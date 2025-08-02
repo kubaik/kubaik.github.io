@@ -1,0 +1,31 @@
+# 🏆 AI Blog System Setup Guide
+
+## Step 1: Install Python Dependencies
+pip install aiohttp==3.8.5 markdown==3.4.4 Jinja2==3.1.2 PyYAML==6.0.1 openai==1.3.0 requests==2.31.0 python-frontmatter==1.0.0 Pillow==10.0.0
+
+## Step 2: Initialize the Blog System
+python blog_system.py init
+
+## Step 3: Configure Your Blog
+# Edit the generated config.yaml file with your details:
+# - OpenAI API key
+# - GitHub token
+# - Site name and URL
+# - Content topics
+
+## Step 4: Test Content Generation
+python blog_system.py generate --topic "artificial intelligence"
+
+## Step 5: Build Static Site
+python blog_system.py build
+
+## Step 6: Setup GitHub Repository
+# 1. Create new GitHub repository
+# 2. Add repository secrets:
+#    - OPENAI_API_KEY: Your OpenAI API key
+# 3. Enable GitHub Pages in repository settings
+# 4. Push your code to trigger automation
+
+## Alternative: Run Without Dependencies (Simplified Version)
+# If you want to test the core functionality without external APIs,
+# I can create a simplified version that works offline
