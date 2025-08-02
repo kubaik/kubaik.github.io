@@ -3,7 +3,6 @@ site_name: "AI-Powered Blog"
 site_description: "Automated content creation with cutting-edge AI"
 author: "AI Blog System"
 base_url: "https://github.com/kubaik/ai-blog-system"
-openai_api_key: "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"
 github_token: "your-github-token-here"
 monetization_enabled: true
 auto_posting: true
