@@ -1,6 +1,7 @@
 # 🏆 AI-Powered Blog System
 # Complete automation with GitHub Actions, monetization-ready
 # Stack: Python + FastAPI + GitHub Actions + Free Hosting
+# Security: API keys from environment variables/GitHub secrets
 
 import os
 import json
@@ -44,11 +45,20 @@ class BlogConfig:
     site_description: str = "Automated content creation with AI"
     author: str = "AI Blog System"
     base_url: str = "https://yourblog.github.io"
-    openai_api_key: str = ""
-    github_token: str = ""
     monetization_enabled: bool = True
     auto_posting: bool = True
     content_topics: List[str] = None
+    
+    # Security: API keys from environment variables only
+    @property
+    def openai_api_key(self) -> str:
+        """Get OpenAI API key from environment variable"""
+        return os.getenv('OPENAI_API_KEY', '')
+    
+    @property
+    def github_token(self) -> str:
+        """Get GitHub token from environment variable"""
+        return os.getenv('GITHUB_TOKEN', '')
 
 class AIBlogSystem:
     """Main blog system orchestrator"""
@@ -61,14 +71,30 @@ class AIBlogSystem:
         self.static_dir = Path("static")
         self.output_dir = Path("docs")  # GitHub Pages
         
+        # Validate API keys
+        self._validate_api_keys()
+        
         self.init_directories()
         self.init_database()
+    
+    def _validate_api_keys(self):
+        """Validate that required API keys are available"""
+        if not self.config.openai_api_key:
+            print("⚠️  Warning: OPENAI_API_KEY environment variable not set")
+            print("   Set it in GitHub repository secrets or locally:")
+            print("   export OPENAI_API_KEY='your-key-here'")
+        
+        if not self.config.github_token and os.getenv('GITHUB_ACTIONS'):
+            print("⚠️  Warning: GITHUB_TOKEN not available in GitHub Actions")
     
     def load_config(self, config_path: str) -> BlogConfig:
         """Load configuration from YAML file"""
         try:
             with open(config_path, 'r') as f:
                 data = yaml.safe_load(f)
+            # Remove sensitive keys from config file if they exist
+            data.pop('openai_api_key', None)
+            data.pop('github_token', None)
             return BlogConfig(**data)
         except FileNotFoundError:
             return BlogConfig()
@@ -120,12 +146,21 @@ class AIBlogSystem:
 class AIContentGenerator:
     """AI-powered content generation using OpenAI API"""
     
-    def __init__(self, api_key: str):
-        self.api_key = api_key
+    def __init__(self, api_key: str = None):
+        # Use parameter or environment variable
+        self.api_key = api_key or os.getenv('OPENAI_API_KEY')
+        if not self.api_key:
+            raise ValueError(
+                "OpenAI API key required. Set OPENAI_API_KEY environment variable "
+                "or pass api_key parameter"
+            )
         self.base_url = "https://api.openai.com/v1"
     
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         """Generate a complete blog post with AI"""
+        
+        if not self.api_key:
+            raise ValueError("OpenAI API key not available")
         
         # Generate title and outline
         title_prompt = f"""
@@ -149,7 +184,7 @@ class AIContentGenerator:
         - Engaging introduction and conclusion
         - Include actionable tips or insights
         - Write in markdown format
-        - Add relevant internal linking opportunities
+        - Add relevant linking opportunities
         
         Keywords to naturally include: {', '.join(keywords) if keywords else 'relevant keywords'}
         """
@@ -201,6 +236,9 @@ class AIContentGenerator:
     
     async def _call_openai(self, prompt: str, max_tokens: int = 1000) -> str:
         """Make API call to OpenAI"""
+        if not self.api_key:
+            raise ValueError("OpenAI API key not configured")
+            
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
@@ -213,14 +251,22 @@ class AIContentGenerator:
             "temperature": 0.7
         }
         
-        async with aiohttp.ClientSession() as session:
-            async with session.post(f"{self.base_url}/chat/completions", 
-                                  headers=headers, json=data) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result["choices"][0]["message"]["content"]
-                else:
-                    raise Exception(f"OpenAI API error: {response.status}")
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(f"{self.base_url}/chat/completions", 
+                                      headers=headers, json=data) as response:
+                    if response.status == 200:
+                        result = await response.json()
+                        return result["choices"][0]["message"]["content"]
+                    elif response.status == 401:
+                        raise Exception("Invalid OpenAI API key")
+                    elif response.status == 429:
+                        raise Exception("OpenAI API rate limit exceeded")
+                    else:
+                        error_text = await response.text()
+                        raise Exception(f"OpenAI API error {response.status}: {error_text}")
+        except aiohttp.ClientError as e:
+            raise Exception(f"Network error calling OpenAI API: {e}")
     
     def _create_slug(self, title: str) -> str:
         """Create URL-friendly slug from title"""
@@ -230,6 +276,9 @@ class AIContentGenerator:
     
     async def _generate_affiliate_opportunities(self, topic: str, content: str) -> List[Dict]:
         """Generate relevant affiliate link opportunities"""
+        if not self.api_key:
+            return []
+            
         prompt = f"""
         Based on this blog post topic and content, suggest 3-5 relevant affiliate products or services:
         Topic: {topic}
@@ -371,7 +420,7 @@ class StaticSiteGenerator:
     <!-- Affiliate Section -->
     {% if post.affiliate_links %}
     <div class="affiliate-section">
-        <h3>Recommended Resources</h3>
+        <h3>📦 Recommended Resources</h3>
         {% for link in post.affiliate_links %}
         <div class="affiliate-item">
             <h4>{{ link.name }}</h4>
@@ -796,6 +845,7 @@ class AutomationOrchestrator:
     
     def __init__(self):
         self.blog_system = AIBlogSystem()
+        # Pass the API key from config (which gets it from env var)
         self.content_generator = AIContentGenerator(
             self.blog_system.config.openai_api_key
         )
@@ -805,6 +855,12 @@ class AutomationOrchestrator:
     async def run_daily_automation(self):
         """Run the complete daily automation pipeline"""
         print("🤖 Starting AI Blog Automation...")
+        
+        # Check if API key is available
+        if not self.blog_system.config.openai_api_key:
+            print("❌ Error: OpenAI API key not found in environment variables")
+            print("   Please set OPENAI_API_KEY in GitHub repository secrets")
+            return None
         
         # 1. Generate new content
         topics = self.blog_system.config.content_topics or [
@@ -820,7 +876,11 @@ class AutomationOrchestrator:
         print(f"📝 Generating content for: {topic}")
         
         # 2. Create blog post
-        post = await self.content_generator.generate_blog_post(topic, keywords)
+        try:
+            post = await self.content_generator.generate_blog_post(topic, keywords)
+        except Exception as e:
+            print(f"❌ Error generating content: {e}")
+            return None
         
         # 3. Save to database
         self._save_post(post)
@@ -896,14 +956,12 @@ def setup_blog_system():
     """Initialize blog system with all required files"""
     print("🚀 Setting up AI-Powered Blog System...")
     
-    # Create config.yaml
+    # Create config.yaml (without sensitive data)
     config_template = """
 site_name: "AI-Powered Blog"
 site_description: "Automated content creation with cutting-edge AI"
 author: "AI Blog System"
 base_url: "https://yourusername.github.io/your-repo"
-openai_api_key: "your-openai-api-key-here"
-github_token: "your-github-token-here"
 monetization_enabled: true
 auto_posting: true
 content_topics:
@@ -915,6 +973,9 @@ content_topics:
   - "automation"
   - "software development"
   - "data science"
+
+# Note: API keys are loaded from environment variables for security
+# Set OPENAI_API_KEY and GITHUB_TOKEN as environment variables or GitHub secrets
 """
     
     with open('config.yaml', 'w') as f:
@@ -974,6 +1035,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -1014,7 +1080,23 @@ Pillow==10.0.0
     with open('requirements.txt', 'w') as f:
         f.write(requirements)
     
-    # Create README.md
+    # Create .env.example file
+    env_example = """
+# OpenAI API Configuration
+OPENAI_API_KEY=your-openai-api-key-here
+
+# GitHub Configuration (usually auto-provided in GitHub Actions)
+GITHUB_TOKEN=your-github-token-here
+
+# Optional: Additional API keys for advanced features
+GOOGLE_TRENDS_API_KEY=your-google-trends-key
+SEMRUSH_API_KEY=your-semrush-key
+"""
+    
+    with open('.env.example', 'w') as f:
+        f.write(env_example)
+    
+    # Create README.md with updated security information
     readme_template = """
 # 🏆 AI-Powered Blog System
 
@@ -1024,6 +1106,7 @@ Pillow==10.0.0
 
 - **🤖 AI Content Generation**: GPT-4 powered blog post creation
 - **⚡ GitHub Actions Automation**: Fully automated posting pipeline
+- **🔒 Secure API Key Management**: Environment variables and GitHub secrets
 - **💰 Built-in Monetization**: Ads, affiliates, email capture
 - **📱 Responsive Design**: Mobile-first, modern UI
 - **🔍 SEO Optimized**: Meta tags, structured data, sitemap
@@ -1031,30 +1114,69 @@ Pillow==10.0.0
 
 ## 🚀 Quick Start
 
-1. **Clone and Setup**
-   ```bash
-   git clone https://github.com/yourusername/ai-blog-system.git
-   cd ai-blog-system
-   python blog_system.py init
-   ```
+### 1. Clone and Setup
+```bash
+git clone https://github.com/yourusername/ai-blog-system.git
+cd ai-blog-system
+python blog_system.py init
+```
 
-2. **Configure API Keys**
-   Edit `config.yaml`:
-   ```yaml
-   openai_api_key: "your-openai-api-key"
-   site_name: "Your Blog Name"
-   base_url: "https://yourusername.github.io/repo-name"
-   ```
+### 2. Configure Environment Variables
 
-3. **Setup GitHub Secrets**
-   Add to repository secrets:
+#### For Local Development:
+```bash
+# Copy example environment file
+cp .env.example .env
+
+# Edit .env with your API keys
+OPENAI_API_KEY=your-openai-api-key-here
+```
+
+#### For GitHub Actions (Production):
+1. Go to your repository on GitHub
+2. Navigate to **Settings** > **Secrets and variables** > **Actions**
+3. Add the following repository secrets:
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `GITHUB_TOKEN`: Auto-generated (no action needed)
 
-4. **Enable GitHub Pages**
-   - Go to Settings > Pages
-   - Source: GitHub Actions
-   - Done! 🎉
+### 3. Update Configuration
+Edit `config.yaml`:
+```yaml
+site_name: "Your Blog Name"
+base_url: "https://yourusername.github.io/repo-name"
+content_topics:
+  - "your niche here"
+  - "another topic"
+```
+
+### 4. Enable GitHub Pages
+- Go to **Settings** > **Pages**
+- Source: **GitHub Actions**
+- Done! 🎉
+
+## 🔒 Security Best Practices
+
+### API Key Management
+- ✅ **Never** commit API keys to your repository
+- ✅ Use environment variables for local development
+- ✅ Use GitHub secrets for production deployment
+- ✅ API keys are loaded at runtime from environment
+
+### Environment Variables
+```bash
+# Local development
+export OPENAI_API_KEY="your-key-here"
+python blog_system.py auto
+
+# Or use .env file (not committed to git)
+echo "OPENAI_API_KEY=your-key-here" > .env
+```
+
+### GitHub Secrets Setup
+1. **Repository Settings** → **Secrets and variables** → **Actions**
+2. **New repository secret**:
+   - Name: `OPENAI_API_KEY`
+   - Value: `your-openai-api-key`
 
 ## 📊 Monetization Strategies
 
@@ -1092,15 +1214,28 @@ python blog_system.py build
 python blog_system.py auto
 ```
 
+### Local Development
+```bash
+# Set environment variable
+export OPENAI_API_KEY="your-key-here"
+
+# Generate content locally
+python blog_system.py generate --topic "machine learning"
+
+# Build and preview site
+python blog_system.py build
+python -m http.server 8000 --directory docs
+```
+
 ### Automation Schedule
-- **Daily**: New blog post generation
-- **Weekly**: SEO optimization review
-- **Monthly**: Performance analytics
+- **Daily**: New blog post generation (9 AM UTC)
+- **On Push**: Build and deploy to GitHub Pages
+- **Manual**: Trigger via GitHub Actions interface
 
 ## 📈 Scaling to Profit
 
 ### Month 1-2: Foundation
-- ✅ Setup automation
+- ✅ Setup automation with secure API keys
 - ✅ Generate 30-60 posts
 - ✅ Apply for AdSense
 - **Target**: $0-50/month
@@ -1133,6 +1268,29 @@ Modify CSS in `StaticSiteGenerator._generate_css()`
 ### Monetization
 Update affiliate networks in `MonetizationManager`
 
+## 🔍 Troubleshooting
+
+### Common Issues
+
+#### "OpenAI API key not found"
+```bash
+# Check if environment variable is set
+echo $OPENAI_API_KEY
+
+# Set it if missing
+export OPENAI_API_KEY="your-key-here"
+```
+
+#### GitHub Actions failing
+1. Check repository secrets are set correctly
+2. Verify `OPENAI_API_KEY` is added to secrets
+3. Check Actions logs for specific errors
+
+#### API Rate Limits
+- OpenAI: Upgrade to paid plan for higher limits
+- Implement retry logic with exponential backoff
+- Consider caching generated content
+
 ## 📊 Analytics Integration
 
 - Google Analytics 4
@@ -1159,7 +1317,8 @@ Update affiliate networks in `MonetizationManager`
 
 1. Fork the repository
 2. Create feature branch
-3. Submit pull request
+3. Ensure no API keys in commits
+4. Submit pull request
 
 ## 📜 License
 
@@ -1174,42 +1333,125 @@ MIT License - feel free to use for commercial projects!
 ---
 
 **⭐ Star this repo if it helps you build a profitable AI blog!**
+
+## 🔒 Security Note
+
+This system is designed with security in mind:
+- API keys are never stored in code or config files
+- Environment variables used for sensitive data
+- GitHub secrets for production deployment
+- No hardcoded credentials anywhere in the system
 """
     
     with open('README.md', 'w') as f:
         f.write(readme_template)
     
-    print("✅ Blog system initialized!")
+    # Create .gitignore
+    gitignore_content = """
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Database
+*.db
+blog_data.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# API keys and secrets (extra protection)
+*api_key*
+*secret*
+*token*
+config_local.yaml
+"""
+    
+    with open('.gitignore', 'w') as f:
+        f.write(gitignore_content)
+    
+    print("✅ Blog system initialized with secure API key management!")
     print("\n📋 Next steps:")
-    print("1. Edit config.yaml with your API keys")
-    print("2. Add GitHub repository secrets")
-    print("3. Enable GitHub Pages")
-    print("4. Push to GitHub and watch the magic happen! 🪄")
+    print("1. Get your OpenAI API key from https://platform.openai.com/api-keys")
+    print("2. For local testing: export OPENAI_API_KEY='your-key-here'")
+    print("3. For production: Add OPENAI_API_KEY to GitHub repository secrets")
+    print("4. Edit config.yaml with your site details")
+    print("5. Enable GitHub Pages in repository settings")
+    print("6. Push to GitHub and watch the magic happen! 🪄")
+    print("\n🔒 Security: API keys are loaded from environment variables only!")
 
 async def generate_content_command(topic: str = None):
     """Generate content command"""
-    orchestrator = AutomationOrchestrator()
-    
-    if topic:
-        keywords = await orchestrator._get_trending_keywords(topic)
-        post = await orchestrator.content_generator.generate_blog_post(topic, keywords)
-        orchestrator._save_post(post)
-        print(f"✅ Generated post: {post.title}")
-    else:
-        post = await orchestrator.run_daily_automation()
-        print(f"✅ Auto-generated post: {post.title}")
+    try:
+        orchestrator = AutomationOrchestrator()
+        
+        if topic:
+            keywords = await orchestrator._get_trending_keywords(topic)
+            post = await orchestrator.content_generator.generate_blog_post(topic, keywords)
+            orchestrator._save_post(post)
+            print(f"✅ Generated post: {post.title}")
+        else:
+            post = await orchestrator.run_daily_automation()
+            if post:
+                print(f"✅ Auto-generated post: {post.title}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        print("💡 Make sure OPENAI_API_KEY environment variable is set")
 
 def build_site_command():
     """Build static site command"""
-    blog_system = AIBlogSystem()
-    generator = StaticSiteGenerator(blog_system)
-    generator.generate_site()
-    print("✅ Static site built successfully!")
+    try:
+        blog_system = AIBlogSystem()
+        generator = StaticSiteGenerator(blog_system)
+        generator.generate_site()
+        print("✅ Static site built successfully!")
+    except Exception as e:
+        print(f"❌ Error building site: {e}")
 
 async def run_automation():
     """Run full automation pipeline"""
-    orchestrator = AutomationOrchestrator()
-    await orchestrator.run_daily_automation()
+    try:
+        orchestrator = AutomationOrchestrator()
+        await orchestrator.run_daily_automation()
+    except Exception as e:
+        print(f"❌ Automation failed: {e}")
+        print("💡 Check that OPENAI_API_KEY environment variable is set")
 
 if __name__ == "__main__":
     main()
@@ -1360,20 +1602,92 @@ class DeploymentManager:
         }
         
         with open('netlify.toml', 'w') as f:
-            import toml
-            toml.dump(config, f)
+            # Simple TOML writing since toml library might not be available
+            f.write('[build]\n')
+            f.write('  publish = "docs"\n')
+            f.write('  command = "python blog_system.py build"\n')
+
+# ============================================================================
+# ENVIRONMENT VARIABLE HELPERS
+# ============================================================================
+
+class EnvironmentManager:
+    """Helper for managing environment variables and configuration"""
+    
+    @staticmethod
+    def load_env_file(env_path: str = '.env'):
+        """Load environment variables from .env file"""
+        if not os.path.exists(env_path):
+            return
+        
+        with open(env_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    key, value = line.split('=', 1)
+                    os.environ[key] = value.strip('"\'')
+    
+    @staticmethod
+    def validate_required_env_vars() -> Dict[str, bool]:
+        """Validate that required environment variables are set"""
+        required_vars = {
+            'OPENAI_API_KEY': bool(os.getenv('OPENAI_API_KEY'))
+        }
+        
+        optional_vars = {
+            'GITHUB_TOKEN': bool(os.getenv('GITHUB_TOKEN')),
+            'GOOGLE_TRENDS_API_KEY': bool(os.getenv('GOOGLE_TRENDS_API_KEY')),
+            'SEMRUSH_API_KEY': bool(os.getenv('SEMRUSH_API_KEY'))
+        }
+        
+        return {
+            'required': required_vars,
+            'optional': optional_vars,
+            'all_required_set': all(required_vars.values())
+        }
+    
+    @staticmethod
+    def print_env_status():
+        """Print status of environment variables"""
+        status = EnvironmentManager.validate_required_env_vars()
+        
+        print("🔒 Environment Variables Status:")
+        print("=" * 40)
+        
+        print("\n✅ Required:")
+        for var, is_set in status['required'].items():
+            status_icon = "✅" if is_set else "❌"
+            status_text = "SET" if is_set else "NOT SET"
+            print(f"  {status_icon} {var}: {status_text}")
+        
+        print("\n🔧 Optional:")
+        for var, is_set in status['optional'].items():
+            status_icon = "✅" if is_set else "⚪"
+            status_text = "SET" if is_set else "NOT SET"
+            print(f"  {status_icon} {var}: {status_text}")
+        
+        if not status['all_required_set']:
+            print("\n⚠️  Missing required environment variables!")
+            print("   Set them with: export VARIABLE_NAME='your-value'")
+        else:
+            print("\n🎉 All required environment variables are set!")
 
 # Example usage and testing
 if __name__ == "__main__":
-    # Example of running the system
-    print("🏆 AI-Powered Blog System")
+    # Load environment variables from .env file if it exists
+    EnvironmentManager.load_env_file()
+    
+    print("🏆 AI-Powered Blog System (Secure)")
     print("=" * 50)
     
+    # Check environment variables
+    EnvironmentManager.print_env_status()
+    
     # Initialize system
-    blog = AIBlogSystem()
+    try:
+        blog = AIBlogSystem()
+        print("\n✅ System initialized successfully!")
+    except Exception as e:
+        print(f"\n❌ System initialization failed: {e}")
     
-    # Example: Generate content (requires API key)
-    # orchestrator = AutomationOrchestrator()
-    # asyncio.run(orchestrator.run_daily_automation())
-    
-    print("System ready! Run 'python blog_system.py init' to get started.")
+    print("\nRun 'python blog_system.py init' to get started.")
