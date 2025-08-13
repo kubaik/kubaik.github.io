@@ -4,7 +4,7 @@ on:
   schedule:
     # Run daily at 9 AM UTC
     - cron: '0 9 * * *'
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -31,7 +31,26 @@ jobs:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        python blog_system.py auto  # <-- Ensure this outputs into ./docs
+        python blog_system.py auto
+
+    - name: Prepare docs folder for Pages
+      run: |
+        # Ensure docs directory exists
+        rm -rf docs
+        mkdir -p docs
+
+        # If your script outputs to 'site', 'output', or similar, copy from there
+        # Adjust this line to match your actual build output folder
+        if [ -d "site" ]; then
+          cp -r site/* docs/
+        elif [ -d "output" ]; then
+          cp -r output/* docs/
+        fi
+
+        # Create fallback index.html if missing
+        if [ ! -f "docs/index.html" ]; then
+          echo "<!DOCTYPE html><html><head><title>AI Blog</title></head><body><h1>Welcome to My AI Blog</h1><p>Content will appear soon.</p></body></html>" > docs/index.html
+        fi
 
     - name: Commit and push changes
       run: |
