@@ -24,16 +24,15 @@ jobs:
         python-version: '3.9'
     
     - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
     
     - name: Generate new blog content
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        python blog_system.py auto
-    
+        python blog_system.py auto  # <-- Ensure this creates ./docs
+
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
@@ -41,12 +40,11 @@ jobs:
         git add .
         git diff --staged --quiet || git commit -m "🤖 Auto-generated blog content $(date)"
         git push
-    
-    # Optional: upload the generated site as an artifact for debugging
-    - name: Upload site artifact
+
+    - name: Upload site artifact for deploy
       uses: actions/upload-artifact@v4
       with:
-        name: generated-site
+        name: site
         path: ./docs
 
   deploy:
@@ -57,15 +55,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    
+
+    - name: Download site artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: site
+        path: ./docs
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
-    
+
     - name: Upload artifact for Pages
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './docs'
-    
+        path: ./docs
+
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
