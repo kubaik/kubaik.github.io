@@ -31,7 +31,7 @@ jobs:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        python blog_system.py auto  # <-- Ensure this creates ./docs
+        python blog_system.py auto  # <-- Ensure this outputs into ./docs
 
     - name: Commit and push changes
       run: |
@@ -51,6 +51,9 @@ jobs:
     needs: generate-content
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - name: Checkout
