@@ -2,7 +2,7 @@
 site_name: "AI-Powered Blog"
 site_description: "Automated content creation with cutting-edge AI"
 author: "AI Blog System"
-base_url: "https://yourusername.github.io/your-repo"
+base_url: "https://github.com/kubaik/AI_Blog_Publisher"
 monetization_enabled: true
 auto_posting: true
 content_topics:
@@ -15,5 +15,3 @@ content_topics:
   - "software development"
   - "data science"
 
-# Note: API keys are loaded from environment variables for security
-# Set OPENAI_API_KEY and GITHUB_TOKEN as environment variables or GitHub secrets
