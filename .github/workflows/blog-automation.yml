@@ -1,10 +1,11 @@
+
 name: 🤖 AI Blog Automation
 
 on:
   schedule:
     # Run daily at 9 AM UTC
     - cron: '0 9 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual trigger
   push:
     branches: [ main ]
 
@@ -19,12 +20,13 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
         python-version: '3.9'
     
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
     
     - name: Generate new blog content
       env:
@@ -32,26 +34,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python blog_system.py auto
-
-    - name: Prepare docs folder for Pages
-      run: |
-        # Ensure docs directory exists
-        rm -rf docs
-        mkdir -p docs
-
-        # If your script outputs to 'site', 'output', or similar, copy from there
-        # Adjust this line to match your actual build output folder
-        if [ -d "site" ]; then
-          cp -r site/* docs/
-        elif [ -d "output" ]; then
-          cp -r output/* docs/
-        fi
-
-        # Create fallback index.html if missing
-        if [ ! -f "docs/index.html" ]; then
-          echo "<!DOCTYPE html><html><head><title>AI Blog</title></head><body><h1>Welcome to My AI Blog</h1><p>Content will appear soon.</p></body></html>" > docs/index.html
-        fi
-
+    
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
@@ -60,41 +43,31 @@ jobs:
         git diff --staged --quiet || git commit -m "🤖 Auto-generated blog content $(date)"
         git push
 
-    - name: Upload site artifact for deploy
-      uses: actions/upload-artifact@v4
-      with:
-        name: site
-        path: ./docs
-
   deploy:
     needs: generate-content
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-
-    - name: Download site artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: site
-        path: ./docs
-
+    
     - name: Setup Pages
-      uses: actions/configure-pages@v4
-
-    - name: Upload artifact for Pages
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/configure-pages@v3
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
       with:
-        path: ./docs
-
+        path: './docs'
+    
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4
+      uses: actions/deploy-pages@v2
 
 permissions:
   contents: write
