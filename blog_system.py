@@ -1,51 +1,100 @@
 import os
+import json
+import random
+import yaml
 import markdown as md
 from datetime import datetime
 from typing import Dict, List
-from jinja2 import Template, Environment, BaseLoader
 from pathlib import Path
+from jinja2 import Template, Environment, BaseLoader
 
-# Assuming BlogPost and SEOOptimizer are defined elsewhere in your project
+# === Models and Utilities (replace with your imports if they exist) ===
 # from models import BlogPost
 # from seo_optimizer import SEOOptimizer
 
+class BlogPost:
+    def __init__(self, title, content, slug, tags, meta_description, featured_image,
+                 created_at, updated_at, seo_keywords, affiliate_links, monetization_data):
+        self.title = title
+        self.content = content
+        self.slug = slug
+        self.tags = tags
+        self.meta_description = meta_description
+        self.featured_image = featured_image
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.seo_keywords = seo_keywords
+        self.affiliate_links = affiliate_links
+        self.monetization_data = monetization_data
+
+
+class SEOOptimizer:
+    @staticmethod
+    def generate_sitemap(posts, base_url):
+        urls = [f"<url><loc>{base_url}/{p.slug}</loc></url>" for p in posts]
+        return f"<?xml version='1.0'?><urlset>{''.join(urls)}</urlset>"
+
+    @staticmethod
+    def generate_robots_txt(base_url):
+        return f"User-agent: *\nAllow: /\nSitemap: {base_url}/sitemap.xml"
+
+
+# === Static Site Generator ===
 class StaticSiteGenerator:
     def __init__(self, blog_system):
         self.blog_system = blog_system
         self.templates = self._load_templates()
-        # Add markdown filter to all templates
         for template in self.templates.values():
             template.globals['markdown'] = self._markdown_filter
 
     def _markdown_filter(self, text):
-        """Convert markdown to HTML"""
         return md.markdown(text, extensions=['codehilite', 'fenced_code'])
 
     def _load_templates(self) -> Dict[str, Template]:
-        """Load Jinja2 templates with proper environment"""
         template_strings = {
-            'base': '''... (base HTML template from your instructions) ...''',
-            'post': '''... (post HTML template from your instructions) ...''',
-            'index': '''... (index HTML template from your instructions) ...'''
+            "base": """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% if post %}{{ post.title }} - {% endif %}{{ site_name }}</title>
+<meta name="description" content="{% if post %}{{ post.meta_description }}{% else %}{{ site_description }}{% endif %}">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header><h1><a href="/">{{ site_name }}</a></h1></header>
+<main>{% block content %}{% endblock %}</main>
+<footer>&copy; {{ site_name }}</footer>
+</body>
+</html>""",
+
+            "post": """{% extends "base" %}
+{% block content %}
+<article>
+<h1>{{ post.title }}</h1>
+<div>{{ post.content | safe }}</div>
+</article>
+{% endblock %}""",
+
+            "index": """{% extends "base" %}
+{% block content %}
+<h2>Latest Posts</h2>
+<ul>
+{% for post in posts %}
+<li><a href="/{{ post.slug }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}"""
         }
 
         env = Environment(loader=BaseLoader())
-
-        def markdown_filter(text):
-            return md.markdown(text, extensions=['codehilite', 'fenced_code'])
-
-        env.filters['markdown'] = markdown_filter
-
+        env.filters['markdown'] = lambda text: md.markdown(text, extensions=['codehilite', 'fenced_code'])
         templates = {}
         for name, template_str in template_strings.items():
             templates[name] = env.from_string(template_str)
-
         return templates
 
-    def _generate_post_page(self, post):
-        """Generate individual post HTML page with proper template rendering"""
+    def _generate_post_page(self, post: BlogPost):
         post_content_html = md.markdown(post.content, extensions=['codehilite', 'fenced_code'])
-
         post_dict = {
             'title': post.title,
             'slug': post.slug,
@@ -56,61 +105,53 @@ class StaticSiteGenerator:
             'seo_keywords': post.seo_keywords,
             'affiliate_links': post.affiliate_links
         }
-
         post_html = self.templates['post'].render(post=post_dict)
-
         full_html = self.templates['base'].render(
-            site_name=self.blog_system.config.site_name,
-            site_description=self.blog_system.config.site_description,
-            base_url=self.blog_system.config.base_url,
+            site_name=self.blog_system.config["site_name"],
+            site_description=self.blog_system.config["site_description"],
+            base_url=self.blog_system.config["base_url"],
             post=post_dict,
             content=post_html
         )
-
         post_dir = self.blog_system.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
-
         with open(post_dir / "index.html", 'w', encoding='utf-8') as f:
             f.write(full_html)
 
     def generate_site(self):
-        """Generate complete static site with sitemap"""
         posts = self._get_all_posts()
         self._generate_index(posts)
         for post in posts:
             self._generate_post_page(post)
-        self._generate_css()
-        self._generate_additional_pages()
-
-        sitemap = SEOOptimizer.generate_sitemap(posts, self.blog_system.config.base_url)
+        sitemap = SEOOptimizer.generate_sitemap(posts, self.blog_system.config["base_url"])
         with open(self.blog_system.output_dir / "sitemap.xml", 'w') as f:
             f.write(sitemap)
-
-        robots = SEOOptimizer.generate_robots_txt(self.blog_system.config.base_url)
+        robots = SEOOptimizer.generate_robots_txt(self.blog_system.config["base_url"])
         with open(self.blog_system.output_dir / "robots.txt", 'w') as f:
             f.write(robots)
 
-    # Placeholder for functions not shown in your snippet
-    def _get_all_posts(self): ...
-    def _generate_index(self, posts): ...
-    def _generate_css(self): ...
-    def _generate_additional_pages(self): ...
+    # Placeholder
+    def _get_all_posts(self): return []
+    def _generate_index(self, posts): pass
 
 
+# === Blog System ===
 class BlogSystem:
-    async def generate_blog_post(self, topic: str, keywords: List[str] = None):
-        """Generate a complete blog post with improved error handling"""
+    def __init__(self, config):
+        self.config = config
+        self.output_dir = Path("./docs")
+        self.output_dir.mkdir(exist_ok=True)
+        self.api_key = os.getenv("OPENAI_API_KEY")
+
+    async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
             raise ValueError("OpenAI API key not available")
-
         try:
             title = await self._generate_title(topic, keywords)
             content = await self._generate_content(title, topic, keywords)
-            meta_description = await self._generate_meta_description(title, topic)
-            seo_keywords = await self._generate_seo_keywords(title, topic, keywords)
+            meta_description = f"Learn about {topic} in this detailed guide."
             slug = self._create_slug(title)
-            affiliate_links = await self._generate_affiliate_opportunities(topic, content)
-
+            affiliate_links = []
             return BlogPost(
                 title=title.strip(),
                 content=content.strip(),
@@ -120,60 +161,68 @@ class BlogSystem:
                 featured_image=f"/images/{slug}.jpg",
                 created_at=datetime.now().isoformat(),
                 updated_at=datetime.now().isoformat(),
-                seo_keywords=seo_keywords,
+                seo_keywords=keywords or [topic],
                 affiliate_links=affiliate_links,
                 monetization_data={"ad_slots": 3, "affiliate_count": len(affiliate_links)}
             )
-
         except Exception as e:
             print(f"Error generating blog post: {e}")
             raise
 
     async def _generate_title(self, topic: str, keywords: List[str] = None) -> str:
-        keywords_text = f"Keywords: {', '.join(keywords)}" if keywords else ""
-        prompt = f"""Create an engaging, SEO-optimized blog post title about: {topic}
-{keywords_text}
-
-Requirements:
-- Make it clickable and compelling
-- 60 characters or less for SEO
-- Include main keyword naturally
-- Avoid clickbait, be authentic
-
-Return only the title, nothing else."""
-        return await self._call_openai(prompt, max_tokens=100)
+        return f"The Future of {topic.title()}"
 
     async def _generate_content(self, title: str, topic: str, keywords: List[str] = None) -> str:
-        keywords_text = f"Keywords to include naturally: {', '.join(keywords)}" if keywords else ""
-        prompt = f"""Write a comprehensive, engaging blog post with the title: "{title}"
-Topic: {topic}
-{keywords_text}
+        return f"## Introduction\nThis is an AI-generated blog post about {topic}."
 
-Requirements:
-- 1000-1500 words
-- Use markdown formatting
-- Include 4-6 subheadings
-- Engaging tone
-- Actionable tips
-- Intro & conclusion
+    def _create_slug(self, title: str) -> str:
+        return title.lower().replace(" ", "-")
 
-Structure:
-## Introduction
-...
-
-Write the complete blog post now:"""
-        return await self._call_openai(prompt, max_tokens=2000)
-
-    # Placeholder for other methods
-    def _create_slug(self, title: str) -> str: ...
-    async def _generate_meta_description(self, title, topic): ...
-    async def _generate_seo_keywords(self, title, topic, keywords): ...
-    async def _generate_affiliate_opportunities(self, topic, content): ...
-    async def _call_openai(self, prompt, max_tokens): ...
+    def save_post(self, post: BlogPost):
+        post_dir = self.output_dir / post.slug
+        post_dir.mkdir(exist_ok=True)
+        with open(post_dir / "index.md", "w", encoding="utf-8") as f:
+            f.write(post.content)
 
 
+# === Topic Picker ===
+def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
+    topics = config.get("content_topics", [])
+    if not topics:
+        raise ValueError("No content_topics found in config.yaml")
+    used = []
+    if os.path.exists(history_file):
+        with open(history_file, "r") as f:
+            used = json.load(f)
+    available = [t for t in topics if t not in used]
+    if not available:
+        available = topics
+        used = []
+    topic = random.choice(available)
+    used.append(topic)
+    with open(history_file, "w") as f:
+        json.dump(used, f, indent=2)
+    return topic
+
+
+# === CLI ===
 if __name__ == "__main__":
-    # CLI handling example
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "init":
-        print("Initializing blog system...")
+    config_file = "config.yaml"
+    with open(config_file, "r") as f:
+        config = yaml.safe_load(f)
+    blog_system = BlogSystem(config)
+
+    if len(sys.argv) > 1:
+        mode = sys.argv[1]
+        if mode == "auto":
+            topic = pick_next_topic()
+            print(f"📌 Generating post for topic: {topic}")
+            import asyncio
+            blog_post = asyncio.run(blog_system.generate_blog_post(topic))
+            blog_system.save_post(blog_post)
+            print(f"✅ Post for '{topic}' generated successfully.")
+        elif mode == "init":
+            print("Initializing blog system...")
