@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Show if secret exists
         run: |
-          if [ -n "${{ secrets.MY_SECRET }}" ]; then
+          if [ -n "${{ secrets.OPENAI_API_KEY }}" ]; then
             echo "✅ Secret is available."
           else
             echo "❌ Secret is NOT set."
