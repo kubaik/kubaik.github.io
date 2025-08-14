@@ -1,19 +1,19 @@
+name: 🔍 Test GitHub Secrets
+
+on:
+  workflow_dispatch:  # Run manually from Actions tab
+  push:               # (Optional) Run on every push
+    branches:
+      - main
+
 jobs:
-  generate-content:
+  test-secret:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if secret is available
+      - name: Show if secret exists
         run: |
-          if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
-            echo "❌ Secret is NOT set"
-            exit 1
+          if [ -n "${{ secrets.MY_SECRET }}" ]; then
+            echo "✅ Secret is available."
           else
-            echo "✅ Secret is set"
-            # Print only the first 4 characters for debugging
-            echo "First 4 characters of secret: ${OPENAI_API_KEY:0:4}"
+            echo "❌ Secret is NOT set."
           fi
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
