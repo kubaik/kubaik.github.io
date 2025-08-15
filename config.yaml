@@ -1,17 +1,24 @@
-
-site_name: "AI-Powered Blog"
-site_description: "Automated content creation with cutting-edge AI"
-author: "AI Blog System"
-base_url: "https://github.com/kubaik/AI_Blog_Publisher"
-monetization_enabled: true
-auto_posting: true
+base_url: https://yourusername.github.io/your-repo-name
 content_topics:
-  - "artificial intelligence"
-  - "machine learning"
-  - "productivity"
-  - "technology trends"
-  - "digital marketing"
-  - "automation"
-  - "software development"
-  - "data science"
-
+- Machine Learning Algorithms
+- Web Development Trends
+- Data Science Techniques
+- Artificial Intelligence Applications
+- Cloud Computing Platforms
+- Cybersecurity Best Practices
+- Mobile App Development
+- DevOps and CI/CD
+- Database Optimization
+- Frontend Frameworks
+- Backend Architecture
+- API Design Patterns
+- Software Testing Strategies
+- Performance Optimization
+- Blockchain Technology
+- Internet of Things (IoT)
+- Microservices Architecture
+- Container Technologies
+- Serverless Computing
+- Progressive Web Apps
+site_description: Cutting-edge insights into technology, AI, and development
+site_name: AI Tech Blog

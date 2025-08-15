@@ -3,14 +3,23 @@ name: 🤖 AI Blog Automation
 on:
   schedule:
     - cron: '0 9 * * *'  # Run daily at 9 AM UTC
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual trigger
   push:
     branches: [ main ]
+    paths:
+      - 'blog_system.py'
+      - 'config.yaml'
+      - 'requirements.txt'
+      - '.github/workflows/blog-automation.yml'
 
 permissions:
   contents: write
   pages: write
   id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   generate-content:
@@ -21,61 +30,90 @@ jobs:
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0  
     
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.11'
+        cache: 'pip'
     
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Verify OpenAI API Key
+      run: |
+        if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
+          echo "❌ OPENAI_API_KEY secret is not set"
+          echo "Please add your OpenAI API key to repository secrets"
+          exit 1
+        fi
+        echo "✅ OpenAI API key is available"
+    
+    - name: Check if config exists
+      run: |
+        if [ ! -f "config.yaml" ]; then
+          echo "📝 Creating initial config.yaml..."
+          python blog_system.py init
+          git add config.yaml
+        fi
     
     - name: Generate new blog content
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python blog_system.py auto
+      run: |
+        echo "🤖 Starting blog content generation..."
+        python blog_system.py auto
+    
+    - name: Verify generated content
+      run: |
+        echo "📊 Checking generated content..."
+        ls -la docs/
+        if [ ! -f "docs/index.html" ]; then
+          echo "❌ No index.html generated!"
+          exit 1
+        fi
+        echo "✅ Content generated successfully"
     
     - name: Commit and push changes
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "AI Blog Bot"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Add all changes
         git add .
-        git diff --staged --quiet || git commit -m "🤖 Auto-generated blog content $(date)"
-        git push
+        
+        # Check if there are changes to commit
+        if git diff --staged --quiet; then
+          echo "📝 No changes to commit"
+        else
+          echo "📝 Committing changes..."
+          git commit -m "🤖 Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S')"
+          git push origin main
+          echo "✅ Changes pushed successfully"
+        fi
 
-    - name: Upload site artifact for deploy
-      uses: actions/upload-artifact@v4
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        name: site
         path: ./docs
 
   deploy:
     needs: generate-content
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Download site artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: site
-        path: ./docs
-
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-
-    - name: Upload artifact for Pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./docs
-
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+      
+    - name: Print deployment URL
+      run: |
+        echo "🚀 Site deployed to: ${{ steps.deployment.outputs.page_url }}"
