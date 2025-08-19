@@ -71,17 +71,49 @@ class StaticSiteGenerator:
         self.templates = self._load_templates()
 
     def _load_templates(self) -> Dict[str, Template]:
-        template_strings = {
-            "base": """<!DOCTYPE html>
+        def create_base_html(content_block, page_title_prefix=""):
+            return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if post %}{{ post.title }} - {% endif %}{{ site_name }}</title>
-    <meta name="description" content="{% if post %}{{ post.meta_description }}{% else %}{{ site_description }}{% endif %}">
-    {% if post and post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
+    <title>{page_title_prefix}{{{{ site_name }}}}</title>
+    <meta name="description" content="{{{{ site_description }}}}">
     <link rel="stylesheet" href="/static/style.css">
-    <link rel="canonical" href="{{ base_url }}{% if post %}/{{ post.slug }}/{% endif %}">
+    <link rel="canonical" href="{{{{ base_url }}}}/">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">{{{{ site_name }}}}</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        {content_block}
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{{{ current_year }}}} {{{{ site_name }}}}. Powered by AI.</p>
+        </div>
+    </footer>
+</body>
+</html>"""
+
+        template_strings = {
+            "post": """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - {{ site_name }}</title>
+    <meta name="description" content="{{ post.meta_description }}">
+    {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
 </head>
 <body>
     <header>
@@ -94,7 +126,24 @@ class StaticSiteGenerator:
         </div>
     </header>
     <main class="container">
-        {% block content %}{% endblock %}
+        <article class="blog-post">
+            <header class="post-header">
+                <h1>{{ post.title }}</h1>
+                <div class="post-meta">
+                    <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
+                    {% if post.tags %}
+                    <div class="tags">
+                        {% for tag in post.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </header>
+            <div class="post-content">
+                {{ post.content_html | safe }}
+            </div>
+        </article>
     </main>
     <footer>
         <div class="container">
@@ -104,76 +153,106 @@ class StaticSiteGenerator:
 </body>
 </html>""",
 
-            "post": """{% extends "base" %}
-{% block content %}
-<article class="blog-post">
-    <header class="post-header">
-        <h1>{{ post.title }}</h1>
-        <div class="post-meta">
-            <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
-            {% if post.tags %}
-            <div class="tags">
-                {% for tag in post.tags %}
-                <span class="tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
+            "index": """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }}</title>
+    <meta name="description" content="{{ site_description }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="canonical" href="{{ base_url }}/">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </nav>
         </div>
     </header>
-    <div class="post-content">
-        {{ post.content_html | safe }}
-    </div>
-</article>
-{% endblock %}""",
+    <main class="container">
+        <div class="hero">
+            <h2>Welcome to {{ site_name }}</h2>
+            <p>{{ site_description }}</p>
+        </div>
 
-            "index": """{% extends "base" %}
-{% block content %}
-<div class="hero">
-    <h2>Welcome to {{ site_name }}</h2>
-    <p>{{ site_description }}</p>
-</div>
-
-<section class="recent-posts">
-    <h2>Latest Posts</h2>
-    {% if posts %}
-    <div class="post-grid">
-        {% for post in posts %}
-        <article class="post-card">
-            <h3><a href="/{{ post.slug }}/">{{ post.title }}</a></h3>
-            <p class="post-excerpt">{{ post.meta_description }}</p>
-            <div class="post-meta">
-                <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
-                {% if post.tags %}
-                <div class="tags">
-                    {% for tag in post.tags[:3] %}
-                    <span class="tag">{{ tag }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+        <section class="recent-posts">
+            <h2>Latest Posts</h2>
+            {% if posts %}
+            <div class="post-grid">
+                {% for post in posts %}
+                <article class="post-card">
+                    <h3><a href="/{{ post.slug }}/">{{ post.title }}</a></h3>
+                    <p class="post-excerpt">{{ post.meta_description }}</p>
+                    <div class="post-meta">
+                        <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
+                        {% if post.tags %}
+                        <div class="tags">
+                            {% for tag in post.tags[:3] %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
             </div>
-        </article>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p>No posts yet. Check back soon!</p>
-    {% endif %}
-</section>
-{% endblock %}""",
+            {% else %}
+            <p>No posts yet. Check back soon!</p>
+            {% endif %}
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+        </div>
+    </footer>
+</body>
+</html>""",
 
-            "about": """{% extends "base" %}
-{% block content %}
-<div class="page-content">
-    <h1>About {{ site_name }}</h1>
-    <p>This is an AI-powered blog that automatically generates content on various technology topics.</p>
-    <p>Our content covers:</p>
-    <ul>
-        {% for topic in topics %}
-        <li>{{ topic }}</li>
-        {% endfor %}
-    </ul>
-    <p>All content is generated using advanced AI technology and is updated regularly.</p>
-</div>
-{% endblock %}"""
+            "about": """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - {{ site_name }}</title>
+    <meta name="description" content="About {{ site_name }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="canonical" href="{{ base_url }}/about/">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">{{ site_name }}</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <div class="page-content">
+            <h1>About {{ site_name }}</h1>
+            <p>This is an AI-powered blog that automatically generates content on various technology topics.</p>
+            <p>Our content covers:</p>
+            <ul>
+                {% for topic in topics %}
+                <li>{{ topic }}</li>
+                {% endfor %}
+            </ul>
+            <p>All content is generated using advanced AI technology and is updated regularly.</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+        </div>
+    </footer>
+</body>
+</html>"""
         }
 
         env = Environment(loader=BaseLoader())
