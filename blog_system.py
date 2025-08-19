@@ -10,6 +10,7 @@ from typing import Dict, List, Optional
 from pathlib import Path
 from jinja2 import Template, Environment, BaseLoader
 
+#Blog post
 
 class BlogPost:
     def __init__(self, title, content, slug, tags, meta_description, featured_image,
