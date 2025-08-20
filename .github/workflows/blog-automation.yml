@@ -142,15 +142,7 @@ jobs:
           
           # Create a detailed commit message
           post_count=$(find docs -name "post.json" | wc -l)
-          commit_msg="Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S')
-
-Stats:
-- Total posts: $post_count
-- Generated at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
-- Workflow: ${{ github.workflow }}
-- Run: ${{ github.run_number }}"
-
-          git commit -m "$commit_msg"
+          git commit -m "Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S') - $post_count posts"
           git push origin main
           echo "SUCCESS: Changes pushed successfully"
         fi
