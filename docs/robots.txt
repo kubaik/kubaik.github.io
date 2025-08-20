@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /static/
+
+Sitemap: https://github.com/kubaik/ai-blog-system/sitemap.xml
