@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /static/
 
-Sitemap: https://github.com/kubaik/ai-blog-system/sitemap.xml
+Sitemap: https://kubaik.github.io/ai-blog-system/sitemap.xml
