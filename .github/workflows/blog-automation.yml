@@ -2,8 +2,14 @@ name: 🤖 AI Blog Automation
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '0 9 * * *'  # Daily at 9 AM UTC
   workflow_dispatch:
+    inputs:
+      force_cleanup:
+        description: 'Force cleanup of posts'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ main ]
     paths:
@@ -18,8 +24,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-deployment"  # Changed this
-  cancel-in-progress: true   # Changed this to true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   generate-and-deploy:
@@ -29,83 +35,193 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
-    - name: Checkout repository
+    - name: 📥 Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
-    
-    - name: Set up Python
+
+    - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
         cache: 'pip'
-    
-    - name: Install dependencies
+
+    - name: 📦 Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
-    - name: Verify OpenAI API Key
+
+    - name: 🔑 Verify OpenAI API Key
       run: |
         if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
-          echo "❌ OPENAI_API_KEY secret is not set"
-          exit 1
+          echo "⚠️ OPENAI_API_KEY secret is not set - will use fallback content generation"
+        else
+          echo "✅ OpenAI API key is available"
         fi
-        echo "✅ OpenAI API key is available"
-    
-    - name: Check if config exists
+
+    - name: ⚙️ Initialize config if needed
       run: |
         if [ ! -f "config.yaml" ]; then
           echo "📝 Creating initial config.yaml..."
           python blog_system.py init
+        else
+          echo "✅ Config file exists"
         fi
-    
-    - name: Generate new blog content
+
+    - name: 🧹 Run cleanup if needed
+      run: |
+        echo "🔍 Checking for posts that need cleanup..."
+        if [ "${{ github.event.inputs.force_cleanup }}" = "true" ]; then
+          echo "🧹 Force cleanup requested..."
+          python blog_system.py cleanup
+        else
+          echo "🔍 Running debug mode (includes automatic cleanup)..."
+          python blog_system.py debug
+        fi
+
+    - name: 🤖 Generate new blog content
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         echo "🤖 Starting blog content generation..."
-        python blog_system.py auto
-    
-    - name: Verify generated content
+        
+        # Try to generate new content, but don't fail if it doesn't work
+        if python blog_system.py auto; then
+          echo "✅ New content generated successfully"
+        else
+          echo "⚠️ Content generation failed, rebuilding existing content..."
+          python blog_system.py build
+        fi
+
+    - name: 📊 Verify generated content
       run: |
         echo "📊 Checking generated content..."
-        ls -la docs/
-        if [ ! -f "docs/index.html" ]; then
+        echo "📁 Contents of docs directory:"
+        ls -la docs/ || echo "❌ docs directory not found"
+        
+        if [ -f "docs/index.html" ]; then
+          echo "✅ index.html exists ($(wc -c < docs/index.html) bytes)"
+          
+          # Count posts
+          post_count=$(find docs -name "post.json" | wc -l)
+          echo "📝 Found $post_count blog posts"
+          
+          # List all posts
+          echo "📋 Blog posts:"
+          for post_dir in docs/*/; do
+            if [ -f "$post_dir/post.json" ]; then
+              title=$(python -c "import json; print(json.load(open('$post_dir/post.json'))['title'])" 2>/dev/null || echo "Unknown")
+              echo "  - $(basename "$post_dir"): $title"
+            fi
+          done
+        else
           echo "❌ No index.html generated!"
-          exit 1
+          echo "🔄 Attempting emergency rebuild..."
+          python blog_system.py build
+          
+          if [ ! -f "docs/index.html" ]; then
+            echo "❌ Emergency rebuild failed"
+            exit 1
+          fi
         fi
-        echo "✅ Content generated successfully"
-    
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    
-    - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./docs
-    
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-    
-    - name: Commit and push changes
+
+    - name: 📤 Commit changes before deployment
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
+        # Add all changes
         git add .
         
+        # Check if there are changes to commit
         if git diff --staged --quiet; then
           echo "📝 No changes to commit"
         else
           echo "📝 Committing changes..."
-          git commit -m "🤖 Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S')"
+          
+          # Create a detailed commit message
+          post_count=$(find docs -name "post.json" | wc -l)
+          commit_msg="🤖 Auto-generated blog content - $(date '+%Y-%m-%d %H:%M:%S')
+
+📊 Stats:
+- Total posts: $post_count
+- Generated at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+- Workflow: ${{ github.workflow }}
+- Run: ${{ github.run_number }}"
+
+          git commit -m "$commit_msg"
           git push origin main
           echo "✅ Changes pushed successfully"
         fi
-    
-    - name: Print deployment URL
+
+    - name: 🔧 Setup GitHub Pages
+      uses: actions/configure-pages@v4
+
+    - name: 📦 Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./docs
+
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+    - name: 📋 Deployment Summary
       run: |
+        echo "## 🎉 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 **Site URL**: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+        echo "📅 **Deployed**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        post_count=$(find docs -name "post.json" | wc -l)
+        echo "📊 **Statistics**:" >> $GITHUB_STEP_SUMMARY
+        echo "- Total posts: $post_count" >> $GITHUB_STEP_SUMMARY
+        echo "- Workflow run: #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "📝 **Recent Posts**:" >> $GITHUB_STEP_SUMMARY
+        for post_dir in docs/*/; do
+          if [ -f "$post_dir/post.json" ]; then
+            title=$(python -c "import json; print(json.load(open('$post_dir/post.json'))['title'])" 2>/dev/null || echo "Unknown")
+            slug=$(basename "$post_dir")
+            echo "- [$title](${{ steps.deployment.outputs.page_url }}/$slug/)" >> $GITHUB_STEP_SUMMARY
+          fi
+        done
+        
+        echo ""
         echo "🚀 Site deployed to: ${{ steps.deployment.outputs.page_url }}"
+
+  # Optional: Add a job to create an issue if deployment fails
+  notify-on-failure:
+    needs: generate-and-deploy
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+    - name: 📧 Create issue on failure
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `🚨 Blog automation failed - ${new Date().toISOString().split('T')[0]}`,
+            body: `The automated blog generation workflow failed.
+            
+            **Details:**
+            - Workflow: ${context.workflow}
+            - Run: ${context.runNumber}
+            - Run ID: ${context.runId}
+            - Commit: ${context.sha}
+            
+            **Action needed:**
+            Please check the [workflow logs](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
+            
+            You may need to:
+            1. Check if the OpenAI API key is still valid
+            2. Run \`python blog_system.py cleanup\` manually
+            3. Verify the config.yaml file is correct
+            
+            This issue was automatically created by the failed workflow.`
+          })

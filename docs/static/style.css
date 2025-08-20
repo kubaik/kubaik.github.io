@@ -115,6 +115,20 @@ main {
     margin-bottom: 1rem;
 }
 
+/* Debug Info */
+.debug-info {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.debug-info ul {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
 /* Blog Post */
 .blog-post {
     max-width: 100%;
