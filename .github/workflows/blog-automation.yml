@@ -2,8 +2,8 @@ name: 🤖 AI Blog Automation
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Run daily at 9 AM UTC
-  workflow_dispatch:  # Allow manual trigger
+    - cron: '0 9 * * *'
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths:
@@ -18,19 +18,22 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: "pages-deployment"  # Changed this
+  cancel-in-progress: true   # Changed this to true
 
 jobs:
-  generate-content:
+  generate-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0  
+        fetch-depth: 0
     
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -47,7 +50,6 @@ jobs:
       run: |
         if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
           echo "❌ OPENAI_API_KEY secret is not set"
-          echo "Please add your OpenAI API key to repository secrets"
           exit 1
         fi
         echo "✅ OpenAI API key is available"
@@ -57,7 +59,6 @@ jobs:
         if [ ! -f "config.yaml" ]; then
           echo "📝 Creating initial config.yaml..."
           python blog_system.py init
-          git add config.yaml
         fi
     
     - name: Generate new blog content
@@ -77,15 +78,25 @@ jobs:
         fi
         echo "✅ Content generated successfully"
     
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+    
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./docs
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+    
     - name: Commit and push changes
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Add all changes
         git add .
         
-        # Check if there are changes to commit
         if git diff --staged --quiet; then
           echo "📝 No changes to commit"
         else
@@ -94,26 +105,7 @@ jobs:
           git push origin main
           echo "✅ Changes pushed successfully"
         fi
-
-    - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./docs
-
-  deploy:
-    needs: generate-content
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-      
     - name: Print deployment URL
       run: |
         echo "🚀 Site deployed to: ${{ steps.deployment.outputs.page_url }}"
