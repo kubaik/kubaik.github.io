@@ -219,7 +219,7 @@ jobs:
               Please check the [workflow logs](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.
               
               You may need to:
-              1. Check if the OpenAI API key is still valid
+              1. Check if the OpenAI APIs key is still valid
               2. Run \`python blog_system.py cleanup\` manually
               3. Verify the config.yaml file is correct
               
