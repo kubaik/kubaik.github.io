@@ -124,16 +124,16 @@ class StaticSiteGenerator:
     <title>{{ post.title }} - {{ site_name }}</title>
     <meta name="description" content="{{ post.meta_description }}">
     {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><a href="/">{{ site_name }}</a></h1>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
             </nav>
         </div>
     </header>
@@ -172,16 +172,16 @@ class StaticSiteGenerator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site_name }}</title>
     <meta name="description" content="{{ site_description }}">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><a href="/">{{ site_name }}</a></h1>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
             </nav>
         </div>
     </header>
@@ -197,7 +197,7 @@ class StaticSiteGenerator:
             <div class="post-grid">
                 {% for post in posts %}
                 <article class="post-card">
-                    <h3><a href="/{{ post.slug }}/">{{ post.title }}</a></h3>
+                    <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3>
                     <p class="post-excerpt">{{ post.meta_description }}</p>
                     <div class="post-meta">
                         <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
@@ -241,16 +241,16 @@ class StaticSiteGenerator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - {{ site_name }}</title>
     <meta name="description" content="About {{ site_name }}">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/about/">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><a href="/">{{ site_name }}</a></h1>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
             </nav>
         </div>
     </header>
@@ -281,7 +281,7 @@ class StaticSiteGenerator:
         for name, template_str in template_strings.items():
             templates[name] = env.from_string(template_str)
         return templates
-
+        
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []
         print(f"🔍 Looking for posts in: {self.blog_system.output_dir}")

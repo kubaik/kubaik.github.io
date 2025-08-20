@@ -1,4 +1,6 @@
 base_url: https://kubaik.github.io/ai-blog-system
+base_path: /ai-blog-system  
+
 content_topics:
 - Machine Learning Algorithms
 - Web Development Trends
