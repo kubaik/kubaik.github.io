@@ -208,7 +208,7 @@ jobs:
             title: 'Blog automation failed - ' + new Date().toISOString().split('T')[0],
             body: 'The automated blog generation workflow failed.\n\n' +
                   '**Details:**\n' +
-                  '- Workflows: ' + context.workflow + '\n' +
+                  '- Workflow: ' + context.workflow + '\n' +
                   '- Run: ' + context.runNumber + '\n' +
                   '- Run ID: ' + context.runId + '\n' +
                   '- Commit: ' + context.sha + '\n\n' +
