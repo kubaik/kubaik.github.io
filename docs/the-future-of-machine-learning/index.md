@@ -1,2 +1,4 @@
+# Untitled Post
+
 ## Introduction
 This is an AI-generated blog post about machine learning.
