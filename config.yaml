@@ -1,5 +1,6 @@
+amazon_affiliate_tag: aiblogcontent-20
+base_path: /ai-blog-system
 base_url: https://kubaik.github.io/ai-blog-system
-base_path: /ai-blog-system  
 content_topics:
 - Machine Learning Algorithms
 - Web Development Trends
@@ -21,7 +22,12 @@ content_topics:
 - Container Technologies
 - Serverless Computing
 - Progressive Web Apps
+google_adsense_id: ca-pub-4477679588953789
+google_analytics_id: G-DST4PJYK6V
+google_search_console_key: 'AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ'
 site_description: Cutting-edge insights into technology, AI, and development
 site_name: AI Tech Blog
-amazon_affiliate_tag: "aiblogcontent-20"
-google_analytics_id: "G-DST4PJYK6V"
+social_accounts:
+  facebook: your-facebook-page
+  linkedin: your-linkedin-page
+  twitter: '@KubaiKevin'
