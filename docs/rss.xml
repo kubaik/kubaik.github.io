@@ -4,9 +4,16 @@
         <title>AI Tech Blog</title>
         <description>Cutting-edge insights into technology, AI, and development</description>
         <link>https://kubaik.github.io/ai-blog-system</link>
-        <lastBuildDate>Thu, 21 Aug 2025 08:28:19 </lastBuildDate>
+        <lastBuildDate>Thu, 21 Aug 2025 09:58:29 </lastBuildDate>
         <language>en-US</language>
         
+        <item>
+            <title><![CDATA[Understanding Data Science Techniques: A Complete Guide]]></title>
+            <description><![CDATA[A comprehensive guide to Data Science Techniques covering key concepts, benefits, and best practices for developers.]]></description>
+            <link>https://kubaik.github.io/ai-blog-system/understanding-data-science-techniques-a-complete-g/</link>
+            <guid>https://kubaik.github.io/ai-blog-system/understanding-data-science-techniques-a-complete-g/</guid>
+            <pubDate>Thu, 21 Aug 2025 09:57:00 </pubDate>
+        </item>
         <item>
             <title><![CDATA[Decoding Backend Architecture: A Guide to Efficient Web Structures]]></title>
             <description><![CDATA[Uncover the secrets of efficient web structures with our guide to decoding backend architecture. Learn how to optimize your backend for peak performance.]]></description>
@@ -69,13 +76,6 @@
             <link>https://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/</link>
             <guid>https://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/</guid>
             <pubDate>Wed, 20 Aug 2025 07:55:28 </pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Boost Your Software Delivery with DevOps and CI/CD]]></title>
-            <description><![CDATA[Learn how to accelerate your software delivery process with the powerful combination of DevOps and CI/CD. Discover key strategies and best practices in this comprehensive guide.]]></description>
-            <link>https://kubaik.github.io/ai-blog-system/boost-your-software-delivery-with-devops-and-cicd/</link>
-            <guid>https://kubaik.github.io/ai-blog-system/boost-your-software-delivery-with-devops-and-cicd/</guid>
-            <pubDate>Wed, 20 Aug 2025 07:13:31 </pubDate>
         </item>
     </channel>
 </rss>

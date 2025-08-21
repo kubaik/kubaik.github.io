@@ -90,3 +90,10 @@ Based on industry averages:
 - **Compliance**: Follow FTC guidelines for affiliate disclosures
 
 The enhanced system I provided automates much of this process, but you'll need to customize the affiliate links, add your tracking IDs, and actively promote your content across platforms. Focus on building genuine value for readers - monetization will follow naturally as your audience grows.
+
+How to Use:
+
+Initialize: python blog_system.py init
+Configure: Edit config.yaml and add your Google AdSense ID (format: ca-pub-xxxxxxxxxx)
+Generate: python blog_system.py auto to create posts with ads
+Build: python blog_system.py build to rebuild with all features
