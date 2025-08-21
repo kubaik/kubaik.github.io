@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-08-21T08:02:50.287724",
+  "total_posts": 10,
+  "monetization": {
+    "total_affiliate_links": 6,
+    "estimated_monthly_revenue": 6.0,
+    "ad_slots_total": 30
+  },
+  "seo": {
+    "avg_keywords_per_post": 8.4,
+    "structured_data_enabled": 10,
+    "sitemap_urls": 12
+  },
+  "visibility": {
+    "social_posts_generated": 40,
+    "rss_enabled": true,
+    "search_engine_submissions": 2
+  }
+}

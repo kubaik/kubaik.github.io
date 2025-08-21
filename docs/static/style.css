@@ -53,6 +53,93 @@ nav a:hover {
     background-color: #e9ecef;
 }
 
+/* Ad Slots */
+.ad-slot {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.ad-header { margin-bottom: 20px; }
+.ad-middle { margin: 30px 0; }
+.ad-footer { margin-top: 20px; }
+
+/* Affiliate Links Styling */
+a[rel*="sponsored"] {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px dashed #007bff;
+}
+
+a[rel*="sponsored"]:hover {
+    color: #0056b3;
+    border-bottom-style: solid;
+}
+
+/* Affiliate Disclaimer */
+.affiliate-disclaimer {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 30px 0;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+/* Newsletter Signup */
+.newsletter-signup {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.newsletter-signup h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.newsletter-signup form {
+    display: flex;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.newsletter-signup input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.newsletter-signup button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.newsletter-signup button:hover {
+    background: #218838;
+}
+
 /* Main Content */
 main {
     margin: 2rem auto;
@@ -113,20 +200,6 @@ main {
 .post-excerpt {
     color: #6c757d;
     margin-bottom: 1rem;
-}
-
-/* Debug Info */
-.debug-info {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 2rem;
-}
-
-.debug-info ul {
-    margin-left: 1.5rem;
-    margin-top: 0.5rem;
 }
 
 /* Blog Post */
@@ -231,6 +304,26 @@ footer {
     margin-top: 3rem;
 }
 
+/* Page Content */
+.page-content {
+    max-width: 100%;
+}
+
+.page-content h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.page-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.5rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
@@ -253,24 +346,14 @@ footer {
     nav {
         display: block;
     }
-}
-
-/* Page Content */
-.page-content {
-    max-width: 100%;
-}
-
-.page-content h1 {
-    color: #2c3e50;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.page-content ul {
-    margin: 1.5rem 0;
-    padding-left: 2rem;
-}
-
-.page-content li {
-    margin-bottom: 0.5rem;
+    
+    .newsletter-signup form {
+        flex-direction: column;
+    }
+    
+    .ad-slot {
+        min-height: 80px;
+        font-size: 0.9rem;
+        padding: 15px;
+    }
 }
