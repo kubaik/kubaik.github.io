@@ -4,9 +4,16 @@
         <title>AI Tech Blog</title>
         <description>Cutting-edge insights into technology, AI, and development</description>
         <link>https://kubaik.github.io/ai-blog-system</link>
-        <lastBuildDate>Thu, 21 Aug 2025 14:04:07 </lastBuildDate>
+        <lastBuildDate>Thu, 21 Aug 2025 14:39:30 </lastBuildDate>
         <language>en-US</language>
         
+        <item>
+            <title><![CDATA[Understanding Performance Optimization: A Complete Guide]]></title>
+            <description><![CDATA[A comprehensive guide to Performance Optimization covering key concepts, benefits, and best practices for developers.]]></description>
+            <link>https://kubaik.github.io/ai-blog-system/understanding-performance-optimization-a-complete-/</link>
+            <guid>https://kubaik.github.io/ai-blog-system/understanding-performance-optimization-a-complete-/</guid>
+            <pubDate>Thu, 21 Aug 2025 14:39:29 </pubDate>
+        </item>
         <item>
             <title><![CDATA[Understanding Cybersecurity Best Practices: A Complete Guide]]></title>
             <description><![CDATA[A comprehensive guide to Cybersecurity Best Practices covering key concepts, benefits, and best practices for developers.]]></description>
@@ -69,13 +76,6 @@
             <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-building-/</link>
             <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-building-/</guid>
             <pubDate>Thu, 21 Aug 2025 06:17:55 </pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Mastering Machine Learning Algorithms: A Comprehensive Guide]]></title>
-            <description><![CDATA[Learn how to master machine learning algorithms with our comprehensive guide. Discover tips, techniques, and best practices to elevate your skills.]]></description>
-            <link>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-algorithms-a-comprehens/</link>
-            <guid>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-algorithms-a-comprehens/</guid>
-            <pubDate>Thu, 21 Aug 2025 05:50:58 </pubDate>
         </item>
     </channel>
 </rss>
