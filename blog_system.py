@@ -15,7 +15,7 @@ from monetization_manager import MonetizationManager
 from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
-
+#BlogSystem
 class BlogSystem:
     def __init__(self, config):
         self.config = config
