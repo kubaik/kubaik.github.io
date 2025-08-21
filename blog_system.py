@@ -5,10 +5,12 @@ import yaml
 import markdown as md
 import asyncio
 import aiohttp
-from datetime import datetime
+import requests
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 from pathlib import Path
 from jinja2 import Template, Environment, BaseLoader
+from urllib.parse import quote
 import re
 
 class BlogPost:
@@ -51,7 +53,6 @@ class BlogPost:
         with open(md_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Extract title from first line (assuming # Title format)
         lines = content.split('\n')
         title = "Untitled Post"
         content_without_title = content
@@ -60,11 +61,9 @@ class BlogPost:
             title = lines[0][2:].strip()
             content_without_title = '\n'.join(lines[1:]).strip()
         
-        # Use provided slug or create from title
         if not slug:
             slug = cls._create_slug_static(title)
         
-        # Generate basic metadata
         current_time = datetime.now().isoformat()
         
         return cls(
@@ -90,7 +89,195 @@ class BlogPost:
         return slug[:50]
 
 
+class MonetizationManager:
+    """Handles automated monetization features"""
+    
+    def __init__(self, config):
+        self.config = config
+        self.affiliate_programs = {
+            'amazon': {
+                'tag': config.get('amazon_affiliate_tag', 'your-tag-20'),
+                'api_key': config.get('amazon_api_key'),
+                'keywords': ['tools', 'software', 'books', 'course', 'equipment']
+            },
+            'tech_products': {
+                'categories': ['software', 'cloud', 'development', 'ai-tools'],
+                'commission_rate': 0.05
+            }
+        }
+        
+    def inject_affiliate_links(self, content: str, topic: str) -> tuple:
+        """Inject relevant affiliate links into content"""
+        affiliate_links = []
+        enhanced_content = content
+        
+        suggestions = self._get_affiliate_suggestions(topic)
+        
+        for suggestion in suggestions[:3]:  # Limit to 3 per post
+            link_html = f'<a href="{suggestion["url"]}" target="_blank" rel="nofollow sponsored">{suggestion["text"]}</a>'
+            
+            insertion_points = self._find_insertion_points(content, suggestion["keywords"])
+            
+            if insertion_points:
+                insert_at = random.choice(insertion_points)
+                lines = enhanced_content.split('\n')
+                if insert_at < len(lines):
+                    lines[insert_at] += f"\n\n*Recommended: {link_html}*\n"
+                enhanced_content = '\n'.join(lines)
+                
+                affiliate_links.append({
+                    'url': suggestion['url'],
+                    'text': suggestion['text'],
+                    'commission_rate': suggestion.get('commission', 0.05)
+                })
+        
+        return enhanced_content, affiliate_links
+    
+    def _get_affiliate_suggestions(self, topic: str) -> list:
+        """Get relevant affiliate suggestions based on topic"""
+        suggestions = []
+        topic_lower = topic.lower()
+        
+        # AI/ML Tools
+        if any(term in topic_lower for term in ['ai', 'machine learning', 'data science']):
+            suggestions.extend([
+                {
+                    'url': f'https://amazon.com/dp/B08N5WRWNW?tag={self.affiliate_programs["amazon"]["tag"]}',
+                    'text': 'Python Machine Learning by Sebastian Raschka',
+                    'keywords': ['python', 'learning', 'algorithm'],
+                    'commission': 0.04
+                },
+                {
+                    'url': 'https://coursera.org/learn/machine-learning',
+                    'text': 'Andrew Ng\'s Machine Learning Course',
+                    'keywords': ['course', 'learn', 'training'],
+                    'commission': 0.10
+                }
+            ])
+        
+        # Web Development
+        if any(term in topic_lower for term in ['web', 'frontend', 'backend', 'javascript']):
+            suggestions.extend([
+                {
+                    'url': f'https://amazon.com/dp/B07C3KLQWX?tag={self.affiliate_programs["amazon"]["tag"]}',
+                    'text': 'Eloquent JavaScript Book',
+                    'keywords': ['javascript', 'programming', 'web'],
+                    'commission': 0.04
+                },
+                {
+                    'url': 'https://digitalocean.com',
+                    'text': 'DigitalOcean Cloud Hosting',
+                    'keywords': ['hosting', 'deploy', 'server'],
+                    'commission': 0.25
+                }
+            ])
+            
+        # DevOps/Cloud
+        if any(term in topic_lower for term in ['devops', 'cloud', 'aws', 'docker']):
+            suggestions.extend([
+                {
+                    'url': f'https://amazon.com/dp/B0816Q9F6Z?tag={self.affiliate_programs["amazon"]["tag"]}',
+                    'text': 'Docker Deep Dive by Nigel Poulton',
+                    'keywords': ['docker', 'container', 'devops'],
+                    'commission': 0.04
+                }
+            ])
+        
+        return suggestions
+    
+    def _find_insertion_points(self, content: str, keywords: list) -> list:
+        """Find good places to insert affiliate links"""
+        lines = content.split('\n')
+        insertion_points = []
+        
+        for i, line in enumerate(lines):
+            if any(keyword.lower() in line.lower() for keyword in keywords):
+                insertion_points.append(i)
+        
+        return insertion_points
+    
+    def generate_ad_slots(self, content: str) -> dict:
+        """Generate ad slot positions in content"""
+        lines = content.split('\n')
+        total_lines = len(lines)
+        
+        ad_slots = {
+            'header': 2,
+            'middle': total_lines // 2,
+            'footer': total_lines - 3,
+            'ad_slots': 3,
+            'affiliate_count': 0
+        }
+        
+        return ad_slots
+
+
 class SEOOptimizer:
+    """Enhanced SEO optimization with automation"""
+    
+    def __init__(self, config):
+        self.config = config
+        self.google_analytics_id = config.get('google_analytics_id')
+        self.google_search_console_key = config.get('google_search_console_key')
+    
+    def generate_structured_data(self, post) -> str:
+        """Generate JSON-LD structured data for better SEO"""
+        structured_data = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.meta_description,
+            "author": {
+                "@type": "Organization",
+                "name": self.config["site_name"]
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": self.config["site_name"],
+                "url": self.config["base_url"]
+            },
+            "datePublished": post.created_at,
+            "dateModified": post.updated_at,
+            "url": f"{self.config['base_url']}/{post.slug}/",
+            "keywords": post.seo_keywords
+        }
+        
+        return f'<script type="application/ld+json">\n{json.dumps(structured_data, indent=2)}\n</script>'
+    
+    def generate_meta_tags(self, post) -> str:
+        """Generate comprehensive meta tags"""
+        meta_tags = f'''
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="{post.title}">
+    <meta property="og:description" content="{post.meta_description}">
+    <meta property="og:url" content="{self.config['base_url']}/{post.slug}/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{self.config['site_name']}">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{post.title}">
+    <meta name="twitter:description" content="{post.meta_description}">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="{self.config['base_url']}/{post.slug}/">'''
+        
+        if self.google_analytics_id:
+            meta_tags += f'''
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={self.google_analytics_id}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){{dataLayer.push(arguments);}}
+        gtag('js', new Date());
+        gtag('config', '{self.google_analytics_id}');
+    </script>'''
+        
+        return meta_tags
+
     @staticmethod
     def generate_sitemap(posts, base_url):
         urls = [f"<url><loc>{base_url}/{p.slug}/</loc><lastmod>{p.updated_at.split('T')[0]}</lastmod></url>" for p in posts]
@@ -109,9 +296,98 @@ Disallow: /static/
 Sitemap: {base_url}/sitemap.xml"""
 
 
+class VisibilityAutomator:
+    """Automates content distribution and visibility"""
+    
+    def __init__(self, config):
+        self.config = config
+        self.social_accounts = config.get('social_accounts', {})
+    
+    def submit_to_search_engines(self, sitemap_url: str):
+        """Submit sitemap to search engines"""
+        search_engines = [
+            f"https://www.google.com/ping?sitemap={quote(sitemap_url)}",
+            f"https://www.bing.com/ping?sitemap={quote(sitemap_url)}"
+        ]
+        
+        results = []
+        for engine in search_engines:
+            try:
+                response = requests.get(engine, timeout=10)
+                results.append({
+                    'engine': engine.split('//')[1].split('.')[1],
+                    'status': response.status_code,
+                    'success': response.status_code == 200
+                })
+            except Exception as e:
+                results.append({
+                    'engine': engine.split('//')[1].split('.')[1],
+                    'error': str(e),
+                    'success': False
+                })
+        
+        return results
+    
+    def generate_social_posts(self, post) -> dict:
+        """Generate social media posts for different platforms"""
+        base_text = f"New blog post: {post.title}"
+        post_url = f"{self.config['base_url']}/{post.slug}/"
+        
+        hashtags = ['#' + tag.replace(' ', '').replace('-', '') for tag in post.tags[:3]]
+        
+        social_posts = {
+            'twitter': f"{base_text}\n\n{post.meta_description[:100]}...\n\n{post_url} {' '.join(hashtags[:2])}",
+            'linkedin': f"{base_text}\n\n{post.meta_description}\n\nRead more: {post_url}\n\n{' '.join(hashtags)}",
+            'facebook': f"{base_text}\n\n{post.meta_description}\n\n{post_url}",
+            'reddit_title': post.title,
+            'reddit_content': f"{post.meta_description}\n\nFull article: {post_url}"
+        }
+        
+        return social_posts
+    
+    def create_rss_feed(self, posts: list) -> str:
+        """Generate RSS feed for the blog"""
+        rss_items = []
+        for post in posts[:10]:  # Latest 10 posts
+            rss_items.append(f'''
+        <item>
+            <title><![CDATA[{post.title}]]></title>
+            <description><![CDATA[{post.meta_description}]]></description>
+            <link>{self.config['base_url']}/{post.slug}/</link>
+            <guid>{self.config['base_url']}/{post.slug}/</guid>
+            <pubDate>{self._format_rss_date(post.created_at)}</pubDate>
+        </item>''')
+        
+        rss_feed = f'''<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>{self.config['site_name']}</title>
+        <description>{self.config['site_description']}</description>
+        <link>{self.config['base_url']}</link>
+        <lastBuildDate>{self._format_rss_date(datetime.now().isoformat())}</lastBuildDate>
+        <language>en-US</language>
+        {''.join(rss_items)}
+    </channel>
+</rss>'''
+        
+        return rss_feed
+    
+    def _format_rss_date(self, iso_date: str) -> str:
+        """Convert ISO date to RSS format"""
+        try:
+            dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
+            return dt.strftime('%a, %d %b %Y %H:%M:%S %z')
+        except:
+            dt = datetime.now()
+            return dt.strftime('%a, %d %b %Y %H:%M:%S %z')
+
+
 class StaticSiteGenerator:
     def __init__(self, blog_system):
         self.blog_system = blog_system
+        self.seo = SEOOptimizer(blog_system.config)
+        self.visibility = VisibilityAutomator(blog_system.config)
+        self.monetization = MonetizationManager(blog_system.config)
         self.templates = self._load_templates()
 
     def _load_templates(self) -> Dict[str, Template]:
@@ -124,10 +400,17 @@ class StaticSiteGenerator:
     <title>{{ post.title }} - {{ site_name }}</title>
     <meta name="description" content="{{ post.meta_description }}">
     {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
+    {{ meta_tags | safe }}
+    {{ structured_data | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
 </head>
 <body>
+    <!-- Header Ad Slot -->
+    <div class="ad-slot ad-header">
+        <!-- AdSense code will go here -->
+        <p>Advertisement</p>
+    </div>
+    
     <header>
         <div class="container">
             <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
@@ -154,9 +437,27 @@ class StaticSiteGenerator:
             </header>
             <div class="post-content">
                 {{ post.content_html | safe }}
+                
+                <!-- Middle Ad Slot -->
+                <div class="ad-slot ad-middle">
+                    <p>Advertisement</p>
+                </div>
             </div>
+            
+            <!-- Affiliate Disclaimer -->
+            {% if post.affiliate_links %}
+            <div class="affiliate-disclaimer">
+                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+            </div>
+            {% endif %}
         </article>
     </main>
+    
+    <!-- Footer Ad Slot -->
+    <div class="ad-slot ad-footer">
+        <p>Advertisement</p>
+    </div>
+    
     <footer>
         <div class="container">
             <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
@@ -172,8 +473,9 @@ class StaticSiteGenerator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site_name }}</title>
     <meta name="description" content="{{ site_description }}">
+    {{ analytics_code | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="canonical" href="{{ base_url }}/">
+    <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/feed.xml">
 </head>
 <body>
     <header>
@@ -182,6 +484,7 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/feed.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -189,6 +492,15 @@ class StaticSiteGenerator:
         <div class="hero">
             <h2>Welcome to {{ site_name }}</h2>
             <p>{{ site_description }}</p>
+            
+            <!-- Newsletter Signup -->
+            <div class="newsletter-signup">
+                <h3>Stay Updated</h3>
+                <form action="#" method="post">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
         </div>
 
         <section class="recent-posts">
@@ -214,15 +526,6 @@ class StaticSiteGenerator:
             </div>
             {% else %}
             <p>No posts yet. Check back soon!</p>
-            <div class="debug-info">
-                <p><strong>Debug Info:</strong> Posts array is empty. This means either:</p>
-                <ul>
-                    <li>No posts have been generated yet</li>
-                    <li>Posts are not being loaded properly</li>
-                    <li>The docs directory structure is incorrect</li>
-                </ul>
-                <p>Generated at: {{ current_year }}-{{ '%02d'|format(datetime.now().month) }}-{{ '%02d'|format(datetime.now().day) }}</p>
-            </div>
             {% endif %}
         </section>
     </main>
@@ -290,7 +593,6 @@ class StaticSiteGenerator:
             print(f"Output directory does not exist: {self.blog_system.output_dir}")
             return posts
         
-        # List all directories in docs/
         all_dirs = list(self.blog_system.output_dir.iterdir())
         print(f"Found {len(all_dirs)} items in docs directory")
         
@@ -305,7 +607,6 @@ class StaticSiteGenerator:
                 markdown_path = post_dir / "index.md"
                 
                 if post_json_path.exists():
-                    # Normal case: load from post.json
                     try:
                         print(f"Loading post from JSON: {post_dir}")
                         with open(post_json_path, 'r', encoding='utf-8') as f:
@@ -316,7 +617,6 @@ class StaticSiteGenerator:
                         print(f"Could not load post from {post_dir}: {e}")
                         
                 elif markdown_path.exists():
-                    # Recovery case: create post from markdown
                     try:
                         print(f"Recovering post from markdown: {post_dir}")
                         post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
@@ -328,13 +628,11 @@ class StaticSiteGenerator:
                 else:
                     print(f"Skipping {post_dir}: no post.json or index.md found")
         
-        # Save recovered posts as proper JSON files
         if recovered_posts:
             print(f"Saving {len(recovered_posts)} recovered posts...")
             for post in recovered_posts:
                 self.blog_system.save_post(post)
         
-        # Sort by creation date (newest first)
         posts.sort(key=lambda p: p.created_at, reverse=True)
         print(f"Total posts loaded: {len(posts)} (including {len(recovered_posts)} recovered)")
         return posts
@@ -342,11 +640,14 @@ class StaticSiteGenerator:
     def _generate_post_page(self, post: BlogPost):
         print(f"Generating page for: {post.title}")
         
-        # Convert markdown to HTML
         post_content_html = md.markdown(post.content, extensions=['codehilite', 'fenced_code', 'tables'])
         
         post_dict = post.to_dict()
         post_dict['content_html'] = post_content_html
+        
+        # Generate SEO enhancements
+        meta_tags = self.seo.generate_meta_tags(post)
+        structured_data = self.seo.generate_structured_data(post)
         
         post_html = self.templates['post'].render(
             post=post_dict,
@@ -354,6 +655,8 @@ class StaticSiteGenerator:
             site_description=self.blog_system.config["site_description"],
             base_url=self.blog_system.config["base_url"],
             base_path=self.blog_system.config.get("base_path", ""),
+            meta_tags=meta_tags,
+            structured_data=structured_data,
             current_year=datetime.now().year
         )
         
@@ -364,19 +667,37 @@ class StaticSiteGenerator:
         with open(html_file, 'w', encoding='utf-8') as f:
             f.write(post_html)
         
+        # Generate social media posts
+        social_posts = self.visibility.generate_social_posts(post)
+        social_file = post_dir / "social_posts.json"
+        with open(social_file, 'w', encoding='utf-8') as f:
+            json.dump(social_posts, f, indent=2)
+        
         print(f"Generated: {html_file}")
 
     def _generate_index(self, posts: List[BlogPost]):
         print(f"Generating index page with {len(posts)} posts")
         
+        analytics_code = ""
+        if self.blog_system.config.get('google_analytics_id'):
+            analytics_code = f'''
+    <script async src="https://www.googletagmanager.com/gtag/js?id={self.blog_system.config["google_analytics_id"]}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){{dataLayer.push(arguments);}}
+        gtag('js', new Date());
+        gtag('config', '{self.blog_system.config["google_analytics_id"]}');
+    </script>'''
+        
         index_html = self.templates['index'].render(
-            posts=[p.to_dict() for p in posts[:10]],  # Show latest 10 posts
+            posts=[p.to_dict() for p in posts[:10]],
             site_name=self.blog_system.config["site_name"],
             site_description=self.blog_system.config["site_description"],
             base_url=self.blog_system.config["base_url"],
             base_path=self.blog_system.config.get("base_path", ""),
+            analytics_code=analytics_code,
             current_year=datetime.now().year,
-            datetime=datetime  # Pass datetime for debug
+            datetime=datetime
         )
         
         index_file = self.blog_system.output_dir / "index.html"
@@ -384,7 +705,6 @@ class StaticSiteGenerator:
             f.write(index_html)
         
         print(f"Generated: {index_file}")
-        print(f"Index HTML size: {len(index_html)} characters")
 
     def _generate_about_page(self):
         print("Generating about page")
@@ -464,6 +784,93 @@ nav a:hover {
     background-color: #e9ecef;
 }
 
+/* Ad Slots */
+.ad-slot {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.ad-header { margin-bottom: 20px; }
+.ad-middle { margin: 30px 0; }
+.ad-footer { margin-top: 20px; }
+
+/* Affiliate Links Styling */
+a[rel*="sponsored"] {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px dashed #007bff;
+}
+
+a[rel*="sponsored"]:hover {
+    color: #0056b3;
+    border-bottom-style: solid;
+}
+
+/* Affiliate Disclaimer */
+.affiliate-disclaimer {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 30px 0;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+/* Newsletter Signup */
+.newsletter-signup {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.newsletter-signup h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.newsletter-signup form {
+    display: flex;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.newsletter-signup input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.newsletter-signup button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.newsletter-signup button:hover {
+    background: #218838;
+}
+
 /* Main Content */
 main {
     margin: 2rem auto;
@@ -524,20 +931,6 @@ main {
 .post-excerpt {
     color: #6c757d;
     margin-bottom: 1rem;
-}
-
-/* Debug Info */
-.debug-info {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 2rem;
-}
-
-.debug-info ul {
-    margin-left: 1.5rem;
-    margin-top: 0.5rem;
 }
 
 /* Blog Post */
@@ -642,6 +1035,26 @@ footer {
     margin-top: 3rem;
 }
 
+/* Page Content */
+.page-content {
+    max-width: 100%;
+}
+
+.page-content h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.page-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.5rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
@@ -664,26 +1077,16 @@ footer {
     nav {
         display: block;
     }
-}
-
-/* Page Content */
-.page-content {
-    max-width: 100%;
-}
-
-.page-content h1 {
-    color: #2c3e50;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.page-content ul {
-    margin: 1.5rem 0;
-    padding-left: 2rem;
-}
-
-.page-content li {
-    margin-bottom: 0.5rem;
+    
+    .newsletter-signup form {
+        flex-direction: column;
+    }
+    
+    .ad-slot {
+        min-height: 80px;
+        font-size: 0.9rem;
+        padding: 15px;
+    }
 }
 """
         static_dir = self.blog_system.output_dir / "static"
@@ -693,9 +1096,18 @@ footer {
         print(f"Generated: {static_dir / 'style.css'}")
 
     def generate_site(self):
-        print("Generating static site...")
+        print("Generating static site with monetization features...")
         posts = self._get_all_posts()
         print(f"Found {len(posts)} posts")
+        
+        # Process posts for monetization
+        for post in posts:
+            enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
+                post.content, post.title + " " + " ".join(post.tags)
+            )
+            post.content = enhanced_content
+            post.affiliate_links = affiliate_links
+            post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
         
         # Generate all pages
         self._generate_index(posts)
@@ -705,24 +1117,84 @@ footer {
         for post in posts:
             self._generate_post_page(post)
         
+        # Generate RSS feed
+        rss_content = self.visibility.create_rss_feed(posts)
+        with open(self.blog_system.output_dir / "feed.xml", 'w', encoding='utf-8') as f:
+            f.write(rss_content)
+        
         # Generate SEO files
-        sitemap = SEOOptimizer.generate_sitemap(posts, self.blog_system.config["base_url"])
+        sitemap = self.seo.generate_sitemap(posts, self.blog_system.config["base_url"])
         with open(self.blog_system.output_dir / "sitemap.xml", 'w') as f:
             f.write(sitemap)
         
-        robots = SEOOptimizer.generate_robots_txt(self.blog_system.config["base_url"])
+        robots = self.seo.generate_robots_txt(self.blog_system.config["base_url"])
         with open(self.blog_system.output_dir / "robots.txt", 'w') as f:
             f.write(robots)
         
-        print(f"Site generated successfully with {len(posts)} posts")
+        # Submit to search engines
+        sitemap_url = f"{self.blog_system.config['base_url']}/sitemap.xml"
+        search_results = self.visibility.submit_to_search_engines(sitemap_url)
+        print("Search engine submission results:")
+        for result in search_results:
+            if result.get('success'):
+                print(f"  ✓ {result['engine']}: Success")
+            else:
+                print(f"  ✗ {result['engine']}: {result.get('error', 'Failed')}")
         
-        # List final structure
-        print("\nFinal directory structure:")
-        for item in sorted(self.blog_system.output_dir.rglob("*")):
-            if item.is_file():
-                rel_path = item.relative_to(self.blog_system.output_dir)
-                size = item.stat().st_size
-                print(f"  {rel_path} ({size} bytes)")
+        # Generate automation report
+        report = self._generate_automation_report(posts)
+        print(f"\n📊 Automation Report:")
+        print(f"  • Total posts: {report['total_posts']}")
+        print(f"  • Affiliate links: {report['monetization']['total_affiliate_links']}")
+        print(f"  • Estimated monthly revenue: ${report['monetization']['estimated_monthly_revenue']}")
+        print(f"  • SEO features: {report['seo']['structured_data_enabled']} posts optimized")
+        print(f"  • Social posts generated: {report['visibility']['social_posts_generated']}")
+        
+        print(f"\n✅ Site generated successfully with {len(posts)} posts")
+        print(f"📁 Files created: sitemap.xml, robots.txt, feed.xml")
+        print(f"🔗 Social media posts saved in each post directory")
+
+    def _generate_automation_report(self, posts):
+        """Generate a report of automated improvements"""
+        report = {
+            'timestamp': datetime.now().isoformat(),
+            'total_posts': len(posts),
+            'monetization': {
+                'total_affiliate_links': sum(len(p.affiliate_links) for p in posts),
+                'estimated_monthly_revenue': self._estimate_revenue(posts),
+                'ad_slots_total': sum(p.monetization_data.get('ad_slots', 0) for p in posts)
+            },
+            'seo': {
+                'avg_keywords_per_post': sum(len(p.seo_keywords) for p in posts) / len(posts) if posts else 0,
+                'structured_data_enabled': len(posts),
+                'sitemap_urls': len(posts) + 2
+            },
+            'visibility': {
+                'social_posts_generated': len(posts) * 4,
+                'rss_enabled': True,
+                'search_engine_submissions': 2
+            }
+        }
+        
+        # Save report
+        analytics_dir = Path("./analytics")
+        analytics_dir.mkdir(exist_ok=True)
+        with open(analytics_dir / 'automation_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        return report
+    
+    def _estimate_revenue(self, posts) -> float:
+        """Rough revenue estimation based on traffic and monetization"""
+        avg_monthly_visitors = 1000
+        ctr = 0.02
+        avg_commission = 5.0
+        
+        total_affiliate_links = sum(len(p.affiliate_links) for p in posts)
+        estimated_clicks = avg_monthly_visitors * ctr * (total_affiliate_links / len(posts) if posts else 0)
+        estimated_revenue = estimated_clicks * avg_commission * 0.1
+        
+        return round(estimated_revenue, 2)
 
 
 class BlogSystem:
@@ -731,6 +1203,9 @@ class BlogSystem:
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
         self.api_key = os.getenv("OPENAI_API_KEY")
+        
+        # Initialize monetization manager
+        self.monetization = MonetizationManager(config)
 
     def cleanup_posts(self):
         """Clean up incomplete posts and recover from markdown files"""
@@ -750,7 +1225,6 @@ class BlogSystem:
             post_json_path = post_dir / "post.json"
             markdown_path = post_dir / "index.md"
             
-            # Case 1: Has markdown but no JSON - recover
             if not post_json_path.exists() and markdown_path.exists():
                 try:
                     print(f"Recovering {post_dir.name}...")
@@ -761,14 +1235,12 @@ class BlogSystem:
                 except Exception as e:
                     print(f"Failed to recover {post_dir.name}: {e}")
             
-            # Case 2: Has neither - remove empty directory
             elif not post_json_path.exists() and not markdown_path.exists():
                 print(f"Removing empty directory: {post_dir.name}")
                 try:
                     post_dir.rmdir()
                     removed_count += 1
                 except OSError:
-                    # Directory not empty, list contents
                     print(f"Directory not empty: {list(post_dir.iterdir())}")
         
         print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
@@ -785,23 +1257,33 @@ class BlogSystem:
             meta_description = await self._generate_meta_description(topic, title)
             slug = self._create_slug(title)
             
-            # Generate relevant keywords if none provided
             if not keywords:
                 keywords = await self._generate_keywords(topic, title)
             
-            return BlogPost(
+            post = BlogPost(
                 title=title.strip(),
                 content=content.strip(),
                 slug=slug,
-                tags=keywords[:5],  # Limit to 5 tags
+                tags=keywords[:5],
                 meta_description=meta_description.strip(),
                 featured_image=f"/static/images/{slug}.jpg",
                 created_at=datetime.now().isoformat(),
                 updated_at=datetime.now().isoformat(),
                 seo_keywords=keywords,
                 affiliate_links=[],
-                monetization_data={"ad_slots": 3, "affiliate_count": 0}
+                monetization_data={}
             )
+            
+            # Process for monetization
+            enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
+                post.content, topic
+            )
+            post.content = enhanced_content
+            post.affiliate_links = affiliate_links
+            post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+            
+            return post
+            
         except Exception as e:
             print(f"Error generating blog post: {e}")
             print("Falling back to sample content...")
@@ -847,7 +1329,7 @@ When working with {topic}, developers often encounter several common challenges:
 
 1. **Complexity Management**: Keeping implementations simple and maintainable
 2. **Performance Optimization**: Ensuring optimal performance across different scenarios
-3.                 **Integration Issues**: Seamlessly integrating with existing systems
+3. **Integration Issues**: Seamlessly integrating with existing systems
 
 ## Conclusion
 
@@ -855,7 +1337,7 @@ When working with {topic}, developers often encounter several common challenges:
 
 Remember to stay updated with the latest developments in {topic} as the field continues to evolve rapidly."""
 
-        return BlogPost(
+        post = BlogPost(
             title=title,
             content=content,
             slug=slug,
@@ -866,8 +1348,18 @@ Remember to stay updated with the latest developments in {topic} as the field co
             updated_at=datetime.now().isoformat(),
             seo_keywords=[topic.lower(), 'guide', 'tutorial', 'best practices'],
             affiliate_links=[],
-            monetization_data={"ad_slots": 3, "affiliate_count": 0}
+            monetization_data={}
         )
+        
+        # Process for monetization
+        enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
+            post.content, topic
+        )
+        post.content = enhanced_content
+        post.affiliate_links = affiliate_links
+        post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+        
+        return post
 
     async def _call_openai_api(self, messages: List[Dict], max_tokens: int = 1000):
         headers = {
@@ -952,32 +1444,27 @@ Do not include the main title (# {title}) as it will be added automatically."""}
         slug = re.sub(r'[^\w\s-]', '', slug)
         slug = re.sub(r'[\s_-]+', '-', slug)
         slug = slug.strip('-')
-        return slug[:50]  # Limit slug length
+        return slug[:50]
 
     def save_post(self, post: BlogPost):
-        # Create post directory
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
         
-        # Save post data as JSON for the static generator
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
             json.dump(post.to_dict(), f, indent=2, ensure_ascii=False)
         
-        # Save markdown for reference
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
         
         print(f"Saved post: {post.title} ({post.slug})")
-        print(f"Post directory: {post_dir}")
-        print(f"Files created:")
-        print(f"  - post.json ({(post_dir / 'post.json').stat().st_size} bytes)")
-        print(f"  - index.md ({(post_dir / 'index.md').stat().st_size} bytes)")
+        if post.affiliate_links:
+            print(f"  • {len(post.affiliate_links)} affiliate links added")
+        print(f"  • {post.monetization_data.get('ad_slots', 0)} ad slots configured")
 
 
 def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
     print(f"Picking topic from {config_path}")
     
-    # Load config
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"Config file {config_path} not found. Please create it first.")
     
@@ -988,9 +1475,6 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     if not topics:
         raise ValueError("No content_topics found in config.yaml")
     
-    print(f"Available topics: {len(topics)}")
-    
-    # Load used topics
     used = []
     if os.path.exists(history_file):
         try:
@@ -999,20 +1483,15 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
         except (json.JSONDecodeError, FileNotFoundError):
             used = []
     
-    print(f"Previously used topics: {len(used)}")
-    
-    # Find available topics
     available = [t for t in topics if t not in used]
     if not available:
         print("All topics used, resetting...")
         available = topics
         used = []
     
-    # Pick random topic
     topic = random.choice(available)
     used.append(topic)
     
-    # Save updated history
     with open(history_file, "w") as f:
         json.dump(used, f, indent=2)
     
@@ -1021,12 +1500,25 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
 
 
 def create_sample_config():
-    """Create a sample config.yaml file"""
+    """Create a sample config.yaml file with monetization settings"""
     config = {
         "site_name": "AI Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
         "base_url": "https://kubaik.github.io/ai-blog-system",
-        "base_path": "/ai-blog-system",  # Added this line for GitHub Pages support
+        "base_path": "/ai-blog-system",
+        
+        # Monetization settings
+        "amazon_affiliate_tag": "your-tag-20",  # Replace with your Amazon affiliate tag
+        "google_analytics_id": "",  # Add your GA4 measurement ID
+        "google_search_console_key": "",  # Add your search console verification
+        
+        # Social media accounts (for automated posting)
+        "social_accounts": {
+            "twitter": "@yourblog",
+            "linkedin": "your-linkedin-page",
+            "facebook": "your-facebook-page"
+        },
+        
         "content_topics": [
             "Machine Learning Algorithms",
             "Web Development Trends", 
@@ -1054,8 +1546,15 @@ def create_sample_config():
     with open("config.yaml", "w") as f:
         yaml.dump(config, f, default_flow_style=False, indent=2)
     
-    print("Created sample config.yaml file")
-    print("Updated base_url to your GitHub Pages URL")
+    print("Created sample config.yaml file with monetization settings")
+    print("\n📝 Next steps:")
+    print("1. Replace 'your-tag-20' with your Amazon Associates tag")
+    print("2. Add your Google Analytics 4 measurement ID")
+    print("3. Update social media handles")
+    print("4. Consider applying for affiliate programs like:")
+    print("   • ShareASale")
+    print("   • Commission Junction")
+    print("   • DigitalOcean referral program")
 
 
 if __name__ == "__main__":
@@ -1065,45 +1564,33 @@ if __name__ == "__main__":
         mode = sys.argv[1]
         
         if mode == "init":
-            print("Initializing blog system...")
+            print("Initializing enhanced blog system...")
             create_sample_config()
             os.makedirs("docs/static", exist_ok=True)
-            print("Blog system initialized!")
-            print("\nNext steps:")
-            print("1. Set your OPENAI_API_KEY environment variable") 
-            print("2. Run 'python blog_system.py auto' to generate your first post")
+            os.makedirs("analytics", exist_ok=True)
+            print("Blog system initialized with monetization features!")
             
         elif mode == "auto":
-            print("Starting automated blog generation...")
-            print(f"Working directory: {os.getcwd()}")
-            print(f"Config file exists: {os.path.exists('config.yaml')}")
-            print(f"OpenAI API key available: {'Yes' if os.getenv('OPENAI_API_KEY') else 'No'}")
+            print("Starting automated blog generation with monetization...")
             
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
                 sys.exit(1)
             
-            # Load config
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
-            
-            print(f"Loaded config: {config['site_name']}")
             
             blog_system = BlogSystem(config)
             
             try:
-                # Pick topic and generate post
                 topic = pick_next_topic()
-                print(f"Generating post for topic: {topic}")
-                
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
                 blog_system.save_post(blog_post)
                 
-                # Generate the static site
                 generator = StaticSiteGenerator(blog_system)
                 generator.generate_site()
                 
-                print(f"Post '{blog_post.title}' generated and site built successfully!")
+                print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
                 
             except Exception as e:
                 print(f"Error: {e}")
@@ -1112,7 +1599,7 @@ if __name__ == "__main__":
                 sys.exit(1)
         
         elif mode == "build":
-            print("Building static site from existing posts...")
+            print("Building static site with monetization features...")
             
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -1124,10 +1611,10 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
-            print("Site rebuilt successfully!")
+            print("✅ Enhanced site rebuilt successfully!")
             
         elif mode == "cleanup":
-            print("Running cleanup to fix missing post.json files...")
+            print("Running cleanup with monetization enhancements...")
             
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -1139,13 +1626,12 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
             blog_system.cleanup_posts()
             
-            # Rebuild site after cleanup
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
-            print("Cleanup and rebuild complete!")
+            print("✅ Cleanup and enhanced rebuild complete!")
             
         elif mode == "debug":
-            print("Debug mode - checking current state...")
+            print("Debug mode with monetization analysis...")
             
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -1167,29 +1653,82 @@ if __name__ == "__main__":
                     if item.is_dir():
                         post_json = item / "post.json"
                         post_md = item / "index.md"
+                        social_json = item / "social_posts.json"
                         print(f"    post.json: {'Yes' if post_json.exists() else 'No'}")
                         print(f"    index.md: {'Yes' if post_md.exists() else 'No'}")
+                        print(f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
                                     data = json.load(f)
                                 print(f"    Valid post: {data.get('title', 'Unknown')}")
+                                print(f"    Affiliate links: {len(data.get('affiliate_links', []))}")
+                                print(f"    Ad slots: {data.get('monetization_data', {}).get('ad_slots', 0)}")
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
             
-            # Run cleanup and rebuild
-            print("\nRunning automatic cleanup...")
+            print("\nRunning automatic cleanup with monetization...")
             blog_system.cleanup_posts()
             
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
             
+        elif mode == "social":
+            print("Generating social media posts for existing content...")
+            
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            
+            blog_system = BlogSystem(config)
+            generator = StaticSiteGenerator(blog_system)
+            posts = generator._get_all_posts()
+            
+            visibility = VisibilityAutomator(config)
+            
+            print(f"Generating social media posts for {len(posts)} posts...")
+            for post in posts:
+                social_posts = visibility.generate_social_posts(post)
+                
+                post_dir = blog_system.output_dir / post.slug
+                social_file = post_dir / "social_posts.json"
+                with open(social_file, 'w', encoding='utf-8') as f:
+                    json.dump(social_posts, f, indent=2)
+                
+                print(f"Social posts generated for: {post.title}")
+                print(f"  Twitter: {social_posts['twitter'][:50]}...")
+                print(f"  LinkedIn: {social_posts['linkedin'][:50]}...")
+                print(f"  Reddit: {social_posts['reddit_title']}")
+                print()
+            
+            print("Social media posts generated for all posts!")
+            
         else:
-            print("Usage: python blog_system.py [init|auto|build|cleanup|debug]")
-            print("  init    - Initialize blog system and create config")
-            print("  auto    - Generate new post and rebuild site")
-            print("  build   - Rebuild site from existing posts")
-            print("  cleanup - Fix missing post.json files and rebuild")
-            print("  debug   - Debug current state, cleanup, and rebuild")
+            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social]")
+            print("  init    - Initialize blog system with monetization config")
+            print("  auto    - Generate new post with monetization and rebuild site")
+            print("  build   - Rebuild site with monetization features")
+            print("  cleanup - Fix missing files and rebuild with monetization")
+            print("  debug   - Debug current state with monetization analysis")
+            print("  social  - Generate social media posts for existing content")
     else:
-        print("Usage: python blog_system.py [init|auto|build|cleanup|debug]")
+        print("Enhanced AI Blog System with Monetization")
+        print("Usage: python blog_system.py [command]")
+        print("\nAvailable commands:")
+        print("  init    - Initialize blog system with monetization settings")
+        print("  auto    - Generate new monetized post and rebuild site")
+        print("  build   - Rebuild site with all monetization features")
+        print("  cleanup - Fix posts and rebuild with enhancements")
+        print("  debug   - Analyze current state and rebuild")
+        print("  social  - Generate social media posts for promotion")
+        print("\nMonetization features included:")
+        print("  • Automated affiliate link injection")
+        print("  • Strategic ad placement slots")
+        print("  • SEO optimization with structured data")
+        print("  • Social media post generation")
+        print("  • RSS feed for subscribers")
+        print("  • Search engine submission")
+        print("  • Revenue estimation and reporting")
