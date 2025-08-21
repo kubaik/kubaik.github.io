@@ -1,8 +1,5 @@
 base_url: https://kubaik.github.io/ai-blog-system
 base_path: /ai-blog-system  
-site_description: Cutting-edge insights into technology, AI, and development
-site_name: AI Tech Blog
-
 content_topics:
 - Machine Learning Algorithms
 - Web Development Trends
