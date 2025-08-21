@@ -42,7 +42,6 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -106,7 +105,6 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -256,7 +254,6 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -828,11 +825,7 @@ footer {
         for post in posts:
             self._generate_post_page(post)
         
-        # Generate RSS feed (renamed from feed.xml to rss.xml)
-        rss_content = self.visibility.create_rss_feed(posts)
-        with open(self.blog_system.output_dir / "rss.xml", 'w', encoding='utf-8') as f:
-            f.write(rss_content)
-        
+
         # Generate SEO files
         sitemap = self.seo.generate_sitemap(posts, self.blog_system.config["base_url"])
         with open(self.blog_system.output_dir / "sitemap.xml", 'w') as f:
