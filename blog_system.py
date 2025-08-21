@@ -284,15 +284,15 @@ class StaticSiteGenerator:
         
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []
-        print(f"🔍 Looking for posts in: {self.blog_system.output_dir}")
+        print(f"Looking for posts in: {self.blog_system.output_dir}")
         
         if not self.blog_system.output_dir.exists():
-            print(f"❌ Output directory does not exist: {self.blog_system.output_dir}")
+            print(f"Output directory does not exist: {self.blog_system.output_dir}")
             return posts
         
         # List all directories in docs/
         all_dirs = list(self.blog_system.output_dir.iterdir())
-        print(f"📁 Found {len(all_dirs)} items in docs directory")
+        print(f"Found {len(all_dirs)} items in docs directory")
         
         for item in all_dirs:
             print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
@@ -307,40 +307,40 @@ class StaticSiteGenerator:
                 if post_json_path.exists():
                     # Normal case: load from post.json
                     try:
-                        print(f"📖 Loading post from JSON: {post_dir}")
+                        print(f"Loading post from JSON: {post_dir}")
                         with open(post_json_path, 'r', encoding='utf-8') as f:
                             post_data = json.load(f)
                         posts.append(BlogPost.from_dict(post_data))
-                        print(f"✅ Successfully loaded: {post_data.get('title', 'Unknown')}")
+                        print(f"Successfully loaded: {post_data.get('title', 'Unknown')}")
                     except (json.JSONDecodeError, KeyError) as e:
-                        print(f"❌ Could not load post from {post_dir}: {e}")
+                        print(f"Could not load post from {post_dir}: {e}")
                         
                 elif markdown_path.exists():
                     # Recovery case: create post from markdown
                     try:
-                        print(f"🔄 Recovering post from markdown: {post_dir}")
+                        print(f"Recovering post from markdown: {post_dir}")
                         post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
                         posts.append(post)
                         recovered_posts.append(post)
-                        print(f"✅ Successfully recovered: {post.title}")
+                        print(f"Successfully recovered: {post.title}")
                     except Exception as e:
-                        print(f"❌ Could not recover post from {post_dir}: {e}")
+                        print(f"Could not recover post from {post_dir}: {e}")
                 else:
-                    print(f"⚠️ Skipping {post_dir}: no post.json or index.md found")
+                    print(f"Skipping {post_dir}: no post.json or index.md found")
         
         # Save recovered posts as proper JSON files
         if recovered_posts:
-            print(f"💾 Saving {len(recovered_posts)} recovered posts...")
+            print(f"Saving {len(recovered_posts)} recovered posts...")
             for post in recovered_posts:
                 self.blog_system.save_post(post)
         
         # Sort by creation date (newest first)
         posts.sort(key=lambda p: p.created_at, reverse=True)
-        print(f"📊 Total posts loaded: {len(posts)} (including {len(recovered_posts)} recovered)")
+        print(f"Total posts loaded: {len(posts)} (including {len(recovered_posts)} recovered)")
         return posts
 
     def _generate_post_page(self, post: BlogPost):
-        print(f"📄 Generating page for: {post.title}")
+        print(f"Generating page for: {post.title}")
         
         # Convert markdown to HTML
         post_content_html = md.markdown(post.content, extensions=['codehilite', 'fenced_code', 'tables'])
@@ -353,6 +353,7 @@ class StaticSiteGenerator:
             site_name=self.blog_system.config["site_name"],
             site_description=self.blog_system.config["site_description"],
             base_url=self.blog_system.config["base_url"],
+            base_path=self.blog_system.config.get("base_path", ""),
             current_year=datetime.now().year
         )
         
@@ -363,16 +364,17 @@ class StaticSiteGenerator:
         with open(html_file, 'w', encoding='utf-8') as f:
             f.write(post_html)
         
-        print(f"✅ Generated: {html_file}")
+        print(f"Generated: {html_file}")
 
     def _generate_index(self, posts: List[BlogPost]):
-        print(f"🏠 Generating index page with {len(posts)} posts")
+        print(f"Generating index page with {len(posts)} posts")
         
         index_html = self.templates['index'].render(
             posts=[p.to_dict() for p in posts[:10]],  # Show latest 10 posts
             site_name=self.blog_system.config["site_name"],
             site_description=self.blog_system.config["site_description"],
             base_url=self.blog_system.config["base_url"],
+            base_path=self.blog_system.config.get("base_path", ""),
             current_year=datetime.now().year,
             datetime=datetime  # Pass datetime for debug
         )
@@ -381,16 +383,17 @@ class StaticSiteGenerator:
         with open(index_file, 'w', encoding='utf-8') as f:
             f.write(index_html)
         
-        print(f"✅ Generated: {index_file}")
-        print(f"📏 Index HTML size: {len(index_html)} characters")
+        print(f"Generated: {index_file}")
+        print(f"Index HTML size: {len(index_html)} characters")
 
     def _generate_about_page(self):
-        print("ℹ️ Generating about page")
+        print("Generating about page")
         
         about_html = self.templates['about'].render(
             site_name=self.blog_system.config["site_name"],
             site_description=self.blog_system.config["site_description"],
             base_url=self.blog_system.config["base_url"],
+            base_path=self.blog_system.config.get("base_path", ""),
             topics=self.blog_system.config.get("content_topics", []),
             current_year=datetime.now().year
         )
@@ -402,10 +405,10 @@ class StaticSiteGenerator:
         with open(about_file, 'w', encoding='utf-8') as f:
             f.write(about_html)
         
-        print(f"✅ Generated: {about_file}")
+        print(f"Generated: {about_file}")
 
     def _generate_css(self):
-        print("🎨 Generating CSS")
+        print("Generating CSS")
         css_content = """
 * {
     margin: 0;
@@ -687,12 +690,12 @@ footer {
         static_dir.mkdir(exist_ok=True)
         with open(static_dir / "style.css", 'w', encoding='utf-8') as f:
             f.write(css_content)
-        print(f"✅ Generated: {static_dir / 'style.css'}")
+        print(f"Generated: {static_dir / 'style.css'}")
 
     def generate_site(self):
-        print("📄 Generating static site...")
+        print("Generating static site...")
         posts = self._get_all_posts()
-        print(f"📊 Found {len(posts)} posts")
+        print(f"Found {len(posts)} posts")
         
         # Generate all pages
         self._generate_index(posts)
@@ -711,10 +714,10 @@ footer {
         with open(self.blog_system.output_dir / "robots.txt", 'w') as f:
             f.write(robots)
         
-        print(f"✅ Site generated successfully with {len(posts)} posts")
+        print(f"Site generated successfully with {len(posts)} posts")
         
         # List final structure
-        print("\n📁 Final directory structure:")
+        print("\nFinal directory structure:")
         for item in sorted(self.blog_system.output_dir.rglob("*")):
             if item.is_file():
                 rel_path = item.relative_to(self.blog_system.output_dir)
@@ -731,10 +734,10 @@ class BlogSystem:
 
     def cleanup_posts(self):
         """Clean up incomplete posts and recover from markdown files"""
-        print("🧹 Cleaning up posts...")
+        print("Cleaning up posts...")
         
         if not self.output_dir.exists():
-            print("❌ No docs directory found.")
+            print("No docs directory found.")
             return
         
         fixed_count = 0
@@ -750,33 +753,33 @@ class BlogSystem:
             # Case 1: Has markdown but no JSON - recover
             if not post_json_path.exists() and markdown_path.exists():
                 try:
-                    print(f"🔄 Recovering {post_dir.name}...")
+                    print(f"Recovering {post_dir.name}...")
                     post = BlogPost.from_markdown_file(markdown_path, post_dir.name)
                     self.save_post(post)
                     fixed_count += 1
-                    print(f"✅ Recovered: {post.title}")
+                    print(f"Recovered: {post.title}")
                 except Exception as e:
-                    print(f"❌ Failed to recover {post_dir.name}: {e}")
+                    print(f"Failed to recover {post_dir.name}: {e}")
             
             # Case 2: Has neither - remove empty directory
             elif not post_json_path.exists() and not markdown_path.exists():
-                print(f"🗑️ Removing empty directory: {post_dir.name}")
+                print(f"Removing empty directory: {post_dir.name}")
                 try:
                     post_dir.rmdir()
                     removed_count += 1
                 except OSError:
                     # Directory not empty, list contents
-                    print(f"⚠️ Directory not empty: {list(post_dir.iterdir())}")
+                    print(f"Directory not empty: {list(post_dir.iterdir())}")
         
-        print(f"✅ Cleanup complete: {fixed_count} recovered, {removed_count} removed")
+        print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
-            print("❌ No OpenAI API key found. Using fallback content generation.")
+            print("No OpenAI API key found. Using fallback content generation.")
             return self._generate_fallback_post(topic)
         
         try:
-            print(f"🤖 Generating content for: {topic}")
+            print(f"Generating content for: {topic}")
             title = await self._generate_title(topic, keywords)
             content = await self._generate_content(title, topic, keywords)
             meta_description = await self._generate_meta_description(topic, title)
@@ -800,8 +803,8 @@ class BlogSystem:
                 monetization_data={"ad_slots": 3, "affiliate_count": 0}
             )
         except Exception as e:
-            print(f"❌ Error generating blog post: {e}")
-            print("🔄 Falling back to sample content...")
+            print(f"Error generating blog post: {e}")
+            print("Falling back to sample content...")
             return self._generate_fallback_post(topic)
 
     def _generate_fallback_post(self, topic: str) -> BlogPost:
@@ -844,7 +847,7 @@ When working with {topic}, developers often encounter several common challenges:
 
 1. **Complexity Management**: Keeping implementations simple and maintainable
 2. **Performance Optimization**: Ensuring optimal performance across different scenarios
-3. **Integration Issues**: Seamlessly integrating with existing systems
+3.                 **Integration Issues**: Seamlessly integrating with existing systems
 
 ## Conclusion
 
@@ -964,15 +967,15 @@ Do not include the main title (# {title}) as it will be added automatically."""}
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
         
-        print(f"💾 Saved post: {post.title} ({post.slug})")
-        print(f"📁 Post directory: {post_dir}")
-        print(f"📄 Files created:")
+        print(f"Saved post: {post.title} ({post.slug})")
+        print(f"Post directory: {post_dir}")
+        print(f"Files created:")
         print(f"  - post.json ({(post_dir / 'post.json').stat().st_size} bytes)")
         print(f"  - index.md ({(post_dir / 'index.md').stat().st_size} bytes)")
 
 
 def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
-    print(f"🎯 Picking topic from {config_path}")
+    print(f"Picking topic from {config_path}")
     
     # Load config
     if not os.path.exists(config_path):
@@ -985,7 +988,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     if not topics:
         raise ValueError("No content_topics found in config.yaml")
     
-    print(f"📋 Available topics: {len(topics)}")
+    print(f"Available topics: {len(topics)}")
     
     # Load used topics
     used = []
@@ -996,12 +999,12 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
         except (json.JSONDecodeError, FileNotFoundError):
             used = []
     
-    print(f"📚 Previously used topics: {len(used)}")
+    print(f"Previously used topics: {len(used)}")
     
     # Find available topics
     available = [t for t in topics if t not in used]
     if not available:
-        print("🔄 All topics used, resetting...")
+        print("All topics used, resetting...")
         available = topics
         used = []
     
@@ -1013,7 +1016,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     with open(history_file, "w") as f:
         json.dump(used, f, indent=2)
     
-    print(f"✅ Selected topic: {topic}")
+    print(f"Selected topic: {topic}")
     return topic
 
 
@@ -1023,6 +1026,7 @@ def create_sample_config():
         "site_name": "AI Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
         "base_url": "https://kubaik.github.io/ai-blog-system",
+        "base_path": "/ai-blog-system",  # Added this line for GitHub Pages support
         "content_topics": [
             "Machine Learning Algorithms",
             "Web Development Trends", 
@@ -1050,8 +1054,8 @@ def create_sample_config():
     with open("config.yaml", "w") as f:
         yaml.dump(config, f, default_flow_style=False, indent=2)
     
-    print("✅ Created sample config.yaml file")
-    print("📝 Updated base_url to your GitHub Pages URL")
+    print("Created sample config.yaml file")
+    print("Updated base_url to your GitHub Pages URL")
 
 
 if __name__ == "__main__":
@@ -1061,36 +1065,36 @@ if __name__ == "__main__":
         mode = sys.argv[1]
         
         if mode == "init":
-            print("🚀 Initializing blog system...")
+            print("Initializing blog system...")
             create_sample_config()
             os.makedirs("docs/static", exist_ok=True)
-            print("✅ Blog system initialized!")
+            print("Blog system initialized!")
             print("\nNext steps:")
             print("1. Set your OPENAI_API_KEY environment variable") 
             print("2. Run 'python blog_system.py auto' to generate your first post")
             
         elif mode == "auto":
-            print("🤖 Starting automated blog generation...")
-            print(f"📂 Working directory: {os.getcwd()}")
-            print(f"📋 Config file exists: {os.path.exists('config.yaml')}")
-            print(f"🔑 OpenAI API key available: {'Yes' if os.getenv('OPENAI_API_KEY') else 'No'}")
+            print("Starting automated blog generation...")
+            print(f"Working directory: {os.getcwd()}")
+            print(f"Config file exists: {os.path.exists('config.yaml')}")
+            print(f"OpenAI API key available: {'Yes' if os.getenv('OPENAI_API_KEY') else 'No'}")
             
             if not os.path.exists("config.yaml"):
-                print("❌ config.yaml not found. Run 'python blog_system.py init' first.")
+                print("config.yaml not found. Run 'python blog_system.py init' first.")
                 sys.exit(1)
             
             # Load config
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
             
-            print(f"⚙️ Loaded config: {config['site_name']}")
+            print(f"Loaded config: {config['site_name']}")
             
             blog_system = BlogSystem(config)
             
             try:
                 # Pick topic and generate post
                 topic = pick_next_topic()
-                print(f"📌 Generating post for topic: {topic}")
+                print(f"Generating post for topic: {topic}")
                 
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
                 blog_system.save_post(blog_post)
@@ -1099,19 +1103,19 @@ if __name__ == "__main__":
                 generator = StaticSiteGenerator(blog_system)
                 generator.generate_site()
                 
-                print(f"✅ Post '{blog_post.title}' generated and site built successfully!")
+                print(f"Post '{blog_post.title}' generated and site built successfully!")
                 
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
                 import traceback
                 traceback.print_exc()
                 sys.exit(1)
         
         elif mode == "build":
-            print("🔨 Building static site from existing posts...")
+            print("Building static site from existing posts...")
             
             if not os.path.exists("config.yaml"):
-                print("❌ config.yaml not found.")
+                print("config.yaml not found.")
                 sys.exit(1)
             
             with open("config.yaml", "r") as f:
@@ -1120,13 +1124,13 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
-            print("✅ Site rebuilt successfully!")
+            print("Site rebuilt successfully!")
             
         elif mode == "cleanup":
-            print("🧹 Running cleanup to fix missing post.json files...")
+            print("Running cleanup to fix missing post.json files...")
             
             if not os.path.exists("config.yaml"):
-                print("❌ config.yaml not found.")
+                print("config.yaml not found.")
                 sys.exit(1)
             
             with open("config.yaml", "r") as f:
@@ -1138,13 +1142,13 @@ if __name__ == "__main__":
             # Rebuild site after cleanup
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
-            print("✅ Cleanup and rebuild complete!")
+            print("Cleanup and rebuild complete!")
             
         elif mode == "debug":
-            print("🔍 Debug mode - checking current state...")
+            print("Debug mode - checking current state...")
             
             if not os.path.exists("config.yaml"):
-                print("❌ config.yaml not found.")
+                print("config.yaml not found.")
                 sys.exit(1)
             
             with open("config.yaml", "r") as f:
@@ -1152,29 +1156,29 @@ if __name__ == "__main__":
             
             blog_system = BlogSystem(config)
             
-            print(f"📂 Output directory: {blog_system.output_dir}")
-            print(f"📁 Directory exists: {blog_system.output_dir.exists()}")
+            print(f"Output directory: {blog_system.output_dir}")
+            print(f"Directory exists: {blog_system.output_dir.exists()}")
             
             if blog_system.output_dir.exists():
                 items = list(blog_system.output_dir.iterdir())
-                print(f"📊 Items in directory: {len(items)}")
+                print(f"Items in directory: {len(items)}")
                 for item in items:
                     print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
                     if item.is_dir():
                         post_json = item / "post.json"
                         post_md = item / "index.md"
-                        print(f"    📄 post.json: {'✅' if post_json.exists() else '❌'}")
-                        print(f"    📝 index.md: {'✅' if post_md.exists() else '❌'}")
+                        print(f"    post.json: {'Yes' if post_json.exists() else 'No'}")
+                        print(f"    index.md: {'Yes' if post_md.exists() else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
                                     data = json.load(f)
-                                print(f"    📖 Valid post: {data.get('title', 'Unknown')}")
+                                print(f"    Valid post: {data.get('title', 'Unknown')}")
                             except Exception as e:
-                                print(f"    ❌ Invalid JSON: {e}")
+                                print(f"    Invalid JSON: {e}")
             
             # Run cleanup and rebuild
-            print("\n🧹 Running automatic cleanup...")
+            print("\nRunning automatic cleanup...")
             blog_system.cleanup_posts()
             
             generator = StaticSiteGenerator(blog_system)
