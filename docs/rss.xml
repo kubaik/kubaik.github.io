@@ -4,15 +4,29 @@
         <title>AI Tech Blog</title>
         <description>Cutting-edge insights into technology, AI, and development</description>
         <link>https://kubaik.github.io/ai-blog-system</link>
-        <lastBuildDate>Thu, 21 Aug 2025 14:39:30 </lastBuildDate>
+        <lastBuildDate>Thu, 21 Aug 2025 14:53:34 </lastBuildDate>
         <language>en-US</language>
         
+        <item>
+            <title><![CDATA[Mastering Serverless Computing: The Future of Scalable Technology]]></title>
+            <description><![CDATA[Learn how to harness the power of serverless computing for infinite scalability. Discover the future of technology in our comprehensive guide.]]></description>
+            <link>https://kubaik.github.io/ai-blog-system/mastering-serverless-computing-the-future-of-scala/</link>
+            <guid>https://kubaik.github.io/ai-blog-system/mastering-serverless-computing-the-future-of-scala/</guid>
+            <pubDate>Thu, 21 Aug 2025 14:53:34 </pubDate>
+        </item>
         <item>
             <title><![CDATA[Understanding Performance Optimization: A Complete Guide]]></title>
             <description><![CDATA[A comprehensive guide to Performance Optimization covering key concepts, benefits, and best practices for developers.]]></description>
             <link>https://kubaik.github.io/ai-blog-system/understanding-performance-optimization-a-complete-/</link>
             <guid>https://kubaik.github.io/ai-blog-system/understanding-performance-optimization-a-complete-/</guid>
             <pubDate>Thu, 21 Aug 2025 14:39:29 </pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Understanding Cloud Computing Platforms: A Complete Guide]]></title>
+            <description><![CDATA[A comprehensive guide to Cloud Computing Platforms covering key concepts, benefits, and best practices for developers.]]></description>
+            <link>https://kubaik.github.io/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</link>
+            <guid>https://kubaik.github.io/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</guid>
+            <pubDate>Thu, 21 Aug 2025 14:04:57 </pubDate>
         </item>
         <item>
             <title><![CDATA[Understanding Cybersecurity Best Practices: A Complete Guide]]></title>
@@ -62,20 +76,6 @@
             <link>https://kubaik.github.io/ai-blog-system/mastering-software-testing-expert-strategies-unvei/</link>
             <guid>https://kubaik.github.io/ai-blog-system/mastering-software-testing-expert-strategies-unvei/</guid>
             <pubDate>Thu, 21 Aug 2025 08:02:49 </pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Unlocking the Power of Progressive Web Apps: A Guide]]></title>
-            <description><![CDATA[Discover how to unleash the full potential of Progressive Web Apps with our comprehensive guide. Learn how to enhance user experience and boost conversions.]]></description>
-            <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-a-guid/</link>
-            <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-a-guid/</guid>
-            <pubDate>Thu, 21 Aug 2025 07:00:04 </pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Mastering API Design Patterns: A Guide to Building Robust and Scalable APIs]]></title>
-            <description><![CDATA[Learn how to master API design patterns in this comprehensive guide. Build robust and scalable APIs with expert tips and best practices.]]></description>
-            <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-building-/</link>
-            <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-building-/</guid>
-            <pubDate>Thu, 21 Aug 2025 06:17:55 </pubDate>
         </item>
     </channel>
 </rss>
