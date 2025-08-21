@@ -218,6 +218,7 @@ class SEOOptimizer:
     def __init__(self, config):
         self.config = config
         self.google_analytics_id = config.get('google_analytics_id')
+        self.google_adsense_id = config.get('google_adsense_id')
         self.google_search_console_key = config.get('google_search_console_key')
     
     def generate_structured_data(self, post) -> str:
@@ -276,7 +277,31 @@ class SEOOptimizer:
         gtag('config', '{self.google_analytics_id}');
     </script>'''
         
+        if self.google_adsense_id:
+            meta_tags += f'''
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={self.google_adsense_id}" crossorigin="anonymous"></script>'''
+        
         return meta_tags
+    
+    def generate_adsense_ad(self, slot_type: str = "display") -> str:
+        """Generate AdSense ad unit HTML"""
+        if not self.google_adsense_id:
+            return '<div class="ad-placeholder"><!-- AdSense Ad Slot --></div>'
+        
+        ad_html = f'''
+<ins class="adsbygoogle ad-{slot_type}"
+     style="display:block"
+     data-ad-client="{self.google_adsense_id}"
+     data-ad-slot="AUTO"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({{}});
+</script>'''
+        
+        return ad_html
 
     @staticmethod
     def generate_sitemap(posts, base_url):
@@ -406,10 +431,7 @@ class StaticSiteGenerator:
 </head>
 <body>
     <!-- Header Ad Slot -->
-    <div class="ad-slot ad-header">
-        <!-- AdSense code will go here -->
-        <p>Advertisement</p>
-    </div>
+    {{ header_ad | safe }}
     
     <header>
         <div class="container">
@@ -417,6 +439,7 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -439,9 +462,7 @@ class StaticSiteGenerator:
                 {{ post.content_html | safe }}
                 
                 <!-- Middle Ad Slot -->
-                <div class="ad-slot ad-middle">
-                    <p>Advertisement</p>
-                </div>
+                {{ middle_ad | safe }}
             </div>
             
             <!-- Affiliate Disclaimer -->
@@ -454,9 +475,7 @@ class StaticSiteGenerator:
     </main>
     
     <!-- Footer Ad Slot -->
-    <div class="ad-slot ad-footer">
-        <p>Advertisement</p>
-    </div>
+    {{ footer_ad | safe }}
     
     <footer>
         <div class="container">
@@ -475,7 +494,7 @@ class StaticSiteGenerator:
     <meta name="description" content="{{ site_description }}">
     {{ analytics_code | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
 </head>
 <body>
     <header>
@@ -484,7 +503,7 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/feed.xml">RSS</a>
+                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -492,15 +511,6 @@ class StaticSiteGenerator:
         <div class="hero">
             <h2>Welcome to {{ site_name }}</h2>
             <p>{{ site_description }}</p>
-            
-            <!-- Newsletter Signup -->
-            <div class="newsletter-signup">
-                <h3>Stay Updated</h3>
-                <form action="#" method="post">
-                    <input type="email" placeholder="Your email address" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-            </div>
         </div>
 
         <section class="recent-posts">
@@ -554,6 +564,7 @@ class StaticSiteGenerator:
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
@@ -649,6 +660,11 @@ class StaticSiteGenerator:
         meta_tags = self.seo.generate_meta_tags(post)
         structured_data = self.seo.generate_structured_data(post)
         
+        # Generate AdSense ads
+        header_ad = self.seo.generate_adsense_ad("header")
+        middle_ad = self.seo.generate_adsense_ad("middle")
+        footer_ad = self.seo.generate_adsense_ad("footer")
+        
         post_html = self.templates['post'].render(
             post=post_dict,
             site_name=self.blog_system.config["site_name"],
@@ -657,6 +673,9 @@ class StaticSiteGenerator:
             base_path=self.blog_system.config.get("base_path", ""),
             meta_tags=meta_tags,
             structured_data=structured_data,
+            header_ad=header_ad,
+            middle_ad=middle_ad,
+            footer_ad=footer_ad,
             current_year=datetime.now().year
         )
         
@@ -688,6 +707,10 @@ class StaticSiteGenerator:
         gtag('js', new Date());
         gtag('config', '{self.blog_system.config["google_analytics_id"]}');
     </script>'''
+        
+        if self.blog_system.config.get('google_adsense_id'):
+            analytics_code += f'''
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={self.blog_system.config["google_adsense_id"]}" crossorigin="anonymous"></script>'''
         
         index_html = self.templates['index'].render(
             posts=[p.to_dict() for p in posts[:10]],
@@ -784,8 +807,25 @@ nav a:hover {
     background-color: #e9ecef;
 }
 
-/* Ad Slots */
-.ad-slot {
+/* AdSense Ad Slots */
+.ad-header, .ad-middle, .ad-footer {
+    text-align: center;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+.ad-header { margin-bottom: 20px; }
+.ad-middle { margin: 30px 0; }
+.ad-footer { margin-top: 20px; }
+
+/* AdSense Responsive */
+.adsbygoogle {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Ad Placeholder (when AdSense not configured) */
+.ad-placeholder {
     text-align: center;
     margin: 20px 0;
     padding: 20px;
@@ -798,10 +838,6 @@ nav a:hover {
     color: #6c757d;
     font-style: italic;
 }
-
-.ad-header { margin-bottom: 20px; }
-.ad-middle { margin: 30px 0; }
-.ad-footer { margin-top: 20px; }
 
 /* Affiliate Links Styling */
 a[rel*="sponsored"] {
@@ -825,50 +861,6 @@ a[rel*="sponsored"]:hover {
     margin: 30px 0;
     font-size: 0.9rem;
     color: #856404;
-}
-
-/* Newsletter Signup */
-.newsletter-signup {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    margin: 30px 0;
-}
-
-.newsletter-signup h3 {
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.newsletter-signup form {
-    display: flex;
-    gap: 10px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.newsletter-signup input {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-}
-
-.newsletter-signup button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.newsletter-signup button:hover {
-    background: #218838;
 }
 
 /* Main Content */
@@ -1078,14 +1070,9 @@ footer {
         display: block;
     }
     
-    .newsletter-signup form {
-        flex-direction: column;
-    }
-    
-    .ad-slot {
+    .ad-header, .ad-middle, .ad-footer {
         min-height: 80px;
-        font-size: 0.9rem;
-        padding: 15px;
+        margin: 15px 0;
     }
 }
 """
@@ -1117,9 +1104,9 @@ footer {
         for post in posts:
             self._generate_post_page(post)
         
-        # Generate RSS feed
+        # Generate RSS feed (renamed from feed.xml to rss.xml)
         rss_content = self.visibility.create_rss_feed(posts)
-        with open(self.blog_system.output_dir / "feed.xml", 'w', encoding='utf-8') as f:
+        with open(self.blog_system.output_dir / "rss.xml", 'w', encoding='utf-8') as f:
             f.write(rss_content)
         
         # Generate SEO files
@@ -1146,13 +1133,16 @@ footer {
         print(f"\n📊 Automation Report:")
         print(f"  • Total posts: {report['total_posts']}")
         print(f"  • Affiliate links: {report['monetization']['total_affiliate_links']}")
+        print(f"  • AdSense configured: {'Yes' if self.blog_system.config.get('google_adsense_id') else 'No'}")
         print(f"  • Estimated monthly revenue: ${report['monetization']['estimated_monthly_revenue']}")
         print(f"  • SEO features: {report['seo']['structured_data_enabled']} posts optimized")
         print(f"  • Social posts generated: {report['visibility']['social_posts_generated']}")
         
         print(f"\n✅ Site generated successfully with {len(posts)} posts")
-        print(f"📁 Files created: sitemap.xml, robots.txt, feed.xml")
+        print(f"📁 Files created: sitemap.xml, robots.txt, rss.xml")
         print(f"🔗 Social media posts saved in each post directory")
+        if self.blog_system.config.get('google_adsense_id'):
+            print(f"💰 Google AdSense ads integrated")
 
     def _generate_automation_report(self, posts):
         """Generate a report of automated improvements"""
@@ -1162,7 +1152,8 @@ footer {
             'monetization': {
                 'total_affiliate_links': sum(len(p.affiliate_links) for p in posts),
                 'estimated_monthly_revenue': self._estimate_revenue(posts),
-                'ad_slots_total': sum(p.monetization_data.get('ad_slots', 0) for p in posts)
+                'ad_slots_total': sum(p.monetization_data.get('ad_slots', 0) for p in posts),
+                'adsense_enabled': bool(self.blog_system.config.get('google_adsense_id'))
             },
             'seo': {
                 'avg_keywords_per_post': sum(len(p.seo_keywords) for p in posts) / len(posts) if posts else 0,
@@ -1193,6 +1184,12 @@ footer {
         total_affiliate_links = sum(len(p.affiliate_links) for p in posts)
         estimated_clicks = avg_monthly_visitors * ctr * (total_affiliate_links / len(posts) if posts else 0)
         estimated_revenue = estimated_clicks * avg_commission * 0.1
+        
+        # Add AdSense revenue estimation
+        if self.blog_system.config.get('google_adsense_id'):
+            adsense_rpm = 2.0  # Revenue per mille (per 1000 impressions)
+            estimated_adsense = (avg_monthly_visitors * adsense_rpm) / 1000
+            estimated_revenue += estimated_adsense
         
         return round(estimated_revenue, 2)
 
@@ -1508,13 +1505,14 @@ def create_sample_config():
         "base_path": "/ai-blog-system",
         
         # Monetization settings
-        "amazon_affiliate_tag": "your-tag-20",  # Replace with your Amazon affiliate tag
-        "google_analytics_id": "",  # Add your GA4 measurement ID
+        "amazon_affiliate_tag": "aiblogcontent-20",  # Replace with your Amazon affiliate tag
+        "google_analytics_id": "G-DST4PJYK6V",  # Add your GA4 measurement ID
+        "google_adsense_id": "ca-pub-4477679588953789",  # Add your Google AdSense ID (ca-pub-xxxxxxxxxx)
         "google_search_console_key": "",  # Add your search console verification
         
         # Social media accounts (for automated posting)
         "social_accounts": {
-            "twitter": "@yourblog",
+            "twitter": "@KubaiKevin",
             "linkedin": "your-linkedin-page",
             "facebook": "your-facebook-page"
         },
@@ -1550,8 +1548,9 @@ def create_sample_config():
     print("\n📝 Next steps:")
     print("1. Replace 'your-tag-20' with your Amazon Associates tag")
     print("2. Add your Google Analytics 4 measurement ID")
-    print("3. Update social media handles")
-    print("4. Consider applying for affiliate programs like:")
+    print("3. Add your Google AdSense ID (ca-pub-xxxxxxxxxx)")
+    print("4. Update social media handles")
+    print("5. Consider applying for affiliate programs like:")
     print("   • ShareASale")
     print("   • Commission Junction")
     print("   • DigitalOcean referral program")
@@ -1715,7 +1714,7 @@ if __name__ == "__main__":
             print("  debug   - Debug current state with monetization analysis")
             print("  social  - Generate social media posts for existing content")
     else:
-        print("Enhanced AI Blog System with Monetization")
+        print("Enhanced AI Blog System with Monetization & AdSense")
         print("Usage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init    - Initialize blog system with monetization settings")
@@ -1726,9 +1725,15 @@ if __name__ == "__main__":
         print("  social  - Generate social media posts for promotion")
         print("\nMonetization features included:")
         print("  • Automated affiliate link injection")
-        print("  • Strategic ad placement slots")
+        print("  • Google AdSense integration with responsive ads")
+        print("  • Strategic ad placement slots (header, middle, footer)")
         print("  • SEO optimization with structured data")
         print("  • Social media post generation")
-        print("  • RSS feed for subscribers")
+        print("  • RSS feed for subscribers (/rss.xml)")
         print("  • Search engine submission")
         print("  • Revenue estimation and reporting")
+        print("\nSetup required:")
+        print("  1. Run 'init' to create config.yaml")
+        print("  2. Add your Google AdSense ID (ca-pub-xxxxxxxxxx)")
+        print("  3. Add your Google Analytics ID")
+        print("  4. Configure affiliate program IDs")
