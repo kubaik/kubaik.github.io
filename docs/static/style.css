@@ -53,8 +53,25 @@ nav a:hover {
     background-color: #e9ecef;
 }
 
-/* Ad Slots */
-.ad-slot {
+/* AdSense Ad Slots */
+.ad-header, .ad-middle, .ad-footer {
+    text-align: center;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+.ad-header { margin-bottom: 20px; }
+.ad-middle { margin: 30px 0; }
+.ad-footer { margin-top: 20px; }
+
+/* AdSense Responsive */
+.adsbygoogle {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Ad Placeholder (when AdSense not configured) */
+.ad-placeholder {
     text-align: center;
     margin: 20px 0;
     padding: 20px;
@@ -67,10 +84,6 @@ nav a:hover {
     color: #6c757d;
     font-style: italic;
 }
-
-.ad-header { margin-bottom: 20px; }
-.ad-middle { margin: 30px 0; }
-.ad-footer { margin-top: 20px; }
 
 /* Affiliate Links Styling */
 a[rel*="sponsored"] {
@@ -94,50 +107,6 @@ a[rel*="sponsored"]:hover {
     margin: 30px 0;
     font-size: 0.9rem;
     color: #856404;
-}
-
-/* Newsletter Signup */
-.newsletter-signup {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    margin: 30px 0;
-}
-
-.newsletter-signup h3 {
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.newsletter-signup form {
-    display: flex;
-    gap: 10px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.newsletter-signup input {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-}
-
-.newsletter-signup button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.newsletter-signup button:hover {
-    background: #218838;
 }
 
 /* Main Content */
@@ -347,13 +316,8 @@ footer {
         display: block;
     }
     
-    .newsletter-signup form {
-        flex-direction: column;
-    }
-    
-    .ad-slot {
+    .ad-header, .ad-middle, .ad-footer {
         min-height: 80px;
-        font-size: 0.9rem;
-        padding: 15px;
+        margin: 15px 0;
     }
 }
