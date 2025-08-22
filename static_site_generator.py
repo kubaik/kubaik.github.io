@@ -825,18 +825,23 @@ footer {
         for post in posts:
             self._generate_post_page(post)
         
-
-        # Generate SEO files
-        sitemap = self.seo.generate_sitemap(posts, self.blog_system.config["base_url"])
+        # Generate RSS feed (renamed from feed.xml to rss.xml)
+        # rss_content = self.visibility.create_rss_feed(posts)
+        # with open(self.blog_system.output_dir / "rss.xml", 'w', encoding='utf-8') as f:
+        #     f.write(rss_content)
+        
+        # Generate SEO files - Updated to use the new SEOOptimizer methods
+        sitemap = self.seo.generate_sitemap(posts)
         with open(self.blog_system.output_dir / "sitemap.xml", 'w') as f:
             f.write(sitemap)
         
-        robots = self.seo.generate_robots_txt(self.blog_system.config["base_url"])
+        robots = self.seo.generate_robots_txt()
         with open(self.blog_system.output_dir / "robots.txt", 'w') as f:
             f.write(robots)
         
         # Submit to search engines
-        sitemap_url = f"{self.blog_system.config['base_url']}/sitemap.xml"
+        base_path = self.blog_system.config.get("base_path", "")
+        sitemap_url = f"{self.blog_system.config['base_url']}{base_path}/sitemap.xml"
         search_results = self.visibility.submit_to_search_engines(sitemap_url)
         print("Search engine submission results:")
         for result in search_results:

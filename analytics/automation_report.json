@@ -1,19 +1,19 @@
 {
-  "timestamp": "2025-08-21T16:33:42.277574",
-  "total_posts": 22,
+  "timestamp": "2025-08-22T06:25:28.864954",
+  "total_posts": 24,
   "monetization": {
     "total_affiliate_links": 10,
-    "estimated_monthly_revenue": 6.55,
-    "ad_slots_total": 66,
+    "estimated_monthly_revenue": 6.17,
+    "ad_slots_total": 72,
     "adsense_enabled": true
   },
   "seo": {
-    "avg_keywords_per_post": 7.545454545454546,
-    "structured_data_enabled": 22,
-    "sitemap_urls": 24
+    "avg_keywords_per_post": 7.25,
+    "structured_data_enabled": 24,
+    "sitemap_urls": 26
   },
   "visibility": {
-    "social_posts_generated": 88,
+    "social_posts_generated": 96,
     "rss_enabled": true,
     "search_engine_submissions": 2
   }

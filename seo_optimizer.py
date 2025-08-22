@@ -9,10 +9,12 @@ class SEOOptimizer:
         self.config = config
         self.google_analytics_id = config.get('google_analytics_id')
         self.google_adsense_id = config.get('google_adsense_id')
+        self.google_adsense_verification = config.get('google_adsense_verification')
         self.google_search_console_key = config.get('google_search_console_key')
     
     def generate_structured_data(self, post) -> str:
         """Generate JSON-LD structured data for better SEO"""
+        base_path = self.config.get("base_path", "")
         structured_data = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -25,11 +27,11 @@ class SEOOptimizer:
             "publisher": {
                 "@type": "Organization",
                 "name": self.config["site_name"],
-                "url": self.config["base_url"]
+                "url": f"{self.config['base_url']}{base_path}"
             },
             "datePublished": post.created_at,
             "dateModified": post.updated_at,
-            "url": f"{self.config['base_url']}/{post.slug}/",
+            "url": f"{self.config['base_url']}{base_path}/{post.slug}/",
             "keywords": post.seo_keywords
         }
         
@@ -37,11 +39,14 @@ class SEOOptimizer:
     
     def generate_meta_tags(self, post) -> str:
         """Generate comprehensive meta tags"""
+        base_path = self.config.get("base_path", "")
+        post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
+        
         meta_tags = f'''
     <!-- SEO Meta Tags -->
     <meta property="og:title" content="{post.title}">
     <meta property="og:description" content="{post.meta_description}">
-    <meta property="og:url" content="{self.config['base_url']}/{post.slug}/">
+    <meta property="og:url" content="{post_url}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="{self.config['site_name']}">
     
@@ -53,7 +58,12 @@ class SEOOptimizer:
     <!-- Additional SEO -->
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="{self.config['base_url']}/{post.slug}/">'''
+    <link rel="canonical" href="{post_url}">'''
+        
+        # Add AdSense verification if available
+        if self.google_adsense_verification:
+            meta_tags += f'\n    <!-- Google AdSense Verification -->'
+            meta_tags += f'\n    <meta name="google-adsense-account" content="{self.google_adsense_verification}">'
         
         if self.google_analytics_id:
             meta_tags += f'''
@@ -93,19 +103,23 @@ class SEOOptimizer:
         
         return ad_html
 
-    @staticmethod
-    def generate_sitemap(posts, base_url):
-        urls = [f"<url><loc>{base_url}/{p.slug}/</loc><lastmod>{p.updated_at.split('T')[0]}</lastmod></url>" for p in posts]
-        urls.append(f"<url><loc>{base_url}/</loc><lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod></url>")
+    def generate_sitemap(self, posts) -> str:
+        """Generate sitemap with base_path support"""
+        base_path = self.config.get("base_path", "")
+        urls = [f"<url><loc>{self.config['base_url']}{base_path}/{p.slug}/</loc><lastmod>{p.updated_at.split('T')[0]}</lastmod></url>" for p in posts]
+        urls.append(f"<url><loc>{self.config['base_url']}{base_path}/</loc><lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod></url>")
+        urls.append(f"<url><loc>{self.config['base_url']}{base_path}/about/</loc><lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod></url>")
+        
         return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {''.join(urls)}
 </urlset>"""
 
-    @staticmethod
-    def generate_robots_txt(base_url):
+    def generate_robots_txt(self) -> str:
+        """Generate robots.txt with base_path support"""
+        base_path = self.config.get("base_path", "")
         return f"""User-agent: *
 Allow: /
 Disallow: /static/
 
-Sitemap: {base_url}/sitemap.xml"""
+Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
