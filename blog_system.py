@@ -330,7 +330,8 @@ def create_sample_config():
         "amazon_affiliate_tag": "aiblogcontent-20",  # Replace with your Amazon affiliate tag
         "google_analytics_id": "G-DST4PJYK6V",  # Add your GA4 measurement ID
         "google_adsense_id": "ca-pub-4477679588953789",  # Add your Google AdSense ID (ca-pub-xxxxxxxxxx)
-        "google_search_console_key": "",  # Add your search console verification
+        "google_search_console_key": "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",  # Add your search console verification
+        "google_adsense_verification":"",
         
         # Social media accounts (for automated posting)
         "social_accounts": {
