@@ -10,11 +10,20 @@ class SEOOptimizer:
         self.google_analytics_id = config.get('google_analytics_id')
         self.google_adsense_id = config.get('google_adsense_id')
         self.google_adsense_verification = config.get('google_adsense_verification')
-        self.google_search_console_key = config.get('google_search_console_key')
+        # Fixed: Google Search Console uses verification key, not API key
+        self.google_search_console_verification = config.get('google_search_console_verification')
     
     def generate_structured_data(self, post) -> str:
         """Generate JSON-LD structured data for better SEO"""
         base_path = self.config.get("base_path", "")
+        
+        # Add image if available
+        image_url = None
+        if hasattr(post, 'featured_image') and post.featured_image:
+            image_url = post.featured_image
+        elif hasattr(post, 'image') and post.image:
+            image_url = post.image
+        
         structured_data = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -27,13 +36,32 @@ class SEOOptimizer:
             "publisher": {
                 "@type": "Organization",
                 "name": self.config["site_name"],
-                "url": f"{self.config['base_url']}{base_path}"
+                "url": f"{self.config['base_url']}{base_path}",
+                # Add logo for better structured data
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": f"{self.config['base_url']}{base_path}/static/logo.png"
+                }
             },
             "datePublished": post.created_at,
             "dateModified": post.updated_at,
             "url": f"{self.config['base_url']}{base_path}/{post.slug}/",
-            "keywords": post.seo_keywords
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": f"{self.config['base_url']}{base_path}/{post.slug}/"
+            }
         }
+        
+        # Add image if available
+        if image_url:
+            structured_data["image"] = {
+                "@type": "ImageObject",
+                "url": image_url
+            }
+        
+        # Add keywords if available
+        if hasattr(post, 'seo_keywords') and post.seo_keywords:
+            structured_data["keywords"] = post.seo_keywords
         
         return f'<script type="application/ld+json">\n{json.dumps(structured_data, indent=2)}\n</script>'
     
@@ -45,14 +73,15 @@ class SEOOptimizer:
         if self.google_adsense_verification:
             meta_tags += f'    <meta name="google-adsense-account" content="{self.google_adsense_verification}">\n'
         
-        # Add Google Search Console verification if available
-        if self.google_search_console_key:
-            meta_tags += f'    <meta name="google-site-verification" content="{self.google_search_console_key}">\n'
+        # Fixed: Use correct Google Search Console verification
+        if self.google_search_console_verification:
+            meta_tags += f'    <meta name="google-site-verification" content="{self.google_search_console_verification}">\n'
         
         # Add other global verification codes
         if self.config.get('verification_code'):
             meta_tags += f'    <meta name="verification" content="{self.config["verification_code"]}">\n'
         
+        # Fixed: Improved Google Analytics implementation
         if self.google_analytics_id:
             meta_tags += f'''    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={self.google_analytics_id}"></script>
@@ -60,13 +89,19 @@ class SEOOptimizer:
         window.dataLayer = window.dataLayer || [];
         function gtag(){{dataLayer.push(arguments);}}
         gtag('js', new Date());
-        gtag('config', '{self.google_analytics_id}');
+        gtag('config', '{self.google_analytics_id}', {{
+            page_title: document.title,
+            page_location: window.location.href
+        }});
     </script>
 '''
         
+        # Fixed: Improved AdSense implementation with error handling
         if self.google_adsense_id:
             meta_tags += f'''    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={self.google_adsense_id}" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={self.google_adsense_id}" 
+            crossorigin="anonymous" 
+            onerror="console.warn('AdSense failed to load')"></script>
 '''
         
         return meta_tags
@@ -76,78 +111,116 @@ class SEOOptimizer:
         base_path = self.config.get("base_path", "")
         post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
         
+        # Get featured image if available
+        image_url = None
+        if hasattr(post, 'featured_image') and post.featured_image:
+            image_url = post.featured_image
+        elif hasattr(post, 'image') and post.image:
+            image_url = post.image
+        
         meta_tags = f'''
     <!-- SEO Meta Tags -->
+    <meta name="description" content="{post.meta_description}">
     <meta property="og:title" content="{post.title}">
     <meta property="og:description" content="{post.meta_description}">
     <meta property="og:url" content="{post_url}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="{self.config['site_name']}">
+    <meta property="article:published_time" content="{post.created_at}">
+    <meta property="article:modified_time" content="{post.updated_at}">'''
+        
+        # Add image meta tags if available
+        if image_url:
+            meta_tags += f'''
+    <meta property="og:image" content="{image_url}">
+    <meta property="og:image:alt" content="{post.title}">
+    <meta name="twitter:image" content="{image_url}">'''
+
+        meta_tags += f'''
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{post.title}">
-    <meta name="twitter:description" content="{post.meta_description}">
+    <meta name="twitter:description" content="{post.meta_description}">'''
+        
+        # Add Twitter handle if available
+        if self.config.get('social_accounts', {}).get('twitter'):
+            twitter_handle = self.config['social_accounts']['twitter'].replace('@', '')
+            meta_tags += f'''
+    <meta name="twitter:site" content="@{twitter_handle}">
+    <meta name="twitter:creator" content="@{twitter_handle}">'''
+
+        meta_tags += f'''
 
     <!-- Additional SEO -->
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="{post_url}">'''
         
-        # Add verification meta tag if available
-        if self.config.get('verification_code'):
-            meta_tags += f'\n    <!-- Verification Meta Tag -->'
-            meta_tags += f'\n    <meta name="verification" content="{self.config["verification_code"]}">'
-        
-        # Add AdSense verification if available
-        if self.google_adsense_verification:
-            meta_tags += f'\n    <!-- Google AdSense Verification -->'
-            meta_tags += f'\n    <meta name="google-adsense-account" content="{self.google_adsense_verification}">'
-        
-        if self.google_analytics_id:
-            meta_tags += f'''
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={self.google_analytics_id}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', '{self.google_analytics_id}');
-    </script>'''
-        
-        if self.google_adsense_id:
-            meta_tags += f'''
-
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={self.google_adsense_id}" crossorigin="anonymous"></script>'''
+        # Add keywords if available
+        if hasattr(post, 'seo_keywords') and post.seo_keywords:
+            meta_tags += f'\n    <meta name="keywords" content="{post.seo_keywords}">'
         
         return meta_tags
     
-    def generate_adsense_ad(self, slot_type: str = "display") -> str:
-        """Generate AdSense ad unit HTML"""
+    def generate_adsense_ad(self, slot_type: str = "display", slot_id: str = None) -> str:
+        """Generate AdSense ad unit HTML with better error handling"""
         if not self.google_adsense_id:
-            return '<div class="ad-placeholder"><!-- AdSense Ad Slot --></div>'
+            return '<div class="ad-placeholder" style="min-height: 250px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; color: #999;"><!-- AdSense Ad Slot --></div>'
+        
+        # Use provided slot ID or generate auto slot
+        data_ad_slot = f'data-ad-slot="{slot_id}"' if slot_id else 'data-ad-slot="AUTO"'
         
         ad_html = f'''
-<ins class="adsbygoogle ad-{slot_type}"
-     style="display:block"
-     data-ad-client="{self.google_adsense_id}"
-     data-ad-slot="AUTO"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({{}});
-</script>'''
+<div class="ad-container ad-{slot_type}" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{self.google_adsense_id}"
+         {data_ad_slot}
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        try {{
+            (adsbygoogle = window.adsbygoogle || []).push({{}});
+        }} catch (e) {{
+            console.warn('AdSense initialization failed:', e);
+        }}
+    </script>
+</div>'''
         
         return ad_html
 
     def generate_sitemap(self, posts) -> str:
-        """Generate sitemap with base_path support"""
+        """Generate sitemap with base_path support and better formatting"""
         base_path = self.config.get("base_path", "")
-        urls = [f"<url><loc>{self.config['base_url']}{base_path}/{p.slug}/</loc><lastmod>{p.updated_at.split('T')[0]}</lastmod></url>" for p in posts]
-        urls.append(f"<url><loc>{self.config['base_url']}{base_path}/</loc><lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod></url>")
-        urls.append(f"<url><loc>{self.config['base_url']}{base_path}/about/</loc><lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod></url>")
+        
+        urls = []
+        
+        # Add homepage
+        urls.append(f'''    <url>
+        <loc>{self.config['base_url']}{base_path}/</loc>
+        <lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>''')
+        
+        # Add about page
+        urls.append(f'''    <url>
+        <loc>{self.config['base_url']}{base_path}/about/</loc>
+        <lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>''')
+        
+        # Add posts
+        for post in posts:
+            last_modified = post.updated_at.split('T')[0] if 'T' in post.updated_at else post.updated_at
+            urls.append(f'''    <url>
+        <loc>{self.config['base_url']}{base_path}/{post.slug}/</loc>
+        <lastmod>{last_modified}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>''')
         
         return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -157,11 +230,24 @@ class SEOOptimizer:
     def generate_robots_txt(self) -> str:
         """Generate robots.txt with base_path support"""
         base_path = self.config.get("base_path", "")
-        return f"""User-agent: *
+        
+        robots_content = f"""User-agent: *
 Allow: /
-Disallow: /static/
+Disallow: /static/admin/
+Disallow: /static/temp/
+Disallow: /*.json$
+Disallow: /*?*
 
-Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: {self.config['base_url']}{base_path}/sitemap.xml
+
+# RSS Feed location
+Sitemap: {self.config['base_url']}{base_path}/rss.xml"""
+        
+        return robots_content
 
     def generate_breadcrumbs(self, post=None, page_title=None) -> str:
         """Generate breadcrumb navigation with structured data"""
@@ -206,6 +292,7 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
         
         meta_tags = f'''
     <!-- Homepage SEO Meta Tags -->
+    <meta name="description" content="{self.config['site_description']}">
     <meta property="og:title" content="{self.config['site_name']}">
     <meta property="og:description" content="{self.config['site_description']}">
     <meta property="og:url" content="{homepage_url}">
@@ -218,14 +305,9 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
     <meta name="twitter:description" content="{self.config['site_description']}">
 
     <!-- Additional SEO -->
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="{homepage_url}">'''
-        
-        # Add AdSense verification if available
-        if self.google_adsense_verification:
-            meta_tags += f'\n    <!-- Google AdSense Verification -->'
-            meta_tags += f'\n    <meta name="google-adsense-account" content="{self.google_adsense_verification}">'
         
         return meta_tags
 
@@ -248,8 +330,14 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
             "name": self.config["site_name"],
             "description": self.config["site_description"],
             "url": f"{self.config['base_url']}{base_path}/",
-            "sameAs": social_urls
+            "logo": {
+                "@type": "ImageObject",
+                "url": f"{self.config['base_url']}{base_path}/static/logo.png"
+            }
         }
+        
+        if social_urls:
+            organization_data["sameAs"] = social_urls
         
         return f'<script type="application/ld+json">\n{json.dumps(organization_data, indent=2)}\n</script>'
 
@@ -263,6 +351,10 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
             "name": self.config["site_name"],
             "description": self.config["site_description"],
             "url": f"{self.config['base_url']}{base_path}/",
+            "publisher": {
+                "@type": "Organization",
+                "name": self.config["site_name"]
+            },
             "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
@@ -296,22 +388,38 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
         rss_items = []
         for post in posts[:limit]:
             post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
+            
+            # Handle datetime parsing more safely
+            try:
+                if 'T' in post.created_at:
+                    pub_date = datetime.fromisoformat(post.created_at.replace('Z', '+00:00')).strftime('%a, %d %b %Y %H:%M:%S %z')
+                else:
+                    # Assume it's already in a readable format
+                    pub_date = datetime.strptime(post.created_at, '%Y-%m-%d').strftime('%a, %d %b %Y %H:%M:%S %z')
+            except:
+                pub_date = datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
+            
             rss_items.append(f"""
     <item>
         <title><![CDATA[{post.title}]]></title>
         <description><![CDATA[{post.meta_description}]]></description>
         <link>{post_url}</link>
-        <guid>{post_url}</guid>
-        <pubDate>{datetime.fromisoformat(post.created_at.replace('Z', '+00:00')).strftime('%a, %d %b %Y %H:%M:%S %z')}</pubDate>
+        <guid isPermaLink="true">{post_url}</guid>
+        <pubDate>{pub_date}</pubDate>
     </item>""")
         
+        current_date = datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
+        
         return f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>{self.config['site_name']}</title>
         <description>{self.config['site_description']}</description>
         <link>{self.config['base_url']}{base_path}/</link>
-        <lastBuildDate>{datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')}</lastBuildDate>
+        <atom:link href="{self.config['base_url']}{base_path}/rss.xml" rel="self" type="application/rss+xml" />
+        <language>en-us</language>
+        <lastBuildDate>{current_date}</lastBuildDate>
+        <generator>AI Blog System</generator>
         {''.join(rss_items)}
     </channel>
 </rss>"""
@@ -335,51 +443,128 @@ Sitemap: {self.config['base_url']}{base_path}/sitemap.xml"""
             if 'decoding=' not in attrs:
                 attrs += ' decoding="async"'
             
+            # Add width and height if not present (helps with CLS)
+            if 'width=' not in attrs and 'height=' not in attrs:
+                attrs += ' style="max-width: 100%; height: auto;"'
+            
             return f'<img{attrs}>'
         
         return re.sub(img_pattern, add_attributes, content)
 
     def generate_seo_report(self, posts) -> dict:
         """Generate SEO analysis report"""
+        if not posts:
+            return {
+                'total_posts': 0,
+                'recommendations': ['No posts found to analyze']
+            }
+            
         report = {
             'total_posts': len(posts),
             'posts_with_meta_description': 0,
             'posts_with_keywords': 0,
+            'posts_with_images': 0,
             'average_title_length': 0,
             'average_meta_description_length': 0,
+            'title_issues': [],
+            'meta_description_issues': [],
             'recommendations': []
         }
         
         total_title_length = 0
         total_meta_length = 0
         
-        for post in posts:
+        for i, post in enumerate(posts):
             # Check meta descriptions
             if hasattr(post, 'meta_description') and post.meta_description:
                 report['posts_with_meta_description'] += 1
-                total_meta_length += len(post.meta_description)
+                meta_len = len(post.meta_description)
+                total_meta_length += meta_len
+                
+                # Check meta description length
+                if meta_len < 120:
+                    report['meta_description_issues'].append(f"Post '{post.title}': Meta description too short ({meta_len} chars)")
+                elif meta_len > 160:
+                    report['meta_description_issues'].append(f"Post '{post.title}': Meta description too long ({meta_len} chars)")
             
             # Check keywords
             if hasattr(post, 'seo_keywords') and post.seo_keywords:
                 report['posts_with_keywords'] += 1
             
-            # Title length
+            # Check images
+            if hasattr(post, 'featured_image') and post.featured_image:
+                report['posts_with_images'] += 1
+            elif hasattr(post, 'image') and post.image:
+                report['posts_with_images'] += 1
+            
+            # Check title length
             if hasattr(post, 'title'):
-                total_title_length += len(post.title)
+                title_len = len(post.title)
+                total_title_length += title_len
+                
+                if title_len > 60:
+                    report['title_issues'].append(f"Post '{post.title}': Title too long ({title_len} chars)")
+                elif title_len < 30:
+                    report['title_issues'].append(f"Post '{post.title}': Title too short ({title_len} chars)")
         
-        if posts:
-            report['average_title_length'] = total_title_length / len(posts)
-            if report['posts_with_meta_description'] > 0:
-                report['average_meta_description_length'] = total_meta_length / report['posts_with_meta_description']
+        # Calculate averages
+        report['average_title_length'] = total_title_length / len(posts)
+        if report['posts_with_meta_description'] > 0:
+            report['average_meta_description_length'] = total_meta_length / report['posts_with_meta_description']
         
         # Generate recommendations
-        if report['posts_with_meta_description'] / len(posts) < 0.8:
-            report['recommendations'].append("Add meta descriptions to more posts")
+        meta_desc_percentage = report['posts_with_meta_description'] / len(posts)
+        if meta_desc_percentage < 0.8:
+            report['recommendations'].append(f"Add meta descriptions to more posts ({meta_desc_percentage:.1%} have them)")
         
-        if report['posts_with_keywords'] / len(posts) < 0.5:
-            report['recommendations'].append("Add SEO keywords to more posts")
+        keywords_percentage = report['posts_with_keywords'] / len(posts)
+        if keywords_percentage < 0.5:
+            report['recommendations'].append(f"Add SEO keywords to more posts ({keywords_percentage:.1%} have them)")
+        
+        images_percentage = report['posts_with_images'] / len(posts)
+        if images_percentage < 0.7:
+            report['recommendations'].append(f"Add featured images to more posts ({images_percentage:.1%} have them)")
         
         if report['average_title_length'] > 60:
-            report['recommendations'].append("Consider shorter post titles for better SEO")
+            report['recommendations'].append("Consider shorter post titles for better SEO (average: {:.0f} chars)".format(report['average_title_length']))
+        
+        if not report['recommendations']:
+            report['recommendations'].append("SEO looks good! Keep up the great work.")
         
         return report
+
+    def generate_performance_hints(self) -> str:
+        """Generate performance optimization hints for HTML"""
+        return '''
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">'''
+
+    def validate_config(self) -> list:
+        """Validate SEO configuration and return warnings/errors"""
+        warnings = []
+        
+        # Check required fields
+        required_fields = ['site_name', 'site_description', 'base_url']
+        for field in required_fields:
+            if not self.config.get(field):
+                warnings.append(f"Missing required field: {field}")
+        
+        # Check Google Analytics ID format
+        if self.google_analytics_id and not self.google_analytics_id.startswith('G-'):
+            warnings.append("Google Analytics ID should start with 'G-'")
+        
+        # Check AdSense ID format
+        if self.google_adsense_id and not self.google_adsense_id.startswith('ca-pub-'):
+            warnings.append("Google AdSense ID should start with 'ca-pub-'")
+        
+        # Check social accounts
+        social_accounts = self.config.get('social_accounts', {})
+        if social_accounts.get('twitter') and not social_accounts['twitter'].startswith('@'):
+            warnings.append("Twitter handle should start with '@'")
+        
+        return warnings
