@@ -131,7 +131,7 @@ jobs:
             exit 1
           fi
         fi
-
+    
     - name: Commit changes before deployment
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -164,7 +164,7 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-
+    
     - name: Deployment Summary
       run: |
         echo "## Deployment Complete!" >> $GITHUB_STEP_SUMMARY
