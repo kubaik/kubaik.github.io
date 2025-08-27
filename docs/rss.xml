@@ -4,8 +4,15 @@
         <title>AI Tech Blog</title>
         <description>Cutting-edge insights into technology, AI, and development</description>
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
-        <lastBuildDate>Wed, 27 Aug 2025 05:36:17 </lastBuildDate>
+        <lastBuildDate>Wed, 27 Aug 2025 06:33:42 </lastBuildDate>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Cloud Computing Platforms: A Comprehensive Guide]]></title>
+        <description><![CDATA[Learn how to harness the full potential of cloud computing platforms with our comprehensive guide. Explore the benefits, features, and best practices.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</link>
+        <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</guid>
+        <pubDate>Wed, 27 Aug 2025 06:33:42 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Data Science Techniques: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Data Science Techniques covering key concepts, benefits, and best practices for developers.]]></description>
@@ -138,13 +145,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</link>
         <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</guid>
         <pubDate>Thu, 21 Aug 2025 14:04:57 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[The Ultimate Guide to IoT: Connecting the World Digitally]]></title>
-        <description><![CDATA[Discover the power of IoT with our comprehensive guide! Learn how IoT is revolutionizing connectivity and shaping the digital world.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-connecting-the-world-dig/</link>
-        <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-connecting-the-world-dig/</guid>
-        <pubDate>Thu, 21 Aug 2025 11:18:55 </pubDate>
     </item>
     </channel>
 </rss>
