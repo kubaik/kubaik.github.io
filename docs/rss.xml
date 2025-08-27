@@ -4,8 +4,15 @@
         <title>AI Tech Blog</title>
         <description>Cutting-edge insights into technology, AI, and development</description>
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
-        <lastBuildDate>Wed, 27 Aug 2025 05:34:20 </lastBuildDate>
+        <lastBuildDate>Wed, 27 Aug 2025 05:36:17 </lastBuildDate>
         
+    <item>
+        <title><![CDATA[Understanding Data Science Techniques: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Data Science Techniques covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-data-science-techniques-a-complete-g/</link>
+        <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-data-science-techniques-a-complete-g/</guid>
+        <pubDate>Wed, 27 Aug 2025 05:36:07 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Software Testing: Proven Strategies for Success]]></title>
         <description><![CDATA[Learn how to master software testing with proven strategies for success. Discover expert tips and techniques to improve your testing process.]]></description>
@@ -138,13 +145,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-connecting-the-world-dig/</link>
         <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-connecting-the-world-dig/</guid>
         <pubDate>Thu, 21 Aug 2025 11:18:55 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Microservices Architecture: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</link>
-        <guid>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</guid>
-        <pubDate>Thu, 21 Aug 2025 11:15:36 </pubDate>
     </item>
     </channel>
 </rss>
