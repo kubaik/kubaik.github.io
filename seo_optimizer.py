@@ -69,9 +69,9 @@ class SEOOptimizer:
         """Generate global meta tags for all pages"""
         meta_tags = ""
         
-        # Add AdSense verification if available
+        # Add AdSense verification if available - MUST be on homepage
         if self.google_adsense_verification:
-            meta_tags += f'    <meta name="google-adsense-account" content="{self.google_adsense_verification}">\n'
+            meta_tags += f'    <meta name="google-adsense-account" content="ca-pub-{self.google_adsense_verification.replace("ca-pub-", "")}">\n'
         
         # Fixed: Use correct Google Search Console verification
         if self.google_search_console_verification:
@@ -543,6 +543,18 @@ Sitemap: {self.config['base_url']}{base_path}/rss.xml"""
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">'''
+
+    def generate_adsense_verification_only(self) -> str:
+        """Generate ONLY AdSense verification meta tag for homepage"""
+        if not self.google_adsense_verification:
+            return ""
+        
+        # Clean up the AdSense ID to ensure proper format
+        adsense_id = self.google_adsense_verification
+        if not adsense_id.startswith('ca-pub-'):
+            adsense_id = f"ca-pub-{adsense_id}"
+        
+        return f'<meta name="google-adsense-account" content="{adsense_id}">'
 
     def validate_config(self) -> list:
         """Validate SEO configuration and return warnings/errors"""
