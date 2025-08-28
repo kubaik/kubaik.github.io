@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 27 Aug 2025 08:31:06 </lastBuildDate>
+        <lastBuildDate>Thu, 28 Aug 2025 06:34:50 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering API Design Patterns: Creating Efficient and Scalable Interfaces]]></title>
+        <description><![CDATA[Learn how to create efficient and scalable interfaces with this comprehensive guide on mastering API design patterns. Elevate your API game now!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-creating-efficient-a/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-creating-efficient-a/</guid>
+        <pubDate>Thu, 28 Aug 2025 06:34:50 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Database Optimization: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-web-development-trends-a-complete-gu/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-web-development-trends-a-complete-gu/</guid>
         <pubDate>Thu, 21 Aug 2025 15:08:23 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Serverless Computing: The Future of Scalable Technology]]></title>
-        <description><![CDATA[Learn how to harness the power of serverless computing for infinite scalability. Discover the future of technology in our comprehensive guide.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-serverless-computing-the-future-of-scala/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-serverless-computing-the-future-of-scala/</guid>
-        <pubDate>Thu, 21 Aug 2025 14:53:34 </pubDate>
     </item>
     </channel>
 </rss>
