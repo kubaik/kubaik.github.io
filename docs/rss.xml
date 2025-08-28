@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 28 Aug 2025 10:48:11 </lastBuildDate>
+        <lastBuildDate>Thu, 28 Aug 2025 10:51:56 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Progressive Web Apps: The Future of Mobile Experience]]></title>
+        <description><![CDATA[Discover how Progressive Web Apps are transforming the mobile experience. Unleash the power of PWA technology for faster, engaging mobile interactions.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-the-f/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-the-f/</guid>
+        <pubDate>Thu, 28 Aug 2025 10:51:55 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding DevOps and CI/CD: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to DevOps and CI/CD covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-backend-architecture-a-complete-guid/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-backend-architecture-a-complete-guid/</guid>
         <pubDate>Fri, 22 Aug 2025 06:24:03 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Maximizing Efficiency: The Ultimate Guide to Database Optimization]]></title>
-        <description><![CDATA[Learn how to boost performance and streamline operations with our ultimate guide to database optimization. Maximize efficiency now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/maximizing-efficiency-the-ultimate-guide-to-databa/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/maximizing-efficiency-the-ultimate-guide-to-databa/</guid>
-        <pubDate>Thu, 21 Aug 2025 16:33:41 </pubDate>
     </item>
     </channel>
 </rss>
