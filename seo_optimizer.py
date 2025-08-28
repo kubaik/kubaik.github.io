@@ -231,6 +231,14 @@ class SEOOptimizer:
         """Generate robots.txt with base_path support"""
         base_path = self.config.get("base_path", "")
         
+        # Fix: Don't add base_path if base_url already includes it
+        if base_path and self.config['base_url'].endswith(base_path):
+            sitemap_url = f"{self.config['base_url']}/sitemap.xml"
+            rss_url = f"{self.config['base_url']}/rss.xml"
+        else:
+            sitemap_url = f"{self.config['base_url']}{base_path}/sitemap.xml"
+            rss_url = f"{self.config['base_url']}{base_path}/rss.xml"
+        
         robots_content = f"""User-agent: *
 Allow: /
 Disallow: /static/admin/
@@ -242,10 +250,10 @@ Disallow: /*?*
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: {self.config['base_url']}{base_path}/sitemap.xml
+Sitemap: {sitemap_url}
 
 # RSS Feed location
-Sitemap: {self.config['base_url']}{base_path}/rss.xml"""
+Sitemap: {rss_url}"""
         
         return robots_content
 

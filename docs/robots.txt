@@ -9,7 +9,7 @@ Disallow: /*?*
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://kubaik.github.io/ai-blog-system/ai-blog-system/sitemap.xml
+Sitemap: https://kubaik.github.io/ai-blog-system/sitemap.xml
 
 # RSS Feed location
-Sitemap: https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml
+Sitemap: https://kubaik.github.io/ai-blog-system/rss.xml
