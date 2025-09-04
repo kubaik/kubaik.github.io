@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 04 Sep 2025 06:33:26 </lastBuildDate>
+        <lastBuildDate>Thu, 04 Sep 2025 09:12:53 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding API Design Patterns: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</guid>
+        <pubDate>Thu, 04 Sep 2025 09:12:36 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Frontend Frameworks: A Guide to Building Stunning Websites]]></title>
         <description><![CDATA[Learn how to master frontend frameworks and build visually stunning websites with this comprehensive guide. Elevate your web development skills now!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/protect-your-data-essential-cybersecurity-best-pra/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/protect-your-data-essential-cybersecurity-best-pra/</guid>
         <pubDate>Sun, 24 Aug 2025 06:32:58 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering DevOps and CI/CD: A Guide to Agile Software Development]]></title>
-        <description><![CDATA[Learn how to master DevOps and CI/CD for agile software development in this comprehensive guide. Streamline your workflow and boost productivity today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-agile-softwar/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-agile-softwar/</guid>
-        <pubDate>Sat, 23 Aug 2025 06:32:13 </pubDate>
     </item>
     </channel>
 </rss>
