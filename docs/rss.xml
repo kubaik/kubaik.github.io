@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 03 Sep 2025 06:32:46 </lastBuildDate>
+        <lastBuildDate>Thu, 04 Sep 2025 06:33:26 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Frontend Frameworks: A Guide to Building Stunning Websites]]></title>
+        <description><![CDATA[Learn how to master frontend frameworks and build visually stunning websites with this comprehensive guide. Elevate your web development skills now!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</guid>
+        <pubDate>Thu, 04 Sep 2025 06:33:26 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unveiling the Power of Machine Learning Algorithms]]></title>
         <description><![CDATA[Discover how machine learning algorithms are revolutionizing industries and transforming data into actionable insights. Explore the power of AI in our latest blog post!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-agile-softwar/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-agile-softwar/</guid>
         <pubDate>Sat, 23 Aug 2025 06:32:13 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[The Ultimate Guide to IoT: Revolutionizing the Way We Live!]]></title>
-        <description><![CDATA[Explore the future of IoT in our comprehensive guide! Discover how IoT is transforming everyday life and revolutionizing the way we live.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-revolutionizing-the-way-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/the-ultimate-guide-to-iot-revolutionizing-the-way-/</guid>
-        <pubDate>Fri, 22 Aug 2025 06:47:07 </pubDate>
     </item>
     </channel>
 </rss>
