@@ -339,6 +339,15 @@ def create_sample_config():
             "linkedin": "your-linkedin-page",
             "facebook": "your-facebook-page"
         },
+
+        "twitter_api":{
+        "api_key": "7P6iS0FF7gY8W85exTschgmGD",
+        "api_secret": "jsAQgNWY0IfFNRaoO9GpAVkst1k4EPVG2VILSVGxp8ubP3MBSg",
+        "access_token": "263530787-1MPeCXCHfRWV5YV3Vz9WmK4MZT7LaHJyhdeTzLta",
+        "access_token_secret": "6AbtBr1YKwzHYJrL6yxUtYPVKs2JnFZwcSNM3tO8RK8RE",
+        "bearer_token": "AAAAAAAAAAAAAAAAAAAAAGAYpwEAAAAATWxF8efzbv1LccCZv2drOfqnvZ0%3DcKCm4c39fLfwjItmMqGaKKnCqc1PAhBdhRRB60mvChUktbhYqV"
+        },
+  
         
         "content_topics": [
             "Machine Learning Algorithms",

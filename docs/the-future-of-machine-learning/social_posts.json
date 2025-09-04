@@ -1,7 +1,9 @@
 {
-  "twitter": "New blog post: Untitled Post\n\nBlog post about Untitled Post...\n\nhttps://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/ #recovered #blog",
-  "linkedin": "New blog post: Untitled Post\n\nBlog post about Untitled Post\n\nRead more: https://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/\n\n#recovered #blog",
-  "facebook": "New blog post: Untitled Post\n\nBlog post about Untitled Post\n\nhttps://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/",
-  "reddit_title": "Untitled Post",
-  "reddit_content": "Blog post about Untitled Post\n\nFull article: https://kubaik.github.io/ai-blog-system/the-future-of-machine-learning/"
+  "twitter": "\ud83d\udcdd Untitled Post\n\nBlog post about Untitled Post\n\nhttps://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-machine-learning/ #Recovered #Blog",
+  "linkedin": "\ud83d\ude80 New blog post: Untitled Post\n\nBlog post about Untitled Post\n\n\ud83d\udcd6 Read the full article: https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-machine-learning/\n\n\ud83d\udcad What are your thoughts on this topic?\n\n#Recovered #Blog",
+  "facebook": "\ud83d\udcdd Untitled Post\n\nBlog post about Untitled Post\n\n\ud83d\udd17 Read more: https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-machine-learning/",
+  "reddit": {
+    "title": "Untitled Post",
+    "content": "Blog post about Untitled Post\n\nFull article: https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-machine-learning/"
+  }
 }
