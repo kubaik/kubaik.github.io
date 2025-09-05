@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 04 Sep 2025 09:13:42 </lastBuildDate>
+        <lastBuildDate>Fri, 05 Sep 2025 06:33:50 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Demystifying Backend Architecture: Building Robust Foundations]]></title>
+        <description><![CDATA[Unravel the secrets of backend architecture in our latest blog post! Learn how to construct a solid foundation for robust and efficient systems.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/demystifying-backend-architecture-building-robust-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/demystifying-backend-architecture-building-robust-/</guid>
+        <pubDate>Fri, 05 Sep 2025 06:33:50 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Stay Ahead of the Curve: Latest Web Development Trends]]></title>
         <description><![CDATA[Discover the top web development trends to stay ahead of the curve in 2022. Learn about new technologies and strategies to elevate your online presence.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</guid>
         <pubDate>Tue, 26 Aug 2025 06:36:17 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Maximizing Your Potential: The Ultimate Guide to Performance Optimization]]></title>
-        <description><![CDATA[Unleash your full potential with our ultimate guide to performance optimization. Learn expert tips and strategies to maximize your efficiency and productivity.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/maximizing-your-potential-the-ultimate-guide-to-pe/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/maximizing-your-potential-the-ultimate-guide-to-pe/</guid>
-        <pubDate>Mon, 25 Aug 2025 06:37:44 </pubDate>
     </item>
     </channel>
 </rss>
