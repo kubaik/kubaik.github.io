@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 05 Sep 2025 06:33:50 </lastBuildDate>
+        <lastBuildDate>Sat, 06 Sep 2025 06:30:16 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unraveling the Power of Blockchain: A Game-Changer in Technology]]></title>
+        <description><![CDATA[Discover how blockchain technology is revolutionizing industries and changing the way we interact with data. Unravel the power of blockchain in our latest blog post!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-power-of-blockchain-a-game-changer-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-power-of-blockchain-a-game-changer-/</guid>
+        <pubDate>Sat, 06 Sep 2025 06:30:16 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Demystifying Backend Architecture: Building Robust Foundations]]></title>
         <description><![CDATA[Unravel the secrets of backend architecture in our latest blog post! Learn how to construct a solid foundation for robust and efficient systems.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cybersecurity-best-practices-a-compl/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cybersecurity-best-practices-a-compl/</guid>
         <pubDate>Wed, 27 Aug 2025 05:09:28 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Microservices: A Guide to Modern Architecture]]></title>
-        <description><![CDATA[Learn how to master microservices architecture with our comprehensive guide. Explore the key principles and best practices for building modern systems.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</guid>
-        <pubDate>Tue, 26 Aug 2025 06:36:17 </pubDate>
     </item>
     </channel>
 </rss>
