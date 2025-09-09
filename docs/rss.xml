@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 08 Sep 2025 06:36:02 </lastBuildDate>
+        <lastBuildDate>Tue, 09 Sep 2025 06:35:00 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Microservices: The Blueprint for Scalable Architecture]]></title>
+        <description><![CDATA[Learn how to build a scalable architecture with our comprehensive guide on mastering microservices. Elevate your development game today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</guid>
+        <pubDate>Tue, 09 Sep 2025 06:34:59 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of AI: Innovative Applications Revolutionizing Industries]]></title>
         <description><![CDATA[Discover how AI is transforming industries with innovative applications. Explore the power of AI in revolutionizing businesses and society.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</guid>
         <pubDate>Wed, 27 Aug 2025 08:19:24 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Data Science Techniques: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Data Science Techniques covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-data-science-techniques-a-complete-g/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-data-science-techniques-a-complete-g/</guid>
-        <pubDate>Wed, 27 Aug 2025 05:36:07 </pubDate>
     </item>
     </channel>
 </rss>
