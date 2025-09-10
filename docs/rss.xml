@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Sep 2025 11:03:55 </lastBuildDate>
+        <lastBuildDate>Wed, 10 Sep 2025 11:17:45 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding Backend Architecture: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Backend Architecture covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-backend-architecture-a-complete-guid/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-backend-architecture-a-complete-guid/</guid>
+        <pubDate>Wed, 10 Sep 2025 11:17:45 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering the Magic of Serverless Computing: A Beginner's Guide]]></title>
         <description><![CDATA[Learn the ropes of Serverless Computing in this comprehensive beginner's guide. Unlock the magic and master the art of serverless technology today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</guid>
         <pubDate>Wed, 10 Sep 2025 06:33:58 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Microservices: The Blueprint for Scalable Architecture]]></title>
-        <description><![CDATA[Learn how to build a scalable architecture with our comprehensive guide on mastering microservices. Elevate your development game today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</guid>
-        <pubDate>Tue, 09 Sep 2025 06:34:59 </pubDate>
     </item>
     </channel>
 </rss>
