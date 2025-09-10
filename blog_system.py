@@ -537,6 +537,105 @@ if __name__ == "__main__":
             
             print("Social media posts generated for all posts!")
             
+        elif mode == "auto":
+            print("Starting automated blog generation with monetization and Twitter posting...")
+            
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found. Run 'python blog_system.py init' first.")
+                sys.exit(1)
+            
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            
+            blog_system = BlogSystem(config)
+            
+            try:
+                topic = pick_next_topic()
+                blog_post = asyncio.run(blog_system.generate_blog_post(topic))
+                blog_system.save_post(blog_post)
+                
+                from static_site_generator import StaticSiteGenerator  # Make sure this import exists
+                generator = StaticSiteGenerator(blog_system)
+                generator.generate_site()
+                
+                print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
+                
+                # NEW: Auto-post to Twitter
+                from visibility_automator import VisibilityAutomator
+                visibility = VisibilityAutomator(config)
+                
+                # Validate Twitter config first
+                twitter_validation = visibility.validate_twitter_config()
+                if twitter_validation['valid']:
+                    print("🐦 Posting to Twitter...")
+                    twitter_result = visibility.post_to_twitter(blog_post)
+                    
+                    if twitter_result['success']:
+                        print(f"✅ Twitter post successful! Tweet ID: {twitter_result.get('tweet_id')}")
+                        print(f"📝 Tweet text: {twitter_result['text'][:100]}...")
+                        if twitter_result.get('url'):
+                            print(f"🔗 Tweet URL: {twitter_result['url']}")
+                    else:
+                        print(f"❌ Twitter post failed: {twitter_result['error']}")
+                        print("📝 Generated tweet text (you can post manually):")
+                        print(f"   {twitter_result.get('text', 'N/A')}")
+                else:
+                    print(f"⚠️ Twitter posting skipped: {twitter_validation['message']}")
+                    if twitter_validation.get('error'):
+                        print(f"   Error details: {twitter_validation['error']}")
+                
+            except Exception as e:
+                print(f"Error: {e}")
+                import traceback
+                traceback.print_exc()
+                sys.exit(1)
+        
+        elif mode == "test-twitter":
+            print("Testing Twitter integration...")
+            
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            
+            from visibility_automator import VisibilityAutomator
+            visibility = VisibilityAutomator(config)
+            
+            # Test connection
+            connection_test = visibility.test_twitter_connection()
+            print(f"Connection test: {connection_test}")
+            
+            if connection_test['success']:
+                # Create a simple test post
+                class TestPost:
+                    def __init__(self):
+                        self.title = "Test - AI Blog System Twitter Integration"
+                        self.meta_description = "Testing our automated blog to Twitter posting system. Integration test successful!"
+                        self.slug = "test-twitter-integration"
+                        self.tags = ["test", "automation", "blogging"]
+                
+                test_post = TestPost()
+                
+                # Generate social post (don't actually post)
+                social_posts = visibility.generate_social_posts(test_post)
+                print(f"\nGenerated Twitter post preview:")
+                print(f"📱 {social_posts['twitter']}")
+                print(f"   Length: {len(social_posts['twitter'])} characters")
+                
+                # Ask for confirmation before posting
+                response = input("\nPost this test tweet? (y/N): ")
+                if response.lower() == 'y':
+                    result = visibility.post_to_twitter(test_post)
+                    if result['success']:
+                        print("✅ Test tweet posted successfully!")
+                        print(f"🆔 Tweet ID: {result.get('tweet_id')}")
+                    else:
+                        print(f"❌ Test tweet failed: {result['error']}")
+                else:
+                    print("Test cancelled - no tweet posted.")   
+
         else:
             print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social]")
             print("  init    - Initialize blog system with monetization config")
