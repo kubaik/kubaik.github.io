@@ -6,9 +6,37 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Sep 2025 06:33:59 </lastBuildDate>
+        <lastBuildDate>Wed, 10 Sep 2025 07:42:19 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding Internet of Things (IoT): A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</guid>
+        <pubDate>Wed, 10 Sep 2025 07:42:18 </pubDate>
+    </item>
+    <item>
+        <title><![CDATA[Understanding Progressive Web Apps: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Progressive Web Apps covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-progressive-web-apps-a-complete-guid/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-progressive-web-apps-a-complete-guid/</guid>
+        <pubDate>Wed, 10 Sep 2025 07:36:46 </pubDate>
+    </item>
+    <item>
+        <title><![CDATA[Understanding Mobile App Development: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-mobile-app-development-a-complete-gu/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-mobile-app-development-a-complete-gu/</guid>
+        <pubDate>Wed, 10 Sep 2025 07:29:27 </pubDate>
+    </item>
+    <item>
+        <title><![CDATA[Understanding Cloud Computing Platforms: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Cloud Computing Platforms covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-cloud-computing-platforms-a-complete/</guid>
+        <pubDate>Wed, 10 Sep 2025 07:24:17 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering DevOps: A Guide to Seamless CI/CD]]></title>
         <description><![CDATA[Learn how to master DevOps and achieve seamless Continuous Integration/Continuous Deployment in this comprehensive guide. Elevate your software development process now!]]></description>
@@ -120,34 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-the-f/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-the-f/</guid>
         <pubDate>Thu, 28 Aug 2025 10:51:55 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding DevOps and CI/CD: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to DevOps and CI/CD covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-devops-and-cicd-a-complete-guide/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-devops-and-cicd-a-complete-guide/</guid>
-        <pubDate>Thu, 28 Aug 2025 10:47:44 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Microservices Architecture: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</guid>
-        <pubDate>Thu, 28 Aug 2025 07:01:12 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering API Design Patterns: Creating Efficient and Scalable Interfaces]]></title>
-        <description><![CDATA[Learn how to create efficient and scalable interfaces with this comprehensive guide on mastering API design patterns. Elevate your API game now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-creating-efficient-a/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-creating-efficient-a/</guid>
-        <pubDate>Thu, 28 Aug 2025 06:34:50 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Database Optimization: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</guid>
-        <pubDate>Wed, 27 Aug 2025 08:30:52 </pubDate>
     </item>
     </channel>
 </rss>

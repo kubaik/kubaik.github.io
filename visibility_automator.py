@@ -4,30 +4,32 @@ import base64
 import hashlib
 import hmac
 import time
+import secrets
 from datetime import datetime
 from urllib.parse import quote, urlencode
 from typing import List, Dict, Optional
 import logging
 
 class TwitterAPI:
-    """Twitter API v2 integration for posting tweets"""
+    """Twitter API v2 integration with proper OAuth 1.0a authentication"""
     
-    def __init__(self, api_key: str, api_secret: str, access_token: str, access_token_secret: str, bearer_token: str):
+    def __init__(self, api_key: str, api_secret: str, access_token: str, access_token_secret: str):
         self.api_key = api_key
         self.api_secret = api_secret
         self.access_token = access_token
         self.access_token_secret = access_token_secret
-        self.bearer_token = bearer_token
         self.base_url = "https://api.twitter.com/2/"
         
     def _generate_oauth_signature(self, method: str, url: str, params: dict) -> str:
         """Generate OAuth 1.0a signature"""
         # Create parameter string
-        sorted_params = sorted(params.items())
-        param_string = '&'.join([f"{quote(str(k))}={quote(str(v))}" for k, v in sorted_params])
+        encoded_params = []
+        for key in sorted(params.keys()):
+            encoded_params.append(f"{quote(str(key))}={quote(str(params[key]))}")
+        param_string = "&".join(encoded_params)
         
         # Create signature base string
-        base_string = f"{method.upper()}&{quote(url)}&{quote(param_string)}"
+        base_string = f"{method}&{quote(url)}&{quote(param_string)}"
         
         # Create signing key
         signing_key = f"{quote(self.api_secret)}&{quote(self.access_token_secret)}"
@@ -39,91 +41,113 @@ class TwitterAPI:
         
         return signature
     
-    def _create_oauth_header(self, method: str, url: str, params: dict) -> str:
-        """Create OAuth 1.0a authorization header"""
+    def _generate_oauth_header(self, method: str, url: str, additional_params: dict = None) -> str:
+        """Generate OAuth 1.0a authorization header"""
         oauth_params = {
             'oauth_consumer_key': self.api_key,
-            'oauth_nonce': str(int(time.time() * 1000)),
+            'oauth_token': self.access_token,
             'oauth_signature_method': 'HMAC-SHA1',
             'oauth_timestamp': str(int(time.time())),
-            'oauth_token': self.access_token,
+            'oauth_nonce': secrets.token_hex(16),
             'oauth_version': '1.0'
         }
         
-        # Add request parameters for signature calculation
-        all_params = {**oauth_params, **params}
+        # Combine OAuth params with any additional params for signature
+        all_params = oauth_params.copy()
+        if additional_params:
+            all_params.update(additional_params)
+        
+        # Generate signature
         oauth_params['oauth_signature'] = self._generate_oauth_signature(method, url, all_params)
         
-        # Create authorization header
-        oauth_header = 'OAuth ' + ', '.join([f'{k}="{quote(str(v))}"' for k, v in sorted(oauth_params.items())])
-        return oauth_header
+        # Build authorization header
+        auth_header_params = []
+        for key in sorted(oauth_params.keys()):
+            auth_header_params.append(f'{key}="{quote(str(oauth_params[key]))}"')
+        
+        return f"OAuth {', '.join(auth_header_params)}"
     
-    def post_tweet(self, text: str, media_ids: List[str] = None) -> dict:
-        """Post a tweet using Twitter API v2"""
+    def post_tweet(self, text: str) -> dict:
+        """Post a tweet using Twitter API v2 with OAuth 1.0a"""
         url = "https://api.twitter.com/2/tweets"
         
         tweet_data = {
             "text": text
         }
         
-        if media_ids:
-            tweet_data["media"] = {"media_ids": media_ids}
-        
         headers = {
-            "Authorization": f"Bearer {self.bearer_token}",
+            "Authorization": self._generate_oauth_header("POST", url),
             "Content-Type": "application/json"
         }
         
         try:
+            print(f"Attempting to post tweet: {text[:50]}...")
             response = requests.post(url, json=tweet_data, headers=headers, timeout=30)
             
+            print(f"Twitter API Response Status: {response.status_code}")
+            print(f"Twitter API Response: {response.text}")
+            
             if response.status_code == 201:
+                response_data = response.json()
                 return {
                     "success": True,
-                    "data": response.json(),
-                    "tweet_id": response.json().get('data', {}).get('id')
+                    "data": response_data,
+                    "tweet_id": response_data.get('data', {}).get('id')
                 }
             else:
                 return {
                     "success": False,
-                    "error": response.json(),
+                    "error": response.json() if response.text else f"HTTP {response.status_code}",
                     "status_code": response.status_code
                 }
                 
+        except requests.exceptions.RequestException as e:
+            return {
+                "success": False,
+                "error": f"Network error: {str(e)}"
+            }
+        except json.JSONDecodeError as e:
+            return {
+                "success": False,
+                "error": f"JSON decode error: {str(e)}"
+            }
         except Exception as e:
             return {
                 "success": False,
-                "error": str(e)
+                "error": f"Unexpected error: {str(e)}"
             }
     
-    def upload_media(self, file_path: str, media_category: str = "tweet_image") -> Optional[str]:
-        """Upload media to Twitter and return media_id"""
-        # This is a simplified version - you'd need to implement chunked upload for larger files
-        url = "https://upload.twitter.com/1.1/media/upload.json"
+    def test_connection(self) -> dict:
+        """Test the Twitter API connection using OAuth 1.0a"""
+        url = "https://api.twitter.com/2/users/me"
+        headers = {
+            "Authorization": self._generate_oauth_header("GET", url)
+        }
         
         try:
-            with open(file_path, 'rb') as file:
-                files = {'media': file}
-                data = {'media_category': media_category}
-                
-                # Create OAuth header for media upload
-                oauth_header = self._create_oauth_header('POST', url, {})
-                headers = {'Authorization': oauth_header}
-                
-                response = requests.post(url, files=files, data=data, headers=headers, timeout=60)
-                
-                if response.status_code == 200:
-                    return response.json().get('media_id_string')
-                else:
-                    logging.error(f"Media upload failed: {response.json()}")
-                    return None
-                    
+            response = requests.get(url, headers=headers, timeout=10)
+            if response.status_code == 200:
+                user_data = response.json()
+                return {
+                    "success": True,
+                    "user": user_data.get('data', {}),
+                    "message": "Twitter API connection successful"
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": response.json() if response.text else f"HTTP {response.status_code}",
+                    "message": "Twitter API connection failed"
+                }
         except Exception as e:
-            logging.error(f"Media upload error: {str(e)}")
-            return None
+            return {
+                "success": False,
+                "error": str(e),
+                "message": "Failed to connect to Twitter API"
+            }
 
 class VisibilityAutomator:
-    """Enhanced content distribution and visibility automation with Twitter integration"""
+    """Enhanced content distribution with proper Twitter integration"""
     
     def __init__(self, config):
         self.config = config
@@ -131,49 +155,35 @@ class VisibilityAutomator:
         self.twitter_config = config.get('twitter_api', {})
         self.twitter_api = None
         
-        # Initialize Twitter API if credentials are provided
-        if all(key in self.twitter_config for key in ['api_key', 'api_secret', 'access_token', 'access_token_secret', 'bearer_token']):
+        # Initialize Twitter API with OAuth 1.0a (proper method)
+        twitter_creds = self.twitter_config
+        if all(key in twitter_creds for key in ['api_key', 'api_secret', 'access_token', 'access_token_secret']):
             self.twitter_api = TwitterAPI(
-                self.twitter_config['api_key'],
-                self.twitter_config['api_secret'],
-                self.twitter_config['access_token'],
-                self.twitter_config['access_token_secret'],
-                self.twitter_config['bearer_token']
+                api_key=twitter_creds['api_key'],
+                api_secret=twitter_creds['api_secret'],
+                access_token=twitter_creds['access_token'],
+                access_token_secret=twitter_creds['access_token_secret']
             )
+            print("Twitter API initialized with OAuth 1.0a ")
+        else:
+            print("Warning: Twitter OAuth credentials incomplete in config")
+            missing = [key for key in ['api_key', 'api_secret', 'access_token', 'access_token_secret'] 
+                      if key not in twitter_creds]
+            print(f"Missing: {', '.join(missing)}")
         
         # Set up logging
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
     
-    def submit_to_search_engines(self, sitemap_url: str) -> List[dict]:
-        """Submit sitemap to search engines"""
-        search_engines = [
-            f"https://www.google.com/ping?sitemap={quote(sitemap_url)}",
-            f"https://www.bing.com/ping?sitemap={quote(sitemap_url)}"
-        ]
+    def test_twitter_connection(self) -> dict:
+        """Test Twitter API connection"""
+        if not self.twitter_api:
+            return {
+                "success": False,
+                "error": "Twitter API not configured - missing OAuth credentials"
+            }
         
-        results = []
-        for engine in search_engines:
-            try:
-                response = requests.get(engine, timeout=10)
-                engine_name = engine.split('//')[1].split('.')[1]
-                results.append({
-                    'engine': engine_name,
-                    'status': response.status_code,
-                    'success': response.status_code == 200,
-                    'url': engine
-                })
-                self.logger.info(f"Submitted to {engine_name}: {response.status_code}")
-            except Exception as e:
-                engine_name = engine.split('//')[1].split('.')[1]
-                results.append({
-                    'engine': engine_name,
-                    'error': str(e),
-                    'success': False
-                })
-                self.logger.error(f"Failed to submit to {engine_name}: {str(e)}")
-        
-        return results
+        return self.twitter_api.test_connection()
     
     def generate_social_posts(self, post) -> dict:
         """Generate optimized social media posts for different platforms"""
@@ -186,12 +196,15 @@ class VisibilityAutomator:
             hashtags = ['#' + tag.replace(' ', '').replace('-', '').title() 
                        for tag in post.tags[:3]]
         elif hasattr(post, 'seo_keywords') and post.seo_keywords:
-            keywords = post.seo_keywords.split(',')[:3]
+            if isinstance(post.seo_keywords, str):
+                keywords = post.seo_keywords.split(',')[:3]
+            else:
+                keywords = post.seo_keywords[:3]
             hashtags = ['#' + kw.strip().replace(' ', '').title() for kw in keywords]
         
-        # Add site-specific hashtag if configured
-        if self.config.get('default_hashtag'):
-            hashtags.append(f"#{self.config['default_hashtag']}")
+        # Default hashtags if none found
+        if not hashtags:
+            hashtags = ['#TechBlog', '#AI', '#Development']
         
         social_posts = {
             'twitter': self._generate_twitter_post(post, post_url, hashtags),
@@ -215,15 +228,29 @@ class VisibilityAutomator:
         available_space = max_length - url_length - len(hashtag_text) - 3  # 3 for spaces
         
         # Create intro text
-        if len(post.title) + len(post.meta_description) + 10 < available_space:
-            intro = f"📝 {post.title}\n\n{post.meta_description[:100]}{'...' if len(post.meta_description) > 100 else ''}"
-        else:
+        if len(post.title) <= available_space - 20:  # Leave space for description
             intro = f"📝 {post.title}"
-            remaining = available_space - len(intro) - 2
-            if remaining > 20:
-                intro += f"\n\n{post.meta_description[:remaining]}..."
+            remaining = available_space - len(intro) - 4  # 4 for newlines
+            if remaining > 20 and hasattr(post, 'meta_description'):
+                description = post.meta_description[:remaining] + ('...' if len(post.meta_description) > remaining else '')
+                intro += f"\n\n{description}"
+        else:
+            # Title is too long, truncate it
+            title_limit = available_space - 20
+            intro = f"📝 {post.title[:title_limit]}..."
         
-        return f"{intro}\n\n{post_url} {hashtag_text}".strip()
+        tweet = f"{intro}\n\n{post_url} {hashtag_text}".strip()
+        
+        # Ensure we don't exceed character limit
+        if len(tweet) > max_length:
+            excess = len(tweet) - max_length
+            if hasattr(post, 'meta_description') and post.meta_description in tweet:
+                # Trim the description
+                current_desc = post.meta_description
+                new_desc = current_desc[:len(current_desc) - excess - 3] + "..."
+                tweet = tweet.replace(current_desc, new_desc)
+        
+        return tweet
     
     def _generate_linkedin_post(self, post, post_url: str, hashtags: List[str]) -> str:
         """Generate LinkedIn-optimized post"""
@@ -239,12 +266,12 @@ class VisibilityAutomator:
         """Generate Facebook-optimized post"""
         return f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 Read more: {post_url}"
     
-    def post_to_twitter(self, post, custom_text: str = None, image_path: str = None) -> dict:
+    def post_to_twitter(self, post, custom_text: str = None) -> dict:
         """Post blog intro to Twitter"""
         if not self.twitter_api:
             return {
                 "success": False,
-                "error": "Twitter API not configured. Please provide API credentials in config."
+                "error": "Twitter API not configured. Please check your OAuth credentials in config."
             }
         
         try:
@@ -255,18 +282,11 @@ class VisibilityAutomator:
                 social_posts = self.generate_social_posts(post)
                 tweet_text = social_posts['twitter']
             
-            # Upload image if provided
-            media_ids = None
-            if image_path:
-                media_id = self.twitter_api.upload_media(image_path)
-                if media_id:
-                    media_ids = [media_id]
-                    self.logger.info(f"Media uploaded successfully: {media_id}")
-                else:
-                    self.logger.warning("Failed to upload media, posting without image")
+            print(f"Generated tweet text: {tweet_text}")
+            print(f"Tweet length: {len(tweet_text)} characters")
             
             # Post the tweet
-            result = self.twitter_api.post_tweet(tweet_text, media_ids)
+            result = self.twitter_api.post_tweet(tweet_text)
             
             if result['success']:
                 self.logger.info(f"Tweet posted successfully: {result.get('tweet_id')}")
@@ -281,7 +301,8 @@ class VisibilityAutomator:
                 return {
                     "success": False,
                     "error": result.get('error'),
-                    "text": tweet_text
+                    "text": tweet_text,
+                    "status_code": result.get('status_code')
                 }
         
         except Exception as e:
@@ -291,144 +312,112 @@ class VisibilityAutomator:
                 "error": str(e)
             }
     
-    def auto_post_new_blog(self, post, platforms: List[str] = None, delay_minutes: int = 0) -> dict:
-        """Automatically post to specified social platforms when new blog is published"""
-        if platforms is None:
-            platforms = ['twitter']  # Default to Twitter only
-        
-        results = {}
-        
-        # Add delay if specified (useful for scheduling)
-        if delay_minutes > 0:
-            import time
-            self.logger.info(f"Waiting {delay_minutes} minutes before posting...")
-            time.sleep(delay_minutes * 60)
-        
-        # Post to Twitter
-        if 'twitter' in platforms:
-            twitter_result = self.post_to_twitter(post)
-            results['twitter'] = twitter_result
-        
-        # Add other platforms here as needed
-        # if 'linkedin' in platforms:
-        #     results['linkedin'] = self.post_to_linkedin(post)
-        
-        return results
-    
-    def schedule_social_posts(self, posts: List, interval_hours: int = 2) -> List[dict]:
-        """Schedule social media posts for multiple blog posts"""
-        import threading
-        import time
-        
-        scheduled_posts = []
-        
-        for i, post in enumerate(posts):
-            delay_seconds = i * interval_hours * 3600
-            
-            def post_delayed(p=post, delay=delay_seconds):
-                time.sleep(delay)
-                return self.post_to_twitter(p)
-            
-            # Start thread for delayed posting
-            thread = threading.Thread(target=post_delayed)
-            thread.start()
-            
-            scheduled_posts.append({
-                'post': post.title,
-                'scheduled_time': datetime.now().timestamp() + delay_seconds,
-                'thread': thread
-            })
-        
-        return scheduled_posts
-    
-    def get_posting_analytics(self, post_results: List[dict]) -> dict:
-        """Analyze posting results and provide insights"""
-        total_posts = len(post_results)
-        successful_posts = sum(1 for result in post_results if result.get('success'))
-        failed_posts = total_posts - successful_posts
-        
-        analytics = {
-            'total_attempted': total_posts,
-            'successful': successful_posts,
-            'failed': failed_posts,
-            'success_rate': successful_posts / total_posts if total_posts > 0 else 0,
-            'platforms_used': [],
-            'errors': []
-        }
-        
-        # Collect platform info and errors
-        for result in post_results:
-            if 'platform' in result:
-                analytics['platforms_used'].append(result['platform'])
-            if not result.get('success') and 'error' in result:
-                analytics['errors'].append(result['error'])
-        
-        return analytics
-    
     def validate_twitter_config(self) -> dict:
         """Validate Twitter API configuration"""
-        required_keys = ['api_key', 'api_secret', 'access_token', 'access_token_secret', 'bearer_token']
-        missing_keys = [key for key in required_keys if not self.twitter_config.get(key)]
+        required_keys = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
+        twitter_config = self.twitter_config
         
+        missing_keys = [key for key in required_keys if not twitter_config.get(key)]
         if missing_keys:
             return {
                 'valid': False,
-                'missing_keys': missing_keys,
-                'message': f"Missing Twitter API keys: {', '.join(missing_keys)}"
+                'message': f"Missing Twitter OAuth credentials: {', '.join(missing_keys)}"
             }
         
-        # Test API connection if all keys are present
+        # Test API connection
         if self.twitter_api:
-            try:
-                # Test with a simple API call (you might want to implement a test endpoint)
-                return {
-                    'valid': True,
-                    'message': "Twitter API configuration is valid"
-                }
-            except Exception as e:
-                return {
-                    'valid': False,
-                    'error': str(e),
-                    'message': "Twitter API keys provided but connection failed"
-                }
+            test_result = self.twitter_api.test_connection()
+            return {
+                'valid': test_result['success'],
+                'message': test_result['message'],
+                'error': test_result.get('error') if not test_result['success'] else None
+            }
         
         return {
             'valid': False,
             'message': "Twitter API not initialized"
         }
-    
-    def create_content_calendar(self, posts: List, start_date: datetime = None, posts_per_week: int = 3) -> List[dict]:
-        """Create a content calendar for social media posts"""
-        if not start_date:
-            start_date = datetime.now()
-        
-        calendar = []
-        days_between_posts = 7 / posts_per_week  # Days between each post
-        
-        for i, post in enumerate(posts):
-            post_date = start_date + datetime.timedelta(days=i * days_between_posts)
+    def submit_to_search_engines(self, sitemap_url: str) -> List[dict]:
+            """Submit sitemap to search engines"""
+            search_engines = [
+                f"https://www.google.com/ping?sitemap={quote(sitemap_url)}",
+                f"https://www.bing.com/ping?sitemap={quote(sitemap_url)}"
+            ]
             
-            calendar_entry = {
-                'post_title': post.title,
-                'post_slug': post.slug,
-                'scheduled_date': post_date.isoformat(),
-                'day_of_week': post_date.strftime('%A'),
-                'platforms': ['twitter'],  # Default platforms
-                'status': 'scheduled'
-            }
+            results = []
+            for engine in search_engines:
+                try:
+                    response = requests.get(engine, timeout=10)
+                    engine_name = engine.split('//')[1].split('.')[1]
+                    results.append({
+                        'engine': engine_name,
+                        'status': response.status_code,
+                        'success': response.status_code == 200,
+                        'url': engine
+                    })
+                    self.logger.info(f"Submitted to {engine_name}: {response.status_code}")
+                except Exception as e:
+                    engine_name = engine.split('//')[1].split('.')[1]
+                    results.append({
+                        'engine': engine_name,
+                        'error': str(e),
+                        'success': False
+                    })
+                    self.logger.error(f"Failed to submit to {engine_name}: {str(e)}")
             
-            calendar.append(calendar_entry)
-        
-        return calendar
+            return results    
+# Test function to verify Twitter integration
+def test_twitter_integration(config):
+    """Test function to verify Twitter posting works"""
+    print("Testing Twitter integration...")
     
-    def _format_rss_date(self, iso_date: str) -> str:
-        """Convert ISO date to RSS format"""
-        try:
-            if 'T' in iso_date:
-                dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-            else:
-                dt = datetime.strptime(iso_date, '%Y-%m-%d')
-            return dt.strftime('%a, %d %b %Y %H:%M:%S %z')
-        except:
-            dt = datetime.now()
-            return dt.strftime('%a, %d %b %Y %H:%M:%S %z')
+    visibility = VisibilityAutomator(config)
+    
+    # Test connection first
+    connection_test = visibility.test_twitter_connection()
+    print(f"Connection test: {connection_test}")
+    
+    if not connection_test['success']:
+        print(f"Connection failed: {connection_test.get('error')}")
+        return False
+    
+    # Create a test post object
+    class TestPost:
+        def __init__(self):
+            self.title = "Test Blog Post - Twitter Integration"
+            self.meta_description = "Testing automated Twitter posting from our blog system. This is a test post to verify the integration works correctly."
+            self.slug = "test-twitter-integration" 
+            self.tags = ["test", "twitter", "automation"]
+    
+    test_post = TestPost()
+    
+    # Generate preview without posting
+    social_posts = visibility.generate_social_posts(test_post)
+    print(f"Generated tweet preview: {social_posts['twitter']}")
+    print(f"Tweet length: {len(social_posts['twitter'])} characters")
+    
+    # Ask for confirmation before actually posting
+    response = input("\nDo you want to post this test tweet? (y/N): ")
+    if response.lower() == 'y':
+        result = visibility.post_to_twitter(test_post)
+        print(f"Posting result: {result}")
+        return result['success']
+    else:
+        print("Test cancelled - no tweet posted.")
+        return True  # Test structure works, just didn't post
+
+if __name__ == "__main__":
+    # Example usage with your config
+    import yaml
+    
+    try:
+        with open("config.yaml", "r") as f:
+            config = yaml.safe_load(f)
+        
+        success = test_twitter_integration(config)
+        print(f"Twitter integration test: {'✅ PASSED' if success else '❌ FAILED'}")
+        
+    except FileNotFoundError:
+        print("config.yaml not found. Please make sure it exists in the current directory.")
+    except Exception as e:
+        print(f"Error testing Twitter integration: {e}")
