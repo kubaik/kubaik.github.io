@@ -5,3 +5,4 @@ pyyaml==6.0.1
 pygments==2.17.2
 requests
 requests-oauthlib
+tweepy
