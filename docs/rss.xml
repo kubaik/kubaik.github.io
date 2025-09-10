@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Sep 2025 10:55:37 </lastBuildDate>
+        <lastBuildDate>Wed, 10 Sep 2025 11:03:55 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering the Magic of Serverless Computing: A Beginner's Guide]]></title>
+        <description><![CDATA[Learn the ropes of Serverless Computing in this comprehensive beginner's guide. Unlock the magic and master the art of serverless technology today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-the-magic-of-serverless-computing-a-begi/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-the-magic-of-serverless-computing-a-begi/</guid>
+        <pubDate>Wed, 10 Sep 2025 11:03:55 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unlock Your Website's Potential: Mastering Performance Optimization]]></title>
         <description><![CDATA[Learn how to unlock your website's full potential with our comprehensive guide on mastering performance optimization. Boost your site's speed and user experience today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-the-blueprint-for-scalable/</guid>
         <pubDate>Tue, 09 Sep 2025 06:34:59 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of AI: Innovative Applications Revolutionizing Industries]]></title>
-        <description><![CDATA[Discover how AI is transforming industries with innovative applications. Explore the power of AI in revolutionizing businesses and society.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</guid>
-        <pubDate>Mon, 08 Sep 2025 06:36:01 </pubDate>
     </item>
     </channel>
 </rss>
