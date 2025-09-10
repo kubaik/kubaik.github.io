@@ -1,4 +1,6 @@
 import requests
+from requests_oauthlib import OAuth1
+
 import json
 import base64
 import hashlib
@@ -11,140 +13,69 @@ from typing import List, Dict, Optional
 import logging
 
 class TwitterAPI:
-    """Twitter API v2 integration with proper OAuth 1.0a authentication"""
+    """Twitter API v2 integration with OAuth 2.0 Bearer Token"""
     
-    def __init__(self, api_key: str, api_secret: str, access_token: str, access_token_secret: str):
-        self.api_key = api_key
-        self.api_secret = api_secret
-        self.access_token = access_token
-        self.access_token_secret = access_token_secret
-        self.base_url = "https://api.twitter.com/2/"
-        
-    def _generate_oauth_signature(self, method: str, url: str, params: dict) -> str:
-        """Generate OAuth 1.0a signature"""
-        # Create parameter string
-        encoded_params = []
-        for key in sorted(params.keys()):
-            encoded_params.append(f"{quote(str(key))}={quote(str(params[key]))}")
-        param_string = "&".join(encoded_params)
-        
-        # Create signature base string
-        base_string = f"{method}&{quote(url)}&{quote(param_string)}"
-        
-        # Create signing key
-        signing_key = f"{quote(self.api_secret)}&{quote(self.access_token_secret)}"
-        
-        # Generate signature
-        signature = base64.b64encode(
-            hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
-        ).decode()
-        
-        return signature
-    
-    def _generate_oauth_header(self, method: str, url: str, additional_params: dict = None) -> str:
-        """Generate OAuth 1.0a authorization header"""
-        oauth_params = {
-            'oauth_consumer_key': self.api_key,
-            'oauth_token': self.access_token,
-            'oauth_signature_method': 'HMAC-SHA1',
-            'oauth_timestamp': str(int(time.time())),
-            'oauth_nonce': secrets.token_hex(16),
-            'oauth_version': '1.0'
-        }
-        
-        # Combine OAuth params with any additional params for signature
-        all_params = oauth_params.copy()
-        if additional_params:
-            all_params.update(additional_params)
-        
-        # Generate signature
-        oauth_params['oauth_signature'] = self._generate_oauth_signature(method, url, all_params)
-        
-        # Build authorization header
-        auth_header_params = []
-        for key in sorted(oauth_params.keys()):
-            auth_header_params.append(f'{key}="{quote(str(oauth_params[key]))}"')
-        
-        return f"OAuth {', '.join(auth_header_params)}"
-    
-    def post_tweet(self, text: str) -> dict:
-        """Post a tweet using Twitter API v2 with OAuth 1.0a"""
-        url = "https://api.twitter.com/2/tweets"
-        
-        tweet_data = {
-            "text": text
-        }
-        
-        headers = {
-            "Authorization": self._generate_oauth_header("POST", url),
-            "Content-Type": "application/json"
-        }
-        
+    def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
+        self.auth = OAuth1(
+            consumer_key,
+            consumer_secret,
+            access_token,
+            access_token_secret
+        )
+        self.base_url_v1 = "https://api.twitter.com/1.1/"
+        self.base_url_v2 = "https://api.twitter.com/2/"
+
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
+
+    def test_connection(self):
+        """Check credentials by verifying the account"""
+        url = f"{self.base_url_v1}account/verify_credentials.json"
         try:
-            print(f"Attempting to post tweet: {text[:50]}...")
-            response = requests.post(url, json=tweet_data, headers=headers, timeout=30)
-            
-            print(f"Twitter API Response Status: {response.status_code}")
-            print(f"Twitter API Response: {response.text}")
-            
-            if response.status_code == 201:
-                response_data = response.json()
-                return {
-                    "success": True,
-                    "data": response_data,
-                    "tweet_id": response_data.get('data', {}).get('id')
-                }
-            else:
-                return {
-                    "success": False,
-                    "error": response.json() if response.text else f"HTTP {response.status_code}",
-                    "status_code": response.status_code
-                }
-                
-        except requests.exceptions.RequestException as e:
-            return {
-                "success": False,
-                "error": f"Network error: {str(e)}"
-            }
-        except json.JSONDecodeError as e:
-            return {
-                "success": False,
-                "error": f"JSON decode error: {str(e)}"
-            }
-        except Exception as e:
-            return {
-                "success": False,
-                "error": f"Unexpected error: {str(e)}"
-            }
-    
-    def test_connection(self) -> dict:
-        """Test the Twitter API connection using OAuth 1.0a"""
-        url = "https://api.twitter.com/2/users/me"
-        headers = {
-            "Authorization": self._generate_oauth_header("GET", url)
-        }
-        
-        try:
-            response = requests.get(url, headers=headers, timeout=10)
+            response = requests.get(url, auth=self.auth, timeout=10)
             if response.status_code == 200:
-                user_data = response.json()
+                data = response.json()
                 return {
                     "success": True,
-                    "user": user_data.get('data', {}),
+                    "user": {
+                        "id": data.get("id_str"),
+                        "name": data.get("name"),
+                        "screen_name": data.get("screen_name")
+                    },
                     "message": "Twitter API connection successful"
                 }
             else:
                 return {
                     "success": False,
-                    "error": response.json() if response.text else f"HTTP {response.status_code}",
+                    "error": response.json(),
+                    "status_code": response.status_code,
                     "message": "Twitter API connection failed"
                 }
         except Exception as e:
-            return {
-                "success": False,
-                "error": str(e),
-                "message": "Failed to connect to Twitter API"
-            }
+            return {"success": False, "error": str(e)}
+
+    def post_tweet(self, text: str):
+        """Post a tweet using v2 /tweets endpoint"""
+        url = f"{self.base_url_v2}tweets"
+        payload = {"text": text}
+
+        try:
+            response = requests.post(url, json=payload, auth=self.auth, timeout=30)
+            if response.status_code in (200, 201):
+                data = response.json()
+                return {
+                    "success": True,
+                    "tweet_id": data.get("data", {}).get("id"),
+                    "data": data
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": response.json(),
+                    "status_code": response.status_code
+                }
+        except Exception as e:
+            return {"success": False, "error": str(e)}
 
 class VisibilityAutomator:
     """Enhanced content distribution with proper Twitter integration"""
@@ -154,22 +85,20 @@ class VisibilityAutomator:
         self.social_accounts = config.get('social_accounts', {})
         self.twitter_config = config.get('twitter_api', {})
         self.twitter_api = None
-        
-        # Initialize Twitter API with OAuth 1.0a (proper method)
-        twitter_creds = self.twitter_config
-        if all(key in twitter_creds for key in ['api_key', 'api_secret', 'access_token', 'access_token_secret']):
+
+        # Initialize Twitter API with OAuth 2.0 Bearer Token
+        if all(k in self.twitter_config for k in
+               ("api_key", "api_secret", "access_token", "access_token_secret")):
             self.twitter_api = TwitterAPI(
-                api_key=twitter_creds['api_key'],
-                api_secret=twitter_creds['api_secret'],
-                access_token=twitter_creds['access_token'],
-                access_token_secret=twitter_creds['access_token_secret']
+                self.twitter_config["api_key"],
+                self.twitter_config["api_secret"],
+                self.twitter_config["access_token"],
+                self.twitter_config["access_token_secret"]
             )
-            print("Twitter API initialized with OAuth 1.0a ")
+            print("Twitter API initialized with OAuth 1.0a User Context ✅")
         else:
-            print("Warning: Twitter OAuth credentials incomplete in config")
-            missing = [key for key in ['api_key', 'api_secret', 'access_token', 'access_token_secret'] 
-                      if key not in twitter_creds]
-            print(f"Missing: {', '.join(missing)}")
+            print("⚠️ Missing Twitter OAuth 1.0a credentials in config.yaml")
+        
         
         # Set up logging
         logging.basicConfig(level=logging.INFO)
@@ -266,51 +195,21 @@ class VisibilityAutomator:
         """Generate Facebook-optimized post"""
         return f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 Read more: {post_url}"
     
-    def post_to_twitter(self, post, custom_text: str = None) -> dict:
-        """Post blog intro to Twitter"""
+    def post_to_twitter(self, post, custom_text=None):
         if not self.twitter_api:
+            return {"success": False, "error": "Twitter API not configured"}
+
+        tweet_text = custom_text or f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 {self.config['base_url']}/{post.slug}/"
+        print(f"Tweet text ({len(tweet_text)} chars): {tweet_text}")
+
+        result = self.twitter_api.post_tweet(tweet_text)
+        if result["success"]:
             return {
-                "success": False,
-                "error": "Twitter API not configured. Please check your OAuth credentials in config."
+                "success": True,
+                "tweet_id": result.get("tweet_id"),
+                "url": f"https://twitter.com/i/web/status/{result.get('tweet_id')}"
             }
-        
-        try:
-            # Use custom text or generate social post
-            if custom_text:
-                tweet_text = custom_text
-            else:
-                social_posts = self.generate_social_posts(post)
-                tweet_text = social_posts['twitter']
-            
-            print(f"Generated tweet text: {tweet_text}")
-            print(f"Tweet length: {len(tweet_text)} characters")
-            
-            # Post the tweet
-            result = self.twitter_api.post_tweet(tweet_text)
-            
-            if result['success']:
-                self.logger.info(f"Tweet posted successfully: {result.get('tweet_id')}")
-                return {
-                    "success": True,
-                    "tweet_id": result.get('tweet_id'),
-                    "text": tweet_text,
-                    "url": f"https://twitter.com/user/status/{result.get('tweet_id')}" if result.get('tweet_id') else None
-                }
-            else:
-                self.logger.error(f"Failed to post tweet: {result.get('error')}")
-                return {
-                    "success": False,
-                    "error": result.get('error'),
-                    "text": tweet_text,
-                    "status_code": result.get('status_code')
-                }
-        
-        except Exception as e:
-            self.logger.error(f"Twitter posting error: {str(e)}")
-            return {
-                "success": False,
-                "error": str(e)
-            }
+        return result
     
     def validate_twitter_config(self) -> dict:
         """Validate Twitter API configuration"""
