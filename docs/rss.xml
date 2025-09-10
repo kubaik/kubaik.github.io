@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Sep 2025 11:17:45 </lastBuildDate>
+        <lastBuildDate>Wed, 10 Sep 2025 11:19:41 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering DevOps and CI/CD: Streamline Your Software Delivery]]></title>
+        <description><![CDATA[Learn how to master DevOps and CI/CD to streamline your software delivery process. Discover key strategies and best practices in this comprehensive guide.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-streamline-your-software/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-streamline-your-software/</guid>
+        <pubDate>Wed, 10 Sep 2025 11:19:40 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Backend Architecture: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Backend Architecture covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-progressive-web-apps-a-complete-guid/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-progressive-web-apps-a-complete-guid/</guid>
         <pubDate>Wed, 10 Sep 2025 07:36:46 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering DevOps: A Guide to Seamless CI/CD]]></title>
-        <description><![CDATA[Learn how to master DevOps and achieve seamless Continuous Integration/Continuous Deployment in this comprehensive guide. Elevate your software development process now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</guid>
-        <pubDate>Wed, 10 Sep 2025 06:33:58 </pubDate>
     </item>
     </channel>
 </rss>
