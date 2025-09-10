@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Tue, 09 Sep 2025 06:35:00 </lastBuildDate>
+        <lastBuildDate>Wed, 10 Sep 2025 06:33:59 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering DevOps: A Guide to Seamless CI/CD]]></title>
+        <description><![CDATA[Learn how to master DevOps and achieve seamless Continuous Integration/Continuous Deployment in this comprehensive guide. Elevate your software development process now!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-a-guide-to-seamless-cicd/</guid>
+        <pubDate>Wed, 10 Sep 2025 06:33:58 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Microservices: The Blueprint for Scalable Architecture]]></title>
         <description><![CDATA[Learn how to build a scalable architecture with our comprehensive guide on mastering microservices. Elevate your development game today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</guid>
         <pubDate>Wed, 27 Aug 2025 08:30:52 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Blockchain Technology: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Blockchain Technology covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</guid>
-        <pubDate>Wed, 27 Aug 2025 08:19:24 </pubDate>
     </item>
     </channel>
 </rss>
