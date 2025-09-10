@@ -422,6 +422,14 @@ if __name__ == "__main__":
                 generator.generate_site()
                 
                 print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
+
+                visibility = VisibilityAutomator(config)
+                tweet_text = f"🚀 New blog post: {blog_post.title} \n\nRead here: https://kubaik.github.io/ai-blog-system/{blog_post.slug}"
+                twitter_result = visibility.post_to_twitter(tweet_text)
+                if twitter_result['success']:
+                    print(f"🐦 Tweeted successfully! URL: {twitter_result['url']}")
+                else:
+                    print(f"⚠️ Twitter post failed: {twitter_result.get('error')}")
                 
             except Exception as e:
                 print(f"Error: {e}")
@@ -536,7 +544,7 @@ if __name__ == "__main__":
                 print()
             
             print("Social media posts generated for all posts!")
-            
+
         elif mode == "auto":
             print("Starting automated blog generation with monetization and Twitter posting...")
             
@@ -563,26 +571,8 @@ if __name__ == "__main__":
                 # NEW: Auto-post to Twitter
                 from visibility_automator import VisibilityAutomator
                 visibility = VisibilityAutomator(config)
-                
-                # Validate Twitter config first
-                twitter_validation = visibility.validate_twitter_config()
-                if twitter_validation['valid']:
-                    print("🐦 Posting to Twitter...")
-                    twitter_result = visibility.post_to_twitter(blog_post)
-                    
-                    if twitter_result['success']:
-                        print(f"✅ Twitter post successful! Tweet ID: {twitter_result.get('tweet_id')}")
-                        print(f"📝 Tweet text: {twitter_result['text'][:100]}...")
-                        if twitter_result.get('url'):
-                            print(f"🔗 Tweet URL: {twitter_result['url']}")
-                    else:
-                        print(f"❌ Twitter post failed: {twitter_result['error']}")
-                        print("📝 Generated tweet text (you can post manually):")
-                        print(f"   {twitter_result.get('text', 'N/A')}")
-                else:
-                    print(f"⚠️ Twitter posting skipped: {twitter_validation['message']}")
-                    if twitter_validation.get('error'):
-                        print(f"   Error details: {twitter_validation['error']}")
+                tweet_text = f"🚀 New blog post: {post['title']} \n\nRead here: {post['url']}"
+                visibility.post_to_twitter(tweet_text)
                 
             except Exception as e:
                 print(f"Error: {e}")

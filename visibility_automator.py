@@ -11,10 +11,12 @@ from datetime import datetime
 from urllib.parse import quote, urlencode
 from typing import List, Dict, Optional
 import logging
+import tweepy
+
 
 class TwitterAPI:
-    """Twitter API v2 integration with OAuth 2.0 Bearer Token"""
-    
+    """Twitter API v1.1/2 integration with OAuth 1.0a User Context"""
+
     def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
         self.auth = OAuth1(
             consumer_key,
@@ -28,7 +30,7 @@ class TwitterAPI:
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
 
-    def test_connection(self):
+    def test_connection(self) -> Dict:
         """Check credentials by verifying the account"""
         url = f"{self.base_url_v1}account/verify_credentials.json"
         try:
@@ -54,19 +56,22 @@ class TwitterAPI:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def post_tweet(self, text: str):
-        """Post a tweet using v2 /tweets endpoint"""
-        url = f"{self.base_url_v2}tweets"
-        payload = {"text": text}
+    def post_tweet(self, text: str) -> Dict:
+        """Post a tweet (v1.1 endpoint is more reliable for OAuth1)"""
+        url = f"{self.base_url_v1}statuses/update.json"
+        payload = {"status": text}
 
         try:
-            response = requests.post(url, json=payload, auth=self.auth, timeout=30)
+            response = requests.post(url, auth=self.twitter_api.auth,
+                                 headers=headers, json=payload, timeout=30)
+
             if response.status_code in (200, 201):
                 data = response.json()
                 return {
                     "success": True,
-                    "tweet_id": data.get("data", {}).get("id"),
-                    "data": data
+                    "tweet_id": data.get("id_str"),
+                    "url": f"https://twitter.com/{data['user']['screen_name']}/status/{data['id_str']}",
+                    "text": data.get("text", "")
                 }
             else:
                 return {
@@ -89,12 +94,19 @@ class VisibilityAutomator:
         # Initialize Twitter API with OAuth 2.0 Bearer Token
         if all(k in self.twitter_config for k in
                ("api_key", "api_secret", "access_token", "access_token_secret")):
-            self.twitter_api = TwitterAPI(
-                self.twitter_config["api_key"],
-                self.twitter_config["api_secret"],
-                self.twitter_config["access_token"],
-                self.twitter_config["access_token_secret"]
+
+            try:
+                self.twitter_api = TwitterAPI(
+                    self.twitter_config["api_key"],
+                    self.twitter_config["api_secret"],
+                    self.twitter_config["access_token"],
+                    self.twitter_config["access_token_secret"]
             )
+                print("✅ Twitter API initialized with OAuth 1.0a User Context")
+            except Exception as e:
+                print(f"⚠️ Twitter API initialization failed: {e}")
+                self.twitter_api = None
+
             print("Twitter API initialized with OAuth 1.0a User Context ✅")
         else:
             print("⚠️ Missing Twitter OAuth 1.0a credentials in config.yaml")
@@ -195,21 +207,40 @@ class VisibilityAutomator:
         """Generate Facebook-optimized post"""
         return f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 Read more: {post_url}"
     
-    def post_to_twitter(self, post, custom_text=None):
+    def post_to_twitter(self, message: str):
+        """Post a tweet using Twitter API v2 /tweets endpoint (Free tier supported)"""
         if not self.twitter_api:
-            return {"success": False, "error": "Twitter API not configured"}
+            self.logger.warning("Twitter API is not initialized.")
+            return {"success": False, "error": "Twitter API not initialized"}
 
-        tweet_text = custom_text or f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 {self.config['base_url']}/{post.slug}/"
-        print(f"Tweet text ({len(tweet_text)} chars): {tweet_text}")
+        try:
+            url = "https://api.twitter.com/2/tweets"
+            headers = {"Content-Type": "application/json"}
+            payload = {"text": message}
 
-        result = self.twitter_api.post_tweet(tweet_text)
-        if result["success"]:
-            return {
-                "success": True,
-                "tweet_id": result.get("tweet_id"),
-                "url": f"https://twitter.com/i/web/status/{result.get('tweet_id')}"
-            }
-        return result
+            # Use OAuth1 for user-context auth
+            response = requests.post(url, auth=self.twitter_api.auth,
+                                    headers=headers, json=payload, timeout=30)
+
+            if response.status_code in (200, 201):
+                data = response.json()
+                tweet_id = data.get("data", {}).get("id")
+                return {
+                    "success": True,
+                    "tweet_id": tweet_id,
+                    "url": f"https://twitter.com/i/web/status/{tweet_id}",
+                    "text": message
+                }
+            else:
+                return {
+                    "success": False,
+                    "status_code": response.status_code,
+                    "error": response.json()
+                }
+
+        except Exception as e:
+            self.logger.error(f"⚠️ Twitter post failed: {e}")
+            return {"success": False, "error": str(e)}
     
     def validate_twitter_config(self) -> dict:
         """Validate Twitter API configuration"""
@@ -236,6 +267,37 @@ class VisibilityAutomator:
             'valid': False,
             'message': "Twitter API not initialized"
         }
+    def post_blog_to_twitter(self, post) -> Dict:
+        """Post a blog to Twitter using _generate_twitter_post"""
+        if not self.twitter_api:
+            return {"success": False, "error": "Twitter not configured"}
+
+        base_path = self.config.get("base_path", "")
+        post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
+
+        # Generate Twitter-optimized text (title + desc + hashtags, 280-char safe)
+        hashtags = []
+        if hasattr(post, 'tags') and post.tags:
+            hashtags = ['#' + tag.replace(' ', '').replace('-', '').title() for tag in post.tags[:3]]
+        elif hasattr(post, 'seo_keywords') and post.seo_keywords:
+            if isinstance(post.seo_keywords, str):
+                keywords = post.seo_keywords.split(',')[:3]
+            else:
+                keywords = post.seo_keywords[:3]
+            hashtags = ['#' + kw.strip().replace(' ', '').title() for kw in keywords]
+
+        tweet_text = self._generate_twitter_post(post, post_url, hashtags)
+
+        # Send the tweet
+        result = self.twitter_api.post_tweet(tweet_text)
+        if result["success"]:
+            return {
+                "success": True,
+                "tweet_id": result.get("tweet_id"),
+                "url": f"https://twitter.com/i/web/status/{result.get('tweet_id')}"
+            }
+        return result    
+
     def submit_to_search_engines(self, sitemap_url: str) -> List[dict]:
             """Submit sitemap to search engines"""
             search_engines = [
