@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Sep 2025 12:51:00 </lastBuildDate>
+        <lastBuildDate>Thu, 11 Sep 2025 06:34:18 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Microservices: A Guide to Scalable Architecture]]></title>
+        <description><![CDATA[Learn how to master microservices architecture for scalable and efficient systems. Discover expert tips and best practices in this comprehensive guide.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</guid>
+        <pubDate>Thu, 11 Sep 2025 06:34:18 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Software Testing: Top Strategies for Success]]></title>
         <description><![CDATA[Learn top software testing strategies to enhance your skills and boost project success. Master the art of software testing with expert tips and techniques.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</guid>
         <pubDate>Wed, 10 Sep 2025 07:52:45 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Internet of Things (IoT): A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</guid>
-        <pubDate>Wed, 10 Sep 2025 07:42:18 </pubDate>
     </item>
     </channel>
 </rss>
