@@ -2,8 +2,10 @@ name: AI Blog Automation
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Daily at 9 AM EAT (06:00 UTC)
-    - cron: '0 10 * * *'  # 13:00 EAT (10:00 UTC)
+    - cron: '0 6 * * *'   # 09:00 EAT
+    - cron: '0 9 * * *'   # 12:00 EAT
+    - cron: '0 12 * * *'  # 15:00 EAT
+    - cron: '0 15 * * *'  # 18:00 EAT
 
   workflow_dispatch:
     inputs:
