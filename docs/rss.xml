@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 12 Sep 2025 08:52:15 </lastBuildDate>
+        <lastBuildDate>Fri, 12 Sep 2025 09:14:11 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency]]></title>
+        <description><![CDATA[Learn how to boost performance and efficiency with expert tips on mastering database optimization. Improve speed and functionality for better results.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
+        <pubDate>Fri, 12 Sep 2025 09:14:11 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unlocking the Power of Progressive Web Apps: Boost Your Online Presence!]]></title>
         <description><![CDATA[Discover how Progressive Web Apps can revolutionize your online presence. Learn the key strategies to unlock their full potential. Reach new heights today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-database-optimization-a-complete-gui/</guid>
         <pubDate>Wed, 10 Sep 2025 09:04:54 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Serverless Computing: A Beginner's Guide]]></title>
-        <description><![CDATA[Discover the potential of serverless computing in this beginner's guide. Learn how to unleash its power and transform your business.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</guid>
-        <pubDate>Wed, 10 Sep 2025 08:39:02 </pubDate>
     </item>
     </channel>
 </rss>
