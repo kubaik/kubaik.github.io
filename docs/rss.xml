@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sat, 13 Sep 2025 12:20:15 </lastBuildDate>
+        <lastBuildDate>Sat, 13 Sep 2025 15:10:49 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Progressive Web Apps]]></title>
+        <description><![CDATA[Discover how Progressive Web Apps can revolutionize your online presence and enhance user experience. Unleash the power of PWAs with our comprehensive guide!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps/</guid>
+        <pubDate>Sat, 13 Sep 2025 15:10:48 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unveiling the Power of Machine Learning Algorithms: A Comprehensive Guide]]></title>
         <description><![CDATA[Discover the true potential of machine learning algorithms in our comprehensive guide. Learn how to leverage their power for data-driven success.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-web-development-trends-a-complete-gu/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-web-development-trends-a-complete-gu/</guid>
         <pubDate>Wed, 10 Sep 2025 10:22:30 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Frontend Frameworks: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Frontend Frameworks covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-frontend-frameworks-a-complete-guide/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-frontend-frameworks-a-complete-guide/</guid>
-        <pubDate>Wed, 10 Sep 2025 10:20:09 </pubDate>
     </item>
     </channel>
 </rss>
