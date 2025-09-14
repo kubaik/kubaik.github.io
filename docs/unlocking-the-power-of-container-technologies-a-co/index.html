@@ -179,9 +179,12 @@
 <span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
 <span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-image:latest</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+
+<span class="nt">*Recommended</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*</span>
+
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">- name</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-image:latest</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
 </code></pre></div>
 
@@ -209,7 +212,6 @@
 <h2>Container Networking</h2>
 <p>Container networking enables communication between containers running on the same host or across different hosts in a cluster. Container networking solutions like Docker's built-in bridge network, overlay network, and third-party plugins provide ways to connect containers and expose services to the outside world.</p>
 <h3>Practical Example: Creating a Docker Bridge Network</h3>
-<p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
 <ol>
 <li>Create a bridge network in Docker:</li>
 </ol>
