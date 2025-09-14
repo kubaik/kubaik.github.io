@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 14 Sep 2025 06:30:52 </lastBuildDate>
+        <lastBuildDate>Sun, 14 Sep 2025 09:12:21 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[5 Essential Cybersecurity Best Practices You Need to Know]]></title>
+        <description><![CDATA[Protect your digital assets with these 5 essential cybersecurity best practices. Learn how to safeguard your data and privacy online.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/5-essential-cybersecurity-best-practices-you-need-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/5-essential-cybersecurity-best-practices-you-need-/</guid>
+        <pubDate>Sun, 14 Sep 2025 09:12:20 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of Microservices: A Comprehensive Guide]]></title>
         <description><![CDATA[Discover how to harness the full potential of microservices in our comprehensive guide. Learn the benefits, best practices, and implementation strategies.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-artificial-intelligence-applications/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-artificial-intelligence-applications/</guid>
         <pubDate>Wed, 10 Sep 2025 10:46:21 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding API Design Patterns: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</guid>
-        <pubDate>Wed, 10 Sep 2025 10:40:24 </pubDate>
     </item>
     </channel>
 </rss>
