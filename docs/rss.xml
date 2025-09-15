@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 15 Sep 2025 15:52:13 </lastBuildDate>
+        <lastBuildDate>Mon, 15 Sep 2025 18:22:42 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Boost Your Website's Speed: The Ultimate Guide to Performance Optimization]]></title>
+        <description><![CDATA[Learn how to boost your website's speed with our ultimate guide to performance optimization. Improve user experience and SEO rankings today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</guid>
+        <pubDate>Mon, 15 Sep 2025 18:22:41 </pubDate>
+    </item>
     <item>
         <title><![CDATA[The Future of Finance: Unleashing the Power of Blockchain]]></title>
         <description><![CDATA[Explore the limitless possibilities of blockchain technology in finance. Discover how it's revolutionizing the future of finance in this insightful blog post.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</guid>
         <pubDate>Thu, 11 Sep 2025 06:34:18 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Software Testing: Top Strategies for Success]]></title>
-        <description><![CDATA[Learn top software testing strategies to enhance your skills and boost project success. Master the art of software testing with expert tips and techniques.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</guid>
-        <pubDate>Wed, 10 Sep 2025 12:51:00 </pubDate>
     </item>
     </channel>
 </rss>
