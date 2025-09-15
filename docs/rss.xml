@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 14 Sep 2025 15:11:20 </lastBuildDate>
+        <lastBuildDate>Mon, 15 Sep 2025 06:36:31 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of API Design Patterns: A Comprehensive Guide]]></title>
+        <description><![CDATA[Learn how to harness the full potential of API design patterns with our comprehensive guide. Master best practices for creating efficient and scalable APIs.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-api-design-patterns-a-comp/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-api-design-patterns-a-comp/</guid>
+        <pubDate>Mon, 15 Sep 2025 06:36:31 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unlocking the Potential: Innovative Artificial Intelligence Applications]]></title>
         <description><![CDATA[Discover the endless possibilities of AI in our blog post 'Unlocking the Potential: Innovative Artificial Intelligence Applications'. Explore the future of AI technology!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-the-magic-of-serverless-computing-a-begi/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-the-magic-of-serverless-computing-a-begi/</guid>
         <pubDate>Wed, 10 Sep 2025 11:03:55 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unlock Your Website's Potential: Mastering Performance Optimization]]></title>
-        <description><![CDATA[Learn how to unlock your website's full potential with our comprehensive guide on mastering performance optimization. Boost your site's speed and user experience today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlock-your-websites-potential-mastering-performan/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlock-your-websites-potential-mastering-performan/</guid>
-        <pubDate>Wed, 10 Sep 2025 10:55:37 </pubDate>
     </item>
     </channel>
 </rss>
