@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 15 Sep 2025 18:22:42 </lastBuildDate>
+        <lastBuildDate>Mon, 15 Sep 2025 21:18:54 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Data Science Techniques: A Comprehensive Guide]]></title>
+        <description><![CDATA[Learn how to master essential data science techniques with our comprehensive guide. Discover tips, tools, and strategies for success in this dynamic field.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</guid>
+        <pubDate>Mon, 15 Sep 2025 21:18:54 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Boost Your Website's Speed: The Ultimate Guide to Performance Optimization]]></title>
         <description><![CDATA[Learn how to boost your website's speed with our ultimate guide to performance optimization. Improve user experience and SEO rankings today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-machine-learning-algorithms/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-machine-learning-algorithms/</guid>
         <pubDate>Thu, 11 Sep 2025 10:20:52 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Microservices: A Guide to Scalable Architecture]]></title>
-        <description><![CDATA[Learn how to master microservices architecture for scalable and efficient systems. Discover expert tips and best practices in this comprehensive guide.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</guid>
-        <pubDate>Thu, 11 Sep 2025 06:34:18 </pubDate>
     </item>
     </channel>
 </rss>
