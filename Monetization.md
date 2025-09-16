@@ -98,3 +98,6 @@ Configure: Edit config.yaml and add your Google AdSense ID (format: ca-pub-xxxxx
 Generate: python blog_system.py auto to create posts with ads
 Build: python blog_system.py build to rebuild with all features
 test 
+
+Please store the following recovery codes in a safe place.
+39899368 7557534644562325 4775911375475328 3200884863234973 5074926508020529 12418813
