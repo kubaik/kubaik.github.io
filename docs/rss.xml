@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Wed, 17 Sep 2025 18:22:13 </lastBuildDate>
+        <lastBuildDate>Wed, 17 Sep 2025 21:18:34 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Software Testing: Top Strategies Revealed]]></title>
+        <description><![CDATA[Discover the top strategies to master software testing in our latest blog post. Learn essential tips and techniques to enhance your testing process.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</guid>
+        <pubDate>Wed, 17 Sep 2025 21:18:34 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unlocking Peak Performance: Strategies for Optimal Efficiency]]></title>
         <description><![CDATA[Learn top strategies for unlocking peak performance and achieving optimal efficiency in this insightful blog post. Boost your productivity now!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</guid>
         <pubDate>Mon, 15 Sep 2025 12:24:02 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering DevOps and CI/CD: Streamline Your Development Workflow]]></title>
-        <description><![CDATA[Learn how to streamline your development workflow with DevOps and CI/CD. Master the best practices to increase efficiency and productivity in software development.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-streamline-your-developm/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-streamline-your-developm/</guid>
-        <pubDate>Mon, 15 Sep 2025 09:16:28 </pubDate>
     </item>
     </channel>
 </rss>
