@@ -8,7 +8,7 @@ class MonetizationManager:
         self.config = config
         self.affiliate_programs = {
             'amazon': {
-                'tag': config.get('amazon_affiliate_tag', 'your-tag-20'),
+                'tag': config.get('amazon_affiliate_tag', 'aiblogcontent-20'),
                 'api_key': config.get('amazon_api_key'),
                 'keywords': ['tools', 'software', 'books', 'course', 'equipment']
             },
