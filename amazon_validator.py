@@ -6,7 +6,7 @@ import logging
 
 class AmazonAffiliateValidator:
     def __init__(self, config_path='config.yaml'):
-        """Initialize with configuration from YAML file"""
+        """Initialize with configuration from YAML files"""
         with open(config_path, 'r') as file:
             self.config = yaml.safe_load(file)
         
