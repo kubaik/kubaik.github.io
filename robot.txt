@@ -25,7 +25,7 @@ Disallow: /README.md
 Disallow: /LICENSE
 
 # Sitemap location (replace with your actual sitemap URL)
-Sitemap: https://kubaik.github.io/sitemap.xml
+Sitemap: https://kubaik.github.io/ai-blog-system/sitemap.xml
 
 # Crawl delay (optional - seconds between requests)
 Crawl-delay: 1
