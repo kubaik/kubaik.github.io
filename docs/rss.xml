@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 18 Sep 2025 09:14:44 </lastBuildDate>
+        <lastBuildDate>Thu, 18 Sep 2025 12:23:07 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering API Design Patterns: A Guide for Developers]]></title>
+        <description><![CDATA[Learn how to master API design patterns with our comprehensive guide for developers. Discover best practices and tips to level up your API design skills.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</guid>
+        <pubDate>Thu, 18 Sep 2025 12:23:06 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency!]]></title>
         <description><![CDATA[Learn how to enhance your database performance and efficiency with expert tips and strategies. Master the art of database optimization for maximum results!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-finance-unleashing-the-power-of-bloc/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-finance-unleashing-the-power-of-bloc/</guid>
         <pubDate>Mon, 15 Sep 2025 15:52:12 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Cloud Computing Platforms: A Guide for Beginners]]></title>
-        <description><![CDATA[Discover how to harness the full potential of cloud computing platforms with this beginner's guide. Unlock the benefits and possibilities today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</guid>
-        <pubDate>Mon, 15 Sep 2025 15:15:03 </pubDate>
     </item>
     </channel>
 </rss>
