@@ -1,0 +1,31 @@
+# Allow all crawlers access to all content
+User-agent: *
+Allow: /
+
+# Specifically allow Google AdSense crawler (required for AdSense)
+User-agent: Mediapartners-Google
+Allow: /
+
+# Allow Google's main crawler
+User-agent: Googlebot
+Allow: /
+
+# Block crawlers from sensitive directories (if you have any)
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Common files to block from crawling
+Disallow: /*.json$
+Disallow: /*.yml$
+Disallow: /*.yaml$
+Disallow: /README.md
+Disallow: /LICENSE
+
+# Sitemap location (replace with your actual sitemap URL)
+Sitemap: https://kubaik.github.io/sitemap.xml
+
+# Crawl delay (optional - seconds between requests)
+Crawl-delay: 1
