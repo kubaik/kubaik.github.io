@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 19 Sep 2025 15:13:26 </lastBuildDate>
+        <lastBuildDate>Fri, 19 Sep 2025 18:21:45 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding Machine Learning Algorithms: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-machine-learning-algorithms-a-comple/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-machine-learning-algorithms-a-comple/</guid>
+        <pubDate>Fri, 19 Sep 2025 18:21:45 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Progressive Web Apps: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Progressive Web Apps covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</guid>
         <pubDate>Wed, 17 Sep 2025 06:34:43 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Protect Your Digital World: Essential Cybersecurity Tips]]></title>
-        <description><![CDATA[Safeguard your digital presence with our expert cybersecurity tips. Learn how to protect your online world from cyber threats and stay secure.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/protect-your-digital-world-essential-cybersecurity/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/protect-your-digital-world-essential-cybersecurity/</guid>
-        <pubDate>Tue, 16 Sep 2025 21:19:11 </pubDate>
     </item>
     </channel>
 </rss>
