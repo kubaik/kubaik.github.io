@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 19 Sep 2025 18:21:45 </lastBuildDate>
+        <lastBuildDate>Fri, 19 Sep 2025 21:18:14 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding Internet of Things (IoT): A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</guid>
+        <pubDate>Fri, 19 Sep 2025 21:18:13 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Machine Learning Algorithms: A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-your-/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-your-/</guid>
         <pubDate>Wed, 17 Sep 2025 09:14:48 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Backend Architecture: A Comprehensive Guide]]></title>
-        <description><![CDATA[Learn how to master backend architecture with our comprehensive guide. Explore best practices, tips, and techniques to build robust and scalable systems.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</guid>
-        <pubDate>Wed, 17 Sep 2025 06:34:43 </pubDate>
     </item>
     </channel>
 </rss>
