@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sat, 20 Sep 2025 12:21:03 </lastBuildDate>
+        <lastBuildDate>Sat, 20 Sep 2025 15:11:41 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Boost Your Website's Speed: The Ultimate Guide to Performance Optimization]]></title>
+        <description><![CDATA[Learn how to boost your website's speed with our ultimate guide to performance optimization. Maximize user experience and improve SEO rankings today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</guid>
+        <pubDate>Sat, 20 Sep 2025 15:11:40 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of API Design Patterns: A Guide for Developers]]></title>
         <description><![CDATA[Learn how to unleash the power of API design patterns in our comprehensive guide for developers. Discover best practices and boost your API development skills!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</guid>
         <pubDate>Wed, 17 Sep 2025 15:03:23 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Mobile App Development: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-mobile-app-development-a-complete-gu/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-mobile-app-development-a-complete-gu/</guid>
-        <pubDate>Wed, 17 Sep 2025 14:55:12 </pubDate>
     </item>
     </channel>
 </rss>
