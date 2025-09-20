@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 19 Sep 2025 21:18:14 </lastBuildDate>
+        <lastBuildDate>Sat, 20 Sep 2025 06:30:57 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Understanding Microservices Architecture: A Complete Guide]]></title>
+        <description><![CDATA[A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</guid>
+        <pubDate>Sat, 20 Sep 2025 06:30:56 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Understanding Internet of Things (IoT): A Complete Guide]]></title>
         <description><![CDATA[A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-exploring-the-power-of-/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-exploring-the-power-of-/</guid>
         <pubDate>Wed, 17 Sep 2025 12:23:44 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Progressive Web Apps: Your Ultimate Guide]]></title>
-        <description><![CDATA[Discover how to unlock the full potential of Progressive Web Apps with our ultimate guide. Learn how to create fast, engaging experiences for your users!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-your-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-your-/</guid>
-        <pubDate>Wed, 17 Sep 2025 09:14:48 </pubDate>
     </item>
     </channel>
 </rss>
