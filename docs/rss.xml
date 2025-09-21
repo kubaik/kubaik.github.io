@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 15:11:34 </lastBuildDate>
+        <lastBuildDate>Sun, 21 Sep 2025 18:20:30 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Serverless Computing: A Game-Changer in Tech]]></title>
+        <description><![CDATA[Discover the game-changing potential of serverless computing in our latest blog post. Unleash the power of this transformative technology in the tech industry.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-gam/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-gam/</guid>
+        <pubDate>Sun, 21 Sep 2025 18:20:29 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency]]></title>
         <description><![CDATA[Learn how to master database optimization to boost performance and efficiency. Discover expert tips and strategies in this comprehensive guide.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</guid>
         <pubDate>Thu, 18 Sep 2025 12:23:06 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Data Science Techniques: A Comprehensive Guide]]></title>
-        <description><![CDATA[Learn how to harness the full potential of data science techniques with our comprehensive guide. Master the art of data analysis and make informed decisions.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</guid>
-        <pubDate>Thu, 18 Sep 2025 06:34:22 </pubDate>
     </item>
     </channel>
 </rss>
