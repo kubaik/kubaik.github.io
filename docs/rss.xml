@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 18:20:30 </lastBuildDate>
+        <lastBuildDate>Sun, 21 Sep 2025 21:18:10 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Stay Ahead: Top Web Development Trends 2022]]></title>
+        <description><![CDATA[Discover the top web development trends set to dominate 2022! Stay ahead of the curve with insights on cutting-edge technologies and strategies.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/stay-ahead-top-web-development-trends-2022/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/stay-ahead-top-web-development-trends-2022/</guid>
+        <pubDate>Sun, 21 Sep 2025 21:18:10 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of Serverless Computing: A Game-Changer in Tech]]></title>
         <description><![CDATA[Discover the game-changing potential of serverless computing in our latest blog post. Unleash the power of this transformative technology in the tech industry.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</guid>
         <pubDate>Thu, 18 Sep 2025 15:14:08 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering API Design Patterns: A Guide for Developers]]></title>
-        <description><![CDATA[Learn how to master API design patterns with our comprehensive guide for developers. Discover best practices and tips to level up your API design skills.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</guid>
-        <pubDate>Thu, 18 Sep 2025 12:23:06 </pubDate>
     </item>
     </channel>
 </rss>
