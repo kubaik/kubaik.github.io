@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 06:32:24 </lastBuildDate>
+        <lastBuildDate>Sun, 21 Sep 2025 09:12:23 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Mobile App Development: A Beginner's Guide]]></title>
+        <description><![CDATA[Learn the essentials of mobile app development in our comprehensive beginner's guide. Get started on your journey to mastering app creation today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-beginners-guide/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-beginners-guide/</guid>
+        <pubDate>Sun, 21 Sep 2025 09:12:22 </pubDate>
+    </item>
     <item>
         <title><![CDATA[10 Innovative AI Applications Changing the Game]]></title>
         <description><![CDATA[Discover how 10 cutting-edge AI applications are revolutionizing industries and reshaping the future. Explore the game-changing potential of AI now!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</guid>
         <pubDate>Wed, 17 Sep 2025 21:18:34 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unlocking Peak Performance: Strategies for Optimal Efficiency]]></title>
-        <description><![CDATA[Learn top strategies for unlocking peak performance and achieving optimal efficiency in this insightful blog post. Boost your productivity now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-peak-performance-strategies-for-optimal-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-peak-performance-strategies-for-optimal-/</guid>
-        <pubDate>Wed, 17 Sep 2025 18:22:12 </pubDate>
     </item>
     </channel>
 </rss>
