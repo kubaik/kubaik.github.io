@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 12:20:56 </lastBuildDate>
+        <lastBuildDate>Sun, 21 Sep 2025 15:11:34 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency]]></title>
+        <description><![CDATA[Learn how to master database optimization to boost performance and efficiency. Discover expert tips and strategies in this comprehensive guide.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
+        <pubDate>Sun, 21 Sep 2025 15:11:34 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Frontend Frameworks: A Guide to Modern Web Development]]></title>
         <description><![CDATA[Learn how to master frontend frameworks for modern web development. Explore the latest trends and techniques to enhance your coding skills.]]></description>
@@ -134,13 +141,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-for-develope/</guid>
         <pubDate>Thu, 18 Sep 2025 12:23:06 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency!]]></title>
-        <description><![CDATA[Learn how to enhance your database performance and efficiency with expert tips and strategies. Master the art of database optimization for maximum results!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
-        <pubDate>Thu, 18 Sep 2025 09:14:43 </pubDate>
     </item>
     <item>
         <title><![CDATA[Unleashing the Power of Data Science Techniques: A Comprehensive Guide]]></title>
