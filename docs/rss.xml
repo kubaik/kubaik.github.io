@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 09:12:23 </lastBuildDate>
+        <lastBuildDate>Sun, 21 Sep 2025 12:20:56 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Frontend Frameworks: A Guide to Modern Web Development]]></title>
+        <description><![CDATA[Learn how to master frontend frameworks for modern web development. Explore the latest trends and techniques to enhance your coding skills.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-guide-to-modern-we/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-guide-to-modern-we/</guid>
+        <pubDate>Sun, 21 Sep 2025 12:20:56 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Mobile App Development: A Beginner's Guide]]></title>
         <description><![CDATA[Learn the essentials of mobile app development in our comprehensive beginner's guide. Get started on your journey to mastering app creation today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</guid>
         <pubDate>Thu, 18 Sep 2025 06:34:22 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Software Testing: Top Strategies Revealed]]></title>
-        <description><![CDATA[Discover the top strategies to master software testing in our latest blog post. Learn essential tips and techniques to enhance your testing process.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-revealed/</guid>
-        <pubDate>Wed, 17 Sep 2025 21:18:34 </pubDate>
     </item>
     </channel>
 </rss>
