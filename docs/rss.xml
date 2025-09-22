@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 22 Sep 2025 09:16:46 </lastBuildDate>
+        <lastBuildDate>Mon, 22 Sep 2025 12:24:10 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering DevOps and CI/CD: A Guide to Seamless Software Delivery]]></title>
+        <description><![CDATA[Learn how to master DevOps and CI/CD for seamless software delivery. Get expert tips and insights to streamline your development process.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-seamless-soft/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-seamless-soft/</guid>
+        <pubDate>Mon, 22 Sep 2025 12:24:09 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unraveling the Power of Blockchain: A Beginner's Guide]]></title>
         <description><![CDATA[Discover the potential of Blockchain technology in our beginner's guide. Learn how this revolutionary technology is changing the way we transact and secure data.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</guid>
         <pubDate>Fri, 19 Sep 2025 09:15:05 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unlocking the Power of Blockchain: A Game-Changer in Technology]]></title>
-        <description><![CDATA[Discover how Blockchain is revolutionizing technology. Learn how this game-changer is transforming industries and unlocking new possibilities.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-blockchain-a-game-changer-i/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-blockchain-a-game-changer-i/</guid>
-        <pubDate>Fri, 19 Sep 2025 06:34:08 </pubDate>
     </item>
     </channel>
 </rss>
