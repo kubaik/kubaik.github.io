@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 22 Sep 2025 06:36:15 </lastBuildDate>
+        <lastBuildDate>Mon, 22 Sep 2025 09:16:46 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unraveling the Power of Blockchain: A Beginner's Guide]]></title>
+        <description><![CDATA[Discover the potential of Blockchain technology in our beginner's guide. Learn how this revolutionary technology is changing the way we transact and secure data.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-power-of-blockchain-a-beginners-gui/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-power-of-blockchain-a-beginners-gui/</guid>
+        <pubDate>Mon, 22 Sep 2025 09:16:46 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Data Science Techniques: A Comprehensive Guide]]></title>
         <description><![CDATA[Learn how to master essential data science techniques with our comprehensive guide. Explore tools, methods, and best practices to level up your skills!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-blockchain-a-game-changer-i/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-blockchain-a-game-changer-i/</guid>
         <pubDate>Fri, 19 Sep 2025 06:34:08 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of AI: Innovative Applications You Need to Know]]></title>
-        <description><![CDATA[Discover the endless possibilities of AI with our insightful blog post! Explore innovative applications and unleash the power of artificial intelligence today.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</guid>
-        <pubDate>Thu, 18 Sep 2025 18:23:06 </pubDate>
     </item>
     </channel>
 </rss>
