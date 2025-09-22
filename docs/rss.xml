@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 21 Sep 2025 21:18:10 </lastBuildDate>
+        <lastBuildDate>Mon, 22 Sep 2025 06:36:15 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Data Science Techniques: A Comprehensive Guide]]></title>
+        <description><![CDATA[Learn how to master essential data science techniques with our comprehensive guide. Explore tools, methods, and best practices to level up your skills!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</guid>
+        <pubDate>Mon, 22 Sep 2025 06:36:14 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Stay Ahead: Top Web Development Trends 2022]]></title>
         <description><![CDATA[Discover the top web development trends set to dominate 2022! Stay ahead of the curve with insights on cutting-edge technologies and strategies.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-innovative-applications/</guid>
         <pubDate>Thu, 18 Sep 2025 18:23:06 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Frontend Frameworks: A Developer's Guide]]></title>
-        <description><![CDATA[Learn how to master frontend frameworks with this comprehensive developer's guide. Discover tips, tricks, and best practices to level up your skills.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</guid>
-        <pubDate>Thu, 18 Sep 2025 15:14:08 </pubDate>
     </item>
     </channel>
 </rss>
