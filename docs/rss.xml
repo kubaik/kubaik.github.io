@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Tue, 23 Sep 2025 18:23:27 </lastBuildDate>
+        <lastBuildDate>Tue, 23 Sep 2025 21:18:50 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Container Technologies: A Guide]]></title>
+        <description><![CDATA[Learn how to maximize the potential of container technologies with our comprehensive guide. Explore tips, best practices, and real-world examples.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</guid>
+        <pubDate>Tue, 23 Sep 2025 21:18:49 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Microservices: Unleashing the Power of Scalable Architecture]]></title>
         <description><![CDATA[Learn how to harness the full potential of Microservices Architecture in our latest blog post. Discover the secrets to building scalable and efficient systems.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-the-ultimate-guide-to-pe/</guid>
         <pubDate>Sat, 20 Sep 2025 15:11:40 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of API Design Patterns: A Guide for Developers]]></title>
-        <description><![CDATA[Learn how to unleash the power of API design patterns in our comprehensive guide for developers. Discover best practices and boost your API development skills!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-api-design-patterns-a-guid/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-api-design-patterns-a-guid/</guid>
-        <pubDate>Sat, 20 Sep 2025 12:21:03 </pubDate>
     </item>
     </channel>
 </rss>
