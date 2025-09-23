@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Tue, 23 Sep 2025 06:34:42 </lastBuildDate>
+        <lastBuildDate>Tue, 23 Sep 2025 09:15:08 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Top 2022 Web Development Trends: Stay Ahead of the Curve!]]></title>
+        <description><![CDATA[Stay ahead of the curve with the top 2022 web development trends! Discover the latest innovations shaping the future of web development.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/top-2022-web-development-trends-stay-ahead-of-the-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/top-2022-web-development-trends-stay-ahead-of-the-/</guid>
+        <pubDate>Tue, 23 Sep 2025 09:15:07 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Mobile App Development: A Complete Guide]]></title>
         <description><![CDATA[Learn how to master mobile app development with our comprehensive guide. Explore essential tips, best practices, and expert insights to succeed in the ever-evolving world of app development.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-microservices-architecture-a-complet/</guid>
         <pubDate>Sat, 20 Sep 2025 06:30:56 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Internet of Things (IoT): A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</guid>
-        <pubDate>Fri, 19 Sep 2025 21:18:13 </pubDate>
     </item>
     </channel>
 </rss>
