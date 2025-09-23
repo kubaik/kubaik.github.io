@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 22 Sep 2025 21:18:41 </lastBuildDate>
+        <lastBuildDate>Tue, 23 Sep 2025 06:34:42 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Mobile App Development: A Complete Guide]]></title>
+        <description><![CDATA[Learn how to master mobile app development with our comprehensive guide. Explore essential tips, best practices, and expert insights to succeed in the ever-evolving world of app development.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-complete-guide/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-complete-guide/</guid>
+        <pubDate>Tue, 23 Sep 2025 06:34:42 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of Progressive Web Apps: A Game-Changer in Mobile Technology!]]></title>
         <description><![CDATA[Discover how Progressive Web Apps are revolutionizing mobile technology! Learn how to leverage their power for better user experiences and increased engagement.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-internet-of-things-iot-a-complete-gu/</guid>
         <pubDate>Fri, 19 Sep 2025 21:18:13 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Understanding Machine Learning Algorithms: A Complete Guide]]></title>
-        <description><![CDATA[A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-machine-learning-algorithms-a-comple/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-machine-learning-algorithms-a-comple/</guid>
-        <pubDate>Fri, 19 Sep 2025 18:21:45 </pubDate>
     </item>
     </channel>
 </rss>
