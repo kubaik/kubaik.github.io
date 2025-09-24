@@ -163,10 +163,8 @@
 <p><strong>Creating a Container</strong>: Use the <code>docker run</code> command to create a new container from an existing image. For example:</p>
 </li>
 </ol>
-<p>```bash</p>
-<p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
-<p>docker run -d -p 8080:80 nginx
-   ```</p>
+<p><code>bash
+   docker run -d -p 8080:80 nginx</code></p>
 <ol>
 <li>
 <p><strong>Managing Containers</strong>: Use commands like <code>docker ps</code>, <code>docker stop</code>, and <code>docker rm</code> to manage containers on your system.</p>
@@ -196,6 +194,9 @@
 <ul>
 <li><strong>Use Trusted Images</strong>: Always pull images from trusted sources like Docker Hub or your organization's registry.</li>
 <li><strong>Apply Security Patches</strong>: Regularly update your container images and base OS to patch vulnerabilities.</li>
+</ul>
+<p><em>Recommended: <a href="https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Docker Deep Dive by Nigel Poulton</a></em></p>
+<ul>
 <li><strong>Limit Permissions</strong>: Follow the principle of least privilege by restricting container permissions to only what is necessary.</li>
 <li><strong>Network Segmentation</strong>: Use network policies to restrict communication between containers and control traffic flow.</li>
 </ul>
