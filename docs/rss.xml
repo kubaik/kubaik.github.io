@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 25 Sep 2025 07:59:45 </lastBuildDate>
+        <lastBuildDate>Thu, 25 Sep 2025 09:22:09 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Software Testing: Top Strategies for Success]]></title>
+        <description><![CDATA[Learn top strategies to excel in software testing. Discover expert tips and best practices to become a master in software testing and ensure project success.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</guid>
+        <pubDate>Thu, 25 Sep 2025 09:22:08 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering DevOps: Streamlining Your Workflow with CI/CD]]></title>
         <description><![CDATA[Learn how to streamline your workflow with CI/CD in DevOps. Discover best practices and tools to master the art of continuous integration and delivery.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</guid>
         <pubDate>Mon, 22 Sep 2025 15:14:58 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering DevOps and CI/CD: A Guide to Seamless Software Delivery]]></title>
-        <description><![CDATA[Learn how to master DevOps and CI/CD for seamless software delivery. Get expert tips and insights to streamline your development process.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-seamless-soft/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-a-guide-to-seamless-soft/</guid>
-        <pubDate>Mon, 22 Sep 2025 12:24:09 </pubDate>
     </item>
     </channel>
 </rss>
