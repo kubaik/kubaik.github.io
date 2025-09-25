@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 25 Sep 2025 13:31:04 </lastBuildDate>
+        <lastBuildDate>Thu, 25 Sep 2025 15:13:41 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unlocking Success: Top API Design Patterns for Seamless Integration]]></title>
+        <description><![CDATA[Discover the key API design patterns for seamless integration in our latest blog post. Unlock success with expert insights and practical tips.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-success-top-api-design-patterns-for-seam/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-success-top-api-design-patterns-for-seam/</guid>
+        <pubDate>Thu, 25 Sep 2025 15:13:41 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Software Testing: Expert Strategies Unveiled]]></title>
         <description><![CDATA[Learn expert strategies to master software testing in this comprehensive guide. Discover the latest techniques to improve product quality and efficiency.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-complete-guide/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-complete-guide/</guid>
         <pubDate>Tue, 23 Sep 2025 06:34:42 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Progressive Web Apps: A Game-Changer in Mobile Technology!]]></title>
-        <description><![CDATA[Discover how Progressive Web Apps are revolutionizing mobile technology! Learn how to leverage their power for better user experiences and increased engagement.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</guid>
-        <pubDate>Mon, 22 Sep 2025 21:18:40 </pubDate>
     </item>
     </channel>
 </rss>
