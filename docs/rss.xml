@@ -6,15 +6,15 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 25 Sep 2025 07:19:10 </lastBuildDate>
+        <lastBuildDate>Thu, 25 Sep 2025 07:59:45 </lastBuildDate>
         <generator>AI Blog System</generator>
         
     <item>
-        <title><![CDATA[Unraveling the Secrets of Efficient Backend Architecture]]></title>
-        <description><![CDATA[Discover the key principles and strategies for building a high-performing backend architecture in our latest blog post. Unlock the secrets to efficiency now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-secrets-of-efficient-backend-archit/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unraveling-the-secrets-of-efficient-backend-archit/</guid>
-        <pubDate>Thu, 25 Sep 2025 07:19:09 </pubDate>
+        <title><![CDATA[Mastering DevOps: Streamlining Your Workflow with CI/CD]]></title>
+        <description><![CDATA[Learn how to streamline your workflow with CI/CD in DevOps. Discover best practices and tools to master the art of continuous integration and delivery.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-streamlining-your-workflow-with-c/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-streamlining-your-workflow-with-c/</guid>
+        <pubDate>Thu, 25 Sep 2025 07:59:44 </pubDate>
     </item>
     <item>
         <title><![CDATA[Unleashing the Power of AI: Cutting-Edge Applications You Need to Know]]></title>
