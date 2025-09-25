@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Thu, 25 Sep 2025 09:22:09 </lastBuildDate>
+        <lastBuildDate>Thu, 25 Sep 2025 11:11:37 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering API Design Patterns: A Guide to Seamless Integration]]></title>
+        <description><![CDATA[Learn how to master API design patterns for seamless integration in our comprehensive guide. Discover best practices and expert tips to optimize your API design.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-to-seamless-/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-to-seamless-/</guid>
+        <pubDate>Thu, 25 Sep 2025 11:11:36 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Software Testing: Top Strategies for Success]]></title>
         <description><![CDATA[Learn top strategies to excel in software testing. Discover expert tips and best practices to become a master in software testing and ensure project success.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-backend-architecture-a-comp/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-backend-architecture-a-comp/</guid>
         <pubDate>Mon, 22 Sep 2025 18:22:17 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unpacking the Power of Container Technologies: A Deep Dive]]></title>
-        <description><![CDATA[Discover the transformative potential of container technologies in our deep dive exploration. Learn how containers revolutionize application deployment and management.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unpacking-the-power-of-container-technologies-a-de/</guid>
-        <pubDate>Mon, 22 Sep 2025 15:14:58 </pubDate>
     </item>
     </channel>
 </rss>
