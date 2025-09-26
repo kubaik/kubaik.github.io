@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 26 Sep 2025 09:22:31 </lastBuildDate>
+        <lastBuildDate>Fri, 26 Sep 2025 11:10:35 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Microservices: A Guide to Modern Architecture]]></title>
+        <description><![CDATA[Learn how to harness the potential of microservices to revolutionize your software architecture. Explore the benefits and best practices in our comprehensive guide.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-microservices-a-guide-to-m/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-microservices-a-guide-to-m/</guid>
+        <pubDate>Fri, 26 Sep 2025 11:10:34 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering DevOps and CI/CD for Seamless Software Delivery]]></title>
         <description><![CDATA[Learn how to streamline software delivery with DevOps and CI/CD. Discover expert tips and strategies to master these essential practices today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-g/</guid>
         <pubDate>Tue, 23 Sep 2025 21:18:49 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Microservices: Unleashing the Power of Scalable Architecture]]></title>
-        <description><![CDATA[Learn how to harness the full potential of Microservices Architecture in our latest blog post. Discover the secrets to building scalable and efficient systems.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-unleashing-the-power-of-sc/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-unleashing-the-power-of-sc/</guid>
-        <pubDate>Tue, 23 Sep 2025 18:23:27 </pubDate>
     </item>
     </channel>
 </rss>
