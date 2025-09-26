@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 26 Sep 2025 07:18:21 </lastBuildDate>
+        <lastBuildDate>Fri, 26 Sep 2025 09:22:31 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering DevOps and CI/CD for Seamless Software Delivery]]></title>
+        <description><![CDATA[Learn how to streamline software delivery with DevOps and CI/CD. Discover expert tips and strategies to master these essential practices today!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-for-seamless-software-de/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-for-seamless-software-de/</guid>
+        <pubDate>Fri, 26 Sep 2025 09:22:30 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency]]></title>
         <description><![CDATA[Learn how to master database optimization to boost performance and efficiency. Discover expert tips and strategies to maximize your database's potential.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-unleashing-the-power-of-sc/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-unleashing-the-power-of-sc/</guid>
         <pubDate>Tue, 23 Sep 2025 18:23:27 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Data Science Techniques: A Comprehensive Guide]]></title>
-        <description><![CDATA[Learn how to master essential data science techniques with our comprehensive guide. Elevate your skills and excel in the world of data analysis.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</guid>
-        <pubDate>Tue, 23 Sep 2025 15:14:21 </pubDate>
     </item>
     </channel>
 </rss>
