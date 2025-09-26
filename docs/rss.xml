@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Fri, 26 Sep 2025 13:29:37 </lastBuildDate>
+        <lastBuildDate>Fri, 26 Sep 2025 15:13:24 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Progressive Web Apps: A Game-Changer in Digital Experience]]></title>
+        <description><![CDATA[Discover how Progressive Web Apps revolutionize digital experiences. Explore the benefits and unleash their power in this game-changing blog post.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</guid>
+        <pubDate>Fri, 26 Sep 2025 15:13:23 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Unleashing the Power of Container Technologies: A Deep Dive]]></title>
         <description><![CDATA[Discover how container technologies revolutionize software development in our comprehensive deep dive. Learn to unleash their power today!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-serverless-computing-a-complete-guid/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/understanding-serverless-computing-a-complete-guid/</guid>
         <pubDate>Wed, 24 Sep 2025 11:45:50 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[The Future of Connectivity: Unleashing the Power of IoT]]></title>
-        <description><![CDATA[Explore how IoT is revolutionizing connectivity in our world. Discover the potential and impact of IoT technology in our daily lives.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-unleashing-the-power-of/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-unleashing-the-power-of/</guid>
-        <pubDate>Wed, 24 Sep 2025 09:15:16 </pubDate>
     </item>
     </channel>
 </rss>
