@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sat, 27 Sep 2025 13:22:41 </lastBuildDate>
+        <lastBuildDate>Sat, 27 Sep 2025 15:11:22 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unleashing the Power of Serverless Computing: A Beginner's Guide]]></title>
+        <description><![CDATA[Discover how to unlock the potential of serverless computing with our comprehensive beginner's guide. Learn how to leverage this powerful technology now!]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-serverless-computing-a-beg/</guid>
+        <pubDate>Sat, 27 Sep 2025 15:11:21 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Frontend Frameworks: A Developer's Guide]]></title>
         <description><![CDATA[Discover the ultimate guide to mastering frontend frameworks in this in-depth blog post. Level up your development skills and stay ahead of the curve!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-streamlining-your-workflow-with-c/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-streamlining-your-workflow-with-c/</guid>
         <pubDate>Thu, 25 Sep 2025 07:59:44 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of AI: Cutting-Edge Applications You Need to Know]]></title>
-        <description><![CDATA[Discover the latest AI applications making waves across industries! Explore cutting-edge uses of artificial intelligence in our insightful blog post.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-cutting-edge-applicatio/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-ai-cutting-edge-applicatio/</guid>
-        <pubDate>Wed, 24 Sep 2025 20:24:41 </pubDate>
     </item>
     </channel>
 </rss>
