@@ -11,6 +11,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>    <url>
+        <loc>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</loc>
+        <lastmod>2025-09-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>    <url>
         <loc>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-machine-learning-unveiling-the-top-algor/</loc>
         <lastmod>2025-09-27</lastmod>
         <changefreq>weekly</changefreq>
@@ -263,11 +268,6 @@
     </url>    <url>
         <loc>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-blockchain-a-game-changer-i/</loc>
         <lastmod>2025-09-19</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>    <url>
-        <loc>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-frontend-frameworks-a-developers-guide/</loc>
-        <lastmod>2025-09-18</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>    <url>
