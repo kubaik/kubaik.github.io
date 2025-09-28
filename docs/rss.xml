@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 28 Sep 2025 13:23:01 </lastBuildDate>
+        <lastBuildDate>Sun, 28 Sep 2025 15:11:02 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Microservices: A Guide to Scalable Architecture]]></title>
+        <description><![CDATA[Learn how to master Microservices Architecture with our comprehensive guide. Explore scalable solutions for modern software development.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</guid>
+        <pubDate>Sun, 28 Sep 2025 15:11:01 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Protect Your Data: Essential Cybersecurity Best Practices]]></title>
         <description><![CDATA[Learn how to safeguard your data with essential cybersecurity best practices. Discover expert tips to protect your digital assets effectively.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
         <pubDate>Fri, 26 Sep 2025 07:18:21 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Performance Optimization: Boost Your Website's Speed!]]></title>
-        <description><![CDATA[Learn how to boost your website's speed and master performance optimization techniques in this comprehensive blog post. Speed up your site today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-performance-optimization-boost-your-webs/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-performance-optimization-boost-your-webs/</guid>
-        <pubDate>Fri, 26 Sep 2025 05:11:48 </pubDate>
     </item>
     </channel>
 </rss>
