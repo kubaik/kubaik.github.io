@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sat, 27 Sep 2025 19:05:21 </lastBuildDate>
+        <lastBuildDate>Sun, 28 Sep 2025 05:11:03 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Mastering Mobile App Development: A Comprehensive Guide]]></title>
+        <description><![CDATA[Learn how to master mobile app development with our comprehensive guide. Discover tips, tricks, and best practices to create successful apps.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-comprehensive-g/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-comprehensive-g/</guid>
+        <pubDate>Sun, 28 Sep 2025 05:11:02 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Stay Ahead of the Curve: Top Web Development Trends 2022]]></title>
         <description><![CDATA[Discover the latest web development trends for 2022 and stay ahead of the curve with expert insights. Explore cutting-edge technologies and strategies in our comprehensive guide.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-expert-strategies-unvei/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-software-testing-expert-strategies-unvei/</guid>
         <pubDate>Thu, 25 Sep 2025 13:31:03 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering API Design Patterns: A Guide to Seamless Integration]]></title>
-        <description><![CDATA[Learn how to master API design patterns for seamless integration in our comprehensive guide. Discover best practices and expert tips to optimize your API design.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-to-seamless-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-api-design-patterns-a-guide-to-seamless-/</guid>
-        <pubDate>Thu, 25 Sep 2025 11:11:36 </pubDate>
     </item>
     </channel>
 </rss>
