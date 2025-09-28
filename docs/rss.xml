@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 28 Sep 2025 17:12:22 </lastBuildDate>
+        <lastBuildDate>Sun, 28 Sep 2025 19:05:16 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Boost Your Website's Speed: A Guide to Performance Optimization]]></title>
+        <description><![CDATA[Improve your website's speed and performance with our comprehensive guide! Learn expert tips and techniques for boosting your site's performance.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-a-guide-to-performance-o/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/boost-your-websites-speed-a-guide-to-performance-o/</guid>
+        <pubDate>Sun, 28 Sep 2025 19:05:16 </pubDate>
+    </item>
     <item>
         <title><![CDATA[Mastering Machine Learning: Unveiling the Top Algorithms]]></title>
         <description><![CDATA[Discover the top machine learning algorithms and master the art of data science with our comprehensive guide. Explore now for expert insights!]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-for-seamless-software-de/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-devops-and-cicd-for-seamless-software-de/</guid>
         <pubDate>Fri, 26 Sep 2025 09:22:30 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Mastering Database Optimization: Boost Performance & Efficiency]]></title>
-        <description><![CDATA[Learn how to master database optimization to boost performance and efficiency. Discover expert tips and strategies to maximize your database's potential.]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
-        <pubDate>Fri, 26 Sep 2025 07:18:21 </pubDate>
     </item>
     </channel>
 </rss>
