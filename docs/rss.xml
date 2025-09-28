@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Sun, 28 Sep 2025 09:18:18 </lastBuildDate>
+        <lastBuildDate>Sun, 28 Sep 2025 11:08:57 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Unlocking the Power of Progressive Web Apps: Your Ultimate Guide]]></title>
+        <description><![CDATA[Discover how to unleash the potential of Progressive Web Apps with our ultimate guide. Learn how to boost your online presence and engagement.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-progressive-web-apps-your-u/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unlocking-the-power-of-progressive-web-apps-your-u/</guid>
+        <pubDate>Sun, 28 Sep 2025 11:08:56 </pubDate>
+    </item>
     <item>
         <title><![CDATA[The Future of Connectivity: Exploring the Internet of Things (IoT)]]></title>
         <description><![CDATA[Discover the endless possibilities of the Internet of Things (IoT) in our latest blog post. Dive into the future of connectivity and explore the world of smart devices.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-guide-for-succe/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/mastering-mobile-app-development-a-guide-for-succe/</guid>
         <pubDate>Thu, 25 Sep 2025 19:08:11 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[The Future of Connectivity: Exploring the Power of IoT]]></title>
-        <description><![CDATA[Discover the endless possibilities of IoT and how it's shaping the future of connectivity in our latest blog post. Explore the power of IoT now!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-exploring-the-power-of-/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/the-future-of-connectivity-exploring-the-power-of-/</guid>
-        <pubDate>Thu, 25 Sep 2025 17:14:12 </pubDate>
     </item>
     </channel>
 </rss>
