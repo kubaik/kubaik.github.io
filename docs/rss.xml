@@ -6,9 +6,16 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/</link>
         <atom:link href="https://kubaik.github.io/ai-blog-system/ai-blog-system/rss.xml" rel="self" type="application/rss+xml" />
         <language>en-us</language>
-        <lastBuildDate>Mon, 29 Sep 2025 09:24:40 </lastBuildDate>
+        <lastBuildDate>Mon, 29 Sep 2025 11:10:59 </lastBuildDate>
         <generator>AI Blog System</generator>
         
+    <item>
+        <title><![CDATA[Demystifying Blockchain: The Future of Secure Transactions]]></title>
+        <description><![CDATA[Unravel the mysteries of blockchain technology and discover how it is revolutionizing secure transactions. Explore the future of blockchain in this insightful blog post.]]></description>
+        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/demystifying-blockchain-the-future-of-secure-trans/</link>
+        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/demystifying-blockchain-the-future-of-secure-trans/</guid>
+        <pubDate>Mon, 29 Sep 2025 11:10:58 </pubDate>
+    </item>
     <item>
         <title><![CDATA[The Future of Computing: Unleashing the Power of Serverless Technology]]></title>
         <description><![CDATA[Discover the future of computing with our blog post on Serverless Technology. Learn how this innovation is revolutionizing the way we build and deploy applications.]]></description>
@@ -141,13 +148,6 @@
         <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</link>
         <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-progressive-web-apps-a-gam/</guid>
         <pubDate>Fri, 26 Sep 2025 15:13:23 </pubDate>
-    </item>
-    <item>
-        <title><![CDATA[Unleashing the Power of Container Technologies: A Deep Dive]]></title>
-        <description><![CDATA[Discover how container technologies revolutionize software development in our comprehensive deep dive. Learn to unleash their power today!]]></description>
-        <link>https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-d/</link>
-        <guid isPermaLink="true">https://kubaik.github.io/ai-blog-system/ai-blog-system/unleashing-the-power-of-container-technologies-a-d/</guid>
-        <pubDate>Fri, 26 Sep 2025 13:29:36 </pubDate>
     </item>
     </channel>
 </rss>
