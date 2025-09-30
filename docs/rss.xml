@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Sep 2025 13:30:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Sep 2025 15:11:49 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Mobile App Development: A Beginner&apos;s Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-mobile-app-development-a-beginners-guide/</link>
+      <description>Learn the essentials of mobile app development with our beginner&apos;s guide. Unlock the secrets to mastering app creation and start building your dream app today!</description>
+      <pubDate>Tue, 30 Sep 2025 15:11:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-mobile-app-development-a-beginners-guide/</guid>
+    </item>
     <item>
       <title>Mastering Data Science Techniques: A Guide to Analyzing Big Data</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-guide-to-analy/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of computing with our blog post on Serverless Technology. Learn how this innovation is revolutionizing the way we build and deploy applications.</description>
       <pubDate>Mon, 29 Sep 2025 09:24:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/the-future-of-computing-unleashing-the-power-of-se/</guid>
-    </item>
-    <item>
-      <title>Revolutionizing Industries: Top Artificial Intelligence Applications</title>
-      <link>https://kubaik.github.io/ai-blog-system/revolutionizing-industries-top-artificial-intellig/</link>
-      <description>Discover how artificial intelligence is transforming industries with the top applications. Stay informed and ahead of the curve with this insightful blog post!</description>
-      <pubDate>Mon, 29 Sep 2025 05:12:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/revolutionizing-industries-top-artificial-intellig/</guid>
     </item>
   </channel>
 </rss>
