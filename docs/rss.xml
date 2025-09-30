@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Sep 2025 08:52:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Sep 2025 09:22:11 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Frontend Frameworks: A Guide to Streamlining Web Development</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-streamlin/</link>
+      <description>Learn how to streamline web development by mastering frontend frameworks. Get expert tips and tricks to enhance your coding skills. Start optimizing your workflow today!</description>
+      <pubDate>Tue, 30 Sep 2025 09:22:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-streamlin/</guid>
+    </item>
     <item>
       <title>Understanding Serverless Computing: A Complete Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/understanding-serverless-computing-a-complete-guid/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to master Microservices Architecture with our comprehensive guide. Explore scalable solutions for modern software development.</description>
       <pubDate>Sun, 28 Sep 2025 15:11:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-microservices-a-guide-to-scalable-archit/</guid>
-    </item>
-    <item>
-      <title>Protect Your Data: Essential Cybersecurity Best Practices</title>
-      <link>https://kubaik.github.io/ai-blog-system/protect-your-data-essential-cybersecurity-best-pra/</link>
-      <description>Learn how to safeguard your data with essential cybersecurity best practices. Discover expert tips to protect your digital assets effectively.</description>
-      <pubDate>Sun, 28 Sep 2025 13:23:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/protect-your-data-essential-cybersecurity-best-pra/</guid>
     </item>
   </channel>
 </rss>
