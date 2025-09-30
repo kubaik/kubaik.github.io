@@ -427,7 +427,7 @@ if __name__ == "__main__":
                 tweet_text = f"🚀 {blog_post.title} \n\nRead here: https://kubaik.github.io/ai-blog-system/{blog_post.slug}"
                 twitter_result = visibility.post_to_twitter(tweet_text)
                 if twitter_result['success']:
-                    print(f"🐦 Tweeted successfully! URL: {twitter_result['url']}")
+                    print(f"🐦 Tweeted successfully URL: {twitter_result['url']}")
                 else:
                     print(f"⚠️ Twitter post failed: {twitter_result.get('error')}")
                 
