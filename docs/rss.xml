@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Sep 2025 11:11:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Sep 2025 13:30:50 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Data Science Techniques: A Guide to Analyzing Big Data</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-guide-to-analy/</link>
+      <description>Learn how to master data science techniques for analyzing big data in this comprehensive guide. Unlock the power of data analysis today!</description>
+      <pubDate>Tue, 30 Sep 2025 13:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-guide-to-analy/</guid>
+    </item>
     <item>
       <title>Mastering API Design Patterns: A Blueprint for Success</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-blueprint-for-succ/</link>
@@ -138,13 +145,6 @@
       <description>Discover how artificial intelligence is transforming industries with the top applications. Stay informed and ahead of the curve with this insightful blog post!</description>
       <pubDate>Mon, 29 Sep 2025 05:12:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/revolutionizing-industries-top-artificial-intellig/</guid>
-    </item>
-    <item>
-      <title>Boost Your Website&apos;s Speed: A Guide to Performance Optimization</title>
-      <link>https://kubaik.github.io/ai-blog-system/boost-your-websites-speed-a-guide-to-performance-o/</link>
-      <description>Improve your website&apos;s speed and performance with our comprehensive guide! Learn expert tips and techniques for boosting your site&apos;s performance.</description>
-      <pubDate>Sun, 28 Sep 2025 19:05:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/boost-your-websites-speed-a-guide-to-performance-o/</guid>
     </item>
   </channel>
 </rss>
