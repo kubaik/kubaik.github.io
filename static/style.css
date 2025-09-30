@@ -1,0 +1,151 @@
+/* Contact Page Styles */
+.contact-info {
+    margin: 2rem 0;
+}
+
+.contact-method {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-method h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-email {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s;
+}
+
+.contact-email:hover {
+    border-bottom: 2px solid #667eea;
+}
+
+.contact-reasons, .contact-guidelines, .business-info, .social-media {
+    margin: 2rem 0;
+}
+
+.contact-reasons h2, .contact-guidelines h2, .business-info h2, .social-media h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.contact-reasons ul, .contact-guidelines ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.contact-reasons li, .contact-guidelines li {
+    padding: 0.5rem 0;
+    border-left: 3px solid #667eea;
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 0 8px 8px 0;
+}
+
+.business-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+/* Privacy Policy & Terms Styling */
+.page-content h2 {
+    color: #2c3e50;
+    margin: 2rem 0 1rem 0;
+    font-size: 1.6rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+}
+
+.page-content h3 {
+    color: #34495e;
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.page-content p {
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+.page-content ul {
+    margin: 1rem 0 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+/* Legal pages highlight important sections */
+.page-content p:first-of-type {
+    font-weight: 500;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Enhanced Navigation */
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+header nav a {
+    white-space: nowrap;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    header nav {
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    header nav a {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .contact-method {
+        padding: 1rem;
+    }
+    
+    .business-info {
+        padding: 1rem;
+    }
+    
+    .contact-reasons li, .contact-guidelines li {
+        padding: 0.4rem;
+        padding-left: 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    header nav a {
+        width: 100%;
+        text-align: center;
+        margin: 0.2rem 0;
+    }
+}
