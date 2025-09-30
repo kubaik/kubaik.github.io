@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Sep 2025 15:11:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Sep 2025 17:14:39 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps and CI/CD: A Guide to Efficient Software Delivery</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-devops-and-cicd-a-guide-to-efficient-sof/</link>
+      <description>Learn how to streamline software delivery with DevOps and CI/CD in this comprehensive guide. Master the essential practices for faster and more efficient development.</description>
+      <pubDate>Tue, 30 Sep 2025 17:14:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-and-cicd-a-guide-to-efficient-sof/</guid>
+    </item>
     <item>
       <title>Mastering Mobile App Development: A Beginner&apos;s Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-mobile-app-development-a-beginners-guide/</link>
@@ -138,13 +145,6 @@
       <description>Unravel the mysteries of blockchain technology and discover how it is revolutionizing secure transactions. Explore the future of blockchain in this insightful blog post.</description>
       <pubDate>Mon, 29 Sep 2025 11:10:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/demystifying-blockchain-the-future-of-secure-trans/</guid>
-    </item>
-    <item>
-      <title>The Future of Computing: Unleashing the Power of Serverless Technology</title>
-      <link>https://kubaik.github.io/ai-blog-system/the-future-of-computing-unleashing-the-power-of-se/</link>
-      <description>Discover the future of computing with our blog post on Serverless Technology. Learn how this innovation is revolutionizing the way we build and deploy applications.</description>
-      <pubDate>Mon, 29 Sep 2025 09:24:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/the-future-of-computing-unleashing-the-power-of-se/</guid>
     </item>
   </channel>
 </rss>
