@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 13:31:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 15:12:43 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: A Guide to Efficient Development</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-guide-to-efficien/</link>
+      <description>Learn how to master backend architecture for efficient development in this comprehensive guide. Discover best practices and tips to streamline your backend processes.</description>
+      <pubDate>Wed, 01 Oct 2025 15:12:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-guide-to-efficien/</guid>
+    </item>
     <item>
       <title>Maximizing Efficiency: The Art of Performance Optimization</title>
       <link>https://kubaik.github.io/ai-blog-system/maximizing-efficiency-the-art-of-performance-optim/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Sep 2025 07:09:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/understanding-database-optimization-a-complete-gui/</guid>
-    </item>
-    <item>
-      <title>Unpacking the Power of Container Technologies: A Guide for Modern Businesses</title>
-      <link>https://kubaik.github.io/ai-blog-system/unpacking-the-power-of-container-technologies-a-gu/</link>
-      <description>Discover how container technologies can revolutionize your business in our comprehensive guide. Learn the benefits and best practices for modernizing your operations.</description>
-      <pubDate>Tue, 30 Sep 2025 05:12:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unpacking-the-power-of-container-technologies-a-gu/</guid>
     </item>
   </channel>
 </rss>
