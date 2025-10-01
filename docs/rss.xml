@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 07:18:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 09:22:55 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Microservices: The Ultimate Guide to Modern Architecture</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-microservices-the-ultimate-guide-to-mode/</link>
+      <description>Learn how to master Microservices Architecture with our comprehensive guide! Discover the key principles and best practices for building modern software systems.</description>
+      <pubDate>Wed, 01 Oct 2025 09:22:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-microservices-the-ultimate-guide-to-mode/</guid>
+    </item>
     <item>
       <title>Maximize Efficiency: The Ultimate Guide to Database Optimization</title>
       <link>https://kubaik.github.io/ai-blog-system/maximize-efficiency-the-ultimate-guide-to-database/</link>
@@ -138,13 +145,6 @@
       <description>Learn the top strategies and techniques for mastering software testing in this comprehensive guide. Elevate your testing game and ensure project success!</description>
       <pubDate>Mon, 29 Sep 2025 17:15:17 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-software-testing-strategies-for-success/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: A Guide to Efficient Integration</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-efficient/</link>
-      <description>Learn how to master API design patterns for efficient integration in this comprehensive guide. Discover best practices and expert tips to streamline your development process.</description>
-      <pubDate>Mon, 29 Sep 2025 15:13:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-guide-to-efficient/</guid>
     </item>
   </channel>
 </rss>
