@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 15:12:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 17:14:54 +0000</lastBuildDate>
+    <item>
+      <title>5 Web Development Trends Shaping the Future of the Internet</title>
+      <link>https://kubaik.github.io/ai-blog-system/5-web-development-trends-shaping-the-future-of-the/</link>
+      <description>Stay ahead of the curve with our latest blog post on the top 5 web development trends shaping the future of the internet. Discover what&apos;s next in web development!</description>
+      <pubDate>Wed, 01 Oct 2025 17:14:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/5-web-development-trends-shaping-the-future-of-the/</guid>
+    </item>
     <item>
       <title>Mastering Backend Architecture: A Guide to Efficient Development</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-guide-to-efficien/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Sep 2025 07:16:15 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Understanding Database Optimization: A Complete Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/understanding-database-optimization-a-complete-gui/</link>
-      <description>A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Sep 2025 07:09:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/understanding-database-optimization-a-complete-gui/</guid>
     </item>
   </channel>
 </rss>
