@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 17:14:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 19:08:04 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Progressive Web Apps: Your Ultimate Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-your-u/</link>
+      <description>Discover how to harness the full potential of Progressive Web Apps with our comprehensive guide. Learn the benefits and best practices for success!</description>
+      <pubDate>Wed, 01 Oct 2025 19:08:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-your-u/</guid>
+    </item>
     <item>
       <title>5 Web Development Trends Shaping the Future of the Internet</title>
       <link>https://kubaik.github.io/ai-blog-system/5-web-development-trends-shaping-the-future-of-the/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to boost performance and efficiency by mastering database optimization techniques. Take your database to the next level today!</description>
       <pubDate>Tue, 30 Sep 2025 07:19:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
-    </item>
-    <item>
-      <title>Understanding API Design Patterns: A Complete Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</link>
-      <description>A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Sep 2025 07:16:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/understanding-api-design-patterns-a-complete-guide/</guid>
     </item>
   </channel>
 </rss>
