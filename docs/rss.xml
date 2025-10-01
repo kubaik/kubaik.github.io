@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 11:11:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 13:31:04 +0000</lastBuildDate>
+    <item>
+      <title>Maximizing Efficiency: The Art of Performance Optimization</title>
+      <link>https://kubaik.github.io/ai-blog-system/maximizing-efficiency-the-art-of-performance-optim/</link>
+      <description>Learn how to maximize efficiency and improve performance optimization in this insightful blog post. Discover key strategies and tips to boost productivity!</description>
+      <pubDate>Wed, 01 Oct 2025 13:31:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/maximizing-efficiency-the-art-of-performance-optim/</guid>
+    </item>
     <item>
       <title>Unleashing the Power of Cloud Computing Platforms: A Guide for Success</title>
       <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how container technologies can revolutionize your business in our comprehensive guide. Learn the benefits and best practices for modernizing your operations.</description>
       <pubDate>Tue, 30 Sep 2025 05:12:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unpacking-the-power-of-container-technologies-a-gu/</guid>
-    </item>
-    <item>
-      <title>Mastering Data Science Techniques: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</link>
-      <description>Learn the essential data science techniques to excel in the field. Discover expert tips and strategies in this comprehensive guide. Master your skills today!</description>
-      <pubDate>Mon, 29 Sep 2025 19:08:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-comprehensive-/</guid>
     </item>
   </channel>
 </rss>
