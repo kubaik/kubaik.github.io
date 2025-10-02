@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Oct 2025 08:57:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Oct 2025 09:20:49 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Database Optimization: Boost Performance &amp; Efficiency</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
+      <description>Learn how to master database optimization to boost performance and efficiency in this comprehensive guide. Discover expert tips and best practices here.</description>
+      <pubDate>Thu, 02 Oct 2025 09:20:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
+    </item>
+    <item>
+      <title>Mastering Mobile App Development: Your Ultimate Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-mobile-app-development-your-ultimate-gui/</link>
+      <description>Learn how to excel in mobile app development with our ultimate guide! Discover key strategies, tools, and tips to create successful apps.</description>
+      <pubDate>Thu, 02 Oct 2025 09:16:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-mobile-app-development-your-ultimate-gui/</guid>
+    </item>
     <item>
       <title>5 Expert Tips for Maximum Performance Optimization</title>
       <link>https://kubaik.github.io/ai-blog-system/5-expert-tips-for-maximum-performance-optimization/</link>
@@ -131,20 +145,6 @@
       <description>Learn how to master data science techniques for analyzing big data in this comprehensive guide. Unlock the power of data analysis today!</description>
       <pubDate>Tue, 30 Sep 2025 13:30:49 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-data-science-techniques-a-guide-to-analy/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: A Blueprint for Success</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-blueprint-for-succ/</link>
-      <description>Learn how to master API design patterns with our comprehensive guide. Unlock the blueprint for success in building efficient and scalable APIs.</description>
-      <pubDate>Tue, 30 Sep 2025 11:11:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-blueprint-for-succ/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of AI: Innovative Applications Explained</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-ai-innovative-applications-/</link>
-      <description>Discover the limitless potential of AI in our latest blog post! Explore innovative applications and unlock the power of Artificial Intelligence today.</description>
-      <pubDate>Tue, 30 Sep 2025 09:25:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-ai-innovative-applications-/</guid>
     </item>
   </channel>
 </rss>
