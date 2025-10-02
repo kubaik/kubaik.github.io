@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Oct 2025 08:08:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Oct 2025 08:14:15 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Cybersecurity Best Practices: A Complete Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/understanding-cybersecurity-best-practices-a-compl/</link>
+      <description>A comprehensive guide to Cybersecurity Best Practices covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Oct 2025 08:14:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/understanding-cybersecurity-best-practices-a-compl/</guid>
+    </item>
     <item>
       <title>Understanding Blockchain Technology: A Complete Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Sep 2025 08:51:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/understanding-serverless-computing-a-complete-guid/</guid>
-    </item>
-    <item>
-      <title>Understanding Frontend Frameworks: A Complete Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/understanding-frontend-frameworks-a-complete-guide/</link>
-      <description>A comprehensive guide to Frontend Frameworks covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Sep 2025 08:23:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/understanding-frontend-frameworks-a-complete-guide/</guid>
     </item>
   </channel>
 </rss>
