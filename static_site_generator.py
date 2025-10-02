@@ -144,21 +144,16 @@ class StaticSiteGenerator:
         """Generate about, contact, privacy, and terms pages"""
         config = self.blog_system.config
         
+        # Map directory names (with hyphens) to template names (with underscores)
         pages = {
-            'about': {
-                'topics': config.get('content_topics', [])[:10]
-            },
-            'contact': {},
-            'privacy_policy': {
-                'current_date': datetime.now().strftime('%B %d, %Y')
-            },
-            'terms_of_service': {
-                'current_date': datetime.now().strftime('%B %d, %Y')
-            }
+            'about': ('about', {'topics': config.get('content_topics', [])[:10]}),
+            'contact': ('contact', {}),
+            'privacy-policy': ('privacy_policy', {'current_date': datetime.now().strftime('%B %d, %Y')}),
+            'terms-of-service': ('terms_of_service', {'current_date': datetime.now().strftime('%B %d, %Y')})
         }
         
-        for page_name, extra_context in pages.items():
-            page_dir = Path("./docs") / page_name
+        for dir_name, (template_name, extra_context) in pages.items():
+            page_dir = Path("./docs") / dir_name
             page_dir.mkdir(exist_ok=True)
             
             context = {
@@ -170,7 +165,7 @@ class StaticSiteGenerator:
                 **extra_context
             }
             
-            html = self.templates[page_name].render(**context)
+            html = self.templates[template_name].render(**context)
             
             output_file = page_dir / "index.html"
             with open(output_file, 'w', encoding='utf-8') as f:
