@@ -33,8 +33,25 @@ class StaticSiteGenerator:
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
+        self._generate_ads_txt()
         
         print(f"Site generated successfully with {len(posts)} posts!")
+
+    def _generate_ads_txt(self):
+        """Generate ads.txt file for AdSense verification"""
+        config = self.blog_system.config
+        adsense_id = config.get('google_adsense_id', '')
+        
+        if adsense_id:
+            # Remove 'ca-pub-' prefix if present
+            pub_id = adsense_id.replace('ca-pub-', '')
+            
+            ads_txt_content = f"google.com, pub-{pub_id}, DIRECT, f08c47fec0942fa0\n"
+            
+            with open("./docs/ads.txt", 'w', encoding='utf-8') as f:
+                f.write(ads_txt_content)
+            
+            print("Generated ads.txt file")
 
     def _get_all_posts(self) -> List[BlogPost]:
         """Load all blog posts from the docs directory"""

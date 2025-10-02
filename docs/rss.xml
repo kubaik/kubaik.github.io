@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Oct 2025 07:17:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Oct 2025 07:24:43 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Blockchain Technology: A Complete Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</link>
+      <description>A comprehensive guide to Blockchain Technology covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Oct 2025 07:24:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/understanding-blockchain-technology-a-complete-gui/</guid>
+    </item>
     <item>
       <title>Mastering Machine Learning: Unraveling the Power of Algorithms</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-unraveling-the-power-of/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Frontend Frameworks covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Sep 2025 08:23:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/understanding-frontend-frameworks-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Understanding Software Testing Strategies: A Complete Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/understanding-software-testing-strategies-a-comple/</link>
-      <description>A comprehensive guide to Software Testing Strategies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Sep 2025 07:22:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/understanding-software-testing-strategies-a-comple/</guid>
     </item>
   </channel>
 </rss>
