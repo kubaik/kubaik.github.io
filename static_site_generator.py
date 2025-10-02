@@ -706,18 +706,57 @@ class StaticSiteGenerator:
                 </nav>
             </div>
         </header>
-        <main class="container">
+                    <main class="container">
             <div class="page-content">
                 <h1>Privacy Policy</h1>
-                <p><strong>Last updated:</strong> {{ current_date }}</p>
-                
+                <p><strong>Last updated:</strong> October 02, 2025</p>
+
                 <h2>Introduction</h2>
-                <p>{{ site_name }} is committed to protecting your privacy.</p>
-                
+                <p><strong>AI Tech Blog</strong> (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our website.</p>
+
+                <h2>Information We Collect</h2>
+                <ul>
+                <li><strong>Personal Information:</strong> such as your email address, if you voluntarily contact us or subscribe to updates.</li>
+                <li><strong>Non-Personal Information:</strong> such as browser type, device type, and usage data, collected automatically for analytics and site performance.</li>
+                <li><strong>Cookies & Tracking:</strong> we may use cookies, analytics tools, and similar technologies to improve the user experience and deliver relevant ads.</li>
+                </ul>
+
+                <h2>How We Use Your Information</h2>
+                <ul>
+                <li>To operate and maintain the Site.</li>
+                <li>To improve content and personalize user experience.</li>
+                <li>To send newsletters, updates, or promotional content (if you opt in).</li>
+                <li>To comply with legal obligations.</li>
+                </ul>
+
+                <h2>Sharing of Information</h2>
+                <p>We do not sell or rent your personal information. We may share data with trusted third-party service providers (e.g., analytics, hosting, advertising networks) only as necessary to operate the Site.</p>
+
+                <h2>Third-Party Links</h2>
+                <p>Our Site may contain links to third-party websites or affiliate products. We are not responsible for the privacy practices or content of those external sites.</p>
+
+                <h2>Data Retention</h2>
+                <p>We retain personal information only for as long as necessary to fulfill the purposes described in this Privacy Policy or as required by law.</p>
+
+                <h2>Your Privacy Rights</h2>
+                <p>Depending on your location, you may have rights to access, update, or delete your personal data. To exercise these rights, contact us at <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.</p>
+
+                <h2>Children’s Privacy</h2>
+                <p>The Site is not intended for children under 13. We do not knowingly collect information from children. If you believe we have unintentionally collected data from a child, please contact us.</p>
+
+                <h2>Security</h2>
+                <p>We implement reasonable security measures to protect your information. However, no method of transmission or storage is 100% secure, and we cannot guarantee absolute security.</p>
+
+                <h2>Changes to This Privacy Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Any updates will be posted on this page with the revised “Last updated” date.</p>
+
                 <h2>Contact Us</h2>
-                <p>Questions? Email us at <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.</p>
+                <p>If you have any questions or concerns about this Privacy Policy, email us at 
+                <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.
+                </p>
             </div>
-        </main>
+            </main>
+
         <footer>
             <div class="container">
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
