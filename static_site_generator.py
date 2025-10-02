@@ -751,16 +751,53 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
-            <div class="page-content">
-                <h1>Terms of Service</h1>
-                <p><strong>Last updated:</strong> {{ current_date }}</p>
-                
-                <h2>Agreement to Terms</h2>
-                <p>By accessing {{ site_name }}, you agree to these terms.</p>
-                
-                <h2>Contact Information</h2>
-                <p>Questions? Contact us at <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.</p>
-            </div>
+        <div class="page-content">
+            <h1>Terms of Service</h1>
+            <p><strong>Last updated:</strong> October 02, 2025</p>
+
+            <h2>Agreement to Terms</h2>
+            <p>By accessing <strong>AI Tech Blog</strong> (the “Site,” “we,” “our,” or “us”), you agree to be bound by these Terms of Service (the “Terms”). If you do not agree, please do not use our services.</p>
+
+            <h2>Use of Our Services</h2>
+            <ul>
+            <li>You may browse and read the content for personal, non-commercial purposes.</li>
+            <li>You agree not to misuse the Site or interfere with its operation.</li>
+            <li>Automated scraping, unauthorized reposting, or commercial use of our content is prohibited unless expressly authorized.</li>
+            </ul>
+
+            <h2>AI-Generated Content Disclaimer</h2>
+            <p>The articles, posts, and recommendations published on AI Tech Blog are automatically generated using artificial intelligence. While we strive for accuracy, we cannot guarantee that all information is correct, complete, or up to date. Content should not be considered professional, legal, medical, or financial advice. Users are responsible for verifying information before acting on it.</p>
+
+            <h2>Intellectual Property Rights</h2>
+            <p>All content, branding, and design elements on the Site are owned or licensed by us, unless otherwise stated. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
+
+            <h2>Third-Party Links & Affiliates</h2>
+            <ul>
+            <li>Some articles may include links to third-party websites, affiliate products, or sponsored content.</li>
+            <li>We are not responsible for the content, policies, or actions of any third-party site.</li>
+            <li>When you click on affiliate links, we may earn a commission at no extra cost to you.</li>
+            </ul>
+
+            <h2>Limitation of Liability</h2>
+            <p>The Site is provided “as is” without warranties of any kind. We are not liable for any damages, losses, or consequences resulting from the use of our AI-generated content or third-party services.</p>
+
+            <h2>Privacy</h2>
+            <p>Your use of the Site is also governed by our <a href="/privacy-policy.html">Privacy Policy</a>, which describes how we collect, use, and store information.</p>
+
+            <h2>Termination of Use</h2>
+            <p>We reserve the right to suspend or terminate access to the Site at our discretion, without notice, if you violate these Terms.</p>
+
+            <h2>Governing Law</h2>
+            <p>These Terms are governed by and interpreted under the laws of Kenya, without regard to conflict of law principles.</p>
+
+            <h2>Updates to Terms</h2>
+            <p>We may update these Terms from time to time. Changes will be posted with an updated “Last updated” date. Continued use of the Site indicates acceptance of the revised Terms.</p>
+
+            <h2>Contact Information</h2>
+            <p>For questions or concerns about these Terms, please contact us at: 
+            <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>
+            </p>
+        </div>
         </main>
         <footer>
             <div class="container">
