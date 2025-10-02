@@ -739,7 +739,8 @@ class StaticSiteGenerator:
                 <p>We retain personal information only for as long as necessary to fulfill the purposes described in this Privacy Policy or as required by law.</p>
 
                 <h2>Your Privacy Rights</h2>
-                <p>Depending on your location, you may have rights to access, update, or delete your personal data. To exercise these rights, contact us at <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.</p>
+                <p>Depending on your location, you may have rights to access, update, or delete your personal data. To exercise these rights, contact us at <a href="mailto:aiblogauto@gmail.com
+">aiblogauto@gmail.com</a>.</p>
 
                 <h2>Children’s Privacy</h2>
                 <p>The Site is not intended for children under 13. We do not knowingly collect information from children. If you believe we have unintentionally collected data from a child, please contact us.</p>
@@ -752,7 +753,7 @@ class StaticSiteGenerator:
 
                 <h2>Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy, email us at 
-                <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>.
+                <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>.
                 </p>
             </div>
             </main>
@@ -834,7 +835,7 @@ class StaticSiteGenerator:
 
             <h2>Contact Information</h2>
             <p>For questions or concerns about these Terms, please contact us at: 
-            <a href="mailto:kevkubai@gmail.com">kevkubai@gmail.com</a>
+            <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>
             </p>
         </div>
         </main>
@@ -879,7 +880,7 @@ class StaticSiteGenerator:
                     <h2>Get in Touch</h2>
                     <div class="contact-method">
                         <h3>Email</h3>
-                        <p><a href="mailto:kevkubai@gmail.com" class="contact-email">kevkubai@gmail.com</a></p>
+                        <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
                     </div>
                 </div>
             </div>
