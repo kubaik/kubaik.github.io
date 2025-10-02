@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Oct 2025 08:14:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Oct 2025 08:30:09 +0000</lastBuildDate>
+    <item>
+      <title>Demystifying Backend Architecture: A Comprehensive Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/demystifying-backend-architecture-a-comprehensive-/</link>
+      <description>Unravel the mysteries of backend architecture with our comprehensive guide! Learn the ins and outs of building a strong foundation for your digital projects.</description>
+      <pubDate>Thu, 02 Oct 2025 08:30:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/demystifying-backend-architecture-a-comprehensive-/</guid>
+    </item>
     <item>
       <title>Understanding Cybersecurity Best Practices: A Complete Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/understanding-cybersecurity-best-practices-a-compl/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to streamline web development by mastering frontend frameworks. Get expert tips and tricks to enhance your coding skills. Start optimizing your workflow today!</description>
       <pubDate>Tue, 30 Sep 2025 09:22:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-streamlin/</guid>
-    </item>
-    <item>
-      <title>Understanding Serverless Computing: A Complete Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/understanding-serverless-computing-a-complete-guid/</link>
-      <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Sep 2025 08:51:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/understanding-serverless-computing-a-complete-guid/</guid>
     </item>
   </channel>
 </rss>
