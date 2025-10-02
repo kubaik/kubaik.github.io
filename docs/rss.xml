@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Oct 2025 19:08:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Oct 2025 05:11:12 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Software Testing: Top Strategies for Success</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</link>
+      <description>Learn expert software testing strategies to elevate your testing game and ensure success. Discover top tips and techniques to master software testing now!</description>
+      <pubDate>Thu, 02 Oct 2025 05:11:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Progressive Web Apps: Your Ultimate Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-your-u/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Web Development Trends covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Sep 2025 07:21:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/understanding-web-development-trends-a-complete-gu/</guid>
-    </item>
-    <item>
-      <title>Mastering Database Optimization: Boost Performance Now!</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-database-optimization-boost-performance-/</link>
-      <description>Learn how to boost performance and efficiency by mastering database optimization techniques. Take your database to the next level today!</description>
-      <pubDate>Tue, 30 Sep 2025 07:19:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-database-optimization-boost-performance-/</guid>
     </item>
   </channel>
 </rss>
