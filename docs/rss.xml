@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Oct 2025 07:17:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Oct 2025 09:20:09 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps: The Ultimate Guide to CI/CD</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</link>
+      <description>Unlock the secrets of DevOps with our ultimate guide to CI/CD. Learn how to streamline software development and deployment for maximum efficiency and success.</description>
+      <pubDate>Fri, 03 Oct 2025 09:20:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</guid>
+    </item>
     <item>
       <title>Decoding Machine Learning Algorithms: A Beginner&apos;s Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/decoding-machine-learning-algorithms-a-beginners-g/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead of the curve with our latest blog post on the top 5 web development trends shaping the future of the internet. Discover what&apos;s next in web development!</description>
       <pubDate>Wed, 01 Oct 2025 17:14:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/5-web-development-trends-shaping-the-future-of-the/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: A Guide to Efficient Development</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-guide-to-efficien/</link>
-      <description>Learn how to master backend architecture for efficient development in this comprehensive guide. Discover best practices and tips to streamline your backend processes.</description>
-      <pubDate>Wed, 01 Oct 2025 15:12:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-guide-to-efficien/</guid>
     </item>
   </channel>
 </rss>
