@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Oct 2025 17:12:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Oct 2025 19:09:44 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: Essential API Design Patterns</title>
+      <link>https://kubaik.github.io/ai-blog-system/unlocking-efficiency-essential-api-design-patterns/</link>
+      <description>Learn how to boost efficiency in your API design with essential design patterns. Discover key strategies to unlock seamless integration and performance.</description>
+      <pubDate>Sat, 04 Oct 2025 19:09:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/unlocking-efficiency-essential-api-design-patterns/</guid>
+    </item>
     <item>
       <title>Unleashing the Power of Cloud Computing Platforms: A Comprehensive Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Blockchain Technology is transforming various industries and revolutionizing the way businesses operate. Learn about its power and potential.</description>
       <pubDate>Thu, 02 Oct 2025 13:28:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unveiling-the-power-of-blockchain-revolutionizing-/</guid>
-    </item>
-    <item>
-      <title>Unpacking Container Technologies: A Beginner&apos;s Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/unpacking-container-technologies-a-beginners-guide/</link>
-      <description>Discover the world of Container Technologies with our comprehensive beginner&apos;s guide. Learn how to unpack and leverage these tools effectively.</description>
-      <pubDate>Thu, 02 Oct 2025 11:10:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unpacking-container-technologies-a-beginners-guide/</guid>
     </item>
   </channel>
 </rss>
