@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Oct 2025 13:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Oct 2025 15:11:05 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Microservices: A Modern Approach to Architecture</title>
+      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-microservices-a-modern-appr/</link>
+      <description>Discover how to leverage the potential of microservices in your architecture strategy. Explore best practices and real-world examples in this insightful post.</description>
+      <pubDate>Sat, 04 Oct 2025 15:11:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-microservices-a-modern-appr/</guid>
+    </item>
     <item>
       <title>Maximizing Performance: The Ultimate Guide to Database Optimization</title>
       <link>https://kubaik.github.io/ai-blog-system/maximizing-performance-the-ultimate-guide-to-datab/</link>
@@ -138,13 +145,6 @@
       <description>Discover the world of Container Technologies with our comprehensive beginner&apos;s guide. Learn how to unpack and leverage these tools effectively.</description>
       <pubDate>Thu, 02 Oct 2025 11:10:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unpacking-container-technologies-a-beginners-guide/</guid>
-    </item>
-    <item>
-      <title>Mastering Cybersecurity: Top Tips for Safe Online Practices</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-cybersecurity-top-tips-for-safe-online-p/</link>
-      <description>Learn top tips to master cybersecurity and ensure safe online practices. Discover how to protect your digital assets and stay secure online.</description>
-      <pubDate>Thu, 02 Oct 2025 09:45:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-cybersecurity-top-tips-for-safe-online-p/</guid>
     </item>
   </channel>
 </rss>
