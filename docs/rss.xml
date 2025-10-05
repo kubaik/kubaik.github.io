@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Oct 2025 19:09:44 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Oct 2025 05:10:56 +0000</lastBuildDate>
+    <item>
+      <title>Demystifying Backend Architecture: A Comprehensive Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/demystifying-backend-architecture-a-comprehensive-/</link>
+      <description>Uncover the secrets of backend architecture with our comprehensive guide. Learn the ins and outs of building a robust backend system for your website.</description>
+      <pubDate>Sun, 05 Oct 2025 05:10:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/demystifying-backend-architecture-a-comprehensive-/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: Essential API Design Patterns</title>
       <link>https://kubaik.github.io/ai-blog-system/unlocking-efficiency-essential-api-design-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to harness the full potential of data science techniques with our comprehensive guide. Master the art of data analysis and drive business success.</description>
       <pubDate>Thu, 02 Oct 2025 15:12:42 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</guid>
-    </item>
-    <item>
-      <title>Unveiling the Power of Blockchain: Revolutionizing Industries</title>
-      <link>https://kubaik.github.io/ai-blog-system/unveiling-the-power-of-blockchain-revolutionizing-/</link>
-      <description>Discover how Blockchain Technology is transforming various industries and revolutionizing the way businesses operate. Learn about its power and potential.</description>
-      <pubDate>Thu, 02 Oct 2025 13:28:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unveiling-the-power-of-blockchain-revolutionizing-/</guid>
     </item>
   </channel>
 </rss>
