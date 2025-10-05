@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Oct 2025 11:08:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Oct 2025 13:22:47 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps: Streamlining with CI/CD</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-devops-streamlining-with-cicd/</link>
+      <description>Learn how to master DevOps and streamline your processes with Continuous Integration/Continuous Deployment (CI/CD) in this informative blog post.</description>
+      <pubDate>Sun, 05 Oct 2025 13:22:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-streamlining-with-cicd/</guid>
+    </item>
     <item>
       <title>Fortify Your Defenses: Essential Cybersecurity Best Practices</title>
       <link>https://kubaik.github.io/ai-blog-system/fortify-your-defenses-essential-cybersecurity-best/</link>
@@ -138,13 +145,6 @@
       <description>Uncover the secrets of machine learning algorithms in our beginner&apos;s guide! Learn the basics and boost your understanding of this powerful technology.</description>
       <pubDate>Fri, 03 Oct 2025 07:17:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/decoding-machine-learning-algorithms-a-beginners-g/</guid>
-    </item>
-    <item>
-      <title>The Ultimate Guide to IoT: Revolutionizing the Future</title>
-      <link>https://kubaik.github.io/ai-blog-system/the-ultimate-guide-to-iot-revolutionizing-the-futu/</link>
-      <description>Discover how the Internet of Things is shaping the future with our comprehensive guide. Explore IoT&apos;s impact and potential in this must-read blog post!</description>
-      <pubDate>Fri, 03 Oct 2025 05:11:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/the-ultimate-guide-to-iot-revolutionizing-the-futu/</guid>
     </item>
   </channel>
 </rss>
