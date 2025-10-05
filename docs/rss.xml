@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Oct 2025 13:22:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Oct 2025 15:11:01 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Software Testing: Top Strategies for Success</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</link>
+      <description>Learn top strategies for success in software testing with this comprehensive guide. Master the art of software testing to improve product quality.</description>
+      <pubDate>Sun, 05 Oct 2025 15:11:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-succ/</guid>
+    </item>
     <item>
       <title>Mastering DevOps: Streamlining with CI/CD</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-devops-streamlining-with-cicd/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets of DevOps with our ultimate guide to CI/CD. Learn how to streamline software development and deployment for maximum efficiency and success.</description>
       <pubDate>Fri, 03 Oct 2025 09:20:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</guid>
-    </item>
-    <item>
-      <title>Decoding Machine Learning Algorithms: A Beginner&apos;s Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/decoding-machine-learning-algorithms-a-beginners-g/</link>
-      <description>Uncover the secrets of machine learning algorithms in our beginner&apos;s guide! Learn the basics and boost your understanding of this powerful technology.</description>
-      <pubDate>Fri, 03 Oct 2025 07:17:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/decoding-machine-learning-algorithms-a-beginners-g/</guid>
     </item>
   </channel>
 </rss>
