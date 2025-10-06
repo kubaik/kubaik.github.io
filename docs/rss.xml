@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Oct 2025 05:12:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Oct 2025 07:18:57 +0000</lastBuildDate>
+    <item>
+      <title>Unleashing the Power of Data Science Techniques</title>
+      <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-data-science-techniques/</link>
+      <description>Discover how to harness the full potential of data science techniques in our latest blog post. Learn how to unlock valuable insights and drive business growth.</description>
+      <pubDate>Mon, 06 Oct 2025 07:18:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-data-science-techniques/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: Top Web Development Trends You Need to Know</title>
       <link>https://kubaik.github.io/ai-blog-system/unlocking-the-future-top-web-development-trends-yo/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to master frontend frameworks and build stunning websites with this comprehensive guide. Discover tips, tricks, and best practices to level up your web development skills.</description>
       <pubDate>Fri, 03 Oct 2025 17:13:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: A Blueprint for Success</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-blueprint-for-succ/</link>
-      <description>Learn how to excel in API design with our comprehensive guide. Discover key strategies and best practices to achieve success in API design patterns.</description>
-      <pubDate>Fri, 03 Oct 2025 15:13:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-a-blueprint-for-succ/</guid>
     </item>
   </channel>
 </rss>
