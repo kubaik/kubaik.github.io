@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Oct 2025 05:11:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 07:18:16 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps: The Ultimate Guide to CI/CD</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</link>
+      <description>Learn how to master DevOps with our ultimate guide to Continuous Integration and Continuous Deployment. Streamline your workflow and boost efficiency today!</description>
+      <pubDate>Tue, 07 Oct 2025 07:18:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</guid>
+    </item>
     <item>
       <title>Unleashing the Power: Top Artificial Intelligence Applications</title>
       <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-top-artificial-intelligence-a/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to harness the full potential of cloud computing platforms with our comprehensive guide. Discover tips, best practices, and more. Skyrocket your business to new heights!</description>
       <pubDate>Sat, 04 Oct 2025 17:12:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of Microservices: A Modern Approach to Architecture</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-microservices-a-modern-appr/</link>
-      <description>Discover how to leverage the potential of microservices in your architecture strategy. Explore best practices and real-world examples in this insightful post.</description>
-      <pubDate>Sat, 04 Oct 2025 15:11:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-microservices-a-modern-appr/</guid>
     </item>
   </channel>
 </rss>
