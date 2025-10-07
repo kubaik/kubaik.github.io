@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Oct 2025 17:14:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 19:10:57 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: A Comprehensive Guide</title>
+      <link>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</link>
+      <description>Learn how to master backend architecture with our comprehensive guide. Discover best practices, tips, and strategies to build robust and scalable systems.</description>
+      <pubDate>Tue, 07 Oct 2025 19:10:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</guid>
+    </item>
     <item>
       <title>Mastering Machine Learning Algorithms: A Comprehensive Guide</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-algorithms-a-comprehens/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to master DevOps and streamline your processes with Continuous Integration/Continuous Deployment (CI/CD) in this informative blog post.</description>
       <pubDate>Sun, 05 Oct 2025 13:22:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-streamlining-with-cicd/</guid>
-    </item>
-    <item>
-      <title>Fortify Your Defenses: Essential Cybersecurity Best Practices</title>
-      <link>https://kubaik.github.io/ai-blog-system/fortify-your-defenses-essential-cybersecurity-best/</link>
-      <description>Learn how to protect your digital assets with essential cybersecurity best practices. Stay ahead of cyber threats and fortify your defenses now.</description>
-      <pubDate>Sun, 05 Oct 2025 11:08:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/fortify-your-defenses-essential-cybersecurity-best/</guid>
     </item>
   </channel>
 </rss>
