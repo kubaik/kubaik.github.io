@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io/ai-blog-system</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Oct 2025 19:11:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 05:11:37 +0000</lastBuildDate>
+    <item>
+      <title>Unleashing the Power: Top Artificial Intelligence Applications</title>
+      <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-top-artificial-intelligence-a/</link>
+      <description>Discover the top artificial intelligence applications transforming industries. Explore the power of AI in this insightful blog post.</description>
+      <pubDate>Tue, 07 Oct 2025 05:11:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-top-artificial-intelligence-a/</guid>
+    </item>
     <item>
       <title>Mastering Frontend Frameworks: A Guide to Building Stunning Websites</title>
       <link>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how to leverage the potential of microservices in your architecture strategy. Explore best practices and real-world examples in this insightful post.</description>
       <pubDate>Sat, 04 Oct 2025 15:11:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-microservices-a-modern-appr/</guid>
-    </item>
-    <item>
-      <title>Maximizing Performance: The Ultimate Guide to Database Optimization</title>
-      <link>https://kubaik.github.io/ai-blog-system/maximizing-performance-the-ultimate-guide-to-datab/</link>
-      <description>Learn how to maximize your database performance with our comprehensive guide to database optimization. Implement best practices for improved speed and efficiency.</description>
-      <pubDate>Sat, 04 Oct 2025 13:22:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/maximizing-performance-the-ultimate-guide-to-datab/</guid>
     </item>
   </channel>
 </rss>
