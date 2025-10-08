@@ -187,7 +187,7 @@ Remember to stay updated with the latest developments in {topic} as the field co
         }
         
         data = {
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4.1-nano",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7
