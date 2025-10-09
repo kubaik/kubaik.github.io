@@ -27,7 +27,7 @@ class BlogSystem:
         self.monetization = MonetizationManager(config)
 
     def cleanup_posts(self):
-        """Cleansss ups incomplete posts and recover from markdown files"""
+        """Clean ups incomplete posts and recover from markdown files"""
         print("Cleaning up posts...")
         
         if not self.output_dir.exists():
