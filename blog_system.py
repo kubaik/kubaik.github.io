@@ -323,8 +323,8 @@ def create_sample_config():
     config = {
         "site_name": "AI Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
-        "base_url": "https://kubaik.github.io/ai-blog-system",
-        "base_path": "/ai-blog-system",
+        "base_url": "https://kubaik.github.io",
+        "base_path": "/",
         
         # Monetization settings
         "amazon_affiliate_tag": "aiblogcontent-20",  # Replace with your Amazon affiliate tag
