@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 09:22:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Oct 2025 11:11:22 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Container Technologies: Boost Your DevOps Efficiency</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-container-technologies-boos/</link>
+      <description>Discover how container technologies can supercharge your DevOps workflows, improve deployment speed, and boost efficiency. Unlock their full potential today!</description>
+      <pubDate>Thu, 09 Oct 2025 11:11:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-boos/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: Top Artificial Intelligence Applications in 2024</title>
       <link>https://kubaik.github.io/unlocking-the-future-top-artificial-intelligence-a/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead in the digital world with our blog on the top web development trends for 2022. Explore the latest technologies and strategies to elevate your web presence.</description>
       <pubDate>Wed, 08 Oct 2025 05:12:03 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-development-trends-for-2022-stay-ahead-of-/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-a-comprehensive-gui/</link>
-      <description>Learn how to master backend architecture with our comprehensive guide. Discover best practices, tips, and strategies to build robust and scalable systems.</description>
-      <pubDate>Tue, 07 Oct 2025 19:10:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-a-comprehensive-gui/</guid>
     </item>
   </channel>
 </rss>
