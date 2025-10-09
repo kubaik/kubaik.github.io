@@ -1,6 +1,6 @@
 amazon_affiliate_tag: aiblogcontent-20
-base_path: /ai-blog-system
-base_url: https://kubaik.github.io/ai-blog-system
+base_path: /
+base_url: https://kubaik.github.io
 content_topics:
 - Machine Learning Algorithms
 - Web Development Trends
