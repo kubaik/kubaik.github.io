@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 07:31:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Oct 2025 07:43:24 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Microservices Architecture: Boost Your App&apos;s Flexibility</title>
+      <link>https://kubaik.github.io/mastering-microservices-architecture-boost-your-ap/</link>
+      <description>Discover how to master microservices architecture and boost your app&apos;s flexibility, scalability, and performance with our expert tips and strategies.</description>
+      <pubDate>Thu, 09 Oct 2025 07:43:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-microservices-architecture-boost-your-ap/</guid>
+    </item>
     <item>
       <title>Top Software Testing Strategies to Ensure Quality in 2024</title>
       <link>https://kubaik.github.io/top-software-testing-strategies-to-ensure-quality-/</link>
@@ -138,13 +145,6 @@
       <description>Learn the secrets to success in mobile app development with this ultimate guide. Discover expert tips and strategies to unlock your app&apos;s full potential.</description>
       <pubDate>Tue, 07 Oct 2025 09:22:21 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-success-the-ultimate-guide-to-mobile-app/</guid>
-    </item>
-    <item>
-      <title>Mastering DevOps: The Ultimate Guide to CI/CD</title>
-      <link>https://kubaik.github.io/mastering-devops-the-ultimate-guide-to-cicd/</link>
-      <description>Learn how to master DevOps with our ultimate guide to Continuous Integration and Continuous Deployment. Streamline your workflow and boost efficiency today!</description>
-      <pubDate>Tue, 07 Oct 2025 07:18:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-devops-the-ultimate-guide-to-cicd/</guid>
     </item>
   </channel>
 </rss>
