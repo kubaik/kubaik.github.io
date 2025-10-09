@@ -2,149 +2,149 @@
 <rss version="2.0">
   <channel>
     <title>AI Tech Blog</title>
-    <link>https://kubaik.github.io/ai-blog-system</link>
+    <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 07:18:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Oct 2025 07:26:03 +0000</lastBuildDate>
+    <item>
+      <title>Top Web Development Trends to Watch in 2024</title>
+      <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
+      <description>Discover the top web development trends to watch in 2024. Stay ahead with the latest innovations shaping the future of web design and development!</description>
+      <pubDate>Thu, 09 Oct 2025 07:26:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Progressive Web Apps: The Future of Mobile Browsing</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-the-fu/</link>
+      <link>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-the-fu/</link>
       <description>Discover how Progressive Web Apps revolutionize mobile browsing—boost speed, engagement, and user experience. Unlock the future today!</description>
       <pubDate>Thu, 09 Oct 2025 07:18:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-progressive-web-apps-the-fu/</guid>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-the-fu/</guid>
     </item>
     <item>
       <title>Unlocking the Future: How Blockchain Technology Is Changing Everything</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-future-how-blockchain-technology-is-/</link>
+      <link>https://kubaik.github.io/unlocking-the-future-how-blockchain-technology-is-/</link>
       <description>Discover how blockchain technology is transforming industries, enhancing security, and shaping the future in this insightful blog post.</description>
       <pubDate>Thu, 09 Oct 2025 05:12:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-future-how-blockchain-technology-is-/</guid>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-blockchain-technology-is-/</guid>
     </item>
     <item>
       <title>Unlocking the Power of Serverless Computing: Benefits &amp; Trends</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-serverless-computing-benefi/</link>
+      <link>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-benefi/</link>
       <description>Discover the benefits and latest trends of serverless computing. Unlock efficiency, scalability, and innovation with this transformative tech.</description>
       <pubDate>Wed, 08 Oct 2025 19:10:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-serverless-computing-benefi/</guid>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-benefi/</guid>
     </item>
     <item>
       <title>Mastering API Design Patterns: Best Practices for Seamless Integration</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-best-practices-for-s/</link>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</link>
       <description>Discover top API design patterns and best practices to ensure seamless integration, improve performance, and elevate your development process. Read more now!</description>
       <pubDate>Wed, 08 Oct 2025 17:14:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-api-design-patterns-best-practices-for-s/</guid>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</guid>
     </item>
     <item>
       <title>Top Cybersecurity Best Practices to Protect Your Data</title>
-      <link>https://kubaik.github.io/ai-blog-system/top-cybersecurity-best-practices-to-protect-your-d/</link>
+      <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-protect-your-d/</link>
       <description>Discover essential cybersecurity best practices to safeguard your data. Learn expert tips to stay protected and secure your digital assets effectively.</description>
       <pubDate>Wed, 08 Oct 2025 15:14:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/top-cybersecurity-best-practices-to-protect-your-d/</guid>
+      <guid>https://kubaik.github.io/top-cybersecurity-best-practices-to-protect-your-d/</guid>
     </item>
     <item>
       <title>Unlocking Blockchain: The Future of Secure Digital Transactions</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-blockchain-the-future-of-secure-digital-/</link>
+      <link>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</link>
       <description>Discover how blockchain technology is revolutionizing secure digital transactions and shaping the future of digital finance. Unlock the potential today!</description>
       <pubDate>Wed, 08 Oct 2025 13:31:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-blockchain-the-future-of-secure-digital-/</guid>
+      <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</guid>
     </item>
     <item>
       <title>Unlock the Power of Serverless Computing: Simplify &amp; Scale Seamlessly</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlock-the-power-of-serverless-computing-simplify-/</link>
+      <link>https://kubaik.github.io/unlock-the-power-of-serverless-computing-simplify-/</link>
       <description>Discover how serverless computing simplifies deployment, boosts scalability, and accelerates innovation. Unlock its power today!</description>
       <pubDate>Wed, 08 Oct 2025 11:10:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlock-the-power-of-serverless-computing-simplify-/</guid>
+      <guid>https://kubaik.github.io/unlock-the-power-of-serverless-computing-simplify-/</guid>
     </item>
     <item>
       <title>Mastering Software Testing: Top Strategies for Quality Assurance</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-qual/</link>
+      <link>https://kubaik.github.io/mastering-software-testing-top-strategies-for-qual/</link>
       <description>Discover top software testing strategies to ensure quality assurance. Master testing techniques and boost your software&apos;s reliability today!</description>
       <pubDate>Wed, 08 Oct 2025 09:22:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-software-testing-top-strategies-for-qual/</guid>
+      <guid>https://kubaik.github.io/mastering-software-testing-top-strategies-for-qual/</guid>
     </item>
     <item>
       <title>Unlocking the Power of Container Technologies in Modern IT</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-container-technologies-in-m/</link>
+      <link>https://kubaik.github.io/unlocking-the-power-of-container-technologies-in-m/</link>
       <description>Discover how container technologies revolutionize modern IT, boosting efficiency, scalability, and security. Unlock their full potential today!</description>
       <pubDate>Wed, 08 Oct 2025 07:17:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-the-power-of-container-technologies-in-m/</guid>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-in-m/</guid>
     </item>
     <item>
       <title>Unlock the Power of Progressive Web Apps: Future of Mobile Tech</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlock-the-power-of-progressive-web-apps-future-of/</link>
+      <link>https://kubaik.github.io/unlock-the-power-of-progressive-web-apps-future-of/</link>
       <description>Discover how Progressive Web Apps are transforming mobile tech, offering fast, reliable, and engaging experiences. Unlock their full potential today!</description>
       <pubDate>Wed, 08 Oct 2025 07:14:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlock-the-power-of-progressive-web-apps-future-of/</guid>
+      <guid>https://kubaik.github.io/unlock-the-power-of-progressive-web-apps-future-of/</guid>
     </item>
     <item>
       <title>Top Web Development Trends for 2022: Stay Ahead of the Curve!</title>
-      <link>https://kubaik.github.io/ai-blog-system/top-web-development-trends-for-2022-stay-ahead-of-/</link>
+      <link>https://kubaik.github.io/top-web-development-trends-for-2022-stay-ahead-of-/</link>
       <description>Stay ahead in the digital world with our blog on the top web development trends for 2022. Explore the latest technologies and strategies to elevate your web presence.</description>
       <pubDate>Wed, 08 Oct 2025 05:12:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/top-web-development-trends-for-2022-stay-ahead-of-/</guid>
+      <guid>https://kubaik.github.io/top-web-development-trends-for-2022-stay-ahead-of-/</guid>
     </item>
     <item>
       <title>Mastering Backend Architecture: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</link>
+      <link>https://kubaik.github.io/mastering-backend-architecture-a-comprehensive-gui/</link>
       <description>Learn how to master backend architecture with our comprehensive guide. Discover best practices, tips, and strategies to build robust and scalable systems.</description>
       <pubDate>Tue, 07 Oct 2025 19:10:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-backend-architecture-a-comprehensive-gui/</guid>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-a-comprehensive-gui/</guid>
     </item>
     <item>
       <title>Mastering Machine Learning Algorithms: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-algorithms-a-comprehens/</link>
+      <link>https://kubaik.github.io/mastering-machine-learning-algorithms-a-comprehens/</link>
       <description>Learn how to master machine learning algorithms with our comprehensive guide. Discover tips, tricks, and best practices to boost your skills in ML.</description>
       <pubDate>Tue, 07 Oct 2025 17:14:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-machine-learning-algorithms-a-comprehens/</guid>
+      <guid>https://kubaik.github.io/mastering-machine-learning-algorithms-a-comprehens/</guid>
     </item>
     <item>
       <title>Unleashing the Power of Cloud Computing Platforms: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</link>
+      <link>https://kubaik.github.io/unleashing-the-power-of-cloud-computing-platforms-/</link>
       <description>Learn how to harness the full potential of cloud computing platforms with our comprehensive guide. Explore tips, best practices, and tools to optimize your cloud strategy.</description>
       <pubDate>Tue, 07 Oct 2025 15:14:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-cloud-computing-platforms-/</guid>
+      <guid>https://kubaik.github.io/unleashing-the-power-of-cloud-computing-platforms-/</guid>
     </item>
     <item>
       <title>Unleashing the Power of Data Science Techniques: A Comprehensive Guide</title>
-      <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</link>
+      <link>https://kubaik.github.io/unleashing-the-power-of-data-science-techniques-a-/</link>
       <description>Master data science techniques with our comprehensive guide. Learn how to unleash the power of data science for your projects. Dive in now!</description>
       <pubDate>Tue, 07 Oct 2025 13:31:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-of-data-science-techniques-a-/</guid>
+      <guid>https://kubaik.github.io/unleashing-the-power-of-data-science-techniques-a-/</guid>
     </item>
     <item>
       <title>Mastering Microservices: A Guide to Modern Architecture</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</link>
+      <link>https://kubaik.github.io/mastering-microservices-a-guide-to-modern-architec/</link>
       <description>Learn how to master Microservices Architecture with our comprehensive guide. Explore the benefits and best practices for building scalable, flexible systems.</description>
       <pubDate>Tue, 07 Oct 2025 11:10:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-microservices-a-guide-to-modern-architec/</guid>
+      <guid>https://kubaik.github.io/mastering-microservices-a-guide-to-modern-architec/</guid>
     </item>
     <item>
       <title>Unlocking Success: The Ultimate Guide to Mobile App Development</title>
-      <link>https://kubaik.github.io/ai-blog-system/unlocking-success-the-ultimate-guide-to-mobile-app/</link>
+      <link>https://kubaik.github.io/unlocking-success-the-ultimate-guide-to-mobile-app/</link>
       <description>Learn the secrets to success in mobile app development with this ultimate guide. Discover expert tips and strategies to unlock your app&apos;s full potential.</description>
       <pubDate>Tue, 07 Oct 2025 09:22:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unlocking-success-the-ultimate-guide-to-mobile-app/</guid>
+      <guid>https://kubaik.github.io/unlocking-success-the-ultimate-guide-to-mobile-app/</guid>
     </item>
     <item>
       <title>Mastering DevOps: The Ultimate Guide to CI/CD</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</link>
+      <link>https://kubaik.github.io/mastering-devops-the-ultimate-guide-to-cicd/</link>
       <description>Learn how to master DevOps with our ultimate guide to Continuous Integration and Continuous Deployment. Streamline your workflow and boost efficiency today!</description>
       <pubDate>Tue, 07 Oct 2025 07:18:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-devops-the-ultimate-guide-to-cicd/</guid>
+      <guid>https://kubaik.github.io/mastering-devops-the-ultimate-guide-to-cicd/</guid>
     </item>
     <item>
       <title>Unleashing the Power: Top Artificial Intelligence Applications</title>
-      <link>https://kubaik.github.io/ai-blog-system/unleashing-the-power-top-artificial-intelligence-a/</link>
+      <link>https://kubaik.github.io/unleashing-the-power-top-artificial-intelligence-a/</link>
       <description>Discover the top artificial intelligence applications transforming industries. Explore the power of AI in this insightful blog post.</description>
       <pubDate>Tue, 07 Oct 2025 05:11:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/unleashing-the-power-top-artificial-intelligence-a/</guid>
-    </item>
-    <item>
-      <title>Mastering Frontend Frameworks: A Guide to Building Stunning Websites</title>
-      <link>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</link>
-      <description>Learn how to master frontend frameworks and build stunning websites with this comprehensive guide. Elevate your web development skills today!</description>
-      <pubDate>Mon, 06 Oct 2025 19:11:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-blog-system/mastering-frontend-frameworks-a-guide-to-building-/</guid>
+      <guid>https://kubaik.github.io/unleashing-the-power-top-artificial-intelligence-a/</guid>
     </item>
   </channel>
 </rss>
