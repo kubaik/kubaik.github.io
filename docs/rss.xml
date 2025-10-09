@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 07:50:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Oct 2025 08:20:11 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Backend Architecture: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-backend-architecture-a-complete-guid/</link>
+      <description>A comprehensive guide to Backend Architecture covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 09 Oct 2025 08:18:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-backend-architecture-a-complete-guid/</guid>
+    </item>
     <item>
       <title>Boost Your Website Speed: Top Performance Optimization Tips</title>
       <link>https://kubaik.github.io/boost-your-website-speed-top-performance-optimizat/</link>
@@ -138,13 +145,6 @@
       <description>Master data science techniques with our comprehensive guide. Learn how to unleash the power of data science for your projects. Dive in now!</description>
       <pubDate>Tue, 07 Oct 2025 13:31:17 +0000</pubDate>
       <guid>https://kubaik.github.io/unleashing-the-power-of-data-science-techniques-a-/</guid>
-    </item>
-    <item>
-      <title>Mastering Microservices: A Guide to Modern Architecture</title>
-      <link>https://kubaik.github.io/mastering-microservices-a-guide-to-modern-architec/</link>
-      <description>Learn how to master Microservices Architecture with our comprehensive guide. Explore the benefits and best practices for building scalable, flexible systems.</description>
-      <pubDate>Tue, 07 Oct 2025 11:10:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-microservices-a-guide-to-modern-architec/</guid>
     </item>
   </channel>
 </rss>
