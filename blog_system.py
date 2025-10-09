@@ -424,7 +424,7 @@ if __name__ == "__main__":
                 print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
 
                 visibility = VisibilityAutomator(config)
-                tweet_text = f"🚀 {blog_post.title} \n\nRead here: https://kubaik.github.io/ai-blog-system/{blog_post.slug}"
+                tweet_text = f"🚀 {blog_post.title} \n\nRead here: https://kubaik.github.io/{blog_post.slug}"
                 twitter_result = visibility.post_to_twitter(tweet_text)
                 if twitter_result['success']:
                     print(f"🐦 Tweeted successfully URL: {twitter_result['url']}")
