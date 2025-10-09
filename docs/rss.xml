@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 16:12:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Oct 2025 16:27:47 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery</title>
+      <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
+      <description>Unlock the secrets to faster, reliable software delivery with expert tips on mastering DevOps and CI/CD. Boost your development pipeline today!</description>
+      <pubDate>Thu, 09 Oct 2025 16:27:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
+    </item>
     <item>
       <title>Master Data Science Techniques: Boost Your Analytics Skills Today</title>
       <link>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</link>
@@ -138,13 +145,6 @@
       <description>Discover how blockchain technology is revolutionizing secure digital transactions and shaping the future of digital finance. Unlock the potential today!</description>
       <pubDate>Wed, 08 Oct 2025 13:31:43 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</guid>
-    </item>
-    <item>
-      <title>Unlock the Power of Serverless Computing: Simplify &amp; Scale Seamlessly</title>
-      <link>https://kubaik.github.io/unlock-the-power-of-serverless-computing-simplify-/</link>
-      <description>Discover how serverless computing simplifies deployment, boosts scalability, and accelerates innovation. Unlock its power today!</description>
-      <pubDate>Wed, 08 Oct 2025 11:10:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-the-power-of-serverless-computing-simplify-/</guid>
     </item>
   </channel>
 </rss>
