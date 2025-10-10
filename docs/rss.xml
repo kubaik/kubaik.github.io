@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Oct 2025 07:18:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 09:22:52 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Insights: Top Data Science Techniques You Must Know</title>
+      <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
+      <description>Discover essential data science techniques to unlock insights and boost your analytics skills. Learn top methods every data scientist should know today!</description>
+      <pubDate>Fri, 10 Oct 2025 09:22:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Machine Learning Algorithms: A Beginner’s Guide</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips to boost your website speed and enhance performance. Optimize load times and improve user experience today!</description>
       <pubDate>Thu, 09 Oct 2025 07:50:35 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-website-speed-top-performance-optimizat/</guid>
-    </item>
-    <item>
-      <title>Mastering Microservices Architecture: Boost Your App&apos;s Flexibility</title>
-      <link>https://kubaik.github.io/mastering-microservices-architecture-boost-your-ap/</link>
-      <description>Discover how to master microservices architecture and boost your app&apos;s flexibility, scalability, and performance with our expert tips and strategies.</description>
-      <pubDate>Thu, 09 Oct 2025 07:43:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-microservices-architecture-boost-your-ap/</guid>
     </item>
   </channel>
 </rss>
