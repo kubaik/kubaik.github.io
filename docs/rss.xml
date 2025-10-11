@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Oct 2025 07:15:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Oct 2025 09:18:44 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Blockchain: The Future of Secure Digital Transactions</title>
+      <link>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</link>
+      <description>Discover how blockchain technology is revolutionizing digital transactions with enhanced security and transparency. Unlock the future of secure digital payments today!</description>
+      <pubDate>Sat, 11 Oct 2025 09:18:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: The Ultimate Guide to Serverless Computing</title>
       <link>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-serverl/</link>
@@ -138,13 +145,6 @@
       <description>Discover the essentials of machine learning algorithms with our beginner’s guide. Simplify complex concepts and start your AI journey today!</description>
       <pubDate>Thu, 09 Oct 2025 15:43:28 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-machine-learning-algorithms-a-beginners-/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: Best Practices for Seamless Integration</title>
-      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</link>
-      <description>Discover proven API design patterns and best practices to ensure seamless integration, improve efficiency, and build scalable, reliable APIs.</description>
-      <pubDate>Thu, 09 Oct 2025 15:34:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</guid>
     </item>
   </channel>
 </rss>
