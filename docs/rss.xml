@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Oct 2025 05:11:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Oct 2025 07:15:41 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: The Ultimate Guide to Serverless Computing</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-serverl/</link>
+      <description>Discover how serverless computing boosts efficiency, reduces costs, and simplifies deployment. Your ultimate guide to mastering serverless technology!</description>
+      <pubDate>Sat, 11 Oct 2025 07:15:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-serverl/</guid>
+    </item>
     <item>
       <title>Boost Your Speed: Top Performance Optimization Tips</title>
       <link>https://kubaik.github.io/boost-your-speed-top-performance-optimization-tips/</link>
@@ -138,13 +145,6 @@
       <description>Discover proven API design patterns and best practices to ensure seamless integration, improve efficiency, and build scalable, reliable APIs.</description>
       <pubDate>Thu, 09 Oct 2025 15:34:12 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</guid>
-    </item>
-    <item>
-      <title>Top Tips for Successful Mobile App Development in 2024</title>
-      <link>https://kubaik.github.io/top-tips-for-successful-mobile-app-development-in-/</link>
-      <description>Discover the top tips for successful mobile app development in 2024. Boost your app’s performance, user experience, and success today!</description>
-      <pubDate>Thu, 09 Oct 2025 13:32:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-tips-for-successful-mobile-app-development-in-/</guid>
     </item>
   </channel>
 </rss>
