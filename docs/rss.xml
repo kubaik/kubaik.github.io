@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Oct 2025 15:10:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Oct 2025 17:12:19 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Success with Microservices Architecture: Boost Your App&apos;s Scalability</title>
+      <link>https://kubaik.github.io/unlocking-success-with-microservices-architecture-/</link>
+      <description>Discover how microservices architecture can boost your app&apos;s scalability and performance. Unlock success today with expert insights and strategies!</description>
+      <pubDate>Sat, 11 Oct 2025 17:12:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-success-with-microservices-architecture-/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: How IoT Is Transforming Our World</title>
       <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-our-w/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top frontend frameworks of 2024 to elevate your web development skills. Stay ahead with the latest trends and tools in frontend development!</description>
       <pubDate>Thu, 09 Oct 2025 16:46:28 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</guid>
-    </item>
-    <item>
-      <title>Master Data Science Techniques: Boost Your Analytics Skills Today</title>
-      <link>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</link>
-      <description>Unlock top data science techniques to boost your analytics skills. Learn proven methods to excel in data analysis and advance your data science career today!</description>
-      <pubDate>Thu, 09 Oct 2025 16:12:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</guid>
     </item>
   </channel>
 </rss>
