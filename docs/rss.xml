@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Oct 2025 19:09:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Oct 2025 21:13:19 +0000</lastBuildDate>
+    <item>
+      <title>Master Data Science Techniques: Boost Your Analytics Skills Today</title>
+      <link>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</link>
+      <description>Discover essential data science techniques to enhance your analytics skills. Master key methods and boost your data expertise today!</description>
+      <pubDate>Sat, 11 Oct 2025 21:13:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</guid>
+    </item>
     <item>
       <title>Mastering API Design Patterns: Best Practices for Seamless Integration</title>
       <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</link>
@@ -138,13 +145,6 @@
       <description>Discover the fundamentals of container technologies and learn how they can transform your development process. Perfect for beginners!</description>
       <pubDate>Thu, 09 Oct 2025 19:12:02 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-a-be/</guid>
-    </item>
-    <item>
-      <title>Top Web Development Trends to Watch in 2024</title>
-      <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
-      <description>Discover the top web development trends to watch in 2024 and stay ahead of the curve. Boost your website’s performance and innovation today!</description>
-      <pubDate>Thu, 09 Oct 2025 17:15:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
     </item>
   </channel>
 </rss>
