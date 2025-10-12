@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Oct 2025 09:18:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Oct 2025 11:09:40 +0000</lastBuildDate>
+    <item>
+      <title>2024 Web Development Trends You Can’t Miss</title>
+      <link>https://kubaik.github.io/2024-web-development-trends-you-cant-miss/</link>
+      <description>Discover the top web development trends shaping 2024. Stay ahead with the latest innovations in tech, design, and user experience. Read more now!</description>
+      <pubDate>Sun, 12 Oct 2025 11:09:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/2024-web-development-trends-you-cant-miss/</guid>
+    </item>
     <item>
       <title>Ultimate Guide to Mobile App Development in 2024</title>
       <link>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Discover the basics of machine learning algorithms and how they can transform your projects. A beginner’s guide to unlocking AI’s potential!</description>
       <pubDate>Fri, 10 Oct 2025 07:17:59 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</guid>
-    </item>
-    <item>
-      <title>Boost Your Database Performance: Top Optimization Tips</title>
-      <link>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</link>
-      <description>Unlock expert tips to boost your database performance. Discover top optimization strategies to enhance speed, reliability, and efficiency today!</description>
-      <pubDate>Fri, 10 Oct 2025 05:12:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
     </item>
   </channel>
 </rss>
