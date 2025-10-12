@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Oct 2025 07:15:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Oct 2025 09:18:54 +0000</lastBuildDate>
+    <item>
+      <title>Ultimate Guide to Mobile App Development in 2024</title>
+      <link>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</link>
+      <description>Discover the latest trends, tools, and best practices in mobile app development for 2024. Build smarter, faster, and more innovative apps today!</description>
+      <pubDate>Sun, 12 Oct 2025 09:18:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</guid>
+    </item>
     <item>
       <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery Efficiency</title>
       <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert tips to boost your database performance. Discover top optimization strategies to enhance speed, reliability, and efficiency today!</description>
       <pubDate>Fri, 10 Oct 2025 05:12:03 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
-    </item>
-    <item>
-      <title>Top Software Testing Strategies to Ensure Quality in 2024</title>
-      <link>https://kubaik.github.io/top-software-testing-strategies-to-ensure-quality-/</link>
-      <description>Discover the top software testing strategies for 2024 to ensure quality, reliability, and seamless user experiences. Stay ahead with expert testing tips!</description>
-      <pubDate>Fri, 10 Oct 2025 04:37:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-software-testing-strategies-to-ensure-quality-/</guid>
     </item>
   </channel>
 </rss>
