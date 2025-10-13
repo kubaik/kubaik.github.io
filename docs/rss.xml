@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Oct 2025 11:11:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Oct 2025 13:31:49 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Microservices Architecture: Boost Your App&apos;s Scalability</title>
+      <link>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</link>
+      <description>Discover how microservices architecture can enhance your app&apos;s scalability, flexibility, and performance. Unlock the secrets to building resilient, efficient systems today!</description>
+      <pubDate>Mon, 13 Oct 2025 13:31:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</guid>
+    </item>
     <item>
       <title>Master Software Testing Strategies: Boost Quality &amp; Efficiency</title>
       <link>https://kubaik.github.io/master-software-testing-strategies-boost-quality-e/</link>
@@ -138,13 +145,6 @@
       <description>Discover how blockchain technology is revolutionizing digital transactions with enhanced security and transparency. Unlock the future of secure digital payments today!</description>
       <pubDate>Sat, 11 Oct 2025 09:18:42 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Ultimate Guide to Serverless Computing</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-serverl/</link>
-      <description>Discover how serverless computing boosts efficiency, reduces costs, and simplifies deployment. Your ultimate guide to mastering serverless technology!</description>
-      <pubDate>Sat, 11 Oct 2025 07:15:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-serverl/</guid>
     </item>
   </channel>
 </rss>
