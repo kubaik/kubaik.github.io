@@ -656,7 +656,7 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
-            <div class="page-content">
+            <article class="page-content">
                 <h1>About {{ site_name }}</h1>
                 <p>Welcome to {{ site_name }}, an innovative AI-powered blog that delivers high-quality, informative content on various technology topics.</p>
                 
@@ -672,7 +672,7 @@ class StaticSiteGenerator:
                 
                 <h2>Contact Us</h2>
                 <p>Have questions? Visit our <a href="{{ base_path }}/contact/">contact page</a>.</p>
-            </div>
+            </article>
         </main>
         <footer>
             <div class="container">
@@ -706,13 +706,13 @@ class StaticSiteGenerator:
                 </nav>
             </div>
         </header>
-                    <main class="container">
-            <div class="page-content">
+        <main class="container">
+            <article class="page-content">
                 <h1>Privacy Policy</h1>
                 <p><strong>Last updated:</strong> October 02, 2025</p>
 
                 <h2>Introduction</h2>
-                <p><strong>AI Tech Blog</strong> (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our website.</p>
+                <p><strong>AI Tech Blog</strong> ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our website.</p>
 
                 <h2>Information We Collect</h2>
                 <ul>
@@ -739,23 +739,22 @@ class StaticSiteGenerator:
                 <p>We retain personal information only for as long as necessary to fulfill the purposes described in this Privacy Policy or as required by law.</p>
 
                 <h2>Your Privacy Rights</h2>
-                <p>Depending on your location, you may have rights to access, update, or delete your personal data. To exercise these rights, contact us at <a href="mailto:aiblogauto@gmail.com
-">aiblogauto@gmail.com</a>.</p>
+                <p>Depending on your location, you may have rights to access, update, or delete your personal data. To exercise these rights, contact us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>.</p>
 
-                <h2>Children’s Privacy</h2>
+                <h2>Children's Privacy</h2>
                 <p>The Site is not intended for children under 13. We do not knowingly collect information from children. If you believe we have unintentionally collected data from a child, please contact us.</p>
 
                 <h2>Security</h2>
                 <p>We implement reasonable security measures to protect your information. However, no method of transmission or storage is 100% secure, and we cannot guarantee absolute security.</p>
 
                 <h2>Changes to This Privacy Policy</h2>
-                <p>We may update this Privacy Policy from time to time. Any updates will be posted on this page with the revised “Last updated” date.</p>
+                <p>We may update this Privacy Policy from time to time. Any updates will be posted on this page with the revised "Last updated" date.</p>
 
                 <h2>Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy, email us at 
                 <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>.
                 </p>
-            </div>
+            </article>
             </main>
 
         <footer>
@@ -791,12 +790,12 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
-        <div class="page-content">
+        <article class="page-content">
             <h1>Terms of Service</h1>
             <p><strong>Last updated:</strong> October 02, 2025</p>
 
             <h2>Agreement to Terms</h2>
-            <p>By accessing <strong>AI Tech Blog</strong> (the “Site,” “we,” “our,” or “us”), you agree to be bound by these Terms of Service (the “Terms”). If you do not agree, please do not use our services.</p>
+            <p>By accessing <strong>AI Tech Blog</strong> (the "Site," "we," "our," or "us"), you agree to be bound by these Terms of Service (the "Terms"). If you do not agree, please do not use our services.</p>
 
             <h2>Use of Our Services</h2>
             <ul>
@@ -819,7 +818,7 @@ class StaticSiteGenerator:
             </ul>
 
             <h2>Limitation of Liability</h2>
-            <p>The Site is provided “as is” without warranties of any kind. We are not liable for any damages, losses, or consequences resulting from the use of our AI-generated content or third-party services.</p>
+            <p>The Site is provided "as is" without warranties of any kind. We are not liable for any damages, losses, or consequences resulting from the use of our AI-generated content or third-party services.</p>
 
             <h2>Privacy</h2>
             <p>Your use of the Site is also governed by our <a href="{{ base_path }}/privacy-policy.html">Privacy Policy</a>, which describes how we collect, use, and store information.</p>
@@ -831,13 +830,13 @@ class StaticSiteGenerator:
             <p>These Terms are governed by and interpreted under the laws of Kenya, without regard to conflict of law principles.</p>
 
             <h2>Updates to Terms</h2>
-            <p>We may update these Terms from time to time. Changes will be posted with an updated “Last updated” date. Continued use of the Site indicates acceptance of the revised Terms.</p>
+            <p>We may update these Terms from time to time. Changes will be posted with an updated "Last updated" date. Continued use of the Site indicates acceptance of the revised Terms.</p>
 
             <h2>Contact Information</h2>
             <p>For questions or concerns about these Terms, please contact us at: 
             <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>
             </p>
-        </div>
+        </article>
         </main>
         <footer>
             <div class="container">
@@ -872,7 +871,7 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
-            <div class="page-content">
+            <article class="page-content">
                 <h1>Contact Us</h1>
                 <p>We'd love to hear from you!</p>
                 
@@ -883,7 +882,7 @@ class StaticSiteGenerator:
                         <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
                     </div>
                 </div>
-            </div>
+            </article>
         </main>
         <footer>
             <div class="container">
