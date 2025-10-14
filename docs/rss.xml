@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Oct 2025 11:11:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 13:32:31 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Essential Tips &amp; Best Practices</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</link>
+      <description>Discover essential tips and best practices to master backend architecture. Optimize your system for scalability, security, and performance today!</description>
+      <pubDate>Tue, 14 Oct 2025 13:32:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks in 2024: Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover proven tips to boost your site speed and enhance performance. Optimize your website today for faster load times and better user experience!</description>
       <pubDate>Sun, 12 Oct 2025 19:09:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-site-speed-top-performance-optimization/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Ultimate Guide to Container Technologies</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-contain/</link>
-      <description>Discover how container technologies boost efficiency, streamline deployment, and transform your IT infrastructure with our comprehensive guide.</description>
-      <pubDate>Sun, 12 Oct 2025 17:12:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-ultimate-guide-to-contain/</guid>
     </item>
   </channel>
 </rss>
