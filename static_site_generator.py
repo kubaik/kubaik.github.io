@@ -639,19 +639,19 @@ class StaticSiteGenerator:
         <title>About - {{ site_name }}</title>
         <meta name="description" content="About {{ site_name }}">
         {{ global_meta_tags | safe }}
-        <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="../static/style.css">
         <link rel="canonical" href="{{ base_url }}/about/">
     </head>
     <body>
         <header>
             <div class="container">
-                <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+                <h1><a href="../">{{ site_name }}</a></h1>
                 <nav>
-                    <a href="{{ base_path }}/">Home</a>
-                    <a href="{{ base_path }}/about/">About</a>
-                    <a href="{{ base_path }}/contact/">Contact</a>
-                    <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms</a>
+                    <a href="../">Home</a>
+                    <a href="../about/">About</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../privacy-policy/">Privacy Policy</a>
+                    <a href="../terms-of-service/">Terms</a>
                 </nav>
             </div>
         </header>
@@ -671,7 +671,7 @@ class StaticSiteGenerator:
                 </ul>
                 
                 <h2>Contact Us</h2>
-                <p>Have questions? Visit our <a href="{{ base_path }}/contact/">contact page</a>.</p>
+                <p>Have questions? Visit our <a href="../contact/">contact page</a>.</p>
             </article>
         </main>
         <footer>
@@ -690,19 +690,19 @@ class StaticSiteGenerator:
         <title>Privacy Policy - {{ site_name }}</title>
         <meta name="description" content="Privacy Policy for {{ site_name }}">
         {{ global_meta_tags | safe }}
-        <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="../static/style.css">
         <link rel="canonical" href="{{ base_url }}/privacy-policy/">
     </head>
     <body>
         <header>
             <div class="container">
-                <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+                <h1><a href="../">{{ site_name }}</a></h1>
                 <nav>
-                    <a href="{{ base_path }}/">Home</a>
-                    <a href="{{ base_path }}/about/">About</a>
-                    <a href="{{ base_path }}/contact/">Contact</a>
-                    <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms</a>
+                    <a href="../">Home</a>
+                    <a href="../about/">About</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../privacy-policy/">Privacy Policy</a>
+                    <a href="../terms-of-service/">Terms</a>
                 </nav>
             </div>
         </header>
@@ -773,19 +773,19 @@ class StaticSiteGenerator:
         <title>Terms of Service - {{ site_name }}</title>
         <meta name="description" content="Terms of Service for {{ site_name }}">
         {{ global_meta_tags | safe }}
-        <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="../static/style.css">
         <link rel="canonical" href="{{ base_url }}/terms-of-service/">
     </head>
     <body>
         <header>
             <div class="container">
-                <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+                <h1><a href="../">{{ site_name }}</a></h1>
                 <nav>
-                    <a href="{{ base_path }}/">Home</a>
-                    <a href="{{ base_path }}/about/">About</a>
-                    <a href="{{ base_path }}/contact/">Contact</a>
-                    <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms</a>
+                    <a href="../">Home</a>
+                    <a href="../about/">About</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../privacy-policy/">Privacy Policy</a>
+                    <a href="../terms-of-service/">Terms</a>
                 </nav>
             </div>
         </header>
@@ -821,7 +821,7 @@ class StaticSiteGenerator:
             <p>The Site is provided "as is" without warranties of any kind. We are not liable for any damages, losses, or consequences resulting from the use of our AI-generated content or third-party services.</p>
 
             <h2>Privacy</h2>
-            <p>Your use of the Site is also governed by our <a href="{{ base_path }}/privacy-policy.html">Privacy Policy</a>, which describes how we collect, use, and store information.</p>
+            <p>Your use of the Site is also governed by our <a href="../privacy-policy/">Privacy Policy</a>, which describes how we collect, use, and store information.</p>
 
             <h2>Termination of Use</h2>
             <p>We reserve the right to suspend or terminate access to the Site at our discretion, without notice, if you violate these Terms.</p>
