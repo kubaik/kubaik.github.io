@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Oct 2025 06:16:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 06:22:12 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: IoT&apos;s Impact on Daily Life</title>
+      <link>https://kubaik.github.io/unlocking-the-future-iots-impact-on-daily-life/</link>
+      <description>Discover how IoT is transforming daily life, enhancing convenience, safety, and efficiency. Explore the future of interconnected technology today!</description>
+      <pubDate>Tue, 14 Oct 2025 06:22:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-iots-impact-on-daily-life/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Blockchain: Transforming the Future of Tech</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-blockchain-transforming-the/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest trends, tools, and best practices in mobile app development for 2024. Build smarter, faster, and more innovative apps today!</description>
       <pubDate>Sun, 12 Oct 2025 09:18:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</guid>
-    </item>
-    <item>
-      <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery Efficiency</title>
-      <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
-      <description>Boost your software delivery with expert tips on mastering DevOps and CI/CD. Enhance efficiency, automate processes, and accelerate your project success today!</description>
-      <pubDate>Sun, 12 Oct 2025 07:15:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
     </item>
   </channel>
 </rss>
