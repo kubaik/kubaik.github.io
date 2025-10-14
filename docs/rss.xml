@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Oct 2025 06:40:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 06:41:32 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Software Testing Strategies for Flawless Apps</title>
+      <link>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</link>
+      <description>Discover proven software testing strategies to ensure flawless apps. Boost your testing skills and deliver high-quality, bug-free software every time!</description>
+      <pubDate>Tue, 14 Oct 2025 06:41:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</guid>
+    </item>
     <item>
       <title>Mastering Machine Learning Algorithms: A Beginner’s Guide</title>
       <link>https://kubaik.github.io/mastering-machine-learning-algorithms-a-beginners-/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top IoT innovations shaping 2024. Explore key trends transforming industries and unlocking the future of connected technology. Read more now!</description>
       <pubDate>Sun, 12 Oct 2025 13:23:25 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-top-trends-in-iot-innovation-/</guid>
-    </item>
-    <item>
-      <title>2024 Web Development Trends You Can’t Miss</title>
-      <link>https://kubaik.github.io/2024-web-development-trends-you-cant-miss/</link>
-      <description>Discover the top web development trends shaping 2024. Stay ahead with the latest innovations in tech, design, and user experience. Read more now!</description>
-      <pubDate>Sun, 12 Oct 2025 11:09:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/2024-web-development-trends-you-cant-miss/</guid>
     </item>
   </channel>
 </rss>
