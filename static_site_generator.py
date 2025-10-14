@@ -711,8 +711,11 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
+            <div class="hero">
+                <h2>Privacy Policy</h2>
+                <p>How we protect and handle your information</p>
+            </div>
             <article class="page-content">
-                <h1>Privacy Policy</h1>
                 <p><strong>Last updated:</strong> October 02, 2025</p>
 
                 <h2>Introduction</h2>
@@ -794,6 +797,10 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
+        <div class="hero">
+            <h2>Terms of Service</h2>
+            <p>Please read these terms carefully before using our site</p>
+        </div>
         <article class="page-content">
             <h1>Terms of Service</h1>
             <p><strong>Last updated:</strong> October 02, 2025</p>
@@ -875,6 +882,10 @@ class StaticSiteGenerator:
             </div>
         </header>
         <main class="container">
+            <div class="hero">
+                <h2>Contact Us</h2>
+                <p>Get in touch with the AI Tech Blog team</p>
+            </div>
             <article class="page-content">
                 <h1>Contact Us</h1>
                 <p>We'd love to hear from you!</p>
