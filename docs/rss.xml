@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Oct 2025 06:15:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 06:16:27 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Blockchain: Transforming the Future of Tech</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-blockchain-transforming-the/</link>
+      <description>Discover how blockchain is revolutionizing technology, enhancing security, transparency, and innovation for a smarter, more connected future.</description>
+      <pubDate>Tue, 14 Oct 2025 06:16:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-blockchain-transforming-the/</guid>
+    </item>
     <item>
       <title>Top Web Development Trends to Watch in 2024</title>
       <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Boost your software delivery with expert tips on mastering DevOps and CI/CD. Enhance efficiency, automate processes, and accelerate your project success today!</description>
       <pubDate>Sun, 12 Oct 2025 07:15:57 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
-    </item>
-    <item>
-      <title>Unlocking Power: The Ultimate Guide to Serverless Computing</title>
-      <link>https://kubaik.github.io/unlocking-power-the-ultimate-guide-to-serverless-c/</link>
-      <description>Discover how serverless computing can boost your efficiency and scalability. Unlock the power with our ultimate guide!</description>
-      <pubDate>Sun, 12 Oct 2025 05:11:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-power-the-ultimate-guide-to-serverless-c/</guid>
     </item>
   </channel>
 </rss>
