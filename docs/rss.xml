@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Oct 2025 06:29:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 06:30:52 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Machine Learning Algorithms: A Beginner’s Guide</title>
+      <link>https://kubaik.github.io/mastering-machine-learning-algorithms-a-beginners-/</link>
+      <description>Learn the fundamentals of machine learning algorithms with our beginner’s guide. Unlock the secrets to building smarter models today!</description>
+      <pubDate>Tue, 14 Oct 2025 06:30:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-machine-learning-algorithms-a-beginners-/</guid>
+    </item>
     <item>
       <title>Top Cybersecurity Best Practices to Protect Your Data</title>
       <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-protect-your-d/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top web development trends shaping 2024. Stay ahead with the latest innovations in tech, design, and user experience. Read more now!</description>
       <pubDate>Sun, 12 Oct 2025 11:09:39 +0000</pubDate>
       <guid>https://kubaik.github.io/2024-web-development-trends-you-cant-miss/</guid>
-    </item>
-    <item>
-      <title>Ultimate Guide to Mobile App Development in 2024</title>
-      <link>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</link>
-      <description>Discover the latest trends, tools, and best practices in mobile app development for 2024. Build smarter, faster, and more innovative apps today!</description>
-      <pubDate>Sun, 12 Oct 2025 09:18:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ultimate-guide-to-mobile-app-development-in-2024/</guid>
     </item>
   </channel>
 </rss>
