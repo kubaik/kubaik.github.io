@@ -802,7 +802,6 @@ class StaticSiteGenerator:
             <p>Please read these terms carefully before using our site</p>
         </div>
         <article class="page-content">
-            <h1>Terms of Service</h1>
             <p><strong>Last updated:</strong> October 02, 2025</p>
 
             <h2>Agreement to Terms</h2>
@@ -887,7 +886,6 @@ class StaticSiteGenerator:
                 <p>Get in touch with the AI Tech Blog team</p>
             </div>
             <article class="page-content">
-                <h1>Contact Us</h1>
                 <p>We'd love to hear from you!</p>
                 
                 <div class="contact-info">
