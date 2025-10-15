@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Oct 2025 11:11:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Oct 2025 13:34:07 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery Speed</title>
+      <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
+      <description>Boost your software delivery with expert tips on mastering DevOps and CI/CD. Accelerate releases, improve quality, and streamline your development pipeline today!</description>
+      <pubDate>Wed, 15 Oct 2025 13:34:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Progressive Web Apps in 2024</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-in-202/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential API design patterns and best practices to build scalable, maintainable, and efficient APIs. Elevate your development skills today!</description>
       <pubDate>Tue, 14 Oct 2025 05:11:43 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-d/</guid>
-    </item>
-    <item>
-      <title>Boost Your Database Performance: Top Optimization Tips</title>
-      <link>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</link>
-      <description>Unlock expert tips to boost your database performance! Discover top optimization strategies to enhance speed, efficiency, and reliability today.</description>
-      <pubDate>Mon, 13 Oct 2025 19:10:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
     </item>
   </channel>
 </rss>
