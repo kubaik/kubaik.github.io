@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Oct 2025 05:12:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Oct 2025 07:19:21 +0000</lastBuildDate>
+    <item>
+      <title>Master API Design Patterns: Boost Your App’s Efficiency &amp; Scalability</title>
+      <link>https://kubaik.github.io/master-api-design-patterns-boost-your-apps-efficie/</link>
+      <description>Discover essential API design patterns to enhance your app’s efficiency and scalability. Master best practices for robust, future-proof APIs today!</description>
+      <pubDate>Wed, 15 Oct 2025 07:19:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-api-design-patterns-boost-your-apps-efficie/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top Data Science Techniques You Must Know</title>
       <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
@@ -138,13 +145,6 @@
       <description>Discover how microservices architecture can enhance your app&apos;s scalability, flexibility, and performance. Unlock the secrets to building resilient, efficient systems today!</description>
       <pubDate>Mon, 13 Oct 2025 13:31:48 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</guid>
-    </item>
-    <item>
-      <title>Master Software Testing Strategies: Boost Quality &amp; Efficiency</title>
-      <link>https://kubaik.github.io/master-software-testing-strategies-boost-quality-e/</link>
-      <description>Discover expert software testing strategies to enhance quality and efficiency. Master testing techniques and boost your software development process today!</description>
-      <pubDate>Mon, 13 Oct 2025 11:11:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-software-testing-strategies-boost-quality-e/</guid>
     </item>
   </channel>
 </rss>
