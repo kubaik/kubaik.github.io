@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Oct 2025 13:33:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Oct 2025 15:14:44 +0000</lastBuildDate>
+    <item>
+      <title>Top Frontend Frameworks in 2024: Boost Your Web Development</title>
+      <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
+      <description>Discover the top frontend frameworks in 2024 to elevate your web development projects. Stay ahead with the latest tools and trends in frontend tech!</description>
+      <pubDate>Thu, 16 Oct 2025 15:14:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Serverless Computing: Boost Your App’s Scalability</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-boost-/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential tips and best practices to master backend architecture. Optimize your system for scalability, security, and performance today!</description>
       <pubDate>Tue, 14 Oct 2025 13:32:29 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</guid>
-    </item>
-    <item>
-      <title>Top Frontend Frameworks in 2024: Boost Your Web Development Skills</title>
-      <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
-      <description>Discover the top frontend frameworks in 2024 to elevate your web development skills. Stay ahead with the latest tools and trends in frontend development!</description>
-      <pubDate>Tue, 14 Oct 2025 11:11:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</guid>
     </item>
   </channel>
 </rss>
