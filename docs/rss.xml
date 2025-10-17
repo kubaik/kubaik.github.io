@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Oct 2025 09:23:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Oct 2025 11:11:05 +0000</lastBuildDate>
+    <item>
+      <title>Top Cybersecurity Best Practices to Protect Your Data</title>
+      <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-protect-your-d/</link>
+      <description>Discover essential cybersecurity best practices to safeguard your data. Learn expert tips to stay protected in today’s digital landscape.</description>
+      <pubDate>Fri, 17 Oct 2025 11:11:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-cybersecurity-best-practices-to-protect-your-d/</guid>
+    </item>
     <item>
       <title>Unlocking Blockchain: The Future of Secure Digital Transactions</title>
       <link>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-digital-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how serverless computing can streamline your cloud strategy, reduce costs, and boost scalability. Unlock the power of serverless today!</description>
       <pubDate>Wed, 15 Oct 2025 09:23:31 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-the-power-of-serverless-computing-simplify-/</guid>
-    </item>
-    <item>
-      <title>Master API Design Patterns: Boost Your App’s Efficiency &amp; Scalability</title>
-      <link>https://kubaik.github.io/master-api-design-patterns-boost-your-apps-efficie/</link>
-      <description>Discover essential API design patterns to enhance your app’s efficiency and scalability. Master best practices for robust, future-proof APIs today!</description>
-      <pubDate>Wed, 15 Oct 2025 07:19:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-api-design-patterns-boost-your-apps-efficie/</guid>
     </item>
   </channel>
 </rss>
