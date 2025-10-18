@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Oct 2025 13:24:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Oct 2025 15:11:36 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: How Blockchain Tech Is Changing Everything</title>
+      <link>https://kubaik.github.io/unlocking-the-future-how-blockchain-tech-is-changi/</link>
+      <description>Discover how blockchain technology is transforming industries, enhancing security, and shaping the future in our latest insightful blog post.</description>
+      <pubDate>Sat, 18 Oct 2025 15:11:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-blockchain-tech-is-changi/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks in 2024: Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips to boost your site speed and enhance performance. Speed up your website today with our essential optimization strategies!</description>
       <pubDate>Thu, 16 Oct 2025 11:11:33 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-site-speed-essential-performance-optimi/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: Best Practices &amp; Tips</title>
-      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-tips/</link>
-      <description>Discover top API design patterns, best practices, and expert tips to build scalable, efficient, and maintainable APIs. Elevate your API development today!</description>
-      <pubDate>Thu, 16 Oct 2025 09:23:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-tips/</guid>
     </item>
   </channel>
 </rss>
