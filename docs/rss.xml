@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Oct 2025 21:15:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Oct 2025 05:11:02 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Key Principles &amp; Best Practices</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-key-principles-best/</link>
+      <description>Discover essential principles and best practices to master backend architecture. Optimize performance, scalability, and security for your projects today!</description>
+      <pubDate>Sat, 18 Oct 2025 05:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-key-principles-best/</guid>
+    </item>
     <item>
       <title>Top Web Development Trends to Watch in 2024</title>
       <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Discover proven software testing strategies to ensure flawless releases. Boost quality, reduce bugs, and deliver perfect software every time.</description>
       <pubDate>Wed, 15 Oct 2025 21:15:14 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: How IoT Is Transforming Everyday Life</title>
-      <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-every/</link>
-      <description>Discover how IoT is revolutionizing daily life, enhancing convenience, safety, and efficiency. Explore the future of connected living today!</description>
-      <pubDate>Wed, 15 Oct 2025 19:11:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-every/</guid>
     </item>
   </channel>
 </rss>
