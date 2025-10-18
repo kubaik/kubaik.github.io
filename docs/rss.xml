@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Oct 2025 05:11:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Oct 2025 07:16:17 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Power: Top Machine Learning Algorithms You Must Know</title>
+      <link>https://kubaik.github.io/unlocking-power-top-machine-learning-algorithms-yo/</link>
+      <description>Discover essential machine learning algorithms and unlock their power. Learn the top methods every data scientist should master today!</description>
+      <pubDate>Sat, 18 Oct 2025 07:16:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-power-top-machine-learning-algorithms-yo/</guid>
+    </item>
     <item>
       <title>Mastering Backend Architecture: Key Principles &amp; Best Practices</title>
       <link>https://kubaik.github.io/mastering-backend-architecture-key-principles-best/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential tips to master backend architecture and build scalable, efficient systems. Boost your development skills today!</description>
       <pubDate>Thu, 16 Oct 2025 05:12:04 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-backend-architecture-essential-tips-for-/</guid>
-    </item>
-    <item>
-      <title>Mastering Software Testing Strategies for Flawless Releases</title>
-      <link>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</link>
-      <description>Discover proven software testing strategies to ensure flawless releases. Boost quality, reduce bugs, and deliver perfect software every time.</description>
-      <pubDate>Wed, 15 Oct 2025 21:15:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</guid>
     </item>
   </channel>
 </rss>
