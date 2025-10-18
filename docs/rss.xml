@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Oct 2025 07:16:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Oct 2025 09:19:39 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Progressive Web Apps: The Future of Web Development</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-the-fu/</link>
+      <description>Discover how Progressive Web Apps are transforming web development with faster, reliable, and engaging experiences. Unlock their full potential today!</description>
+      <pubDate>Sat, 18 Oct 2025 09:19:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-the-fu/</guid>
+    </item>
     <item>
       <title>Unlocking Power: Top Machine Learning Algorithms You Must Know</title>
       <link>https://kubaik.github.io/unlocking-power-top-machine-learning-algorithms-yo/</link>
@@ -138,13 +145,6 @@
       <description>Discover how machine learning algorithms are transforming industries in 2024. Unlock their power to drive innovation and stay ahead in the AI revolution.</description>
       <pubDate>Thu, 16 Oct 2025 07:19:08 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: Essential Tips for Scalable Systems</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-essential-tips-for-/</link>
-      <description>Discover essential tips to master backend architecture and build scalable, efficient systems. Boost your development skills today!</description>
-      <pubDate>Thu, 16 Oct 2025 05:12:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-essential-tips-for-/</guid>
     </item>
   </channel>
 </rss>
