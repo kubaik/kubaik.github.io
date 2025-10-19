@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Oct 2025 09:18:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Oct 2025 11:09:33 +0000</lastBuildDate>
+    <item>
+      <title>Top Trends in Mobile App Development for 2024</title>
+      <link>https://kubaik.github.io/top-trends-in-mobile-app-development-for-2024/</link>
+      <description>Discover the top mobile app development trends for 2024. Stay ahead with innovative features, emerging technologies, and expert insights to boost your app success.</description>
+      <pubDate>Sun, 19 Oct 2025 11:09:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-trends-in-mobile-app-development-for-2024/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Microservices Architecture for Modern Apps</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how microservices architecture boosts efficiency, scalability, and flexibility. Unlock the full potential of your applications today!</description>
       <pubDate>Fri, 17 Oct 2025 05:11:59 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</guid>
-    </item>
-    <item>
-      <title>Mastering Data Science Techniques: Unlock Your Data&apos;s Potential</title>
-      <link>https://kubaik.github.io/mastering-data-science-techniques-unlock-your-data/</link>
-      <description>Discover top data science techniques to unlock your data’s potential. Boost your skills and transform insights into actionable results today!</description>
-      <pubDate>Thu, 16 Oct 2025 21:15:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-data-science-techniques-unlock-your-data/</guid>
     </item>
   </channel>
 </rss>
