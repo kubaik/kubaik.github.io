@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Oct 2025 11:09:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Oct 2025 13:24:51 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Insights: Top Data Science Techniques You Must Know</title>
+      <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
+      <description>Discover essential data science techniques to boost your skills. Unlock insights and elevate your projects with our top strategies. Read now!</description>
+      <pubDate>Sun, 19 Oct 2025 13:24:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</guid>
+    </item>
     <item>
       <title>Top Trends in Mobile App Development for 2024</title>
       <link>https://kubaik.github.io/top-trends-in-mobile-app-development-for-2024/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips for successful mobile app development in 2024. Boost your app&apos;s success with our essential strategies and best practices!</description>
       <pubDate>Fri, 17 Oct 2025 07:18:38 +0000</pubDate>
       <guid>https://kubaik.github.io/top-tips-for-successful-mobile-app-development-in-/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
-      <description>Discover how microservices architecture boosts efficiency, scalability, and flexibility. Unlock the full potential of your applications today!</description>
-      <pubDate>Fri, 17 Oct 2025 05:11:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</guid>
     </item>
   </channel>
 </rss>
