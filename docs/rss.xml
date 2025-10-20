@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Oct 2025 07:19:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Oct 2025 09:25:11 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Boost Your App&apos;s Performance &amp; Scalability</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-boost-your-apps-per/</link>
+      <description>Discover expert tips to optimize your backend architecture, boost app performance, and ensure seamless scalability with our comprehensive guide.</description>
+      <pubDate>Mon, 20 Oct 2025 09:25:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-boost-your-apps-per/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Serverless Computing: Benefits &amp; Trends</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-benefi/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential machine learning algorithms and unlock their power. Learn the top methods every data scientist should master today!</description>
       <pubDate>Sat, 18 Oct 2025 07:16:15 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-power-top-machine-learning-algorithms-yo/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: Key Principles &amp; Best Practices</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-key-principles-best/</link>
-      <description>Discover essential principles and best practices to master backend architecture. Optimize performance, scalability, and security for your projects today!</description>
-      <pubDate>Sat, 18 Oct 2025 05:11:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-key-principles-best/</guid>
     </item>
   </channel>
 </rss>
