@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Oct 2025 07:18:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Oct 2025 09:25:02 +0000</lastBuildDate>
+    <item>
+      <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery Speed</title>
+      <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
+      <description>Boost your software delivery speed with expert tips on mastering DevOps and CI/CD. Streamline processes and accelerate your development pipeline today!</description>
+      <pubDate>Wed, 22 Oct 2025 09:25:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: How IoT is Transforming Our World</title>
       <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-our-w/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top 10 AI applications revolutionizing industries today. Explore how artificial intelligence is shaping the future across sectors.</description>
       <pubDate>Mon, 20 Oct 2025 05:13:00 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-top-10-ai-applications-transf/</guid>
-    </item>
-    <item>
-      <title>Boost Performance: Essential Database Optimization Tips</title>
-      <link>https://kubaik.github.io/boost-performance-essential-database-optimization-/</link>
-      <description>Discover top database optimization tips to boost performance, enhance speed, and ensure your database runs smoothly. Read our essential guide now!</description>
-      <pubDate>Sun, 19 Oct 2025 21:14:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-performance-essential-database-optimization-/</guid>
     </item>
   </channel>
 </rss>
