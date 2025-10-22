@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Oct 2025 15:13:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Oct 2025 17:16:17 +0000</lastBuildDate>
+    <item>
+      <title>Top Software Testing Strategies to Boost Quality &amp; Efficiency</title>
+      <link>https://kubaik.github.io/top-software-testing-strategies-to-boost-quality-e/</link>
+      <description>Discover top software testing strategies to enhance quality and efficiency. Boost your testing process today with proven methods and best practices!</description>
+      <pubDate>Wed, 22 Oct 2025 17:16:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-software-testing-strategies-to-boost-quality-e/</guid>
+    </item>
     <item>
       <title>Mastering API Design Patterns: Best Practices for Seamless Integration</title>
       <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets of data science! Boost your analytics skills with proven techniques and expert tips. Start mastering data science today!</description>
       <pubDate>Mon, 20 Oct 2025 11:11:52 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-data-science-techniques-boost-your-analy/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: Boost Your App&apos;s Performance &amp; Scalability</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-boost-your-apps-per/</link>
-      <description>Discover expert tips to optimize your backend architecture, boost app performance, and ensure seamless scalability with our comprehensive guide.</description>
-      <pubDate>Mon, 20 Oct 2025 09:25:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-boost-your-apps-per/</guid>
     </item>
   </channel>
 </rss>
