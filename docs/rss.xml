@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Oct 2025 07:19:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Oct 2025 09:24:12 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Essential Tips &amp; Best Practices</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</link>
+      <description>Discover essential tips and best practices to master backend architecture. Optimize your systems for performance, scalability, and reliability today!</description>
+      <pubDate>Thu, 23 Oct 2025 09:24:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Machine Learning Algorithms: A Beginner&apos;s Guide</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</link>
@@ -138,13 +145,6 @@
       <description>Discover how microservices architecture can enhance your app’s flexibility, scalability, and performance. Unlock the secrets to modern, agile development today!</description>
       <pubDate>Mon, 20 Oct 2025 21:15:48 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</guid>
-    </item>
-    <item>
-      <title>Revolutionizing Industries: Top Applications of Artificial Intelligence</title>
-      <link>https://kubaik.github.io/revolutionizing-industries-top-applications-of-art/</link>
-      <description>Discover how AI is transforming industries with innovative applications, boosting efficiency, and shaping the future across sectors. Explore the top AI uses now!</description>
-      <pubDate>Mon, 20 Oct 2025 19:11:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/revolutionizing-industries-top-applications-of-art/</guid>
     </item>
   </channel>
 </rss>
