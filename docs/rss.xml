@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Oct 2025 09:24:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Oct 2025 11:11:42 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Progressive Web Apps for Your Business</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-for-yo/</link>
+      <description>Discover how Progressive Web Apps can boost your business with faster load times, improved user engagement, and seamless experiences. Unlock their potential today!</description>
+      <pubDate>Thu, 23 Oct 2025 11:11:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-progressive-web-apps-for-yo/</guid>
+    </item>
     <item>
       <title>Mastering Backend Architecture: Essential Tips &amp; Best Practices</title>
       <link>https://kubaik.github.io/mastering-backend-architecture-essential-tips-best/</link>
@@ -138,13 +145,6 @@
       <description>Learn top API design patterns and best practices to build scalable, efficient, and maintainable APIs. Boost your development skills today!</description>
       <pubDate>Tue, 21 Oct 2025 05:12:17 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-d/</guid>
-    </item>
-    <item>
-      <title>Unlocking Microservices Architecture: Boost Your App’s Flexibility</title>
-      <link>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</link>
-      <description>Discover how microservices architecture can enhance your app’s flexibility, scalability, and performance. Unlock the secrets to modern, agile development today!</description>
-      <pubDate>Mon, 20 Oct 2025 21:15:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-microservices-architecture-boost-your-ap/</guid>
     </item>
   </channel>
 </rss>
