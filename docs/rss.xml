@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Oct 2025 05:11:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Oct 2025 07:17:04 +0000</lastBuildDate>
+    <item>
+      <title>Boost Your Database Performance: Top Optimization Tips</title>
+      <link>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</link>
+      <description>Discover expert tips to boost your database performance and optimize efficiency. Enhance speed and reliability with our top database optimization strategies.</description>
+      <pubDate>Sat, 25 Oct 2025 07:17:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
+    </item>
     <item>
       <title>Top Web Development Trends to Watch in 2024</title>
       <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Discover top API design patterns and best practices to ensure seamless integration and robust, scalable APIs. Elevate your development skills today!</description>
       <pubDate>Wed, 22 Oct 2025 15:13:34 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-s/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of Container Technologies: Future of DevOps</title>
-      <link>https://kubaik.github.io/unlocking-the-power-of-container-technologies-futu/</link>
-      <description>Discover how container technologies are transforming DevOps, boosting agility, scalability, and efficiency. Unlock the future of software development today!</description>
-      <pubDate>Wed, 22 Oct 2025 13:35:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-futu/</guid>
     </item>
   </channel>
 </rss>
