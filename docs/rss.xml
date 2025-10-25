@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Oct 2025 09:19:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Oct 2025 11:09:54 +0000</lastBuildDate>
+    <item>
+      <title>Master Software Testing Strategies for Flawless Apps</title>
+      <link>https://kubaik.github.io/master-software-testing-strategies-for-flawless-ap/</link>
+      <description>Discover expert software testing strategies to ensure flawless apps. Boost your testing skills and deliver high-quality, bug-free software today!</description>
+      <pubDate>Sat, 25 Oct 2025 11:09:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-software-testing-strategies-for-flawless-ap/</guid>
+    </item>
     <item>
       <title>Unlock the Power of Serverless Computing: Boost Your App&apos;s Scalability</title>
       <link>https://kubaik.github.io/unlock-the-power-of-serverless-computing-boost-you/</link>
@@ -138,13 +145,6 @@
       <description>Discover the key benefits and best practices of microservices architecture to boost your application&apos;s success. Unlock your development potential today!</description>
       <pubDate>Wed, 22 Oct 2025 21:13:40 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-success-with-microservices-architecture-/</guid>
-    </item>
-    <item>
-      <title>Top Software Testing Strategies to Boost Quality &amp; Efficiency</title>
-      <link>https://kubaik.github.io/top-software-testing-strategies-to-boost-quality-e/</link>
-      <description>Discover top software testing strategies to enhance quality and efficiency. Boost your testing process today with proven methods and best practices!</description>
-      <pubDate>Wed, 22 Oct 2025 17:16:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-software-testing-strategies-to-boost-quality-e/</guid>
     </item>
   </channel>
 </rss>
