@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Oct 2025 11:12:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Oct 2025 13:34:27 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: How IoT Is Transforming Our Lives Today</title>
+      <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-our-l/</link>
+      <description>Discover how IoT is revolutionizing daily life, from smart homes to healthcare. Explore the future of connected technology in our latest blog post!</description>
+      <pubDate>Mon, 27 Oct 2025 13:34:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-our-l/</guid>
+    </item>
     <item>
       <title>Top 10 AI Applications Transforming Industries Today</title>
       <link>https://kubaik.github.io/top-10-ai-applications-transforming-industries-tod/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert software testing strategies to ensure flawless apps. Boost your testing skills and deliver high-quality, bug-free software today!</description>
       <pubDate>Sat, 25 Oct 2025 11:09:52 +0000</pubDate>
       <guid>https://kubaik.github.io/master-software-testing-strategies-for-flawless-ap/</guid>
-    </item>
-    <item>
-      <title>Unlock the Power of Serverless Computing: Boost Your App&apos;s Scalability</title>
-      <link>https://kubaik.github.io/unlock-the-power-of-serverless-computing-boost-you/</link>
-      <description>Discover how serverless computing can boost your app’s scalability, reduce costs, and streamline development. Unlock the power today!</description>
-      <pubDate>Sat, 25 Oct 2025 09:19:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-the-power-of-serverless-computing-boost-you/</guid>
     </item>
   </channel>
 </rss>
