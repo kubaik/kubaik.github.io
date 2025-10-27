@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Oct 2025 07:19:28 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Oct 2025 09:26:40 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Blockchain: How It’s Changing the Future</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-blockchain-how-its-changing/</link>
+      <description>Discover how blockchain technology is transforming industries, enhancing security, and shaping the future. Unlock the potential of blockchain today!</description>
+      <pubDate>Mon, 27 Oct 2025 09:26:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-blockchain-how-its-changing/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks in 2024: Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips to boost your database performance and optimize efficiency. Enhance speed and reliability with our top database optimization strategies.</description>
       <pubDate>Sat, 25 Oct 2025 07:17:02 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
-    </item>
-    <item>
-      <title>Top Web Development Trends to Watch in 2024</title>
-      <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
-      <description>Discover the top web development trends shaping 2024. Stay ahead with innovative technologies and strategies for your website success!</description>
-      <pubDate>Sat, 25 Oct 2025 05:11:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
     </item>
   </channel>
 </rss>
