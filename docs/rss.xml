@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Oct 2025 15:14:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Oct 2025 17:15:10 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Key Strategies &amp; Best Practices</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-key-strategies-best/</link>
+      <description>Discover essential strategies and best practices to master backend architecture. Optimize your systems for performance, scalability, and reliability today!</description>
+      <pubDate>Mon, 27 Oct 2025 17:15:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-key-strategies-best/</guid>
+    </item>
     <item>
       <title>Revolutionize Deployment: Top Container Technologies You Must Know</title>
       <link>https://kubaik.github.io/revolutionize-deployment-top-container-technologie/</link>
@@ -138,13 +145,6 @@
       <description>Discover the best cloud computing platforms in 2024. Our complete guide covers top providers, features, and insights to help you choose the right solution.</description>
       <pubDate>Sat, 25 Oct 2025 15:11:36 +0000</pubDate>
       <guid>https://kubaik.github.io/top-cloud-computing-platforms-in-2024-a-complete-g/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of Container Technologies for Modern IT</title>
-      <link>https://kubaik.github.io/unlocking-the-power-of-container-technologies-for-/</link>
-      <description>Discover how container technologies revolutionize modern IT, boosting efficiency, scalability, and agility. Unlock their full potential today!</description>
-      <pubDate>Sat, 25 Oct 2025 13:24:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-for-/</guid>
     </item>
   </channel>
 </rss>
