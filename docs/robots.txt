@@ -1,15 +1,29 @@
+# Allow all crawlers access to all content
 User-agent: *
 Allow: /
-Disallow: /static/admin/
-Disallow: /static/temp/
-Disallow: /*.json$
-Disallow: /*?*
 
-# Crawl-delay for polite crawling
+# Specifically allow Google AdSense crawler (required for AdSense)
+User-agent: Mediapartners-Google
+Allow: /
+
+# Allow Google's main crawler
+User-agent: Googlebot
+Allow: /
+
+# Allow Google AdSense crawler
+User-agent: Googlebot-Image
+Allow: /
+
+# Block crawlers from sensitive directories
+User-agent: *
+Disallow: /admin/
+Disallow: /.git/
+
+# IMPORTANT: Allow ads.txt
+Allow: /ads.txt
+
+# Sitemap location (CORRECTED URL)
+Sitemap: https://kubaik.github.io/sitemap.xml
+
+# Crawl delay (optional - seconds between requests)
 Crawl-delay: 1
-
-# Sitemap location
-Sitemap: https://kubaik.github.io/ai-blog-system/sitemap.xml
-
-# RSS Feed location
-Sitemap: https://kubaik.github.io/ai-blog-system/rss.xml
