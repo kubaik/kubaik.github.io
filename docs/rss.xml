@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Oct 2025 06:01:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Oct 2025 06:09:05 +0000</lastBuildDate>
+    <item>
+      <title>Mastering API Design Patterns: Best Practices for Developers</title>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-d/</link>
+      <description>Discover top API design patterns and best practices to build scalable, efficient, and maintainable APIs. Elevate your development skills today!</description>
+      <pubDate>Tue, 28 Oct 2025 06:09:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-for-d/</guid>
+    </item>
     <item>
       <title>Mastering Data Science Techniques: Boost Your Analytics Skills</title>
       <link>https://kubaik.github.io/mastering-data-science-techniques-boost-your-analy/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top mobile app development trends for 2024, including AI integration, 5G, and more innovations shaping the future of apps. Stay ahead in tech!</description>
       <pubDate>Sun, 26 Oct 2025 05:11:30 +0000</pubDate>
       <guid>https://kubaik.github.io/top-trends-in-mobile-app-development-for-2024/</guid>
-    </item>
-    <item>
-      <title>Master Data Science Techniques: Boost Your Analytics Skills Today</title>
-      <link>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</link>
-      <description>Boost your analytics skills with expert data science techniques. Discover actionable tips to master data analysis and drive smarter decision-making today!</description>
-      <pubDate>Sat, 25 Oct 2025 21:14:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-data-science-techniques-boost-your-analytic/</guid>
     </item>
   </channel>
 </rss>
