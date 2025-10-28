@@ -22,8 +22,8 @@ Disallow: /.git/
 # IMPORTANT: Allow ads.txt
 Allow: /ads.txt
 
-# Sitemap location (CORRECTED URL)
+# Sitemap location
 Sitemap: https://kubaik.github.io/sitemap.xml
 
-# Crawl delay (optional - seconds between requests)
+# Crawl delay
 Crawl-delay: 1
