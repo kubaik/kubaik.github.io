@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Oct 2025 19:11:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Oct 2025 21:16:10 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Container Technologies: Boost Your Cloud DevOps</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-container-technologies-boos/</link>
+      <description>Discover how container technologies can transform your cloud DevOps. Boost efficiency, scalability, and agility with our expert insights.</description>
+      <pubDate>Tue, 28 Oct 2025 21:16:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-container-technologies-boos/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks in 2024: Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover how microservices boost your app’s scalability and flexibility. Learn key strategies to unlock the full potential of microservices architecture today!</description>
       <pubDate>Sun, 26 Oct 2025 21:14:53 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-microservices-boost-your-apps-scalabilit/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of Serverless Computing: Benefits &amp; Best Practices</title>
-      <link>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-benefi/</link>
-      <description>Discover the benefits of serverless computing and learn expert best practices to optimize your applications and boost efficiency effortlessly.</description>
-      <pubDate>Sun, 26 Oct 2025 19:10:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-power-of-serverless-computing-benefi/</guid>
     </item>
   </channel>
 </rss>
