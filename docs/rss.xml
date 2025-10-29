@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Oct 2025 05:12:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Oct 2025 07:19:22 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: How IoT Is Transforming Daily Life</title>
+      <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-daily/</link>
+      <description>Discover how IoT is revolutionizing daily life with smarter homes, cities, and devices. Explore the future of connected living today!</description>
+      <pubDate>Wed, 29 Oct 2025 07:19:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-daily/</guid>
+    </item>
     <item>
       <title>Top Cloud Computing Platforms in 2024: A Complete Guide</title>
       <link>https://kubaik.github.io/top-cloud-computing-platforms-in-2024-a-complete-g/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top machine learning algorithms to master in 2024. Boost your AI skills with our comprehensive guide to essential algorithms today!</description>
       <pubDate>Mon, 27 Oct 2025 05:13:59 +0000</pubDate>
       <guid>https://kubaik.github.io/top-machine-learning-algorithms-you-need-to-know-i/</guid>
-    </item>
-    <item>
-      <title>Unlocking Microservices: Boost Your App’s Scalability &amp; Flexibility</title>
-      <link>https://kubaik.github.io/unlocking-microservices-boost-your-apps-scalabilit/</link>
-      <description>Discover how microservices boost your app’s scalability and flexibility. Learn key strategies to unlock the full potential of microservices architecture today!</description>
-      <pubDate>Sun, 26 Oct 2025 21:14:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-microservices-boost-your-apps-scalabilit/</guid>
     </item>
   </channel>
 </rss>
