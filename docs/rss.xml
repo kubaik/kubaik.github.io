@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 11:11:47 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 13:33:03 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Microservices Architecture: Boost Your App&apos;s Scalability</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</link>
+      <description>Discover how Microservices Architecture can enhance your app’s scalability, flexibility, and performance. Unlock its full potential today!</description>
+      <pubDate>Thu, 30 Oct 2025 13:33:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</guid>
+    </item>
     <item>
       <title>Boost Your Speed: Top Performance Optimization Tips for 2024</title>
       <link>https://kubaik.github.io/boost-your-speed-top-performance-optimization-tips/</link>
@@ -138,13 +145,6 @@
       <description>Enhance your analytics skills with proven data science techniques. Master the latest methods to unlock insights and boost your data-driven decision-making.</description>
       <pubDate>Tue, 28 Oct 2025 05:12:55 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-data-science-techniques-boost-your-analy/</guid>
-    </item>
-    <item>
-      <title>Unlock the Power of Progressive Web Apps: Future of Mobile Experience</title>
-      <link>https://kubaik.github.io/unlock-the-power-of-progressive-web-apps-future-of/</link>
-      <description>Discover how Progressive Web Apps revolutionize mobile experiences, blending speed, offline access, and engagement for the future of app development.</description>
-      <pubDate>Mon, 27 Oct 2025 21:15:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-the-power-of-progressive-web-apps-future-of/</guid>
     </item>
   </channel>
 </rss>
