@@ -15,6 +15,7 @@ from monetization_manager import MonetizationManager
 from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
+
 #BlogSystem
 class BlogSystem:
     def __init__(self, config):
@@ -218,25 +219,41 @@ Remember to stay updated with the latest developments in {topic} as the field co
         keyword_text = f"\nKeywords to incorporate naturally: {', '.join(keywords)}" if keywords else ""
         
         messages = [
-            {"role": "system", "content": "You are an expert technical writer. Write comprehensive, well-structured blog posts in Markdown format."},
-            {"role": "user", "content": f"""Write a detailed blog post with the title: "{title}"
+            {
+                "role": "system", 
+                "content": """You are an experienced tech blogger who writes detailed, 
+                practical articles. Always include specific examples, code snippets, 
+                real numbers, and actionable insights. Avoid generic statements and filler text."""
+            },
+            {
+                "role": "user", 
+                "content": f"""Write a 1,500-word technical blog post with the title: "{title}"
 
 Topic: {topic}{keyword_text}
 
 Requirements:
-- Write in Markdown format
-- Include multiple sections with proper headings (##, ###)
-- Write 800-1200 words
-- Include practical examples and actionable advice
+- Write in Markdown format (##, ###)
+- Include 2-3 practical code examples with explanations
+- Mention specific tools, platforms, or services by name
+- Include real metrics, pricing data, or performance benchmarks where relevant
+- Provide concrete use cases with implementation details
+- Address common problems with specific solutions
+- Write 1,200-1,800 words of substantial content
 - Use bullet points and numbered lists where appropriate
-- Add a conclusion section
-- Make it informative and engaging for readers
-- Use proper Markdown formatting for code blocks, links, etc.
+- Add a strong conclusion with actionable next steps
 
-Do not include the main title (# {title}) as it will be added automatically."""}
+Avoid:
+- Generic phrases like "crucial aspect", "important technology", or "plays a vital role"
+- Vague benefits without specifics
+- Template-like structure
+- Filler content that doesn't add value
+- Repeating the same points in different words
+
+Do not include the main title (# {title}) as it will be added automatically."""
+            }
         ]
         
-        content = await self._call_openai_api(messages, max_tokens=2000)
+        content = await self._call_openai_api(messages, max_tokens=3000)
         return content.strip()
 
     async def _generate_meta_description(self, topic: str, title: str) -> str:
@@ -327,13 +344,13 @@ def create_sample_config():
         "base_path": "",
         
         # Monetization settings
-        "amazon_affiliate_tag": "aiblogcontent-20",  # Replace with your Amazon affiliate tag
-        "google_analytics_id": "G-DST4PJYK6V",  # Add your GA4 measurement ID
-        "google_adsense_id": "ca-pub-4477679588953789",  # Add your Google AdSense ID (ca-pub-xxxxxxxxxx)
-        "google_search_console_key": "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",  # Add your search console verification
+        "amazon_affiliate_tag": "aiblogcontent-20",
+        "google_analytics_id": "G-DST4PJYK6V",
+        "google_adsense_id": "ca-pub-4477679588953789",
+        "google_search_console_key": "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
         "google_adsense_verification":"ca-pub-4477679588953789",
         
-        # Social media accounts (for automated posting)
+        # Social media accounts
         "social_accounts": {
             "twitter": "@KubaiKevin",
             "linkedin": "your-linkedin-page",
@@ -544,41 +561,6 @@ if __name__ == "__main__":
                 print()
             
             print("Social media posts generated for all posts!")
-
-        elif mode == "auto":
-            print("Starting automated blog generation with monetization and Twitter posting...")
-            
-            if not os.path.exists("config.yaml"):
-                print("config.yaml not found. Run 'python blog_system.py init' first.")
-                sys.exit(1)
-            
-            with open("config.yaml", "r") as f:
-                config = yaml.safe_load(f)
-            
-            blog_system = BlogSystem(config)
-            
-            try:
-                topic = pick_next_topic()
-                blog_post = asyncio.run(blog_system.generate_blog_post(topic))
-                blog_system.save_post(blog_post)
-                
-                from static_site_generator import StaticSiteGenerator  # Make sure this import exists
-                generator = StaticSiteGenerator(blog_system)
-                generator.generate_site()
-                
-                print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
-                
-                # NEW: Auto-post to Twitter
-                from visibility_automator import VisibilityAutomator
-                visibility = VisibilityAutomator(config)
-                tweet_text = f"🚀 New blog post: {post['title']} \n\nRead here: {post['url']}"
-                visibility.post_to_twitter(tweet_text)
-                
-            except Exception as e:
-                print(f"Error: {e}")
-                import traceback
-                traceback.print_exc()
-                sys.exit(1)
         
         elif mode == "test-twitter":
             print("Testing Twitter integration...")
@@ -590,7 +572,6 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
             
-            from visibility_automator import VisibilityAutomator
             visibility = VisibilityAutomator(config)
             
             # Test connection
@@ -608,7 +589,7 @@ if __name__ == "__main__":
                 
                 test_post = TestPost()
                 
-                # Generate social post (don't actually post)
+                # Generate social post
                 social_posts = visibility.generate_social_posts(test_post)
                 print(f"\nGenerated Twitter post preview:")
                 print(f"📱 {social_posts['twitter']}")
@@ -627,23 +608,25 @@ if __name__ == "__main__":
                     print("Test cancelled - no tweet posted.")   
 
         else:
-            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social]")
-            print("  init    - Initialize blog system with monetization config")
-            print("  auto    - Generate new post with monetization and rebuild site")
-            print("  build   - Rebuild site with monetization features")
-            print("  cleanup - Fix missing files and rebuild with monetization")
-            print("  debug   - Debug current state with monetization analysis")
-            print("  social  - Generate social media posts for existing content")
+            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter]")
+            print("  init         - Initialize blog system with monetization config")
+            print("  auto         - Generate new post with monetization and rebuild site")
+            print("  build        - Rebuild site with monetization features")
+            print("  cleanup      - Fix missing files and rebuild with monetization")
+            print("  debug        - Debug current state with monetization analysis")
+            print("  social       - Generate social media posts for existing content")
+            print("  test-twitter - Test Twitter API integration")
     else:
         print("Enhanced AI Blog System with Monetization & AdSense")
         print("Usage: python blog_system.py [command]")
         print("\nAvailable commands:")
-        print("  init    - Initialize blog system with monetization settings")
-        print("  auto    - Generate new monetized post and rebuild site")
-        print("  build   - Rebuild site with all monetization features")
-        print("  cleanup - Fix posts and rebuild with enhancements")
-        print("  debug   - Analyze current state and rebuild")
-        print("  social  - Generate social media posts for promotion")
+        print("  init         - Initialize blog system with monetization settings")
+        print("  auto         - Generate new monetized post and rebuild site")
+        print("  build        - Rebuild site with all monetization features")
+        print("  cleanup      - Fix posts and rebuild with enhancements")
+        print("  debug        - Analyze current state and rebuild")
+        print("  social       - Generate social media posts for promotion")
+        print("  test-twitter - Test Twitter API connection and posting")
         print("\nMonetization features included:")
         print("  • Automated affiliate link injection")
         print("  • Google AdSense integration with responsive ads")
