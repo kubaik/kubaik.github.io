@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 07:18:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 09:23:51 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Database Optimization: Boost Performance &amp; Speed</title>
+      <link>https://kubaik.github.io/mastering-database-optimization-boost-performance-/</link>
+      <description>Discover expert tips to master database optimization, boost performance, and speed up your systems. Enhance efficiency today!</description>
+      <pubDate>Thu, 30 Oct 2025 09:23:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-database-optimization-boost-performance-/</guid>
+    </item>
     <item>
       <title>Top Machine Learning Algorithms to Boost Your AI Skills</title>
       <link>https://kubaik.github.io/top-machine-learning-algorithms-to-boost-your-ai-s/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top web development trends to watch in 2024. Stay ahead with the latest innovations shaping websites and digital experiences.</description>
       <pubDate>Mon, 27 Oct 2025 19:11:28 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: Key Strategies &amp; Best Practices</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-key-strategies-best/</link>
-      <description>Discover essential strategies and best practices to master backend architecture. Optimize your systems for performance, scalability, and reliability today!</description>
-      <pubDate>Mon, 27 Oct 2025 17:15:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-key-strategies-best/</guid>
     </item>
   </channel>
 </rss>
