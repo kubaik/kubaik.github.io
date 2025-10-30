@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 16:57:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 17:15:49 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Progressive Web Apps: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-progressive-web-apps-a-complete-guid/</link>
+      <description>A comprehensive guide to Progressive Web Apps covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 30 Oct 2025 17:15:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-progressive-web-apps-a-complete-guid/</guid>
+    </item>
     <item>
       <title>Understanding Serverless Computing: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top frontend frameworks in 2024 to enhance your web development skills. Stay ahead with the latest tools and trends!</description>
       <pubDate>Tue, 28 Oct 2025 19:11:56 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks-in-2024-boost-your-web-dev/</guid>
-    </item>
-    <item>
-      <title>Boost Your Efficiency: Top Performance Optimization Tips</title>
-      <link>https://kubaik.github.io/boost-your-efficiency-top-performance-optimization/</link>
-      <description>Discover expert tips to boost your efficiency and optimize performance. Enhance productivity with proven strategies in our latest blog post!</description>
-      <pubDate>Tue, 28 Oct 2025 13:32:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-efficiency-top-performance-optimization/</guid>
     </item>
   </channel>
 </rss>
