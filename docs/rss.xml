@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 16:50:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 16:57:59 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Serverless Computing: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
+      <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 30 Oct 2025 16:57:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
+    </item>
     <item>
       <title>Understanding Artificial Intelligence Applications: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-artificial-intelligence-applications/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips to boost your efficiency and optimize performance. Enhance productivity with proven strategies in our latest blog post!</description>
       <pubDate>Tue, 28 Oct 2025 13:32:47 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-efficiency-top-performance-optimization/</guid>
-    </item>
-    <item>
-      <title>Boost Your Database Performance: Top Optimization Tips</title>
-      <link>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</link>
-      <description>Enhance your database performance with proven optimization tips. Discover effective strategies to boost speed, efficiency, and reliability today!</description>
-      <pubDate>Tue, 28 Oct 2025 11:10:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-database-performance-top-optimization-t/</guid>
     </item>
   </channel>
 </rss>
