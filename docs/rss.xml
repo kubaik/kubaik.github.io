@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 17:32:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 19:11:07 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Container Technologies: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
+      <description>A comprehensive guide to Container Technologies covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 30 Oct 2025 19:11:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding Cloud Computing Platforms: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-cloud-computing-platforms-a-complete/</link>
@@ -138,13 +145,6 @@
       <description>Discover how IoT is revolutionizing daily life with smarter homes, cities, and devices. Explore the future of connected living today!</description>
       <pubDate>Wed, 29 Oct 2025 07:19:20 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-daily/</guid>
-    </item>
-    <item>
-      <title>Top Cloud Computing Platforms in 2024: A Complete Guide</title>
-      <link>https://kubaik.github.io/top-cloud-computing-platforms-in-2024-a-complete-g/</link>
-      <description>Discover the top cloud computing platforms of 2024 with our comprehensive guide. Find the best options for your business needs today!</description>
-      <pubDate>Wed, 29 Oct 2025 05:12:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-cloud-computing-platforms-in-2024-a-complete-g/</guid>
     </item>
   </channel>
 </rss>
