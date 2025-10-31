@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Oct 2025 11:09:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Oct 2025 11:11:40 +0000</lastBuildDate>
+    <item>
+      <title>Mastering API Design Patterns: Best Practices Unveiled</title>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</link>
+      <description>Unlock the secrets of effective API design! Explore essential patterns and best practices to enhance your development skills and streamline integrations.</description>
+      <pubDate>Fri, 31 Oct 2025 11:11:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: How IoT is Transforming Our Lives</title>
       <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-our-l/</link>
@@ -138,13 +145,6 @@
       <description>Learn top software testing strategies to enhance quality and efficiency. Master testing techniques to deliver reliable, high-performing software every time.</description>
       <pubDate>Wed, 29 Oct 2025 19:11:22 +0000</pubDate>
       <guid>https://kubaik.github.io/master-software-testing-strategies-boost-quality-e/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: How Blockchain Tech is Changing the World</title>
-      <link>https://kubaik.github.io/unlocking-the-future-how-blockchain-tech-is-changi/</link>
-      <description>Discover how blockchain technology is revolutionizing industries, enhancing security, and shaping the future of digital innovation worldwide.</description>
-      <pubDate>Wed, 29 Oct 2025 17:16:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-how-blockchain-tech-is-changi/</guid>
     </item>
   </channel>
 </rss>
