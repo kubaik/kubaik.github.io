@@ -188,9 +188,9 @@ Remember to stay updated with the latest developments in {topic} as the field co
         }
         
         data = {
-            "model": "gpt-5-mini",
+            "model": "gpt-4o-mini",
             "messages": messages,
-            "max_tokens": max_tokens,
+            "max_completion_tokens": max_tokens,
             "temperature": 0.7
         }
         
