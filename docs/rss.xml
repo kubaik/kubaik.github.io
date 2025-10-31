@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Oct 2025 19:11:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Oct 2025 05:13:11 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Mobile App Development: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</link>
+      <description>A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 31 Oct 2025 05:13:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding Container Technologies: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top mobile app development trends for 2024 and stay ahead with the latest innovations shaping the future of apps.</description>
       <pubDate>Wed, 29 Oct 2025 09:23:03 +0000</pubDate>
       <guid>https://kubaik.github.io/top-trends-in-mobile-app-development-for-2024/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: How IoT Is Transforming Daily Life</title>
-      <link>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-daily/</link>
-      <description>Discover how IoT is revolutionizing daily life with smarter homes, cities, and devices. Explore the future of connected living today!</description>
-      <pubDate>Wed, 29 Oct 2025 07:19:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-is-transforming-daily/</guid>
     </item>
   </channel>
 </rss>
