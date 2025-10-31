@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Oct 2025 10:46:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Oct 2025 10:49:53 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Blockchain: The Future of Secure Transactions</title>
+      <link>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-transact/</link>
+      <description>Discover how blockchain technology is revolutionizing secure transactions. Explore its potential, benefits, and future impact on various industries.</description>
+      <pubDate>Fri, 31 Oct 2025 10:49:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-transact/</guid>
+    </item>
     <item>
       <title>Understanding Serverless Computing: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential strategies to master backend architecture and build scalable, efficient apps. Boost your development skills today!</description>
       <pubDate>Wed, 29 Oct 2025 13:35:05 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-backend-architecture-essential-strategie/</guid>
-    </item>
-    <item>
-      <title>Mastering DevOps &amp; CI/CD: Boost Your Software Delivery Speed</title>
-      <link>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</link>
-      <description>Learn how to master DevOps and CI/CD to accelerate your software delivery, improve collaboration, and boost your team&apos;s efficiency today!</description>
-      <pubDate>Wed, 29 Oct 2025 11:12:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-devops-cicd-boost-your-software-delivery/</guid>
     </item>
   </channel>
 </rss>
