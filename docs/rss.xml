@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Oct 2025 17:16:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Oct 2025 19:10:33 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Microservices Architecture: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</link>
+      <description>A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 31 Oct 2025 19:10:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks in 2023: Boost Your Web Development!</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-in-2023-boost-your-web-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert tips to master database optimization, boost performance, and speed up your systems. Enhance efficiency today!</description>
       <pubDate>Thu, 30 Oct 2025 09:23:49 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-database-optimization-boost-performance-/</guid>
-    </item>
-    <item>
-      <title>Top Machine Learning Algorithms to Boost Your AI Skills</title>
-      <link>https://kubaik.github.io/top-machine-learning-algorithms-to-boost-your-ai-s/</link>
-      <description>Discover the top machine learning algorithms to enhance your AI skills. Boost your expertise with our expert insights and practical tips today!</description>
-      <pubDate>Thu, 30 Oct 2025 07:18:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-machine-learning-algorithms-to-boost-your-ai-s/</guid>
     </item>
   </channel>
 </rss>
