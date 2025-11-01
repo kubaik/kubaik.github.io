@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Nov 2025 07:17:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Nov 2025 09:20:16 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: Why Progressive Web Apps Matter</title>
+      <link>https://kubaik.github.io/unlocking-the-future-why-progressive-web-apps-matt/</link>
+      <description>Discover why Progressive Web Apps are revolutionizing user experiences. Unlock the future of web technology and boost engagement with PWAs today!</description>
+      <pubDate>Sat, 01 Nov 2025 09:20:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-why-progressive-web-apps-matt/</guid>
+    </item>
     <item>
       <title>Top Cybersecurity Best Practices to Safeguard Your Data</title>
       <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-safeguard-your/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top web development trends of 2024 that you can&apos;t miss. Stay ahead with innovative tech and strategies shaping the future of web design!</description>
       <pubDate>Thu, 30 Oct 2025 15:15:10 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-development-trends-in-2024-you-cant-miss/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power of Microservices Architecture: Boost Your App&apos;s Scalability</title>
-      <link>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</link>
-      <description>Discover how Microservices Architecture can enhance your app’s scalability, flexibility, and performance. Unlock its full potential today!</description>
-      <pubDate>Thu, 30 Oct 2025 13:33:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</guid>
     </item>
   </channel>
 </rss>
