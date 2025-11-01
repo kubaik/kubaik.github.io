@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Nov 2025 11:10:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Nov 2025 13:25:45 +0000</lastBuildDate>
+    <item>
+      <title>Top Web Development Trends to Watch in 2024</title>
+      <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
+      <description>Discover the top web development trends for 2024! Stay ahead with insights on AI, responsive design, and more to elevate your online presence.</description>
+      <pubDate>Sat, 01 Nov 2025 13:25:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
+    </item>
     <item>
       <title>Mastering DevOps: The Power of CI/CD Unleashed!</title>
       <link>https://kubaik.github.io/mastering-devops-the-power-of-cicd-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 30 Oct 2025 17:30:19 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-performance-optimization-a-complete-/</guid>
-    </item>
-    <item>
-      <title>Understanding Progressive Web Apps: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-progressive-web-apps-a-complete-guid/</link>
-      <description>A comprehensive guide to Progressive Web Apps covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 30 Oct 2025 17:15:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-progressive-web-apps-a-complete-guid/</guid>
     </item>
   </channel>
 </rss>
