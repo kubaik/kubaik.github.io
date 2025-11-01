@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Nov 2025 05:12:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Nov 2025 07:17:16 +0000</lastBuildDate>
+    <item>
+      <title>Top Cybersecurity Best Practices to Safeguard Your Data</title>
+      <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-safeguard-your/</link>
+      <description>Discover essential cybersecurity best practices to protect your data. Learn how to safeguard your information and stay safe in the digital world.</description>
+      <pubDate>Sat, 01 Nov 2025 07:17:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-cybersecurity-best-practices-to-safeguard-your/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top Data Science Techniques Explained</title>
       <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-exp/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Microservices Architecture can enhance your app’s scalability, flexibility, and performance. Unlock its full potential today!</description>
       <pubDate>Thu, 30 Oct 2025 13:33:00 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-power-of-microservices-architecture-/</guid>
-    </item>
-    <item>
-      <title>Boost Your Speed: Top Performance Optimization Tips for 2024</title>
-      <link>https://kubaik.github.io/boost-your-speed-top-performance-optimization-tips/</link>
-      <description>Discover expert tips to boost your website speed and performance in 2024. Enhance user experience and SEO with our top optimization strategies!</description>
-      <pubDate>Thu, 30 Oct 2025 11:11:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-speed-top-performance-optimization-tips/</guid>
     </item>
   </channel>
 </rss>
