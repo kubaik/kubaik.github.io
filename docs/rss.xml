@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Nov 2025 17:13:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Nov 2025 19:10:17 +0000</lastBuildDate>
+    <item>
+      <title>Mastering API Design Patterns: Boost Your Development Skills</title>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</link>
+      <description>Unlock the secrets of API design patterns! Enhance your development skills with our expert tips and best practices for creating efficient, scalable APIs.</description>
+      <pubDate>Sat, 01 Nov 2025 19:10:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top 5 Machine Learning Algorithms Explained</title>
       <link>https://kubaik.github.io/unlocking-insights-top-5-machine-learning-algorith/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 05:13:09 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</guid>
-    </item>
-    <item>
-      <title>Understanding Container Technologies: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
-      <description>A comprehensive guide to Container Technologies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 30 Oct 2025 19:11:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</guid>
     </item>
   </channel>
 </rss>
