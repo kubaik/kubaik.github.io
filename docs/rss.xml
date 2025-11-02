@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Nov 2025 13:25:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Nov 2025 15:11:56 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: How IoT Transforms Our Daily Lives</title>
+      <link>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</link>
+      <description>Discover how the Internet of Things (IoT) is revolutionizing our daily lives, enhancing convenience, efficiency, and connectivity in ways you never imagined.</description>
+      <pubDate>Sun, 02 Nov 2025 15:11:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top Data Science Techniques You Need</title>
       <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 10:46:45 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
-    </item>
-    <item>
-      <title>Understanding Artificial Intelligence Applications: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-artificial-intelligence-applications/</link>
-      <description>A comprehensive guide to Artificial Intelligence Applications covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 31 Oct 2025 09:23:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-artificial-intelligence-applications/</guid>
     </item>
   </channel>
 </rss>
