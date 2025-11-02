@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Nov 2025 07:17:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Nov 2025 09:19:24 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Success: Mastering DevOps &amp; CI/CD Best Practices</title>
+      <link>https://kubaik.github.io/unlocking-success-mastering-devops-cicd-best-pract/</link>
+      <description>Discover essential DevOps and CI/CD best practices to streamline your development process and unlock success. Transform your workflow today!</description>
+      <pubDate>Sun, 02 Nov 2025 09:19:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-success-mastering-devops-cicd-best-pract/</guid>
+    </item>
     <item>
       <title>Top Web Development Trends to Watch in 2024</title>
       <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 07:18:10 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</guid>
-    </item>
-    <item>
-      <title>Understanding Mobile App Development: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</link>
-      <description>A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 31 Oct 2025 05:13:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</guid>
     </item>
   </channel>
 </rss>
