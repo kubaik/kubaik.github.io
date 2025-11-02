@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Nov 2025 15:11:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Nov 2025 17:13:54 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Software Testing: Top Strategies for Success</title>
+      <link>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</link>
+      <description>Unlock your software&apos;s potential! Discover top strategies for mastering software testing and ensuring quality in your projects. Read more for expert insights!</description>
+      <pubDate>Sun, 02 Nov 2025 17:13:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: How IoT Transforms Our Daily Lives</title>
       <link>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 11:05:40 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-database-optimization-a-complete-gui/</guid>
-    </item>
-    <item>
-      <title>Understanding Serverless Computing: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
-      <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 31 Oct 2025 10:46:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
     </item>
   </channel>
 </rss>
