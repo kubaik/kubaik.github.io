@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Nov 2025 11:09:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Nov 2025 13:25:09 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Insights: Top Data Science Techniques You Need</title>
+      <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
+      <description>Discover essential data science techniques that will elevate your skills and unlock powerful insights. Transform your analysis with our expert tips!</description>
+      <pubDate>Sun, 02 Nov 2025 13:25:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</guid>
+    </item>
     <item>
       <title>Unlocking Blockchain: The Future of Secure Transactions</title>
       <link>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-transact/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Artificial Intelligence Applications covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 09:23:31 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-artificial-intelligence-applications/</guid>
-    </item>
-    <item>
-      <title>Understanding Machine Learning Algorithms: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</link>
-      <description>A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 31 Oct 2025 07:18:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</guid>
     </item>
   </channel>
 </rss>
