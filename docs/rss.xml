@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Nov 2025 09:27:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 11:11:51 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: The Power of Serverless Computing</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</link>
+      <description>Discover how serverless computing enhances efficiency and scalability. Unlock the potential of this revolutionary technology for your business today!</description>
+      <pubDate>Mon, 03 Nov 2025 11:11:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</guid>
+    </item>
     <item>
       <title>Unlocking the Future: The Power of Progressive Web Apps</title>
       <link>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top frontend frameworks of 2023 to elevate your web development skills. Stay ahead with the latest tools and trends for building stunning websites!</description>
       <pubDate>Fri, 31 Oct 2025 17:16:25 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks-in-2023-boost-your-web-dev/</guid>
-    </item>
-    <item>
-      <title>Top 7 Software Testing Strategies for Flawless Releases</title>
-      <link>https://kubaik.github.io/top-7-software-testing-strategies-for-flawless-rel/</link>
-      <description>Discover the top 7 software testing strategies to ensure flawless releases. Boost quality, enhance performance, and minimize bugs with expert insights!</description>
-      <pubDate>Fri, 31 Oct 2025 15:13:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-7-software-testing-strategies-for-flawless-rel/</guid>
     </item>
   </channel>
 </rss>
