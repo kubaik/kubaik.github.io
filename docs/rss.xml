@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Nov 2025 13:33:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 15:15:01 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: The Key to Scalable Systems</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-the-key-to-scalable/</link>
+      <description>Unlock the secrets to scalable systems with our guide on mastering backend architecture. Discover best practices, tips, and strategies for robust app performance!</description>
+      <pubDate>Mon, 03 Nov 2025 15:14:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-the-key-to-scalable/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
       <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential data science techniques in our latest blog post, &apos;Unlocking Insights.&apos; Enhance your skills and unlock valuable insights today!</description>
       <pubDate>Sat, 01 Nov 2025 05:11:58 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-exp/</guid>
-    </item>
-    <item>
-      <title>Understanding Microservices Architecture: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</link>
-      <description>A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 31 Oct 2025 19:10:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</guid>
     </item>
   </channel>
 </rss>
