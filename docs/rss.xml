@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Nov 2025 11:11:51 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 13:33:10 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
+      <description>Discover how microservices architecture can boost your project&apos;s efficiency, flexibility, and scalability. Unlock the power of modern software development today!</description>
+      <pubDate>Mon, 03 Nov 2025 13:33:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: The Power of Serverless Computing</title>
       <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 31 Oct 2025 19:10:31 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</guid>
-    </item>
-    <item>
-      <title>Top Frontend Frameworks in 2023: Boost Your Web Development!</title>
-      <link>https://kubaik.github.io/top-frontend-frameworks-in-2023-boost-your-web-dev/</link>
-      <description>Discover the top frontend frameworks of 2023 to elevate your web development skills. Stay ahead with the latest tools and trends for building stunning websites!</description>
-      <pubDate>Fri, 31 Oct 2025 17:16:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-frontend-frameworks-in-2023-boost-your-web-dev/</guid>
     </item>
   </channel>
 </rss>
