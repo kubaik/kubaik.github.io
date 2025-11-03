@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Nov 2025 17:16:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 19:12:00 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Peak Performance: Mastering Database Optimization</title>
+      <link>https://kubaik.github.io/unlock-peak-performance-mastering-database-optimiz/</link>
+      <description>Discover how to boost your database performance with expert tips on optimization techniques. Unlock peak efficiency and enhance your data management today!</description>
+      <pubDate>Mon, 03 Nov 2025 19:11:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-peak-performance-mastering-database-optimiz/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks to Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-to-boost-your-web-developm/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the full potential of DevOps with CI/CD! Discover strategies, tools, and best practices to streamline your development process and enhance collaboration.</description>
       <pubDate>Sat, 01 Nov 2025 11:10:08 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-devops-the-power-of-cicd-unleashed/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: Why Progressive Web Apps Matter</title>
-      <link>https://kubaik.github.io/unlocking-the-future-why-progressive-web-apps-matt/</link>
-      <description>Discover why Progressive Web Apps are revolutionizing user experiences. Unlock the future of web technology and boost engagement with PWAs today!</description>
-      <pubDate>Sat, 01 Nov 2025 09:20:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-why-progressive-web-apps-matt/</guid>
     </item>
   </channel>
 </rss>
