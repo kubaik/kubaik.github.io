@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Nov 2025 05:13:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Nov 2025 07:19:44 +0000</lastBuildDate>
+    <item>
+      <title>Mastering API Design Patterns: Best Practices Unveiled</title>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</link>
+      <description>Unlock the secrets of effective API design! Explore best practices and essential patterns to elevate your development skills in our comprehensive guide.</description>
+      <pubDate>Tue, 04 Nov 2025 07:19:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</guid>
+    </item>
     <item>
       <title>Unlocking Potential: Top AI Applications Transforming Industries</title>
       <link>https://kubaik.github.io/unlocking-potential-top-ai-applications-transformi/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top 5 machine learning algorithms that can transform your data insights. Unlock the power of AI with our easy-to-understand guide!</description>
       <pubDate>Sat, 01 Nov 2025 17:13:35 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-insights-top-5-machine-learning-algorith/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: A Deep Dive into Container Technologies</title>
-      <link>https://kubaik.github.io/unlocking-the-future-a-deep-dive-into-container-te/</link>
-      <description>Explore the future of software deployment in &quot;Unlocking the Future: A Deep Dive into Container Technologies.&quot; Discover benefits, trends, and best practices!</description>
-      <pubDate>Sat, 01 Nov 2025 15:11:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-a-deep-dive-into-container-te/</guid>
     </item>
   </channel>
 </rss>
