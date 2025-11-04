@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Nov 2025 15:15:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Nov 2025 17:17:58 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Key Principles for Success</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-key-principles-for-/</link>
+      <description>Unlock the secrets to robust backend architecture! Discover key principles that drive success in software development and ensure scalable, efficient systems.</description>
+      <pubDate>Tue, 04 Nov 2025 17:17:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-key-principles-for-/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: The Power of Container Technologies</title>
       <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-container-techno/</link>
@@ -138,13 +145,6 @@
       <description>Discover how blockchain technology is revolutionizing secure transactions. Explore its potential and impact on the future of finance and beyond!</description>
       <pubDate>Sun, 02 Nov 2025 11:09:55 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-blockchain-the-future-of-secure-transact/</guid>
-    </item>
-    <item>
-      <title>Unlocking Success: Mastering DevOps &amp; CI/CD Best Practices</title>
-      <link>https://kubaik.github.io/unlocking-success-mastering-devops-cicd-best-pract/</link>
-      <description>Discover essential DevOps and CI/CD best practices to streamline your development process and unlock success. Transform your workflow today!</description>
-      <pubDate>Sun, 02 Nov 2025 09:19:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-success-mastering-devops-cicd-best-pract/</guid>
     </item>
   </channel>
 </rss>
