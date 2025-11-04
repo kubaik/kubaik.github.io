@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Nov 2025 09:25:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Nov 2025 11:12:12 +0000</lastBuildDate>
+    <item>
+      <title>Boost Your Performance: Essential Database Optimization Tips</title>
+      <link>https://kubaik.github.io/boost-your-performance-essential-database-optimiza/</link>
+      <description>Unlock your database&apos;s potential! Discover essential tips to boost performance and efficiency in our latest blog post on database optimization.</description>
+      <pubDate>Tue, 04 Nov 2025 11:12:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-your-performance-essential-database-optimiza/</guid>
+    </item>
     <item>
       <title>Unlocking Agility: DevOps &amp; CI/CD Essentials for Success</title>
       <link>https://kubaik.github.io/unlocking-agility-devops-cicd-essentials-for-succe/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential cybersecurity best practices to protect your data from threats. Stay safe online with our expert tips and strategies for robust security.</description>
       <pubDate>Sun, 02 Nov 2025 05:12:21 +0000</pubDate>
       <guid>https://kubaik.github.io/top-cybersecurity-best-practices-to-safeguard-your/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: Boost Your Development Skills</title>
-      <link>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</link>
-      <description>Unlock the secrets of API design patterns! Enhance your development skills with our expert tips and best practices for creating efficient, scalable APIs.</description>
-      <pubDate>Sat, 01 Nov 2025 19:10:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</guid>
     </item>
   </channel>
 </rss>
