@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Nov 2025 17:17:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Nov 2025 19:12:48 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Power of Machine Learning Algorithms</title>
+      <link>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</link>
+      <description>Discover how machine learning algorithms transform data into insights. Unlock their power with our comprehensive guide to enhancing your AI knowledge today!</description>
+      <pubDate>Wed, 05 Nov 2025 19:12:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</guid>
+    </item>
     <item>
       <title>Top 5 Cloud Computing Platforms Revolutionizing Businesses</title>
       <link>https://kubaik.github.io/top-5-cloud-computing-platforms-revolutionizing-bu/</link>
@@ -138,13 +145,6 @@
       <description>Discover how serverless computing enhances efficiency and scalability. Unlock the potential of this revolutionary technology for your business today!</description>
       <pubDate>Mon, 03 Nov 2025 11:11:48 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: The Power of Progressive Web Apps</title>
-      <link>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</link>
-      <description>Discover how Progressive Web Apps (PWAs) are revolutionizing user experience and engagement. Unlock the future of web technology with our insights!</description>
-      <pubDate>Mon, 03 Nov 2025 09:27:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</guid>
     </item>
   </channel>
 </rss>
