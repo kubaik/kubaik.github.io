@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Nov 2025 19:12:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Nov 2025 05:13:50 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Data Science: Top Techniques You Need to Know</title>
+      <link>https://kubaik.github.io/mastering-data-science-top-techniques-you-need-to-/</link>
+      <description>Unlock the secrets of data science! Discover essential techniques to enhance your skills and master the art of data analysis in our latest blog post.</description>
+      <pubDate>Wed, 05 Nov 2025 05:13:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-data-science-top-techniques-you-need-to-/</guid>
+    </item>
     <item>
       <title>Unlock Success: Top Trends in Mobile App Development 2023</title>
       <link>https://kubaik.github.io/unlock-success-top-trends-in-mobile-app-developmen/</link>
@@ -138,13 +145,6 @@
       <description>Discover how the Internet of Things (IoT) is revolutionizing our daily lives, enhancing convenience, efficiency, and connectivity in ways you never imagined.</description>
       <pubDate>Sun, 02 Nov 2025 15:11:54 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</guid>
-    </item>
-    <item>
-      <title>Unlocking Insights: Top Data Science Techniques You Need</title>
-      <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</link>
-      <description>Discover essential data science techniques that will elevate your skills and unlock powerful insights. Transform your analysis with our expert tips!</description>
-      <pubDate>Sun, 02 Nov 2025 13:25:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-you/</guid>
     </item>
   </channel>
 </rss>
