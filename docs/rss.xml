@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Nov 2025 15:15:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Nov 2025 17:17:54 +0000</lastBuildDate>
+    <item>
+      <title>Mastering API Design Patterns: Boost Your Development Skills!</title>
+      <link>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</link>
+      <description>Unlock your development potential! Discover essential API design patterns to streamline your projects and enhance your coding skills in our latest blog post.</description>
+      <pubDate>Thu, 06 Nov 2025 17:17:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</guid>
+    </item>
     <item>
       <title>Mastering Software Testing Strategies for Flawless Releases</title>
       <link>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your database&apos;s potential! Discover essential tips to boost performance and efficiency in our latest blog post on database optimization.</description>
       <pubDate>Tue, 04 Nov 2025 11:12:09 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-performance-essential-database-optimiza/</guid>
-    </item>
-    <item>
-      <title>Unlocking Agility: DevOps &amp; CI/CD Essentials for Success</title>
-      <link>https://kubaik.github.io/unlocking-agility-devops-cicd-essentials-for-succe/</link>
-      <description>Discover essential DevOps and CI/CD strategies to boost agility and drive success in your software development process. Unlock your team&apos;s potential today!</description>
-      <pubDate>Tue, 04 Nov 2025 09:25:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-agility-devops-cicd-essentials-for-succe/</guid>
     </item>
   </channel>
 </rss>
