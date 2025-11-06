@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Nov 2025 19:12:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Nov 2025 05:13:49 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: The Power of Serverless Computing</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</link>
+      <description>Discover how serverless computing boosts efficiency and reduces costs. Unlock the potential of this game-changing technology for your business today!</description>
+      <pubDate>Thu, 06 Nov 2025 05:13:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</guid>
+    </item>
     <item>
       <title>Unlocking the Power of Machine Learning Algorithms</title>
       <link>https://kubaik.github.io/unlocking-the-power-of-machine-learning-algorithms/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets to scalable systems with our guide on mastering backend architecture. Discover best practices, tips, and strategies for robust app performance!</description>
       <pubDate>Mon, 03 Nov 2025 15:14:58 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-backend-architecture-the-key-to-scalable/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Power of Serverless Computing</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</link>
-      <description>Discover how serverless computing enhances efficiency and scalability. Unlock the potential of this revolutionary technology for your business today!</description>
-      <pubDate>Mon, 03 Nov 2025 11:11:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</guid>
     </item>
   </channel>
 </rss>
