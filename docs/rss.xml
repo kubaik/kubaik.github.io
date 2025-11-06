@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Nov 2025 07:18:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Nov 2025 09:25:10 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking the Future: How IoT Transforms Our Daily Lives</title>
+      <link>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</link>
+      <description>Discover how IoT is revolutionizing everyday life, from smart homes to healthcare. Unlock the future with innovative insights and practical applications!</description>
+      <pubDate>Thu, 06 Nov 2025 09:25:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-the-future-how-iot-transforms-our-daily-/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks to Boost Your Web Development Skills</title>
       <link>https://kubaik.github.io/top-frontend-frameworks-to-boost-your-web-developm/</link>
@@ -138,13 +145,6 @@
       <description>Discover how to boost your database performance with expert tips on optimization techniques. Unlock peak efficiency and enhance your data management today!</description>
       <pubDate>Mon, 03 Nov 2025 19:11:58 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-peak-performance-mastering-database-optimiz/</guid>
-    </item>
-    <item>
-      <title>Mastering Backend Architecture: The Key to Scalable Systems</title>
-      <link>https://kubaik.github.io/mastering-backend-architecture-the-key-to-scalable/</link>
-      <description>Unlock the secrets to scalable systems with our guide on mastering backend architecture. Discover best practices, tips, and strategies for robust app performance!</description>
-      <pubDate>Mon, 03 Nov 2025 15:14:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-backend-architecture-the-key-to-scalable/</guid>
     </item>
   </channel>
 </rss>
