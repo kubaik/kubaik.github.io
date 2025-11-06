@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Nov 2025 13:34:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Nov 2025 15:15:32 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Software Testing Strategies for Flawless Releases</title>
+      <link>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</link>
+      <description>Unlock flawless software releases with our expert guide on mastering testing strategies. Elevate your QA game and ensure quality every time!</description>
+      <pubDate>Thu, 06 Nov 2025 15:15:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</guid>
+    </item>
     <item>
       <title>Unlocking Blockchain: Revolutionizing the Future of Technology</title>
       <link>https://kubaik.github.io/unlocking-blockchain-revolutionizing-the-future-of/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential DevOps and CI/CD strategies to boost agility and drive success in your software development process. Unlock your team&apos;s potential today!</description>
       <pubDate>Tue, 04 Nov 2025 09:25:03 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-agility-devops-cicd-essentials-for-succe/</guid>
-    </item>
-    <item>
-      <title>Mastering API Design Patterns: Best Practices Unveiled</title>
-      <link>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</link>
-      <description>Unlock the secrets of effective API design! Explore best practices and essential patterns to elevate your development skills in our comprehensive guide.</description>
-      <pubDate>Tue, 04 Nov 2025 07:19:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-api-design-patterns-best-practices-unvei/</guid>
     </item>
   </channel>
 </rss>
