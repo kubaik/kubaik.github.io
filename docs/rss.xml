@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Nov 2025 11:11:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Nov 2025 13:31:02 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Serverless Computing: A New Era of Scalability</title>
+      <link>https://kubaik.github.io/unlocking-serverless-computing-a-new-era-of-scalab/</link>
+      <description>Discover how serverless computing revolutionizes scalability. Unlock efficiency, reduce costs, and simplify deployment in this new era of cloud technology.</description>
+      <pubDate>Fri, 07 Nov 2025 13:30:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-serverless-computing-a-new-era-of-scalab/</guid>
+    </item>
     <item>
       <title>Top Web Development Trends to Watch in 2024</title>
       <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential cybersecurity best practices to protect your data and stay safe online. Learn the top 10 tips you can&apos;t afford to ignore!</description>
       <pubDate>Wed, 05 Nov 2025 07:19:37 +0000</pubDate>
       <guid>https://kubaik.github.io/top-10-cybersecurity-best-practices-you-cant-ignor/</guid>
-    </item>
-    <item>
-      <title>Mastering Data Science: Top Techniques You Need to Know</title>
-      <link>https://kubaik.github.io/mastering-data-science-top-techniques-you-need-to-/</link>
-      <description>Unlock the secrets of data science! Discover essential techniques to enhance your skills and master the art of data analysis in our latest blog post.</description>
-      <pubDate>Wed, 05 Nov 2025 05:13:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-data-science-top-techniques-you-need-to-/</guid>
     </item>
   </channel>
 </rss>
