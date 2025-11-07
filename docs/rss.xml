@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Nov 2025 05:13:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Nov 2025 07:19:04 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Speed: Essential Tips for Database Optimization</title>
+      <link>https://kubaik.github.io/unlocking-speed-essential-tips-for-database-optimi/</link>
+      <description>Discover essential tips for database optimization to enhance performance and speed. Unlock your database&apos;s full potential with our expert insights!</description>
+      <pubDate>Fri, 07 Nov 2025 07:19:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-speed-essential-tips-for-database-optimi/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top Data Science Techniques for Success</title>
       <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-for/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets to robust backend architecture! Discover key principles that drive success in software development and ensure scalable, efficient systems.</description>
       <pubDate>Tue, 04 Nov 2025 17:17:55 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-backend-architecture-key-principles-for-/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Power of Container Technologies</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-container-techno/</link>
-      <description>Discover how container technologies boost efficiency and streamline processes. Unlock the potential of your workflows with our expert insights and tips!</description>
-      <pubDate>Tue, 04 Nov 2025 15:15:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-container-techno/</guid>
     </item>
   </channel>
 </rss>
