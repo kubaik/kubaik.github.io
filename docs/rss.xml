@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Nov 2025 05:11:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Nov 2025 07:17:26 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking DevOps: Mastering CI/CD for Seamless Delivery</title>
+      <link>https://kubaik.github.io/unlocking-devops-mastering-cicd-for-seamless-deliv/</link>
+      <description>Discover how to master CI/CD in DevOps for seamless software delivery. Unlock best practices, tools, and strategies to enhance your development workflow today!</description>
+      <pubDate>Sat, 08 Nov 2025 07:17:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-devops-mastering-cicd-for-seamless-deliv/</guid>
+    </item>
     <item>
       <title>Top 5 Cloud Computing Platforms Revolutionizing Business Today</title>
       <link>https://kubaik.github.io/top-5-cloud-computing-platforms-revolutionizing-bu/</link>
@@ -138,13 +145,6 @@
       <description>Discover the impact of Progressive Web Apps on the digital landscape. Learn how they enhance user experience and drive engagement for your business!</description>
       <pubDate>Wed, 05 Nov 2025 15:15:21 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-why-progressive-web-apps-matt/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
-      <description>Discover how microservices architecture boosts efficiency, enhances scalability, and fosters innovation. Unlock the potential of your applications today!</description>
-      <pubDate>Wed, 05 Nov 2025 13:35:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</guid>
     </item>
   </channel>
 </rss>
