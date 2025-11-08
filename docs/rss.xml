@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Nov 2025 11:10:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Nov 2025 13:26:12 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Scalability: The Power of Microservices Architecture</title>
+      <link>https://kubaik.github.io/unlocking-scalability-the-power-of-microservices-a/</link>
+      <description>Discover how microservices architecture can transform your business by enhancing scalability and flexibility. Unlock the future of software development today!</description>
+      <pubDate>Sat, 08 Nov 2025 13:26:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-scalability-the-power-of-microservices-a/</guid>
+    </item>
     <item>
       <title>Mastering Backend Architecture: A Guide for Developers</title>
       <link>https://kubaik.github.io/mastering-backend-architecture-a-guide-for-develop/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top frontend frameworks to elevate your web development skills. Explore features, benefits, and tips to enhance your coding prowess!</description>
       <pubDate>Thu, 06 Nov 2025 07:18:54 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks-to-boost-your-web-developm/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: The Power of Serverless Computing</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</link>
-      <description>Discover how serverless computing boosts efficiency and reduces costs. Unlock the potential of this game-changing technology for your business today!</description>
-      <pubDate>Thu, 06 Nov 2025 05:13:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-serverless-compu/</guid>
     </item>
   </channel>
 </rss>
