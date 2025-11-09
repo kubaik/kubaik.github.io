@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Nov 2025 05:12:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Nov 2025 07:17:56 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Backend Architecture: Your Guide to Scalable Systems</title>
+      <link>https://kubaik.github.io/mastering-backend-architecture-your-guide-to-scala/</link>
+      <description>Unlock the secrets of scalable backend architecture! Dive into our comprehensive guide to master system design for optimal performance and growth.</description>
+      <pubDate>Sun, 09 Nov 2025 07:17:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-backend-architecture-your-guide-to-scala/</guid>
+    </item>
     <item>
       <title>Top Cybersecurity Best Practices to Safeguard Your Data</title>
       <link>https://kubaik.github.io/top-cybersecurity-best-practices-to-safeguard-your/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your development potential! Discover essential API design patterns to streamline your projects and enhance your coding skills in our latest blog post.</description>
       <pubDate>Thu, 06 Nov 2025 17:17:51 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-api-design-patterns-boost-your-developme/</guid>
-    </item>
-    <item>
-      <title>Mastering Software Testing Strategies for Flawless Releases</title>
-      <link>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</link>
-      <description>Unlock flawless software releases with our expert guide on mastering testing strategies. Elevate your QA game and ensure quality every time!</description>
-      <pubDate>Thu, 06 Nov 2025 15:15:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-software-testing-strategies-for-flawless/</guid>
     </item>
   </channel>
 </rss>
