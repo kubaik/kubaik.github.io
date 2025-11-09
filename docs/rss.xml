@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Nov 2025 13:26:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Nov 2025 15:12:01 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: DevOps and CI/CD Explained</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-devops-and-cicd-explained/</link>
+      <description>Discover how DevOps and CI/CD streamline software development, enhance collaboration, and boost efficiency. Unlock your team&apos;s potential today!</description>
+      <pubDate>Sun, 09 Nov 2025 15:11:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-devops-and-cicd-explained/</guid>
+    </item>
     <item>
       <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
       <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top 10 AI applications transforming industries today. Unlock potential and stay ahead with innovations reshaping the future of work and technology.</description>
       <pubDate>Fri, 07 Nov 2025 09:23:36 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-potential-top-10-ai-applications-revolut/</guid>
-    </item>
-    <item>
-      <title>Unlocking Speed: Essential Tips for Database Optimization</title>
-      <link>https://kubaik.github.io/unlocking-speed-essential-tips-for-database-optimi/</link>
-      <description>Discover essential tips for database optimization to enhance performance and speed. Unlock your database&apos;s full potential with our expert insights!</description>
-      <pubDate>Fri, 07 Nov 2025 07:19:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-speed-essential-tips-for-database-optimi/</guid>
     </item>
   </channel>
 </rss>
