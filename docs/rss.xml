@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Nov 2025 11:10:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Nov 2025 13:26:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlocking Efficiency: The Power of Microservices Architecture</title>
+      <link>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</link>
+      <description>Discover how microservices architecture boosts efficiency, enhances scalability, and transforms your development process. Unlock the future of software design!</description>
+      <pubDate>Sun, 09 Nov 2025 13:26:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-microservices-ar/</guid>
+    </item>
     <item>
       <title>Unlocking Insights: Top Data Science Techniques Explained</title>
       <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-exp/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential tips for database optimization to enhance performance and speed. Unlock your database&apos;s full potential with our expert insights!</description>
       <pubDate>Fri, 07 Nov 2025 07:19:01 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-speed-essential-tips-for-database-optimi/</guid>
-    </item>
-    <item>
-      <title>Unlocking Insights: Top Data Science Techniques for Success</title>
-      <link>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-for/</link>
-      <description>Discover essential data science techniques to enhance your skills and drive success. Unlock insights and transform data into actionable strategies today!</description>
-      <pubDate>Fri, 07 Nov 2025 05:13:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-insights-top-data-science-techniques-for/</guid>
     </item>
   </channel>
 </rss>
