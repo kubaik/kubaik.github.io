@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Nov 2025 15:16:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Nov 2025 17:16:42 +0000</lastBuildDate>
+    <item>
+      <title>Boost Your Performance: Essential Tips for Database Optimization</title>
+      <link>https://kubaik.github.io/boost-your-performance-essential-tips-for-database/</link>
+      <description>Unlock your database&apos;s full potential! Discover essential tips for optimization that enhance performance, speed, and efficiency in our latest blog post.</description>
+      <pubDate>Mon, 10 Nov 2025 17:16:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-your-performance-essential-tips-for-database/</guid>
+    </item>
     <item>
       <title>Mastering Software Testing: Top Strategies for Success</title>
       <link>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</link>
@@ -138,13 +145,6 @@
       <description>Discover how container technologies can revolutionize your workflow, enhance scalability, and boost efficiency in your development processes. Unlock your potential!</description>
       <pubDate>Sat, 08 Nov 2025 09:20:02 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-container-techno/</guid>
-    </item>
-    <item>
-      <title>Unlocking DevOps: Mastering CI/CD for Seamless Delivery</title>
-      <link>https://kubaik.github.io/unlocking-devops-mastering-cicd-for-seamless-deliv/</link>
-      <description>Discover how to master CI/CD in DevOps for seamless software delivery. Unlock best practices, tools, and strategies to enhance your development workflow today!</description>
-      <pubDate>Sat, 08 Nov 2025 07:17:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-devops-mastering-cicd-for-seamless-deliv/</guid>
     </item>
   </channel>
 </rss>
