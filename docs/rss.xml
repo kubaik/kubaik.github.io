@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Nov 2025 05:13:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 07:19:17 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Software Testing Strategies: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</link>
+      <description>A comprehensive guide to Software Testing Strategies covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 12 Nov 2025 07:19:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</guid>
+    </item>
     <item>
       <title>Understanding Machine Learning Algorithms: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</link>
@@ -138,13 +145,6 @@
       <description>Discover how IoT is reshaping our world! Explore transformative innovations, real-world applications, and the future of connectivity in this insightful blog post.</description>
       <pubDate>Sun, 09 Nov 2025 17:13:57 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-iot-transforming-our-connected-world-tod/</guid>
-    </item>
-    <item>
-      <title>Unlocking Efficiency: DevOps and CI/CD Explained</title>
-      <link>https://kubaik.github.io/unlocking-efficiency-devops-and-cicd-explained/</link>
-      <description>Discover how DevOps and CI/CD streamline software development, enhance collaboration, and boost efficiency. Unlock your team&apos;s potential today!</description>
-      <pubDate>Sun, 09 Nov 2025 15:11:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-efficiency-devops-and-cicd-explained/</guid>
     </item>
   </channel>
 </rss>
