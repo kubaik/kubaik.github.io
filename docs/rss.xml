@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Nov 2025 17:16:52 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 19:11:58 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Microservices Architecture: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</link>
+      <description>A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 12 Nov 2025 19:11:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Performance Optimization: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-performance-optimization-a-complete-/</link>
@@ -138,13 +145,6 @@
       <description>Discover how serverless computing is revolutionizing app development. Unlock efficiency, scalability, and cost savings for your next project today!</description>
       <pubDate>Mon, 10 Nov 2025 13:34:01 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-serverless-computing-the-future-of-app-d/</guid>
-    </item>
-    <item>
-      <title>Top Cloud Computing Platforms: Powering Your Digital Future</title>
-      <link>https://kubaik.github.io/top-cloud-computing-platforms-powering-your-digita/</link>
-      <description>Discover the leading cloud computing platforms transforming the digital landscape. Explore features, benefits, and how they can power your future today!</description>
-      <pubDate>Mon, 10 Nov 2025 11:12:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-cloud-computing-platforms-powering-your-digita/</guid>
     </item>
   </channel>
 </rss>
