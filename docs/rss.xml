@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Nov 2025 07:19:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 09:24:16 +0000</lastBuildDate>
+    <item>
+      <title>Understanding DevOps and CI/CD: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-devops-and-cicd-a-complete-guide/</link>
+      <description>A comprehensive guide to DevOps and CI/CD covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 12 Nov 2025 09:24:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-devops-and-cicd-a-complete-guide/</guid>
+    </item>
     <item>
       <title>Understanding Software Testing Strategies: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</link>
@@ -138,13 +145,6 @@
       <description>Discover the best frontend frameworks to elevate your web development skills. Explore features, benefits, and tips to choose the right one for your projects!</description>
       <pubDate>Sun, 09 Nov 2025 19:10:11 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks-boost-your-web-development/</guid>
-    </item>
-    <item>
-      <title>Unlocking IoT: Transforming Our Connected World Today!</title>
-      <link>https://kubaik.github.io/unlocking-iot-transforming-our-connected-world-tod/</link>
-      <description>Discover how IoT is reshaping our world! Explore transformative innovations, real-world applications, and the future of connectivity in this insightful blog post.</description>
-      <pubDate>Sun, 09 Nov 2025 17:13:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-iot-transforming-our-connected-world-tod/</guid>
     </item>
   </channel>
 </rss>
