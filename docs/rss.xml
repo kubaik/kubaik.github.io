@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Nov 2025 09:24:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 11:11:52 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Blockchain Technology: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-blockchain-technology-a-complete-gui/</link>
+      <description>A comprehensive guide to Blockchain Technology covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 12 Nov 2025 11:11:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-blockchain-technology-a-complete-gui/</guid>
+    </item>
     <item>
       <title>Understanding DevOps and CI/CD: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-devops-and-cicd-a-complete-guide/</link>
@@ -138,13 +145,6 @@
       <description>Discover how blockchain technology is revolutionizing industries, enhancing transparency, and driving innovation. Unlock the future today!</description>
       <pubDate>Mon, 10 Nov 2025 05:13:58 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-how-blockchain-technology-tra/</guid>
-    </item>
-    <item>
-      <title>Top Frontend Frameworks: Boost Your Web Development Skills!</title>
-      <link>https://kubaik.github.io/top-frontend-frameworks-boost-your-web-development/</link>
-      <description>Discover the best frontend frameworks to elevate your web development skills. Explore features, benefits, and tips to choose the right one for your projects!</description>
-      <pubDate>Sun, 09 Nov 2025 19:10:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-frontend-frameworks-boost-your-web-development/</guid>
     </item>
   </channel>
 </rss>
