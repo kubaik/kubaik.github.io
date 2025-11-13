@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 07:19:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 09:24:44 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Cloud Computing Platforms: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-cloud-computing-platforms-a-complete/</link>
+      <description>A comprehensive guide to Cloud Computing Platforms covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 09:24:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-cloud-computing-platforms-a-complete/</guid>
+    </item>
     <item>
       <title>Understanding Container Technologies: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 10 Nov 2025 19:12:21 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-api-design-patterns-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Boost Your Performance: Essential Tips for Database Optimization</title>
-      <link>https://kubaik.github.io/boost-your-performance-essential-tips-for-database/</link>
-      <description>Unlock your database&apos;s full potential! Discover essential tips for optimization that enhance performance, speed, and efficiency in our latest blog post.</description>
-      <pubDate>Mon, 10 Nov 2025 17:16:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-your-performance-essential-tips-for-database/</guid>
     </item>
   </channel>
 </rss>
