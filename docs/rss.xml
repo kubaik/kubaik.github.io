@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 11:12:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 13:34:30 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Database Optimization: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-database-optimization-a-complete-gui/</link>
+      <description>A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 13:34:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-database-optimization-a-complete-gui/</guid>
+    </item>
     <item>
       <title>Understanding Web Development Trends: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-web-development-trends-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top machine learning algorithms and how they can transform your data into actionable insights. Unlock the power of AI today!</description>
       <pubDate>Tue, 11 Nov 2025 07:19:59 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-power-top-machine-learning-algorithm/</guid>
-    </item>
-    <item>
-      <title>Unlocking Success: The Future of Mobile App Development</title>
-      <link>https://kubaik.github.io/unlocking-success-the-future-of-mobile-app-develop/</link>
-      <description>Explore the future of mobile app development and discover key trends, strategies, and innovations that can unlock your success in this dynamic industry.</description>
-      <pubDate>Tue, 11 Nov 2025 05:14:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-success-the-future-of-mobile-app-develop/</guid>
     </item>
   </channel>
 </rss>
