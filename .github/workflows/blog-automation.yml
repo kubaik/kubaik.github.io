@@ -77,6 +77,14 @@ jobs:
           echo "SUCCESS: OpenAI API key is available"
         fi
 
+    - name: Verify GROQ_API_KEY API Key
+      run: |
+        if [ -z "${{ secrets.GROQ_API_KEY }}" ]; then
+          echo "WARNING: GROQ_API_KEY secret is not set - will use fallback content generation"
+        else
+          echo "SUCCESS: GROQ_API_KEY API key is available"
+        fi    
+
     - name: Initialize config if needed
       run: |
         if [ ! -f "config.yaml" ]; then
@@ -100,6 +108,7 @@ jobs:
     - name: Generate new blog content
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
         echo "Starting blog content generation..."
         
