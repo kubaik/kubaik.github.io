@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 13:34:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 15:15:50 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Artificial Intelligence Applications: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-artificial-intelligence-applications/</link>
+      <description>A comprehensive guide to Artificial Intelligence Applications covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 15:15:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-artificial-intelligence-applications/</guid>
+    </item>
     <item>
       <title>Understanding Database Optimization: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-database-optimization-a-complete-gui/</link>
@@ -138,13 +145,6 @@
       <description>Discover the top web development trends for 2024! Stay ahead with insights on AI, responsive design, and more. Transform your projects today!</description>
       <pubDate>Tue, 11 Nov 2025 09:25:09 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Power: Top Machine Learning Algorithms Explored</title>
-      <link>https://kubaik.github.io/unlocking-the-power-top-machine-learning-algorithm/</link>
-      <description>Discover the top machine learning algorithms and how they can transform your data into actionable insights. Unlock the power of AI today!</description>
-      <pubDate>Tue, 11 Nov 2025 07:19:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-power-top-machine-learning-algorithm/</guid>
     </item>
   </channel>
 </rss>
