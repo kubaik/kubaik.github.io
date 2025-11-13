@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 15:15:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 16:40:16 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Cybersecurity Best Practices: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-cybersecurity-best-practices-a-compl/</link>
+      <description>A comprehensive guide to Cybersecurity Best Practices covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 16:40:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-cybersecurity-best-practices-a-compl/</guid>
+    </item>
     <item>
       <title>Understanding Artificial Intelligence Applications: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-artificial-intelligence-applications/</link>
@@ -138,13 +145,6 @@
       <description>Discover how container technologies boost efficiency and streamline workflows. Unlock the potential of your projects with our expert insights and practical tips!</description>
       <pubDate>Tue, 11 Nov 2025 11:12:39 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-efficiency-the-power-of-container-techno/</guid>
-    </item>
-    <item>
-      <title>Top Web Development Trends to Watch in 2024!</title>
-      <link>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</link>
-      <description>Discover the top web development trends for 2024! Stay ahead with insights on AI, responsive design, and more. Transform your projects today!</description>
-      <pubDate>Tue, 11 Nov 2025 09:25:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-development-trends-to-watch-in-2024/</guid>
     </item>
   </channel>
 </rss>
