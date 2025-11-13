@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Nov 2025 19:11:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 05:13:04 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Internet of Things (IoT): A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-internet-of-things-iot-a-complete-gu/</link>
+      <description>A comprehensive guide to Internet of Things (IoT) covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 05:13:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-internet-of-things-iot-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding Microservices Architecture: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</link>
@@ -138,13 +145,6 @@
       <description>Unlock success in software testing with our top strategies! Learn essential techniques to enhance quality, efficiency, and collaboration in your projects.</description>
       <pubDate>Mon, 10 Nov 2025 15:16:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</guid>
-    </item>
-    <item>
-      <title>Unlocking Serverless Computing: The Future of App Development</title>
-      <link>https://kubaik.github.io/unlocking-serverless-computing-the-future-of-app-d/</link>
-      <description>Discover how serverless computing is revolutionizing app development. Unlock efficiency, scalability, and cost savings for your next project today!</description>
-      <pubDate>Mon, 10 Nov 2025 13:34:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-serverless-computing-the-future-of-app-d/</guid>
     </item>
   </channel>
 </rss>
