@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 17:16:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 19:11:35 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Serverless Computing: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
+      <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 19:11:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
+    </item>
     <item>
       <title>Understanding API Design Patterns: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-api-design-patterns-a-complete-guide/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Progressive Web Apps are transforming the digital landscape. Unlock their potential to enhance user experience and boost engagement today!</description>
       <pubDate>Tue, 11 Nov 2025 15:14:57 +0000</pubDate>
       <guid>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</guid>
-    </item>
-    <item>
-      <title>Top 10 Cybersecurity Best Practices to Protect Your Data</title>
-      <link>https://kubaik.github.io/top-10-cybersecurity-best-practices-to-protect-you/</link>
-      <description>Discover essential cybersecurity best practices to safeguard your data. Learn the top 10 strategies to enhance your online security and protect your privacy.</description>
-      <pubDate>Tue, 11 Nov 2025 13:33:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-10-cybersecurity-best-practices-to-protect-you/</guid>
     </item>
   </channel>
 </rss>
