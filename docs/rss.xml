@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Nov 2025 05:13:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Nov 2025 07:19:09 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Container Technologies: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
+      <description>A comprehensive guide to Container Technologies covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 13 Nov 2025 07:19:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding Internet of Things (IoT): A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-internet-of-things-iot-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your database&apos;s full potential! Discover essential tips for optimization that enhance performance, speed, and efficiency in our latest blog post.</description>
       <pubDate>Mon, 10 Nov 2025 17:16:39 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-performance-essential-tips-for-database/</guid>
-    </item>
-    <item>
-      <title>Mastering Software Testing: Top Strategies for Success</title>
-      <link>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</link>
-      <description>Unlock success in software testing with our top strategies! Learn essential techniques to enhance quality, efficiency, and collaboration in your projects.</description>
-      <pubDate>Mon, 10 Nov 2025 15:16:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/mastering-software-testing-top-strategies-for-succ/</guid>
     </item>
   </channel>
 </rss>
