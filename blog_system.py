@@ -22,7 +22,9 @@ class BlogSystem:
         self.config = config
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        
+        # Use Groq API instead of OpenAI
+        self.api_key = os.getenv("GROQ_API_KEY")
         
         # Initialize monetization manager
         self.monetization = MonetizationManager(config)
@@ -67,11 +69,13 @@ class BlogSystem:
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
-            print("No OpenAI API key found. Using fallback content generation.")
+            print("No Groq API key found. Using fallback content generation.")
             return self._generate_fallback_post(topic)
         
         try:
             print(f"Generating content for: {topic}")
+            print(f"Using Groq API (llama-3.3-70b-versatile)")
+            
             title = await self._generate_title(topic, keywords)
             content = await self._generate_content(title, topic, keywords)
             meta_description = await self._generate_meta_description(topic, title)
@@ -181,28 +185,29 @@ Remember to stay updated with the latest developments in {topic} as the field co
         
         return post
 
-    async def _call_openai_api(self, messages: List[Dict], max_tokens: int = 1000):
+    async def _call_groq_api(self, messages: List[Dict], max_tokens: int = 1000):
+        """Call Groq API (OpenAI-compatible endpoint)"""
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
         
         data = {
-            "model": "gpt-4o-mini",
+            "model": "llama-3.3-70b-versatile",  # Groq's best model
             "messages": messages,
-            "max_completion_tokens": max_tokens,
+            "max_tokens": max_tokens,
             "temperature": 0.7
         }
         
         async with aiohttp.ClientSession() as session:
-            async with session.post("https://api.openai.com/v1/chat/completions", 
+            async with session.post("https://api.groq.com/openai/v1/chat/completions", 
                                    headers=headers, json=data) as response:
                 if response.status == 200:
                     result = await response.json()
                     return result["choices"][0]["message"]["content"]
                 else:
                     error_text = await response.text()
-                    raise Exception(f"OpenAI API error: {response.status} - {error_text}")
+                    raise Exception(f"Groq API error: {response.status} - {error_text}")
 
     async def _generate_title(self, topic: str, keywords: List[str] = None) -> str:
         keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
@@ -212,7 +217,7 @@ Remember to stay updated with the latest developments in {topic} as the field co
             {"role": "user", "content": f"Generate a compelling blog post title about '{topic}'.{keyword_text} The title should be catchy, informative, and under 60 characters."}
         ]
         
-        title = await self._call_openai_api(messages, max_tokens=100)
+        title = await self._call_groq_api(messages, max_tokens=100)
         return title.strip().strip('"')
 
     async def _generate_content(self, title: str, topic: str, keywords: List[str] = None) -> str:
@@ -253,7 +258,7 @@ Do not include the main title (# {title}) as it will be added automatically."""
             }
         ]
         
-        content = await self._call_openai_api(messages, max_tokens=3000)
+        content = await self._call_groq_api(messages, max_tokens=3000)
         return content.strip()
 
     async def _generate_meta_description(self, topic: str, title: str) -> str:
@@ -262,7 +267,7 @@ Do not include the main title (# {title}) as it will be added automatically."""
             {"role": "user", "content": f"Write a compelling meta description (under 160 characters) for a blog post titled '{title}' about {topic}."}
         ]
         
-        description = await self._call_openai_api(messages, max_tokens=100)
+        description = await self._call_groq_api(messages, max_tokens=100)
         return description.strip().strip('"')
 
     async def _generate_keywords(self, topic: str, title: str) -> List[str]:
@@ -271,7 +276,7 @@ Do not include the main title (# {title}) as it will be added automatically."""
             {"role": "user", "content": f"Generate 8-10 relevant SEO keywords for a blog post titled '{title}' about {topic}. Return as a comma-separated list."}
         ]
         
-        keywords_text = await self._call_openai_api(messages, max_tokens=150)
+        keywords_text = await self._call_groq_api(messages, max_tokens=150)
         keywords = [k.strip().strip('"') for k in keywords_text.split(',')]
         return [k for k in keywords if k][:10]
 
@@ -417,9 +422,12 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print("Blog system initialized with monetization features!")
+            print("\n🚀 Now using Groq API (Free & Fast!)")
+            print("Add GROQ_API_KEY to your environment or .env file")
             
         elif mode == "auto":
             print("Starting automated blog generation with monetization...")
+            print("🚀 Using Groq API (llama-3.3-70b-versatile)")
             
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found. Run 'python blog_system.py init' first.")
@@ -618,7 +626,8 @@ if __name__ == "__main__":
             print("  test-twitter - Test Twitter API integration")
     else:
         print("Enhanced AI Blog System with Monetization & AdSense")
-        print("Usage: python blog_system.py [command]")
+        print("🚀 Now powered by Groq API (FREE & FAST!)")
+        print("\nUsage: python blog_system.py [command]")
         print("\nAvailable commands:")
         print("  init         - Initialize blog system with monetization settings")
         print("  auto         - Generate new monetized post and rebuild site")
@@ -638,6 +647,7 @@ if __name__ == "__main__":
         print("  • Revenue estimation and reporting")
         print("\nSetup required:")
         print("  1. Run 'init' to create config.yaml")
-        print("  2. Add your Google AdSense ID (ca-pub-xxxxxxxxxx)")
-        print("  3. Add your Google Analytics ID")
-        print("  4. Configure affiliate program IDs")
+        print("  2. Add GROQ_API_KEY to environment/GitHub secrets")
+        print("  3. Add your Google AdSense ID (ca-pub-xxxxxxxxxx)")
+        print("  4. Add your Google Analytics ID")
+        print("  5. Configure affiliate program IDs")
