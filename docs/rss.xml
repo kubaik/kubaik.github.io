@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 14:20:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 14:42:04 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done</title>
+      <link>https://kubaik.github.io/devops-done/</link>
+      <description>Streamline development with DevOps &amp; CI/CD best practices</description>
+      <pubDate>Fri, 14 Nov 2025 14:42:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done/</guid>
+    </item>
     <item>
       <title>Data Science Essentials</title>
       <link>https://kubaik.github.io/data-science-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert API design patterns for scalable &amp; secure APIs.</description>
       <pubDate>Fri, 14 Nov 2025 08:23:06 +0000</pubDate>
       <guid>https://kubaik.github.io/api-design-done-right/</guid>
-    </item>
-    <item>
-      <title>AI in Action</title>
-      <link>https://kubaik.github.io/ai-in-action/</link>
-      <description>Discover AI&apos;s impact on industries &amp; daily life in &apos;AI in Action&apos;</description>
-      <pubDate>Fri, 14 Nov 2025 07:48:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-in-action/</guid>
     </item>
   </channel>
 </rss>
