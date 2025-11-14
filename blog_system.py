@@ -78,6 +78,7 @@ class BlogSystem:
         
         try:
             print(f"Generating content for: {topic}")
+            
             print(f"Using Groq API (llama-3.3-70b-versatile)")
             
             title = await self._generate_title(topic, keywords)
