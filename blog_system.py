@@ -467,11 +467,11 @@ if __name__ == "__main__":
                 
                 # Create tweet with hashtags
                 hashtags = blog_post.twitter_hashtags if hasattr(blog_post, 'twitter_hashtags') else ""
-                tweet_text = f"🚀 New Post: {blog_post.title}\n\n{blog_post.meta_description[:100]}...\n\n🔗 Read more: https://kubaik.github.io/{blog_post.slug}\n\n{hashtags}"
+                tweet_text = f"🚀 New Post: {blog_post.title}\n{blog_post.meta_description[:100]}...\n🔗 Read more: https://kubaik.github.io/{blog_post.slug}\n{hashtags}"
                 
                 # Ensure tweet is under 280 characters
                 if len(tweet_text) > 280:
-                    tweet_text = f"🚀 {blog_post.title}\n\nRead: https://kubaik.github.io/{blog_post.slug}\n\n{hashtags}"
+                    tweet_text = f"🚀 {blog_post.title}\nRead: https://kubaik.github.io/{blog_post.slug}\n{hashtags}"
                 
                 twitter_result = visibility.post_to_twitter(tweet_text)
                 if twitter_result['success']:
