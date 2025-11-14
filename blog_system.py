@@ -15,6 +15,7 @@ from monetization_manager import MonetizationManager
 from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
+from hashtag_manager import HashtagManager, add_hashtags_to_post
 
 #BlogSystem
 class BlogSystem:
@@ -28,6 +29,9 @@ class BlogSystem:
         
         # Initialize monetization manager
         self.monetization = MonetizationManager(config)
+        
+        # Initialize hashtag manager
+        self.hashtag_manager = HashtagManager(config)
 
     def cleanup_posts(self):
         """Clean ups incomplete posts and recover from markdown files"""
@@ -105,6 +109,17 @@ class BlogSystem:
             post.content = enhanced_content
             post.affiliate_links = affiliate_links
             post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
+            
+            # Add daily trending hashtags
+            print("✨ Generating trending hashtags...")
+            hashtags = await self.hashtag_manager.get_daily_hashtags(topic, max_hashtags=10)
+            post.tags = list(set(post.tags + hashtags))[:15]  # Merge and limit
+            post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]  # Add to SEO keywords too
+            
+            # Store formatted hashtags for social media
+            post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(hashtags[:5])
+            
+            print(f"📱 Hashtags: {', '.join(hashtags[:5])}")
             
             return post
             
@@ -449,7 +464,15 @@ if __name__ == "__main__":
                 print(f"✅ Enhanced post '{blog_post.title}' generated successfully!")
 
                 visibility = VisibilityAutomator(config)
-                tweet_text = f"🚀 {blog_post.title} \n\nRead here: https://kubaik.github.io/{blog_post.slug}"
+                
+                # Create tweet with hashtags
+                hashtags = blog_post.twitter_hashtags if hasattr(blog_post, 'twitter_hashtags') else ""
+                tweet_text = f"🚀 New Post: {blog_post.title}\n\n{blog_post.meta_description[:100]}...\n\n🔗 Read more: https://kubaik.github.io/{blog_post.slug}\n\n{hashtags}"
+                
+                # Ensure tweet is under 280 characters
+                if len(tweet_text) > 280:
+                    tweet_text = f"🚀 {blog_post.title}\n\nRead: https://kubaik.github.io/{blog_post.slug}\n\n{hashtags}"
+                
                 twitter_result = visibility.post_to_twitter(tweet_text)
                 if twitter_result['success']:
                     print(f"🐦 Tweeted successfully URL: {twitter_result['url']}")

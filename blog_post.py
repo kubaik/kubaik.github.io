@@ -6,7 +6,8 @@ from typing import Dict, List, Optional
 
 class BlogPost:
     def __init__(self, title, content, slug, tags, meta_description, featured_image,
-                 created_at, updated_at, seo_keywords, affiliate_links=None, monetization_data=None):
+                 created_at, updated_at, seo_keywords, affiliate_links=None, 
+                 monetization_data=None, twitter_hashtags=None):
         self.title = title
         self.content = content
         self.slug = slug
@@ -18,6 +19,9 @@ class BlogPost:
         self.seo_keywords = seo_keywords or []
         self.affiliate_links = affiliate_links or []
         self.monetization_data = monetization_data or {}
+        
+        # Social media hashtags
+        self.twitter_hashtags = twitter_hashtags or ""
 
     def to_dict(self):
         return {
@@ -31,7 +35,8 @@ class BlogPost:
             'updated_at': self.updated_at,
             'seo_keywords': self.seo_keywords,
             'affiliate_links': self.affiliate_links,
-            'monetization_data': self.monetization_data
+            'monetization_data': self.monetization_data,
+            'twitter_hashtags': self.twitter_hashtags
         }
 
     @classmethod
@@ -68,7 +73,8 @@ class BlogPost:
             updated_at=current_time,
             seo_keywords=[],
             affiliate_links=[],
-            monetization_data={"ad_slots": 3, "affiliate_count": 0}
+            monetization_data={"ad_slots": 3, "affiliate_count": 0},
+            twitter_hashtags=""
         )
     
     @staticmethod
