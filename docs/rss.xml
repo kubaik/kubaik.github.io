@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 09:09:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 09:13:57 +0000</lastBuildDate>
+    <item>
+      <title>PWA Power</title>
+      <link>https://kubaik.github.io/pwa-power/</link>
+      <description>Unlock PWA power: fast, reliable, and engaging web apps</description>
+      <pubDate>Fri, 14 Nov 2025 09:13:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-power/</guid>
+    </item>
     <item>
       <title>Test Smart</title>
       <link>https://kubaik.github.io/test-smart/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Microservices Architecture covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 12 Nov 2025 19:11:55 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-microservices-architecture-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding Performance Optimization: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-performance-optimization-a-complete-/</link>
-      <description>A comprehensive guide to Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 12 Nov 2025 17:16:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-performance-optimization-a-complete-/</guid>
     </item>
   </channel>
 </rss>
