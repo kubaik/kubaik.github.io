@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 11:41:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 12:37:31 +0000</lastBuildDate>
+    <item>
+      <title>Boost DB Speed</title>
+      <link>https://kubaik.github.io/boost-db-speed/</link>
+      <description>Improve database performance with expert tips and tricks.</description>
+      <pubDate>Fri, 14 Nov 2025 12:37:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-db-speed/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 13 Nov 2025 19:11:32 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
-    </item>
-    <item>
-      <title>Understanding API Design Patterns: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-api-design-patterns-a-complete-guide/</link>
-      <description>A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 13 Nov 2025 17:16:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-api-design-patterns-a-complete-guide/</guid>
     </item>
   </channel>
 </rss>
