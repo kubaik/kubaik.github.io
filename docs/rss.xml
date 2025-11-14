@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 16:50:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 17:15:03 +0000</lastBuildDate>
+    <item>
+      <title>Optimize DB</title>
+      <link>https://kubaik.github.io/optimize-db/</link>
+      <description>Boost performance with expert DB optimization tips and techniques.</description>
+      <pubDate>Fri, 14 Nov 2025 17:15:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-db/</guid>
+    </item>
     <item>
       <title>Cloud Done Right</title>
       <link>https://kubaik.github.io/cloud-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable apps with serverless computing. Learn how to revolutionize your development workflow.</description>
       <pubDate>Fri, 14 Nov 2025 09:22:24 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-rev/</guid>
-    </item>
-    <item>
-      <title>Test Smart</title>
-      <link>https://kubaik.github.io/test-smart/</link>
-      <description>Boost software quality with effective testing strategies. Learn how to &apos;Test Smart&apos; and optimize your testing process.</description>
-      <pubDate>Fri, 14 Nov 2025 09:09:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smart/</guid>
     </item>
   </channel>
 </rss>
