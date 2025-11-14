@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 07:48:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 08:06:44 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Trends</title>
+      <link>https://kubaik.github.io/web-dev-trends/</link>
+      <description>Discover latest web dev trends &amp; insights to boost your online presence.</description>
+      <pubDate>Fri, 14 Nov 2025 08:06:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-trends/</guid>
+    </item>
     <item>
       <title>AI in Action</title>
       <link>https://kubaik.github.io/ai-in-action/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 12 Nov 2025 05:13:35 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</guid>
-    </item>
-    <item>
-      <title>Understanding Mobile App Development: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</link>
-      <description>A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 11 Nov 2025 19:11:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</guid>
     </item>
   </channel>
 </rss>
