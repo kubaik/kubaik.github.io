@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 08:59:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 09:09:07 +0000</lastBuildDate>
+    <item>
+      <title>Test Smart</title>
+      <link>https://kubaik.github.io/test-smart/</link>
+      <description>Boost software quality with effective testing strategies. Learn how to &apos;Test Smart&apos; and optimize your testing process.</description>
+      <pubDate>Fri, 14 Nov 2025 09:09:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smart/</guid>
+    </item>
     <item>
       <title>Secure Now</title>
       <link>https://kubaik.github.io/secure-now/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 12 Nov 2025 17:16:49 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-performance-optimization-a-complete-/</guid>
-    </item>
-    <item>
-      <title>Understanding Backend Architecture: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-backend-architecture-a-complete-guid/</link>
-      <description>A comprehensive guide to Backend Architecture covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 12 Nov 2025 13:34:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-backend-architecture-a-complete-guid/</guid>
     </item>
   </channel>
 </rss>
