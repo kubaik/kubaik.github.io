@@ -1,5 +1,120 @@
 [
   {
+    "title": "Secure Now",
+    "content": "## Introduction to Cybersecurity Best Practices\nIn today's digital landscape, cybersecurity is a top priority for individuals and organizations alike. With the rise of remote work and the increasing reliance on cloud services, the attack surface has expanded, making it easier for malicious actors to exploit vulnerabilities. According to a report by Cybersecurity Ventures, the global cost of cybercrime is projected to reach $10.5 trillion by 2025, up from $3 trillion in 2015. To mitigate these risks, it's essential to implement robust cybersecurity best practices.\n\n### Understanding the Threat Landscape\nThe threat landscape is constantly evolving, with new threats emerging daily. Some of the most common threats include:\n* Phishing attacks: 32% of organizations experienced phishing attacks in 2020, resulting in an average loss of $1.6 million per incident (Source: IBM Security)\n* Ransomware attacks: The average cost of a ransomware attack is $1.85 million, with 66% of organizations experiencing a significant impact on their business (Source: Sophos)\n* Data breaches: The average cost of a data breach is $3.92 million, with 60% of small businesses going out of business within 6 months of a breach (Source: Ponemon Institute)\n\n## Implementing Cybersecurity Best Practices\nTo protect against these threats, it's essential to implement a multi-layered security approach. Here are some best practices to get you started:\n1. **Use strong passwords**: Implement a password manager like LastPass or 1Password to generate and store unique, complex passwords for all accounts.\n2. **Enable multi-factor authentication**: Use a service like Authy or Google Authenticator to add an extra layer of security to your accounts.\n3. **Keep software up-to-date**: Regularly update your operating system, browser, and other software to ensure you have the latest security patches.\n\n### Example: Implementing Password Hashing with Python\nTo illustrate the importance of password security, let's consider an example of implementing password hashing using Python:\n```python\nimport hashlib\nimport os\n\ndef hash_password(password):\n    salt = os.urandom(32)\n    hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)\n    return salt + hashed_password\n\ndef verify_password(stored_password, provided_password):\n    salt = stored_password[:32]\n    stored_hash = stored_password[32:]\n    provided_hash = hashlib.pbkdf2_hmac('sha256', provided_password.encode('utf-8'), salt, 100000)\n    return provided_hash == stored_hash\n\n# Example usage:\npassword = \"mysecretpassword\"\nhashed_password = hash_password(password)\nprint(hashed_password)\n\n# Verify the password\nis_valid = verify_password(hashed_password, password)\nprint(is_valid)  # Output: True\n```\nIn this example, we use the `hashlib` library to implement password hashing using the PBKDF2 algorithm. We generate a random salt and use it to hash the password. When verifying the password, we extract the salt from the stored hash and use it to hash the provided password. If the two hashes match, the password is valid.\n\n## Using Security Tools and Platforms\nThere are many security tools and platforms available to help you protect your assets. Some popular options include:\n* **Cloudflare**: A cloud-based security platform that offers DDoS protection, SSL encryption, and web application firewall (WAF) capabilities. Pricing starts at $20/month for the Pro plan.\n* **OWASP ZAP**: An open-source web application security scanner that can help identify vulnerabilities in your web applications.\n* **Nmap**: A network scanning tool that can help you identify open ports and services on your network.\n\n### Example: Configuring Cloudflare SSL Encryption\nTo illustrate the importance of SSL encryption, let's consider an example of configuring Cloudflare SSL encryption:\n```bash\n# Enable SSL encryption on Cloudflare\ncloudflare ssl --enable --domain example.com\n\n# Verify SSL encryption\ncurl -v https://example.com\n```\nIn this example, we use the Cloudflare CLI to enable SSL encryption for our domain. We then use `curl` to verify that SSL encryption is working correctly.\n\n## Addressing Common Problems\nSome common problems that organizations face when implementing cybersecurity best practices include:\n* **Lack of resources**: Many organizations lack the resources and expertise to implement robust security measures.\n* **Complexity**: Security can be complex, making it difficult to implement and manage.\n* **Cost**: Implementing security measures can be costly, especially for small businesses.\n\nTo address these problems, consider the following solutions:\n* **Outsource security**: Consider outsourcing security to a managed security service provider (MSSP) like AlertLogic or Trustwave.\n* **Use cloud-based security**: Use cloud-based security platforms like Cloudflare or AWS Security Hub to simplify security management.\n* **Implement a security framework**: Implement a security framework like NIST Cybersecurity Framework or ISO 27001 to provide a structured approach to security.\n\n### Example: Implementing a Security Framework with NIST\nTo illustrate the importance of implementing a security framework, let's consider an example of implementing the NIST Cybersecurity Framework:\n```markdown\n# NIST Cybersecurity Framework Implementation\n\n## Identify\n* Identify critical assets and data\n* Identify potential threats and vulnerabilities\n\n## Protect\n* Implement access controls and authentication\n* Implement data encryption and backup\n\n## Detect\n* Implement monitoring and logging\n* Implement incident response planning\n\n## Respond\n* Implement incident response procedures\n* Implement communication and coordination\n\n## Recover\n* Implement recovery planning\n* Implement training and awareness\n```\nIn this example, we use the NIST Cybersecurity Framework to provide a structured approach to security. We identify critical assets and data, implement access controls and authentication, and implement incident response planning.\n\n## Conclusion and Next Steps\nIn conclusion, implementing cybersecurity best practices is essential to protecting your assets and data. By using strong passwords, enabling multi-factor authentication, and keeping software up-to-date, you can significantly reduce the risk of a security breach. Additionally, using security tools and platforms like Cloudflare and OWASP ZAP can help you identify and mitigate vulnerabilities. To get started, consider the following next steps:\n* **Conduct a security assessment**: Identify potential vulnerabilities and weaknesses in your security posture.\n* **Implement a security framework**: Use a framework like NIST Cybersecurity Framework or ISO 27001 to provide a structured approach to security.\n* **Invest in security tools and training**: Invest in security tools and training to help you stay up-to-date with the latest security threats and best practices.\nBy following these steps and implementing robust cybersecurity best practices, you can protect your assets and data from cyber threats and ensure the long-term success of your organization.",
+    "slug": "secure-now",
+    "tags": [
+      "secure online data",
+      "ZeroTrust",
+      "CyberSec",
+      "CloudSecurity",
+      "Astro",
+      "internet safety guidelines",
+      "TechTwitter",
+      "cybersecurity best practices",
+      "Cybersecurity",
+      "InfoSec",
+      "Encryption",
+      "online security tips",
+      "Blockchain",
+      "MachineLearning",
+      "cybersecurity measures"
+    ],
+    "meta_description": "Protect your digital life with expert cybersecurity tips and best practices.",
+    "featured_image": "/static/images/secure-now.jpg",
+    "created_at": "2025-11-14T08:59:35.503155",
+    "updated_at": "2025-11-14T08:59:35.503161",
+    "seo_keywords": [
+      "secure online data",
+      "InfoSec",
+      "cybersecurity awareness",
+      "cybersecurity measures",
+      "online threat protection",
+      "secure now",
+      "CyberSec",
+      "CloudSecurity",
+      "Astro",
+      "cyber attack prevention",
+      "data protection strategies",
+      "online security tips",
+      "Cybersecurity",
+      "TechTwitter",
+      "ZeroTrust"
+    ],
+    "affiliate_links": [],
+    "monetization_data": {
+      "header": 2,
+      "middle": 52,
+      "footer": 101,
+      "ad_slots": 3,
+      "affiliate_count": 0
+    },
+    "twitter_hashtags": "#Blockchain #Cybersecurity #Astro #MachineLearning #CloudSecurity"
+  },
+  {
+    "title": "ML Essentials",
+    "content": "## Introduction to Machine Learning Algorithms\nMachine learning (ML) algorithms are the backbone of any artificial intelligence (AI) system, enabling them to learn from data and make predictions or decisions. With the increasing availability of large datasets and computational power, ML has become a key driver of innovation in various industries, including healthcare, finance, and retail. In this article, we will delve into the world of ML algorithms, exploring their types, applications, and implementation details.\n\n### Types of Machine Learning Algorithms\nThere are several types of ML algorithms, each with its strengths and weaknesses. Some of the most common types include:\n* Supervised learning algorithms, which learn from labeled data and predict outcomes for new, unseen data. Examples include linear regression, decision trees, and support vector machines (SVMs).\n* Unsupervised learning algorithms, which discover patterns and relationships in unlabeled data. Examples include k-means clustering, hierarchical clustering, and principal component analysis (PCA).\n* Reinforcement learning algorithms, which learn from trial and error by interacting with an environment and receiving rewards or penalties. Examples include Q-learning, SARSA, and deep Q-networks (DQN).\n\n## Practical Code Examples\nTo illustrate the concepts, let's consider a few practical code examples using popular ML libraries and frameworks.\n\n### Example 1: Linear Regression with Scikit-Learn\n```python\nimport numpy as np\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import train_test_split\n\n# Generate sample data\nX = np.random.rand(100, 1)\ny = 3 * X + 2 + np.random.randn(100, 1) / 1.5\n\n# Split data into training and testing sets\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# Create and train a linear regression model\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\n# Evaluate the model on the testing set\nprint(\"Coefficient of determination (R^2):\", model.score(X_test, y_test))\n```\nThis example demonstrates a simple linear regression model using Scikit-Learn, a popular Python library for ML. The model is trained on a synthetic dataset and evaluated on a separate testing set.\n\n### Example 2: Image Classification with TensorFlow and Keras\n```python\n\n*Recommended: <a href=\"https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20\" target=\"_blank\" rel=\"nofollow sponsored\">Python Machine Learning by Sebastian Raschka</a>*\n\nimport tensorflow as tf\nfrom tensorflow import keras\nfrom sklearn.model_selection import train_test_split\n\n# Load the CIFAR-10 dataset\n(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()\n\n# Normalize the input data\nx_train = x_train.astype(\"float32\") / 255\nx_test = x_test.astype(\"float32\") / 255\n\n# Split data into training and validation sets\nx_train, x_val, y_train, y_val = train_test_split(x_train, y_train, test_size=0.2, random_state=42)\n\n# Create and compile a convolutional neural network (CNN) model\nmodel = keras.models.Sequential([\n    keras.layers.Conv2D(32, (3, 3), activation=\"relu\", input_shape=(32, 32, 3)),\n    keras.layers.MaxPooling2D((2, 2)),\n    keras.layers.Flatten(),\n    keras.layers.Dense(64, activation=\"relu\"),\n    keras.layers.Dense(10, activation=\"softmax\")\n])\nmodel.compile(optimizer=\"adam\", loss=\"sparse_categorical_crossentropy\", metrics=[\"accuracy\"])\n\n# Train the model on the training set\nmodel.fit(x_train, y_train, epochs=10, validation_data=(x_val, y_val))\n```\nThis example demonstrates a CNN model using TensorFlow and Keras, trained on the CIFAR-10 dataset for image classification. The model is trained on a subset of the data and evaluated on a separate validation set.\n\n### Example 3: Natural Language Processing with NLTK and spaCy\n```python\nimport nltk\nfrom nltk.tokenize import word_tokenize\nimport spacy\n\n# Load the spaCy English language model\nnlp = spacy.load(\"en_core_web_sm\")\n\n# Define a sample text\ntext = \"This is a sample text for natural language processing.\"\n\n# Tokenize the text using NLTK\ntokens = word_tokenize(text)\nprint(\"NLTK tokens:\", tokens)\n\n# Process the text using spaCy\ndoc = nlp(text)\nprint(\"spaCy entities:\", [(ent.text, ent.label_) for ent in doc.ents])\n```\nThis example demonstrates the use of NLTK and spaCy for natural language processing (NLP) tasks, such as tokenization and entity recognition.\n\n## Real-World Use Cases\nML algorithms have numerous applications in various industries, including:\n1. **Healthcare**: Predicting patient outcomes, diagnosing diseases, and personalizing treatment plans.\n2. **Finance**: Detecting fraud, predicting stock prices, and optimizing investment portfolios.\n3. **Retail**: Recommending products, predicting customer behavior, and optimizing supply chains.\n\nSome notable examples of ML in action include:\n* **Google's AlphaGo**: A computer program that defeated a human world champion in Go using reinforcement learning.\n* **Amazon's Alexa**: A virtual assistant that uses NLP and ML to understand voice commands and respond accordingly.\n* **Netflix's recommendation system**: A system that uses collaborative filtering and content-based filtering to recommend movies and TV shows to users.\n\n## Common Problems and Solutions\nSome common problems encountered when working with ML algorithms include:\n* **Overfitting**: When a model is too complex and fits the training data too closely, resulting in poor performance on new data.\n\t+ Solution: Regularization techniques, such as L1 and L2 regularization, dropout, and early stopping.\n* **Underfitting**: When a model is too simple and fails to capture the underlying patterns in the data.\n\t+ Solution: Increasing the model complexity, using ensemble methods, or collecting more data.\n* **Imbalanced datasets**: When the dataset is skewed towards one class or label, resulting in biased models.\n\t+ Solution: Oversampling the minority class, undersampling the majority class, or using class weights.\n\n## Performance Benchmarks\nThe performance of ML algorithms can be evaluated using various metrics, such as:\n* **Accuracy**: The proportion of correctly classified instances.\n* **Precision**: The proportion of true positives among all predicted positives.\n* **Recall**: The proportion of true positives among all actual positives.\n* **F1-score**: The harmonic mean of precision and recall.\n\n*Recommended: <a href=\"https://coursera.org/learn/machine-learning\" target=\"_blank\" rel=\"nofollow sponsored\">Andrew Ng's Machine Learning Course</a>*\n\n\nSome popular tools and platforms for evaluating ML models include:\n* **Scikit-Learn**: A Python library that provides a wide range of ML algorithms and evaluation metrics.\n* **TensorFlow**: A popular open-source ML framework that provides tools for model evaluation and optimization.\n* **Kaggle**: A platform that hosts ML competitions and provides a range of datasets and evaluation metrics.\n\n## Conclusion and Next Steps\nIn conclusion, ML algorithms are a powerful tool for extracting insights from data and making predictions or decisions. By understanding the different types of ML algorithms, their applications, and implementation details, practitioners can build effective ML models that drive business value. To get started with ML, we recommend:\n1. **Exploring popular ML libraries and frameworks**, such as Scikit-Learn, TensorFlow, and PyTorch.\n2. **Practicing with real-world datasets and use cases**, such as those found on Kaggle or UCI Machine Learning Repository.\n3. **Staying up-to-date with the latest ML research and trends**, by attending conferences, reading research papers, and following industry leaders.\n\nBy following these steps and continuing to learn and experiment with ML algorithms, practitioners can unlock the full potential of ML and drive innovation in their respective fields. Some potential next steps include:\n* **Deploying ML models in production environments**, using tools such as Docker, Kubernetes, and TensorFlow Serving.\n* **Integrating ML with other technologies**, such as computer vision, NLP, and robotics.\n* **Exploring new applications and use cases**, such as edge ML, transfer learning, and explainable AI.",
+    "slug": "ml-essentials",
+    "tags": [
+      "TechInnovation",
+      "AI",
+      "TensorFlow",
+      "Deep Learning",
+      "AR",
+      "AIalgorithms",
+      "Artificial Intelligence",
+      "IoT",
+      "Machine Learning Algorithms",
+      "DataScience",
+      "coding",
+      "ML Essentials",
+      "MachineLearning",
+      "Data Science",
+      "PromptEngineering"
+    ],
+    "meta_description": "Discover the fundamentals of Machine Learning with essential algorithms and techniques.",
+    "featured_image": "/static/images/ml-essentials.jpg",
+    "created_at": "2025-11-14T08:53:45.499721",
+    "updated_at": "2025-11-14T08:53:45.499728",
+    "seo_keywords": [
+      "Deep Learning",
+      "Artificial Intelligence",
+      "IoT",
+      "TensorFlow",
+      "Natural Language Processing",
+      "Supervised Learning",
+      "MachineLearning",
+      "Data Science",
+      "AI",
+      "AIalgorithms",
+      "Machine Learning Algorithms",
+      "Unsupervised Learning",
+      "DataScience",
+      "ML Essentials",
+      "Neural Networks"
+    ],
+    "affiliate_links": [
+      {
+        "url": "https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20",
+        "text": "Python Machine Learning by Sebastian Raschka",
+        "commission_rate": 0.04
+      },
+      {
+        "url": "https://coursera.org/learn/machine-learning",
+        "text": "Andrew Ng's Machine Learning Course",
+        "commission_rate": 0.1
+      }
+    ],
+    "monetization_data": {
+      "header": 2,
+      "middle": 67,
+      "footer": 132,
+      "ad_slots": 3,
+      "affiliate_count": 0
+    },
+    "twitter_hashtags": "#DataScience #MachineLearning #AI #IoT #coding"
+  },
+  {
     "title": "Building Blocks",
     "content": "## Introduction to Backend Architecture\nBackend architecture refers to the design and structure of the server-side components of a web application. It encompasses the databases, servers, and APIs that power the application, and is responsible for managing data, handling requests, and providing services to the frontend. A well-designed backend architecture is essential for building scalable, efficient, and reliable web applications.\n\n*Recommended: <a href=\"https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20\" target=\"_blank\" rel=\"nofollow sponsored\">Eloquent JavaScript Book</a>*\n\n\n### Key Components of Backend Architecture\nThe key components of backend architecture include:\n* **Databases**: used to store and manage data, such as MySQL, PostgreSQL, or MongoDB\n* **Servers**: used to handle requests and provide services, such as Apache, Nginx, or Node.js\n* **APIs**: used to interact with the frontend and other services, such as RESTful APIs or GraphQL\n* **Load Balancers**: used to distribute traffic and improve scalability, such as HAProxy or NGINX\n* **Caching Layers**: used to improve performance and reduce latency, such as Redis or Memcached\n\n## Designing a Scalable Backend Architecture\n\n*Recommended: <a href=\"https://digitalocean.com\" target=\"_blank\" rel=\"nofollow sponsored\">DigitalOcean Cloud Hosting</a>*\n\nTo design a scalable backend architecture, it's essential to consider the following factors:\n1. **Horizontal scaling**: the ability to add more servers to handle increased traffic\n2. **Vertical scaling**: the ability to increase the power of individual servers to handle increased traffic\n3. **Load balancing**: the ability to distribute traffic across multiple servers\n4. **Caching**: the ability to store frequently accessed data in memory to reduce latency\n\nFor example, let's consider a simple e-commerce application built using Node.js and Express.js. We can use a load balancer like NGINX to distribute traffic across multiple servers, and a caching layer like Redis to store frequently accessed data.\n```javascript\n// example of using Redis as a caching layer in Node.js\nconst redis = require('redis');\nconst client = redis.createClient();\n\n// set a value in the cache\nclient.set('product:123', 'Product 123', (err, reply) => {\n  console.log(reply);\n});\n\n// get a value from the cache\nclient.get('product:123', (err, reply) => {\n  console.log(reply);\n});\n```\nIn this example, we're using the Redis client library for Node.js to set and get values in the cache. This can help improve performance and reduce latency by storing frequently accessed data in memory.\n\n## Choosing the Right Tools and Platforms\nWhen choosing the right tools and platforms for your backend architecture, it's essential to consider the following factors:\n* **Cost**: the cost of using the tool or platform, such as the cost of hosting a server on AWS or Google Cloud\n* **Scalability**: the ability of the tool or platform to handle increased traffic, such as the ability of Apache Kafka to handle high-volume data streams\n* **Performance**: the performance of the tool or platform, such as the performance of PostgreSQL compared to MySQL\n* **Security**: the security features of the tool or platform, such as the security features of AWS IAM\n\nFor example, let's consider the cost of hosting a server on AWS versus Google Cloud. According to the pricing data, the cost of hosting a server on AWS can range from $25 to $100 per month, depending on the instance type and region. In contrast, the cost of hosting a server on Google Cloud can range from $30 to $120 per month, depending on the instance type and region.\n```python\n# example of using the AWS SDK for Python to launch an EC2 instance\nimport boto3\n\nec2 = boto3.client('ec2')\n\n# launch an EC2 instance\nresponse = ec2.run_instances(\n  ImageId='ami-abc123',\n  InstanceType='t2.micro',\n  MinCount=1,\n  MaxCount=1\n)\n\nprint(response)\n```\nIn this example, we're using the AWS SDK for Python to launch an EC2 instance. This can help simplify the process of launching and managing servers on AWS.\n\n## Common Problems and Solutions\nSome common problems that can occur in backend architecture include:\n* **Bottlenecks**: situations where a single component is limiting the performance of the entire system\n* **Latency**: situations where the system is taking too long to respond to requests\n* **Security vulnerabilities**: situations where the system is vulnerable to attack or data breach\n\nTo solve these problems, it's essential to use the right tools and techniques, such as:\n* **Monitoring and logging**: tools like New Relic or Splunk can help identify bottlenecks and latency issues\n* **Caching and content delivery networks (CDNs)**: tools like Redis or Cloudflare can help improve performance and reduce latency\n* **Security scanning and penetration testing**: tools like OWASP ZAP or Burp Suite can help identify security vulnerabilities\n\nFor example, let's consider a situation where a web application is experiencing high latency due to a bottleneck in the database. We can use a tool like New Relic to identify the bottleneck and optimize the database queries to improve performance.\n```java\n// example of using New Relic to monitor and optimize database queries\nimport com.newrelic.api.agent.NewRelic;\n\n// get the New Relic agent\nNewRelic agent = NewRelic.getAgent();\n\n// start a database transaction\nagent.getTransactionalActivity().startTransaction(\"database_query\");\n\n// execute the database query\nResultSet results = statement.executeQuery(\"SELECT * FROM users\");\n\n// end the database transaction\nagent.getTransactionalActivity().endTransaction(\"database_query\");\n```\nIn this example, we're using the New Relic agent to monitor and optimize database queries. This can help identify bottlenecks and improve performance.\n\n## Conclusion and Next Steps\nIn conclusion, building a scalable and efficient backend architecture requires careful consideration of the key components, design factors, and tools and platforms. By using the right tools and techniques, such as load balancing, caching, and monitoring and logging, we can build web applications that are fast, reliable, and secure.\n\nTo get started with building your own backend architecture, follow these next steps:\n* **Choose a programming language and framework**: such as Node.js and Express.js, or Python and Django\n* **Select a database and caching layer**: such as MySQL and Redis, or PostgreSQL and Memcached\n* **Use a load balancer and CDN**: such as NGINX and Cloudflare, or HAProxy and Akamai\n* **Monitor and optimize performance**: using tools like New Relic, Splunk, or OWASP ZAP\n\nBy following these steps and using the right tools and techniques, you can build a backend architecture that is scalable, efficient, and reliable. Remember to always consider the key components, design factors, and tools and platforms when building your backend architecture, and don't hesitate to experiment and try new things. With practice and experience, you can become a skilled backend architect and build web applications that are fast, reliable, and secure. \n\nSome popular backend architecture tools and platforms to consider are:\n* **AWS**: a comprehensive cloud computing platform that offers a wide range of services, including EC2, S3, and RDS\n* **Google Cloud**: a cloud computing platform that offers a wide range of services, including Compute Engine, Cloud Storage, and Cloud SQL\n* **Azure**: a cloud computing platform that offers a wide range of services, including Virtual Machines, Blob Storage, and Cosmos DB\n* **Heroku**: a cloud platform that offers a wide range of services, including dynos, add-ons, and buildpacks\n* **DigitalOcean**: a cloud platform that offers a wide range of services, including droplets, storage, and networking. \n\nWhen choosing a backend architecture tool or platform, consider the following factors:\n* **Cost**: the cost of using the tool or platform, including any subscription fees, usage fees, or support fees\n* **Scalability**: the ability of the tool or platform to handle increased traffic, including any limitations or restrictions on scaling\n* **Performance**: the performance of the tool or platform, including any benchmarks or metrics that demonstrate its speed and efficiency\n* **Security**: the security features of the tool or platform, including any encryption, authentication, or access control mechanisms\n* **Support**: the level of support offered by the tool or platform, including any documentation, tutorials, or customer support resources. \n\nBy considering these factors and choosing the right tools and platforms, you can build a backend architecture that is scalable, efficient, and reliable, and that meets the needs of your web application.",
     "slug": "building-blocks",
@@ -43,7 +158,8 @@
       "footer": 121,
       "ad_slots": 3,
       "affiliate_count": 0
-    }
+    },
+    "twitter_hashtags": ""
   },
   {
     "title": "API Design Done Right",
@@ -78,7 +194,8 @@
       "footer": 125,
       "ad_slots": 3,
       "affiliate_count": 0
-    }
+    },
+    "twitter_hashtags": ""
   },
   {
     "title": "Web Dev Trends",
