@@ -64,5 +64,18 @@
       "FutureOfTech"
     ],
     "topic": "Serverless Computing"
+  },
+  "microservices_architecture": {
+    "timestamp": "2025-11-14T09:34:41.402757",
+    "hashtags": [
+      "CloudNative",
+      "ServerlessComputing",
+      "Microservices",
+      "DevOps",
+      "SoftwareArchitecture",
+      "CloudEngineering",
+      "Kubernetes"
+    ],
+    "topic": "Microservices Architecture"
   }
 }
