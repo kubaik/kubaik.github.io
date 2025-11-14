@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 13:54:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 14:20:05 +0000</lastBuildDate>
+    <item>
+      <title>Data Science Essentials</title>
+      <link>https://kubaik.github.io/data-science-essentials/</link>
+      <description>Unlock data insights with essential techniques and tools in data science.</description>
+      <pubDate>Fri, 14 Nov 2025 14:20:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-science-essentials/</guid>
+    </item>
     <item>
       <title>Web Dev Trends</title>
       <link>https://kubaik.github.io/web-dev-trends/</link>
@@ -138,13 +145,6 @@
       <description>Discover AI&apos;s impact on industries &amp; daily life in &apos;AI in Action&apos;</description>
       <pubDate>Fri, 14 Nov 2025 07:48:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-in-action/</guid>
-    </item>
-    <item>
-      <title>IoT Revolution</title>
-      <link>https://kubaik.github.io/iot-revolution/</link>
-      <description>Discover the future of tech with IoT Revolution. Learn how connected devices are changing our world.</description>
-      <pubDate>Fri, 14 Nov 2025 07:38:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-revolution/</guid>
     </item>
   </channel>
 </rss>
