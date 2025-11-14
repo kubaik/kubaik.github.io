@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 09:40:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 10:26:39 +0000</lastBuildDate>
+    <item>
+      <title>Container Tech</title>
+      <link>https://kubaik.github.io/container-tech/</link>
+      <description>Discover the latest in container tech &amp; transform your workflow with innovative solutions.</description>
+      <pubDate>Fri, 14 Nov 2025 10:26:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/container-tech/</guid>
+    </item>
     <item>
       <title>App Success</title>
       <link>https://kubaik.github.io/app-success/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Database Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 13 Nov 2025 13:34:27 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-database-optimization-a-complete-gui/</guid>
-    </item>
-    <item>
-      <title>Understanding Web Development Trends: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-web-development-trends-a-complete-gu/</link>
-      <description>A comprehensive guide to Web Development Trends covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 13 Nov 2025 11:12:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-web-development-trends-a-complete-gu/</guid>
     </item>
   </channel>
 </rss>
