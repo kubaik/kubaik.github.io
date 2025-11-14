@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 14:42:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 15:13:12 +0000</lastBuildDate>
+    <item>
+      <title>API Design Done Right</title>
+      <link>https://kubaik.github.io/api-design-done-right/</link>
+      <description>Learn API design patterns for scalable, secure, and efficient APIs.</description>
+      <pubDate>Fri, 14 Nov 2025 15:13:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-design-done-right/</guid>
+    </item>
     <item>
       <title>DevOps Done</title>
       <link>https://kubaik.github.io/devops-done/</link>
@@ -138,13 +145,6 @@
       <description>Learn backend architecture fundamentals with our Building Blocks guide.</description>
       <pubDate>Fri, 14 Nov 2025 08:49:26 +0000</pubDate>
       <guid>https://kubaik.github.io/building-blocks/</guid>
-    </item>
-    <item>
-      <title>API Design Done Right</title>
-      <link>https://kubaik.github.io/api-design-done-right/</link>
-      <description>Learn expert API design patterns for scalable &amp; secure APIs.</description>
-      <pubDate>Fri, 14 Nov 2025 08:23:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-design-done-right/</guid>
     </item>
   </channel>
 </rss>
