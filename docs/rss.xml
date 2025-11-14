@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 13:31:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 13:35:45 +0000</lastBuildDate>
+    <item>
+      <title>Secure Online</title>
+      <link>https://kubaik.github.io/secure-online/</link>
+      <description>Protect yourself online with expert cybersecurity tips and best practices.</description>
+      <pubDate>Fri, 14 Nov 2025 13:35:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-online/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks</title>
       <link>https://kubaik.github.io/top-frontend-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with IoT Revolution. Learn how connected devices are changing our world.</description>
       <pubDate>Fri, 14 Nov 2025 07:38:16 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-revolution/</guid>
-    </item>
-    <item>
-      <title>Understanding Container Technologies: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
-      <description>A comprehensive guide to Container Technologies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 14 Nov 2025 07:18:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</guid>
     </item>
   </channel>
 </rss>
