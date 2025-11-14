@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 08:06:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 08:23:09 +0000</lastBuildDate>
+    <item>
+      <title>API Design Done Right</title>
+      <link>https://kubaik.github.io/api-design-done-right/</link>
+      <description>Learn expert API design patterns for scalable &amp; secure APIs.</description>
+      <pubDate>Fri, 14 Nov 2025 08:23:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-design-done-right/</guid>
+    </item>
     <item>
       <title>Web Dev Trends</title>
       <link>https://kubaik.github.io/web-dev-trends/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Software Testing Strategies covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 12 Nov 2025 07:19:14 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</guid>
-    </item>
-    <item>
-      <title>Understanding Machine Learning Algorithms: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</link>
-      <description>A comprehensive guide to Machine Learning Algorithms covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 12 Nov 2025 05:13:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-machine-learning-algorithms-a-comple/</guid>
     </item>
   </channel>
 </rss>
