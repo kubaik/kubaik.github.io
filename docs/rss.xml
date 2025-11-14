@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 09:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 09:23:38 +0000</lastBuildDate>
+    <item>
+      <title>ML Essentials</title>
+      <link>https://kubaik.github.io/ml-essentials/</link>
+      <description>Unlock ML potential with essential algorithms &amp; techniques.</description>
+      <pubDate>Fri, 14 Nov 2025 09:23:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-essentials/</guid>
+    </item>
     <item>
       <title>Serverless Rev</title>
       <link>https://kubaik.github.io/serverless-rev/</link>
@@ -33,13 +40,6 @@
       <description>Protect your digital life with expert cybersecurity tips and best practices.</description>
       <pubDate>Fri, 14 Nov 2025 08:59:35 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-now/</guid>
-    </item>
-    <item>
-      <title>ML Essentials</title>
-      <link>https://kubaik.github.io/ml-essentials/</link>
-      <description>Discover the fundamentals of Machine Learning with essential algorithms and techniques.</description>
-      <pubDate>Fri, 14 Nov 2025 08:53:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-essentials/</guid>
     </item>
     <item>
       <title>Building Blocks</title>
