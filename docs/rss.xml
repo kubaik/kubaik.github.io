@@ -5,13 +5,20 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 08:53:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 08:49:29 +0000</lastBuildDate>
     <item>
-      <title>ML Essentials</title>
-      <link>https://kubaik.github.io/ml-essentials/</link>
-      <description>Discover the fundamentals of Machine Learning with essential algorithms and techniques.</description>
-      <pubDate>Fri, 14 Nov 2025 08:53:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-essentials/</guid>
+      <title>Building Blocks</title>
+      <link>https://kubaik.github.io/building-blocks/</link>
+      <description>Learn backend architecture fundamentals with our Building Blocks guide.</description>
+      <pubDate>Fri, 14 Nov 2025 08:49:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/building-blocks/</guid>
+    </item>
+    <item>
+      <title>API Design Done Right</title>
+      <link>https://kubaik.github.io/api-design-done-right/</link>
+      <description>Learn expert API design patterns for scalable &amp; secure APIs.</description>
+      <pubDate>Fri, 14 Nov 2025 08:23:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-design-done-right/</guid>
     </item>
     <item>
       <title>Web Dev Trends</title>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to DevOps and CI/CD covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 12 Nov 2025 09:24:13 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-devops-and-cicd-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Understanding Software Testing Strategies: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</link>
-      <description>A comprehensive guide to Software Testing Strategies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 12 Nov 2025 07:19:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-software-testing-strategies-a-comple/</guid>
     </item>
   </channel>
 </rss>
