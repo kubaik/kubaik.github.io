@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 11:11:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 11:41:23 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Optimize DevOps &amp; CI/CD for success. Learn best practices &amp; expert tips.</description>
+      <pubDate>Fri, 14 Nov 2025 11:41:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>Cloud Power</title>
       <link>https://kubaik.github.io/cloud-power/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to API Design Patterns covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 13 Nov 2025 17:16:47 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-api-design-patterns-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Understanding Cybersecurity Best Practices: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-cybersecurity-best-practices-a-compl/</link>
-      <description>A comprehensive guide to Cybersecurity Best Practices covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 13 Nov 2025 16:40:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-cybersecurity-best-practices-a-compl/</guid>
     </item>
   </channel>
 </rss>
