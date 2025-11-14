@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 13:45:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 13:54:43 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Trends</title>
+      <link>https://kubaik.github.io/web-dev-trends/</link>
+      <description>Discover the latest web development trends shaping the industry&apos;s future.</description>
+      <pubDate>Fri, 14 Nov 2025 13:54:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-trends/</guid>
+    </item>
     <item>
       <title>PWA Power</title>
       <link>https://kubaik.github.io/pwa-power/</link>
@@ -124,13 +131,6 @@
       <description>Learn expert API design patterns for scalable &amp; secure APIs.</description>
       <pubDate>Fri, 14 Nov 2025 08:23:06 +0000</pubDate>
       <guid>https://kubaik.github.io/api-design-done-right/</guid>
-    </item>
-    <item>
-      <title>Web Dev Trends</title>
-      <link>https://kubaik.github.io/web-dev-trends/</link>
-      <description>Discover latest web dev trends &amp; insights to boost your online presence.</description>
-      <pubDate>Fri, 14 Nov 2025 08:06:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-trends/</guid>
     </item>
     <item>
       <title>AI in Action</title>
