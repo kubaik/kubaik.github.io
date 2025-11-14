@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 05:12:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 07:38:23 +0000</lastBuildDate>
+    <item>
+      <title>IoT Revolution</title>
+      <link>https://kubaik.github.io/iot-revolution/</link>
+      <description>Discover the future of tech with IoT Revolution. Learn how connected devices are changing our world.</description>
+      <pubDate>Fri, 14 Nov 2025 07:38:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-revolution/</guid>
+    </item>
     <item>
       <title>Understanding Data Science Techniques: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-data-science-techniques-a-complete-g/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Frontend Frameworks covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 11 Nov 2025 17:15:20 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-frontend-frameworks-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Unlocking the Future: The Power of Progressive Web Apps</title>
-      <link>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</link>
-      <description>Discover how Progressive Web Apps are transforming the digital landscape. Unlock their potential to enhance user experience and boost engagement today!</description>
-      <pubDate>Tue, 11 Nov 2025 15:14:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlocking-the-future-the-power-of-progressive-web-/</guid>
     </item>
   </channel>
 </rss>

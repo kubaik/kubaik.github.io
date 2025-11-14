@@ -110,7 +110,7 @@ jobs:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
-        echo "Starting blog content generation..."
+        echo "Starting blog content generation"
         
         # Try to generate new content, but don't fail if it doesn't work
         if python blog_system.py auto; then
