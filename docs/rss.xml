@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 12:37:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 13:06:21 +0000</lastBuildDate>
+    <item>
+      <title>Top Frontend Frameworks</title>
+      <link>https://kubaik.github.io/top-frontend-frameworks/</link>
+      <description>Discover top frontend frameworks for building scalable web apps.</description>
+      <pubDate>Fri, 14 Nov 2025 13:06:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-frontend-frameworks/</guid>
+    </item>
     <item>
       <title>Boost DB Speed</title>
       <link>https://kubaik.github.io/boost-db-speed/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Data Science Techniques covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 14 Nov 2025 05:12:46 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-data-science-techniques-a-complete-g/</guid>
-    </item>
-    <item>
-      <title>Understanding Serverless Computing: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</link>
-      <description>A comprehensive guide to Serverless Computing covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 13 Nov 2025 19:11:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-serverless-computing-a-complete-guid/</guid>
     </item>
   </channel>
 </rss>
