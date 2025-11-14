@@ -130,5 +130,18 @@
       "HybridCloud"
     ],
     "topic": "Cloud Computing Platforms"
+  },
+  "devops_and_ci/cd": {
+    "timestamp": "2025-11-14T11:41:19.818585",
+    "hashtags": [
+      "DevOps",
+      "CICD",
+      "CloudNative",
+      "TechAutomation",
+      "SoftwareDelivery",
+      "CodeQuality",
+      "DigitalTransformation"
+    ],
+    "topic": "DevOps and CI/CD"
   }
 }
