@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 07:18:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 07:48:25 +0000</lastBuildDate>
+    <item>
+      <title>AI in Action</title>
+      <link>https://kubaik.github.io/ai-in-action/</link>
+      <description>Discover AI&apos;s impact on industries &amp; daily life in &apos;AI in Action&apos;</description>
+      <pubDate>Fri, 14 Nov 2025 07:48:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-action/</guid>
+    </item>
+    <item>
+      <title>IoT Revolution</title>
+      <link>https://kubaik.github.io/iot-revolution/</link>
+      <description>Discover the future of tech with IoT Revolution. Learn how connected devices are changing our world.</description>
+      <pubDate>Fri, 14 Nov 2025 07:38:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-revolution/</guid>
+    </item>
     <item>
       <title>Understanding Container Technologies: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-container-technologies-a-complete-gu/</link>
@@ -131,13 +145,6 @@
       <description>A comprehensive guide to Mobile App Development covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 11 Nov 2025 19:11:37 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mobile-app-development-a-complete-gu/</guid>
-    </item>
-    <item>
-      <title>Understanding Frontend Frameworks: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-frontend-frameworks-a-complete-guide/</link>
-      <description>A comprehensive guide to Frontend Frameworks covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 11 Nov 2025 17:15:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-frontend-frameworks-a-complete-guide/</guid>
     </item>
   </channel>
 </rss>
