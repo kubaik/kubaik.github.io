@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 16:14:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 16:50:43 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Done Right</title>
+      <link>https://kubaik.github.io/cloud-done-right/</link>
+      <description>Unlock efficient cloud solutions with our expert guide to Cloud Computing Platforms.</description>
+      <pubDate>Fri, 14 Nov 2025 16:50:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-done-right/</guid>
+    </item>
     <item>
       <title>Micro Done Right</title>
       <link>https://kubaik.github.io/micro-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost software quality with effective testing strategies. Learn how to &apos;Test Smart&apos; and optimize your testing process.</description>
       <pubDate>Fri, 14 Nov 2025 09:09:03 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smart/</guid>
-    </item>
-    <item>
-      <title>Secure Now</title>
-      <link>https://kubaik.github.io/secure-now/</link>
-      <description>Protect your digital life with expert cybersecurity tips and best practices.</description>
-      <pubDate>Fri, 14 Nov 2025 08:59:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-now/</guid>
     </item>
   </channel>
 </rss>
