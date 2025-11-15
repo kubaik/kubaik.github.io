@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 21:20:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 22:20:24 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Platforms</title>
+      <link>https://kubaik.github.io/cloud-platforms/</link>
+      <description>Discover top cloud platforms for scalable computing, storage, and security solutions.</description>
+      <pubDate>Sat, 15 Nov 2025 22:20:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-platforms/</guid>
+    </item>
     <item>
       <title>App Success</title>
       <link>https://kubaik.github.io/app-success/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient cloud solutions with our expert guide to Cloud Computing Platforms.</description>
       <pubDate>Fri, 14 Nov 2025 16:50:40 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-done-right/</guid>
-    </item>
-    <item>
-      <title>Micro Done Right</title>
-      <link>https://kubaik.github.io/micro-done-right/</link>
-      <description>Learn how to implement Microservices Architecture effectively with expert tips and best practices.</description>
-      <pubDate>Fri, 14 Nov 2025 16:14:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-done-right/</guid>
     </item>
   </channel>
 </rss>
