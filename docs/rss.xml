@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 06:03:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 07:21:52 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost testing efficiency with smart strategies and techniques.</description>
+      <pubDate>Sat, 15 Nov 2025 07:21:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Improve database performance with expert tips and tricks.</description>
       <pubDate>Fri, 14 Nov 2025 12:37:27 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-db-speed/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Optimize DevOps &amp; CI/CD for success. Learn best practices &amp; expert tips.</description>
-      <pubDate>Fri, 14 Nov 2025 11:41:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
