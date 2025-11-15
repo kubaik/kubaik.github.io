@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 18:32:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 19:17:58 +0000</lastBuildDate>
+    <item>
+      <title>Micro Made Easy</title>
+      <link>https://kubaik.github.io/micro-made-easy/</link>
+      <description>Simplify complex systems with microservices architecture. Learn how to implement Micro Made Easy.</description>
+      <pubDate>Sat, 15 Nov 2025 19:17:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-made-easy/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to implement Microservices Architecture effectively with expert tips and best practices.</description>
       <pubDate>Fri, 14 Nov 2025 16:14:36 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-done-right/</guid>
-    </item>
-    <item>
-      <title>Building Blocks</title>
-      <link>https://kubaik.github.io/building-blocks/</link>
-      <description>Learn backend architecture fundamentals with our &apos;Building Blocks&apos; guide.</description>
-      <pubDate>Fri, 14 Nov 2025 15:43:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/building-blocks/</guid>
     </item>
   </channel>
 </rss>
