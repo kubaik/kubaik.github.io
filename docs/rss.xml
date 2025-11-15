@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 14:21:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 15:23:13 +0000</lastBuildDate>
+    <item>
+      <title>Data Science Hacks</title>
+      <link>https://kubaik.github.io/data-science-hacks/</link>
+      <description>Boost insights with top data science hacks and techniques.</description>
+      <pubDate>Sat, 15 Nov 2025 15:23:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-science-hacks/</guid>
+    </item>
     <item>
       <title>Top FE Frameworks</title>
       <link>https://kubaik.github.io/top-fe-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Learn API design patterns for scalable, secure, and efficient APIs.</description>
       <pubDate>Fri, 14 Nov 2025 15:13:09 +0000</pubDate>
       <guid>https://kubaik.github.io/api-design-done-right/</guid>
-    </item>
-    <item>
-      <title>Data Science Essentials</title>
-      <link>https://kubaik.github.io/data-science-essentials/</link>
-      <description>Unlock data insights with essential techniques and tools in data science.</description>
-      <pubDate>Fri, 14 Nov 2025 14:20:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-science-essentials/</guid>
     </item>
   </channel>
 </rss>
