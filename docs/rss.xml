@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 05:11:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 05:27:27 +0000</lastBuildDate>
+    <item>
+      <title>AI in Action</title>
+      <link>https://kubaik.github.io/ai-in-action/</link>
+      <description>Explore AI&apos;s impact on industries &amp; daily life with real-world applications.</description>
+      <pubDate>Sat, 15 Nov 2025 05:27:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-action/</guid>
+    </item>
     <item>
       <title>Serverless: Code, Not Servers</title>
       <link>https://kubaik.github.io/serverless-code-not-servers/</link>
@@ -138,13 +145,6 @@
       <description>Optimize DevOps &amp; CI/CD for success. Learn best practices &amp; expert tips.</description>
       <pubDate>Fri, 14 Nov 2025 11:41:19 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Cloud Power</title>
-      <link>https://kubaik.github.io/cloud-power/</link>
-      <description>Unlock cloud potential with our expert guide to cloud computing platforms.</description>
-      <pubDate>Fri, 14 Nov 2025 11:11:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-power/</guid>
     </item>
   </channel>
 </rss>
