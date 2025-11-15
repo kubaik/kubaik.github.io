@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 07:21:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 08:30:20 +0000</lastBuildDate>
+    <item>
+      <title>IoT Revolution</title>
+      <link>https://kubaik.github.io/iot-revolution/</link>
+      <description>Discover the IoT Revolution: How connected devices are changing our world.</description>
+      <pubDate>Sat, 15 Nov 2025 08:30:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-revolution/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover top frontend frameworks for building responsive websites and apps.</description>
       <pubDate>Fri, 14 Nov 2025 13:31:54 +0000</pubDate>
       <guid>https://kubaik.github.io/top-frontend-frameworks/</guid>
-    </item>
-    <item>
-      <title>Boost DB Speed</title>
-      <link>https://kubaik.github.io/boost-db-speed/</link>
-      <description>Improve database performance with expert tips and tricks.</description>
-      <pubDate>Fri, 14 Nov 2025 12:37:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-db-speed/</guid>
     </item>
   </channel>
 </rss>
