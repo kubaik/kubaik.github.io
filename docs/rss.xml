@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Nov 2025 16:28:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 17:19:22 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain 101</title>
+      <link>https://kubaik.github.io/blockchain-101/</link>
+      <description>Learn the basics of blockchain tech and its applications in our beginner&apos;s guide, Blockchain 101.</description>
+      <pubDate>Sat, 15 Nov 2025 17:19:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-101/</guid>
+    </item>
     <item>
       <title>Optimize DB</title>
       <link>https://kubaik.github.io/optimize-db/</link>
@@ -138,13 +145,6 @@
       <description>Learn backend architecture fundamentals with our &apos;Building Blocks&apos; guide.</description>
       <pubDate>Fri, 14 Nov 2025 15:43:13 +0000</pubDate>
       <guid>https://kubaik.github.io/building-blocks/</guid>
-    </item>
-    <item>
-      <title>API Design Done Right</title>
-      <link>https://kubaik.github.io/api-design-done-right/</link>
-      <description>Learn API design patterns for scalable, secure, and efficient APIs.</description>
-      <pubDate>Fri, 14 Nov 2025 15:13:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-design-done-right/</guid>
     </item>
   </channel>
 </rss>
