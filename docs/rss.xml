@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Nov 2025 19:11:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Nov 2025 05:11:42 +0000</lastBuildDate>
+    <item>
+      <title>Serverless: Code, Not Servers</title>
+      <link>https://kubaik.github.io/serverless-code-not-servers/</link>
+      <description>Learn about Serverless Computing: focus on code, not servers. Boost efficiency &amp; scalability.</description>
+      <pubDate>Sat, 15 Nov 2025 05:11:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-code-not-servers/</guid>
+    </item>
     <item>
       <title>ML Essentials</title>
       <link>https://kubaik.github.io/ml-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with our expert guide to cloud computing platforms.</description>
       <pubDate>Fri, 14 Nov 2025 11:11:50 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-power/</guid>
-    </item>
-    <item>
-      <title>Serverless Rev</title>
-      <link>https://kubaik.github.io/serverless-rev/</link>
-      <description>Unlock scalable apps with serverless computing. Learn how to revolutionize your development workflow.</description>
-      <pubDate>Fri, 14 Nov 2025 09:22:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-rev/</guid>
     </item>
   </channel>
 </rss>
