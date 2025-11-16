@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 02:06:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 03:51:34 +0000</lastBuildDate>
+    <item>
+      <title>AI in Action</title>
+      <link>https://kubaik.github.io/ai-in-action/</link>
+      <description>Discover AI&apos;s impact on industries &amp; daily life in &apos;AI in Action&apos;</description>
+      <pubDate>Sun, 16 Nov 2025 03:51:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-action/</guid>
+    </item>
     <item>
       <title>Secure Now</title>
       <link>https://kubaik.github.io/secure-now/</link>
@@ -124,13 +131,6 @@
       <description>Boost testing efficiency with smart strategies and techniques.</description>
       <pubDate>Sat, 15 Nov 2025 07:21:49 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>AI in Action</title>
-      <link>https://kubaik.github.io/ai-in-action/</link>
-      <description>Explore AI&apos;s impact on industries &amp; daily life with real-world applications.</description>
-      <pubDate>Sat, 15 Nov 2025 05:27:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-in-action/</guid>
     </item>
     <item>
       <title>Serverless: Code, Not Servers</title>
