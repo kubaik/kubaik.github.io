@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 19:19:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 20:26:49 +0000</lastBuildDate>
+    <item>
+      <title>Microservices: Scale Fast</title>
+      <link>https://kubaik.github.io/microservices-scale-fast/</link>
+      <description>Learn how microservices architecture helps businesses scale fast and efficiently.</description>
+      <pubDate>Sun, 16 Nov 2025 20:26:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/microservices-scale-fast/</guid>
+    </item>
     <item>
       <title>Boost DB Speed</title>
       <link>https://kubaik.github.io/boost-db-speed/</link>
@@ -138,13 +145,6 @@
       <description>Simplify complex systems with microservices architecture. Learn how to implement Micro Made Easy.</description>
       <pubDate>Sat, 15 Nov 2025 19:17:55 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-made-easy/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Unlock faster performance with expert tips and tricks.</description>
-      <pubDate>Sat, 15 Nov 2025 18:32:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
