@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 03:51:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 04:30:59 +0000</lastBuildDate>
+    <item>
+      <title>Build Smart: Backend</title>
+      <link>https://kubaik.github.io/build-smart-backend/</link>
+      <description>Learn backend architecture best practices to build scalable apps</description>
+      <pubDate>Sun, 16 Nov 2025 04:30:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-smart-backend/</guid>
+    </item>
     <item>
       <title>AI in Action</title>
       <link>https://kubaik.github.io/ai-in-action/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Serverless Computing: focus on code, not servers. Boost efficiency &amp; scalability.</description>
       <pubDate>Sat, 15 Nov 2025 05:11:38 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-code-not-servers/</guid>
-    </item>
-    <item>
-      <title>ML Essentials</title>
-      <link>https://kubaik.github.io/ml-essentials/</link>
-      <description>Discover ML fundamentals with our essentials guide to machine learning algorithms.</description>
-      <pubDate>Fri, 14 Nov 2025 19:11:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-essentials/</guid>
     </item>
   </channel>
 </rss>
