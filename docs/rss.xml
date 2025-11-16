@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 21:21:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 22:23:22 +0000</lastBuildDate>
+    <item>
+      <title>ML Essentials</title>
+      <link>https://kubaik.github.io/ml-essentials/</link>
+      <description>Unlock ML potential with essential algorithms and techniques.</description>
+      <pubDate>Sun, 16 Nov 2025 22:23:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-essentials/</guid>
+    </item>
     <item>
       <title>Secure Now</title>
       <link>https://kubaik.github.io/secure-now/</link>
@@ -103,13 +110,6 @@
       <description>Unlock PWA power: fast, reliable, and engaging web apps</description>
       <pubDate>Sun, 16 Nov 2025 07:23:05 +0000</pubDate>
       <guid>https://kubaik.github.io/pwa-power/</guid>
-    </item>
-    <item>
-      <title>ML Essentials</title>
-      <link>https://kubaik.github.io/ml-essentials/</link>
-      <description>Unlock ML basics: explore key algorithms &amp; concepts.</description>
-      <pubDate>Sun, 16 Nov 2025 06:36:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-essentials/</guid>
     </item>
     <item>
       <title>Test Smart</title>
