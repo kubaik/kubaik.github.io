@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 13:28:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 14:21:34 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Unlock efficient software delivery with expert DevOps &amp; CI/CD strategies.</description>
+      <pubDate>Sun, 16 Nov 2025 14:21:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>API Design Done Right</title>
       <link>https://kubaik.github.io/api-design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover latest Container Technologies &amp; innovations transforming industries.</description>
       <pubDate>Sat, 15 Nov 2025 13:29:03 +0000</pubDate>
       <guid>https://kubaik.github.io/container-tech/</guid>
-    </item>
-    <item>
-      <title>DevOps Done</title>
-      <link>https://kubaik.github.io/devops-done/</link>
-      <description>Streamline development with DevOps &amp; CI/CD. Learn how to improve efficiency &amp; delivery.</description>
-      <pubDate>Sat, 15 Nov 2025 10:24:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done/</guid>
     </item>
   </channel>
 </rss>
