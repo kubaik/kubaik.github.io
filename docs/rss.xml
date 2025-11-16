@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 18:33:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 19:19:10 +0000</lastBuildDate>
+    <item>
+      <title>Boost DB Speed</title>
+      <link>https://kubaik.github.io/boost-db-speed/</link>
+      <description>Maximize database performance with expert tips and tricks.</description>
+      <pubDate>Sun, 16 Nov 2025 19:19:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-db-speed/</guid>
+    </item>
     <item>
       <title>Serverless 101</title>
       <link>https://kubaik.github.io/serverless-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster performance with expert tips and tricks.</description>
       <pubDate>Sat, 15 Nov 2025 18:32:28 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Blockchain 101</title>
-      <link>https://kubaik.github.io/blockchain-101/</link>
-      <description>Learn the basics of blockchain tech and its applications in our beginner&apos;s guide, Blockchain 101.</description>
-      <pubDate>Sat, 15 Nov 2025 17:19:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-101/</guid>
     </item>
   </channel>
 </rss>
