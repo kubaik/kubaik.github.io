@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 22:23:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 23:22:55 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Blockchain</title>
+      <link>https://kubaik.github.io/unlock-blockchain/</link>
+      <description>Discover the power of blockchain tech &amp; its applications</description>
+      <pubDate>Sun, 16 Nov 2025 23:22:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-blockchain/</guid>
+    </item>
     <item>
       <title>ML Essentials</title>
       <link>https://kubaik.github.io/ml-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover the IoT Revolution: how connected devices are changing our world</description>
       <pubDate>Sat, 15 Nov 2025 20:25:16 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-revolution/</guid>
-    </item>
-    <item>
-      <title>Micro Made Easy</title>
-      <link>https://kubaik.github.io/micro-made-easy/</link>
-      <description>Simplify complex systems with microservices architecture. Learn how to implement Micro Made Easy.</description>
-      <pubDate>Sat, 15 Nov 2025 19:17:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-made-easy/</guid>
     </item>
   </channel>
 </rss>
