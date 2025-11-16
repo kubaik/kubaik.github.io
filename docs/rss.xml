@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 04:30:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 05:24:50 +0000</lastBuildDate>
+    <item>
+      <title>Test Smart</title>
+      <link>https://kubaik.github.io/test-smart/</link>
+      <description>Boost software quality with effective testing strategies. Learn how to Test Smart.</description>
+      <pubDate>Sun, 16 Nov 2025 05:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smart/</guid>
+    </item>
     <item>
       <title>Build Smart: Backend</title>
       <link>https://kubaik.github.io/build-smart-backend/</link>
@@ -138,13 +145,6 @@
       <description>Boost testing efficiency with smart strategies and techniques.</description>
       <pubDate>Sat, 15 Nov 2025 07:21:49 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Serverless: Code, Not Servers</title>
-      <link>https://kubaik.github.io/serverless-code-not-servers/</link>
-      <description>Learn about Serverless Computing: focus on code, not servers. Boost efficiency &amp; scalability.</description>
-      <pubDate>Sat, 15 Nov 2025 05:11:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-code-not-servers/</guid>
     </item>
   </channel>
 </rss>
