@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 12:47:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 13:28:45 +0000</lastBuildDate>
+    <item>
+      <title>API Design Done Right</title>
+      <link>https://kubaik.github.io/api-design-done-right/</link>
+      <description>Learn API design best practices and patterns for scalable, secure, and intuitive interfaces.</description>
+      <pubDate>Sun, 16 Nov 2025 13:28:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-design-done-right/</guid>
+    </item>
     <item>
       <title>Optimize Now</title>
       <link>https://kubaik.github.io/optimize-now/</link>
@@ -68,13 +75,6 @@
       <description>Protect your digital life with expert cybersecurity tips and best practices.</description>
       <pubDate>Sun, 16 Nov 2025 02:06:36 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-now/</guid>
-    </item>
-    <item>
-      <title>API Design Done Right</title>
-      <link>https://kubaik.github.io/api-design-done-right/</link>
-      <description>Learn API design patterns for scalable &amp; secure APIs. Discover best practices and expert tips.</description>
-      <pubDate>Sat, 15 Nov 2025 23:22:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-design-done-right/</guid>
     </item>
     <item>
       <title>Cloud Platforms</title>

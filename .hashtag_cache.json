@@ -209,14 +209,14 @@
     "topic": "Data Science Techniques"
   },
   "api_design_patterns": {
-    "timestamp": "2025-11-15T23:22:19.187624",
+    "timestamp": "2025-11-16T13:28:42.480331",
     "hashtags": [
       "APIDesign",
       "CloudNative",
       "DevOps",
       "Microservices",
-      "Serverless",
       "APIFirst",
+      "Serverless",
       "SoftwareArchitecture"
     ],
     "topic": "API Design Patterns"
