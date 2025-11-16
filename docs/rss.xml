@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 15:23:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Nov 2025 16:29:09 +0000</lastBuildDate>
+    <item>
+      <title>Container Tech</title>
+      <link>https://kubaik.github.io/container-tech/</link>
+      <description>Discover the latest in container tech &amp; innovative solutions</description>
+      <pubDate>Sun, 16 Nov 2025 16:29:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/container-tech/</guid>
+    </item>
     <item>
       <title>Top Frontend Frameworks</title>
       <link>https://kubaik.github.io/top-frontend-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with top data science hacks and techniques.</description>
       <pubDate>Sat, 15 Nov 2025 15:23:09 +0000</pubDate>
       <guid>https://kubaik.github.io/data-science-hacks/</guid>
-    </item>
-    <item>
-      <title>Top FE Frameworks</title>
-      <link>https://kubaik.github.io/top-fe-frameworks/</link>
-      <description>Discover top frontend frameworks for building scalable web apps.</description>
-      <pubDate>Sat, 15 Nov 2025 14:21:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-fe-frameworks/</guid>
     </item>
   </channel>
 </rss>
