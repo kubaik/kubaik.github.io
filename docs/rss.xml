@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 06:39:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 07:25:47 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
+      <pubDate>Mon, 17 Nov 2025 07:25:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>AI Agents: Build Smart</title>
       <link>https://kubaik.github.io/ai-agents-build-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover latest web dev trends &amp; stay ahead.</description>
       <pubDate>Sun, 16 Nov 2025 09:24:18 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-trends/</guid>
-    </item>
-    <item>
-      <title>App Success</title>
-      <link>https://kubaik.github.io/app-success/</link>
-      <description>Unlock mobile app success with expert development tips and strategies.</description>
-      <pubDate>Sun, 16 Nov 2025 08:30:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-success/</guid>
     </item>
   </channel>
 </rss>
