@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 06:04:51 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 06:39:13 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents: Build Smart</title>
+      <link>https://kubaik.github.io/ai-agents-build-smart/</link>
+      <description>Learn to build intelligent AI agents with our expert guide.</description>
+      <pubDate>Mon, 17 Nov 2025 06:39:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-build-smart/</guid>
+    </item>
     <item>
       <title>Edge AI</title>
       <link>https://kubaik.github.io/edge-ai/</link>
@@ -138,13 +145,6 @@
       <description>Unlock mobile app success with expert development tips and strategies.</description>
       <pubDate>Sun, 16 Nov 2025 08:30:55 +0000</pubDate>
       <guid>https://kubaik.github.io/app-success/</guid>
-    </item>
-    <item>
-      <title>PWA Power</title>
-      <link>https://kubaik.github.io/pwa-power/</link>
-      <description>Unlock PWA power: fast, reliable, and engaging web apps</description>
-      <pubDate>Sun, 16 Nov 2025 07:23:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/pwa-power/</guid>
     </item>
   </channel>
 </rss>
