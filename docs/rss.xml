@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 17:24:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 18:36:41 +0000</lastBuildDate>
+    <item>
+      <title>Flutter: Build Fast</title>
+      <link>https://kubaik.github.io/flutter-build-fast/</link>
+      <description>Build fast, stunning mobile apps with Flutter. Learn how to accelerate development.</description>
+      <pubDate>Mon, 17 Nov 2025 18:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-build-fast/</guid>
+    </item>
     <item>
       <title>Migrate Smart</title>
       <link>https://kubaik.github.io/migrate-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of blockchain tech &amp; its applications</description>
       <pubDate>Sun, 16 Nov 2025 23:22:51 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-blockchain/</guid>
-    </item>
-    <item>
-      <title>ML Essentials</title>
-      <link>https://kubaik.github.io/ml-essentials/</link>
-      <description>Unlock ML potential with essential algorithms and techniques.</description>
-      <pubDate>Sun, 16 Nov 2025 22:23:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-essentials/</guid>
     </item>
   </channel>
 </rss>
