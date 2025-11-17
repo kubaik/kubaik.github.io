@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 11:23:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 11:42:46 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Secrets</title>
+      <link>https://kubaik.github.io/api-gateway-secrets/</link>
+      <description>Unlock API Gateway secrets &amp; patterns for secure, scalable integrations.</description>
+      <pubDate>Mon, 17 Nov 2025 11:42:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-secrets/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn to design scalable backend architectures for high-performance applications.</description>
       <pubDate>Sun, 16 Nov 2025 17:20:25 +0000</pubDate>
       <guid>https://kubaik.github.io/build-better-backends/</guid>
-    </item>
-    <item>
-      <title>Container Tech</title>
-      <link>https://kubaik.github.io/container-tech/</link>
-      <description>Discover the latest in container tech &amp; innovative solutions</description>
-      <pubDate>Sun, 16 Nov 2025 16:29:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/container-tech/</guid>
     </item>
   </channel>
 </rss>
