@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 12:54:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 13:36:32 +0000</lastBuildDate>
+    <item>
+      <title>Secure Data</title>
+      <link>https://kubaik.github.io/secure-data/</link>
+      <description>Safeguard sensitive info with encryption &amp; key management solutions. Learn more.</description>
+      <pubDate>Mon, 17 Nov 2025 13:36:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-data/</guid>
+    </item>
     <item>
       <title>Master TypeScript</title>
       <link>https://kubaik.github.io/master-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of serverless computing and its benefits in our introductory guide, Serverless 101.</description>
       <pubDate>Sun, 16 Nov 2025 18:33:31 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-101/</guid>
-    </item>
-    <item>
-      <title>Build Better Backends</title>
-      <link>https://kubaik.github.io/build-better-backends/</link>
-      <description>Learn to design scalable backend architectures for high-performance applications.</description>
-      <pubDate>Sun, 16 Nov 2025 17:20:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-better-backends/</guid>
     </item>
   </channel>
 </rss>
