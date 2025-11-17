@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 15:29:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 16:35:48 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover Explainable AI techniques to unlock transparency in AI decision-making.</description>
+      <pubDate>Mon, 17 Nov 2025 16:35:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Protect your digital life with expert cybersecurity tips and best practices.</description>
       <pubDate>Sun, 16 Nov 2025 21:21:54 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-now/</guid>
-    </item>
-    <item>
-      <title>Microservices: Scale Fast</title>
-      <link>https://kubaik.github.io/microservices-scale-fast/</link>
-      <description>Learn how microservices architecture helps businesses scale fast and efficiently.</description>
-      <pubDate>Sun, 16 Nov 2025 20:26:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/microservices-scale-fast/</guid>
     </item>
   </channel>
 </rss>
