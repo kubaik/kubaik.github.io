@@ -248,7 +248,7 @@ Remember to stay updated with the latest developments in {topic} as the field co
             },
             {
                 "role": "user", 
-                "content": f"""Write a 1,500-word technical blog post with the title: "{title}"
+                "content": f"""Write a 2,500-word technical blog post with the title: "{title}"
 
 Topic: {topic}{keyword_text}
 
