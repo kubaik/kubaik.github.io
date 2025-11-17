@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 16:35:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 17:24:47 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Streamline cloud migration with expert strategies and best practices.</description>
+      <pubDate>Mon, 17 Nov 2025 17:24:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML potential with essential algorithms and techniques.</description>
       <pubDate>Sun, 16 Nov 2025 22:23:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-essentials/</guid>
-    </item>
-    <item>
-      <title>Secure Now</title>
-      <link>https://kubaik.github.io/secure-now/</link>
-      <description>Protect your digital life with expert cybersecurity tips and best practices.</description>
-      <pubDate>Sun, 16 Nov 2025 21:21:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-now/</guid>
     </item>
   </channel>
 </rss>
