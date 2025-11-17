@@ -526,5 +526,18 @@
       "FutureOfWork"
     ],
     "topic": "Time Management for Engineers"
+  },
+  "jwt_authentication_implementation": {
+    "timestamp": "2025-11-17T23:24:01.436320",
+    "hashtags": [
+      "TechSecurity",
+      "CloudAuth",
+      "DevOpsTools",
+      "CyberSecSolutions",
+      "APIGateway",
+      "InfoSecNews",
+      "ZeroTrust"
+    ],
+    "topic": "JWT Authentication Implementation"
   }
 }
