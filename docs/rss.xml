@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 13:36:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 14:26:53 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for implementation.</description>
+      <pubDate>Mon, 17 Nov 2025 14:26:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>Secure Data</title>
       <link>https://kubaik.github.io/secure-data/</link>
@@ -138,13 +145,6 @@
       <description>Maximize database performance with expert tips and tricks.</description>
       <pubDate>Sun, 16 Nov 2025 19:19:07 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-db-speed/</guid>
-    </item>
-    <item>
-      <title>Serverless 101</title>
-      <link>https://kubaik.github.io/serverless-101/</link>
-      <description>Learn the basics of serverless computing and its benefits in our introductory guide, Serverless 101.</description>
-      <pubDate>Sun, 16 Nov 2025 18:33:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-101/</guid>
     </item>
   </channel>
 </rss>
