@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2025 23:22:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 02:01:43 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Done Right</title>
+      <link>https://kubaik.github.io/cloud-done-right/</link>
+      <description>Unlock efficient cloud solutions with expert insights on Cloud Computing Platforms.</description>
+      <pubDate>Mon, 17 Nov 2025 02:01:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-done-right/</guid>
+    </item>
     <item>
       <title>Unlock Blockchain</title>
       <link>https://kubaik.github.io/unlock-blockchain/</link>
@@ -138,13 +145,6 @@
       <description>Discover top cloud platforms for scalable computing, storage, and security solutions.</description>
       <pubDate>Sat, 15 Nov 2025 22:20:21 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-platforms/</guid>
-    </item>
-    <item>
-      <title>IoT Revolution</title>
-      <link>https://kubaik.github.io/iot-revolution/</link>
-      <description>Discover the IoT Revolution: how connected devices are changing our world</description>
-      <pubDate>Sat, 15 Nov 2025 20:25:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-revolution/</guid>
     </item>
   </channel>
 </rss>
