@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 07:29:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 08:37:10 +0000</lastBuildDate>
+    <item>
+      <title>Smart Contracts</title>
+      <link>https://kubaik.github.io/smart-contracts/</link>
+      <description>Learn about smart contract development and its applications in blockchain technology.</description>
+      <pubDate>Mon, 17 Nov 2025 08:37:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-contracts/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn API design best practices and patterns for scalable, secure, and intuitive interfaces.</description>
       <pubDate>Sun, 16 Nov 2025 13:28:42 +0000</pubDate>
       <guid>https://kubaik.github.io/api-design-done-right/</guid>
-    </item>
-    <item>
-      <title>Optimize Now</title>
-      <link>https://kubaik.github.io/optimize-now/</link>
-      <description>Boost speed &amp; efficiency. Learn expert tips on performance optimization.</description>
-      <pubDate>Sun, 16 Nov 2025 12:47:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-now/</guid>
     </item>
   </channel>
 </rss>
