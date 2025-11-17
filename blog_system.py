@@ -259,7 +259,7 @@ Requirements:
 - Include real metrics, pricing data, or performance benchmarks where relevant
 - Provide concrete use cases with implementation details
 - Address common problems with specific solutions
-- Write 1,200-1,800 words of substantial content
+- Write 2,500-3,000 words of substantial content
 - Use bullet points and numbered lists where appropriate
 - Add a strong conclusion with actionable next steps
 
