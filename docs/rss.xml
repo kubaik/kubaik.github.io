@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Nov 2025 18:36:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 19:20:48 +0000</lastBuildDate>
+    <item>
+      <title>BaaS Simplified</title>
+      <link>https://kubaik.github.io/baas-simplified/</link>
+      <description>Unlock mobile app potential with BaaS. Learn how Backend as a Service simplifies development.</description>
+      <pubDate>Mon, 17 Nov 2025 19:20:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/baas-simplified/</guid>
+    </item>
     <item>
       <title>Flutter: Build Fast</title>
       <link>https://kubaik.github.io/flutter-build-fast/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient cloud solutions with expert insights on Cloud Computing Platforms.</description>
       <pubDate>Mon, 17 Nov 2025 02:01:39 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-done-right/</guid>
-    </item>
-    <item>
-      <title>Unlock Blockchain</title>
-      <link>https://kubaik.github.io/unlock-blockchain/</link>
-      <description>Discover the power of blockchain tech &amp; its applications</description>
-      <pubDate>Sun, 16 Nov 2025 23:22:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-blockchain/</guid>
     </item>
   </channel>
 </rss>
