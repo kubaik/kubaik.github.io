@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 04:30:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 05:26:26 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Learn Svelte JS &amp; modern JavaScript for lightweight, fast web apps.</description>
+      <pubDate>Tue, 18 Nov 2025 05:26:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Split Smarter</title>
       <link>https://kubaik.github.io/split-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn about smart contract development and its applications in blockchain technology.</description>
       <pubDate>Mon, 17 Nov 2025 08:37:06 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-contracts/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn responsive web design techniques to create mobile-friendly sites that adapt to any screen size.</description>
-      <pubDate>Mon, 17 Nov 2025 07:29:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
