@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 10:30:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 11:24:03 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Maximize AI impact with smart deployment strategies. Learn how to deploy AI models efficiently.</description>
+      <pubDate>Tue, 18 Nov 2025 11:23:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Streamline devops with GitOps. Learn best practices for implementation.</description>
       <pubDate>Mon, 17 Nov 2025 14:26:49 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Secure Data</title>
-      <link>https://kubaik.github.io/secure-data/</link>
-      <description>Safeguard sensitive info with encryption &amp; key management solutions. Learn more.</description>
-      <pubDate>Mon, 17 Nov 2025 13:36:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-data/</guid>
     </item>
   </channel>
 </rss>
