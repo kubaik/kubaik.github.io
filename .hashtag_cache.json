@@ -552,5 +552,18 @@
       "SRE"
     ],
     "topic": "Monitoring and Observability"
+  },
+  "docker_containerization_guide": {
+    "timestamp": "2025-11-18T03:18:32.653402",
+    "hashtags": [
+      "CloudNative",
+      "DevOpsTools",
+      "Containerization",
+      "Kubernetes",
+      "ServerlessTech",
+      "Microservices",
+      "DevSecOps"
+    ],
+    "topic": "Docker Containerization Guide"
   }
 }
