@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 19:31:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 22:26:12 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech: New Era</title>
+      <link>https://kubaik.github.io/nft-tech-new-era/</link>
+      <description>Discover NFT tech&apos;s revolutionary impact &amp; explore its vast use cases in art, gaming &amp; more.</description>
+      <pubDate>Tue, 18 Nov 2025 22:26:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech-new-era/</guid>
+    </item>
     <item>
       <title>Pipeline Perfection</title>
       <link>https://kubaik.github.io/pipeline-perfection/</link>
@@ -138,13 +145,6 @@
       <description>Simplify JWT auth implementation with our expert guide and secure your apps with ease.</description>
       <pubDate>Mon, 17 Nov 2025 23:24:01 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
-    </item>
-    <item>
-      <title>Engineer Time Hacks</title>
-      <link>https://kubaik.github.io/engineer-time-hacks/</link>
-      <description>Boost productivity with expert time hacks for engineers. Learn to prioritize tasks and manage time effectively.</description>
-      <pubDate>Mon, 17 Nov 2025 22:25:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-time-hacks/</guid>
     </item>
   </channel>
 </rss>
