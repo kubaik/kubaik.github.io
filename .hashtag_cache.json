@@ -631,5 +631,18 @@
       "DataIntegrity"
     ],
     "topic": "Data Governance Frameworks"
+  },
+  "etl_vs_elt_processes": {
+    "timestamp": "2025-11-18T09:29:04.264440",
+    "hashtags": [
+      "DataIntegration",
+      "CloudComputing",
+      "DataWarehousing",
+      "BigDataAnalytics",
+      "ELTProcesses",
+      "DataTransformation",
+      "TechInnovation"
+    ],
+    "topic": "ETL vs ELT Processes"
   }
 }

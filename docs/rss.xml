@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 08:34:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 09:29:08 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Discover the difference between ETL &amp; ELT processes and which is best for your data integration needs.</description>
+      <pubDate>Tue, 18 Nov 2025 09:29:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Unlock advanced TypeScript types &amp; elevate your coding skills.</description>
       <pubDate>Mon, 17 Nov 2025 12:54:19 +0000</pubDate>
       <guid>https://kubaik.github.io/master-typescript/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Expert guides and tutorials.</description>
-      <pubDate>Mon, 17 Nov 2025 11:23:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
