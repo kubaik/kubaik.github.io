@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 03:18:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 04:30:50 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Boost app performance with smart code splitting strategies.</description>
+      <pubDate>Tue, 18 Nov 2025 04:30:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>Docker Done Right</title>
       <link>https://kubaik.github.io/docker-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn responsive web design techniques to create mobile-friendly sites that adapt to any screen size.</description>
       <pubDate>Mon, 17 Nov 2025 07:29:55 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Mon, 17 Nov 2025 07:25:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
