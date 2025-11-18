@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 13:36:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 14:27:19 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Augmented Reality (AR) Development: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</link>
+      <description>A comprehensive guide to Augmented Reality (AR) Development covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Tue, 18 Nov 2025 14:27:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</guid>
+    </item>
     <item>
       <title>Understanding Feature Engineering Techniques: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</link>
@@ -138,13 +145,6 @@
       <description>Streamline cloud migration with expert strategies and best practices.</description>
       <pubDate>Mon, 17 Nov 2025 17:24:43 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-smart/</guid>
-    </item>
-    <item>
-      <title>Unlock XAI</title>
-      <link>https://kubaik.github.io/unlock-xai/</link>
-      <description>Discover Explainable AI techniques to unlock transparency in AI decision-making.</description>
-      <pubDate>Mon, 17 Nov 2025 16:35:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-xai/</guid>
     </item>
   </channel>
 </rss>
