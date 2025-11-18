@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 01:59:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 03:18:36 +0000</lastBuildDate>
+    <item>
+      <title>Docker Done Right</title>
+      <link>https://kubaik.github.io/docker-done-right/</link>
+      <description>Master Docker containerization with our expert guide.</description>
+      <pubDate>Tue, 18 Nov 2025 03:18:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-done-right/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Mon, 17 Nov 2025 07:25:43 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>AI Agents: Build Smart</title>
-      <link>https://kubaik.github.io/ai-agents-build-smart/</link>
-      <description>Learn to build intelligent AI agents with our expert guide.</description>
-      <pubDate>Mon, 17 Nov 2025 06:39:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-build-smart/</guid>
     </item>
   </channel>
 </rss>
