@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 07:25:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 08:34:56 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to manage data effectively</description>
+      <pubDate>Tue, 18 Nov 2025 08:34:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Data Mesh: Unlock Scale</title>
       <link>https://kubaik.github.io/data-mesh-unlock-scale/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert guides and tutorials.</description>
       <pubDate>Mon, 17 Nov 2025 11:23:14 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Angular Ent Apps</title>
-      <link>https://kubaik.github.io/angular-ent-apps/</link>
-      <description>Learn about Angular Ent Apps and build scalable enterprise applications with expert guidance.</description>
-      <pubDate>Mon, 17 Nov 2025 10:29:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
     </item>
   </channel>
 </rss>
