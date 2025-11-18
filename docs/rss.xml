@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 05:26:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 06:37:58 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Tue, 18 Nov 2025 06:37:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Explore Computer Vision tech &amp; its innovative applications</description>
       <pubDate>Mon, 17 Nov 2025 09:31:43 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Smart Contracts</title>
-      <link>https://kubaik.github.io/smart-contracts/</link>
-      <description>Learn about smart contract development and its applications in blockchain technology.</description>
-      <pubDate>Mon, 17 Nov 2025 08:37:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-contracts/</guid>
     </item>
   </channel>
 </rss>
