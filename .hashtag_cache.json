@@ -696,5 +696,18 @@
       "SoftwareDevelopment"
     ],
     "topic": "Command Line Productivity Tips"
+  },
+  "cybersecurity_fundamentals": {
+    "timestamp": "2025-11-18T16:36:26.657328",
+    "hashtags": [
+      "Cybersecurity",
+      "InfoSec",
+      "ZeroTrust",
+      "CloudSecurity",
+      "ThreatIntelligence",
+      "CyberAwareness",
+      "DigitalDefense"
+    ],
+    "topic": "Cybersecurity Fundamentals"
   }
 }
