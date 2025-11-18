@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 22:26:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 23:23:58 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn how to visualize smart and elevate your data storytelling.</description>
+      <pubDate>Tue, 18 Nov 2025 23:23:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>NFT Tech: New Era</title>
       <link>https://kubaik.github.io/nft-tech-new-era/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability best practices.</description>
       <pubDate>Tue, 18 Nov 2025 01:59:48 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Made Easy</title>
-      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
-      <description>Simplify JWT auth implementation with our expert guide and secure your apps with ease.</description>
-      <pubDate>Mon, 17 Nov 2025 23:24:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
     </item>
   </channel>
 </rss>
