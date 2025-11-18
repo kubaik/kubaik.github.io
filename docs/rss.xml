@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 12:54:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 13:36:42 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Feature Engineering Techniques: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</link>
+      <description>A comprehensive guide to Feature Engineering Techniques covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Tue, 18 Nov 2025 13:36:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</guid>
+    </item>
     <item>
       <title>SSG Simplified</title>
       <link>https://kubaik.github.io/ssg-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Discover Explainable AI techniques to unlock transparency in AI decision-making.</description>
       <pubDate>Mon, 17 Nov 2025 16:35:44 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-xai/</guid>
-    </item>
-    <item>
-      <title>API Test Made Easy</title>
-      <link>https://kubaik.github.io/api-test-made-easy/</link>
-      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
-      <pubDate>Mon, 17 Nov 2025 15:29:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
     </item>
   </channel>
 </rss>
