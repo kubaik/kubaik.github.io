@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Nov 2025 16:36:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Nov 2025 17:24:49 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Tue, 18 Nov 2025 17:24:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Cyber Safe</title>
       <link>https://kubaik.github.io/cyber-safe/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
       <pubDate>Mon, 17 Nov 2025 20:29:19 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up/</guid>
-    </item>
-    <item>
-      <title>BaaS Simplified</title>
-      <link>https://kubaik.github.io/baas-simplified/</link>
-      <description>Unlock mobile app potential with BaaS. Learn how Backend as a Service simplifies development.</description>
-      <pubDate>Mon, 17 Nov 2025 19:20:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/baas-simplified/</guid>
     </item>
   </channel>
 </rss>
