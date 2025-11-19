@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 22:24:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 23:24:28 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript at Scale</title>
+      <link>https://kubaik.github.io/typescript-at-scale/</link>
+      <description>Learn how to use TypeScript for large-scale apps, improving code quality and scalability.</description>
+      <pubDate>Wed, 19 Nov 2025 23:24:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-at-scale/</guid>
+    </item>
     <item>
       <title>Cloud Evolved</title>
       <link>https://kubaik.github.io/cloud-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
       <pubDate>Wed, 19 Nov 2025 07:25:33 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert backend architecture patterns &amp; boost app performance with our comprehensive guide.</description>
-      <pubDate>Wed, 19 Nov 2025 06:38:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
