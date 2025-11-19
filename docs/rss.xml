@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 12:54:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 13:36:32 +0000</lastBuildDate>
+    <item>
+      <title>Vue.js Components</title>
+      <link>https://kubaik.github.io/vuejs-components/</link>
+      <description>Learn Vue.js component architecture &amp; best practices for building scalable apps.</description>
+      <pubDate>Wed, 19 Nov 2025 13:36:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuejs-components/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Augmented Reality (AR) Development covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 18 Nov 2025 14:27:15 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</guid>
-    </item>
-    <item>
-      <title>Understanding Feature Engineering Techniques: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</link>
-      <description>A comprehensive guide to Feature Engineering Techniques covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 18 Nov 2025 13:36:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</guid>
     </item>
   </channel>
 </rss>
