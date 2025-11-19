@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 04:30:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 05:26:56 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smarter</title>
+      <link>https://kubaik.github.io/scale-smarter/</link>
+      <description>Learn scalability patterns to grow efficiently</description>
+      <pubDate>Wed, 19 Nov 2025 05:26:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smarter/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Tue, 18 Nov 2025 06:37:54 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Learn Svelte JS &amp; modern JavaScript for lightweight, fast web apps.</description>
-      <pubDate>Tue, 18 Nov 2025 05:26:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
