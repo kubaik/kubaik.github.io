@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 17:05:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 17:06:44 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop essential tech leadership skills with our expert guide.</description>
+      <pubDate>Wed, 19 Nov 2025 17:06:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>DB Tools</title>
       <link>https://kubaik.github.io/db-tools/</link>
@@ -138,13 +145,6 @@
       <description>Discover NFT tech&apos;s revolutionary impact &amp; explore its vast use cases in art, gaming &amp; more.</description>
       <pubDate>Tue, 18 Nov 2025 22:26:08 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-new-era/</guid>
-    </item>
-    <item>
-      <title>Pipeline Perfection</title>
-      <link>https://kubaik.github.io/pipeline-perfection/</link>
-      <description>Optimize data workflows with expert pipeline strategies and best practices.</description>
-      <pubDate>Tue, 18 Nov 2025 19:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/pipeline-perfection/</guid>
     </item>
   </channel>
 </rss>
