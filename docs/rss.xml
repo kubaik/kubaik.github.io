@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 17:23:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 18:38:06 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Backend</title>
+      <link>https://kubaik.github.io/kotlin-backend/</link>
+      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
+      <pubDate>Wed, 19 Nov 2025 18:38:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-backend/</guid>
+    </item>
     <item>
       <title>Revamp Old Code</title>
       <link>https://kubaik.github.io/revamp-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of the internet with Web3 and decentralized apps (DApps)</description>
       <pubDate>Wed, 19 Nov 2025 01:59:37 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-unleashed/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Boost insights with data visualization best practices. Learn how to visualize smart and elevate your data storytelling.</description>
-      <pubDate>Tue, 18 Nov 2025 23:23:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
