@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 20:25:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 21:19:58 +0000</lastBuildDate>
+    <item>
+      <title>Core Mastery</title>
+      <link>https://kubaik.github.io/core-mastery/</link>
+      <description>Unlock expert-level C# .NET Core development with Core Mastery, your guide to building high-performance applications.</description>
+      <pubDate>Wed, 19 Nov 2025 21:19:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/core-mastery/</guid>
+    </item>
     <item>
       <title>SSR Boost</title>
       <link>https://kubaik.github.io/ssr-boost/</link>
@@ -138,13 +145,6 @@
       <description>Learn scalability patterns to grow efficiently</description>
       <pubDate>Wed, 19 Nov 2025 05:26:51 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Boost website speed with expert frontend performance tuning tips.</description>
-      <pubDate>Wed, 19 Nov 2025 04:30:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
