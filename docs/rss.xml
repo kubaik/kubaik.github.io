@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 13:36:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 13:50:16 +0000</lastBuildDate>
+    <item>
+      <title>Load Less</title>
+      <link>https://kubaik.github.io/load-less/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement Load Less for a faster user experience.</description>
+      <pubDate>Wed, 19 Nov 2025 13:50:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-less/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks to streamline your workflow.</description>
       <pubDate>Tue, 18 Nov 2025 15:29:44 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Understanding Augmented Reality (AR) Development: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</link>
-      <description>A comprehensive guide to Augmented Reality (AR) Development covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 18 Nov 2025 14:27:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</guid>
     </item>
   </channel>
 </rss>

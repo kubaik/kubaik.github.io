@@ -52,5 +52,6 @@
   "Code Review Best Practices",
   "CQRS and Event Sourcing",
   "Native iOS Development with Swift",
-  "Vue.js Component Architecture"
+  "Vue.js Component Architecture",
+  "Lazy Loading Implementation"
 ]
