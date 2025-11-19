@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 11:23:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 12:54:45 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Wed, 19 Nov 2025 12:54:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Feature Engineering Techniques covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 18 Nov 2025 13:36:38 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</guid>
-    </item>
-    <item>
-      <title>SSG Simplified</title>
-      <link>https://kubaik.github.io/ssg-simplified/</link>
-      <description>Unlock faster sites with Static Site Generation (SSG). Learn the basics and benefits in our simplified guide.</description>
-      <pubDate>Tue, 18 Nov 2025 12:54:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssg-simplified/</guid>
     </item>
   </channel>
 </rss>
