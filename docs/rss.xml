@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 10:29:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 11:23:01 +0000</lastBuildDate>
+    <item>
+      <title>CQRS Unlocked</title>
+      <link>https://kubaik.github.io/cqrs-unlocked/</link>
+      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing. Learn how.</description>
+      <pubDate>Wed, 19 Nov 2025 11:22:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster sites with Static Site Generation (SSG). Learn the basics and benefits in our simplified guide.</description>
       <pubDate>Tue, 18 Nov 2025 12:54:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Maximize AI impact with smart deployment strategies. Learn how to deploy AI models efficiently.</description>
-      <pubDate>Tue, 18 Nov 2025 11:23:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>

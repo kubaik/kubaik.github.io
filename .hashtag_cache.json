@@ -894,5 +894,19 @@
       "CodingStandards"
     ],
     "topic": "Code Review Best Practices"
+  },
+  "cqrs_and_event_sourcing": {
+    "timestamp": "2025-11-19T11:22:57.701642",
+    "hashtags": [
+      "SoftwareArchitecture",
+      "DomainDrivenDesign",
+      "CloudNative",
+      "EventDriven",
+      "Microservices",
+      "SoftwareDevelopment",
+      "CloudComputing",
+      "DevOps"
+    ],
+    "topic": "CQRS and Event Sourcing"
   }
 }
