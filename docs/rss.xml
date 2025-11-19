@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 09:29:34 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 10:29:43 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Learn code review best practices to improve code quality and team collaboration.</description>
+      <pubDate>Wed, 19 Nov 2025 10:29:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>AI Evolved</title>
       <link>https://kubaik.github.io/ai-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Maximize AI impact with smart deployment strategies. Learn how to deploy AI models efficiently.</description>
       <pubDate>Tue, 18 Nov 2025 11:23:59 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: expert guide to building a scalable Internet of Things architecture.</description>
-      <pubDate>Tue, 18 Nov 2025 10:30:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
