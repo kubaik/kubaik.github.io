@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 06:38:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 07:25:38 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
+      <pubDate>Wed, 19 Nov 2025 07:25:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to manage data effectively</description>
       <pubDate>Tue, 18 Nov 2025 08:34:52 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Data Mesh: Unlock Scale</title>
-      <link>https://kubaik.github.io/data-mesh-unlock-scale/</link>
-      <description>Unlock scalable data management with Data Mesh Architecture. Learn how to transform your data landscape.</description>
-      <pubDate>Tue, 18 Nov 2025 07:25:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-unlock-scale/</guid>
     </item>
   </channel>
 </rss>
