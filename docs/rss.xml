@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 03:18:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 04:30:57 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Boost website speed with expert frontend performance tuning tips.</description>
+      <pubDate>Wed, 19 Nov 2025 04:30:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Unlock Web Components</title>
       <link>https://kubaik.github.io/unlock-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn Svelte JS &amp; modern JavaScript for lightweight, fast web apps.</description>
       <pubDate>Tue, 18 Nov 2025 05:26:23 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Boost app performance with smart code splitting strategies.</description>
-      <pubDate>Tue, 18 Nov 2025 04:30:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
