@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 01:59:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 03:18:16 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Web Components</title>
+      <link>https://kubaik.github.io/unlock-web-components/</link>
+      <description>Discover Web Components &amp; Custom Elements. Build reusable UI pieces with ease.</description>
+      <pubDate>Wed, 19 Nov 2025 03:18:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-web-components/</guid>
+    </item>
     <item>
       <title>Web3 Unleashed</title>
       <link>https://kubaik.github.io/web3-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart code splitting strategies.</description>
       <pubDate>Tue, 18 Nov 2025 04:30:46 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smarter/</guid>
-    </item>
-    <item>
-      <title>Docker Done Right</title>
-      <link>https://kubaik.github.io/docker-done-right/</link>
-      <description>Master Docker containerization with our expert guide.</description>
-      <pubDate>Tue, 18 Nov 2025 03:18:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-done-right/</guid>
     </item>
   </channel>
 </rss>
