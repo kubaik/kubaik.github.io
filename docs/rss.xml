@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 14:34:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 15:27:47 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
+      <pubDate>Wed, 19 Nov 2025 15:27:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Master Site Reliability Engineering (SRE) principles &amp; boost system reliability</description>
       <pubDate>Tue, 18 Nov 2025 18:38:07 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-simplified/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Tue, 18 Nov 2025 17:24:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>

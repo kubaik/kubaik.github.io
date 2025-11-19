@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Lake 101 - AI Tech Blog</title>
+        <meta name="description" content="Learn Data Lake basics & architecture in our introductory guide.">
+        <meta name="keywords" content="WebDev, Data Lake Implementation, Data Lake Management, ArtificialIntelligence, Data Lake Design, technology, Data Lake Solutions, BigDataAnalytics, CloudComputing, Data Warehouse Alternative, software, DataLake, Big Data Storage, Cloud Data Lake, Data Lake Security">
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Data Lake basics & architecture in our introductory guide.">
+    <meta property="og:title" content="Data Lake 101">
+    <meta property="og:description" content="Learn Data Lake basics & architecture in our introductory guide.">
+    <meta property="og:url" content="https://kubaik.github.io/data-lake-101/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI Tech Blog">
+    <meta property="article:published_time" content="2025-11-19T15:27:43.532000">
+    <meta property="article:modified_time" content="2025-11-19T15:27:43.532006">
+    <meta property="og:image" content="/static/images/data-lake-101.jpg">
+    <meta property="og:image:alt" content="Data Lake 101">
+    <meta name="twitter:image" content="/static/images/data-lake-101.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Data Lake 101">
+    <meta name="twitter:description" content="Learn Data Lake basics & architecture in our introductory guide.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/data-lake-101/">
+    <meta name="keywords" content="WebDev, Data Lake Implementation, Data Lake Management, ArtificialIntelligence, Data Lake Design, technology, Data Lake Solutions, BigDataAnalytics, CloudComputing, Data Warehouse Alternative, software, DataLake, Big Data Storage, Cloud Data Lake, Data Lake Security">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Data Lake 101",
+  "description": "Learn Data Lake basics & architecture in our introductory guide.",
+  "author": {
+    "@type": "Organization",
+    "name": "AI Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2025-11-19T15:27:43.532000",
+  "dateModified": "2025-11-19T15:27:43.532006",
+  "url": "https://kubaik.github.io/data-lake-101/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/data-lake-101/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/data-lake-101.jpg"
+  },
+  "keywords": [
+    "WebDev",
+    "Data Lake Implementation",
+    "Data Lake Management",
+    "ArtificialIntelligence",
+    "Data Lake Design",
+    "technology",
+    "Data Lake Solutions",
+    "BigDataAnalytics",
+    "CloudComputing",
+    "Data Warehouse Alternative",
+    "software",
+    "DataLake",
+    "Big Data Storage",
+    "Cloud Data Lake",
+    "Data Lake Security"
+  ]
+}
+</script>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <!-- Header Ad Slot -->
+        <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <header>
+            <div class="container">
+                <h1><a href="/">AI Tech Blog</a></h1>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/terms-of-service/">Terms</a>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+            <article class="blog-post">
+                <header class="post-header">
+                    <h1>Data Lake 101</h1>
+                    <div class="post-meta">
+                        <time datetime="2025-11-19T15:27:43.532000">2025-11-19</time>
+                        
+                        <div class="tags">
+                            
+                            <span class="tag">CloudComputing</span>
+                            
+                            <span class="tag">Data Warehouse Alternative</span>
+                            
+                            <span class="tag">WebDev</span>
+                            
+                            <span class="tag">Data Lake 101</span>
+                            
+                            <span class="tag">100DaysOfCode</span>
+                            
+                            <span class="tag">VR</span>
+                            
+                            <span class="tag">software</span>
+                            
+                            <span class="tag">Blockchain</span>
+                            
+                            <span class="tag">ArtificialIntelligence</span>
+                            
+                            <span class="tag">DataLake</span>
+                            
+                            <span class="tag">Data Lake Design</span>
+                            
+                            <span class="tag">technology</span>
+                            
+                            <span class="tag">Big Data Storage</span>
+                            
+                            <span class="tag">Data Lake Architecture</span>
+                            
+                            <span class="tag">BigDataAnalytics</span>
+                            
+                        </div>
+                        
+                    </div>
+                </header>
+                <div class="post-content">
+                    <h2 id="introduction-to-data-lakes">Introduction to Data Lakes</h2>
+<p>A data lake is a centralized repository that stores all types of data in its native format, providing a single source of truth for an organization's data. It's a key component of a data-driven strategy, enabling businesses to make informed decisions by analyzing large amounts of data from various sources. In this article, we'll delve into the world of data lakes, exploring their architecture, benefits, and implementation details.</p>
+<h3 id="data-lake-architecture">Data Lake Architecture</h3>
+<p>A typical data lake architecture consists of the following layers:
+* <strong>Ingestion Layer</strong>: responsible for collecting data from various sources, such as social media, IoT devices, and databases.
+* <strong>Storage Layer</strong>: where the ingested data is stored in its native format, often using distributed file systems like Hadoop Distributed File System (HDFS) or cloud-based object storage like Amazon S3.
+* <strong>Processing Layer</strong>: where the stored data is processed and transformed into a usable format, using tools like Apache Spark, Apache Flink, or AWS Glue.
+* <strong>Analytics Layer</strong>: where the processed data is analyzed and visualized, using tools like Tableau, Power BI, or D3.js.</p>
+<h2 id="data-ingestion">Data Ingestion</h2>
+<p>Data ingestion is the process of collecting data from various sources and storing it in the data lake. This can be done using various tools and techniques, such as:
+* <strong>Apache NiFi</strong>: an open-source data ingestion tool that provides a user-friendly interface for designing and managing data flows.
+* <strong>AWS Kinesis</strong>: a fully managed service that makes it easy to collect, process, and analyze real-time data.</p>
+<p>Here's an example of how to use Apache NiFi to ingest data from a Twitter stream:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tweepy</span>
+<span class="kn">from</span> <span class="nn">tweepy</span> <span class="kn">import</span> <span class="n">OAuthHandler</span>
+
+<span class="c1"># Twitter API credentials</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_key&quot;</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_secret&quot;</span>
+<span class="n">access_token</span> <span class="o">=</span> <span class="s2">&quot;your_access_token&quot;</span>
+<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s2">&quot;your_access_token_secret&quot;</span>
+
+<span class="c1"># Set up OAuth handler</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
+
+<span class="c1"># Set up Twitter API object</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+
+<span class="c1"># Define a NiFi processor to ingest Twitter data</span>
+<span class="k">class</span> <span class="nc">TwitterIngestProcessor</span><span class="p">(</span><span class="n">Processors</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api</span> <span class="o">=</span> <span class="n">api</span>
+
+    <span class="k">def</span> <span class="nf">onTrigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="c1"># Get the latest tweets</span>
+        <span class="n">tweets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;your_search_query&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+        <span class="c1"># Convert tweets to JSON</span>
+        <span class="n">json_tweets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+            <span class="n">json_tweet</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="s2">&quot;created_at&quot;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span>
+            <span class="p">}</span>
+            <span class="n">json_tweets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_tweet</span><span class="p">)</span>
+
+        <span class="c1"># Send the JSON tweets to the next processor</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_tweets</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This code defines a NiFi processor that ingests Twitter data using the Tweepy library and sends it to the next processor in the flow.</p>
+<h2 id="data-storage">Data Storage</h2>
+<p>Data storage is a critical component of a data lake, as it needs to be scalable, durable, and cost-effective. Some popular options for data storage include:
+* <strong>Hadoop Distributed File System (HDFS)</strong>: a distributed file system that provides high-throughput access to data.
+* <strong>Amazon S3</strong>: a cloud-based object storage service that provides durable and scalable storage for large amounts of data.</p>
+<p>Here's an example of how to use Amazon S3 to store data using the AWS SDK for Python:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+
+<span class="c1"># Set up AWS credentials</span>
+<span class="n">aws_access_key_id</span> <span class="o">=</span> <span class="s2">&quot;your_aws_access_key_id&quot;</span>
+<span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="s2">&quot;your_aws_secret_access_key&quot;</span>
+
+<span class="c1"># Set up S3 client</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">aws_access_key_id</span><span class="o">=</span><span class="n">aws_access_key_id</span><span class="p">,</span> <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="n">aws_secret_access_key</span><span class="p">)</span>
+
+<span class="c1"># Upload a file to S3</span>
+<span class="n">s3</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;path/to/local/file&quot;</span><span class="p">,</span> <span class="s2">&quot;your_bucket_name&quot;</span><span class="p">,</span> <span class="s2">&quot;path/to/remote/file&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This code sets up an S3 client using the AWS SDK for Python and uploads a file to an S3 bucket.</p>
+<h2 id="data-processing">Data Processing</h2>
+<p>Data processing is the step where the stored data is transformed into a usable format. This can be done using various tools and techniques, such as:
+* <strong>Apache Spark</strong>: a unified analytics engine for large-scale data processing.
+* <strong>AWS Glue</strong>: a fully managed extract, transform, and load (ETL) service that makes it easy to prepare and load data for analysis.</p>
+<p>Here's an example of how to use Apache Spark to process data:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="c1"># Set up Spark session</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;your_app_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="c1"># Load data from S3</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;s3://your_bucket_name/path/to/data&quot;</span><span class="p">)</span>
+
+<span class="c1"># Process the data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="c1"># Save the processed data to S3</span>
+<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s2">&quot;s3://your_bucket_name/path/to/processed_data&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This code sets up a Spark session, loads data from S3, processes the data using Spark SQL, and saves the processed data back to S3.</p>
+<h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
+<p>Some common problems that data engineers face when building a data lake include:
+* <strong>Data quality issues</strong>: data is incomplete, inconsistent, or inaccurate.
+    + Solution: implement data validation and data cleansing processes to ensure high-quality data.
+* <strong>Data security issues</strong>: data is not properly secured, leading to unauthorized access or data breaches.
+    + Solution: implement robust security measures, such as encryption, access controls, and auditing.
+* <strong>Data scalability issues</strong>: data grows rapidly, leading to performance issues and increased costs.
+    + Solution: implement scalable storage and processing solutions, such as distributed file systems and cloud-based services.</p>
+<h2 id="use-cases">Use Cases</h2>
+<p>Some concrete use cases for data lakes include:
+1. <strong>Customer 360</strong>: create a unified view of customer data to improve customer experience and loyalty.
+    * Implementation details: ingest customer data from various sources, such as CRM systems, social media, and customer feedback surveys. Process the data using Apache Spark and save it to a data warehouse for analysis.
+2. <strong>Predictive Maintenance</strong>: predict equipment failures to reduce downtime and improve overall efficiency.
+    * Implementation details: ingest sensor data from equipment, process it using Apache Spark, and train machine learning models to predict failures.
+3. <strong>Personalized Recommendations</strong>: provide personalized product recommendations to customers based on their behavior and preferences.
+    * Implementation details: ingest customer behavior data, such as purchase history and browsing behavior. Process the data using Apache Spark and train machine learning models to generate personalized recommendations.</p>
+<h2 id="performance-benchmarks">Performance Benchmarks</h2>
+<p>Some performance benchmarks for data lakes include:
+* <strong>Data ingestion</strong>: 10,000 events per second using Apache NiFi and AWS Kinesis.
+* <strong>Data processing</strong>: 100 GB of data processed per hour using Apache Spark and AWS Glue.
+* <strong>Data storage</strong>: 1 PB of data stored in Amazon S3, with an average latency of 10 ms.</p>
+<h2 id="pricing-data">Pricing Data</h2>
+<p>Some pricing data for data lakes include:
+* <strong>Amazon S3</strong>: $0.023 per GB-month for standard storage, with a minimum of 1 GB.
+* <strong>AWS Glue</strong>: $0.44 per hour for a Glue job, with a minimum of 1 hour.
+* <strong>Apache Spark</strong>: free and open-source, with optional support and services available from vendors like Databricks.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Building a data lake is a complex task that requires careful planning, design, and implementation. By following the principles outlined in this article, data engineers can create a scalable, secure, and high-performance data lake that meets the needs of their organization. Some actionable next steps include:
+* <strong>Define your use cases</strong>: identify the specific business problems you want to solve with your data lake.
+* <strong>Choose your tools and technologies</strong>: select the right tools and technologies for your data lake, based on your use cases and requirements.
+* <strong>Design your architecture</strong>: design a scalable and secure architecture for your data lake, using the layers and components outlined in this article.
+* <strong>Implement and test</strong>: implement your data lake and test it thoroughly to ensure it meets your requirements and performs well.
+* <strong>Monitor and optimize</strong>: monitor your data lake regularly and optimize its performance to ensure it continues to meet your needs.</p>
+                    
+                    <!-- Middle Ad Slot -->
+                    <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+                </div>
+                
+                <!-- Affiliate Disclaimer -->
+                
+            </article>
+        </main>
+        
+        <!-- Footer Ad Slot -->
+        <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 AI Tech Blog. Powered by AI.</p>
+            </div>
+        </footer>
+    </body>
+    </html>
