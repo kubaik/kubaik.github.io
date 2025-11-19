@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 08:34:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Nov 2025 09:29:34 +0000</lastBuildDate>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-machine interaction.</description>
+      <pubDate>Wed, 19 Nov 2025 09:29:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
+    </item>
     <item>
       <title>Vector DBs</title>
       <link>https://kubaik.github.io/vector-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: expert guide to building a scalable Internet of Things architecture.</description>
       <pubDate>Tue, 18 Nov 2025 10:30:16 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes and which is best for your data integration needs.</description>
-      <pubDate>Tue, 18 Nov 2025 09:29:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
