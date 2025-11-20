@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 10:28:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 11:22:56 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Boost productivity with top VS Code extensions. Discover essential tools to streamline coding.</description>
+      <pubDate>Thu, 20 Nov 2025 11:22:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
       <pubDate>Wed, 19 Nov 2025 15:27:43 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest in web dev: explore modern frameworks &amp; tools transforming the industry.</description>
-      <pubDate>Wed, 19 Nov 2025 14:34:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>
