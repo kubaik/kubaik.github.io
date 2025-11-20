@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 15:28:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 16:34:06 +0000</lastBuildDate>
+    <item>
+      <title>Stop Attacks</title>
+      <link>https://kubaik.github.io/stop-attacks/</link>
+      <description>Learn effective DDoS protection strategies to prevent cyber attacks.</description>
+      <pubDate>Thu, 20 Nov 2025 16:34:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-attacks/</guid>
+    </item>
     <item>
       <title>NLP Tech</title>
       <link>https://kubaik.github.io/nlp-tech/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
       <pubDate>Wed, 19 Nov 2025 19:21:22 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
-    </item>
-    <item>
-      <title>Kotlin Backend</title>
-      <link>https://kubaik.github.io/kotlin-backend/</link>
-      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
-      <pubDate>Wed, 19 Nov 2025 18:38:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-backend/</guid>
     </item>
   </channel>
 </rss>
