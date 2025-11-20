@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 20:30:21 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 21:23:48 +0000</lastBuildDate>
+    <item>
+      <title>Work Smarter</title>
+      <link>https://kubaik.github.io/work-smarter/</link>
+      <description>Boost productivity with expert remote work tips and best practices.</description>
+      <pubDate>Thu, 20 Nov 2025 21:23:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/work-smarter/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Simplify server management with expert load balancing techniques.</description>
       <pubDate>Thu, 20 Nov 2025 01:58:02 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>TypeScript at Scale</title>
-      <link>https://kubaik.github.io/typescript-at-scale/</link>
-      <description>Learn how to use TypeScript for large-scale apps, improving code quality and scalability.</description>
-      <pubDate>Wed, 19 Nov 2025 23:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-at-scale/</guid>
     </item>
   </channel>
 </rss>
