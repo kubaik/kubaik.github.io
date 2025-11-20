@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 17:20:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 18:38:03 +0000</lastBuildDate>
+    <item>
+      <title>Boost Network Speed</title>
+      <link>https://kubaik.github.io/boost-network-speed/</link>
+      <description>Maximize network speed with expert optimization tips.</description>
+      <pubDate>Thu, 20 Nov 2025 18:37:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-network-speed/</guid>
+    </item>
     <item>
       <title>Negotiate Like a Pro</title>
       <link>https://kubaik.github.io/negotiate-like-a-pro/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert-level C# .NET Core development with Core Mastery, your guide to building high-performance applications.</description>
       <pubDate>Wed, 19 Nov 2025 21:19:53 +0000</pubDate>
       <guid>https://kubaik.github.io/core-mastery/</guid>
-    </item>
-    <item>
-      <title>SSR Boost</title>
-      <link>https://kubaik.github.io/ssr-boost/</link>
-      <description>Unlock faster loads with Server-Side Rendering (SSR) techniques and boost your website&apos;s performance.</description>
-      <pubDate>Wed, 19 Nov 2025 20:25:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-boost/</guid>
     </item>
   </channel>
 </rss>
