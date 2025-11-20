@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Nov 2025 23:24:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 01:58:06 +0000</lastBuildDate>
+    <item>
+      <title>Balance Made Easy</title>
+      <link>https://kubaik.github.io/balance-made-easy/</link>
+      <description>Simplify server management with expert load balancing techniques.</description>
+      <pubDate>Thu, 20 Nov 2025 01:58:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-made-easy/</guid>
+    </item>
     <item>
       <title>TypeScript at Scale</title>
       <link>https://kubaik.github.io/typescript-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
       <pubDate>Wed, 19 Nov 2025 08:34:51 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
-      <pubDate>Wed, 19 Nov 2025 07:25:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
