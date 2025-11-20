@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 09:27:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 10:28:41 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Learn Python for data science and unlock insights with our expert guide.</description>
+      <pubDate>Thu, 20 Nov 2025 10:28:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Unlock Snowflake</title>
       <link>https://kubaik.github.io/unlock-snowflake/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest in web dev: explore modern frameworks &amp; tools transforming the industry.</description>
       <pubDate>Wed, 19 Nov 2025 14:34:44 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Wed, 19 Nov 2025 14:27:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
