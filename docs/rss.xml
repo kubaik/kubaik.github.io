@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 18:38:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 19:20:45 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP Power</title>
+      <link>https://kubaik.github.io/unlock-gcp-power/</link>
+      <description>Unlock GCP&apos;s full potential with expert tips and insights.</description>
+      <pubDate>Thu, 20 Nov 2025 19:20:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
+    </item>
     <item>
       <title>Boost Network Speed</title>
       <link>https://kubaik.github.io/boost-network-speed/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with multi-cloud architecture. Learn more.</description>
       <pubDate>Wed, 19 Nov 2025 22:24:55 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>Core Mastery</title>
-      <link>https://kubaik.github.io/core-mastery/</link>
-      <description>Unlock expert-level C# .NET Core development with Core Mastery, your guide to building high-performance applications.</description>
-      <pubDate>Wed, 19 Nov 2025 21:19:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-mastery/</guid>
     </item>
   </channel>
 </rss>
