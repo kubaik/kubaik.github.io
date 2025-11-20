@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 03:16:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 04:29:36 +0000</lastBuildDate>
+    <item>
+      <title>Scale with Ease</title>
+      <link>https://kubaik.github.io/scale-with-ease/</link>
+      <description>Learn how database replication &amp; sharding can help you scale with ease.</description>
+      <pubDate>Thu, 20 Nov 2025 04:29:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-ease/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Learn code review best practices to improve code quality and team collaboration.</description>
       <pubDate>Wed, 19 Nov 2025 10:29:39 +0000</pubDate>
       <guid>https://kubaik.github.io/code-review-done-right/</guid>
-    </item>
-    <item>
-      <title>AI Evolved</title>
-      <link>https://kubaik.github.io/ai-evolved/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-machine interaction.</description>
-      <pubDate>Wed, 19 Nov 2025 09:29:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
