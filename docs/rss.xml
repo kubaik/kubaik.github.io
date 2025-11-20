@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 21:23:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 22:23:46 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
+      <pubDate>Thu, 20 Nov 2025 22:23:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and lives.</description>
       <pubDate>Thu, 20 Nov 2025 03:16:11 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
-    </item>
-    <item>
-      <title>Balance Made Easy</title>
-      <link>https://kubaik.github.io/balance-made-easy/</link>
-      <description>Simplify server management with expert load balancing techniques.</description>
-      <pubDate>Thu, 20 Nov 2025 01:58:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-made-easy/</guid>
     </item>
   </channel>
 </rss>

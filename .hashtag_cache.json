@@ -1372,5 +1372,18 @@
       "CloudComputing"
     ],
     "topic": "Remote Work Best Practices"
+  },
+  "serverless_architecture_patterns": {
+    "timestamp": "2025-11-20T22:23:42.397612",
+    "hashtags": [
+      "CloudNative",
+      "ServerlessComputing",
+      "CloudArchitecture",
+      "DevOps",
+      "Microservices",
+      "AzureFunctions",
+      "LambdaArchitecture"
+    ],
+    "topic": "Serverless Architecture Patterns"
   }
 }
