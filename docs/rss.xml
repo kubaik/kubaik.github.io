@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Nov 2025 11:22:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Nov 2025 12:53:39 +0000</lastBuildDate>
+    <item>
+      <title>K8s Simplified</title>
+      <link>https://kubaik.github.io/k8s-simplified/</link>
+      <description>Simplify Kubernetes orchestration with our expert guide, making container management easy and efficient.</description>
+      <pubDate>Thu, 20 Nov 2025 12:53:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-simplified/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB tools for efficient database management and optimization.</description>
       <pubDate>Wed, 19 Nov 2025 16:34:28 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
-      <pubDate>Wed, 19 Nov 2025 15:27:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
