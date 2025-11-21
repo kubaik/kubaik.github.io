@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 16:31:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 17:22:55 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn about Zero Trust Security Architecture &amp; how to secure your network with a proactive approach.</description>
+      <pubDate>Fri, 21 Nov 2025 17:22:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP&apos;s full potential with expert tips and insights.</description>
       <pubDate>Thu, 20 Nov 2025 19:20:41 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
-    </item>
-    <item>
-      <title>Boost Network Speed</title>
-      <link>https://kubaik.github.io/boost-network-speed/</link>
-      <description>Maximize network speed with expert optimization tips.</description>
-      <pubDate>Thu, 20 Nov 2025 18:37:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-network-speed/</guid>
     </item>
   </channel>
 </rss>
