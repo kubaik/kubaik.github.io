@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 06:39:18 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 07:26:15 +0000</lastBuildDate>
+    <item>
+      <title>Cache Smarter</title>
+      <link>https://kubaik.github.io/cache-smarter/</link>
+      <description>Boost app performance with smart caching strategies using Redis and Memcached.</description>
+      <pubDate>Fri, 21 Nov 2025 07:26:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/cache-smarter/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn Python for data science and unlock insights with our expert guide.</description>
       <pubDate>Thu, 20 Nov 2025 10:28:36 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock data-driven insights with our expert guide.</description>
-      <pubDate>Thu, 20 Nov 2025 09:27:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>

@@ -92,5 +92,6 @@
   "Microservices vs Monolithic Architecture",
   "Rust Memory Safety",
   "5G Technology Impact",
-  "Web Accessibility Standards (WCAG)"
+  "Web Accessibility Standards (WCAG)",
+  "Caching Strategies (Redis, Memcached)"
 ]
