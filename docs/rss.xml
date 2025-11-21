@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 11:21:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 12:52:51 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover the power of secrets management. Unlock secure data storage &amp; access control solutions.</description>
+      <pubDate>Fri, 21 Nov 2025 12:52:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques for smarter interactions</description>
       <pubDate>Thu, 20 Nov 2025 15:28:25 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-tech/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost page speed with expert image optimization techniques.</description>
-      <pubDate>Thu, 20 Nov 2025 14:26:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
