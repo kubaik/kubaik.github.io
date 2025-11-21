@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 08:35:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 09:28:04 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Done Right</title>
+      <link>https://kubaik.github.io/graphql-done-right/</link>
+      <description>Learn expert GraphQL API development techniques for scalable apps</description>
+      <pubDate>Fri, 21 Nov 2025 09:27:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-done-right/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Simplify Kubernetes orchestration with our expert guide, making container management easy and efficient.</description>
       <pubDate>Thu, 20 Nov 2025 12:53:34 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Boost productivity with top VS Code extensions. Discover essential tools to streamline coding.</description>
-      <pubDate>Thu, 20 Nov 2025 11:22:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
