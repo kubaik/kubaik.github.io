@@ -1531,5 +1531,18 @@
       "CodeNewbies"
     ],
     "topic": "Open Source Contribution Guide"
+  },
+  "secrets_management": {
+    "timestamp": "2025-11-21T12:52:47.136680",
+    "hashtags": [
+      "CloudSecurity",
+      "DevSecOps",
+      "SecretsManagement",
+      "CyberSecurity",
+      "ZeroTrust",
+      "APIsecurity",
+      "InfoSec"
+    ],
+    "topic": "Secrets Management"
   }
 }
