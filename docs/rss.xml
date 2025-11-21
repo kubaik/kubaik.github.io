@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 15:23:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 16:31:31 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning uncovers hidden insights.</description>
+      <pubDate>Fri, 21 Nov 2025 16:31:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Maximize network speed with expert optimization tips.</description>
       <pubDate>Thu, 20 Nov 2025 18:37:59 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Negotiate Like a Pro</title>
-      <link>https://kubaik.github.io/negotiate-like-a-pro/</link>
-      <description>Boost your tech salary with expert negotiation tips and strategies.</description>
-      <pubDate>Thu, 20 Nov 2025 17:20:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-like-a-pro/</guid>
     </item>
   </channel>
 </rss>
