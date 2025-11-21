@@ -93,5 +93,6 @@
   "Rust Memory Safety",
   "5G Technology Impact",
   "Web Accessibility Standards (WCAG)",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Disaster Recovery Planning"
 ]
