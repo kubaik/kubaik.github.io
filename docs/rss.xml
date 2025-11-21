@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 09:28:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 10:28:01 +0000</lastBuildDate>
+    <item>
+      <title>Code Duo</title>
+      <link>https://kubaik.github.io/code-duo/</link>
+      <description>Boost coding skills with pair programming. Learn techniques for efficient collaboration.</description>
+      <pubDate>Fri, 21 Nov 2025 10:27:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-duo/</guid>
+    </item>
     <item>
       <title>GraphQL Done Right</title>
       <link>https://kubaik.github.io/graphql-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
       <pubDate>Thu, 20 Nov 2025 13:34:54 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
-    </item>
-    <item>
-      <title>K8s Simplified</title>
-      <link>https://kubaik.github.io/k8s-simplified/</link>
-      <description>Simplify Kubernetes orchestration with our expert guide, making container management easy and efficient.</description>
-      <pubDate>Thu, 20 Nov 2025 12:53:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-simplified/</guid>
     </item>
   </channel>
 </rss>
