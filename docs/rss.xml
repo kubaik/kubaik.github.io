@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 14:25:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 15:23:40 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Fri, 21 Nov 2025 15:23:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Boost Security: WAF</title>
       <link>https://kubaik.github.io/boost-security-waf/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with expert negotiation tips and strategies.</description>
       <pubDate>Thu, 20 Nov 2025 17:20:27 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-like-a-pro/</guid>
-    </item>
-    <item>
-      <title>Stop Attacks</title>
-      <link>https://kubaik.github.io/stop-attacks/</link>
-      <description>Learn effective DDoS protection strategies to prevent cyber attacks.</description>
-      <pubDate>Thu, 20 Nov 2025 16:34:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-attacks/</guid>
     </item>
   </channel>
 </rss>
