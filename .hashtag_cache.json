@@ -1425,5 +1425,18 @@
       "Containerization"
     ],
     "topic": "Microservices vs Monolithic Architecture"
+  },
+  "rust_memory_safety": {
+    "timestamp": "2025-11-21T04:30:34.407108",
+    "hashtags": [
+      "RustLang",
+      "MemorySafety",
+      "SystemsProgramming",
+      "TechSecurity",
+      "CodeQuality",
+      "DevOpsTools",
+      "CloudNativeDev"
+    ],
+    "topic": "Rust Memory Safety"
   }
 }
