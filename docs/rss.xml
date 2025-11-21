@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Nov 2025 17:22:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Nov 2025 18:33:47 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Visibility</title>
+      <link>https://kubaik.github.io/boost-app-visibility/</link>
+      <description>Maximize app downloads with expert ASO tips and strategies.</description>
+      <pubDate>Fri, 21 Nov 2025 18:33:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips and techniques.</description>
       <pubDate>Thu, 20 Nov 2025 20:30:16 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP Power</title>
-      <link>https://kubaik.github.io/unlock-gcp-power/</link>
-      <description>Unlock GCP&apos;s full potential with expert tips and insights.</description>
-      <pubDate>Thu, 20 Nov 2025 19:20:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
     </item>
   </channel>
 </rss>
