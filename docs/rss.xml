@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 15:23:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 16:29:50 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
+      <pubDate>Sat, 22 Nov 2025 16:29:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Async Made Easy</title>
       <link>https://kubaik.github.io/async-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover top mobile app architecture patterns for scalable &amp; efficient app design.</description>
       <pubDate>Fri, 21 Nov 2025 19:21:28 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-app-arch/</guid>
-    </item>
-    <item>
-      <title>Boost App Visibility</title>
-      <link>https://kubaik.github.io/boost-app-visibility/</link>
-      <description>Maximize app downloads with expert ASO tips and strategies.</description>
-      <pubDate>Fri, 21 Nov 2025 18:33:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
     </item>
   </channel>
 </rss>
