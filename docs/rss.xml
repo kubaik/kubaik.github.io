@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 13:28:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 14:21:56 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data</title>
+      <link>https://kubaik.github.io/clean-data/</link>
+      <description>Improve data accuracy with expert Data Quality Management tips and best practices.</description>
+      <pubDate>Sat, 22 Nov 2025 14:21:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data/</guid>
+    </item>
     <item>
       <title>RL Wins</title>
       <link>https://kubaik.github.io/rl-wins/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; how to secure your network with a proactive approach.</description>
       <pubDate>Fri, 21 Nov 2025 17:22:50 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning uncovers hidden insights.</description>
-      <pubDate>Fri, 21 Nov 2025 16:31:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
