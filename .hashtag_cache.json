@@ -1965,5 +1965,18 @@
       "CloudNativeDev"
     ],
     "topic": "Functional Programming Concepts"
+  },
+  "delta_lake_and_data_lakehouse": {
+    "timestamp": "2025-11-22T23:23:52.263676",
+    "hashtags": [
+      "DataLakehouse",
+      "DeltaLake",
+      "BigDataAnalytics",
+      "CloudComputing",
+      "ArtificialIntelligence",
+      "DataEngineering",
+      "LakehouseArchitecture"
+    ],
+    "topic": "Delta Lake and Data Lakehouse"
   }
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 22:24:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 23:23:57 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake Simplified</title>
+      <link>https://kubaik.github.io/delta-lake-simplified/</link>
+      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to simplify your data management</description>
+      <pubDate>Sat, 22 Nov 2025 23:23:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-simplified/</guid>
+    </item>
     <item>
       <title>FuncProg 101</title>
       <link>https://kubaik.github.io/funcprog-101/</link>
@@ -138,13 +145,6 @@
       <description>Simplify security compliance with expert guides on SOC 2 &amp; ISO 27001.</description>
       <pubDate>Sat, 22 Nov 2025 04:29:15 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Master Git with expert tips and tricks for advanced techniques.</description>
-      <pubDate>Sat, 22 Nov 2025 03:10:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
