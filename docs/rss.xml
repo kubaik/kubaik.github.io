@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 16:29:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 17:20:48 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Done Right</title>
+      <link>https://kubaik.github.io/mlops-done-right/</link>
+      <description>Streamline ML workflows with MLOps best practices &amp; automation techniques.</description>
+      <pubDate>Sat, 22 Nov 2025 17:20:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-done-right/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Fri, 21 Nov 2025 20:29:22 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Mobile App Arch</title>
-      <link>https://kubaik.github.io/mobile-app-arch/</link>
-      <description>Discover top mobile app architecture patterns for scalable &amp; efficient app design.</description>
-      <pubDate>Fri, 21 Nov 2025 19:21:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-app-arch/</guid>
     </item>
   </channel>
 </rss>
