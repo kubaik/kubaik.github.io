@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 14:21:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 15:23:36 +0000</lastBuildDate>
+    <item>
+      <title>Async Made Easy</title>
+      <link>https://kubaik.github.io/async-made-easy/</link>
+      <description>Unlock efficient async processing with message queues. Learn how to simplify workflows and boost performance.</description>
+      <pubDate>Sat, 22 Nov 2025 15:23:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-made-easy/</guid>
+    </item>
     <item>
       <title>Clean Data</title>
       <link>https://kubaik.github.io/clean-data/</link>
@@ -138,13 +145,6 @@
       <description>Maximize app downloads with expert ASO tips and strategies.</description>
       <pubDate>Fri, 21 Nov 2025 18:33:42 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-visibility/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; how to secure your network with a proactive approach.</description>
-      <pubDate>Fri, 21 Nov 2025 17:22:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
