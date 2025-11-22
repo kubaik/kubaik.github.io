@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 04:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 05:24:22 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Improve app security with smarter testing. Learn SAST &amp; DAST best practices.</description>
+      <pubDate>Sat, 22 Nov 2025 05:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Unlock SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart caching strategies using Redis and Memcached.</description>
       <pubDate>Fri, 21 Nov 2025 07:26:11 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-smarter/</guid>
-    </item>
-    <item>
-      <title>WCAG Simplified</title>
-      <link>https://kubaik.github.io/wcag-simplified/</link>
-      <description>Simplify web accessibility with WCAG guidelines, making online content inclusive for all users.</description>
-      <pubDate>Fri, 21 Nov 2025 06:39:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-simplified/</guid>
     </item>
   </channel>
 </rss>

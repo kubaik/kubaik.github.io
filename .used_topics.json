@@ -112,5 +112,6 @@
   "Go Programming Concurrency",
   "Event-Driven Architecture",
   "Git Advanced Techniques",
-  "Security Compliance (SOC 2, ISO 27001)"
+  "Security Compliance (SOC 2, ISO 27001)",
+  "Application Security Testing (SAST/DAST)"
 ]
