@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 06:34:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 07:22:46 +0000</lastBuildDate>
+    <item>
+      <title>Lock Down APIs</title>
+      <link>https://kubaik.github.io/lock-down-apis/</link>
+      <description>Secure your APIs with expert tips and best practices to protect against threats and data breaches.</description>
+      <pubDate>Sat, 22 Nov 2025 07:22:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-down-apis/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert GraphQL API development techniques for scalable apps</description>
       <pubDate>Fri, 21 Nov 2025 09:27:59 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-done-right/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity.</description>
-      <pubDate>Fri, 21 Nov 2025 08:35:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
