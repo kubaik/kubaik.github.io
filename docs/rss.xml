@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 17:20:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 18:34:09 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Sat, 22 Nov 2025 18:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>MLOps Done Right</title>
       <link>https://kubaik.github.io/mlops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost your dev career with personal branding tips and coding expertise.</description>
       <pubDate>Fri, 21 Nov 2025 21:23:12 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Fri, 21 Nov 2025 20:29:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
