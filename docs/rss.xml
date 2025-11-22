@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 08:31:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 09:24:22 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Web</title>
+      <link>https://kubaik.github.io/real-time-web/</link>
+      <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
+      <pubDate>Sat, 22 Nov 2025 09:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-web/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Fri, 21 Nov 2025 11:21:51 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Code Duo</title>
-      <link>https://kubaik.github.io/code-duo/</link>
-      <description>Boost coding skills with pair programming. Learn techniques for efficient collaboration.</description>
-      <pubDate>Fri, 21 Nov 2025 10:27:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-duo/</guid>
     </item>
   </channel>
 </rss>
