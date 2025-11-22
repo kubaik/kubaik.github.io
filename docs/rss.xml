@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 03:10:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 04:29:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
+      <description>Simplify security compliance with expert guides on SOC 2 &amp; ISO 27001.</description>
+      <pubDate>Sat, 22 Nov 2025 04:29:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Simplify web accessibility with WCAG guidelines, making online content inclusive for all users.</description>
       <pubDate>Fri, 21 Nov 2025 06:39:14 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Discover the 5G revolution: faster speeds, new possibilities.</description>
-      <pubDate>Fri, 21 Nov 2025 05:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>
