@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 12:46:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 13:28:20 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost results with RL strategies. Discover expert techniques &amp; insights.</description>
+      <pubDate>Sat, 22 Nov 2025 13:28:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning uncovers hidden insights.</description>
       <pubDate>Fri, 21 Nov 2025 16:31:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices.</description>
-      <pubDate>Fri, 21 Nov 2025 15:23:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
