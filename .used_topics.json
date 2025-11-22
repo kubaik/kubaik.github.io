@@ -130,5 +130,6 @@
   "Apache Kafka for Streaming",
   "Ruby on Rails Web Apps",
   "React Native Cross-Platform Apps",
-  "Functional Programming Concepts"
+  "Functional Programming Concepts",
+  "Delta Lake and Data Lakehouse"
 ]
