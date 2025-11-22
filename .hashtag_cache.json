@@ -1727,5 +1727,18 @@
       "RegTech"
     ],
     "topic": "Security Compliance (SOC 2, ISO 27001)"
+  },
+  "application_security_testing_(sast/dast)": {
+    "timestamp": "2025-11-22T05:24:17.640242",
+    "hashtags": [
+      "AppSec",
+      "CyberProtect",
+      "DevSecOps",
+      "SecureCode",
+      "TechRisk",
+      "CloudSecurity",
+      "CodeVulnerability"
+    ],
+    "topic": "Application Security Testing (SAST/DAST)"
   }
 }
