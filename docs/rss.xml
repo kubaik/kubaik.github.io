@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Nov 2025 01:54:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 03:10:13 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Master Git with expert tips and tricks for advanced techniques.</description>
+      <pubDate>Sat, 22 Nov 2025 03:10:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>EDA: Scale Fast</title>
       <link>https://kubaik.github.io/eda-scale-fast/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution: faster speeds, new possibilities.</description>
       <pubDate>Fri, 21 Nov 2025 05:26:42 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Code</title>
-      <link>https://kubaik.github.io/rust-safe-code/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
-      <pubDate>Fri, 21 Nov 2025 04:30:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-code/</guid>
     </item>
   </channel>
 </rss>
