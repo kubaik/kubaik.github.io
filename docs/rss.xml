@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 18:34:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 19:20:17 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Improve code quality with Test-Driven Development (TDD) best practices.</description>
+      <pubDate>Sun, 23 Nov 2025 19:20:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>AI Pulse Check</title>
       <link>https://kubaik.github.io/ai-pulse-check/</link>
@@ -138,13 +145,6 @@
       <description>Learn functional programming basics and concepts in this intro guide.</description>
       <pubDate>Sat, 22 Nov 2025 22:24:10 +0000</pubDate>
       <guid>https://kubaik.github.io/funcprog-101/</guid>
-    </item>
-    <item>
-      <title>Build Once</title>
-      <link>https://kubaik.github.io/build-once/</link>
-      <description>Build mobile apps for both iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Sat, 22 Nov 2025 21:21:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-once/</guid>
     </item>
   </channel>
 </rss>
