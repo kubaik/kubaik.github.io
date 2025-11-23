@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 06:36:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 07:24:03 +0000</lastBuildDate>
+    <item>
+      <title>AI with a Conscience</title>
+      <link>https://kubaik.github.io/ai-with-a-conscience/</link>
+      <description>Explore AI ethics &amp; responsible AI development for a conscious future.</description>
+      <pubDate>Sun, 23 Nov 2025 07:23:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
+    </item>
     <item>
       <title>Dev PM</title>
       <link>https://kubaik.github.io/dev-pm/</link>
@@ -138,13 +145,6 @@
       <description>Learn blockchain basics &amp; discover its power in our beginner&apos;s guide.</description>
       <pubDate>Sat, 22 Nov 2025 10:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-101/</guid>
-    </item>
-    <item>
-      <title>Real-Time Web</title>
-      <link>https://kubaik.github.io/real-time-web/</link>
-      <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
-      <pubDate>Sat, 22 Nov 2025 09:24:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-web/</guid>
     </item>
   </channel>
 </rss>
