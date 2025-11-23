@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 04:40:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 05:25:33 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Learn container security best practices to protect your apps and data.</description>
+      <pubDate>Sun, 23 Nov 2025 05:25:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top BI tools &amp; techniques.</description>
       <pubDate>Sat, 22 Nov 2025 08:31:20 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>Lock Down APIs</title>
-      <link>https://kubaik.github.io/lock-down-apis/</link>
-      <description>Secure your APIs with expert tips and best practices to protect against threats and data breaches.</description>
-      <pubDate>Sat, 22 Nov 2025 07:22:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-down-apis/</guid>
     </item>
   </channel>
 </rss>
