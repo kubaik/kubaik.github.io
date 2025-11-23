@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 13:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 14:22:01 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full Stack</title>
+      <link>https://kubaik.github.io/nextjs-full-stack/</link>
+      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
+      <pubDate>Sun, 23 Nov 2025 14:21:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Streamline ML workflows with MLOps best practices &amp; automation techniques.</description>
       <pubDate>Sat, 22 Nov 2025 17:20:42 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-done-right/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
-      <pubDate>Sat, 22 Nov 2025 16:29:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
