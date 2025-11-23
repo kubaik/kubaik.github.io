@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 05:25:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 06:36:30 +0000</lastBuildDate>
+    <item>
+      <title>Dev PM</title>
+      <link>https://kubaik.github.io/dev-pm/</link>
+      <description>Master project management as a developer with expert tips and strategies.</description>
+      <pubDate>Sun, 23 Nov 2025 06:36:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-pm/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
       <pubDate>Sat, 22 Nov 2025 09:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/real-time-web/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top BI tools &amp; techniques.</description>
-      <pubDate>Sat, 22 Nov 2025 08:31:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
