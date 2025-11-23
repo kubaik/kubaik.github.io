@@ -2004,5 +2004,18 @@
       "DisasterRecovery"
     ],
     "topic": "Incident Response Planning"
+  },
+  "restful_api_design_principles": {
+    "timestamp": "2025-11-23T04:40:01.788580",
+    "hashtags": [
+      "APIDesign",
+      "CloudNative",
+      "DevOps",
+      "APIFirst",
+      "Microservices",
+      "ServerlessArchitecture",
+      "FullStackDevelopment"
+    ],
+    "topic": "RESTful API Design Principles"
   }
 }

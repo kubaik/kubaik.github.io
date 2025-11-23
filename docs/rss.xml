@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 03:59:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 04:40:06 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
+      <pubDate>Sun, 23 Nov 2025 04:40:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Plan to Survive</title>
       <link>https://kubaik.github.io/plan-to-survive/</link>
@@ -138,13 +145,6 @@
       <description>Secure your APIs with expert tips and best practices to protect against threats and data breaches.</description>
       <pubDate>Sat, 22 Nov 2025 07:22:41 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-down-apis/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Sat, 22 Nov 2025 06:34:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
