@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 14:22:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 15:23:34 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD on-the-go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD on-the-go. Learn how to automate testing &amp; deployment anywhere.</description>
+      <pubDate>Sun, 23 Nov 2025 15:23:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Next.js: Full Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Sat, 22 Nov 2025 18:34:03 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>MLOps Done Right</title>
-      <link>https://kubaik.github.io/mlops-done-right/</link>
-      <description>Streamline ML workflows with MLOps best practices &amp; automation techniques.</description>
-      <pubDate>Sat, 22 Nov 2025 17:20:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-done-right/</guid>
     </item>
   </channel>
 </rss>
