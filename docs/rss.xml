@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 17:21:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 18:34:22 +0000</lastBuildDate>
+    <item>
+      <title>AI Pulse Check</title>
+      <link>https://kubaik.github.io/ai-pulse-check/</link>
+      <description>Stay ahead with AI pulse check: Monitor &amp; maintain models for peak performance</description>
+      <pubDate>Sun, 23 Nov 2025 18:34:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for both iOS &amp; Android with one codebase using React Native.</description>
       <pubDate>Sat, 22 Nov 2025 21:21:53 +0000</pubDate>
       <guid>https://kubaik.github.io/build-once/</guid>
-    </item>
-    <item>
-      <title>Rails to Riches</title>
-      <link>https://kubaik.github.io/rails-to-riches/</link>
-      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks.</description>
-      <pubDate>Sat, 22 Nov 2025 20:27:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-to-riches/</guid>
     </item>
   </channel>
 </rss>
