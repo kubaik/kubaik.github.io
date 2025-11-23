@@ -2257,5 +2257,18 @@
       "ServerlessArchitecture"
     ],
     "topic": "Rate Limiting and Throttling"
+  },
+  "oauth_2.0_and_openid_connect": {
+    "timestamp": "2025-11-23T23:23:37.161298",
+    "hashtags": [
+      "IdentityAccess",
+      "CloudSecurity",
+      "TechAuthentication",
+      "OpenSource",
+      "ZeroTrust",
+      "CyberSecurity",
+      "APIsecurity"
+    ],
+    "topic": "OAuth 2.0 and OpenID Connect"
   }
 }
