@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 19:20:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 20:28:08 +0000</lastBuildDate>
+    <item>
+      <title>Write Right</title>
+      <link>https://kubaik.github.io/write-right/</link>
+      <description>Improve your technical writing skills with expert tips and best practices.</description>
+      <pubDate>Sun, 23 Nov 2025 20:28:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-right/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to simplify your data management</description>
       <pubDate>Sat, 22 Nov 2025 23:23:51 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-simplified/</guid>
-    </item>
-    <item>
-      <title>FuncProg 101</title>
-      <link>https://kubaik.github.io/funcprog-101/</link>
-      <description>Learn functional programming basics and concepts in this intro guide.</description>
-      <pubDate>Sat, 22 Nov 2025 22:24:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/funcprog-101/</guid>
     </item>
   </channel>
 </rss>
