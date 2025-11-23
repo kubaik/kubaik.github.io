@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 10:25:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 11:20:02 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Performance</title>
+      <link>https://kubaik.github.io/optimize-performance/</link>
+      <description>Boost efficiency with profiling &amp; benchmarking. Learn to optimize performance and improve your workflow.</description>
+      <pubDate>Sun, 23 Nov 2025 11:19:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-performance/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Improve data accuracy with expert Data Quality Management tips and best practices.</description>
       <pubDate>Sat, 22 Nov 2025 14:21:51 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost results with RL strategies. Discover expert techniques &amp; insights.</description>
-      <pubDate>Sat, 22 Nov 2025 13:28:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
