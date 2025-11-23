@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 15:23:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 16:29:56 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
+      <pubDate>Sun, 23 Nov 2025 16:29:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>CI/CD on-the-go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Unlock real-time data processing with Apache Kafka Streams.</description>
       <pubDate>Sat, 22 Nov 2025 19:19:12 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Boost AI model performance with expert training tips and best practices.</description>
-      <pubDate>Sat, 22 Nov 2025 18:34:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
