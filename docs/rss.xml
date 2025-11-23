@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 08:31:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 09:24:48 +0000</lastBuildDate>
+    <item>
+      <title>Crack Tech Interviews</title>
+      <link>https://kubaik.github.io/crack-tech-interviews/</link>
+      <description>Ace tech interviews with insider tips and tricks. Learn how to prepare and succeed.</description>
+      <pubDate>Sun, 23 Nov 2025 09:24:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
+    </item>
     <item>
       <title>Deep Learning</title>
       <link>https://kubaik.github.io/deep-learning/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials: learn latest features &amp; best practices.</description>
       <pubDate>Sat, 22 Nov 2025 12:46:09 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>iOS with Swift</title>
-      <link>https://kubaik.github.io/ios-with-swift/</link>
-      <description>Learn iOS development with Swift. Discover the power of Apple&apos;s programming language.</description>
-      <pubDate>Sat, 22 Nov 2025 11:19:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-with-swift/</guid>
     </item>
   </channel>
 </rss>
