@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 20:28:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 21:22:35 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Sun, 23 Nov 2025 21:22:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Write Right</title>
       <link>https://kubaik.github.io/write-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with Azure. Discover scalable solutions</description>
       <pubDate>Sun, 23 Nov 2025 02:19:45 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-with-azure/</guid>
-    </item>
-    <item>
-      <title>Delta Lake Simplified</title>
-      <link>https://kubaik.github.io/delta-lake-simplified/</link>
-      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to simplify your data management</description>
-      <pubDate>Sat, 22 Nov 2025 23:23:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-simplified/</guid>
     </item>
   </channel>
 </rss>
