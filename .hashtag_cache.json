@@ -1978,5 +1978,18 @@
       "LakehouseArchitecture"
     ],
     "topic": "Delta Lake and Data Lakehouse"
+  },
+  "azure_cloud_services": {
+    "timestamp": "2025-11-23T02:19:45.214264",
+    "hashtags": [
+      "CloudComputing",
+      "AzureServices",
+      "MicrosoftAzure",
+      "CloudMigration",
+      "DevOpsTools",
+      "ArtificialIntelligence",
+      "DigitalTransformation"
+    ],
+    "topic": "Azure Cloud Services"
   }
 }
