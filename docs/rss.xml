@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 16:29:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 17:21:02 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark Big Data Processing</description>
+      <pubDate>Sun, 23 Nov 2025 17:20:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Code Less, Achieve More</title>
       <link>https://kubaik.github.io/code-less-achieve-more/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks.</description>
       <pubDate>Sat, 22 Nov 2025 20:27:12 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-to-riches/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams.</description>
-      <pubDate>Sat, 22 Nov 2025 19:19:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
