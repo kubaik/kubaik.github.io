@@ -1991,5 +1991,18 @@
       "DigitalTransformation"
     ],
     "topic": "Azure Cloud Services"
+  },
+  "incident_response_planning": {
+    "timestamp": "2025-11-23T03:59:40.403858",
+    "hashtags": [
+      "CyberResilience",
+      "IncidentResponse",
+      "ThreatManagement",
+      "InfoSec",
+      "CloudSecurity",
+      "AIpoweredSecurity",
+      "DisasterRecovery"
+    ],
+    "topic": "Incident Response Planning"
   }
 }
