@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 09:24:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Nov 2025 10:25:31 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Learn Java Spring Boot development with expert tips and tutorials.</description>
+      <pubDate>Sun, 23 Nov 2025 10:25:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>Crack Tech Interviews</title>
       <link>https://kubaik.github.io/crack-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Boost results with RL strategies. Discover expert techniques &amp; insights.</description>
       <pubDate>Sat, 22 Nov 2025 13:28:15 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials: learn latest features &amp; best practices.</description>
-      <pubDate>Sat, 22 Nov 2025 12:46:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
