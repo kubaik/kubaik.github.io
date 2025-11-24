@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 18:38:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 19:19:33 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions. Learn A/B testing strategies to boost conversions.</description>
+      <pubDate>Mon, 24 Nov 2025 19:19:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn to limit excessive requests with rate limiting and throttling techniques.</description>
       <pubDate>Sun, 23 Nov 2025 22:24:38 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flood/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Sun, 23 Nov 2025 21:22:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
