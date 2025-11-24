@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 12:56:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 13:38:31 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with top cloud security best practices and expert tips.</description>
+      <pubDate>Mon, 24 Nov 2025 13:38:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
       <pubDate>Sun, 23 Nov 2025 16:29:51 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>CI/CD on-the-go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD on-the-go. Learn how to automate testing &amp; deployment anywhere.</description>
-      <pubDate>Sun, 23 Nov 2025 15:23:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
