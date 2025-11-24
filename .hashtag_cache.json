@@ -2390,5 +2390,18 @@
       "ServerlessFirst"
     ],
     "topic": "Cloud Cost Optimization"
+  },
+  "canary_deployments": {
+    "timestamp": "2025-11-24T11:23:22.557925",
+    "hashtags": [
+      "CloudNative",
+      "DevOpsTools",
+      "ContinuousDelivery",
+      "Kubernetes",
+      "DeploymentStrategies",
+      "TechInnovations",
+      "SoftwareEngineering"
+    ],
+    "topic": "Canary Deployments"
   }
 }
