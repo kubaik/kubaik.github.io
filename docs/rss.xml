@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 11:23:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 12:56:05 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Unlock BDD basics &amp; simplify testing with our expert guide.</description>
+      <pubDate>Mon, 24 Nov 2025 12:56:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD on-the-go. Learn how to automate testing &amp; deployment anywhere.</description>
       <pubDate>Sun, 23 Nov 2025 15:23:28 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full Stack</title>
-      <link>https://kubaik.github.io/nextjs-full-stack/</link>
-      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
-      <pubDate>Sun, 23 Nov 2025 14:21:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
     </item>
   </channel>
 </rss>
