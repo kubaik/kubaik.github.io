@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 21:25:28 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 22:25:30 +0000</lastBuildDate>
+    <item>
+      <title>Ace Sys Design</title>
+      <link>https://kubaik.github.io/ace-sys-design/</link>
+      <description>Master system design interviews with expert tips and tricks.</description>
+      <pubDate>Mon, 24 Nov 2025 22:25:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ace-sys-design/</guid>
+    </item>
     <item>
       <title>Vuln Mgmt 101</title>
       <link>https://kubaik.github.io/vuln-mgmt-101/</link>
@@ -138,13 +145,6 @@
       <description>Master Federated Learning with expert insights and best practices.</description>
       <pubDate>Mon, 24 Nov 2025 03:59:14 +0000</pubDate>
       <guid>https://kubaik.github.io/fl-done-right/</guid>
-    </item>
-    <item>
-      <title>Jamstack: Fast Sites</title>
-      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
-      <description>Boost site speed with Jamstack architecture. Learn how to build fast, secure sites.</description>
-      <pubDate>Mon, 24 Nov 2025 02:08:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
     </item>
   </channel>
 </rss>

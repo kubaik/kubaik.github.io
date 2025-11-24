@@ -2534,5 +2534,18 @@
       "DevSecOps"
     ],
     "topic": "Vulnerability Management"
+  },
+  "system_design_interview_tips": {
+    "timestamp": "2025-11-24T22:25:24.959111",
+    "hashtags": [
+      "SystemDesign",
+      "TechInterviews",
+      "SoftwareEngineering",
+      "CloudComputing",
+      "DevOps",
+      "CodingChallenges",
+      "ArchitecturePatterns"
+    ],
+    "topic": "System Design Interview Tips"
   }
 }
