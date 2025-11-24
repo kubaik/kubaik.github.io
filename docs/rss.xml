@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 13:38:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 14:27:55 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Improve app performance with expert tips and tools.</description>
+      <pubDate>Mon, 24 Nov 2025 14:27:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>Secure Cloud</title>
       <link>https://kubaik.github.io/secure-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark Big Data Processing</description>
       <pubDate>Sun, 23 Nov 2025 17:20:57 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Code Less, Achieve More</title>
-      <link>https://kubaik.github.io/code-less-achieve-more/</link>
-      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
-      <pubDate>Sun, 23 Nov 2025 16:29:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
     </item>
   </channel>
 </rss>
