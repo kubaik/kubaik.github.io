@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 17:25:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 18:38:21 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Improve coding skills with expert debugging techniques and tools.</description>
+      <pubDate>Mon, 24 Nov 2025 18:38:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Sun, 23 Nov 2025 21:22:30 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Write Right</title>
-      <link>https://kubaik.github.io/write-right/</link>
-      <description>Improve your technical writing skills with expert tips and best practices.</description>
-      <pubDate>Sun, 23 Nov 2025 20:28:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-right/</guid>
     </item>
   </channel>
 </rss>
