@@ -2521,5 +2521,18 @@
       "FutureOfTech"
     ],
     "topic": "Edge Computing Applications"
+  },
+  "vulnerability_management": {
+    "timestamp": "2025-11-24T21:25:23.512501",
+    "hashtags": [
+      "CyberSecurity",
+      "VulnManagement",
+      "ThreatIntelligence",
+      "CloudSecurity",
+      "ZeroTrust",
+      "InfoSec",
+      "DevSecOps"
+    ],
+    "topic": "Vulnerability Management"
   }
 }
