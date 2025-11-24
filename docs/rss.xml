@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 04:41:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 05:28:28 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Learn expert React best practices and patterns for efficient coding.</description>
+      <pubDate>Mon, 24 Nov 2025 05:28:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning Neural Networks.</description>
       <pubDate>Sun, 23 Nov 2025 08:31:33 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning/</guid>
-    </item>
-    <item>
-      <title>AI with a Conscience</title>
-      <link>https://kubaik.github.io/ai-with-a-conscience/</link>
-      <description>Explore AI ethics &amp; responsible AI development for a conscious future.</description>
-      <pubDate>Sun, 23 Nov 2025 07:23:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
     </item>
   </channel>
 </rss>
