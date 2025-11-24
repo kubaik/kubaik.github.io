@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 22:25:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 23:24:42 +0000</lastBuildDate>
+    <item>
+      <title>Build Your Brand</title>
+      <link>https://kubaik.github.io/build-your-brand/</link>
+      <description>Boost your tech career with a strong portfolio. Learn how to build your brand and showcase skills.</description>
+      <pubDate>Mon, 24 Nov 2025 23:24:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-your-brand/</guid>
+    </item>
     <item>
       <title>Ace Sys Design</title>
       <link>https://kubaik.github.io/ace-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective penetration testing methodologies to secure your systems with our expert guide.</description>
       <pubDate>Mon, 24 Nov 2025 04:41:14 +0000</pubDate>
       <guid>https://kubaik.github.io/test-to-secure/</guid>
-    </item>
-    <item>
-      <title>FL Done Right</title>
-      <link>https://kubaik.github.io/fl-done-right/</link>
-      <description>Master Federated Learning with expert insights and best practices.</description>
-      <pubDate>Mon, 24 Nov 2025 03:59:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/fl-done-right/</guid>
     </item>
   </channel>
 </rss>
