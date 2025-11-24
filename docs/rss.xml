@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 19:19:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 20:29:36 +0000</lastBuildDate>
+    <item>
+      <title>Edge Now</title>
+      <link>https://kubaik.github.io/edge-now/</link>
+      <description>Unlock Edge Computing&apos;s potential with our latest insights on its applications and benefits.</description>
+      <pubDate>Mon, 24 Nov 2025 20:29:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-now/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
       <pubDate>Sun, 23 Nov 2025 23:23:36 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>Limit the Flood</title>
-      <link>https://kubaik.github.io/limit-the-flood/</link>
-      <description>Learn to limit excessive requests with rate limiting and throttling techniques.</description>
-      <pubDate>Sun, 23 Nov 2025 22:24:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flood/</guid>
     </item>
   </channel>
 </rss>
