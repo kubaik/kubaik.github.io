@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 02:08:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 03:59:19 +0000</lastBuildDate>
+    <item>
+      <title>FL Done Right</title>
+      <link>https://kubaik.github.io/fl-done-right/</link>
+      <description>Master Federated Learning with expert insights and best practices.</description>
+      <pubDate>Mon, 24 Nov 2025 03:59:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/fl-done-right/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast Sites</title>
       <link>https://kubaik.github.io/jamstack-fast-sites/</link>
@@ -138,13 +145,6 @@
       <description>Master project management as a developer with expert tips and strategies.</description>
       <pubDate>Sun, 23 Nov 2025 06:36:24 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-pm/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Learn container security best practices to protect your apps and data.</description>
-      <pubDate>Sun, 23 Nov 2025 05:25:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
