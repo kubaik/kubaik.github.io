@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 20:29:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 21:25:28 +0000</lastBuildDate>
+    <item>
+      <title>Vuln Mgmt 101</title>
+      <link>https://kubaik.github.io/vuln-mgmt-101/</link>
+      <description>Learn basics of Vulnerability Management in our Vuln Mgmt 101 guide.</description>
+      <pubDate>Mon, 24 Nov 2025 21:25:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuln-mgmt-101/</guid>
+    </item>
     <item>
       <title>Edge Now</title>
       <link>https://kubaik.github.io/edge-now/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with Jamstack architecture. Learn how to build fast, secure sites.</description>
       <pubDate>Mon, 24 Nov 2025 02:08:00 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
-      <pubDate>Sun, 23 Nov 2025 23:23:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
