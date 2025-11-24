@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 15:30:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 16:30:11 +0000</lastBuildDate>
+    <item>
+      <title>AI Revival</title>
+      <link>https://kubaik.github.io/ai-revival/</link>
+      <description>Unlock AI&apos;s potential with Generative AI &amp; Large Language Models</description>
+      <pubDate>Mon, 24 Nov 2025 16:30:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revival/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with Test-Driven Development (TDD) best practices.</description>
       <pubDate>Sun, 23 Nov 2025 19:20:12 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>AI Pulse Check</title>
-      <link>https://kubaik.github.io/ai-pulse-check/</link>
-      <description>Stay ahead with AI pulse check: Monitor &amp; maintain models for peak performance</description>
-      <pubDate>Sun, 23 Nov 2025 18:34:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
     </item>
   </channel>
 </rss>
