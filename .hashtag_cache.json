@@ -2324,5 +2324,18 @@
       "CleanCode"
     ],
     "topic": "React Best Practices and Patterns"
+  },
+  "sql_vs_nosql_databases": {
+    "timestamp": "2025-11-24T06:39:21.235238",
+    "hashtags": [
+      "DatabaseWars",
+      "CloudNative",
+      "DataEngineering",
+      "SQLvsNoSQL",
+      "DevOpsTools",
+      "BigDataManagement",
+      "DatabaseDesign"
+    ],
+    "topic": "SQL vs NoSQL Databases"
   }
 }
