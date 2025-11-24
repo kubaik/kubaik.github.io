@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Nov 2025 23:23:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 02:08:05 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast Sites</title>
+      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
+      <description>Boost site speed with Jamstack architecture. Learn how to build fast, secure sites.</description>
+      <pubDate>Mon, 24 Nov 2025 02:08:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Learn container security best practices to protect your apps and data.</description>
       <pubDate>Sun, 23 Nov 2025 05:25:28 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
-      <pubDate>Sun, 23 Nov 2025 04:40:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
