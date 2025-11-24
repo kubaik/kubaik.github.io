@@ -2377,5 +2377,18 @@
       "TechInnovation"
     ],
     "topic": "Design Patterns in Practice"
+  },
+  "cloud_cost_optimization": {
+    "timestamp": "2025-11-24T10:30:49.506435",
+    "hashtags": [
+      "CloudCosts",
+      "TechDebt",
+      "FinOps",
+      "CloudEconomy",
+      "CostOptimization",
+      "DevSecOps",
+      "ServerlessFirst"
+    ],
+    "topic": "Cloud Cost Optimization"
   }
 }

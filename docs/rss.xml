@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Nov 2025 09:32:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Nov 2025 10:30:54 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spending with expert tips and strategies for cloud cost optimization.</description>
+      <pubDate>Mon, 24 Nov 2025 10:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover the basics of quantum computing and unlock its power in our intro guide, Quantum 101.</description>
       <pubDate>Sun, 23 Nov 2025 13:27:44 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>Crack Code Complexity</title>
-      <link>https://kubaik.github.io/crack-code-complexity/</link>
-      <description>Master algorithm complexity analysis &amp; simplify code with expert insights.</description>
-      <pubDate>Sun, 23 Nov 2025 12:45:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
     </item>
   </channel>
 </rss>
