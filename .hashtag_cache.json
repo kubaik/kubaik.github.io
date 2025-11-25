@@ -2748,5 +2748,18 @@
       "DigitalTransformation"
     ],
     "topic": "IoT Device Management"
+  },
+  "technical_debt_management": {
+    "timestamp": "2025-11-25T16:36:12.200188",
+    "hashtags": [
+      "TechDebt",
+      "CodeQuality",
+      "DevOps",
+      "CloudNative",
+      "SustainabilityInTech",
+      "AgileDevelopment",
+      "DigitalTransformation"
+    ],
+    "topic": "Technical Debt Management"
   }
 }
