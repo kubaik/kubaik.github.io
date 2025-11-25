@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 09:30:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 10:31:57 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS: Utility First</title>
+      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
+      <description>Learn Tailwind CSS Utility-First design for faster styling</description>
+      <pubDate>Tue, 25 Nov 2025 10:31:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock BDD basics &amp; simplify testing with our expert guide.</description>
       <pubDate>Mon, 24 Nov 2025 12:56:00 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>Canary Deploy</title>
-      <link>https://kubaik.github.io/canary-deploy/</link>
-      <description>Learn about Canary Deploy, a safe &amp; gradual rollout strategy for new code releases.</description>
-      <pubDate>Mon, 24 Nov 2025 11:23:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-deploy/</guid>
     </item>
   </channel>
 </rss>
