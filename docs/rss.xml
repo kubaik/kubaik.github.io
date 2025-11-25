@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 16:36:17 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 17:25:44 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up!</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Learn about Service Mesh Architecture and its benefits in &apos;Mesh Up!&apos; Discover how to streamline microservices management.</description>
+      <pubDate>Tue, 25 Nov 2025 17:25:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>Tame Debt</title>
       <link>https://kubaik.github.io/tame-debt/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s potential with our latest insights on its applications and benefits.</description>
       <pubDate>Mon, 24 Nov 2025 20:29:31 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-now/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Improve coding skills with expert debugging techniques and tools.</description>
-      <pubDate>Mon, 24 Nov 2025 18:38:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
