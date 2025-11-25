@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 12:55:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 13:38:38 +0000</lastBuildDate>
+    <item>
+      <title>Boost Memory</title>
+      <link>https://kubaik.github.io/boost-memory/</link>
+      <description>Improve focus &amp; productivity with expert memory management tips.</description>
+      <pubDate>Tue, 25 Nov 2025 13:38:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-memory/</guid>
+    </item>
     <item>
       <title>Cloud Mastery</title>
       <link>https://kubaik.github.io/cloud-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient DevOps with expert best practices and cultural tips.</description>
       <pubDate>Mon, 24 Nov 2025 15:30:20 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Improve app performance with expert tips and tools.</description>
-      <pubDate>Mon, 24 Nov 2025 14:27:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
