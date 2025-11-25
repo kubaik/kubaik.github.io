@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 14:28:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 15:29:35 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Control &amp; manage IoT devices securely with our expert guide.</description>
+      <pubDate>Tue, 25 Nov 2025 15:29:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Unlock PWA Power</title>
       <link>https://kubaik.github.io/unlock-pwa-power/</link>
@@ -138,13 +145,6 @@
       <description>Streamline log data analysis with smart solutions. Boost security &amp; efficiency.</description>
       <pubDate>Mon, 24 Nov 2025 17:25:14 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
-    </item>
-    <item>
-      <title>AI Revival</title>
-      <link>https://kubaik.github.io/ai-revival/</link>
-      <description>Unlock AI&apos;s potential with Generative AI &amp; Large Language Models</description>
-      <pubDate>Mon, 24 Nov 2025 16:30:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revival/</guid>
     </item>
   </channel>
 </rss>
