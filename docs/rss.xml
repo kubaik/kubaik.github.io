@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 15:29:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 16:36:17 +0000</lastBuildDate>
+    <item>
+      <title>Tame Debt</title>
+      <link>https://kubaik.github.io/tame-debt/</link>
+      <description>Master technical debt management with expert strategies to prioritize, reduce, and optimize your codebase.</description>
+      <pubDate>Tue, 25 Nov 2025 16:36:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-debt/</guid>
+    </item>
     <item>
       <title>IoT Device Control</title>
       <link>https://kubaik.github.io/iot-device-control/</link>
@@ -138,13 +145,6 @@
       <description>Improve coding skills with expert debugging techniques and tools.</description>
       <pubDate>Mon, 24 Nov 2025 18:38:15 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-smarter/</guid>
-    </item>
-    <item>
-      <title>Log On: Smart Solutions</title>
-      <link>https://kubaik.github.io/log-on-smart-solutions/</link>
-      <description>Streamline log data analysis with smart solutions. Boost security &amp; efficiency.</description>
-      <pubDate>Mon, 24 Nov 2025 17:25:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
     </item>
   </channel>
 </rss>
