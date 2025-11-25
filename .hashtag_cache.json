@@ -2761,5 +2761,18 @@
       "DigitalTransformation"
     ],
     "topic": "Technical Debt Management"
+  },
+  "service_mesh_architecture": {
+    "timestamp": "2025-11-25T17:25:39.317385",
+    "hashtags": [
+      "ServiceMesh",
+      "CloudNative",
+      "Microservices",
+      "Kubernetes",
+      "DevOpsTools",
+      "Istio",
+      "Observability"
+    ],
+    "topic": "Service Mesh Architecture"
   }
 }
