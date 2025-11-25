@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 08:35:54 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 09:30:46 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Improve backend testing with smarter strategies and techniques.</description>
+      <pubDate>Tue, 25 Nov 2025 09:30:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>SIEM Simplified</title>
       <link>https://kubaik.github.io/siem-simplified/</link>
@@ -82,13 +89,6 @@
       <description>Unlock Edge Computing&apos;s potential with our latest insights on its applications and benefits.</description>
       <pubDate>Mon, 24 Nov 2025 20:29:31 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-now/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize with data-driven decisions. Learn A/B testing strategies to boost conversions.</description>
-      <pubDate>Mon, 24 Nov 2025 19:19:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>Debug Smarter</title>
