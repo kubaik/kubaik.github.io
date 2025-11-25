@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 04:32:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 05:27:31 +0000</lastBuildDate>
+    <item>
+      <title>ML Demystified</title>
+      <link>https://kubaik.github.io/ml-demystified/</link>
+      <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
+      <pubDate>Tue, 25 Nov 2025 05:27:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-demystified/</guid>
+    </item>
     <item>
       <title>Blue-Green Deploy</title>
       <link>https://kubaik.github.io/blue-green-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech &amp; its revolutionary impact on industries</description>
       <pubDate>Mon, 24 Nov 2025 08:37:15 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twins/</guid>
-    </item>
-    <item>
-      <title>Boost Engagement</title>
-      <link>https://kubaik.github.io/boost-engagement/</link>
-      <description>Maximize user interaction with strategic push notifications. Learn how to boost engagement now.</description>
-      <pubDate>Mon, 24 Nov 2025 07:25:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-engagement/</guid>
     </item>
   </channel>
 </rss>
