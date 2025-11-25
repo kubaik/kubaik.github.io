@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 05:27:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 06:40:09 +0000</lastBuildDate>
+    <item>
+      <title>Designing Distributed</title>
+      <link>https://kubaik.github.io/designing-distributed/</link>
+      <description>Learn Distributed Systems Design principles and best practices for scalable, efficient, and fault-tolerant systems.</description>
+      <pubDate>Tue, 25 Nov 2025 06:40:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/designing-distributed/</guid>
+    </item>
     <item>
       <title>ML Demystified</title>
       <link>https://kubaik.github.io/ml-demystified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert design patterns in practice, elevate your craft with &apos;Design Done Right&apos;</description>
       <pubDate>Mon, 24 Nov 2025 09:32:36 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Digital Twins</title>
-      <link>https://kubaik.github.io/digital-twins/</link>
-      <description>Discover Digital Twin tech &amp; its revolutionary impact on industries</description>
-      <pubDate>Mon, 24 Nov 2025 08:37:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twins/</guid>
     </item>
   </channel>
 </rss>
