@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 18:39:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 19:22:47 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure zero downtime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
+      <pubDate>Tue, 25 Nov 2025 19:22:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>AutoML Boost</title>
       <link>https://kubaik.github.io/automl-boost/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and tricks.</description>
       <pubDate>Mon, 24 Nov 2025 22:25:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ace-sys-design/</guid>
-    </item>
-    <item>
-      <title>Vuln Mgmt 101</title>
-      <link>https://kubaik.github.io/vuln-mgmt-101/</link>
-      <description>Learn basics of Vulnerability Management in our Vuln Mgmt 101 guide.</description>
-      <pubDate>Mon, 24 Nov 2025 21:25:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-mgmt-101/</guid>
     </item>
   </channel>
 </rss>
