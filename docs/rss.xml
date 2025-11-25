@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 19:22:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 20:30:25 +0000</lastBuildDate>
+    <item>
+      <title>Scale with TypeScript</title>
+      <link>https://kubaik.github.io/scale-with-typescript/</link>
+      <description>Build scalable apps with TypeScript. Learn how to boost performance &amp; reliability in large-scale applications.</description>
+      <pubDate>Tue, 25 Nov 2025 20:30:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech career with a strong portfolio. Learn how to build your brand and showcase skills.</description>
       <pubDate>Mon, 24 Nov 2025 23:24:36 +0000</pubDate>
       <guid>https://kubaik.github.io/build-your-brand/</guid>
-    </item>
-    <item>
-      <title>Ace Sys Design</title>
-      <link>https://kubaik.github.io/ace-sys-design/</link>
-      <description>Master system design interviews with expert tips and tricks.</description>
-      <pubDate>Mon, 24 Nov 2025 22:25:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-sys-design/</guid>
     </item>
   </channel>
 </rss>
