@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 10:31:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 11:24:02 +0000</lastBuildDate>
+    <item>
+      <title>Tune Up!</title>
+      <link>https://kubaik.github.io/tune-up/</link>
+      <description>Optimize model performance with expert Hyperparameter Tuning Methods.</description>
+      <pubDate>Tue, 25 Nov 2025 11:23:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-up/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with top cloud security best practices and expert tips.</description>
       <pubDate>Mon, 24 Nov 2025 13:38:25 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Unlock BDD basics &amp; simplify testing with our expert guide.</description>
-      <pubDate>Mon, 24 Nov 2025 12:56:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
