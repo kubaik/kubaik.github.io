@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 11:24:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 12:55:21 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Mastery</title>
+      <link>https://kubaik.github.io/cloud-mastery/</link>
+      <description>Unlock cloud potential with expert AWS architecture guidance.</description>
+      <pubDate>Tue, 25 Nov 2025 12:55:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-mastery/</guid>
+    </item>
     <item>
       <title>Tune Up!</title>
       <link>https://kubaik.github.io/tune-up/</link>
@@ -138,13 +145,6 @@
       <description>Improve app performance with expert tips and tools.</description>
       <pubDate>Mon, 24 Nov 2025 14:27:50 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>Secure Cloud</title>
-      <link>https://kubaik.github.io/secure-cloud/</link>
-      <description>Protect your data with top cloud security best practices and expert tips.</description>
-      <pubDate>Mon, 24 Nov 2025 13:38:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-cloud/</guid>
     </item>
   </channel>
 </rss>
