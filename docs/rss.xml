@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 21:24:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 22:26:19 +0000</lastBuildDate>
+    <item>
+      <title>Write Right</title>
+      <link>https://kubaik.github.io/write-right/</link>
+      <description>Improve your technical writing skills with expert tips and best practices.</description>
+      <pubDate>Tue, 25 Nov 2025 22:26:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-right/</guid>
+    </item>
     <item>
       <title>Unlock Snowflake</title>
       <link>https://kubaik.github.io/unlock-snowflake/</link>
@@ -138,13 +145,6 @@
       <description>Unlock instant insights with real-time data processing. Learn how.</description>
       <pubDate>Tue, 25 Nov 2025 03:51:28 +0000</pubDate>
       <guid>https://kubaik.github.io/process-now/</guid>
-    </item>
-    <item>
-      <title>AI Forecasting</title>
-      <link>https://kubaik.github.io/ai-forecasting/</link>
-      <description>Unlock accurate predictions with AI forecasting. Learn how to apply AI to time series forecasting.</description>
-      <pubDate>Tue, 25 Nov 2025 02:01:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasting/</guid>
     </item>
   </channel>
 </rss>
