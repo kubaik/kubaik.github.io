@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Nov 2025 23:24:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 02:01:38 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover Explainable AI (XAI) techniques to unlock transparent &amp; trustworthy AI models.</description>
+      <pubDate>Wed, 26 Nov 2025 02:01:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
       <pubDate>Tue, 25 Nov 2025 05:27:25 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-demystified/</guid>
-    </item>
-    <item>
-      <title>Blue-Green Deploy</title>
-      <link>https://kubaik.github.io/blue-green-deploy/</link>
-      <description>Learn Blue-Green Deployment, a seamless release strategy for zero-downtime updates.</description>
-      <pubDate>Tue, 25 Nov 2025 04:32:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-deploy/</guid>
     </item>
   </channel>
 </rss>
