@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 02:01:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 03:50:39 +0000</lastBuildDate>
+    <item>
+      <title>Profile &amp; Optimize</title>
+      <link>https://kubaik.github.io/profile-optimize/</link>
+      <description>Boost performance with profiling &amp; benchmarking. Learn how to optimize your code.</description>
+      <pubDate>Wed, 26 Nov 2025 03:50:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/profile-optimize/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Learn Distributed Systems Design principles and best practices for scalable, efficient, and fault-tolerant systems.</description>
       <pubDate>Tue, 25 Nov 2025 06:40:03 +0000</pubDate>
       <guid>https://kubaik.github.io/designing-distributed/</guid>
-    </item>
-    <item>
-      <title>ML Demystified</title>
-      <link>https://kubaik.github.io/ml-demystified/</link>
-      <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
-      <pubDate>Tue, 25 Nov 2025 05:27:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-demystified/</guid>
     </item>
   </channel>
 </rss>
