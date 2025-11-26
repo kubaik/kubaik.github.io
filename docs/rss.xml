@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 17:24:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 18:34:24 +0000</lastBuildDate>
+    <item>
+      <title>Secure APIs</title>
+      <link>https://kubaik.github.io/secure-apis/</link>
+      <description>Learn API security best practices to protect your data and prevent attacks.</description>
+      <pubDate>Wed, 26 Nov 2025 18:34:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-apis/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Snowflake&apos;s full potential with expert tips and insights on maximizing the cloud data platform&apos;s capabilities.</description>
       <pubDate>Tue, 25 Nov 2025 21:24:07 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>Scale with TypeScript</title>
-      <link>https://kubaik.github.io/scale-with-typescript/</link>
-      <description>Build scalable apps with TypeScript. Learn how to boost performance &amp; reliability in large-scale applications.</description>
-      <pubDate>Tue, 25 Nov 2025 20:30:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
     </item>
   </channel>
 </rss>
