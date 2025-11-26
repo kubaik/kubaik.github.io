@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 12:56:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 13:39:47 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up!</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Unlock microservice management with Service Mesh Architecture. Learn more!</description>
+      <pubDate>Wed, 26 Nov 2025 13:39:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -124,13 +131,6 @@
       <description>Unlock efficient AI with AutoML Boost, exploring Neural Architecture Search for optimized models.</description>
       <pubDate>Tue, 25 Nov 2025 18:39:14 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-boost/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Learn about Service Mesh Architecture and its benefits in &apos;Mesh Up!&apos; Discover how to streamline microservices management.</description>
-      <pubDate>Tue, 25 Nov 2025 17:25:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
     <item>
       <title>Tame Debt</title>

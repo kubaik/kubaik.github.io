@@ -13,5 +13,6 @@
   "Building a Tech Portfolio",
   "Incident Response Planning",
   "Quantum Computing Basics",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Service Mesh Architecture"
 ]
