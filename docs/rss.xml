@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 20:28:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 21:23:10 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twins</title>
+      <link>https://kubaik.github.io/digital-twins/</link>
+      <description>Discover Digital Twin tech, revolutionizing industries with virtual replicas.</description>
+      <pubDate>Wed, 26 Nov 2025 21:23:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twins/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover Explainable AI (XAI) techniques to unlock transparent &amp; trustworthy AI models.</description>
       <pubDate>Wed, 26 Nov 2025 02:01:33 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-xai/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Expert tips &amp; tutorials.</description>
-      <pubDate>Tue, 25 Nov 2025 23:24:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
