@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 16:34:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 17:24:32 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques and best practices.</description>
+      <pubDate>Wed, 26 Nov 2025 17:24:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable apps with TypeScript. Learn how to boost performance &amp; reliability in large-scale applications.</description>
       <pubDate>Tue, 25 Nov 2025 20:30:19 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure zero downtime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
-      <pubDate>Tue, 25 Nov 2025 19:22:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
