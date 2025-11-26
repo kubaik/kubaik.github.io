@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 03:50:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 04:33:08 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve productivity with Doc Right. Learn documentation best practices.</description>
+      <pubDate>Wed, 26 Nov 2025 04:33:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Profile &amp; Optimize</title>
       <link>https://kubaik.github.io/profile-optimize/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with DW Solutions, expert data warehousing services for informed business decisions.</description>
       <pubDate>Tue, 25 Nov 2025 07:26:16 +0000</pubDate>
       <guid>https://kubaik.github.io/dw-solutions/</guid>
-    </item>
-    <item>
-      <title>Designing Distributed</title>
-      <link>https://kubaik.github.io/designing-distributed/</link>
-      <description>Learn Distributed Systems Design principles and best practices for scalable, efficient, and fault-tolerant systems.</description>
-      <pubDate>Tue, 25 Nov 2025 06:40:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/designing-distributed/</guid>
     </item>
   </channel>
 </rss>
