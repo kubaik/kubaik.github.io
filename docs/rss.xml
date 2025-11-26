@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 15:27:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 16:34:06 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Wed, 26 Nov 2025 16:34:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Ensure zero downtime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
       <pubDate>Tue, 25 Nov 2025 19:22:41 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>AutoML Boost</title>
-      <link>https://kubaik.github.io/automl-boost/</link>
-      <description>Unlock efficient AI with AutoML Boost, exploring Neural Architecture Search for optimized models.</description>
-      <pubDate>Tue, 25 Nov 2025 18:39:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-boost/</guid>
     </item>
   </channel>
 </rss>
