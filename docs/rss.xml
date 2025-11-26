@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 19:20:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 20:28:05 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Boost coding efficiency with expert debugging techniques.</description>
+      <pubDate>Wed, 26 Nov 2025 20:27:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert tips &amp; tutorials.</description>
       <pubDate>Tue, 25 Nov 2025 23:24:04 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Write Right</title>
-      <link>https://kubaik.github.io/write-right/</link>
-      <description>Improve your technical writing skills with expert tips and best practices.</description>
-      <pubDate>Tue, 25 Nov 2025 22:26:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-right/</guid>
     </item>
   </channel>
 </rss>
