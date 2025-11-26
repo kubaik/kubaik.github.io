@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 13:39:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 14:27:58 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehousing Simplified</title>
+      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
+      <description>Simplify data management with our expert solutions. Learn how to streamline data warehousing.</description>
+      <pubDate>Wed, 26 Nov 2025 14:27:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
+    </item>
     <item>
       <title>Mesh Up!</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Master technical debt management with expert strategies to prioritize, reduce, and optimize your codebase.</description>
       <pubDate>Tue, 25 Nov 2025 16:36:12 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-debt/</guid>
-    </item>
-    <item>
-      <title>IoT Device Control</title>
-      <link>https://kubaik.github.io/iot-device-control/</link>
-      <description>Control &amp; manage IoT devices securely with our expert guide.</description>
-      <pubDate>Tue, 25 Nov 2025 15:29:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-device-control/</guid>
     </item>
   </channel>
 </rss>
