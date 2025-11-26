@@ -12,5 +12,6 @@
   "Rust Memory Safety",
   "Building a Tech Portfolio",
   "Incident Response Planning",
-  "Quantum Computing Basics"
+  "Quantum Computing Basics",
+  "Caching Strategies (Redis, Memcached)"
 ]

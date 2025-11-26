@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 11:23:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 12:56:47 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Cache</title>
+      <link>https://kubaik.github.io/boost-speed-cache/</link>
+      <description>Supercharge your site with caching strategies using Redis &amp; Memcached.</description>
+      <pubDate>Wed, 26 Nov 2025 12:56:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Control &amp; manage IoT devices securely with our expert guide.</description>
       <pubDate>Tue, 25 Nov 2025 15:29:30 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-control/</guid>
-    </item>
-    <item>
-      <title>Unlock PWA Power</title>
-      <link>https://kubaik.github.io/unlock-pwa-power/</link>
-      <description>Boost user engagement with Progressive Web Apps. Learn how to unlock PWA power and elevate your mobile experience.</description>
-      <pubDate>Tue, 25 Nov 2025 14:27:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-pwa-power/</guid>
     </item>
   </channel>
 </rss>
