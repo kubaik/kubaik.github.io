@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 14:27:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Nov 2025 15:27:05 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Learn expert-approved React best practices and patterns for efficient development.</description>
+      <pubDate>Wed, 26 Nov 2025 15:26:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Data Warehousing Simplified</title>
       <link>https://kubaik.github.io/data-warehousing-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with AutoML Boost, exploring Neural Architecture Search for optimized models.</description>
       <pubDate>Tue, 25 Nov 2025 18:39:14 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-boost/</guid>
-    </item>
-    <item>
-      <title>Tame Debt</title>
-      <link>https://kubaik.github.io/tame-debt/</link>
-      <description>Master technical debt management with expert strategies to prioritize, reduce, and optimize your codebase.</description>
-      <pubDate>Tue, 25 Nov 2025 16:36:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-debt/</guid>
     </item>
   </channel>
 </rss>
