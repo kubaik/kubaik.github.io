@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 04:32:21 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 05:27:39 +0000</lastBuildDate>
+    <item>
+      <title>Flutter Fast</title>
+      <link>https://kubaik.github.io/flutter-fast/</link>
+      <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and best practices.</description>
+      <pubDate>Thu, 27 Nov 2025 05:27:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-fast/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust&apos;s design ensures memory safety, preventing common errors and bugs.</description>
       <pubDate>Wed, 26 Nov 2025 08:35:45 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-by-design/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Unlock GCP: Discover Google Cloud Platform&apos;s full potential</description>
-      <pubDate>Wed, 26 Nov 2025 07:25:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
