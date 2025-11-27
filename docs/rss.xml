@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 17:22:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 18:35:33 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Optimize AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Thu, 27 Nov 2025 18:35:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>AI Evolved</title>
       <link>https://kubaik.github.io/ai-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech, revolutionizing industries with virtual replicas.</description>
       <pubDate>Wed, 26 Nov 2025 21:23:04 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twins/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Boost coding efficiency with expert debugging techniques.</description>
-      <pubDate>Wed, 26 Nov 2025 20:27:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
