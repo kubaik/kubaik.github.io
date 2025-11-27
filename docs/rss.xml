@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 13:36:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 14:26:56 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient AI with Transfer Learning. Learn how to implement it for smarter models.</description>
+      <pubDate>Thu, 27 Nov 2025 14:26:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>ASO Boost</title>
       <link>https://kubaik.github.io/aso-boost/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with pair programming techniques and best practices.</description>
       <pubDate>Wed, 26 Nov 2025 17:24:26 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Wed, 26 Nov 2025 16:34:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
