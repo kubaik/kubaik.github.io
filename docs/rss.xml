@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 07:27:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 08:35:57 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for better user experience.</description>
+      <pubDate>Thu, 27 Nov 2025 08:35:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover the basics of quantum computing and unlock its power.</description>
       <pubDate>Wed, 26 Nov 2025 11:23:21 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>Plan to Respond</title>
-      <link>https://kubaik.github.io/plan-to-respond/</link>
-      <description>Prepare for the unexpected with a solid incident response plan. Learn how to respond quickly and effectively.</description>
-      <pubDate>Wed, 26 Nov 2025 10:30:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/plan-to-respond/</guid>
     </item>
   </channel>
 </rss>
