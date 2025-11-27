@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 20:26:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 21:23:09 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Optimize with serverless architecture patterns. Learn expert strategies for scalable, cost-effective applications.</description>
+      <pubDate>Thu, 27 Nov 2025 21:23:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>RL Wins</title>
       <link>https://kubaik.github.io/rl-wins/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s potential with innovative applications.</description>
       <pubDate>Thu, 27 Nov 2025 01:59:04 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-up/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
-      <pubDate>Wed, 26 Nov 2025 23:24:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
