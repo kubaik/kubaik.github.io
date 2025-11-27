@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 01:59:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 03:17:55 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
+      <pubDate>Thu, 27 Nov 2025 03:17:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Edge Up</title>
       <link>https://kubaik.github.io/edge-up/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Wed, 26 Nov 2025 06:39:36 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-smarter/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Prep</title>
-      <link>https://kubaik.github.io/tech-interview-prep/</link>
-      <description>Crack tech interviews with ease. Get insider tips and prep guide.</description>
-      <pubDate>Wed, 26 Nov 2025 05:26:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
     </item>
   </channel>
 </rss>
