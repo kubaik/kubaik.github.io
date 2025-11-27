@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 22:24:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 23:24:24 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock model potential with expert feature engineering techniques.</description>
+      <pubDate>Thu, 27 Nov 2025 23:24:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Learn practical design patterns to elevate your craft and create stunning visuals.</description>
       <pubDate>Thu, 27 Nov 2025 04:32:15 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
-      <pubDate>Thu, 27 Nov 2025 03:17:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
