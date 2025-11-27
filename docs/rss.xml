@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 09:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 10:30:23 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn expert RESTful API design principles for scalable &amp; secure APIs.</description>
+      <pubDate>Thu, 27 Nov 2025 10:30:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Unlock PWA</title>
       <link>https://kubaik.github.io/unlock-pwa/</link>
@@ -138,13 +145,6 @@
       <description>Unlock microservice management with Service Mesh Architecture. Learn more!</description>
       <pubDate>Wed, 26 Nov 2025 13:39:42 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Supercharge your site with caching strategies using Redis &amp; Memcached.</description>
-      <pubDate>Wed, 26 Nov 2025 12:56:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
