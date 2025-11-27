@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 10:30:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 11:23:32 +0000</lastBuildDate>
+    <item>
+      <title>Secure the Cloud</title>
+      <link>https://kubaik.github.io/secure-the-cloud/</link>
+      <description>Protect your cloud data with expert security tips and best practices.</description>
+      <pubDate>Thu, 27 Nov 2025 11:23:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-the-cloud/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Simplify data management with our expert solutions. Learn how to streamline data warehousing.</description>
       <pubDate>Wed, 26 Nov 2025 14:27:52 +0000</pubDate>
       <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservice management with Service Mesh Architecture. Learn more!</description>
-      <pubDate>Wed, 26 Nov 2025 13:39:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
