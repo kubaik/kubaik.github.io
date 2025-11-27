@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 03:17:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 04:32:21 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn practical design patterns to elevate your craft and create stunning visuals.</description>
+      <pubDate>Thu, 27 Nov 2025 04:32:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP: Discover Google Cloud Platform&apos;s full potential</description>
       <pubDate>Wed, 26 Nov 2025 07:25:24 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>Tune Smarter</title>
-      <link>https://kubaik.github.io/tune-smarter/</link>
-      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
-      <pubDate>Wed, 26 Nov 2025 06:39:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-smarter/</guid>
     </item>
   </channel>
 </rss>
