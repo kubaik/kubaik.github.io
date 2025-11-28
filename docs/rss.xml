@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 01:58:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 03:17:37 +0000</lastBuildDate>
+    <item>
+      <title>Fix Before Fail</title>
+      <link>https://kubaik.github.io/fix-before-fail/</link>
+      <description>Proactively fix vulnerabilities before they fail. Learn how with our expert guide to vulnerability management.</description>
+      <pubDate>Fri, 28 Nov 2025 03:17:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-before-fail/</guid>
+    </item>
     <item>
       <title>Crack System Design</title>
       <link>https://kubaik.github.io/crack-system-design/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks and best practices to manage data effectively.</description>
       <pubDate>Thu, 27 Nov 2025 06:40:01 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Flutter Fast</title>
-      <link>https://kubaik.github.io/flutter-fast/</link>
-      <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and best practices.</description>
-      <pubDate>Thu, 27 Nov 2025 05:27:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-fast/</guid>
     </item>
   </channel>
 </rss>
