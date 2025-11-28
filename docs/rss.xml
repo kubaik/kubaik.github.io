@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 03:17:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 04:31:32 +0000</lastBuildDate>
+    <item>
+      <title>Normalize Your DB</title>
+      <link>https://kubaik.github.io/normalize-your-db/</link>
+      <description>Improve database efficiency with normalization techniques and best practices.</description>
+      <pubDate>Fri, 28 Nov 2025 04:31:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/normalize-your-db/</guid>
+    </item>
     <item>
       <title>Fix Before Fail</title>
       <link>https://kubaik.github.io/fix-before-fail/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
       <pubDate>Thu, 27 Nov 2025 07:26:56 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-made-easy/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks and best practices to manage data effectively.</description>
-      <pubDate>Thu, 27 Nov 2025 06:40:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
