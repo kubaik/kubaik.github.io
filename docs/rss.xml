@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 05:27:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 06:40:04 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Streamline cloud migration with expert strategies &amp; best practices.</description>
+      <pubDate>Fri, 28 Nov 2025 06:39:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Delta Lake Unleashed</title>
       <link>https://kubaik.github.io/delta-lake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Progressive Web Apps. Learn how to unlock fast, reliable, and engaging experiences.</description>
       <pubDate>Thu, 27 Nov 2025 09:29:15 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-pwa/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for better user experience.</description>
-      <pubDate>Thu, 27 Nov 2025 08:35:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
