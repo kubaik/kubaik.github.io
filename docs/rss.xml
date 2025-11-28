@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 17:23:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 18:35:41 +0000</lastBuildDate>
+    <item>
+      <title>Process Now</title>
+      <link>https://kubaik.github.io/process-now/</link>
+      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
+      <pubDate>Fri, 28 Nov 2025 18:35:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/process-now/</guid>
+    </item>
     <item>
       <title>CI/CD on-the-go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with serverless architecture patterns. Learn expert strategies for scalable, cost-effective applications.</description>
       <pubDate>Thu, 27 Nov 2025 21:23:03 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Discover winning Reinforcement Learning strategies and boost AI performance.</description>
-      <pubDate>Thu, 27 Nov 2025 20:26:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
