@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 10:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 11:23:01 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with our expert guide and secure your apps effortlessly.</description>
+      <pubDate>Fri, 28 Nov 2025 11:22:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility-First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn how to implement it for smarter models.</description>
       <pubDate>Thu, 27 Nov 2025 14:26:50 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>ASO Boost</title>
-      <link>https://kubaik.github.io/aso-boost/</link>
-      <description>Maximize app visibility with ASO Boost. Learn expert tips to increase downloads.</description>
-      <pubDate>Thu, 27 Nov 2025 13:36:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/aso-boost/</guid>
     </item>
   </channel>
 </rss>
