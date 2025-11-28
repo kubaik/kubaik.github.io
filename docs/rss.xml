@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 18:35:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 19:20:53 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Accelerated</title>
+      <link>https://kubaik.github.io/automl-accelerated/</link>
+      <description>Unlock efficient AI model development with AutoML Accelerated, exploring Neural Architecture Search innovations.</description>
+      <pubDate>Fri, 28 Nov 2025 19:20:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-accelerated/</guid>
+    </item>
     <item>
       <title>Process Now</title>
       <link>https://kubaik.github.io/process-now/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
       <pubDate>Thu, 27 Nov 2025 22:24:48 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Optimize with serverless architecture patterns. Learn expert strategies for scalable, cost-effective applications.</description>
-      <pubDate>Thu, 27 Nov 2025 21:23:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
