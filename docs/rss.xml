@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 12:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 13:35:05 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Fri, 28 Nov 2025 13:34:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Unlock powerful search with Vector DBs &amp; embeddings. Learn how to revolutionize data retrieval.</description>
       <pubDate>Thu, 27 Nov 2025 16:32:58 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>TS Power Types</title>
-      <link>https://kubaik.github.io/ts-power-types/</link>
-      <description>Unlock TypeScript&apos;s full potential with advanced power types.</description>
-      <pubDate>Thu, 27 Nov 2025 15:27:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ts-power-types/</guid>
     </item>
   </channel>
 </rss>
