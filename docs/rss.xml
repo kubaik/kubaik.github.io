@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 07:26:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 08:36:01 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Unlock real-time engagement with live web apps, enhancing user experience.</description>
+      <pubDate>Fri, 28 Nov 2025 08:35:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>NLP Insights</title>
       <link>https://kubaik.github.io/nlp-insights/</link>
@@ -138,13 +145,6 @@
       <description>Protect your cloud data with expert security tips and best practices.</description>
       <pubDate>Thu, 27 Nov 2025 11:23:26 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-the-cloud/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn expert RESTful API design principles for scalable &amp; secure APIs.</description>
-      <pubDate>Thu, 27 Nov 2025 10:30:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
