@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Nov 2025 23:24:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 01:58:45 +0000</lastBuildDate>
+    <item>
+      <title>Crack System Design</title>
+      <link>https://kubaik.github.io/crack-system-design/</link>
+      <description>Master system design interviews with expert tips and tricks.</description>
+      <pubDate>Fri, 28 Nov 2025 01:58:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-system-design/</guid>
+    </item>
     <item>
       <title>Boost Models</title>
       <link>https://kubaik.github.io/boost-models/</link>
@@ -138,13 +145,6 @@
       <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and best practices.</description>
       <pubDate>Thu, 27 Nov 2025 05:27:33 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-fast/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn practical design patterns to elevate your craft and create stunning visuals.</description>
-      <pubDate>Thu, 27 Nov 2025 04:32:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
