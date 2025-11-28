@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 15:26:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 16:32:39 +0000</lastBuildDate>
+    <item>
+      <title>Canary Deploy</title>
+      <link>https://kubaik.github.io/canary-deploy/</link>
+      <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new software releases.</description>
+      <pubDate>Fri, 28 Nov 2025 16:32:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/canary-deploy/</guid>
+    </item>
     <item>
       <title>AI at the Edge</title>
       <link>https://kubaik.github.io/ai-at-the-edge/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Java Spring Boot&apos;s full potential &amp; boost dev productivity with expert tips.</description>
       <pubDate>Thu, 27 Nov 2025 19:20:13 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-dev-with-spring/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Optimize AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Thu, 27 Nov 2025 18:35:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
