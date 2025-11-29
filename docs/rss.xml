@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 18:35:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 19:20:12 +0000</lastBuildDate>
+    <item>
+      <title>Boost WA Speed</title>
+      <link>https://kubaik.github.io/boost-wa-speed/</link>
+      <description>Boost WebAssembly speed with expert optimization tips and tricks.</description>
+      <pubDate>Sat, 29 Nov 2025 19:20:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
+    </item>
     <item>
       <title>Vision Tech</title>
       <link>https://kubaik.github.io/vision-tech/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable infrastructure with AWS Cloud Architecture. Learn more.</description>
       <pubDate>Fri, 28 Nov 2025 22:24:04 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-power/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; how to protect your network with a &apos;never trust, always verify&apos; approach.</description>
-      <pubDate>Fri, 28 Nov 2025 21:22:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
