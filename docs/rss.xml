@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 16:30:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 17:22:02 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Load</title>
+      <link>https://kubaik.github.io/limit-the-load/</link>
+      <description>Learn how rate limiting &amp; throttling protect your API from abuse and overload, ensuring reliable performance.</description>
+      <pubDate>Sat, 29 Nov 2025 17:21:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-load/</guid>
+    </item>
     <item>
       <title>Visualize Smart</title>
       <link>https://kubaik.github.io/visualize-smart/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark big data processing. Learn how to spark big data analytics and drive business growth.</description>
       <pubDate>Fri, 28 Nov 2025 20:28:36 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Unlock efficient AI model development with AutoML Accelerated, exploring Neural Architecture Search innovations.</description>
-      <pubDate>Fri, 28 Nov 2025 19:20:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
