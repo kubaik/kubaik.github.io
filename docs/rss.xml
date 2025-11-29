@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 22:24:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 23:24:15 +0000</lastBuildDate>
+    <item>
+      <title>Boost Network Speed</title>
+      <link>https://kubaik.github.io/boost-network-speed/</link>
+      <description>Maximize network speed with expert tips and optimization techniques.</description>
+      <pubDate>Sat, 29 Nov 2025 23:24:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-network-speed/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Optimize app performance with expert tips and tools.</description>
       <pubDate>Sat, 29 Nov 2025 04:30:47 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>MLOps Done Right</title>
-      <link>https://kubaik.github.io/mlops-done-right/</link>
-      <description>Streamline ML workflow with MLOps best practices and automation techniques.</description>
-      <pubDate>Sat, 29 Nov 2025 03:17:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-done-right/</guid>
     </item>
   </channel>
 </rss>
