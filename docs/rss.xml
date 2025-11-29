@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 15:24:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 16:30:54 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn to visualize smart and make informed decisions.</description>
+      <pubDate>Sat, 29 Nov 2025 16:30:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI model development with AutoML Accelerated, exploring Neural Architecture Search innovations.</description>
       <pubDate>Fri, 28 Nov 2025 19:20:47 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>Process Now</title>
-      <link>https://kubaik.github.io/process-now/</link>
-      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
-      <pubDate>Fri, 28 Nov 2025 18:35:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/process-now/</guid>
     </item>
   </channel>
 </rss>
