@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 20:27:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 21:22:37 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Optimize AI model training with expert best practices &amp; maximize performance.</description>
+      <pubDate>Sat, 29 Nov 2025 21:22:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>SRE Simplified</title>
       <link>https://kubaik.github.io/sre-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials, featuring arrow functions, async/await, and more.</description>
       <pubDate>Sat, 29 Nov 2025 01:58:17 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>App Architect</title>
-      <link>https://kubaik.github.io/app-architect/</link>
-      <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
-      <pubDate>Fri, 28 Nov 2025 23:24:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-architect/</guid>
     </item>
   </channel>
 </rss>
