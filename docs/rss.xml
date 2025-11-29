@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Nov 2025 23:24:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 01:58:23 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Unlock modern JavaScript with ES6+ essentials, featuring arrow functions, async/await, and more.</description>
+      <pubDate>Sat, 29 Nov 2025 01:58:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>App Architect</title>
       <link>https://kubaik.github.io/app-architect/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data potential with Delta Lake &amp; Data Lakehouse. Learn more</description>
       <pubDate>Fri, 28 Nov 2025 05:27:18 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
-    </item>
-    <item>
-      <title>Normalize Your DB</title>
-      <link>https://kubaik.github.io/normalize-your-db/</link>
-      <description>Improve database efficiency with normalization techniques and best practices.</description>
-      <pubDate>Fri, 28 Nov 2025 04:31:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/normalize-your-db/</guid>
     </item>
   </channel>
 </rss>
