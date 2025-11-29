@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 09:26:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 10:26:12 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Essentials</title>
+      <link>https://kubaik.github.io/siem-essentials/</link>
+      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
+      <pubDate>Sat, 29 Nov 2025 10:26:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-essentials/</guid>
+    </item>
     <item>
       <title>FP Fundamentals</title>
       <link>https://kubaik.github.io/fp-fundamentals/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Fri, 28 Nov 2025 13:34:59 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>VR Beyond Gaming</title>
-      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
-      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; revolutionizing experiences.</description>
-      <pubDate>Fri, 28 Nov 2025 12:54:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
     </item>
   </channel>
 </rss>
