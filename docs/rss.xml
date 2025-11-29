@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 10:26:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 11:20:31 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Learn IoT architecture best practices with our expert blueprint guide.</description>
+      <pubDate>Sat, 29 Nov 2025 11:20:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Fri, 28 Nov 2025 14:26:21 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Fri, 28 Nov 2025 13:34:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
