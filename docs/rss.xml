@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 16:30:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 17:22:13 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data: Learn A/B testing &amp; experimentation strategies to boost conversions.</description>
+      <pubDate>Sun, 30 Nov 2025 17:22:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient ops with SRE. Learn how to simplify &amp; improve reliability</description>
       <pubDate>Sat, 29 Nov 2025 20:27:52 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Boost WebAssembly speed with expert optimization tips and tricks.</description>
-      <pubDate>Sat, 29 Nov 2025 19:20:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
