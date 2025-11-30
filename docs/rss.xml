@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 22:24:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 23:23:54 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh 101</title>
+      <link>https://kubaik.github.io/data-mesh-101/</link>
+      <description>Learn Data Mesh basics &amp; unlock scalable data management with our introductory guide to Data Mesh Architecture.</description>
+      <pubDate>Sun, 30 Nov 2025 23:23:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-101/</guid>
+    </item>
     <item>
       <title>AI Model Care</title>
       <link>https://kubaik.github.io/ai-model-care/</link>
@@ -138,13 +145,6 @@
       <description>Protect sensitive data with encryption &amp; key management solutions. Learn how to secure your information.</description>
       <pubDate>Sun, 30 Nov 2025 04:41:58 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-data-encrypt/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile performance with expert tips and tricks.</description>
-      <pubDate>Sun, 30 Nov 2025 04:00:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
