@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 17:22:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 18:35:09 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech: 5 Key Uses</title>
+      <link>https://kubaik.github.io/nft-tech-5-key-uses/</link>
+      <description>Unlock NFT tech&apos;s potential: 5 key uses driving innovation</description>
+      <pubDate>Sun, 30 Nov 2025 18:35:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech-5-key-uses/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Optimize AI model training with expert best practices &amp; maximize performance.</description>
       <pubDate>Sat, 29 Nov 2025 21:22:32 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>SRE Simplified</title>
-      <link>https://kubaik.github.io/sre-simplified/</link>
-      <description>Unlock efficient ops with SRE. Learn how to simplify &amp; improve reliability</description>
-      <pubDate>Sat, 29 Nov 2025 20:27:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-simplified/</guid>
     </item>
   </channel>
 </rss>
