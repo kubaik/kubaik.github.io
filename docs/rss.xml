@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 15:24:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 16:30:55 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn about high availability systems &amp; ensure 24/7 uptime</description>
+      <pubDate>Sun, 30 Nov 2025 16:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Made Easy</title>
       <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Boost WebAssembly speed with expert optimization tips and tricks.</description>
       <pubDate>Sat, 29 Nov 2025 19:20:06 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore Computer Vision tech &amp; its innovative applications</description>
-      <pubDate>Sat, 29 Nov 2025 18:34:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
