@@ -90,5 +90,6 @@
   "Site Reliability Engineering (SRE)",
   "AI Model Training Best Practices",
   "Apache Kafka for Streaming",
-  "Network Performance Optimization"
+  "Network Performance Optimization",
+  "Message Queues and Async Processing"
 ]

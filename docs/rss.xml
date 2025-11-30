@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Nov 2025 23:24:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 02:12:50 +0000</lastBuildDate>
+    <item>
+      <title>Queue Up!</title>
+      <link>https://kubaik.github.io/queue-up/</link>
+      <description>Unlock efficient async processing with message queues. Learn how to boost performance and scalability.</description>
+      <pubDate>Sun, 30 Nov 2025 02:12:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/queue-up/</guid>
+    </item>
     <item>
       <title>Boost Network Speed</title>
       <link>https://kubaik.github.io/boost-network-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn scalability patterns to grow efficiently</description>
       <pubDate>Sat, 29 Nov 2025 05:26:19 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Optimize app performance with expert tips and tools.</description>
-      <pubDate>Sat, 29 Nov 2025 04:30:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
