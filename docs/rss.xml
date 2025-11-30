@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 20:28:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 21:23:06 +0000</lastBuildDate>
+    <item>
+      <title>Design Distributed</title>
+      <link>https://kubaik.github.io/design-distributed/</link>
+      <description>Learn distributed systems design principles and patterns for scalable, reliable architectures.</description>
+      <pubDate>Sun, 30 Nov 2025 21:23:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-distributed/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient async processing with message queues. Learn how to boost performance and scalability.</description>
       <pubDate>Sun, 30 Nov 2025 02:12:44 +0000</pubDate>
       <guid>https://kubaik.github.io/queue-up/</guid>
-    </item>
-    <item>
-      <title>Boost Network Speed</title>
-      <link>https://kubaik.github.io/boost-network-speed/</link>
-      <description>Maximize network speed with expert tips and optimization techniques.</description>
-      <pubDate>Sat, 29 Nov 2025 23:24:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-network-speed/</guid>
     </item>
   </channel>
 </rss>
