@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 06:38:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 07:23:33 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Done Right</title>
+      <link>https://kubaik.github.io/cicd-done-right/</link>
+      <description>Boost efficiency with expert CI/CD pipeline implementation tips.</description>
+      <pubDate>Sun, 30 Nov 2025 07:23:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-done-right/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
       <pubDate>Sat, 29 Nov 2025 10:26:06 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>FP Fundamentals</title>
-      <link>https://kubaik.github.io/fp-fundamentals/</link>
-      <description>Learn core Functional Programming concepts and principles.</description>
-      <pubDate>Sat, 29 Nov 2025 09:26:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
     </item>
   </channel>
 </rss>
