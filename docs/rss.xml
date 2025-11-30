@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 07:23:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 08:31:15 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Learn Python for data science &amp; unlock insights with our expert guide.</description>
+      <pubDate>Sun, 30 Nov 2025 08:31:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>CI/CD Done Right</title>
       <link>https://kubaik.github.io/cicd-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn IoT architecture best practices with our expert blueprint guide.</description>
       <pubDate>Sat, 29 Nov 2025 11:20:25 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
-      <pubDate>Sat, 29 Nov 2025 10:26:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
