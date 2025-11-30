@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 11:20:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 12:50:03 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning 101</title>
+      <link>https://kubaik.github.io/deep-learning-101/</link>
+      <description>Unlock AI&apos;s potential with Deep Learning 101. Discover neural networks &amp; more.</description>
+      <pubDate>Sun, 30 Nov 2025 12:49:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning-101/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Improve business decisions with clean data. Learn why data quality matters.</description>
       <pubDate>Sat, 29 Nov 2025 15:24:22 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>AI Predicts</title>
-      <link>https://kubaik.github.io/ai-predicts/</link>
-      <description>Unlock future trends with AI-powered time series forecasting. Discover how AI predicts market shifts.</description>
-      <pubDate>Sat, 29 Nov 2025 14:23:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-predicts/</guid>
     </item>
   </channel>
 </rss>
