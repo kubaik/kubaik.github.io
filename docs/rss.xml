@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 12:50:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 13:31:09 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Freedom</title>
+      <link>https://kubaik.github.io/cloud-freedom/</link>
+      <description>Break free with multi-cloud architecture. Learn how to unlock flexibility &amp; scalability in the cloud.</description>
+      <pubDate>Sun, 30 Nov 2025 13:31:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-freedom/</guid>
+    </item>
     <item>
       <title>Deep Learning 101</title>
       <link>https://kubaik.github.io/deep-learning-101/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn to visualize smart and make informed decisions.</description>
       <pubDate>Sat, 29 Nov 2025 16:30:48 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve business decisions with clean data. Learn why data quality matters.</description>
-      <pubDate>Sat, 29 Nov 2025 15:24:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
