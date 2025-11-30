@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 14:23:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 15:24:23 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full-Stack Made Easy</title>
+      <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
+      <description>Simplify full-stack dev with Next.js. Learn how to build seamless apps with ease.</description>
+      <pubDate>Sun, 30 Nov 2025 15:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Explore Computer Vision tech &amp; its innovative applications</description>
       <pubDate>Sat, 29 Nov 2025 18:34:59 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Limit the Load</title>
-      <link>https://kubaik.github.io/limit-the-load/</link>
-      <description>Learn how rate limiting &amp; throttling protect your API from abuse and overload, ensuring reliable performance.</description>
-      <pubDate>Sat, 29 Nov 2025 17:21:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-load/</guid>
     </item>
   </channel>
 </rss>
