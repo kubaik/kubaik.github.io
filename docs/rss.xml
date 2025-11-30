@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 21:23:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 22:24:53 +0000</lastBuildDate>
+    <item>
+      <title>AI Model Care</title>
+      <link>https://kubaik.github.io/ai-model-care/</link>
+      <description>Optimize AI performance with expert model care, monitoring &amp; maintenance strategies.</description>
+      <pubDate>Sun, 30 Nov 2025 22:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-model-care/</guid>
+    </item>
     <item>
       <title>Design Distributed</title>
       <link>https://kubaik.github.io/design-distributed/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile performance with expert tips and tricks.</description>
       <pubDate>Sun, 30 Nov 2025 04:00:03 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Queue Up!</title>
-      <link>https://kubaik.github.io/queue-up/</link>
-      <description>Unlock efficient async processing with message queues. Learn how to boost performance and scalability.</description>
-      <pubDate>Sun, 30 Nov 2025 02:12:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/queue-up/</guid>
     </item>
   </channel>
 </rss>
