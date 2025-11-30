@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 09:24:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 10:25:55 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Sun, 30 Nov 2025 10:25:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Unlock Web3</title>
       <link>https://kubaik.github.io/unlock-web3/</link>
@@ -138,13 +145,6 @@
       <description>Master Agile development with expert tips and best practices.</description>
       <pubDate>Sat, 29 Nov 2025 13:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-done-right/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Compare Scrum &amp; Kanban: which Agile method is best for your team?</description>
-      <pubDate>Sat, 29 Nov 2025 12:50:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
