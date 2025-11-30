@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 08:31:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 09:24:58 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Web3</title>
+      <link>https://kubaik.github.io/unlock-web3/</link>
+      <description>Discover the power of Web3 &amp; DApps. Learn how to unlock a decentralized future.</description>
+      <pubDate>Sun, 30 Nov 2025 09:24:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-web3/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Compare Scrum &amp; Kanban: which Agile method is best for your team?</description>
       <pubDate>Sat, 29 Nov 2025 12:50:16 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Learn IoT architecture best practices with our expert blueprint guide.</description>
-      <pubDate>Sat, 29 Nov 2025 11:20:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
