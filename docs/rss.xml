@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 18:35:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 19:20:53 +0000</lastBuildDate>
+    <item>
+      <title>Boost Web Security: WAF</title>
+      <link>https://kubaik.github.io/boost-web-security-waf/</link>
+      <description>Safeguard your website with Web Application Firewall (WAF). Learn how to boost web security and protect against threats.</description>
+      <pubDate>Sun, 30 Nov 2025 19:20:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-web-security-waf/</guid>
+    </item>
     <item>
       <title>NFT Tech: 5 Key Uses</title>
       <link>https://kubaik.github.io/nft-tech-5-key-uses/</link>
@@ -138,13 +145,6 @@
       <description>Unlock real-time data processing with Kafka Streams. Learn how Apache Kafka enables scalable streaming solutions.</description>
       <pubDate>Sat, 29 Nov 2025 22:24:42 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Optimize AI model training with expert best practices &amp; maximize performance.</description>
-      <pubDate>Sat, 29 Nov 2025 21:22:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
