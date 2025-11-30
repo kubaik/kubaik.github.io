@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 04:42:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 05:26:38 +0000</lastBuildDate>
+    <item>
+      <title>.NET Core Mastery</title>
+      <link>https://kubaik.github.io/net-core-mastery/</link>
+      <description>Unlock expert-level .NET Core skills with C# tutorials and guides.</description>
+      <pubDate>Sun, 30 Nov 2025 05:26:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/net-core-mastery/</guid>
+    </item>
     <item>
       <title>Secure Data: Encrypt</title>
       <link>https://kubaik.github.io/secure-data-encrypt/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to design efficient data engineering pipelines with our expert guide to data flow.</description>
       <pubDate>Sat, 29 Nov 2025 08:32:55 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spending with expert tips and strategies for optimal cost optimization.</description>
-      <pubDate>Sat, 29 Nov 2025 07:23:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
