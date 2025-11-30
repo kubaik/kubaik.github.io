@@ -2326,15 +2326,15 @@
     "topic": "React Best Practices and Patterns"
   },
   "sql_vs_nosql_databases": {
-    "timestamp": "2025-11-24T06:39:21.235238",
+    "timestamp": "2025-11-30T06:38:04.220624",
     "hashtags": [
       "DatabaseWars",
-      "CloudNative",
+      "CloudComputing",
       "DataEngineering",
+      "NoSQLMovement",
       "SQLvsNoSQL",
-      "DevOpsTools",
-      "BigDataManagement",
-      "DatabaseDesign"
+      "DatabaseManagement",
+      "TechDebates"
     ],
     "topic": "SQL vs NoSQL Databases"
   },

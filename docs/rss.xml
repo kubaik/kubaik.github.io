@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 05:26:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 06:38:10 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: learn key differences &amp; choose the best fit for your project.</description>
+      <pubDate>Sun, 30 Nov 2025 06:38:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>.NET Core Mastery</title>
       <link>https://kubaik.github.io/net-core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn core Functional Programming concepts and principles.</description>
       <pubDate>Sat, 29 Nov 2025 09:26:03 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-fundamentals/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Learn how to design efficient data engineering pipelines with our expert guide to data flow.</description>
-      <pubDate>Sat, 29 Nov 2025 08:32:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
