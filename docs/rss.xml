@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 10:25:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 11:20:28 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Master Git with expert tips and advanced techniques.</description>
+      <pubDate>Sun, 30 Nov 2025 11:20:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock future trends with AI-powered time series forecasting. Discover how AI predicts market shifts.</description>
       <pubDate>Sat, 29 Nov 2025 14:23:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-predicts/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices.</description>
-      <pubDate>Sat, 29 Nov 2025 13:31:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
