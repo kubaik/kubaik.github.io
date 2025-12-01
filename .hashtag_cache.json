@@ -925,16 +925,16 @@
     "topic": "Native iOS Development with Swift"
   },
   "vue.js_component_architecture": {
-    "timestamp": "2025-11-19T13:36:28.639081",
+    "timestamp": "2025-12-01T07:29:08.963680",
     "hashtags": [
-      "VueJs",
-      "FrontendDev",
-      "JavaScript",
-      "WebDevelopment",
+      "Vuejs",
       "ComponentDriven",
+      "JavaScript",
+      "FrontendDev",
+      "WebDevelopment",
       "TechArchitecture",
-      "SoftwareEngineering",
-      "CloudNativeApps"
+      "CloudNativeApps",
+      "SoftwareEngineering"
     ],
     "topic": "Vue.js Component Architecture"
   },
