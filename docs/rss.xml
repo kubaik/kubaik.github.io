@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Nov 2025 23:23:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 02:27:12 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to design smart recommender systems that drive user engagement</description>
+      <pubDate>Mon, 01 Dec 2025 02:27:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Data Mesh 101</title>
       <link>https://kubaik.github.io/data-mesh-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert-level .NET Core skills with C# tutorials and guides.</description>
       <pubDate>Sun, 30 Nov 2025 05:26:32 +0000</pubDate>
       <guid>https://kubaik.github.io/net-core-mastery/</guid>
-    </item>
-    <item>
-      <title>Secure Data: Encrypt</title>
-      <link>https://kubaik.github.io/secure-data-encrypt/</link>
-      <description>Protect sensitive data with encryption &amp; key management solutions. Learn how to secure your information.</description>
-      <pubDate>Sun, 30 Nov 2025 04:41:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-data-encrypt/</guid>
     </item>
   </channel>
 </rss>
