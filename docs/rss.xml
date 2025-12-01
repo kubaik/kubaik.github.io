@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 16:36:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 17:27:37 +0000</lastBuildDate>
+    <item>
+      <title>Test to Secure</title>
+      <link>https://kubaik.github.io/test-to-secure/</link>
+      <description>Learn expert Penetration Testing Methodologies to secure your systems</description>
+      <pubDate>Mon, 01 Dec 2025 17:27:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-to-secure/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
       <pubDate>Sun, 30 Nov 2025 20:28:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Boost Web Security: WAF</title>
-      <link>https://kubaik.github.io/boost-web-security-waf/</link>
-      <description>Safeguard your website with Web Application Firewall (WAF). Learn how to boost web security and protect against threats.</description>
-      <pubDate>Sun, 30 Nov 2025 19:20:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-web-security-waf/</guid>
     </item>
   </channel>
 </rss>
