@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 09:35:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 10:32:02 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Brand</title>
+      <link>https://kubaik.github.io/code-your-brand/</link>
+      <description>Elevate your dev career with personal branding tips and strategies.</description>
+      <pubDate>Mon, 01 Dec 2025 10:31:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-brand/</guid>
+    </item>
     <item>
       <title>Code Less, Achieve More</title>
       <link>https://kubaik.github.io/code-less-achieve-more/</link>
@@ -138,13 +145,6 @@
       <description>Break free with multi-cloud architecture. Learn how to unlock flexibility &amp; scalability in the cloud.</description>
       <pubDate>Sun, 30 Nov 2025 13:31:03 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-freedom/</guid>
-    </item>
-    <item>
-      <title>Deep Learning 101</title>
-      <link>https://kubaik.github.io/deep-learning-101/</link>
-      <description>Unlock AI&apos;s potential with Deep Learning 101. Discover neural networks &amp; more.</description>
-      <pubDate>Sun, 30 Nov 2025 12:49:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-101/</guid>
     </item>
   </channel>
 </rss>
