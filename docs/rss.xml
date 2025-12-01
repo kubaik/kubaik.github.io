@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 10:32:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 11:24:43 +0000</lastBuildDate>
+    <item>
+      <title>Optimize DB Queries</title>
+      <link>https://kubaik.github.io/optimize-db-queries/</link>
+      <description>Boost performance with expert DB query optimization tips.</description>
+      <pubDate>Mon, 01 Dec 2025 11:24:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-db-queries/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile app engagement with expert UI/UX tips and best practices.</description>
       <pubDate>Sun, 30 Nov 2025 14:23:01 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
-    </item>
-    <item>
-      <title>Cloud Freedom</title>
-      <link>https://kubaik.github.io/cloud-freedom/</link>
-      <description>Break free with multi-cloud architecture. Learn how to unlock flexibility &amp; scalability in the cloud.</description>
-      <pubDate>Sun, 30 Nov 2025 13:31:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-freedom/</guid>
     </item>
   </channel>
 </rss>
