@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 08:39:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 09:35:56 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
+      <pubDate>Mon, 01 Dec 2025 09:35:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>Data Lake Blueprint</title>
       <link>https://kubaik.github.io/data-lake-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning 101. Discover neural networks &amp; more.</description>
       <pubDate>Sun, 30 Nov 2025 12:49:57 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-101/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Master Git with expert tips and advanced techniques.</description>
-      <pubDate>Sun, 30 Nov 2025 11:20:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
