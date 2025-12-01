@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 07:29:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 08:39:30 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake Blueprint</title>
+      <link>https://kubaik.github.io/data-lake-blueprint/</link>
+      <description>Build a scalable Data Lake with our expert blueprint, optimizing architecture for insights</description>
+      <pubDate>Mon, 01 Dec 2025 08:39:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
+    </item>
     <item>
       <title>Vue Components</title>
       <link>https://kubaik.github.io/vue-components/</link>
@@ -138,13 +145,6 @@
       <description>Master Git with expert tips and advanced techniques.</description>
       <pubDate>Sun, 30 Nov 2025 11:20:23 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Sun, 30 Nov 2025 10:25:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
