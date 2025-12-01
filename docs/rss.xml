@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 20:27:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 21:22:35 +0000</lastBuildDate>
+    <item>
+      <title>AR Revolved</title>
+      <link>https://kubaik.github.io/ar-revolved/</link>
+      <description>Discover the future of tech with AR Revolved, exploring innovations in Augmented Reality development.</description>
+      <pubDate>Mon, 01 Dec 2025 21:22:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-revolved/</guid>
+    </item>
     <item>
       <title>Boost Memory</title>
       <link>https://kubaik.github.io/boost-memory/</link>
@@ -138,13 +145,6 @@
       <description>Learn to design smart recommender systems that drive user engagement</description>
       <pubDate>Mon, 01 Dec 2025 02:27:05 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Data Mesh 101</title>
-      <link>https://kubaik.github.io/data-mesh-101/</link>
-      <description>Learn Data Mesh basics &amp; unlock scalable data management with our introductory guide to Data Mesh Architecture.</description>
-      <pubDate>Sun, 30 Nov 2025 23:23:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-101/</guid>
     </item>
   </channel>
 </rss>
