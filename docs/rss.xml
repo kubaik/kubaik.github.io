@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 02:27:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 04:07:15 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Simplify workflow management with GitOps best practices and expert implementation tips.</description>
+      <pubDate>Mon, 01 Dec 2025 04:07:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: learn key differences &amp; choose the best fit for your project.</description>
       <pubDate>Sun, 30 Nov 2025 06:38:03 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>.NET Core Mastery</title>
-      <link>https://kubaik.github.io/net-core-mastery/</link>
-      <description>Unlock expert-level .NET Core skills with C# tutorials and guides.</description>
-      <pubDate>Sun, 30 Nov 2025 05:26:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/net-core-mastery/</guid>
     </item>
   </channel>
 </rss>
