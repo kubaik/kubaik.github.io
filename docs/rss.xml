@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 19:27:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 20:27:35 +0000</lastBuildDate>
+    <item>
+      <title>Boost Memory</title>
+      <link>https://kubaik.github.io/boost-memory/</link>
+      <description>Improve focus &amp; recall with proven memory management tips.</description>
+      <pubDate>Mon, 01 Dec 2025 20:27:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-memory/</guid>
+    </item>
     <item>
       <title>Secure Code</title>
       <link>https://kubaik.github.io/secure-code/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Mesh basics &amp; unlock scalable data management with our introductory guide to Data Mesh Architecture.</description>
       <pubDate>Sun, 30 Nov 2025 23:23:47 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh-101/</guid>
-    </item>
-    <item>
-      <title>AI Model Care</title>
-      <link>https://kubaik.github.io/ai-model-care/</link>
-      <description>Optimize AI performance with expert model care, monitoring &amp; maintenance strategies.</description>
-      <pubDate>Sun, 30 Nov 2025 22:24:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-care/</guid>
     </item>
   </channel>
 </rss>
