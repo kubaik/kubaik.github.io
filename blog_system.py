@@ -248,7 +248,7 @@ Remember to stay updated with the latest developments in {topic} as the field co
             },
             {
                 "role": "user", 
-                "content": f"""Write a 2,500-word technical blog post with the title: "{title}"
+                "content": f"""Write a 4,000-word technical blog post with the title: "{title}"
 
 Topic: {topic}{keyword_text}
 
@@ -259,7 +259,7 @@ Requirements:
 - Include real metrics, pricing data, or performance benchmarks where relevant
 - Provide concrete use cases with implementation details
 - Address common problems with specific solutions
-- Write 2,500-3,000 words of substantial content
+- Write 3,500-4,000 words of substantial content
 - Use bullet points and numbered lists where appropriate
 - Add a strong conclusion with actionable next steps
 
