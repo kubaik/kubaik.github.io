@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 13:41:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 14:29:42 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Boost productivity with time management tips tailored for engineers.</description>
+      <pubDate>Mon, 01 Dec 2025 14:29:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>Balance Made Easy</title>
       <link>https://kubaik.github.io/balance-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with data: Learn A/B testing &amp; experimentation strategies to boost conversions.</description>
       <pubDate>Sun, 30 Nov 2025 17:22:07 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Learn about high availability systems &amp; ensure 24/7 uptime</description>
-      <pubDate>Sun, 30 Nov 2025 16:30:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
