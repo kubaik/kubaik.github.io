@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 17:27:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 18:42:39 +0000</lastBuildDate>
+    <item>
+      <title>Build with Web Components</title>
+      <link>https://kubaik.github.io/build-with-web-components/</link>
+      <description>Learn to build reusable UI with Web Components &amp; Custom Elements.</description>
+      <pubDate>Mon, 01 Dec 2025 18:42:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-with-web-components/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Learn distributed systems design principles and patterns for scalable, reliable architectures.</description>
       <pubDate>Sun, 30 Nov 2025 21:23:01 +0000</pubDate>
       <guid>https://kubaik.github.io/design-distributed/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
-      <pubDate>Sun, 30 Nov 2025 20:28:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
