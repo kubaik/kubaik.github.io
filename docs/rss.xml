@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Dec 2025 21:22:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 22:25:35 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Unlock the future with 5G. Discover its impact on tech, business, and society.</description>
+      <pubDate>Mon, 01 Dec 2025 22:25:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>AR Revolved</title>
       <link>https://kubaik.github.io/ar-revolved/</link>
@@ -138,13 +145,6 @@
       <description>Simplify workflow management with GitOps best practices and expert implementation tips.</description>
       <pubDate>Mon, 01 Dec 2025 04:07:09 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to design smart recommender systems that drive user engagement</description>
-      <pubDate>Mon, 01 Dec 2025 02:27:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
