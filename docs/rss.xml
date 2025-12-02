@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 02:03:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 03:54:51 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; best practices to scale your application.</description>
+      <pubDate>Tue, 02 Dec 2025 03:54:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Master project management as a developer with expert tips and tools.</description>
       <pubDate>Mon, 01 Dec 2025 06:42:32 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-pm/</guid>
-    </item>
-    <item>
-      <title>iOS with Swift</title>
-      <link>https://kubaik.github.io/ios-with-swift/</link>
-      <description>Learn iOS development with Swift. Discover the power of Swift programming.</description>
-      <pubDate>Mon, 01 Dec 2025 05:34:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-with-swift/</guid>
     </item>
   </channel>
 </rss>
