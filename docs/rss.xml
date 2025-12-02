@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 19:25:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 20:32:08 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Tue, 02 Dec 2025 20:32:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Crack the Code</title>
       <link>https://kubaik.github.io/crack-the-code/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Mon, 01 Dec 2025 23:25:34 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Unlock the future with 5G. Discover its impact on tech, business, and society.</description>
-      <pubDate>Mon, 01 Dec 2025 22:25:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>

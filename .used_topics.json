@@ -152,5 +152,6 @@
   "Container Security Best Practices",
   "Database Replication and Sharding",
   "Static Site Generation (SSG)",
-  "Algorithm Complexity Analysis"
+  "Algorithm Complexity Analysis",
+  "Backend Testing Strategies"
 ]
