@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 03:54:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 04:36:21 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost database performance with expert indexing strategies.</description>
+      <pubDate>Tue, 02 Dec 2025 04:36:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture &amp; build reusable UI elements with our expert guide to Vue Components.</description>
       <pubDate>Mon, 01 Dec 2025 07:29:08 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-components/</guid>
-    </item>
-    <item>
-      <title>Dev PM</title>
-      <link>https://kubaik.github.io/dev-pm/</link>
-      <description>Master project management as a developer with expert tips and tools.</description>
-      <pubDate>Mon, 01 Dec 2025 06:42:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-pm/</guid>
     </item>
   </channel>
 </rss>
