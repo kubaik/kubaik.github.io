@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 11:26:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 12:57:47 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Compare ETL vs ELT: Learn key differences &amp; benefits of each data integration process.</description>
+      <pubDate>Tue, 02 Dec 2025 12:57:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to scale fast &amp; efficiently.</description>
       <pubDate>Mon, 01 Dec 2025 15:30:12 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-scale-fast/</guid>
-    </item>
-    <item>
-      <title>Engineer Your Time</title>
-      <link>https://kubaik.github.io/engineer-your-time/</link>
-      <description>Boost productivity with time management tips tailored for engineers.</description>
-      <pubDate>Mon, 01 Dec 2025 14:29:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-your-time/</guid>
     </item>
   </channel>
 </rss>
