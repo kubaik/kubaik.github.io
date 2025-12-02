@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 14:30:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 15:31:47 +0000</lastBuildDate>
+    <item>
+      <title>Angular Ent Apps</title>
+      <link>https://kubaik.github.io/angular-ent-apps/</link>
+      <description>Build scalable Angular enterprise apps with expert guidance and best practices.</description>
+      <pubDate>Tue, 02 Dec 2025 15:31:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build reusable UI with Web Components &amp; Custom Elements.</description>
       <pubDate>Mon, 01 Dec 2025 18:42:33 +0000</pubDate>
       <guid>https://kubaik.github.io/build-with-web-components/</guid>
-    </item>
-    <item>
-      <title>Test to Secure</title>
-      <link>https://kubaik.github.io/test-to-secure/</link>
-      <description>Learn expert Penetration Testing Methodologies to secure your systems</description>
-      <pubDate>Mon, 01 Dec 2025 17:27:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-to-secure/</guid>
     </item>
   </channel>
 </rss>
