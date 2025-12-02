@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 17:28:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 18:41:40 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed with SSG</title>
+      <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
+      <description>Unlock faster websites with Static Site Generation (SSG). Learn how to boost speed and improve user experience.</description>
+      <pubDate>Tue, 02 Dec 2025 18:41:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
+    </item>
     <item>
       <title>Scale Up: Replicate &amp; Shard</title>
       <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with AR Revolved, exploring innovations in Augmented Reality development.</description>
       <pubDate>Mon, 01 Dec 2025 21:22:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-revolved/</guid>
-    </item>
-    <item>
-      <title>Boost Memory</title>
-      <link>https://kubaik.github.io/boost-memory/</link>
-      <description>Improve focus &amp; recall with proven memory management tips.</description>
-      <pubDate>Mon, 01 Dec 2025 20:27:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-memory/</guid>
     </item>
   </channel>
 </rss>
