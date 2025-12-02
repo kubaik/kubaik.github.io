@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 20:32:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 21:25:38 +0000</lastBuildDate>
+    <item>
+      <title>MBaaS Simplified</title>
+      <link>https://kubaik.github.io/mbaas-simplified/</link>
+      <description>Streamline mobile app development with MBaaS, a simplified backend solution.</description>
+      <pubDate>Tue, 02 Dec 2025 21:25:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/mbaas-simplified/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of CQRS &amp; Event Sourcing. Learn scalable architecture patterns.</description>
       <pubDate>Tue, 02 Dec 2025 02:03:28 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
-      <pubDate>Mon, 01 Dec 2025 23:25:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
