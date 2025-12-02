@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 18:41:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 19:25:08 +0000</lastBuildDate>
+    <item>
+      <title>Crack the Code</title>
+      <link>https://kubaik.github.io/crack-the-code/</link>
+      <description>Unlock the secrets of algorithm complexity analysis and optimize your code with expert insights.</description>
+      <pubDate>Tue, 02 Dec 2025 19:25:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-the-code/</guid>
+    </item>
     <item>
       <title>Boost Speed with SSG</title>
       <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future with 5G. Discover its impact on tech, business, and society.</description>
       <pubDate>Mon, 01 Dec 2025 22:25:29 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>AR Revolved</title>
-      <link>https://kubaik.github.io/ar-revolved/</link>
-      <description>Discover the future of tech with AR Revolved, exploring innovations in Augmented Reality development.</description>
-      <pubDate>Mon, 01 Dec 2025 21:22:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-revolved/</guid>
     </item>
   </channel>
 </rss>
