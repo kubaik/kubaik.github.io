@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 21:25:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 22:23:19 +0000</lastBuildDate>
+    <item>
+      <title>SSR Unlocked</title>
+      <link>https://kubaik.github.io/ssr-unlocked/</link>
+      <description>Unlock faster loads &amp; better SEO with Server-Side Rendering (SSR)</description>
+      <pubDate>Tue, 02 Dec 2025 22:23:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssr-unlocked/</guid>
+    </item>
     <item>
       <title>MBaaS Simplified</title>
       <link>https://kubaik.github.io/mbaas-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; best practices to scale your application.</description>
       <pubDate>Tue, 02 Dec 2025 03:54:45 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock the power of CQRS &amp; Event Sourcing. Learn scalable architecture patterns.</description>
-      <pubDate>Tue, 02 Dec 2025 02:03:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
