@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 22:23:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 23:25:00 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop essential tech leadership skills with Lead Tech. Learn to innovate &amp; inspire.</description>
+      <pubDate>Tue, 02 Dec 2025 23:24:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>SSR Unlocked</title>
       <link>https://kubaik.github.io/ssr-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert indexing strategies.</description>
       <pubDate>Tue, 02 Dec 2025 04:36:15 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert Backend Architecture Patterns &amp; best practices to scale your application.</description>
-      <pubDate>Tue, 02 Dec 2025 03:54:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
