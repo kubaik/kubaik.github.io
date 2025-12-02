@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 09:33:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 10:31:14 +0000</lastBuildDate>
+    <item>
+      <title>Revive Old Code</title>
+      <link>https://kubaik.github.io/revive-old-code/</link>
+      <description>Breathe new life into outdated code with refactoring tips and tricks.</description>
+      <pubDate>Tue, 02 Dec 2025 10:31:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/revive-old-code/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Master load balancing techniques for efficient network management.</description>
       <pubDate>Mon, 01 Dec 2025 13:41:04 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>AI Done Right</title>
-      <link>https://kubaik.github.io/ai-done-right/</link>
-      <description>Unlock responsible AI practices &amp; ethics for a better future</description>
-      <pubDate>Mon, 01 Dec 2025 12:57:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-done-right/</guid>
     </item>
   </channel>
 </rss>
