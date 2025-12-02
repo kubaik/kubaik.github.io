@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 16:37:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 17:28:36 +0000</lastBuildDate>
+    <item>
+      <title>Scale Up: Replicate &amp; Shard</title>
+      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
+      <description>Learn database replication &amp; sharding to scale up your system&apos;s performance and efficiency.</description>
+      <pubDate>Tue, 02 Dec 2025 17:28:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Improve focus &amp; recall with proven memory management tips.</description>
       <pubDate>Mon, 01 Dec 2025 20:27:29 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>Secure Code</title>
-      <link>https://kubaik.github.io/secure-code/</link>
-      <description>Strengthen app security with SAST &amp; DAST testing, learn more</description>
-      <pubDate>Mon, 01 Dec 2025 19:27:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code/</guid>
     </item>
   </channel>
 </rss>
