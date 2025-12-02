@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Dec 2025 13:43:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Dec 2025 14:30:04 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Tue, 02 Dec 2025 14:29:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Penetration Testing Methodologies to secure your systems</description>
       <pubDate>Mon, 01 Dec 2025 17:27:31 +0000</pubDate>
       <guid>https://kubaik.github.io/test-to-secure/</guid>
-    </item>
-    <item>
-      <title>Work Smarter</title>
-      <link>https://kubaik.github.io/work-smarter/</link>
-      <description>Boost productivity with remote work best practices and expert tips.</description>
-      <pubDate>Mon, 01 Dec 2025 16:36:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smarter/</guid>
     </item>
   </channel>
 </rss>

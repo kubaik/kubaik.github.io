@@ -1941,7 +1941,7 @@
     "topic": "Ruby on Rails Web Apps"
   },
   "react_native_cross-platform_apps": {
-    "timestamp": "2025-11-22T21:21:53.481969",
+    "timestamp": "2025-12-02T14:29:58.186338",
     "hashtags": [
       "CrossPlatformDev",
       "ReactNative",
@@ -1949,7 +1949,8 @@
       "JavaScript",
       "AppDevelopment",
       "NativeApps",
-      "HybridApps"
+      "FlutterAlternatives",
+      "DevOpsTools"
     ],
     "topic": "React Native Cross-Platform Apps"
   },
