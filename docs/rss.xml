@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 11:25:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 12:58:06 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Patterns</title>
+      <link>https://kubaik.github.io/api-gateway-patterns/</link>
+      <description>Learn key API Gateway patterns for secure, scalable integrations.</description>
+      <pubDate>Wed, 03 Dec 2025 12:57:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guidance and best practices.</description>
       <pubDate>Tue, 02 Dec 2025 15:31:41 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-ent-apps/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Tue, 02 Dec 2025 14:29:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
