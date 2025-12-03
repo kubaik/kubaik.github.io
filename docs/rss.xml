@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 06:40:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 07:28:07 +0000</lastBuildDate>
+    <item>
+      <title>IoT Simplified</title>
+      <link>https://kubaik.github.io/iot-simplified/</link>
+      <description>Simplify IoT device management with expert insights and solutions.</description>
+      <pubDate>Wed, 03 Dec 2025 07:28:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-simplified/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code with refactoring tips and tricks.</description>
       <pubDate>Tue, 02 Dec 2025 10:31:08 +0000</pubDate>
       <guid>https://kubaik.github.io/revive-old-code/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code</description>
-      <pubDate>Tue, 02 Dec 2025 09:33:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
