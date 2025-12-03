@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 08:38:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 09:31:22 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green Done</title>
+      <link>https://kubaik.github.io/blue-green-done/</link>
+      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
+      <pubDate>Wed, 03 Dec 2025 09:31:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-done/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Compare ETL vs ELT: Learn key differences &amp; benefits of each data integration process.</description>
       <pubDate>Tue, 02 Dec 2025 12:57:41 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Boost user experience with responsive web design techniques and expert tips.</description>
-      <pubDate>Tue, 02 Dec 2025 11:26:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
