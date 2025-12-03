@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 17:28:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 18:40:53 +0000</lastBuildDate>
+    <item>
+      <title>Review Like Pro</title>
+      <link>https://kubaik.github.io/review-like-pro/</link>
+      <description>Master code review best practices with expert tips and tricks.</description>
+      <pubDate>Wed, 03 Dec 2025 18:40:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/review-like-pro/</guid>
+    </item>
     <item>
       <title>Top Web Dev Frames</title>
       <link>https://kubaik.github.io/top-web-dev-frames/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with MBaaS, a simplified backend solution.</description>
       <pubDate>Tue, 02 Dec 2025 21:25:32 +0000</pubDate>
       <guid>https://kubaik.github.io/mbaas-simplified/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Tue, 02 Dec 2025 20:32:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
