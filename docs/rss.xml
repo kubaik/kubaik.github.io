@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 14:29:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 15:31:23 +0000</lastBuildDate>
+    <item>
+      <title>Push Done Right</title>
+      <link>https://kubaik.github.io/push-done-right/</link>
+      <description>Boost engagement with perfect push notifications. Learn expert implementation tips.</description>
+      <pubDate>Wed, 03 Dec 2025 15:31:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-done-right/</guid>
+    </item>
     <item>
       <title>Lock Down: SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/lock-down-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster websites with Static Site Generation (SSG). Learn how to boost speed and improve user experience.</description>
       <pubDate>Tue, 02 Dec 2025 18:41:34 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
-    </item>
-    <item>
-      <title>Scale Up: Replicate &amp; Shard</title>
-      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
-      <description>Learn database replication &amp; sharding to scale up your system&apos;s performance and efficiency.</description>
-      <pubDate>Tue, 02 Dec 2025 17:28:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
     </item>
   </channel>
 </rss>
