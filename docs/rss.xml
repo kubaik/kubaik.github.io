@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 16:37:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 17:28:17 +0000</lastBuildDate>
+    <item>
+      <title>Top Web Dev Frames</title>
+      <link>https://kubaik.github.io/top-web-dev-frames/</link>
+      <description>Discover top web dev frameworks for modern development.</description>
+      <pubDate>Wed, 03 Dec 2025 17:28:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-web-dev-frames/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Tue, 02 Dec 2025 20:32:01 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Crack the Code</title>
-      <link>https://kubaik.github.io/crack-the-code/</link>
-      <description>Unlock the secrets of algorithm complexity analysis and optimize your code with expert insights.</description>
-      <pubDate>Tue, 02 Dec 2025 19:25:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-the-code/</guid>
     </item>
   </channel>
 </rss>
