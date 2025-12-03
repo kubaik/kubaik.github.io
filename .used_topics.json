@@ -164,5 +164,6 @@
   "Monitoring and Observability",
   "IoT Device Management",
   "Native iOS Development with Swift",
-  "Blue-Green Deployment"
+  "Blue-Green Deployment",
+  "Lazy Loading Implementation"
 ]
