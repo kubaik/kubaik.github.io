@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 03:53:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 04:34:35 +0000</lastBuildDate>
+    <item>
+      <title>Rails to Riches</title>
+      <link>https://kubaik.github.io/rails-to-riches/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks.</description>
+      <pubDate>Wed, 03 Dec 2025 04:34:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-to-riches/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Improve website speed with expert frontend performance tuning tips.</description>
       <pubDate>Tue, 02 Dec 2025 07:27:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn clean code principles for better software development</description>
-      <pubDate>Tue, 02 Dec 2025 06:41:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
