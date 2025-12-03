@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 10:32:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 11:25:25 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Wed, 03 Dec 2025 11:25:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Lazy Load Now</title>
       <link>https://kubaik.github.io/lazy-load-now/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
       <pubDate>Tue, 02 Dec 2025 14:29:57 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Discover the future of AI: Learn about AI agent development and its applications.</description>
-      <pubDate>Tue, 02 Dec 2025 13:42:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
