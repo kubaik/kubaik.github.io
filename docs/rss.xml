@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 20:31:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 21:23:26 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
+      <pubDate>Wed, 03 Dec 2025 21:23:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Develop essential tech leadership skills with Lead Tech. Learn to innovate &amp; inspire.</description>
       <pubDate>Tue, 02 Dec 2025 23:24:54 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>SSR Unlocked</title>
-      <link>https://kubaik.github.io/ssr-unlocked/</link>
-      <description>Unlock faster loads &amp; better SEO with Server-Side Rendering (SSR)</description>
-      <pubDate>Tue, 02 Dec 2025 22:23:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-unlocked/</guid>
     </item>
   </channel>
 </rss>
