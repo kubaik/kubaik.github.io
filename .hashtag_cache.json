@@ -1538,15 +1538,15 @@
     "topic": "Open Source Contribution Guide"
   },
   "secrets_management": {
-    "timestamp": "2025-11-21T12:52:47.136680",
+    "timestamp": "2025-12-03T19:23:08.969654",
     "hashtags": [
       "CloudSecurity",
       "DevSecOps",
-      "SecretsManagement",
-      "CyberSecurity",
-      "ZeroTrust",
-      "APIsecurity",
-      "InfoSec"
+      "CyberProtection",
+      "APIKeys",
+      "TechConfidential",
+      "InfoSec",
+      "ZeroTrust"
     ],
     "topic": "Secrets Management"
   },
