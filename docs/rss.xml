@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 12:58:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Dec 2025 13:41:58 +0000</lastBuildDate>
+    <item>
+      <title>Federated Learning</title>
+      <link>https://kubaik.github.io/federated-learning/</link>
+      <description>Discover Federated Learning, a decentralized approach to AI model training, enhancing data privacy and security.</description>
+      <pubDate>Wed, 03 Dec 2025 13:41:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/federated-learning/</guid>
+    </item>
     <item>
       <title>API Gateway Patterns</title>
       <link>https://kubaik.github.io/api-gateway-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Protect your apps with secure containers. Learn best practices for container security.</description>
       <pubDate>Tue, 02 Dec 2025 16:37:34 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>Angular Ent Apps</title>
-      <link>https://kubaik.github.io/angular-ent-apps/</link>
-      <description>Build scalable Angular enterprise apps with expert guidance and best practices.</description>
-      <pubDate>Tue, 02 Dec 2025 15:31:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
     </item>
   </channel>
 </rss>
