@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 21:26:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 22:24:40 +0000</lastBuildDate>
+    <item>
+      <title>Code the Future</title>
+      <link>https://kubaik.github.io/code-the-future/</link>
+      <description>Learn smart contract dev &amp; shape the future of tech. Discover coding insights &amp; industry trends.</description>
+      <pubDate>Thu, 04 Dec 2025 22:24:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-the-future/</guid>
+    </item>
     <item>
       <title>MLOps Simplified</title>
       <link>https://kubaik.github.io/mlops-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML basics: simplified explanations of machine learning algorithms.</description>
       <pubDate>Thu, 04 Dec 2025 03:54:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-simplified/</guid>
-    </item>
-    <item>
-      <title>Smart Code</title>
-      <link>https://kubaik.github.io/smart-code/</link>
-      <description>Unlock blockchain potential with smart contract development expertise.</description>
-      <pubDate>Thu, 04 Dec 2025 02:04:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-code/</guid>
     </item>
   </channel>
 </rss>
