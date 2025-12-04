@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 10:32:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 11:26:18 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
+      <pubDate>Thu, 04 Dec 2025 11:26:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>Split Smart</title>
       <link>https://kubaik.github.io/split-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover Federated Learning, a decentralized approach to AI model training, enhancing data privacy and security.</description>
       <pubDate>Wed, 03 Dec 2025 13:41:51 +0000</pubDate>
       <guid>https://kubaik.github.io/federated-learning/</guid>
-    </item>
-    <item>
-      <title>API Gateway Patterns</title>
-      <link>https://kubaik.github.io/api-gateway-patterns/</link>
-      <description>Learn key API Gateway patterns for secure, scalable integrations.</description>
-      <pubDate>Wed, 03 Dec 2025 12:57:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
     </item>
   </channel>
 </rss>
