@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 07:27:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 08:37:40 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain Boom</title>
+      <link>https://kubaik.github.io/blockchain-boom/</link>
+      <description>Discover the future of finance with blockchain and cryptocurrency trends.</description>
+      <pubDate>Thu, 04 Dec 2025 08:37:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-boom/</guid>
+    </item>
     <item>
       <title>Boost Tech Pay</title>
       <link>https://kubaik.github.io/boost-tech-pay/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
       <pubDate>Wed, 03 Dec 2025 10:32:22 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-now/</guid>
-    </item>
-    <item>
-      <title>Blue-Green Done</title>
-      <link>https://kubaik.github.io/blue-green-done/</link>
-      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
-      <pubDate>Wed, 03 Dec 2025 09:31:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-done/</guid>
     </item>
   </channel>
 </rss>
