@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 05:27:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 06:40:27 +0000</lastBuildDate>
+    <item>
+      <title>K8s Mastery</title>
+      <link>https://kubaik.github.io/k8s-mastery/</link>
+      <description>Unlock Kubernetes mastery: expert guides, tutorials &amp; best practices for seamless orchestration.</description>
+      <pubDate>Thu, 04 Dec 2025 06:40:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-mastery/</guid>
+    </item>
     <item>
       <title>Log On: Simplify</title>
       <link>https://kubaik.github.io/log-on-simplify/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
       <pubDate>Wed, 03 Dec 2025 08:38:25 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>IoT Simplified</title>
-      <link>https://kubaik.github.io/iot-simplified/</link>
-      <description>Simplify IoT device management with expert insights and solutions.</description>
-      <pubDate>Wed, 03 Dec 2025 07:28:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-simplified/</guid>
     </item>
   </channel>
 </rss>
