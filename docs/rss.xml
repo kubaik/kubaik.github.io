@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 06:40:27 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 07:27:43 +0000</lastBuildDate>
+    <item>
+      <title>Boost Tech Pay</title>
+      <link>https://kubaik.github.io/boost-tech-pay/</link>
+      <description>Learn to negotiate your worth - expert tips to boost your tech salary</description>
+      <pubDate>Thu, 04 Dec 2025 07:27:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-tech-pay/</guid>
+    </item>
     <item>
       <title>K8s Mastery</title>
       <link>https://kubaik.github.io/k8s-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
       <pubDate>Wed, 03 Dec 2025 09:31:15 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-done/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Wed, 03 Dec 2025 08:38:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
