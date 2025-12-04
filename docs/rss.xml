@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 03:55:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 04:36:49 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
+      <pubDate>Thu, 04 Dec 2025 04:36:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>ML Simplified</title>
       <link>https://kubaik.github.io/ml-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
       <pubDate>Wed, 03 Dec 2025 06:40:20 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Unlock productivity with top VS Code extensions.</description>
-      <pubDate>Wed, 03 Dec 2025 05:27:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
