@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 18:41:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 19:23:47 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Improve coding skills with expert debugging techniques, tips &amp; tools.</description>
+      <pubDate>Thu, 04 Dec 2025 19:23:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>Scale with TypeScript</title>
       <link>https://kubaik.github.io/scale-with-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
       <pubDate>Wed, 03 Dec 2025 21:23:20 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Unlock the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
-      <pubDate>Wed, 03 Dec 2025 20:31:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
