@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 09:31:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 10:32:00 +0000</lastBuildDate>
+    <item>
+      <title>Split Smart</title>
+      <link>https://kubaik.github.io/split-smart/</link>
+      <description>Optimize code with smart splitting strategies, boost performance &amp; reduce load times.</description>
+      <pubDate>Thu, 04 Dec 2025 10:31:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smart/</guid>
+    </item>
     <item>
       <title>CYBER 101</title>
       <link>https://kubaik.github.io/cyber-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn key API Gateway patterns for secure, scalable integrations.</description>
       <pubDate>Wed, 03 Dec 2025 12:57:59 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Wed, 03 Dec 2025 11:25:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
