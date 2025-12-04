@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 04:36:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 05:27:09 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Simplify</title>
+      <link>https://kubaik.github.io/log-on-simplify/</link>
+      <description>Simplify log management with our expert solutions, streamlining security and compliance.</description>
+      <pubDate>Thu, 04 Dec 2025 05:27:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-simplify/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Simplify IoT device management with expert insights and solutions.</description>
       <pubDate>Wed, 03 Dec 2025 07:28:01 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-simplified/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
-      <pubDate>Wed, 03 Dec 2025 06:40:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
