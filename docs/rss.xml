@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 15:31:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 16:38:00 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analytics skills.</description>
+      <pubDate>Thu, 04 Dec 2025 16:37:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Terraform 101</title>
       <link>https://kubaik.github.io/terraform-101/</link>
@@ -138,13 +145,6 @@
       <description>Master code review best practices with expert tips and tricks.</description>
       <pubDate>Wed, 03 Dec 2025 18:40:46 +0000</pubDate>
       <guid>https://kubaik.github.io/review-like-pro/</guid>
-    </item>
-    <item>
-      <title>Top Web Dev Frames</title>
-      <link>https://kubaik.github.io/top-web-dev-frames/</link>
-      <description>Discover top web dev frameworks for modern development.</description>
-      <pubDate>Wed, 03 Dec 2025 17:28:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-dev-frames/</guid>
     </item>
   </channel>
 </rss>
