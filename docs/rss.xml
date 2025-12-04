@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 16:38:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 17:28:14 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Thu, 04 Dec 2025 17:28:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -117,13 +124,6 @@
       <description>Learn Go concurrency basics &amp; best practices for efficient parallel programming.</description>
       <pubDate>Wed, 03 Dec 2025 23:23:38 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline dev workflow with automation. Boost efficiency &amp; productivity.</description>
-      <pubDate>Wed, 03 Dec 2025 22:27:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
     <item>
       <title>BDD Simplified</title>
