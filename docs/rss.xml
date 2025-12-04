@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 19:23:47 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 20:31:09 +0000</lastBuildDate>
+    <item>
+      <title>Mobile App Blueprint</title>
+      <link>https://kubaik.github.io/mobile-app-blueprint/</link>
+      <description>Learn expert mobile app architecture patterns and design a scalable app with our blueprint guide.</description>
+      <pubDate>Thu, 04 Dec 2025 20:31:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-app-blueprint/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Go concurrency basics &amp; best practices for efficient parallel programming.</description>
       <pubDate>Wed, 03 Dec 2025 23:23:38 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
-      <pubDate>Wed, 03 Dec 2025 21:23:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
