@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Dec 2025 23:23:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 02:04:18 +0000</lastBuildDate>
+    <item>
+      <title>Smart Code</title>
+      <link>https://kubaik.github.io/smart-code/</link>
+      <description>Unlock blockchain potential with smart contract development expertise.</description>
+      <pubDate>Thu, 04 Dec 2025 02:04:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-code/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks.</description>
       <pubDate>Wed, 03 Dec 2025 04:34:28 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-to-riches/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Unlock DevOps success with expert best practices and cultural insights.</description>
-      <pubDate>Wed, 03 Dec 2025 03:53:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
