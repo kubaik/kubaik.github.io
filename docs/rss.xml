@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 20:30:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 21:24:50 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and tricks for advanced Git techniques.</description>
+      <pubDate>Fri, 05 Dec 2025 21:24:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>SRE Simplified</title>
       <link>https://kubaik.github.io/sre-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: architecture, design &amp; implementation guide</description>
       <pubDate>Fri, 05 Dec 2025 02:04:31 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Thu, 04 Dec 2025 23:25:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
