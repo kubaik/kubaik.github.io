@@ -2094,15 +2094,15 @@
     "topic": "Tech Interview Preparation Guide"
   },
   "java_spring_boot_development": {
-    "timestamp": "2025-11-27T19:20:14.113868",
+    "timestamp": "2025-12-05T08:35:41.583369",
     "hashtags": [
-      "JavaDev",
+      "JavaDevelopment",
       "SpringBoot",
       "CloudNative",
-      "DevOpsTools",
       "Microservices",
-      "ServerlessTech",
-      "FullStackDev"
+      "DevOpsTools",
+      "FullStackDev",
+      "ServerlessArchitecture"
     ],
     "topic": "Java Spring Boot Development"
   },
