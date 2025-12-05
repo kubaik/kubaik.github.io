@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 09:28:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 10:29:20 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn backend architecture patterns &amp; best practices to build scalable systems</description>
+      <pubDate>Fri, 05 Dec 2025 10:29:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master Docker containerization with our expert guide.</description>
       <pubDate>Thu, 04 Dec 2025 13:43:12 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks to streamline your workflow.</description>
-      <pubDate>Thu, 04 Dec 2025 12:58:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
