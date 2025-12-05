@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 08:35:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 09:28:50 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
+      <pubDate>Fri, 05 Dec 2025 09:28:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Spring Boot Made Easy</title>
       <link>https://kubaik.github.io/spring-boot-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks to streamline your workflow.</description>
       <pubDate>Thu, 04 Dec 2025 12:58:19 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
-      <pubDate>Thu, 04 Dec 2025 11:26:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
