@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 14:28:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 15:29:22 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Master IoT device control with expert management tips and strategies.</description>
+      <pubDate>Fri, 05 Dec 2025 15:29:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with TypeScript for large-scale apps. Learn how to scale with confidence.</description>
       <pubDate>Thu, 04 Dec 2025 18:41:33 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
-      <pubDate>Thu, 04 Dec 2025 17:28:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
