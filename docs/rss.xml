@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 22:25:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 23:24:51 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Discover the power of Computer Vision tech &amp; its innovative applications.</description>
+      <pubDate>Fri, 05 Dec 2025 23:24:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Cyber 101</title>
       <link>https://kubaik.github.io/cyber-101/</link>
@@ -138,13 +145,6 @@
       <description>Land your dream tech job with our expert interview prep guide.</description>
       <pubDate>Fri, 05 Dec 2025 04:35:06 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Unlock the future with Generative AI &amp; Large Language Models in our &apos;AI Revolution&apos; blog post.</description>
-      <pubDate>Fri, 05 Dec 2025 03:53:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
