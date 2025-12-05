@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 02:04:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 03:53:58 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Unlock the future with Generative AI &amp; Large Language Models in our &apos;AI Revolution&apos; blog post.</description>
+      <pubDate>Fri, 05 Dec 2025 03:53:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Kubernetes mastery: expert guides, tutorials &amp; best practices for seamless orchestration.</description>
       <pubDate>Thu, 04 Dec 2025 06:40:21 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-mastery/</guid>
-    </item>
-    <item>
-      <title>Log On: Simplify</title>
-      <link>https://kubaik.github.io/log-on-simplify/</link>
-      <description>Simplify log management with our expert solutions, streamlining security and compliance.</description>
-      <pubDate>Thu, 04 Dec 2025 05:27:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-simplify/</guid>
     </item>
   </channel>
 </rss>
