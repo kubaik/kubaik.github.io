@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 17:25:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 18:36:13 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
+      <pubDate>Fri, 05 Dec 2025 18:36:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows and boost efficiency.</description>
       <pubDate>Thu, 04 Dec 2025 21:26:13 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-simplified/</guid>
-    </item>
-    <item>
-      <title>Mobile App Blueprint</title>
-      <link>https://kubaik.github.io/mobile-app-blueprint/</link>
-      <description>Learn expert mobile app architecture patterns and design a scalable app with our blueprint guide.</description>
-      <pubDate>Thu, 04 Dec 2025 20:31:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-app-blueprint/</guid>
     </item>
   </channel>
 </rss>
