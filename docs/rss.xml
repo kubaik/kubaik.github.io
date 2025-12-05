@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 03:53:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 04:35:13 +0000</lastBuildDate>
+    <item>
+      <title>Crack Tech Interviews</title>
+      <link>https://kubaik.github.io/crack-tech-interviews/</link>
+      <description>Land your dream tech job with our expert interview prep guide.</description>
+      <pubDate>Fri, 05 Dec 2025 04:35:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Learn to negotiate your worth - expert tips to boost your tech salary</description>
       <pubDate>Thu, 04 Dec 2025 07:27:36 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-tech-pay/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Unlock Kubernetes mastery: expert guides, tutorials &amp; best practices for seamless orchestration.</description>
-      <pubDate>Thu, 04 Dec 2025 06:40:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
