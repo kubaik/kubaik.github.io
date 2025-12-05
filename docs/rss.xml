@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Dec 2025 23:25:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 02:04:37 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: architecture, design &amp; implementation guide</description>
+      <pubDate>Fri, 05 Dec 2025 02:04:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Deploy AI Smarter</title>
       <link>https://kubaik.github.io/deploy-ai-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify log management with our expert solutions, streamlining security and compliance.</description>
       <pubDate>Thu, 04 Dec 2025 05:27:03 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-simplify/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
-      <pubDate>Thu, 04 Dec 2025 04:36:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
