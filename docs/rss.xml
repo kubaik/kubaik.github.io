@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 19:22:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 20:30:34 +0000</lastBuildDate>
+    <item>
+      <title>SRE Simplified</title>
+      <link>https://kubaik.github.io/sre-simplified/</link>
+      <description>Unlock efficient ops with SRE. Learn how to implement Site Reliability Engineering for improved uptime &amp; performance.</description>
+      <pubDate>Fri, 05 Dec 2025 20:30:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-simplified/</guid>
+    </item>
     <item>
       <title>Secure the Cloud</title>
       <link>https://kubaik.github.io/secure-the-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Streamline AI model deployment with expert strategies and best practices.</description>
       <pubDate>Thu, 04 Dec 2025 23:25:30 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
-    </item>
-    <item>
-      <title>Code the Future</title>
-      <link>https://kubaik.github.io/code-the-future/</link>
-      <description>Learn smart contract dev &amp; shape the future of tech. Discover coding insights &amp; industry trends.</description>
-      <pubDate>Thu, 04 Dec 2025 22:24:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-the-future/</guid>
     </item>
   </channel>
 </rss>
