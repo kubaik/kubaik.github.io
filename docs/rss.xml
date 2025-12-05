@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 04:35:13 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 05:27:18 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Done</title>
+      <link>https://kubaik.github.io/jwt-auth-done/</link>
+      <description>Learn how to implement JWT authentication in your app with our step-by-step guide.</description>
+      <pubDate>Fri, 05 Dec 2025 05:27:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
+    </item>
     <item>
       <title>Crack Tech Interviews</title>
       <link>https://kubaik.github.io/crack-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of finance with blockchain and cryptocurrency trends.</description>
       <pubDate>Thu, 04 Dec 2025 08:37:35 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-boom/</guid>
-    </item>
-    <item>
-      <title>Boost Tech Pay</title>
-      <link>https://kubaik.github.io/boost-tech-pay/</link>
-      <description>Learn to negotiate your worth - expert tips to boost your tech salary</description>
-      <pubDate>Thu, 04 Dec 2025 07:27:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-tech-pay/</guid>
     </item>
   </channel>
 </rss>
