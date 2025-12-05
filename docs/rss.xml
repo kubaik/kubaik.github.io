@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 18:36:13 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 19:22:01 +0000</lastBuildDate>
+    <item>
+      <title>Secure the Cloud</title>
+      <link>https://kubaik.github.io/secure-the-cloud/</link>
+      <description>Protect your cloud data with expert security tips and best practices.</description>
+      <pubDate>Fri, 05 Dec 2025 19:21:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-the-cloud/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn smart contract dev &amp; shape the future of tech. Discover coding insights &amp; industry trends.</description>
       <pubDate>Thu, 04 Dec 2025 22:24:33 +0000</pubDate>
       <guid>https://kubaik.github.io/code-the-future/</guid>
-    </item>
-    <item>
-      <title>MLOps Simplified</title>
-      <link>https://kubaik.github.io/mlops-simplified/</link>
-      <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows and boost efficiency.</description>
-      <pubDate>Thu, 04 Dec 2025 21:26:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-simplified/</guid>
     </item>
   </channel>
 </rss>
