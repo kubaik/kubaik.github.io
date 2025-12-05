@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 13:37:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 14:28:09 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn responsive web design techniques to create adaptable, user-friendly websites</description>
+      <pubDate>Fri, 05 Dec 2025 14:28:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Thu, 04 Dec 2025 17:28:07 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Python for Data</title>
-      <link>https://kubaik.github.io/python-for-data/</link>
-      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analytics skills.</description>
-      <pubDate>Thu, 04 Dec 2025 16:37:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-for-data/</guid>
     </item>
   </channel>
 </rss>
