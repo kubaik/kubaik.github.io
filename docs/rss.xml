@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 07:27:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 08:35:48 +0000</lastBuildDate>
+    <item>
+      <title>Spring Boot Made Easy</title>
+      <link>https://kubaik.github.io/spring-boot-made-easy/</link>
+      <description>Master Java Spring Boot development with easy tutorials and expert tips.</description>
+      <pubDate>Fri, 05 Dec 2025 08:35:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/spring-boot-made-easy/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
       <pubDate>Thu, 04 Dec 2025 11:26:12 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>Split Smart</title>
-      <link>https://kubaik.github.io/split-smart/</link>
-      <description>Optimize code with smart splitting strategies, boost performance &amp; reduce load times.</description>
-      <pubDate>Thu, 04 Dec 2025 10:31:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smart/</guid>
     </item>
   </channel>
 </rss>
