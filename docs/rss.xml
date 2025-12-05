@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 10:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 11:24:49 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Code Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
+      <description>Boost coding productivity with top VS Code extensions.</description>
+      <pubDate>Fri, 05 Dec 2025 11:24:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
       <pubDate>Thu, 04 Dec 2025 14:28:58 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Docker Done Right</title>
-      <link>https://kubaik.github.io/docker-done-right/</link>
-      <description>Master Docker containerization with our expert guide.</description>
-      <pubDate>Thu, 04 Dec 2025 13:43:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-done-right/</guid>
     </item>
   </channel>
 </rss>
