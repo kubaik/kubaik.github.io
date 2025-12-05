@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 16:34:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 17:25:41 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Fri, 05 Dec 2025 17:25:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Negotiate More</title>
       <link>https://kubaik.github.io/negotiate-more/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert mobile app architecture patterns and design a scalable app with our blueprint guide.</description>
       <pubDate>Thu, 04 Dec 2025 20:31:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-app-blueprint/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Improve coding skills with expert debugging techniques, tips &amp; tools.</description>
-      <pubDate>Thu, 04 Dec 2025 19:23:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
