@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Dec 2025 21:24:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 22:25:49 +0000</lastBuildDate>
+    <item>
+      <title>Cyber 101</title>
+      <link>https://kubaik.github.io/cyber-101/</link>
+      <description>Learn cybersecurity basics &amp; protect yourself online with our Cyber 101 guide.</description>
+      <pubDate>Fri, 05 Dec 2025 22:25:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-101/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future with Generative AI &amp; Large Language Models in our &apos;AI Revolution&apos; blog post.</description>
       <pubDate>Fri, 05 Dec 2025 03:53:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: architecture, design &amp; implementation guide</description>
-      <pubDate>Fri, 05 Dec 2025 02:04:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
