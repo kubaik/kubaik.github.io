@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 15:24:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 16:30:53 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Learn expert documentation best practices with Doc Right. Improve clarity, accuracy, and efficiency.</description>
+      <pubDate>Sat, 06 Dec 2025 16:30:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Fix Old Code</title>
       <link>https://kubaik.github.io/fix-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Protect your cloud data with expert security tips and best practices.</description>
       <pubDate>Fri, 05 Dec 2025 19:21:55 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-the-cloud/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
-      <pubDate>Fri, 05 Dec 2025 18:36:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
