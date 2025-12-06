@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 13:31:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 14:22:45 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Patterns</title>
+      <link>https://kubaik.github.io/api-gateway-patterns/</link>
+      <description>Learn API Gateway patterns for secure, scalable APIs.</description>
+      <pubDate>Sat, 06 Dec 2025 14:22:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
+    </item>
     <item>
       <title>Angular at Scale</title>
       <link>https://kubaik.github.io/angular-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Master Agile development with expert tips and best practices.</description>
       <pubDate>Fri, 05 Dec 2025 17:25:34 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-done-right/</guid>
-    </item>
-    <item>
-      <title>Negotiate More</title>
-      <link>https://kubaik.github.io/negotiate-more/</link>
-      <description>Boost your tech salary with expert negotiation tips and strategies.</description>
-      <pubDate>Fri, 05 Dec 2025 16:34:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-more/</guid>
     </item>
   </channel>
 </rss>
