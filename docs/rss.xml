@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 07:24:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 08:32:31 +0000</lastBuildDate>
+    <item>
+      <title>Write Smarter</title>
+      <link>https://kubaik.github.io/write-smarter/</link>
+      <description>Improve your technical writing skills with expert tips and best practices.</description>
+      <pubDate>Sat, 06 Dec 2025 08:32:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-smarter/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Learn backend architecture patterns &amp; best practices to build scalable systems</description>
       <pubDate>Fri, 05 Dec 2025 10:29:14 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
-      <pubDate>Fri, 05 Dec 2025 09:28:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
