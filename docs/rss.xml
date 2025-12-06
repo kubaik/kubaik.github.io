@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 08:32:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 09:25:36 +0000</lastBuildDate>
+    <item>
+      <title>AR Dev 101</title>
+      <link>https://kubaik.github.io/ar-dev-101/</link>
+      <description>Learn AR development basics &amp; start building immersive experiences.</description>
+      <pubDate>Sat, 06 Dec 2025 09:25:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-dev-101/</guid>
+    </item>
     <item>
       <title>Write Smarter</title>
       <link>https://kubaik.github.io/write-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding productivity with top VS Code extensions.</description>
       <pubDate>Fri, 05 Dec 2025 11:24:42 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn backend architecture patterns &amp; best practices to build scalable systems</description>
-      <pubDate>Fri, 05 Dec 2025 10:29:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
