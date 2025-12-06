@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 18:34:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 19:20:14 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Sat, 06 Dec 2025 19:20:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity basics &amp; protect yourself online with our Cyber 101 guide.</description>
       <pubDate>Fri, 05 Dec 2025 22:25:42 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-101/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and tricks for advanced Git techniques.</description>
-      <pubDate>Fri, 05 Dec 2025 21:24:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
