@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 09:25:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 10:26:13 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Unlocked</title>
+      <link>https://kubaik.github.io/graphql-unlocked/</link>
+      <description>Unlock the power of GraphQL API development &amp; learn how to build scalable, flexible APIs with ease.</description>
+      <pubDate>Sat, 06 Dec 2025 10:26:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-unlocked/</guid>
+    </item>
     <item>
       <title>AR Dev 101</title>
       <link>https://kubaik.github.io/ar-dev-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning Neural Networks, explore applications &amp; innovations.</description>
       <pubDate>Fri, 05 Dec 2025 12:55:09 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Code Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
-      <description>Boost coding productivity with top VS Code extensions.</description>
-      <pubDate>Fri, 05 Dec 2025 11:24:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
     </item>
   </channel>
 </rss>
