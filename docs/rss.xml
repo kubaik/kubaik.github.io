@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 21:22:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 22:24:41 +0000</lastBuildDate>
+    <item>
+      <title>Docker Done Right</title>
+      <link>https://kubaik.github.io/docker-done-right/</link>
+      <description>Master Docker containerization with our expert guide, best practices, and tutorials.</description>
+      <pubDate>Sat, 06 Dec 2025 22:24:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-done-right/</guid>
+    </item>
     <item>
       <title>AI Predicts</title>
       <link>https://kubaik.github.io/ai-predicts/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to ensure secure, compliant data management.</description>
       <pubDate>Sat, 06 Dec 2025 03:15:50 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn to design smarter distributed systems with expert tips and insights.</description>
-      <pubDate>Sat, 06 Dec 2025 01:57:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
