@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 06:36:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 07:24:09 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP</title>
+      <link>https://kubaik.github.io/unlock-gcp/</link>
+      <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
+      <pubDate>Sat, 06 Dec 2025 07:24:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
       <pubDate>Fri, 05 Dec 2025 09:28:43 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Spring Boot Made Easy</title>
-      <link>https://kubaik.github.io/spring-boot-made-easy/</link>
-      <description>Master Java Spring Boot development with easy tutorials and expert tips.</description>
-      <pubDate>Fri, 05 Dec 2025 08:35:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/spring-boot-made-easy/</guid>
     </item>
   </channel>
 </rss>
