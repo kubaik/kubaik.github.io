@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 05:26:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 06:36:50 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft intuitive Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
+      <pubDate>Sat, 06 Dec 2025 06:36:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Master Java Spring Boot development with easy tutorials and expert tips.</description>
       <pubDate>Fri, 05 Dec 2025 08:35:41 +0000</pubDate>
       <guid>https://kubaik.github.io/spring-boot-made-easy/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop essential tech leadership skills to drive innovation and success.</description>
-      <pubDate>Fri, 05 Dec 2025 07:27:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
