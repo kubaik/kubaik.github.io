@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 16:30:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 17:21:42 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn to visualize smart and make data-driven decisions.</description>
+      <pubDate>Sat, 06 Dec 2025 17:21:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient ops with SRE. Learn how to implement Site Reliability Engineering for improved uptime &amp; performance.</description>
       <pubDate>Fri, 05 Dec 2025 20:30:28 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-simplified/</guid>
-    </item>
-    <item>
-      <title>Secure the Cloud</title>
-      <link>https://kubaik.github.io/secure-the-cloud/</link>
-      <description>Protect your cloud data with expert security tips and best practices.</description>
-      <pubDate>Fri, 05 Dec 2025 19:21:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-the-cloud/</guid>
     </item>
   </channel>
 </rss>
