@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Dec 2025 19:20:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Dec 2025 20:27:30 +0000</lastBuildDate>
+    <item>
+      <title>Tame Debt</title>
+      <link>https://kubaik.github.io/tame-debt/</link>
+      <description>Master technical debt management with expert strategies to optimize code &amp; boost productivity.</description>
+      <pubDate>Sat, 06 Dec 2025 20:27:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-debt/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Computer Vision tech &amp; its innovative applications.</description>
       <pubDate>Fri, 05 Dec 2025 23:24:44 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Cyber 101</title>
-      <link>https://kubaik.github.io/cyber-101/</link>
-      <description>Learn cybersecurity basics &amp; protect yourself online with our Cyber 101 guide.</description>
-      <pubDate>Fri, 05 Dec 2025 22:25:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/cyber-101/</guid>
     </item>
   </channel>
 </rss>
