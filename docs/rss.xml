@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 04:39:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 05:25:21 +0000</lastBuildDate>
+    <item>
+      <title>Tune In</title>
+      <link>https://kubaik.github.io/tune-in/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Sun, 07 Dec 2025 05:25:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-in/</guid>
+    </item>
     <item>
       <title>Lock Down Containers</title>
       <link>https://kubaik.github.io/lock-down-containers/</link>
@@ -138,13 +145,6 @@
       <description>Improve your technical writing skills with expert tips and best practices.</description>
       <pubDate>Sat, 06 Dec 2025 08:32:25 +0000</pubDate>
       <guid>https://kubaik.github.io/write-smarter/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
-      <pubDate>Sat, 06 Dec 2025 07:24:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
