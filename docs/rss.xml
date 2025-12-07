@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 05:25:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 06:36:27 +0000</lastBuildDate>
+    <item>
+      <title>Federated Learning</title>
+      <link>https://kubaik.github.io/federated-learning/</link>
+      <description>Discover Federated Learning, a secure &amp; decentralized AI approach.</description>
+      <pubDate>Sun, 07 Dec 2025 06:36:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/federated-learning/</guid>
+    </item>
     <item>
       <title>Tune In</title>
       <link>https://kubaik.github.io/tune-in/</link>
@@ -138,13 +145,6 @@
       <description>Learn AR development basics &amp; start building immersive experiences.</description>
       <pubDate>Sat, 06 Dec 2025 09:25:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-dev-101/</guid>
-    </item>
-    <item>
-      <title>Write Smarter</title>
-      <link>https://kubaik.github.io/write-smarter/</link>
-      <description>Improve your technical writing skills with expert tips and best practices.</description>
-      <pubDate>Sat, 06 Dec 2025 08:32:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-smarter/</guid>
     </item>
   </channel>
 </rss>
