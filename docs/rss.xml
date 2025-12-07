@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 16:30:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 17:21:15 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Learn expert Feature Engineering Techniques to Boost Models and improve predictions.</description>
+      <pubDate>Sun, 07 Dec 2025 17:21:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>Unlock TypeScript</title>
       <link>https://kubaik.github.io/unlock-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Master technical debt management with expert strategies to optimize code &amp; boost productivity.</description>
       <pubDate>Sat, 06 Dec 2025 20:27:23 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-debt/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Sat, 06 Dec 2025 19:20:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
