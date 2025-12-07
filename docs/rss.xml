@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 22:24:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 23:23:52 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Smart: 5 Migration Tips</title>
+      <link>https://kubaik.github.io/cloud-smart-5-migration-tips/</link>
+      <description>Boost efficiency with cloud migration. Get 5 expert tips for a seamless transition.</description>
+      <pubDate>Sun, 07 Dec 2025 23:23:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-smart-5-migration-tips/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility-First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Secure your containers with expert tips and best practices.</description>
       <pubDate>Sun, 07 Dec 2025 04:39:29 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-down-containers/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
-      <pubDate>Sun, 07 Dec 2025 03:59:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
