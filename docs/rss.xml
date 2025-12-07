@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 08:31:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 09:25:13 +0000</lastBuildDate>
+    <item>
+      <title>Stay Secure: SOC 2 &amp; ISO</title>
+      <link>https://kubaik.github.io/stay-secure-soc-2-iso/</link>
+      <description>Boost security with SOC 2 &amp; ISO 27001 compliance. Learn how to protect your business.</description>
+      <pubDate>Sun, 07 Dec 2025 09:25:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/stay-secure-soc-2-iso/</guid>
+    </item>
     <item>
       <title>ASO Hacks</title>
       <link>https://kubaik.github.io/aso-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks.</description>
       <pubDate>Sat, 06 Dec 2025 12:50:32 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Improve app speed &amp; user experience with expert APM tips.</description>
-      <pubDate>Sat, 06 Dec 2025 11:20:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
