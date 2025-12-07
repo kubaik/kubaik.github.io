@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 02:18:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 03:59:54 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
+      <pubDate>Sun, 07 Dec 2025 03:59:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Vector DBs</title>
       <link>https://kubaik.github.io/vector-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Learn to craft intuitive Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
       <pubDate>Sat, 06 Dec 2025 06:36:43 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Vue.js Components</title>
-      <link>https://kubaik.github.io/vuejs-components/</link>
-      <description>Learn Vue.js component architecture &amp; build reusable UI elements.</description>
-      <pubDate>Sat, 06 Dec 2025 05:26:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuejs-components/</guid>
     </item>
   </channel>
 </rss>
