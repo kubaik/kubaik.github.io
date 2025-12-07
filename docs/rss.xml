@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 03:59:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 04:39:36 +0000</lastBuildDate>
+    <item>
+      <title>Lock Down Containers</title>
+      <link>https://kubaik.github.io/lock-down-containers/</link>
+      <description>Secure your containers with expert tips and best practices.</description>
+      <pubDate>Sun, 07 Dec 2025 04:39:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-down-containers/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
       <pubDate>Sat, 06 Dec 2025 07:24:02 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intuitive Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
-      <pubDate>Sat, 06 Dec 2025 06:36:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
