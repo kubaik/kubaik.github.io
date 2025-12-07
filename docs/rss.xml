@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 10:24:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 11:20:09 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Time Hacks</title>
+      <link>https://kubaik.github.io/engineer-time-hacks/</link>
+      <description>Boost productivity with proven time management hacks for engineers.</description>
+      <pubDate>Sun, 07 Dec 2025 11:20:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-time-hacks/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Learn API Gateway patterns for secure, scalable APIs.</description>
       <pubDate>Sat, 06 Dec 2025 14:22:38 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
-    </item>
-    <item>
-      <title>Angular at Scale</title>
-      <link>https://kubaik.github.io/angular-at-scale/</link>
-      <description>Learn best practices for building Angular enterprise applications at scale.</description>
-      <pubDate>Sat, 06 Dec 2025 13:31:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-at-scale/</guid>
     </item>
   </channel>
 </rss>
