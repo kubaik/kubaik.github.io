@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 09:25:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 10:24:47 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn about high availability systems &amp; ensure uptime with &apos;Always On&apos; strategies and solutions.</description>
+      <pubDate>Sun, 07 Dec 2025 10:24:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Stay Secure: SOC 2 &amp; ISO</title>
       <link>https://kubaik.github.io/stay-secure-soc-2-iso/</link>
@@ -138,13 +145,6 @@
       <description>Learn best practices for building Angular enterprise applications at scale.</description>
       <pubDate>Sat, 06 Dec 2025 13:31:22 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-at-scale/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Sat, 06 Dec 2025 12:50:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
