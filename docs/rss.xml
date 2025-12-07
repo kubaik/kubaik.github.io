@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 06:36:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 07:24:05 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Sun, 07 Dec 2025 07:23:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>Federated Learning</title>
       <link>https://kubaik.github.io/federated-learning/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of GraphQL API development &amp; learn how to build scalable, flexible APIs with ease.</description>
       <pubDate>Sat, 06 Dec 2025 10:26:06 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-unlocked/</guid>
-    </item>
-    <item>
-      <title>AR Dev 101</title>
-      <link>https://kubaik.github.io/ar-dev-101/</link>
-      <description>Learn AR development basics &amp; start building immersive experiences.</description>
-      <pubDate>Sat, 06 Dec 2025 09:25:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-dev-101/</guid>
     </item>
   </channel>
 </rss>
