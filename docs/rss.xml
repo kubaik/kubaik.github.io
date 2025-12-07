@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 20:28:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 21:21:55 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons, and use cases.</description>
+      <pubDate>Sun, 07 Dec 2025 21:21:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Balance Done</title>
       <link>https://kubaik.github.io/balance-done/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Vector DBs &amp; embeddings, revolutionizing data search &amp; retrieval with AI-powered similarity matching.</description>
       <pubDate>Sun, 07 Dec 2025 02:18:34 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with smart indexing strategies.</description>
-      <pubDate>Sat, 06 Dec 2025 23:24:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
