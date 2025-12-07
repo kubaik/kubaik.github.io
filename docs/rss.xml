@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 19:20:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 20:28:15 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Optimize server performance with expert load balancing techniques.</description>
+      <pubDate>Sun, 07 Dec 2025 20:28:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with smart indexing strategies.</description>
       <pubDate>Sat, 06 Dec 2025 23:24:14 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Docker Done Right</title>
-      <link>https://kubaik.github.io/docker-done-right/</link>
-      <description>Master Docker containerization with our expert guide, best practices, and tutorials.</description>
-      <pubDate>Sat, 06 Dec 2025 22:24:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-done-right/</guid>
     </item>
   </channel>
 </rss>
