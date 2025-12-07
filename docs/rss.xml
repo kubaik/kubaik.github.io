@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 11:20:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Dec 2025 12:49:29 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring and observability best practices.</description>
+      <pubDate>Sun, 07 Dec 2025 12:49:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>Engineer Time Hacks</title>
       <link>https://kubaik.github.io/engineer-time-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Revive outdated code with expert refactoring tips and best practices.</description>
       <pubDate>Sat, 06 Dec 2025 15:24:01 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-old-code/</guid>
-    </item>
-    <item>
-      <title>API Gateway Patterns</title>
-      <link>https://kubaik.github.io/api-gateway-patterns/</link>
-      <description>Learn API Gateway patterns for secure, scalable APIs.</description>
-      <pubDate>Sat, 06 Dec 2025 14:22:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
     </item>
   </channel>
 </rss>
