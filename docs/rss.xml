@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 16:36:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 17:26:33 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSG</title>
+      <link>https://kubaik.github.io/unlock-ssg/</link>
+      <description>Boost site speed with Static Site Generation (SSG). Learn how to unlock faster loads &amp; better UX.</description>
+      <pubDate>Mon, 08 Dec 2025 17:26:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssg/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Optimize server performance with expert load balancing techniques.</description>
       <pubDate>Sun, 07 Dec 2025 20:28:08 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-done/</guid>
-    </item>
-    <item>
-      <title>Mobile UI/UX Done Right</title>
-      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
-      <description>Boost mobile engagement with expert UI/UX tips and best practices.</description>
-      <pubDate>Sun, 07 Dec 2025 19:20:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
     </item>
   </channel>
 </rss>
