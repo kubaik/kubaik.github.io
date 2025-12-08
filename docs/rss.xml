@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 10:31:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 11:25:28 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Mon, 08 Dec 2025 11:25:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>Boost UI with Web Components</title>
       <link>https://kubaik.github.io/boost-ui-with-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
       <pubDate>Sun, 07 Dec 2025 14:23:03 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-now/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques and best practices.</description>
-      <pubDate>Sun, 07 Dec 2025 13:30:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
