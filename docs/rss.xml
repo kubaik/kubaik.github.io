@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 06:44:08 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 07:29:54 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Mastery: AWS</title>
+      <link>https://kubaik.github.io/cloud-mastery-aws/</link>
+      <description>Unlock cloud potential with expert AWS insights &amp; architecture tips.</description>
+      <pubDate>Mon, 08 Dec 2025 07:29:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
+    </item>
     <item>
       <title>WCAG Made Easy</title>
       <link>https://kubaik.github.io/wcag-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn about high availability systems &amp; ensure uptime with &apos;Always On&apos; strategies and solutions.</description>
       <pubDate>Sun, 07 Dec 2025 10:24:40 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Stay Secure: SOC 2 &amp; ISO</title>
-      <link>https://kubaik.github.io/stay-secure-soc-2-iso/</link>
-      <description>Boost security with SOC 2 &amp; ISO 27001 compliance. Learn how to protect your business.</description>
-      <pubDate>Sun, 07 Dec 2025 09:25:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/stay-secure-soc-2-iso/</guid>
     </item>
   </channel>
 </rss>
