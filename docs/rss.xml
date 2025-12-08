@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 12:56:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 13:40:14 +0000</lastBuildDate>
+    <item>
+      <title>AI Meets Edge</title>
+      <link>https://kubaik.github.io/ai-meets-edge/</link>
+      <description>Unlock Edge potential with AI. Discover how AI enhances Edge Computing performance &amp; efficiency.</description>
+      <pubDate>Mon, 08 Dec 2025 13:40:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
+    </item>
     <item>
       <title>Unlock Blockchain</title>
       <link>https://kubaik.github.io/unlock-blockchain/</link>
@@ -138,13 +145,6 @@
       <description>Master TypeScript&apos;s advanced types and unlock next-level coding skills.</description>
       <pubDate>Sun, 07 Dec 2025 16:30:06 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-typescript/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Scrum vs Kanban: Choose the best Agile method</description>
-      <pubDate>Sun, 07 Dec 2025 15:23:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
