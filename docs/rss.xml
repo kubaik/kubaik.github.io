@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 18:40:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 19:23:32 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development &amp; boost your server-side skills with this comprehensive guide.</description>
+      <pubDate>Mon, 08 Dec 2025 19:23:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Boost Network Speed</title>
       <link>https://kubaik.github.io/boost-network-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn Tailwind CSS utility-first design for efficient styling</description>
       <pubDate>Sun, 07 Dec 2025 22:23:59 +0000</pubDate>
       <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons, and use cases.</description>
-      <pubDate>Sun, 07 Dec 2025 21:21:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
