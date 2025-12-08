@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 11:25:28 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 12:56:43 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Blockchain</title>
+      <link>https://kubaik.github.io/unlock-blockchain/</link>
+      <description>Discover the power of blockchain. Learn how it works &amp; its applications.</description>
+      <pubDate>Mon, 08 Dec 2025 12:56:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-blockchain/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Choose the best Agile method</description>
       <pubDate>Sun, 07 Dec 2025 15:23:13 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Lazy Load Now</title>
-      <link>https://kubaik.github.io/lazy-load-now/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
-      <pubDate>Sun, 07 Dec 2025 14:23:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-now/</guid>
     </item>
   </channel>
 </rss>
