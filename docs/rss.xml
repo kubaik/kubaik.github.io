@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 14:30:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 15:30:55 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing: Powering IoT</title>
+      <link>https://kubaik.github.io/edge-computing-powering-iot/</link>
+      <description>Unlock IoT potential with Edge Computing. Discover its applications and benefits.</description>
+      <pubDate>Mon, 08 Dec 2025 15:30:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-powering-iot/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master Go concurrency for efficient coding. Learn parallels, goroutines &amp; channels.</description>
       <pubDate>Sun, 07 Dec 2025 18:34:48 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Learn expert Feature Engineering Techniques to Boost Models and improve predictions.</description>
-      <pubDate>Sun, 07 Dec 2025 17:21:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
