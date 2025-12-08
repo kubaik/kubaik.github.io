@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 07:29:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 08:39:10 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down</title>
+      <link>https://kubaik.github.io/lock-it-down/</link>
+      <description>Safeguard data with encryption &amp; key management. Learn how to lock it down.</description>
+      <pubDate>Mon, 08 Dec 2025 08:39:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down/</guid>
+    </item>
     <item>
       <title>Cloud Mastery: AWS</title>
       <link>https://kubaik.github.io/cloud-mastery-aws/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with proven time management hacks for engineers.</description>
       <pubDate>Sun, 07 Dec 2025 11:20:03 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-time-hacks/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Learn about high availability systems &amp; ensure uptime with &apos;Always On&apos; strategies and solutions.</description>
-      <pubDate>Sun, 07 Dec 2025 10:24:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
