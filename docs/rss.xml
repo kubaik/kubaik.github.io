@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Dec 2025 23:23:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 02:05:21 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up: Simplify Microservices</title>
+      <link>https://kubaik.github.io/mesh-up-simplify-microservices/</link>
+      <description>Simplify microservices with Service Mesh Architecture. Learn how to streamline your workflow and boost efficiency.</description>
+      <pubDate>Mon, 08 Dec 2025 02:05:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up-simplify-microservices/</guid>
+    </item>
     <item>
       <title>Cloud Smart: 5 Migration Tips</title>
       <link>https://kubaik.github.io/cloud-smart-5-migration-tips/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Sun, 07 Dec 2025 05:25:14 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-in/</guid>
-    </item>
-    <item>
-      <title>Lock Down Containers</title>
-      <link>https://kubaik.github.io/lock-down-containers/</link>
-      <description>Secure your containers with expert tips and best practices.</description>
-      <pubDate>Sun, 07 Dec 2025 04:39:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-down-containers/</guid>
     </item>
   </channel>
 </rss>
