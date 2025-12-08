@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 20:31:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 21:22:50 +0000</lastBuildDate>
+    <item>
+      <title>Rails to Success</title>
+      <link>https://kubaik.github.io/rails-to-success/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
+      <pubDate>Mon, 08 Dec 2025 21:22:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-to-success/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Simplify microservices with Service Mesh Architecture. Learn how to streamline your workflow and boost efficiency.</description>
       <pubDate>Mon, 08 Dec 2025 02:05:14 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up-simplify-microservices/</guid>
-    </item>
-    <item>
-      <title>Cloud Smart: 5 Migration Tips</title>
-      <link>https://kubaik.github.io/cloud-smart-5-migration-tips/</link>
-      <description>Boost efficiency with cloud migration. Get 5 expert tips for a seamless transition.</description>
-      <pubDate>Sun, 07 Dec 2025 23:23:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-smart-5-migration-tips/</guid>
     </item>
   </channel>
 </rss>
