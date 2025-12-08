@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 19:23:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 20:31:26 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Expert tutorials &amp; guides.</description>
+      <pubDate>Mon, 08 Dec 2025 20:31:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with cloud migration. Get 5 expert tips for a seamless transition.</description>
       <pubDate>Sun, 07 Dec 2025 23:23:45 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-smart-5-migration-tips/</guid>
-    </item>
-    <item>
-      <title>Tailwind CSS: Utility-First</title>
-      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
-      <description>Learn Tailwind CSS utility-first design for efficient styling</description>
-      <pubDate>Sun, 07 Dec 2025 22:23:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
     </item>
   </channel>
 </rss>
