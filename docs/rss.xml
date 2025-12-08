@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 17:26:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 18:40:33 +0000</lastBuildDate>
+    <item>
+      <title>Boost Network Speed</title>
+      <link>https://kubaik.github.io/boost-network-speed/</link>
+      <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
+      <pubDate>Mon, 08 Dec 2025 18:40:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-network-speed/</guid>
+    </item>
     <item>
       <title>Unlock SSG</title>
       <link>https://kubaik.github.io/unlock-ssg/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: pros, cons, and use cases.</description>
       <pubDate>Sun, 07 Dec 2025 21:21:48 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Balance Done</title>
-      <link>https://kubaik.github.io/balance-done/</link>
-      <description>Optimize server performance with expert load balancing techniques.</description>
-      <pubDate>Sun, 07 Dec 2025 20:28:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-done/</guid>
     </item>
   </channel>
 </rss>
