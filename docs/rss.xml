@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 11:25:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 12:58:18 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehousing Simplified</title>
+      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
+      <description>Simplify data management with our expert solutions. Learn more</description>
+      <pubDate>Tue, 09 Dec 2025 12:58:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock IoT potential with Edge Computing. Discover its applications and benefits.</description>
       <pubDate>Mon, 08 Dec 2025 15:30:47 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing-powering-iot/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Optimize AI model performance with expert training tips and best practices.</description>
-      <pubDate>Mon, 08 Dec 2025 14:29:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
