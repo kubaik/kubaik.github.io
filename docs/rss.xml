@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 12:58:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 13:41:55 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flood</title>
+      <link>https://kubaik.github.io/limit-the-flood/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure system stability.</description>
+      <pubDate>Tue, 09 Dec 2025 13:41:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flood/</guid>
+    </item>
     <item>
       <title>Data Warehousing Simplified</title>
       <link>https://kubaik.github.io/data-warehousing-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable architecture with CQRS &amp; Event Sourcing</description>
       <pubDate>Mon, 08 Dec 2025 16:36:16 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
-    </item>
-    <item>
-      <title>Edge Computing: Powering IoT</title>
-      <link>https://kubaik.github.io/edge-computing-powering-iot/</link>
-      <description>Unlock IoT potential with Edge Computing. Discover its applications and benefits.</description>
-      <pubDate>Mon, 08 Dec 2025 15:30:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing-powering-iot/</guid>
     </item>
   </channel>
 </rss>
