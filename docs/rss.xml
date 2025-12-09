@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 07:27:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 08:38:40 +0000</lastBuildDate>
+    <item>
+      <title>Boost AI with TL</title>
+      <link>https://kubaik.github.io/boost-ai-with-tl/</link>
+      <description>Unlock AI potential with Transfer Learning. Learn how to implement TL for enhanced model performance.</description>
+      <pubDate>Tue, 09 Dec 2025 08:38:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-ai-with-tl/</guid>
+    </item>
     <item>
       <title>Cloud Evolved</title>
       <link>https://kubaik.github.io/cloud-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Mon, 08 Dec 2025 11:25:21 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>Boost UI with Web Components</title>
-      <link>https://kubaik.github.io/boost-ui-with-web-components/</link>
-      <description>Enhance UI with reusable Web Components &amp; Custom Elements. Learn how to boost performance and simplicity.</description>
-      <pubDate>Mon, 08 Dec 2025 10:31:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ui-with-web-components/</guid>
     </item>
   </channel>
 </rss>
