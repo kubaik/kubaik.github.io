@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Dec 2025 23:25:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 02:04:19 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Async</title>
+      <link>https://kubaik.github.io/unlock-async/</link>
+      <description>Unlock async: boost app performance with message queues &amp; async processing techniques.</description>
+      <pubDate>Tue, 09 Dec 2025 02:04:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-async/</guid>
+    </item>
     <item>
       <title>Crypto Boom</title>
       <link>https://kubaik.github.io/crypto-boom/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
       <pubDate>Mon, 08 Dec 2025 05:29:42 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-defense/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Learn expert React best practices and patterns for efficient coding.</description>
-      <pubDate>Mon, 08 Dec 2025 04:40:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
