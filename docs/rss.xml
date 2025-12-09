@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 04:34:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 05:27:46 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Discover the power of real-time web apps, enabling instant interaction and engagement.</description>
+      <pubDate>Tue, 09 Dec 2025 05:27:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard data with encryption &amp; key management. Learn how to lock it down.</description>
       <pubDate>Mon, 08 Dec 2025 08:39:02 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>Cloud Mastery: AWS</title>
-      <link>https://kubaik.github.io/cloud-mastery-aws/</link>
-      <description>Unlock cloud potential with expert AWS insights &amp; architecture tips.</description>
-      <pubDate>Mon, 08 Dec 2025 07:29:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
     </item>
   </channel>
 </rss>
