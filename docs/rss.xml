@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 21:24:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 22:25:53 +0000</lastBuildDate>
+    <item>
+      <title>Grid+Flex</title>
+      <link>https://kubaik.github.io/gridflex/</link>
+      <description>Master CSS Grid &amp; Flexbox with Grid+Flex. Learn layout secrets for responsive designs.</description>
+      <pubDate>Tue, 09 Dec 2025 22:25:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/gridflex/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips.</description>
       <pubDate>Tue, 09 Dec 2025 03:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Unlock Async</title>
-      <link>https://kubaik.github.io/unlock-async/</link>
-      <description>Unlock async: boost app performance with message queues &amp; async processing techniques.</description>
-      <pubDate>Tue, 09 Dec 2025 02:04:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-async/</guid>
     </item>
   </channel>
 </rss>
