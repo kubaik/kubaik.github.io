@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 16:35:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 17:27:12 +0000</lastBuildDate>
+    <item>
+      <title>AI Done Right</title>
+      <link>https://kubaik.github.io/ai-done-right/</link>
+      <description>Unlock responsible AI: Explore ethics &amp; best practices</description>
+      <pubDate>Tue, 09 Dec 2025 17:27:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-done-right/</guid>
+    </item>
     <item>
       <title>Pen Test 101</title>
       <link>https://kubaik.github.io/pen-test-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Expert tutorials &amp; guides.</description>
       <pubDate>Mon, 08 Dec 2025 20:31:19 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development &amp; boost your server-side skills with this comprehensive guide.</description>
-      <pubDate>Mon, 08 Dec 2025 19:23:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
