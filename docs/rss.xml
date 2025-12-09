@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 17:27:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 18:36:34 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green: Zero Downtime</title>
+      <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
+      <description>Learn about Blue-Green Deployment for zero downtime releases and seamless app updates.</description>
+      <pubDate>Tue, 09 Dec 2025 18:36:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-zero-downtime/</guid>
+    </item>
     <item>
       <title>AI Done Right</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
       <pubDate>Mon, 08 Dec 2025 21:22:43 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-to-success/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Expert tutorials &amp; guides.</description>
-      <pubDate>Mon, 08 Dec 2025 20:31:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
