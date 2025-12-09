@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 02:04:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 03:53:32 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Boost database performance with expert query optimization tips.</description>
+      <pubDate>Tue, 09 Dec 2025 03:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>Unlock Async</title>
       <link>https://kubaik.github.io/unlock-async/</link>
@@ -138,13 +145,6 @@
       <description>Simplify web accessibility with WCAG Made Easy, your guide to inclusive design.</description>
       <pubDate>Mon, 08 Dec 2025 06:44:01 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-made-easy/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Mon, 08 Dec 2025 05:29:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
