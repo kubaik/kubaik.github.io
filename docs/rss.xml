@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 10:32:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 11:25:52 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
+      <pubDate>Tue, 09 Dec 2025 11:25:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Optimize AI model performance with expert training tips and best practices.</description>
       <pubDate>Mon, 08 Dec 2025 14:29:57 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>AI Meets Edge</title>
-      <link>https://kubaik.github.io/ai-meets-edge/</link>
-      <description>Unlock Edge potential with AI. Discover how AI enhances Edge Computing performance &amp; efficiency.</description>
-      <pubDate>Mon, 08 Dec 2025 13:40:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
     </item>
   </channel>
 </rss>
