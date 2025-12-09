@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 14:29:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 15:31:39 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with RL strategies. Discover expert Reinforcement Learning techniques.</description>
+      <pubDate>Tue, 09 Dec 2025 15:31:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
       <pubDate>Mon, 08 Dec 2025 18:40:26 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Unlock SSG</title>
-      <link>https://kubaik.github.io/unlock-ssg/</link>
-      <description>Boost site speed with Static Site Generation (SSG). Learn how to unlock faster loads &amp; better UX.</description>
-      <pubDate>Mon, 08 Dec 2025 17:26:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssg/</guid>
     </item>
   </channel>
 </rss>
