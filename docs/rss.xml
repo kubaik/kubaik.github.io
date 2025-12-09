@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 22:25:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 23:26:30 +0000</lastBuildDate>
+    <item>
+      <title>Turbocharge WASM</title>
+      <link>https://kubaik.github.io/turbocharge-wasm/</link>
+      <description>Unlock WebAssembly&apos;s full potential with expert performance optimization techniques.</description>
+      <pubDate>Tue, 09 Dec 2025 23:26:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/turbocharge-wasm/</guid>
+    </item>
     <item>
       <title>Grid+Flex</title>
       <link>https://kubaik.github.io/gridflex/</link>
@@ -138,13 +145,6 @@
       <description>Master modern JavaScript with ES6+ essentials, including syntax &amp; best practices.</description>
       <pubDate>Tue, 09 Dec 2025 04:34:39 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Tue, 09 Dec 2025 03:53:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
