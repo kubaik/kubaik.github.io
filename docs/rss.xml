@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 19:19:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 20:27:27 +0000</lastBuildDate>
+    <item>
+      <title>XAI Uncovered</title>
+      <link>https://kubaik.github.io/xai-uncovered/</link>
+      <description>Unlock the power of Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
+      <pubDate>Tue, 09 Dec 2025 20:27:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/xai-uncovered/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of finance with crypto &amp; blockchain insights.</description>
       <pubDate>Mon, 08 Dec 2025 23:25:33 +0000</pubDate>
       <guid>https://kubaik.github.io/crypto-boom/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
-      <pubDate>Mon, 08 Dec 2025 22:26:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
