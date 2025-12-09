@@ -98,5 +98,6 @@
   "Message Queues and Async Processing",
   "Database Query Optimization",
   "JavaScript ES6+ Features",
-  "Real-Time Web Applications"
+  "Real-Time Web Applications",
+  "Apache Kafka for Streaming"
 ]
