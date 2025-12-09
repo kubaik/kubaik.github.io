@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 13:41:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 14:29:50 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
+      <pubDate>Tue, 09 Dec 2025 14:29:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Limit the Flood</title>
       <link>https://kubaik.github.io/limit-the-flood/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with Static Site Generation (SSG). Learn how to unlock faster loads &amp; better UX.</description>
       <pubDate>Mon, 08 Dec 2025 17:26:26 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssg/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing</description>
-      <pubDate>Mon, 08 Dec 2025 16:36:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
