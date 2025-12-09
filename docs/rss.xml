@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 03:53:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 04:34:46 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Master modern JavaScript with ES6+ essentials, including syntax &amp; best practices.</description>
+      <pubDate>Tue, 09 Dec 2025 04:34:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with expert AWS insights &amp; architecture tips.</description>
       <pubDate>Mon, 08 Dec 2025 07:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
-    </item>
-    <item>
-      <title>WCAG Made Easy</title>
-      <link>https://kubaik.github.io/wcag-made-easy/</link>
-      <description>Simplify web accessibility with WCAG Made Easy, your guide to inclusive design.</description>
-      <pubDate>Mon, 08 Dec 2025 06:44:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-made-easy/</guid>
     </item>
   </channel>
 </rss>
