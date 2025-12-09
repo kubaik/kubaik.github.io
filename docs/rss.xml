@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Dec 2025 08:38:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 09:31:13 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques. Learn how to code together effectively.</description>
+      <pubDate>Tue, 09 Dec 2025 09:31:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Boost AI with TL</title>
       <link>https://kubaik.github.io/boost-ai-with-tl/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of blockchain. Learn how it works &amp; its applications.</description>
       <pubDate>Mon, 08 Dec 2025 12:56:36 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-blockchain/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
-      <pubDate>Mon, 08 Dec 2025 11:25:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
