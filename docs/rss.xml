@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 07:28:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 08:37:46 +0000</lastBuildDate>
+    <item>
+      <title>ML Algos Decoded</title>
+      <link>https://kubaik.github.io/ml-algos-decoded/</link>
+      <description>Unlock ML secrets: Discover how machine learning algorithms work</description>
+      <pubDate>Wed, 10 Dec 2025 08:37:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-algos-decoded/</guid>
+    </item>
     <item>
       <title>NLP Explained</title>
       <link>https://kubaik.github.io/nlp-explained/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
       <pubDate>Tue, 09 Dec 2025 11:25:45 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Unlock faster performance with expert profiling and benchmarking techniques.</description>
-      <pubDate>Tue, 09 Dec 2025 10:32:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
