@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 10:32:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 11:25:22 +0000</lastBuildDate>
+    <item>
+      <title>React Fast</title>
+      <link>https://kubaik.github.io/react-fast/</link>
+      <description>Develop a swift incident response plan with React Fast. Learn to minimize downtime &amp; protect your business.</description>
+      <pubDate>Wed, 10 Dec 2025 11:25:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-fast/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
       <pubDate>Tue, 09 Dec 2025 14:29:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Limit the Flood</title>
-      <link>https://kubaik.github.io/limit-the-flood/</link>
-      <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure system stability.</description>
-      <pubDate>Tue, 09 Dec 2025 13:41:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flood/</guid>
     </item>
   </channel>
 </rss>
