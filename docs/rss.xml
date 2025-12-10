@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 08:37:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 09:32:09 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Boost</title>
+      <link>https://kubaik.github.io/automl-boost/</link>
+      <description>Unlock AI potential with AutoML Boost, exploring AutoML and Neural Architecture Search innovations.</description>
+      <pubDate>Wed, 10 Dec 2025 09:32:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-boost/</guid>
+    </item>
     <item>
       <title>ML Algos Decoded</title>
       <link>https://kubaik.github.io/ml-algos-decoded/</link>
@@ -138,13 +145,6 @@
       <description>Simplify data management with our expert solutions. Learn more</description>
       <pubDate>Tue, 09 Dec 2025 12:58:11 +0000</pubDate>
       <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
-      <pubDate>Tue, 09 Dec 2025 11:25:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
