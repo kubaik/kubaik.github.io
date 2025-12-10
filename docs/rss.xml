@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 20:32:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 21:30:00 +0000</lastBuildDate>
+    <item>
+      <title>Terraform: Code Your Cloud</title>
+      <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
+      <description>Learn Terraform: automate cloud infrastructure with code</description>
+      <pubDate>Wed, 10 Dec 2025 21:29:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
+    </item>
     <item>
       <title>Crack Sys Design</title>
       <link>https://kubaik.github.io/crack-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms, reducing development time and boosting innovation.</description>
       <pubDate>Wed, 10 Dec 2025 02:06:26 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-create-more/</guid>
-    </item>
-    <item>
-      <title>Turbocharge WASM</title>
-      <link>https://kubaik.github.io/turbocharge-wasm/</link>
-      <description>Unlock WebAssembly&apos;s full potential with expert performance optimization techniques.</description>
-      <pubDate>Tue, 09 Dec 2025 23:26:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/turbocharge-wasm/</guid>
     </item>
   </channel>
 </rss>
