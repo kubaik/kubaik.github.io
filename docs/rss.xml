@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 14:30:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 15:32:10 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
+      <pubDate>Wed, 10 Dec 2025 15:32:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Log On: Simplify</title>
       <link>https://kubaik.github.io/log-on-simplify/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Blue-Green Deployment for zero downtime releases and seamless app updates.</description>
       <pubDate>Tue, 09 Dec 2025 18:36:26 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-zero-downtime/</guid>
-    </item>
-    <item>
-      <title>AI Done Right</title>
-      <link>https://kubaik.github.io/ai-done-right/</link>
-      <description>Unlock responsible AI: Explore ethics &amp; best practices</description>
-      <pubDate>Tue, 09 Dec 2025 17:27:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-done-right/</guid>
     </item>
   </channel>
 </rss>
