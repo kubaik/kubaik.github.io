@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 17:29:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 18:38:54 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn database design &amp; normalization best practices</description>
+      <pubDate>Wed, 10 Dec 2025 18:38:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Boost Engagement</title>
       <link>https://kubaik.github.io/boost-engagement/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Tue, 09 Dec 2025 21:24:29 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>XAI Uncovered</title>
-      <link>https://kubaik.github.io/xai-uncovered/</link>
-      <description>Unlock the power of Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
-      <pubDate>Tue, 09 Dec 2025 20:27:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/xai-uncovered/</guid>
     </item>
   </channel>
 </rss>
