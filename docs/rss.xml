@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 18:38:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 19:24:01 +0000</lastBuildDate>
+    <item>
+      <title>Unlock PWA</title>
+      <link>https://kubaik.github.io/unlock-pwa/</link>
+      <description>Discover the power of Progressive Web Apps (PWAs). Learn how to unlock fast, reliable, and engaging user experiences.</description>
+      <pubDate>Wed, 10 Dec 2025 19:23:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-pwa/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox with Grid+Flex. Learn layout secrets for responsive designs.</description>
       <pubDate>Tue, 09 Dec 2025 22:25:46 +0000</pubDate>
       <guid>https://kubaik.github.io/gridflex/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Tue, 09 Dec 2025 21:24:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
