@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 22:26:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 23:24:12 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh Simplified</title>
+      <link>https://kubaik.github.io/data-mesh-simplified/</link>
+      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn how to simplify &amp; scale your data management.</description>
+      <pubDate>Wed, 10 Dec 2025 23:24:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-simplified/</guid>
+    </item>
     <item>
       <title>CI/CD on Go</title>
       <link>https://kubaik.github.io/cicd-on-go/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
       <pubDate>Wed, 10 Dec 2025 04:40:21 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Code Your Brand</title>
-      <link>https://kubaik.github.io/code-your-brand/</link>
-      <description>Establish a strong online presence with personal branding tips for developers.</description>
-      <pubDate>Wed, 10 Dec 2025 03:58:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-your-brand/</guid>
     </item>
   </channel>
 </rss>
