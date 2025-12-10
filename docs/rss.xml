@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 11:25:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 12:58:32 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Simplified</title>
+      <link>https://kubaik.github.io/siem-simplified/</link>
+      <description>Simplify security monitoring with SIEM. Learn how to strengthen your defenses.</description>
+      <pubDate>Wed, 10 Dec 2025 12:58:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-simplified/</guid>
+    </item>
     <item>
       <title>React Fast</title>
       <link>https://kubaik.github.io/react-fast/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with RL strategies. Discover expert Reinforcement Learning techniques.</description>
       <pubDate>Tue, 09 Dec 2025 15:31:32 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
-      <pubDate>Tue, 09 Dec 2025 14:29:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
