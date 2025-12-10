@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 04:40:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 05:28:47 +0000</lastBuildDate>
+    <item>
+      <title>VR Revolution</title>
+      <link>https://kubaik.github.io/vr-revolution/</link>
+      <description>Explore the future of tech with VR Revolution, discover innovative Virtual Reality applications.</description>
+      <pubDate>Wed, 10 Dec 2025 05:28:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-revolution/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI potential with Transfer Learning. Learn how to implement TL for enhanced model performance.</description>
       <pubDate>Tue, 09 Dec 2025 08:38:34 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-ai-with-tl/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock cloud freedom with multi-cloud architecture. Learn how to thrive in a cloud-agnostic world.</description>
-      <pubDate>Tue, 09 Dec 2025 07:27:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
