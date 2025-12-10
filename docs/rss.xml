@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 12:58:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 13:43:40 +0000</lastBuildDate>
+    <item>
+      <title>AI Model Care</title>
+      <link>https://kubaik.github.io/ai-model-care/</link>
+      <description>Ensure AI model performance with expert monitoring &amp; maintenance tips.</description>
+      <pubDate>Wed, 10 Dec 2025 13:43:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-model-care/</guid>
+    </item>
     <item>
       <title>SIEM Simplified</title>
       <link>https://kubaik.github.io/siem-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn penetration testing basics and methodologies in our intro guide, Pen Test 101.</description>
       <pubDate>Tue, 09 Dec 2025 16:35:31 +0000</pubDate>
       <guid>https://kubaik.github.io/pen-test-101/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost performance with RL strategies. Discover expert Reinforcement Learning techniques.</description>
-      <pubDate>Tue, 09 Dec 2025 15:31:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
