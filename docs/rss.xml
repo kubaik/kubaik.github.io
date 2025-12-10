@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 16:36:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 17:29:11 +0000</lastBuildDate>
+    <item>
+      <title>Boost Engagement</title>
+      <link>https://kubaik.github.io/boost-engagement/</link>
+      <description>Skyrocket app engagement with strategic push notifications implementation tips.</description>
+      <pubDate>Wed, 10 Dec 2025 17:29:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-engagement/</guid>
+    </item>
     <item>
       <title>Scale Up: Replicate &amp; Shard</title>
       <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
       <pubDate>Tue, 09 Dec 2025 20:27:20 +0000</pubDate>
       <guid>https://kubaik.github.io/xai-uncovered/</guid>
-    </item>
-    <item>
-      <title>iOS Dev with Swift</title>
-      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
-      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
-      <pubDate>Tue, 09 Dec 2025 19:19:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
     </item>
   </channel>
 </rss>
