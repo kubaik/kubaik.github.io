@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 06:42:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 07:28:42 +0000</lastBuildDate>
+    <item>
+      <title>NLP Explained</title>
+      <link>https://kubaik.github.io/nlp-explained/</link>
+      <description>Unlock NLP techniques to decode human language and boost AI capabilities.</description>
+      <pubDate>Wed, 10 Dec 2025 07:28:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-explained/</guid>
+    </item>
     <item>
       <title>Crack Code Complexity</title>
       <link>https://kubaik.github.io/crack-code-complexity/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster performance with expert profiling and benchmarking techniques.</description>
       <pubDate>Tue, 09 Dec 2025 10:32:17 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques. Learn how to code together effectively.</description>
-      <pubDate>Tue, 09 Dec 2025 09:31:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
