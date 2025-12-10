@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Dec 2025 21:30:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 22:26:55 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD on Go</title>
+      <link>https://kubaik.github.io/cicd-on-go/</link>
+      <description>Streamline mobile app development with CI/CD on Go. Learn automation best practices.</description>
+      <pubDate>Wed, 10 Dec 2025 22:26:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-go/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Cloud</title>
       <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Establish a strong online presence with personal branding tips for developers.</description>
       <pubDate>Wed, 10 Dec 2025 03:58:05 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>Code Less, Create More</title>
-      <link>https://kubaik.github.io/code-less-create-more/</link>
-      <description>Unlock efficiency with low-code/no-code platforms, reducing development time and boosting innovation.</description>
-      <pubDate>Wed, 10 Dec 2025 02:06:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-create-more/</guid>
     </item>
   </channel>
 </rss>
