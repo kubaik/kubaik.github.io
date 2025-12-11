@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 11:26:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 12:59:50 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code: SAST/DAST</title>
+      <link>https://kubaik.github.io/secure-code-sastdast/</link>
+      <description>Boost app security with SAST &amp; DAST testing. Learn how to protect your code from vulnerabilities.</description>
+      <pubDate>Thu, 11 Dec 2025 12:59:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Wed, 10 Dec 2025 15:32:03 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Log On: Simplify</title>
-      <link>https://kubaik.github.io/log-on-simplify/</link>
-      <description>Simplify log management with our expert solutions, streamline monitoring and boost security.</description>
-      <pubDate>Wed, 10 Dec 2025 14:30:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-simplify/</guid>
     </item>
   </channel>
 </rss>

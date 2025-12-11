@@ -148,5 +148,6 @@
   "Data Engineering Pipelines",
   "Design Patterns in Practice",
   "Business Intelligence Tools",
-  "Microservices vs Monolithic Architecture"
+  "Microservices vs Monolithic Architecture",
+  "Application Security Testing (SAST/DAST)"
 ]
