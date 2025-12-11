@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 21:29:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 22:27:50 +0000</lastBuildDate>
+    <item>
+      <title>Canary Deploy</title>
+      <link>https://kubaik.github.io/canary-deploy/</link>
+      <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new code releases.</description>
+      <pubDate>Thu, 11 Dec 2025 22:27:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/canary-deploy/</guid>
+    </item>
     <item>
       <title>AI Evolved</title>
       <link>https://kubaik.github.io/ai-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your site with WAF. Learn how to protect against cyber threats and vulnerabilities.</description>
       <pubDate>Thu, 11 Dec 2025 03:59:42 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-protect-your-site/</guid>
-    </item>
-    <item>
-      <title>Snowflake Simplified</title>
-      <link>https://kubaik.github.io/snowflake-simplified/</link>
-      <description>Unlock data insights with Snowflake Cloud Data Platform. Learn how to simplify data management and analytics.</description>
-      <pubDate>Thu, 11 Dec 2025 02:07:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/snowflake-simplified/</guid>
     </item>
   </channel>
 </rss>
