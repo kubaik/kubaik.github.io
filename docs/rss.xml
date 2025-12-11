@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 07:30:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 08:38:11 +0000</lastBuildDate>
+    <item>
+      <title>Build Smart Pipelines</title>
+      <link>https://kubaik.github.io/build-smart-pipelines/</link>
+      <description>Streamline data workflows with smart pipelines. Learn how to build efficient data engineering pipelines.</description>
+      <pubDate>Thu, 11 Dec 2025 08:38:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-smart-pipelines/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Develop a swift incident response plan with React Fast. Learn to minimize downtime &amp; protect your business.</description>
       <pubDate>Wed, 10 Dec 2025 11:25:15 +0000</pubDate>
       <guid>https://kubaik.github.io/react-fast/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve business decisions with clean data. Learn why data quality matters.</description>
-      <pubDate>Wed, 10 Dec 2025 10:32:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
