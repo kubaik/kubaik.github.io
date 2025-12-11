@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 12:59:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 13:47:54 +0000</lastBuildDate>
+    <item>
+      <title>Fix Before Hack</title>
+      <link>https://kubaik.github.io/fix-before-hack/</link>
+      <description>Prioritize fixes before hackers strike. Learn proactive vulnerability management strategies.</description>
+      <pubDate>Thu, 11 Dec 2025 13:47:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-before-hack/</guid>
+    </item>
     <item>
       <title>Secure Code: SAST/DAST</title>
       <link>https://kubaik.github.io/secure-code-sastdast/</link>
@@ -138,13 +145,6 @@
       <description>Learn database replication &amp; sharding to scale up your data storage and boost performance.</description>
       <pubDate>Wed, 10 Dec 2025 16:35:59 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Wed, 10 Dec 2025 15:32:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
