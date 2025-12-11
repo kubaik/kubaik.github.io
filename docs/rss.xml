@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 03:59:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 04:43:22 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Streamline backend testing with expert strategies and best practices.</description>
+      <pubDate>Thu, 11 Dec 2025 04:43:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>WAF: Protect Your Site</title>
       <link>https://kubaik.github.io/waf-protect-your-site/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques to decode human language and boost AI capabilities.</description>
       <pubDate>Wed, 10 Dec 2025 07:28:35 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-explained/</guid>
-    </item>
-    <item>
-      <title>Crack Code Complexity</title>
-      <link>https://kubaik.github.io/crack-code-complexity/</link>
-      <description>Unlock efficient coding with algorithm complexity analysis.</description>
-      <pubDate>Wed, 10 Dec 2025 06:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
     </item>
   </channel>
 </rss>
