@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 10:32:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 11:26:11 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
+      <pubDate>Thu, 11 Dec 2025 11:26:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Simplify log management with our expert solutions, streamline monitoring and boost security.</description>
       <pubDate>Wed, 10 Dec 2025 14:30:09 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-simplify/</guid>
-    </item>
-    <item>
-      <title>AI Model Care</title>
-      <link>https://kubaik.github.io/ai-model-care/</link>
-      <description>Ensure AI model performance with expert monitoring &amp; maintenance tips.</description>
-      <pubDate>Wed, 10 Dec 2025 13:43:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-care/</guid>
     </item>
   </channel>
 </rss>
