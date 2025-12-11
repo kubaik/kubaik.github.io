@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 14:28:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 15:33:23 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn how Zero Trust Security Architecture protects your network with a &apos;never trust, always verify&apos; approach.</description>
+      <pubDate>Thu, 11 Dec 2025 15:33:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>Process Now</title>
       <link>https://kubaik.github.io/process-now/</link>
@@ -138,13 +145,6 @@
       <description>Learn database design &amp; normalization best practices</description>
       <pubDate>Wed, 10 Dec 2025 18:38:47 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Boost Engagement</title>
-      <link>https://kubaik.github.io/boost-engagement/</link>
-      <description>Skyrocket app engagement with strategic push notifications implementation tips.</description>
-      <pubDate>Wed, 10 Dec 2025 17:29:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-engagement/</guid>
     </item>
   </channel>
 </rss>
