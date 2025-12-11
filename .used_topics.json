@@ -139,5 +139,6 @@
   "Infrastructure as Code (Terraform)",
   "Mobile CI/CD Automation",
   "Data Mesh Architecture",
-  "Snowflake Cloud Data Platform"
+  "Snowflake Cloud Data Platform",
+  "Web Application Firewall (WAF)"
 ]

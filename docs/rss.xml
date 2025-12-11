@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 02:07:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 03:59:49 +0000</lastBuildDate>
+    <item>
+      <title>WAF: Protect Your Site</title>
+      <link>https://kubaik.github.io/waf-protect-your-site/</link>
+      <description>Safeguard your site with WAF. Learn how to protect against cyber threats and vulnerabilities.</description>
+      <pubDate>Thu, 11 Dec 2025 03:59:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-protect-your-site/</guid>
+    </item>
     <item>
       <title>Snowflake Simplified</title>
       <link>https://kubaik.github.io/snowflake-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient coding with algorithm complexity analysis.</description>
       <pubDate>Wed, 10 Dec 2025 06:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-code-complexity/</guid>
-    </item>
-    <item>
-      <title>VR Revolution</title>
-      <link>https://kubaik.github.io/vr-revolution/</link>
-      <description>Explore the future of tech with VR Revolution, discover innovative Virtual Reality applications.</description>
-      <pubDate>Wed, 10 Dec 2025 05:28:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-revolution/</guid>
     </item>
   </channel>
 </rss>
