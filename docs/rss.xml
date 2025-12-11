@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 04:43:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 05:30:15 +0000</lastBuildDate>
+    <item>
+      <title>Work Smart</title>
+      <link>https://kubaik.github.io/work-smart/</link>
+      <description>Boost productivity with remote work best practices. Learn to work smart, not hard.</description>
+      <pubDate>Thu, 11 Dec 2025 05:30:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/work-smart/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML secrets: Discover how machine learning algorithms work</description>
       <pubDate>Wed, 10 Dec 2025 08:37:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-algos-decoded/</guid>
-    </item>
-    <item>
-      <title>NLP Explained</title>
-      <link>https://kubaik.github.io/nlp-explained/</link>
-      <description>Unlock NLP techniques to decode human language and boost AI capabilities.</description>
-      <pubDate>Wed, 10 Dec 2025 07:28:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-explained/</guid>
     </item>
   </channel>
 </rss>
