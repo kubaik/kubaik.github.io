@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 17:33:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 18:39:35 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
+      <pubDate>Thu, 11 Dec 2025 18:39:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: automate cloud infrastructure with code</description>
       <pubDate>Wed, 10 Dec 2025 21:29:53 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Wed, 10 Dec 2025 20:32:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
