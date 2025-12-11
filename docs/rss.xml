@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 13:47:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 14:28:58 +0000</lastBuildDate>
+    <item>
+      <title>Process Now</title>
+      <link>https://kubaik.github.io/process-now/</link>
+      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
+      <pubDate>Thu, 11 Dec 2025 14:28:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/process-now/</guid>
+    </item>
     <item>
       <title>Fix Before Hack</title>
       <link>https://kubaik.github.io/fix-before-hack/</link>
@@ -138,13 +145,6 @@
       <description>Skyrocket app engagement with strategic push notifications implementation tips.</description>
       <pubDate>Wed, 10 Dec 2025 17:29:04 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-engagement/</guid>
-    </item>
-    <item>
-      <title>Scale Up: Replicate &amp; Shard</title>
-      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
-      <description>Learn database replication &amp; sharding to scale up your data storage and boost performance.</description>
-      <pubDate>Wed, 10 Dec 2025 16:35:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
     </item>
   </channel>
 </rss>
