@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Dec 2025 20:30:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Dec 2025 21:29:08 +0000</lastBuildDate>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing tech</description>
+      <pubDate>Thu, 11 Dec 2025 21:29:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
+    </item>
     <item>
       <title>MBaaS Simplified</title>
       <link>https://kubaik.github.io/mbaas-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Snowflake Cloud Data Platform. Learn how to simplify data management and analytics.</description>
       <pubDate>Thu, 11 Dec 2025 02:07:51 +0000</pubDate>
       <guid>https://kubaik.github.io/snowflake-simplified/</guid>
-    </item>
-    <item>
-      <title>Data Mesh Simplified</title>
-      <link>https://kubaik.github.io/data-mesh-simplified/</link>
-      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn how to simplify &amp; scale your data management.</description>
-      <pubDate>Wed, 10 Dec 2025 23:24:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-simplified/</guid>
     </item>
   </channel>
 </rss>
