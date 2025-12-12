@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 20:30:18 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 21:25:24 +0000</lastBuildDate>
+    <item>
+      <title>Top Web Frameworks</title>
+      <link>https://kubaik.github.io/top-web-frameworks/</link>
+      <description>Discover top web frameworks for modern development, boosting efficiency &amp; performance.</description>
+      <pubDate>Fri, 12 Dec 2025 21:25:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-web-frameworks/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps.</description>
       <pubDate>Fri, 12 Dec 2025 02:07:46 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Explore AI agent development &amp; discover the future of intelligent systems.</description>
-      <pubDate>Thu, 11 Dec 2025 23:26:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
