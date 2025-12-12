@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 05:29:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 06:42:28 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Fri, 12 Dec 2025 06:42:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Learn design patterns in practice, boost usability &amp; efficiency with &apos;Design Done Right&apos; expert tips.</description>
       <pubDate>Thu, 11 Dec 2025 09:32:35 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Build Smart Pipelines</title>
-      <link>https://kubaik.github.io/build-smart-pipelines/</link>
-      <description>Streamline data workflows with smart pipelines. Learn how to build efficient data engineering pipelines.</description>
-      <pubDate>Thu, 11 Dec 2025 08:38:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-smart-pipelines/</guid>
     </item>
   </channel>
 </rss>

@@ -1,275 +1,307 @@
 # SOLID Code
 
 ## Introduction to SOLID Design Principles
-The SOLID design principles are a set of guidelines for writing clean, maintainable, and scalable code. Each letter in SOLID represents a principle for development: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion. These principles were first introduced by Robert C. Martin, also known as "Uncle Bob," and have since become a cornerstone of object-oriented design.
+The SOLID design principles are a set of five principles that aim to promote simpler, more robust, and updatable code for software development in object-oriented languages. Each letter in SOLID represents a principle for development: Single responsibility, Open/closed, Liskov substitution, Interface segregation, and Dependency inversion. These principles were introduced by Robert C. Martin, also known as "Uncle Bob," who is a well-known expert in the field of software design.
 
-The SOLID principles are essential for any developer looking to improve the quality and reliability of their code. By following these principles, developers can create software that is easier to understand, modify, and extend. In this article, we will delve into each of the SOLID principles, providing practical examples and code snippets to illustrate their application.
+The SOLID principles are essential for any software developer, as they help to create a maintainable, flexible, and scalable software system. In this article, we will delve into each of these principles, providing practical examples, code snippets, and real-world use cases to illustrate their application.
 
 ### Single Responsibility Principle (SRP)
-The Single Responsibility Principle states that a class should have only one reason to change. This means that a class should have a single, well-defined responsibility and should not be responsible for multiple, unrelated tasks. For example, consider a `User` class that is responsible for both authentication and data storage:
+The Single Responsibility Principle states that a class should have only one reason to change. This means that a class should have a single responsibility or a single purpose. If a class has multiple responsibilities, it becomes difficult to modify one responsibility without affecting the others.
+
+For example, consider a `User` class that has methods for authentication, password reset, and user profile management. If we want to change the authentication mechanism, we would have to modify the `User` class, which could affect the other methods. To avoid this, we can create separate classes for each responsibility, such as `Authenticator`, `PasswordResetter`, and `ProfileManager`.
+
 ```python
+# Before SRP
 class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
 
-    def authenticate(self):
+    def authenticate(self, password):
         # authentication logic
         pass
 
-    def save(self):
-        # data storage logic
+    def reset_password(self, new_password):
+        # password reset logic
         pass
-```
-In this example, the `User` class has two distinct responsibilities: authentication and data storage. If the authentication logic changes, the `User` class will need to be modified, which could potentially affect the data storage logic. To apply the SRP, we can split the `User` class into two separate classes:
-```python
+
+    def update_profile(self, profile_data):
+        # profile update logic
+        pass
+
+# After SRP
 class Authenticator:
     def __init__(self, username, password):
         self.username = username
         self.password = password
 
-    def authenticate(self):
+    def authenticate(self, password):
         # authentication logic
         pass
 
-class UserRepository:
-    def save(self, user):
-        # data storage logic
+class PasswordResetter:
+    def __init__(self, username):
+        self.username = username
+
+    def reset_password(self, new_password):
+        # password reset logic
+        pass
+
+class ProfileManager:
+    def __init__(self, username):
+        self.username = username
+
+    def update_profile(self, profile_data):
+        # profile update logic
         pass
 ```
-By separating the responsibilities into two classes, we can modify the authentication logic without affecting the data storage logic.
 
-## Open/Closed Principle (OCP)
-The Open/Closed Principle states that a class should be open for extension but closed for modification. This means that we should be able to add new functionality to a class without modifying its existing code. For example, consider a `PaymentGateway` class that supports only one payment method:
-```java
-public class PaymentGateway {
-    public void processPayment(String paymentMethod) {
-        if (paymentMethod.equals("creditCard")) {
-            // credit card payment logic
-        } else {
-            throw new UnsupportedOperationException("Unsupported payment method");
-        }
-    }
-}
+### Open/Closed Principle (OCP)
+The Open/Closed Principle states that a class should be open for extension but closed for modification. This means that we should be able to add new functionality to a class without modifying its existing code.
+
+For example, consider a `PaymentGateway` class that supports multiple payment methods, such as credit cards, PayPal, and bank transfers. If we want to add a new payment method, such as Apple Pay, we should be able to do so without modifying the existing code.
+
+```python
+# Before OCP
+class PaymentGateway:
+    def __init__(self):
+        pass
+
+    def process_payment(self, payment_method, amount):
+        if payment_method == "credit_card":
+            # credit card payment logic
+            pass
+        elif payment_method == "paypal":
+            # paypal payment logic
+            pass
+        elif payment_method == "bank_transfer":
+            # bank transfer payment logic
+            pass
+
+# After OCP
+class PaymentMethod:
+    def process_payment(self, amount):
+        pass
+
+class CreditCardPaymentMethod(PaymentMethod):
+    def process_payment(self, amount):
+        # credit card payment logic
+        pass
+
+class PayPalPaymentMethod(PaymentMethod):
+    def process_payment(self, amount):
+        # paypal payment logic
+        pass
+
+class BankTransferPaymentMethod(PaymentMethod):
+    def process_payment(self, amount):
+        # bank transfer payment logic
+        pass
+
+class ApplePayPaymentMethod(PaymentMethod):
+    def process_payment(self, amount):
+        # apple pay payment logic
+        pass
+
+class PaymentGateway:
+    def __init__(self):
+        self.payment_methods = []
+
+    def add_payment_method(self, payment_method):
+        self.payment_methods.append(payment_method)
+
+    def process_payment(self, payment_method, amount):
+        for method in self.payment_methods:
+            if isinstance(method, payment_method):
+                method.process_payment(amount)
+                break
 ```
-To add support for a new payment method, we would need to modify the existing code, which violates the OCP. Instead, we can use polymorphism to create a separate class for each payment method:
-```java
-public interface PaymentMethod {
-    void processPayment();
-}
-
-public class CreditCardPaymentMethod implements PaymentMethod {
-    @Override
-    public void processPayment() {
-        // credit card payment logic
-    }
-}
-
-public class PayPalPaymentMethod implements PaymentMethod {
-    @Override
-    public void processPayment() {
-        // PayPal payment logic
-    }
-}
-
-public class PaymentGateway {
-    public void processPayment(PaymentMethod paymentMethod) {
-        paymentMethod.processPayment();
-    }
-}
-```
-By using polymorphism, we can add support for new payment methods without modifying the existing code.
 
 ### Liskov Substitution Principle (LSP)
-The Liskov Substitution Principle states that subtypes should be substitutable for their base types. This means that any code that uses a base type should be able to work with a subtype without knowing the difference. For example, consider a `Vehicle` class with a `drive()` method:
-```csharp
-public abstract class Vehicle {
-    public abstract void Drive();
-}
+The Liskov Substitution Principle states that subtypes should be substitutable for their base types. This means that any code that uses a base type should be able to work with a subtype without knowing the difference.
 
-public class Car : Vehicle {
-    public override void Drive() {
-        Console.WriteLine("Driving a car");
-    }
-}
+For example, consider a `Bird` class that has a `fly` method. If we create a `Penguin` class that inherits from `Bird`, but penguins cannot fly, we would have to override the `fly` method to throw an exception. However, this would violate the LSP, as code that uses the `Bird` class would not work with the `Penguin` class.
 
-public class Truck : Vehicle {
-    public override void Drive() {
-        Console.WriteLine("Driving a truck");
-    }
-}
-```
-In this example, the `Car` and `Truck` classes are subtypes of the `Vehicle` class and can be used anywhere a `Vehicle` is expected:
-```csharp
-public void DriveVehicle(Vehicle vehicle) {
-    vehicle.Drive();
-}
-
-DriveVehicle(new Car()); // outputs "Driving a car"
-DriveVehicle(new Truck()); // outputs "Driving a truck"
-```
-However, if we add a `Fly()` method to the `Vehicle` class, it may not make sense for all subtypes:
-```csharp
-public abstract class Vehicle {
-    public abstract void Drive();
-    public abstract void Fly();
-}
-
-public class Car : Vehicle {
-    public override void Drive() {
-        Console.WriteLine("Driving a car");
-    }
-
-    public override void Fly() {
-        throw new NotImplementedException("Cars cannot fly");
-    }
-}
-```
-In this case, the `Car` class is not substitutable for the `Vehicle` class, as it does not support the `Fly()` method. To fix this, we can create a separate interface for flying vehicles:
-```csharp
-public interface IFlyingVehicle {
-    void Fly();
-}
-
-public abstract class FlyingVehicle : Vehicle, IFlyingVehicle {
-    public abstract void Fly();
-}
-
-public class Airplane : FlyingVehicle {
-    public override void Drive() {
-        throw new NotImplementedException("Airplanes do not drive");
-    }
-
-    public override void Fly() {
-        Console.WriteLine("Flying an airplane");
-    }
-}
-```
-By creating a separate interface for flying vehicles, we can ensure that subtypes are substitutable for their base types.
-
-## Interface Segregation Principle (ISP)
-The Interface Segregation Principle states that clients should not be forced to depend on interfaces they do not use. This means that we should break up large interfaces into smaller, more focused interfaces. For example, consider a `Printer` interface with methods for printing, scanning, and faxing:
 ```python
-class Printer:
-    def print(self):
+# Before LSP
+class Bird:
+    def fly(self):
+        # flying logic
         pass
 
-    def scan(self):
+class Penguin(Bird):
+    def fly(self):
+        raise Exception("Penguins cannot fly")
+
+# After LSP
+class FlyableBird:
+    def fly(self):
+        # flying logic
         pass
 
-    def fax(self):
-        pass
-```
-In this example, a class that implements the `Printer` interface must provide implementations for all three methods, even if it only supports printing:
-```python
-class BasicPrinter(Printer):
-    def print(self):
-        print("Printing")
+class Bird:
+    pass
 
-    def scan(self):
-        raise NotImplementedError("Scanning not supported")
+class Eagle(FlyableBird):
+    pass
 
-    def fax(self):
-        raise NotImplementedError("Faxing not supported")
+class Penguin(Bird):
+    pass
 ```
-To apply the ISP, we can break up the `Printer` interface into separate interfaces for printing, scanning, and faxing:
+
+### Interface Segregation Principle (ISP)
+The Interface Segregation Principle states that a client should not be forced to depend on interfaces it does not use. This means that instead of having a large, fat interface, we should break it down into smaller, more specialized interfaces.
+
+For example, consider a `Printer` class that has methods for printing, scanning, and faxing. If we create an interface `IPrinter` that includes all these methods, a class that only needs to print would have to implement the scanning and faxing methods as well, even if it does not need them.
+
 ```python
+# Before ISP
 class IPrinter:
-    def print(self):
+    def print(self, document):
+        pass
+
+    def scan(self, document):
+        pass
+
+    def fax(self, document):
+        pass
+
+class BasicPrinter(IPrinter):
+    def print(self, document):
+        # printing logic
+        pass
+
+    def scan(self, document):
+        raise Exception("Basic printer cannot scan")
+
+    def fax(self, document):
+        raise Exception("Basic printer cannot fax")
+
+# After ISP
+class IPrinter:
+    def print(self, document):
         pass
 
 class IScanner:
-    def scan(self):
+    def scan(self, document):
         pass
 
 class IFaxer:
-    def fax(self):
+    def fax(self, document):
+        pass
+
+class BasicPrinter(IPrinter):
+    def print(self, document):
+        # printing logic
+        pass
+
+class AdvancedPrinter(IPrinter, IScanner, IFaxer):
+    def print(self, document):
+        # printing logic
+        pass
+
+    def scan(self, document):
+        # scanning logic
+        pass
+
+    def fax(self, document):
+        # faxing logic
         pass
 ```
-By breaking up the interface into smaller, more focused interfaces, we can ensure that clients are not forced to depend on interfaces they do not use.
 
 ### Dependency Inversion Principle (DIP)
-The Dependency Inversion Principle states that high-level modules should not depend on low-level modules, but both should depend on abstractions. This means that we should decouple high-level modules from low-level modules using interfaces and dependency injection. For example, consider a `NotificationService` class that depends on a `SMTPClient` class:
-```java
-public class NotificationService {
-    private SMTPClient smtpClient;
+The Dependency Inversion Principle states that high-level modules should not depend on low-level modules, but both should depend on abstractions. This means that instead of having a high-level module depend on a specific low-level module, we should define an interface or abstraction that the low-level module can implement.
 
-    public NotificationService() {
-        smtpClient = new SMTPClient();
-    }
+For example, consider a `NotificationService` class that depends on a `SMTPMailer` class to send emails. If we want to switch to a different email provider, such as `AmazonSES`, we would have to modify the `NotificationService` class. However, if we define an interface `IMailer` that both `SMTPMailer` and `AmazonSES` can implement, we can decouple the `NotificationService` class from the specific email provider.
 
-    public void sendNotification(String message) {
-        smtpClient.sendEmail(message);
-    }
-}
+```python
+# Before DIP
+class SMTPMailer:
+    def send_email(self, email):
+        # smtp email logic
+        pass
+
+class NotificationService:
+    def __init__(self):
+        self.mailer = SMTPMailer()
+
+    def send_notification(self, email):
+        self.mailer.send_email(email)
+
+# After DIP
+class IMailer:
+    def send_email(self, email):
+        pass
+
+class SMTPMailer(IMailer):
+    def send_email(self, email):
+        # smtp email logic
+        pass
+
+class AmazonSESMailer(IMailer):
+    def send_email(self, email):
+        # amazon ses email logic
+        pass
+
+class NotificationService:
+    def __init__(self, mailer):
+        self.mailer = mailer
+
+    def send_notification(self, email):
+        self.mailer.send_email(email)
 ```
-In this example, the `NotificationService` class is tightly coupled to the `SMTPClient` class. To apply the DIP, we can introduce an interface for email clients and use dependency injection to provide an instance of the interface:
-```java
-public interface EmailClient {
-    void sendEmail(String message);
-}
 
-public class SMTPClient implements EmailClient {
-    @Override
-    public void sendEmail(String message) {
-        // SMTP email logic
-    }
-}
+## Performance Metrics and Pricing Data
+When implementing the SOLID design principles, it's essential to consider the performance metrics and pricing data of the system. For example, if we're using a cloud-based service like Amazon Web Services (AWS), we need to consider the cost of using their services, such as the cost of storing data in Amazon S3 or the cost of using Amazon EC2 instances.
 
-public class NotificationService {
-    private EmailClient emailClient;
+Here are some performance metrics and pricing data for AWS services:
 
-    public NotificationService(EmailClient emailClient) {
-        this.emailClient = emailClient;
-    }
+* Amazon S3:
+	+ Storage: $0.023 per GB-month
+	+ Data transfer: $0.09 per GB
+* Amazon EC2:
+	+ Instance types: $0.0255 per hour (t2.micro) to $4.256 per hour (c5.18xlarge)
+	+ Storage: $0.10 per GB-month
+* Amazon RDS:
+	+ Instance types: $0.0255 per hour (db.t2.micro) to $4.256 per hour (db.c5.18xlarge)
+	+ Storage: $0.10 per GB-month
 
-    public void sendNotification(String message) {
-        emailClient.sendEmail(message);
-    }
-}
-```
-By using dependency injection and interfaces, we can decouple high-level modules from low-level modules and make our code more modular and maintainable.
+By considering these performance metrics and pricing data, we can design a system that is not only maintainable and scalable but also cost-effective.
 
 ## Real-World Use Cases
-The SOLID principles have numerous real-world use cases, including:
+The SOLID design principles can be applied to a wide range of real-world use cases, such as:
 
-* **E-commerce platforms**: Online shopping platforms like Amazon and eBay use the SOLID principles to create scalable and maintainable codebases. For example, they may use the SRP to separate the concerns of payment processing and order management.
-* **Social media platforms**: Social media platforms like Facebook and Twitter use the SOLID principles to create modular and extensible codebases. For example, they may use the OCP to add new features like live streaming and stories without modifying the existing code.
-* **Cloud services**: Cloud services like AWS and Azure use the SOLID principles to create scalable and reliable codebases. For example, they may use the LSP to create substitutable classes for different types of storage and databases.
+1. **E-commerce platforms**: An e-commerce platform can use the SOLID principles to design a scalable and maintainable system for processing payments, managing inventory, and handling orders.
+2. **Social media platforms**: A social media platform can use the SOLID principles to design a system for handling user profiles, processing posts, and managing comments.
+3. **Content management systems**: A content management system can use the SOLID principles to design a system for managing content, handling user permissions, and processing workflows.
 
-Some popular tools and platforms that support the SOLID principles include:
+Some popular tools and platforms that can be used to implement the SOLID design principles include:
 
-* **Java**: Java is an object-oriented programming language that supports the SOLID principles through its use of interfaces, abstract classes, and dependency injection.
-* **C#**: C# is an object-oriented programming language that supports the SOLID principles through its use of interfaces, abstract classes, and dependency injection.
-* **Spring**: Spring is a Java framework that supports the SOLID principles through its use of dependency injection and aspect-oriented programming.
-* **ASP.NET Core**: ASP.NET Core is a .NET framework that supports the SOLID principles through its use of dependency injection and middleware.
-
-## Performance Benchmarks
-The SOLID principles can have a significant impact on the performance of an application. For example, a study by Microsoft found that using the SOLID principles can reduce the number of bugs in an application by up to 50%. Another study by IBM found that using the SOLID principles can improve the maintainability of an application by up to 30%.
-
-Some real metrics and pricing data for tools and platforms that support the SOLID principles include:
-
-* **Java**: The Java Development Kit (JDK) is free to download and use, while the Java Enterprise Edition (EE) costs $25 per user per month.
-* **C#**: The .NET Framework is free to download and use, while the Visual Studio IDE costs $45 per month.
-* **Spring**: The Spring Framework is free to download and use, while the Spring Boot framework costs $99 per year.
-* **ASP.NET Core**: The ASP.NET Core framework is free to download and use, while the Visual Studio IDE costs $45 per month.
+* **ASP.NET Core**: A cross-platform, open-source framework for building web applications and APIs.
+* **Entity Framework Core**: An object-relational mapping (ORM) framework for .NET applications.
+* **Azure DevOps**: A set of services for planning, developing, delivering, and operating software.
 
 ## Common Problems and Solutions
-Some common problems that developers face when applying the SOLID principles include:
+When implementing the SOLID design principles, some common problems and solutions include:
 
-* **Tight coupling**: Tight coupling occurs when two or more classes are tightly connected, making it difficult to modify one class without affecting the other. Solution: Use dependency injection and interfaces to decouple classes.
-* **Fragile base class problem**: The fragile base class problem occurs when a subclass is tightly coupled to its base class, making it difficult to modify the base class without affecting the subclass. Solution: Use polymorphism and interfaces to create a more flexible and extensible class hierarchy.
-* **Interface segregation problem**: The interface segregation problem occurs when a client is forced to depend on an interface that it does not use. Solution: Break up large interfaces into smaller, more focused interfaces.
+* **Tight coupling**: A problem that occurs when classes are tightly coupled, making it difficult to modify one class without affecting others. Solution: Use dependency injection to decouple classes.
+* **Fragile base class problem**: A problem that occurs when a subclass is fragile and prone to breaking when the base class changes. Solution: Use the Liskov substitution principle to ensure that subtypes are substitutable for their base types.
+* **Interface pollution**: A problem that occurs when an interface is polluted with methods that are not relevant to all implementers. Solution: Use the interface segregation principle to break down the interface into smaller, more specialized interfaces.
 
 ## Conclusion
-In conclusion, the SOLID principles are a set of guidelines for writing clean, maintainable, and scalable code. By applying the SOLID principles, developers can create software that is easier to understand, modify, and extend. The SOLID principles have numerous real-world use cases, including e-commerce platforms, social media platforms, and cloud services. Some popular tools and platforms that support the SOLID principles include Java, C#, Spring, and ASP.NET Core.
+In conclusion, the SOLID design principles are a set of guidelines for designing maintainable, flexible, and scalable software systems. By applying these principles, developers can create systems that are easier to modify, extend, and maintain over time. Some key takeaways from this article include:
 
-To get started with the SOLID principles, follow these actionable next steps:
+* The single responsibility principle: A class should have only one reason to change.
+* The open/closed principle: A class should be open for extension but closed for modification.
+* The Liskov substitution principle: Subtypes should be substitutable for their base types.
+* The interface segregation principle: A client should not be forced to depend on interfaces it does not use.
+* The dependency inversion principle: High-level modules should not depend on low-level modules, but both should depend on abstractions.
 
-1. **Learn the principles**: Start by learning the five SOLID principles: SRP, OCP, LSP, ISP, and DIP.
-2. **Apply the principles**: Apply the SOLID principles to your existing codebase by refactoring classes and interfaces to make them more modular and maintainable.
-3. **Use tools and platforms**: Use tools and platforms that support the SOLID principles, such as Java, C#, Spring, and ASP.NET Core.
-4. **Measure performance**: Measure the performance of your application before and after applying the SOLID principles to see the impact on maintainability and scalability.
-5. **Continuously improve**: Continuously improve your codebase by applying the SOLID principles to new features and modules, and by refactoring existing code to make it more modular and maintainable.
+To get started with applying the SOLID design principles, follow these actionable next steps:
 
-By following these steps, you can create software that is more maintainable, scalable, and reliable, and that meets the needs of your users.
+1. **Identify areas for improvement**: Look for areas in your codebase where the SOLID principles are not being applied.
+2. **Refactor code**: Refactor your code to apply the SOLID principles, starting with the single responsibility principle.
+3. **Use dependency injection**: Use dependency injection to decouple classes and reduce tight coupling.
+4. **Test and iterate**: Test your code and iterate on your design to ensure that it is maintainable, flexible, and scalable.
+
+By following these next steps and applying the SOLID design principles, you can create software systems that are more maintainable, flexible, and scalable, and that will serve your users well for years to come.
