@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 19:22:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 20:30:18 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
+      <pubDate>Fri, 12 Dec 2025 20:30:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Explore AI agent development &amp; discover the future of intelligent systems.</description>
       <pubDate>Thu, 11 Dec 2025 23:26:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents/</guid>
-    </item>
-    <item>
-      <title>Canary Deploy</title>
-      <link>https://kubaik.github.io/canary-deploy/</link>
-      <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new code releases.</description>
-      <pubDate>Thu, 11 Dec 2025 22:27:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-deploy/</guid>
     </item>
   </channel>
 </rss>
