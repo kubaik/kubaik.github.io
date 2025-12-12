@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 02:07:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 03:59:22 +0000</lastBuildDate>
+    <item>
+      <title>Flutter App Dev</title>
+      <link>https://kubaik.github.io/flutter-app-dev/</link>
+      <description>Build fast, natively compiled apps with Flutter mobile development.</description>
+      <pubDate>Fri, 12 Dec 2025 03:59:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
       <pubDate>Thu, 11 Dec 2025 06:42:47 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Work Smart</title>
-      <link>https://kubaik.github.io/work-smart/</link>
-      <description>Boost productivity with remote work best practices. Learn to work smart, not hard.</description>
-      <pubDate>Thu, 11 Dec 2025 05:30:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smart/</guid>
     </item>
   </channel>
 </rss>
