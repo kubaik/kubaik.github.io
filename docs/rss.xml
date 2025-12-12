@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 09:31:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 10:31:09 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Learn scalability patterns to grow your business efficiently</description>
+      <pubDate>Fri, 12 Dec 2025 10:31:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Prioritize fixes before hackers strike. Learn proactive vulnerability management strategies.</description>
       <pubDate>Thu, 11 Dec 2025 13:47:46 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-before-hack/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Boost app security with SAST &amp; DAST testing. Learn how to protect your code from vulnerabilities.</description>
-      <pubDate>Thu, 11 Dec 2025 12:59:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
