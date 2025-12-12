@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 07:29:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 08:38:24 +0000</lastBuildDate>
+    <item>
+      <title>EDA Explained</title>
+      <link>https://kubaik.github.io/eda-explained/</link>
+      <description>Learn about Event-Driven Architecture (EDA) &amp; its benefits in software design.</description>
+      <pubDate>Fri, 12 Dec 2025 08:38:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-explained/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
       <pubDate>Thu, 11 Dec 2025 11:26:04 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top BI tools and strategies.</description>
-      <pubDate>Thu, 11 Dec 2025 10:32:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
