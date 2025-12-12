@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 14:25:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 15:30:07 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for successful workflow implementation.</description>
+      <pubDate>Fri, 12 Dec 2025 15:29:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>DB Tools</title>
       <link>https://kubaik.github.io/db-tools/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
       <pubDate>Thu, 11 Dec 2025 18:39:27 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn clean code principles for efficient coding</description>
-      <pubDate>Thu, 11 Dec 2025 17:32:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
