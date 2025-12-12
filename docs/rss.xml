@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 06:42:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 07:29:14 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Fri, 12 Dec 2025 07:29:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top BI tools and strategies.</description>
       <pubDate>Thu, 11 Dec 2025 10:32:46 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn design patterns in practice, boost usability &amp; efficiency with &apos;Design Done Right&apos; expert tips.</description>
-      <pubDate>Thu, 11 Dec 2025 09:32:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
