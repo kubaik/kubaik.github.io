@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 16:34:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 17:26:12 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your API</title>
+      <link>https://kubaik.github.io/secure-your-api/</link>
+      <description>Protect your API from threats. Learn top security best practices.</description>
+      <pubDate>Fri, 12 Dec 2025 17:26:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-api/</guid>
+    </item>
     <item>
       <title>FP Essentials</title>
       <link>https://kubaik.github.io/fp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with MBaaS. Learn how Backend as a Service simplifies your workflow.</description>
       <pubDate>Thu, 11 Dec 2025 20:30:36 +0000</pubDate>
       <guid>https://kubaik.github.io/mbaas-simplified/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Boost efficiency with DevOps best practices &amp; culture tips.</description>
-      <pubDate>Thu, 11 Dec 2025 19:25:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
