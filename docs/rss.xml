@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 13:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 14:25:07 +0000</lastBuildDate>
+    <item>
+      <title>DB Tools</title>
+      <link>https://kubaik.github.io/db-tools/</link>
+      <description>Discover top DB tools for efficient database management and optimization.</description>
+      <pubDate>Fri, 12 Dec 2025 14:24:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-tools/</guid>
+    </item>
     <item>
       <title>Master Memory</title>
       <link>https://kubaik.github.io/master-memory/</link>
@@ -138,13 +145,6 @@
       <description>Learn clean code principles for efficient coding</description>
       <pubDate>Thu, 11 Dec 2025 17:32:55 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>NFT Tech: 5 Game-Changing Uses</title>
-      <link>https://kubaik.github.io/nft-tech-5-game-changing-uses/</link>
-      <description>Discover 5 revolutionary NFT tech uses transforming industries</description>
-      <pubDate>Thu, 11 Dec 2025 16:39:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-5-game-changing-uses/</guid>
     </item>
   </channel>
 </rss>
