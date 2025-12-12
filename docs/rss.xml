@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 12:57:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 13:40:32 +0000</lastBuildDate>
+    <item>
+      <title>Master Memory</title>
+      <link>https://kubaik.github.io/master-memory/</link>
+      <description>Boost productivity with expert memory management tips and tricks.</description>
+      <pubDate>Fri, 12 Dec 2025 13:40:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-memory/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Discover 5 revolutionary NFT tech uses transforming industries</description>
       <pubDate>Thu, 11 Dec 2025 16:39:52 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-5-game-changing-uses/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn how Zero Trust Security Architecture protects your network with a &apos;never trust, always verify&apos; approach.</description>
-      <pubDate>Thu, 11 Dec 2025 15:33:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
