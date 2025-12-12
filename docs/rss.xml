@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 08:38:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 09:31:58 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
+      <pubDate>Fri, 12 Dec 2025 09:31:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>EDA Explained</title>
       <link>https://kubaik.github.io/eda-explained/</link>
@@ -138,13 +145,6 @@
       <description>Boost app security with SAST &amp; DAST testing. Learn how to protect your code from vulnerabilities.</description>
       <pubDate>Thu, 11 Dec 2025 12:59:44 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
-      <pubDate>Thu, 11 Dec 2025 11:26:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
