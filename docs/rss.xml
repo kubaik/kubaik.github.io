@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 17:26:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 18:40:25 +0000</lastBuildDate>
+    <item>
+      <title>Double Your Assets</title>
+      <link>https://kubaik.github.io/double-your-assets/</link>
+      <description>Unlock asset potential with Digital Twin Technology. Discover how to double your assets&apos; efficiency and ROI.</description>
+      <pubDate>Fri, 12 Dec 2025 18:40:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/double-your-assets/</guid>
+    </item>
     <item>
       <title>Secure Your API</title>
       <link>https://kubaik.github.io/secure-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing tech</description>
       <pubDate>Thu, 11 Dec 2025 21:29:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-evolved/</guid>
-    </item>
-    <item>
-      <title>MBaaS Simplified</title>
-      <link>https://kubaik.github.io/mbaas-simplified/</link>
-      <description>Streamline mobile app development with MBaaS. Learn how Backend as a Service simplifies your workflow.</description>
-      <pubDate>Thu, 11 Dec 2025 20:30:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/mbaas-simplified/</guid>
     </item>
   </channel>
 </rss>
