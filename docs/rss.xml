@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 03:59:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 04:41:23 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
+      <pubDate>Fri, 12 Dec 2025 04:41:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Flutter App Dev</title>
       <link>https://kubaik.github.io/flutter-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding efficiency with Test-Driven Development (TDD) best practices.</description>
       <pubDate>Thu, 11 Dec 2025 07:29:54 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
-      <pubDate>Thu, 11 Dec 2025 06:42:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
