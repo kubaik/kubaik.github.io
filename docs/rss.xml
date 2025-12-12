@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 15:30:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Dec 2025 16:34:32 +0000</lastBuildDate>
+    <item>
+      <title>FP Essentials</title>
+      <link>https://kubaik.github.io/fp-essentials/</link>
+      <description>Learn key Functional Programming concepts and principles in &apos;FP Essentials&apos;</description>
+      <pubDate>Fri, 12 Dec 2025 16:34:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-essentials/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with DevOps best practices &amp; culture tips.</description>
       <pubDate>Thu, 11 Dec 2025 19:25:50 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
-      <pubDate>Thu, 11 Dec 2025 18:39:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
