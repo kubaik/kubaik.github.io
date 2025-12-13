@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 16:31:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 17:22:47 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Learn expert React best practices and patterns for efficient coding.</description>
+      <pubDate>Sat, 13 Dec 2025 17:22:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Vision Tech</title>
       <link>https://kubaik.github.io/vision-tech/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
       <pubDate>Fri, 12 Dec 2025 19:22:31 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up/</guid>
-    </item>
-    <item>
-      <title>Double Your Assets</title>
-      <link>https://kubaik.github.io/double-your-assets/</link>
-      <description>Unlock asset potential with Digital Twin Technology. Discover how to double your assets&apos; efficiency and ROI.</description>
-      <pubDate>Fri, 12 Dec 2025 18:40:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-your-assets/</guid>
     </item>
   </channel>
 </rss>
