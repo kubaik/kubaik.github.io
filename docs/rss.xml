@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 02:01:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 03:51:51 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Cache</title>
+      <link>https://kubaik.github.io/boost-speed-cache/</link>
+      <description>Boost site speed with caching strategies using Redis and Memcached.</description>
+      <pubDate>Sat, 13 Dec 2025 03:51:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
+    </item>
     <item>
       <title>CI/CD Done Right</title>
       <link>https://kubaik.github.io/cicd-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover the difference between ETL &amp; ELT processes.</description>
       <pubDate>Fri, 12 Dec 2025 05:28:58 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Memory</title>
-      <link>https://kubaik.github.io/rust-safe-memory/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
-      <pubDate>Fri, 12 Dec 2025 04:41:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
     </item>
   </channel>
 </rss>

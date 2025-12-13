@@ -183,5 +183,6 @@
   "Modern Web Development Frameworks",
   "Secrets Management",
   "Frontend Performance Tuning",
-  "CI/CD Pipeline Implementation"
+  "CI/CD Pipeline Implementation",
+  "Caching Strategies (Redis, Memcached)"
 ]
