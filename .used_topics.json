@@ -185,5 +185,6 @@
   "Frontend Performance Tuning",
   "CI/CD Pipeline Implementation",
   "Caching Strategies (Redis, Memcached)",
-  "Behavior-Driven Development (BDD)"
+  "Behavior-Driven Development (BDD)",
+  "Server-Side Rendering (SSR)"
 ]
