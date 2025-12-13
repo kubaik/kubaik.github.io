@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 18:34:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 19:20:31 +0000</lastBuildDate>
+    <item>
+      <title>AR Revolts</title>
+      <link>https://kubaik.github.io/ar-revolts/</link>
+      <description>Discover the future of tech with AR Revolts, exploring innovative Augmented Reality development trends.</description>
+      <pubDate>Sat, 13 Dec 2025 19:20:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-revolts/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Discover top web frameworks for modern development, boosting efficiency &amp; performance.</description>
       <pubDate>Fri, 12 Dec 2025 21:25:16 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-frameworks/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
-      <pubDate>Fri, 12 Dec 2025 20:30:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
