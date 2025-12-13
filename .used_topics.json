@@ -187,5 +187,6 @@
   "Caching Strategies (Redis, Memcached)",
   "Behavior-Driven Development (BDD)",
   "Server-Side Rendering (SSR)",
-  "Data Lake Architecture"
+  "Data Lake Architecture",
+  "Open Source Contribution Guide"
 ]
