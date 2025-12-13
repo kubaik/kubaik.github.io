@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 15:25:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 16:31:49 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Explore Computer Vision tech &amp; its innovative applications.</description>
+      <pubDate>Sat, 13 Dec 2025 16:31:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Cloud Mastery: AWS</title>
       <link>https://kubaik.github.io/cloud-mastery-aws/</link>
@@ -138,13 +145,6 @@
       <description>Unlock asset potential with Digital Twin Technology. Discover how to double your assets&apos; efficiency and ROI.</description>
       <pubDate>Fri, 12 Dec 2025 18:40:18 +0000</pubDate>
       <guid>https://kubaik.github.io/double-your-assets/</guid>
-    </item>
-    <item>
-      <title>Secure Your API</title>
-      <link>https://kubaik.github.io/secure-your-api/</link>
-      <description>Protect your API from threats. Learn top security best practices.</description>
-      <pubDate>Fri, 12 Dec 2025 17:26:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-api/</guid>
     </item>
   </channel>
 </rss>
