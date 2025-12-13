@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 19:20:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 20:28:00 +0000</lastBuildDate>
+    <item>
+      <title>Data Flow</title>
+      <link>https://kubaik.github.io/data-flow/</link>
+      <description>Learn about data engineering pipelines &amp; optimize your data flow for insights</description>
+      <pubDate>Sat, 13 Dec 2025 20:27:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-flow/</guid>
+    </item>
     <item>
       <title>AR Revolts</title>
       <link>https://kubaik.github.io/ar-revolts/</link>
@@ -138,13 +145,6 @@
       <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
       <pubDate>Fri, 12 Dec 2025 23:25:40 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Top Web Frameworks</title>
-      <link>https://kubaik.github.io/top-web-frameworks/</link>
-      <description>Discover top web frameworks for modern development, boosting efficiency &amp; performance.</description>
-      <pubDate>Fri, 12 Dec 2025 21:25:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-frameworks/</guid>
     </item>
   </channel>
 </rss>
