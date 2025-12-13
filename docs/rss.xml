@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 12:51:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 13:31:55 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with our easy-to-follow guide and secure your apps with ease.</description>
+      <pubDate>Sat, 13 Dec 2025 13:31:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Streamline devops with GitOps. Learn best practices for successful workflow implementation.</description>
       <pubDate>Fri, 12 Dec 2025 15:29:59 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>DB Tools</title>
-      <link>https://kubaik.github.io/db-tools/</link>
-      <description>Discover top DB tools for efficient database management and optimization.</description>
-      <pubDate>Fri, 12 Dec 2025 14:24:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-tools/</guid>
     </item>
   </channel>
 </rss>
