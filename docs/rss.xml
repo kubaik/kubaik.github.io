@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 03:51:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 04:32:46 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
+      <pubDate>Sat, 13 Dec 2025 04:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Fri, 12 Dec 2025 06:42:20 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes.</description>
-      <pubDate>Fri, 12 Dec 2025 05:28:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
