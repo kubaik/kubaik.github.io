@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 11:21:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 12:51:42 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
+      <pubDate>Sat, 13 Dec 2025 12:51:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB tools for efficient database management and optimization.</description>
       <pubDate>Fri, 12 Dec 2025 14:24:59 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>Master Memory</title>
-      <link>https://kubaik.github.io/master-memory/</link>
-      <description>Boost productivity with expert memory management tips and tricks.</description>
-      <pubDate>Fri, 12 Dec 2025 13:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-memory/</guid>
     </item>
   </channel>
 </rss>
