@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 05:27:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 06:38:34 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake Simplified</title>
+      <link>https://kubaik.github.io/data-lake-simplified/</link>
+      <description>Unlock data insights with simplified Data Lake Architecture. Learn more</description>
+      <pubDate>Sat, 13 Dec 2025 06:38:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-simplified/</guid>
+    </item>
     <item>
       <title>SSR Boost</title>
       <link>https://kubaik.github.io/ssr-boost/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Event-Driven Architecture (EDA) &amp; its benefits in software design.</description>
       <pubDate>Fri, 12 Dec 2025 08:38:17 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-explained/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Fri, 12 Dec 2025 07:29:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>

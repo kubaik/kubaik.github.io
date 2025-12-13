@@ -186,5 +186,6 @@
   "CI/CD Pipeline Implementation",
   "Caching Strategies (Redis, Memcached)",
   "Behavior-Driven Development (BDD)",
-  "Server-Side Rendering (SSR)"
+  "Server-Side Rendering (SSR)",
+  "Data Lake Architecture"
 ]
