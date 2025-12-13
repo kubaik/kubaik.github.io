@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 13:31:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 14:23:51 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Sat, 13 Dec 2025 14:23:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>JWT Auth Made Easy</title>
       <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn key Functional Programming concepts and principles in &apos;FP Essentials&apos;</description>
       <pubDate>Fri, 12 Dec 2025 16:34:24 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-essentials/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for successful workflow implementation.</description>
-      <pubDate>Fri, 12 Dec 2025 15:29:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
