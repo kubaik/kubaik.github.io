@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 10:26:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 11:21:06 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Unlock efficiency with RPA. Automate repetitive tasks &amp; boost productivity.</description>
+      <pubDate>Sat, 13 Dec 2025 11:20:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips and tricks.</description>
       <pubDate>Fri, 12 Dec 2025 13:40:24 +0000</pubDate>
       <guid>https://kubaik.github.io/master-memory/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Discover quantum computing basics in Quantum 101. Learn the fundamentals of this revolutionary tech.</description>
-      <pubDate>Fri, 12 Dec 2025 12:57:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
