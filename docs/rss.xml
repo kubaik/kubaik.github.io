@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 14:23:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 15:25:19 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Mastery: AWS</title>
+      <link>https://kubaik.github.io/cloud-mastery-aws/</link>
+      <description>Master AWS cloud architecture with expert insights and best practices.</description>
+      <pubDate>Sat, 13 Dec 2025 15:25:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your API from threats. Learn top security best practices.</description>
       <pubDate>Fri, 12 Dec 2025 17:26:04 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-api/</guid>
-    </item>
-    <item>
-      <title>FP Essentials</title>
-      <link>https://kubaik.github.io/fp-essentials/</link>
-      <description>Learn key Functional Programming concepts and principles in &apos;FP Essentials&apos;</description>
-      <pubDate>Fri, 12 Dec 2025 16:34:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-essentials/</guid>
     </item>
   </channel>
 </rss>
