@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/sre-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/data-warehousing-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/data-flow/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ar-revolts/</loc><priority>0.9</priority></url>
@@ -171,7 +172,6 @@
 <url><loc>https://kubaik.github.io/design-smarter/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/cyber-101/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/git-pro-tips/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/sre-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/secure-the-cloud/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/api-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/agile-done-right/</loc><priority>0.9</priority></url>
