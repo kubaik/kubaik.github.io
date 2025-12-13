@@ -184,5 +184,6 @@
   "Secrets Management",
   "Frontend Performance Tuning",
   "CI/CD Pipeline Implementation",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Behavior-Driven Development (BDD)"
 ]
