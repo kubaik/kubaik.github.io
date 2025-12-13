@@ -188,5 +188,6 @@
   "Behavior-Driven Development (BDD)",
   "Server-Side Rendering (SSR)",
   "Data Lake Architecture",
-  "Open Source Contribution Guide"
+  "Open Source Contribution Guide",
+  "Delta Lake and Data Lakehouse"
 ]
