@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Dec 2025 23:25:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 02:01:02 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Done Right</title>
+      <link>https://kubaik.github.io/cicd-done-right/</link>
+      <description>Optimize your workflow with expert CI/CD pipeline implementation tips.</description>
+      <pubDate>Sat, 13 Dec 2025 02:00:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-done-right/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
       <pubDate>Fri, 12 Dec 2025 04:41:15 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>Flutter App Dev</title>
-      <link>https://kubaik.github.io/flutter-app-dev/</link>
-      <description>Build fast, natively compiled apps with Flutter mobile development.</description>
-      <pubDate>Fri, 12 Dec 2025 03:59:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
     </item>
   </channel>
 </rss>
