@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 22:25:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 23:24:21 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Simplified</title>
+      <link>https://kubaik.github.io/cicd-simplified/</link>
+      <description>Simplify your workflow with our expert guide to CI/CD pipeline implementation.</description>
+      <pubDate>Sat, 13 Dec 2025 23:24:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-simplified/</guid>
+    </item>
     <item>
       <title>SRE Simplified</title>
       <link>https://kubaik.github.io/sre-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
       <pubDate>Sat, 13 Dec 2025 04:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost site speed with caching strategies using Redis and Memcached.</description>
-      <pubDate>Sat, 13 Dec 2025 03:51:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
