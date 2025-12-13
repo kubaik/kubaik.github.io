@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 20:28:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Dec 2025 21:23:12 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehousing Simplified</title>
+      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
+      <description>Simplify data management with our expert solutions. Learn more.</description>
+      <pubDate>Sat, 13 Dec 2025 21:23:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -138,13 +145,6 @@
       <description>Optimize your workflow with expert CI/CD pipeline implementation tips.</description>
       <pubDate>Sat, 13 Dec 2025 02:00:55 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
-      <pubDate>Fri, 12 Dec 2025 23:25:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
