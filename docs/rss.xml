@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 22:24:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 23:24:25 +0000</lastBuildDate>
+    <item>
+      <title>Terraform 101</title>
+      <link>https://kubaik.github.io/terraform-101/</link>
+      <description>Learn Terraform basics &amp; master Infrastructure as Code (IaC) with our beginner&apos;s guide.</description>
+      <pubDate>Sun, 14 Dec 2025 23:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-101/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost user experience with responsive web design techniques and expert tips.</description>
       <pubDate>Sun, 14 Dec 2025 04:02:44 +0000</pubDate>
       <guid>https://kubaik.github.io/design-on/</guid>
-    </item>
-    <item>
-      <title>Vue.js: Build Better</title>
-      <link>https://kubaik.github.io/vuejs-build-better/</link>
-      <description>Learn Vue.js component architecture best practices to build scalable apps</description>
-      <pubDate>Sun, 14 Dec 2025 02:20:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuejs-build-better/</guid>
     </item>
   </channel>
 </rss>
