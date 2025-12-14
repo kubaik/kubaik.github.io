@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 11:21:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 12:51:52 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution: faster speeds, new opportunities. Learn how 5G technology is changing the world.</description>
+      <pubDate>Sun, 14 Dec 2025 12:51:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>MBaaS Simplified</title>
       <link>https://kubaik.github.io/mbaas-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with expert review tips and best practices.</description>
       <pubDate>Sat, 13 Dec 2025 14:23:43 +0000</pubDate>
       <guid>https://kubaik.github.io/code-review-done-right/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Made Easy</title>
-      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
-      <description>Simplify JWT auth implementation with our easy-to-follow guide and secure your apps with ease.</description>
-      <pubDate>Sat, 13 Dec 2025 13:31:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
     </item>
   </channel>
 </rss>
