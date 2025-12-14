@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 02:20:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 04:02:51 +0000</lastBuildDate>
+    <item>
+      <title>Design On</title>
+      <link>https://kubaik.github.io/design-on/</link>
+      <description>Boost user experience with responsive web design techniques and expert tips.</description>
+      <pubDate>Sun, 14 Dec 2025 04:02:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-on/</guid>
+    </item>
     <item>
       <title>Vue.js: Build Better</title>
       <link>https://kubaik.github.io/vuejs-build-better/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with simplified Data Lake Architecture. Learn more</description>
       <pubDate>Sat, 13 Dec 2025 06:38:27 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-simplified/</guid>
-    </item>
-    <item>
-      <title>SSR Boost</title>
-      <link>https://kubaik.github.io/ssr-boost/</link>
-      <description>Unlock faster loads with Server-Side Rendering (SSR). Learn how to boost performance and SEO.</description>
-      <pubDate>Sat, 13 Dec 2025 05:27:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-boost/</guid>
     </item>
   </channel>
 </rss>
