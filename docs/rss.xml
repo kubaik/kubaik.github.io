@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 17:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 18:36:14 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Master load balancing techniques to optimize app performance and reliability.</description>
+      <pubDate>Sun, 14 Dec 2025 18:36:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>Log On: Simplify</title>
       <link>https://kubaik.github.io/log-on-simplify/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data engineering pipelines &amp; optimize your data flow for insights</description>
       <pubDate>Sat, 13 Dec 2025 20:27:54 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>AR Revolts</title>
-      <link>https://kubaik.github.io/ar-revolts/</link>
-      <description>Discover the future of tech with AR Revolts, exploring innovative Augmented Reality development trends.</description>
-      <pubDate>Sat, 13 Dec 2025 19:20:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-revolts/</guid>
     </item>
   </channel>
 </rss>
