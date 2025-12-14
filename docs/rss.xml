@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 21:23:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 22:24:57 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
+      <pubDate>Sun, 14 Dec 2025 22:24:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture best practices to build scalable apps</description>
       <pubDate>Sun, 14 Dec 2025 02:20:05 +0000</pubDate>
       <guid>https://kubaik.github.io/vuejs-build-better/</guid>
-    </item>
-    <item>
-      <title>CI/CD Simplified</title>
-      <link>https://kubaik.github.io/cicd-simplified/</link>
-      <description>Simplify your workflow with our expert guide to CI/CD pipeline implementation.</description>
-      <pubDate>Sat, 13 Dec 2025 23:24:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-simplified/</guid>
     </item>
   </channel>
 </rss>
