@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 06:38:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 07:25:22 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Sun, 14 Dec 2025 07:25:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build scalable C# apps with .NET Core. Discover framework benefits &amp; get started with tutorials.</description>
       <pubDate>Sat, 13 Dec 2025 09:26:13 +0000</pubDate>
       <guid>https://kubaik.github.io/build-with-net-core/</guid>
-    </item>
-    <item>
-      <title>Delta Lake Unleashed</title>
-      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
-      <description>Unlock the power of Delta Lake &amp; Data Lakehouse for unified analytics &amp; data management.</description>
-      <pubDate>Sat, 13 Dec 2025 08:32:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
     </item>
   </channel>
 </rss>
