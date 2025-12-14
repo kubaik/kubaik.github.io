@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 07:25:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 08:33:47 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits.</description>
+      <pubDate>Sun, 14 Dec 2025 08:33:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster, secure websites with Jamstack architecture. Learn how to boost performance and protection.</description>
       <pubDate>Sat, 13 Dec 2025 10:26:35 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
-    </item>
-    <item>
-      <title>Build with .NET Core</title>
-      <link>https://kubaik.github.io/build-with-net-core/</link>
-      <description>Learn to build scalable C# apps with .NET Core. Discover framework benefits &amp; get started with tutorials.</description>
-      <pubDate>Sat, 13 Dec 2025 09:26:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-with-net-core/</guid>
     </item>
   </channel>
 </rss>
