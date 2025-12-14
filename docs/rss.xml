@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 12:51:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 13:32:24 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Unlock efficient AI model training with expert tips and best practices.</description>
+      <pubDate>Sun, 14 Dec 2025 13:32:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Master AWS cloud architecture with expert insights and best practices.</description>
       <pubDate>Sat, 13 Dec 2025 15:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
-    </item>
-    <item>
-      <title>Code Review Done Right</title>
-      <link>https://kubaik.github.io/code-review-done-right/</link>
-      <description>Improve code quality with expert review tips and best practices.</description>
-      <pubDate>Sat, 13 Dec 2025 14:23:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-review-done-right/</guid>
     </item>
   </channel>
 </rss>
