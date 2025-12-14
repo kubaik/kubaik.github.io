@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 04:02:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 05:27:36 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolved</title>
+      <link>https://kubaik.github.io/ai-revolved/</link>
+      <description>Discover the power of Generative AI &amp; Large Language Models in &apos;AI Revolved&apos;</description>
+      <pubDate>Sun, 14 Dec 2025 05:27:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolved/</guid>
+    </item>
     <item>
       <title>Design On</title>
       <link>https://kubaik.github.io/design-on/</link>
@@ -138,13 +145,6 @@
       <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Sat, 13 Dec 2025 07:27:32 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Data Lake Simplified</title>
-      <link>https://kubaik.github.io/data-lake-simplified/</link>
-      <description>Unlock data insights with simplified Data Lake Architecture. Learn more</description>
-      <pubDate>Sat, 13 Dec 2025 06:38:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-simplified/</guid>
     </item>
   </channel>
 </rss>
