@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Dec 2025 23:24:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 02:20:12 +0000</lastBuildDate>
+    <item>
+      <title>Vue.js: Build Better</title>
+      <link>https://kubaik.github.io/vuejs-build-better/</link>
+      <description>Learn Vue.js component architecture best practices to build scalable apps</description>
+      <pubDate>Sun, 14 Dec 2025 02:20:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuejs-build-better/</guid>
+    </item>
     <item>
       <title>CI/CD Simplified</title>
       <link>https://kubaik.github.io/cicd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster loads with Server-Side Rendering (SSR). Learn how to boost performance and SEO.</description>
       <pubDate>Sat, 13 Dec 2025 05:27:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ssr-boost/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
-      <pubDate>Sat, 13 Dec 2025 04:32:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
