@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Dec 2025 10:27:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Dec 2025 11:21:22 +0000</lastBuildDate>
+    <item>
+      <title>MBaaS Simplified</title>
+      <link>https://kubaik.github.io/mbaas-simplified/</link>
+      <description>Unlock mobile app potential with MBaaS. Learn how Backend as a Service simplifies development.</description>
+      <pubDate>Sun, 14 Dec 2025 11:21:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/mbaas-simplified/</guid>
+    </item>
     <item>
       <title>Unlock Snowflake</title>
       <link>https://kubaik.github.io/unlock-snowflake/</link>
@@ -138,13 +145,6 @@
       <description>Simplify JWT auth implementation with our easy-to-follow guide and secure your apps with ease.</description>
       <pubDate>Sat, 13 Dec 2025 13:31:47 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
-      <pubDate>Sat, 13 Dec 2025 12:51:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
