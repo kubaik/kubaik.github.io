@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 04:07:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 05:32:21 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Boost coding efficiency with expert debugging techniques.</description>
+      <pubDate>Mon, 15 Dec 2025 05:32:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>Contribute Open</title>
       <link>https://kubaik.github.io/contribute-open/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Sun, 14 Dec 2025 07:25:14 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Sun, 14 Dec 2025 06:38:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
