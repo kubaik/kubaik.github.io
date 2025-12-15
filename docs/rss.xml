@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 19:26:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 20:32:23 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock model potential with expert feature engineering techniques.</description>
+      <pubDate>Mon, 15 Dec 2025 20:32:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
       <pubDate>Sun, 14 Dec 2025 22:24:50 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Discover the latest in PHP modern development and take your skills to the next level.</description>
-      <pubDate>Sun, 14 Dec 2025 21:23:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
