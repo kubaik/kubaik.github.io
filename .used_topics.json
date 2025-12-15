@@ -35,5 +35,6 @@
   "IoT Device Management",
   "Open Source Contribution Guide",
   "Debugging Techniques",
-  "Database Design and Normalization"
+  "Database Design and Normalization",
+  "Delta Lake and Data Lakehouse"
 ]
