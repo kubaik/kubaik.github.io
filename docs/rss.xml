@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 16:40:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 17:30:56 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Unlock real-time data processing with Apache Kafka Streams. Learn more.</description>
+      <pubDate>Mon, 15 Dec 2025 17:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of low-code/no-code platforms, revolutionizing app development with speed &amp; efficiency.</description>
       <pubDate>Sun, 14 Dec 2025 19:21:11 +0000</pubDate>
       <guid>https://kubaik.github.io/low-code-rev/</guid>
-    </item>
-    <item>
-      <title>Balance Done</title>
-      <link>https://kubaik.github.io/balance-done/</link>
-      <description>Master load balancing techniques to optimize app performance and reliability.</description>
-      <pubDate>Sun, 14 Dec 2025 18:36:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-done/</guid>
     </item>
   </channel>
 </rss>
