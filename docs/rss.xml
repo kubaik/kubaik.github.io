@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 13:00:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 13:49:16 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh: Simplified</title>
+      <link>https://kubaik.github.io/data-mesh-simplified/</link>
+      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn how to simplify data management and drive business growth.</description>
+      <pubDate>Mon, 15 Dec 2025 13:49:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-simplified/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; how to secure your network with a &apos;never trust, always verify&apos; approach.</description>
       <pubDate>Sun, 14 Dec 2025 15:25:06 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>DB Tools</title>
-      <link>https://kubaik.github.io/db-tools/</link>
-      <description>Discover top DB tools for efficient database management and optimization.</description>
-      <pubDate>Sun, 14 Dec 2025 14:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-tools/</guid>
     </item>
   </channel>
 </rss>
