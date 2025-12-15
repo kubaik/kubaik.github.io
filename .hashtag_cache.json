@@ -2730,16 +2730,15 @@
     "topic": "Progressive Web Apps (PWA)"
   },
   "iot_device_management": {
-    "timestamp": "2025-12-05T15:29:16.110602",
+    "timestamp": "2025-12-15T02:11:27.703040",
     "hashtags": [
-      "InternetOfThings",
-      "DeviceSecurity",
-      "SmartTech",
-      "TechInnovation",
+      "IoTSecurity",
+      "DeviceManagement",
+      "SmartCities",
       "ArtificialIntelligence",
-      "CyberPhysical",
-      "DigitalTransformation",
-      "EdgeComputing"
+      "EdgeComputing",
+      "TechInnovation",
+      "DigitalTransformation"
     ],
     "topic": "IoT Device Management"
   },
