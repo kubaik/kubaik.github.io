@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 15:31:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 16:40:12 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code</description>
+      <pubDate>Mon, 15 Dec 2025 16:40:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>Mesh Up!</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Master load balancing techniques to optimize app performance and reliability.</description>
       <pubDate>Sun, 14 Dec 2025 18:36:06 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-done/</guid>
-    </item>
-    <item>
-      <title>Log On: Simplify</title>
-      <link>https://kubaik.github.io/log-on-simplify/</link>
-      <description>Simplify log management with our expert solutions, streamline monitoring &amp; boost security.</description>
-      <pubDate>Sun, 14 Dec 2025 17:22:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-simplify/</guid>
     </item>
   </channel>
 </rss>
