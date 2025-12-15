@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 05:32:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 06:45:24 +0000</lastBuildDate>
+    <item>
+      <title>Normalize Now</title>
+      <link>https://kubaik.github.io/normalize-now/</link>
+      <description>Learn database normalization basics &amp; best practices to optimize performance</description>
+      <pubDate>Mon, 15 Dec 2025 06:45:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/normalize-now/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits.</description>
       <pubDate>Sun, 14 Dec 2025 08:33:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
-      <pubDate>Sun, 14 Dec 2025 07:25:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
