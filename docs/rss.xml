@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 21:27:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 22:27:27 +0000</lastBuildDate>
+    <item>
+      <title>Dev PM</title>
+      <link>https://kubaik.github.io/dev-pm/</link>
+      <description>Master project management as a developer with expert tips and strategies.</description>
+      <pubDate>Mon, 15 Dec 2025 22:27:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-pm/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Master IoT device control &amp; management. Learn expert tips and best practices.</description>
       <pubDate>Mon, 15 Dec 2025 02:11:27 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-control/</guid>
-    </item>
-    <item>
-      <title>Terraform 101</title>
-      <link>https://kubaik.github.io/terraform-101/</link>
-      <description>Learn Terraform basics &amp; master Infrastructure as Code (IaC) with our beginner&apos;s guide.</description>
-      <pubDate>Sun, 14 Dec 2025 23:24:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-101/</guid>
     </item>
   </channel>
 </rss>
