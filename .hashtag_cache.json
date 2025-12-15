@@ -1178,7 +1178,7 @@
     "topic": "Recommender Systems Design"
   },
   "scrum_vs_kanban": {
-    "timestamp": "2025-12-07T15:23:13.497595",
+    "timestamp": "2025-12-15T08:40:49.622600",
     "hashtags": [
       "AgileMethodologies",
       "KanbanBoard",
@@ -1186,7 +1186,8 @@
       "DevOpsTools",
       "ProjectManagement",
       "SoftwareDevelopment",
-      "LeanAgile"
+      "TechAgile",
+      "LeanDevelopment"
     ],
     "topic": "Scrum vs Kanban"
   },
