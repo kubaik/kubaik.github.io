@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 09:39:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 10:35:05 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient AI with Transfer Learning. Learn implementation tips and techniques.</description>
+      <pubDate>Mon, 15 Dec 2025 10:34:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>Ace Tech Interviews</title>
       <link>https://kubaik.github.io/ace-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution: faster speeds, new opportunities. Learn how 5G technology is changing the world.</description>
       <pubDate>Sun, 14 Dec 2025 12:51:45 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>MBaaS Simplified</title>
-      <link>https://kubaik.github.io/mbaas-simplified/</link>
-      <description>Unlock mobile app potential with MBaaS. Learn how Backend as a Service simplifies development.</description>
-      <pubDate>Sun, 14 Dec 2025 11:21:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/mbaas-simplified/</guid>
     </item>
   </channel>
 </rss>
