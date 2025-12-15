@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 17:30:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 18:41:01 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Simplified</title>
+      <link>https://kubaik.github.io/serverless-simplified/</link>
+      <description>Learn serverless architecture patterns &amp; simplify your cloud infrastructure with our expert guide.</description>
+      <pubDate>Mon, 15 Dec 2025 18:40:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-simplified/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Unlock algorithm secrets: explore complexity analysis and optimization techniques.</description>
       <pubDate>Sun, 14 Dec 2025 20:28:29 +0000</pubDate>
       <guid>https://kubaik.github.io/complexity-uncovered/</guid>
-    </item>
-    <item>
-      <title>Low-Code Rev</title>
-      <link>https://kubaik.github.io/low-code-rev/</link>
-      <description>Discover the power of low-code/no-code platforms, revolutionizing app development with speed &amp; efficiency.</description>
-      <pubDate>Sun, 14 Dec 2025 19:21:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/low-code-rev/</guid>
     </item>
   </channel>
 </rss>
