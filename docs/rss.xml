@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 14:33:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 15:31:41 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up!</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Learn about Service Mesh Architecture with &apos;Mesh Up!&apos; Discover its benefits and how it simplifies microservices management.</description>
+      <pubDate>Mon, 15 Dec 2025 15:31:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>Write to Inform</title>
       <link>https://kubaik.github.io/write-to-inform/</link>
@@ -138,13 +145,6 @@
       <description>Simplify log management with our expert solutions, streamline monitoring &amp; boost security.</description>
       <pubDate>Sun, 14 Dec 2025 17:22:19 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-simplify/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Unlock VS Code&apos;s full potential with top extensions for boosted productivity.</description>
-      <pubDate>Sun, 14 Dec 2025 16:31:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
