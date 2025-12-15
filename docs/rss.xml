@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Dec 2025 02:11:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Dec 2025 04:07:24 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open</title>
+      <link>https://kubaik.github.io/contribute-open/</link>
+      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Mon, 15 Dec 2025 04:07:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open/</guid>
+    </item>
     <item>
       <title>IoT Device Control</title>
       <link>https://kubaik.github.io/iot-device-control/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with expert database indexing strategies.</description>
       <pubDate>Sun, 14 Dec 2025 06:38:08 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>AI Revolved</title>
-      <link>https://kubaik.github.io/ai-revolved/</link>
-      <description>Discover the power of Generative AI &amp; Large Language Models in &apos;AI Revolved&apos;</description>
-      <pubDate>Sun, 14 Dec 2025 05:27:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolved/</guid>
     </item>
   </channel>
 </rss>
