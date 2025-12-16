@@ -2139,16 +2139,16 @@
     "topic": "Quantum Computing Basics"
   },
   "next.js_for_full-stack_development": {
-    "timestamp": "2025-12-12T02:07:47.207003",
+    "timestamp": "2025-12-16T17:29:40.499320",
     "hashtags": [
       "FullStackDev",
-      "Nextjs",
-      "ServerSideRendering",
+      "NextJS",
       "ReactEcosystem",
-      "JavaScript",
-      "DevOps",
-      "CloudNative",
-      "WebDevelopment"
+      "ServerSideRendering",
+      "Jamstack",
+      "WebDevelopment",
+      "CloudNativeApps",
+      "FullStackJS"
     ],
     "topic": "Next.js for Full-Stack Development"
   },
