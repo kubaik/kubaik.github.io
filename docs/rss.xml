@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 04:44:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 05:29:53 +0000</lastBuildDate>
+    <item>
+      <title>CLI Hacks</title>
+      <link>https://kubaik.github.io/cli-hacks/</link>
+      <description>Boost productivity with CLI hacks &amp; tips to streamline your workflow.</description>
+      <pubDate>Tue, 16 Dec 2025 05:29:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/cli-hacks/</guid>
+    </item>
     <item>
       <title>Boost Wasm Speed</title>
       <link>https://kubaik.github.io/boost-wasm-speed/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Which agile method is best for your team?</description>
       <pubDate>Mon, 15 Dec 2025 08:40:49 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Delta Lake Simplified</title>
-      <link>https://kubaik.github.io/delta-lake-simplified/</link>
-      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to simplify your data management and analytics.</description>
-      <pubDate>Mon, 15 Dec 2025 07:30:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-simplified/</guid>
     </item>
   </channel>
 </rss>
