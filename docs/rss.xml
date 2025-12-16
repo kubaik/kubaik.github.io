@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 15:31:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 16:38:31 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack 101</title>
+      <link>https://kubaik.github.io/jamstack-101/</link>
+      <description>Learn Jamstack basics &amp; benefits in our introductory guide to modern web architecture.</description>
+      <pubDate>Tue, 16 Dec 2025 16:38:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-101/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Learn penetration testing methodologies to secure your systems with our expert guide.</description>
       <pubDate>Mon, 15 Dec 2025 19:25:58 +0000</pubDate>
       <guid>https://kubaik.github.io/test-to-secure/</guid>
-    </item>
-    <item>
-      <title>Serverless Simplified</title>
-      <link>https://kubaik.github.io/serverless-simplified/</link>
-      <description>Learn serverless architecture patterns &amp; simplify your cloud infrastructure with our expert guide.</description>
-      <pubDate>Mon, 15 Dec 2025 18:40:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-simplified/</guid>
     </item>
   </channel>
 </rss>
