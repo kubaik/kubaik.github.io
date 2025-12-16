@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 22:25:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 23:26:23 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
+      <pubDate>Tue, 16 Dec 2025 23:26:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
       <pubDate>Tue, 16 Dec 2025 04:44:39 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Tue, 16 Dec 2025 04:00:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
