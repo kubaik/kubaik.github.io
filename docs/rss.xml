@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 04:00:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 04:44:46 +0000</lastBuildDate>
+    <item>
+      <title>Boost Wasm Speed</title>
+      <link>https://kubaik.github.io/boost-wasm-speed/</link>
+      <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
+      <pubDate>Tue, 16 Dec 2025 04:44:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to simplify your data management and analytics.</description>
       <pubDate>Mon, 15 Dec 2025 07:30:58 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-simplified/</guid>
-    </item>
-    <item>
-      <title>Normalize Now</title>
-      <link>https://kubaik.github.io/normalize-now/</link>
-      <description>Learn database normalization basics &amp; best practices to optimize performance</description>
-      <pubDate>Mon, 15 Dec 2025 06:45:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/normalize-now/</guid>
     </item>
   </channel>
 </rss>
