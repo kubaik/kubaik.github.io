@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 12:59:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 13:46:24 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Tue, 16 Dec 2025 13:46:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code</description>
       <pubDate>Mon, 15 Dec 2025 16:40:04 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Learn about Service Mesh Architecture with &apos;Mesh Up!&apos; Discover its benefits and how it simplifies microservices management.</description>
-      <pubDate>Mon, 15 Dec 2025 15:31:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
