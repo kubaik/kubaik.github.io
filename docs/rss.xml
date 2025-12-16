@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 06:43:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 07:29:20 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Visibility</title>
+      <link>https://kubaik.github.io/boost-app-visibility/</link>
+      <description>Maximize app visibility with expert ASO tips and strategies.</description>
+      <pubDate>Tue, 16 Dec 2025 07:29:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn implementation tips and techniques.</description>
       <pubDate>Mon, 15 Dec 2025 10:34:57 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>Ace Tech Interviews</title>
-      <link>https://kubaik.github.io/ace-tech-interviews/</link>
-      <description>Land your dream tech job with our expert interview prep guide.</description>
-      <pubDate>Mon, 15 Dec 2025 09:39:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-tech-interviews/</guid>
     </item>
   </channel>
 </rss>
