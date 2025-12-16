@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 13:46:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 14:31:51 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Biz</title>
+      <link>https://kubaik.github.io/secure-your-biz/</link>
+      <description>Protect your business with expert security compliance solutions for SOC 2 and ISO 27001 certification.</description>
+      <pubDate>Tue, 16 Dec 2025 14:31:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-biz/</guid>
+    </item>
     <item>
       <title>Grid &amp; Flexbox</title>
       <link>https://kubaik.github.io/grid-flexbox/</link>
@@ -138,13 +145,6 @@
       <description>Unlock real-time data processing with Apache Kafka Streams. Learn more.</description>
       <pubDate>Mon, 15 Dec 2025 17:30:49 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code</description>
-      <pubDate>Mon, 15 Dec 2025 16:40:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
