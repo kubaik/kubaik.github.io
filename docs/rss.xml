@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 14:31:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Dec 2025 15:31:03 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS, a lightweight JS framework for modern web development.</description>
+      <pubDate>Tue, 16 Dec 2025 15:30:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Secure Your Biz</title>
       <link>https://kubaik.github.io/secure-your-biz/</link>
@@ -138,13 +145,6 @@
       <description>Learn serverless architecture patterns &amp; simplify your cloud infrastructure with our expert guide.</description>
       <pubDate>Mon, 15 Dec 2025 18:40:54 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-simplified/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams. Learn more.</description>
-      <pubDate>Mon, 15 Dec 2025 17:30:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
