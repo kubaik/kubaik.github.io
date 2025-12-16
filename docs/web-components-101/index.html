@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web Components 101 - AI Tech Blog</title>
+        <meta name="description" content="Learn Web Components basics & create custom elements for reusable UI code">
+        <meta name="keywords" content="Web Component Library, Shadow DOM, Custom Element Registry, Custom Elements, programming, Cybersecurity, Web Development with Web Components, HTML Templates, developer, software, WebComponents, CustomElements, tech, EdgeComputing, JavaScript Web Components">
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Web Components basics & create custom elements for reusable UI code">
+    <meta property="og:title" content="Web Components 101">
+    <meta property="og:description" content="Learn Web Components basics & create custom elements for reusable UI code">
+    <meta property="og:url" content="https://kubaik.github.io/web-components-101/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI Tech Blog">
+    <meta property="article:published_time" content="2025-12-16T09:33:22.246043">
+    <meta property="article:modified_time" content="2025-12-16T09:33:22.246049">
+    <meta property="og:image" content="/static/images/web-components-101.jpg">
+    <meta property="og:image:alt" content="Web Components 101">
+    <meta name="twitter:image" content="/static/images/web-components-101.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Components 101">
+    <meta name="twitter:description" content="Learn Web Components basics & create custom elements for reusable UI code">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/web-components-101/">
+    <meta name="keywords" content="Web Component Library, Shadow DOM, Custom Element Registry, Custom Elements, programming, Cybersecurity, Web Development with Web Components, HTML Templates, developer, software, WebComponents, CustomElements, tech, EdgeComputing, JavaScript Web Components">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Web Components 101",
+  "description": "Learn Web Components basics & create custom elements for reusable UI code",
+  "author": {
+    "@type": "Organization",
+    "name": "AI Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2025-12-16T09:33:22.246043",
+  "dateModified": "2025-12-16T09:33:22.246049",
+  "url": "https://kubaik.github.io/web-components-101/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/web-components-101/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/web-components-101.jpg"
+  },
+  "keywords": [
+    "Web Component Library",
+    "Shadow DOM",
+    "Custom Element Registry",
+    "Custom Elements",
+    "programming",
+    "Cybersecurity",
+    "Web Development with Web Components",
+    "HTML Templates",
+    "developer",
+    "software",
+    "WebComponents",
+    "CustomElements",
+    "tech",
+    "EdgeComputing",
+    "JavaScript Web Components"
+  ]
+}
+</script>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <!-- Header Ad Slot -->
+        <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <header>
+            <div class="container">
+                <h1><a href="/">AI Tech Blog</a></h1>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/terms-of-service/">Terms</a>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+            <article class="blog-post">
+                <header class="post-header">
+                    <h1>Web Components 101</h1>
+                    <div class="post-meta">
+                        <time datetime="2025-12-16T09:33:22.246043">2025-12-16</time>
+                        
+                        <div class="tags">
+                            
+                            <span class="tag">WebComponents</span>
+                            
+                            <span class="tag">programming</span>
+                            
+                            <span class="tag">Web Components</span>
+                            
+                            <span class="tag">CustomElements</span>
+                            
+                            <span class="tag">tech</span>
+                            
+                            <span class="tag">Shadow DOM</span>
+                            
+                            <span class="tag">EdgeComputing</span>
+                            
+                            <span class="tag">Cybersecurity</span>
+                            
+                            <span class="tag">JavaScript Web Components</span>
+                            
+                            <span class="tag">TypeScript</span>
+                            
+                            <span class="tag">FrontendTech</span>
+                            
+                            <span class="tag">developer</span>
+                            
+                            <span class="tag">HTML Templates</span>
+                            
+                            <span class="tag">Custom Elements</span>
+                            
+                            <span class="tag">software</span>
+                            
+                        </div>
+                        
+                    </div>
+                </header>
+                <div class="post-content">
+                    <h2 id="introduction-to-web-components">Introduction to Web Components</h2>
+<p>Web Components are a set of web platform APIs that allow you to create custom, reusable, and encapsulated HTML tags to use in web pages and web apps. They provide a standard component model for the web, making it easier to build and maintain complex web applications. The four main specifications that make up Web Components are Custom Elements, HTML Templates, HTML Imports, and Shadow DOM.</p>
+<p>The main advantage of Web Components is that they allow developers to create custom elements that can be used in the same way as built-in HTML elements. This can help to improve code readability, reduce code duplication, and make it easier to maintain large and complex web applications.</p>
+<h3 id="history-of-web-components">History of Web Components</h3>
+<p>The concept of Web Components has been around for several years, with the first draft of the Custom Elements specification being published in 2013. Since then, the specifications have undergone several revisions, with the latest version being published in 2019. Today, Web Components are supported by all major browsers, including Google Chrome, Mozilla Firefox, Microsoft Edge, and Apple Safari.</p>
+<h2 id="custom-elements">Custom Elements</h2>
+<p>Custom Elements are a key part of the Web Components specification. They allow developers to create custom HTML elements that can be used in web pages and web apps. Custom Elements are defined using the <code>customElements</code> API, which provides a set of methods for defining and registering custom elements.</p>
+<p>Here is an example of how to define a custom element using the <code>customElements</code> API:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">      &lt;style&gt;</span>
+<span class="sb">        :host {</span>
+<span class="sb">          display: block;</span>
+<span class="sb">          background-color: #f0f0f0;</span>
+<span class="sb">          padding: 10px;</span>
+<span class="sb">          border: 1px solid #ccc;</span>
+<span class="sb">        }</span>
+<span class="sb">      &lt;/style&gt;</span>
+<span class="sb">      &lt;h1&gt;Hello World!&lt;/h1&gt;</span>
+<span class="sb">    `</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
+</code></pre></div>
+
+<p>In this example, we define a custom element called <code>my-element</code> that extends the <code>HTMLElement</code> class. We use the <code>attachShadow</code> method to create a shadow DOM for the element, and then set the inner HTML of the shadow DOM to a template string that defines the element's content.</p>
+<h3 id="using-custom-elements">Using Custom Elements</h3>
+<p>Once a custom element has been defined and registered, it can be used in web pages and web apps just like any other HTML element. For example:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>This will render the custom element in the web page, with the content defined in the template string.</p>
+<h2 id="html-templates">HTML Templates</h2>
+<p>HTML Templates are another key part of the Web Components specification. They allow developers to define reusable HTML templates that can be used to render dynamic content. HTML Templates are defined using the <code>&lt;template&gt;</code> element, which is a new element that has been added to the HTML specification.</p>
+<p>Here is an example of how to define an HTML template:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my-template&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a paragraph of text.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>In this example, we define an HTML template with the ID <code>my-template</code>. The template contains an <code>&lt;h1&gt;</code> element and a <code>&lt;p&gt;</code> element, which can be used to render dynamic content.</p>
+<h3 id="using-html-templates">Using HTML Templates</h3>
+<p>Once an HTML template has been defined, it can be used to render dynamic content using JavaScript. For example:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;my-template&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">template</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">clone</span><span class="p">);</span>
+</code></pre></div>
+
+<p>In this example, we get a reference to the HTML template using the <code>document.getElementById</code> method, and then clone the template using the <code>cloneNode</code> method. We then append the cloned template to the <code>body</code> element using the <code>appendChild</code> method.</p>
+<h2 id="shadow-dom">Shadow DOM</h2>
+<p>Shadow DOM is a new feature of the Web Components specification that allows developers to create a separate DOM tree for a custom element. This can be useful for encapsulating an element's content and styles, and for improving performance by reducing the number of DOM nodes.</p>
+<p>Here is an example of how to create a shadow DOM for a custom element:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">();</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">      &lt;style&gt;</span>
+<span class="sb">        :host {</span>
+<span class="sb">          display: block;</span>
+<span class="sb">          background-color: #f0f0f0;</span>
+<span class="sb">          padding: 10px;</span>
+<span class="sb">          border: 1px solid #ccc;</span>
+<span class="sb">        }</span>
+<span class="sb">      &lt;/style&gt;</span>
+<span class="sb">      &lt;h1&gt;Hello World!&lt;/h1&gt;</span>
+<span class="sb">    `</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>In this example, we create a shadow DOM for the custom element using the <code>attachShadow</code> method. We then set the inner HTML of the shadow DOM to a template string that defines the element's content.</p>
+<h3 id="benefits-of-shadow-dom">Benefits of Shadow DOM</h3>
+<p>Shadow DOM provides several benefits, including:</p>
+<ul>
+<li><strong>Encapsulation</strong>: Shadow DOM allows developers to encapsulate an element's content and styles, making it easier to manage complex web applications.</li>
+<li><strong>Improved performance</strong>: Shadow DOM can improve performance by reducing the number of DOM nodes, which can reduce the time it takes to render a web page.</li>
+<li><strong>Simplified styling</strong>: Shadow DOM makes it easier to style custom elements, as the styles are encapsulated within the element and do not affect other elements on the page.</li>
+</ul>
+<h2 id="tools-and-platforms">Tools and Platforms</h2>
+<p>There are several tools and platforms that support Web Components, including:</p>
+<ul>
+<li><strong>Polymer</strong>: A JavaScript library developed by Google that provides a set of tools and APIs for building Web Components.</li>
+<li><strong>Stencil</strong>: A compiler for building Web Components, developed by the Ionic team.</li>
+<li><strong>LitElement</strong>: A lightweight library for building Web Components, developed by the Google Chrome team.</li>
+<li><strong>Mozilla Firefox</strong>: A web browser that supports Web Components, with a set of developer tools for debugging and inspecting custom elements.</li>
+</ul>
+<h3 id="pricing-and-performance">Pricing and Performance</h3>
+<p>The cost of using Web Components can vary depending on the tools and platforms used. For example:</p>
+<ul>
+<li><strong>Polymer</strong>: Free and open-source, with a large community of developers and a wide range of resources available.</li>
+<li><strong>Stencil</strong>: Free and open-source, with a smaller community of developers and a more limited set of resources available.</li>
+<li><strong>LitElement</strong>: Free and open-source, with a small community of developers and a limited set of resources available.</li>
+</ul>
+<p>In terms of performance, Web Components can provide several benefits, including:</p>
+<ul>
+<li><strong>Faster rendering</strong>: Web Components can improve rendering performance by reducing the number of DOM nodes and improving the efficiency of the rendering pipeline.</li>
+<li><strong>Improved responsiveness</strong>: Web Components can improve responsiveness by reducing the time it takes to update the DOM and improving the efficiency of the event handling pipeline.</li>
+</ul>
+<h2 id="real-world-use-cases">Real-World Use Cases</h2>
+<p>Web Components have several real-world use cases, including:</p>
+<ol>
+<li><strong>Building complex web applications</strong>: Web Components can be used to build complex web applications, such as single-page apps and progressive web apps.</li>
+<li><strong>Creating reusable UI components</strong>: Web Components can be used to create reusable UI components, such as buttons, forms, and navigation menus.</li>
+<li><strong>Improving performance</strong>: Web Components can be used to improve performance, by reducing the number of DOM nodes and improving the efficiency of the rendering pipeline.</li>
+</ol>
+<p>Some examples of companies that use Web Components include:</p>
+<ul>
+<li><strong>Google</strong>: Uses Web Components in several of its products, including Google Search and Google Maps.</li>
+<li><strong>Microsoft</strong>: Uses Web Components in several of its products, including Microsoft Office and Microsoft Azure.</li>
+<li><strong>IBM</strong>: Uses Web Components in several of its products, including IBM Watson and IBM Cloud.</li>
+</ul>
+<h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
+<p>Some common problems that developers may encounter when using Web Components include:</p>
+<ul>
+<li><strong>Browser compatibility</strong>: Web Components may not be supported by all browsers, which can make it difficult to ensure compatibility.</li>
+<li><strong>Performance issues</strong>: Web Components can introduce performance issues, such as slow rendering and responsiveness.</li>
+<li><strong>Debugging and testing</strong>: Web Components can be difficult to debug and test, due to the complexity of the component model.</li>
+</ul>
+<p>Some solutions to these problems include:</p>
+<ul>
+<li><strong>Using polyfills</strong>: Polyfills can be used to ensure compatibility with older browsers that do not support Web Components.</li>
+</ul>
+<p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
+<ul>
+<li><strong>Optimizing performance</strong>: Performance can be optimized by reducing the number of DOM nodes, improving the efficiency of the rendering pipeline, and using caching and other optimization techniques.</li>
+<li><strong>Using debugging and testing tools</strong>: Debugging and testing tools, such as the Chrome DevTools, can be used to debug and test Web Components.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Web Components are a powerful technology for building complex web applications, creating reusable UI components, and improving performance. They provide a standard component model for the web, making it easier to build and maintain large and complex web applications. With the support of major browsers and the availability of tools and platforms, Web Components are a viable option for developers who want to build high-quality web applications.</p>
+<p>To get started with Web Components, developers can use the following steps:</p>
+<ol>
+<li><strong>Learn the basics</strong>: Learn the basics of Web Components, including Custom Elements, HTML Templates, and Shadow DOM.</li>
+<li><strong>Choose a tool or platform</strong>: Choose a tool or platform that supports Web Components, such as Polymer, Stencil, or LitElement.</li>
+<li><strong>Start building</strong>: Start building Web Components, using the tools and platforms available.</li>
+<li><strong>Test and debug</strong>: Test and debug Web Components, using debugging and testing tools, such as the Chrome DevTools.</li>
+</ol>
+<p>By following these steps, developers can start building high-quality web applications using Web Components, and take advantage of the benefits that this technology provides. With the continued support of major browsers and the development of new tools and platforms, Web Components are likely to become an increasingly important part of the web development landscape.</p>
+                    
+                    <!-- Middle Ad Slot -->
+                    <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+                </div>
+                
+                <!-- Affiliate Disclaimer -->
+                
+                <div class="affiliate-disclaimer">
+                    <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
+                </div>
+                
+            </article>
+        </main>
+        
+        <!-- Footer Ad Slot -->
+        <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 AI Tech Blog. Powered by AI.</p>
+            </div>
+        </footer>
+    </body>
+    </html>
