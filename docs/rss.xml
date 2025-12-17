@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 04:39:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 05:30:15 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL API</title>
+      <link>https://kubaik.github.io/graphql-api/</link>
+      <description>Learn GraphQL API development best practices and build scalable APIs with ease.</description>
+      <pubDate>Wed, 17 Dec 2025 05:30:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-api/</guid>
+    </item>
     <item>
       <title>Docker 101</title>
       <link>https://kubaik.github.io/docker-101/</link>
@@ -138,13 +145,6 @@
       <description>Discover the RPA Revolt: automation trends &amp; innovations</description>
       <pubDate>Tue, 16 Dec 2025 08:39:16 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-revolt/</guid>
-    </item>
-    <item>
-      <title>Boost App Visibility</title>
-      <link>https://kubaik.github.io/boost-app-visibility/</link>
-      <description>Maximize app visibility with expert ASO tips and strategies.</description>
-      <pubDate>Tue, 16 Dec 2025 07:29:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
     </item>
   </channel>
 </rss>
