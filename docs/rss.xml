@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 09:34:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 10:32:21 +0000</lastBuildDate>
+    <item>
+      <title>Master Memory</title>
+      <link>https://kubaik.github.io/master-memory/</link>
+      <description>Boost productivity with expert memory management tips.</description>
+      <pubDate>Wed, 17 Dec 2025 10:32:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-memory/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Tue, 16 Dec 2025 13:46:16 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Boost business insights with clean data. Learn why data quality matters.</description>
-      <pubDate>Tue, 16 Dec 2025 12:58:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
