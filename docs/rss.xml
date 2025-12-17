@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Dec 2025 23:26:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 02:03:38 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover Explainable AI techniques to unlock transparency in machine learning models.</description>
+      <pubDate>Wed, 17 Dec 2025 02:03:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with CLI hacks &amp; tips to streamline your workflow.</description>
       <pubDate>Tue, 16 Dec 2025 05:29:45 +0000</pubDate>
       <guid>https://kubaik.github.io/cli-hacks/</guid>
-    </item>
-    <item>
-      <title>Boost Wasm Speed</title>
-      <link>https://kubaik.github.io/boost-wasm-speed/</link>
-      <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
-      <pubDate>Tue, 16 Dec 2025 04:44:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
     </item>
   </channel>
 </rss>
