@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 13:39:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 14:30:31 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Brand</title>
+      <link>https://kubaik.github.io/code-your-brand/</link>
+      <description>Elevate your dev career with a strong personal brand. Learn how to code your brand for success.</description>
+      <pubDate>Wed, 17 Dec 2025 14:30:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-brand/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full-stack dev with Next.js. Learn how to build scalable apps.</description>
       <pubDate>Tue, 16 Dec 2025 17:29:40 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
-    </item>
-    <item>
-      <title>Jamstack 101</title>
-      <link>https://kubaik.github.io/jamstack-101/</link>
-      <description>Learn Jamstack basics &amp; benefits in our introductory guide to modern web architecture.</description>
-      <pubDate>Tue, 16 Dec 2025 16:38:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-101/</guid>
     </item>
   </channel>
 </rss>
