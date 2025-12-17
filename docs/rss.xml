@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 10:32:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 11:26:45 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Streamline AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Wed, 17 Dec 2025 11:26:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>Master Memory</title>
       <link>https://kubaik.github.io/master-memory/</link>
@@ -138,13 +145,6 @@
       <description>Protect your business with expert security compliance solutions for SOC 2 and ISO 27001 certification.</description>
       <pubDate>Tue, 16 Dec 2025 14:31:43 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-biz/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Tue, 16 Dec 2025 13:46:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
