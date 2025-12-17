@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 20:32:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 21:27:45 +0000</lastBuildDate>
+    <item>
+      <title>Federated Learning</title>
+      <link>https://kubaik.github.io/federated-learning/</link>
+      <description>Learn about federated learning, a decentralized approach to machine learning implementation.</description>
+      <pubDate>Wed, 17 Dec 2025 21:27:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/federated-learning/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
       <pubDate>Tue, 16 Dec 2025 23:26:15 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
-      <pubDate>Tue, 16 Dec 2025 22:25:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
