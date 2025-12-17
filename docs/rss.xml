@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 12:58:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 13:39:02 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming. Learn techniques and best practices.</description>
+      <pubDate>Wed, 17 Dec 2025 13:38:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Scale Smarter</title>
       <link>https://kubaik.github.io/scale-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Jamstack basics &amp; benefits in our introductory guide to modern web architecture.</description>
       <pubDate>Tue, 16 Dec 2025 16:38:23 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-101/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Discover Svelte JS, a lightweight JS framework for modern web development.</description>
-      <pubDate>Tue, 16 Dec 2025 15:30:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
