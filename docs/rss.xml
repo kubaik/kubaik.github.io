@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 06:42:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 07:29:09 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions using A/B testing and experimentation techniques.</description>
+      <pubDate>Wed, 17 Dec 2025 07:29:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Reduce cloud spend with expert optimization tips and strategies.</description>
       <pubDate>Tue, 16 Dec 2025 10:32:46 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
-    </item>
-    <item>
-      <title>Web Components 101</title>
-      <link>https://kubaik.github.io/web-components-101/</link>
-      <description>Learn Web Components basics &amp; create custom elements for reusable UI code</description>
-      <pubDate>Tue, 16 Dec 2025 09:33:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-components-101/</guid>
     </item>
   </channel>
 </rss>
