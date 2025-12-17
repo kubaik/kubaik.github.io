@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 03:57:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 04:39:41 +0000</lastBuildDate>
+    <item>
+      <title>Docker 101</title>
+      <link>https://kubaik.github.io/docker-101/</link>
+      <description>Learn Docker basics with our beginner&apos;s guide to containerization.</description>
+      <pubDate>Wed, 17 Dec 2025 04:39:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-101/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Maximize app visibility with expert ASO tips and strategies.</description>
       <pubDate>Tue, 16 Dec 2025 07:29:12 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-visibility/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with our expert guide.</description>
-      <pubDate>Tue, 16 Dec 2025 06:43:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
