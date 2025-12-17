@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 16:37:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 17:29:23 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Optimize performance with profiling &amp; benchmarking techniques.</description>
+      <pubDate>Wed, 17 Dec 2025 17:29:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -54,13 +61,6 @@
       <description>Boost productivity with expert memory management tips.</description>
       <pubDate>Wed, 17 Dec 2025 10:32:13 +0000</pubDate>
       <guid>https://kubaik.github.io/master-memory/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Maximize network speed with expert optimization tips.</description>
-      <pubDate>Wed, 17 Dec 2025 09:34:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
     <item>
       <title>Swift iOS Dev</title>
