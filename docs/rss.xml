@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 05:30:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 06:42:16 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
+      <pubDate>Wed, 17 Dec 2025 06:42:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>GraphQL API</title>
       <link>https://kubaik.github.io/graphql-api/</link>
@@ -138,13 +145,6 @@
       <description>Learn Web Components basics &amp; create custom elements for reusable UI code</description>
       <pubDate>Tue, 16 Dec 2025 09:33:22 +0000</pubDate>
       <guid>https://kubaik.github.io/web-components-101/</guid>
-    </item>
-    <item>
-      <title>RPA Revolt</title>
-      <link>https://kubaik.github.io/rpa-revolt/</link>
-      <description>Discover the RPA Revolt: automation trends &amp; innovations</description>
-      <pubDate>Tue, 16 Dec 2025 08:39:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-revolt/</guid>
     </item>
   </channel>
 </rss>
