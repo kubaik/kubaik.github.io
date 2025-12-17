@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 08:38:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 09:34:42 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Maximize network speed with expert optimization tips.</description>
+      <pubDate>Wed, 17 Dec 2025 09:34:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost business insights with clean data. Learn why data quality matters.</description>
       <pubDate>Tue, 16 Dec 2025 12:58:59 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>K8s Made Easy</title>
-      <link>https://kubaik.github.io/k8s-made-easy/</link>
-      <description>Simplify Kubernetes orchestration with expert tips and tricks in &apos;K8s Made Easy&apos; - learn more now</description>
-      <pubDate>Tue, 16 Dec 2025 11:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-made-easy/</guid>
     </item>
   </channel>
 </rss>
