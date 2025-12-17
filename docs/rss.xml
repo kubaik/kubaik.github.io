@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 07:29:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 08:38:47 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Expert guides &amp; tutorials.</description>
+      <pubDate>Wed, 17 Dec 2025 08:38:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify Kubernetes orchestration with expert tips and tricks in &apos;K8s Made Easy&apos; - learn more now</description>
       <pubDate>Tue, 16 Dec 2025 11:26:42 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-made-easy/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert optimization tips and strategies.</description>
-      <pubDate>Tue, 16 Dec 2025 10:32:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
