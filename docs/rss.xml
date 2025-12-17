@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Dec 2025 02:03:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 03:57:07 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Wed, 17 Dec 2025 03:56:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with our expert guide.</description>
       <pubDate>Tue, 16 Dec 2025 06:43:08 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>CLI Hacks</title>
-      <link>https://kubaik.github.io/cli-hacks/</link>
-      <description>Boost productivity with CLI hacks &amp; tips to streamline your workflow.</description>
-      <pubDate>Tue, 16 Dec 2025 05:29:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/cli-hacks/</guid>
     </item>
   </channel>
 </rss>
