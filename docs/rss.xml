@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 20:27:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 21:23:34 +0000</lastBuildDate>
+    <item>
+      <title>ML Made Easy</title>
+      <link>https://kubaik.github.io/ml-made-easy/</link>
+      <description>Unlock machine learning secrets with easy-to-understand explanations of ML algorithms.</description>
+      <pubDate>Thu, 18 Dec 2025 21:23:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-made-easy/</guid>
+    </item>
     <item>
       <title>Angular Ent Apps</title>
       <link>https://kubaik.github.io/angular-ent-apps/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest web dev trends &amp; frameworks</description>
       <pubDate>Thu, 18 Dec 2025 02:04:02 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>Process Now</title>
-      <link>https://kubaik.github.io/process-now/</link>
-      <description>Unlock instant insights with real-time data processing. Learn how.</description>
-      <pubDate>Wed, 17 Dec 2025 23:26:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/process-now/</guid>
     </item>
   </channel>
 </rss>
