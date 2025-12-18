@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 17:29:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 18:40:48 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Explore real-time web apps &amp; discover how they enhance user experience.</description>
+      <pubDate>Thu, 18 Dec 2025 18:40:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>Crack Sys Design</title>
       <link>https://kubaik.github.io/crack-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Learn about federated learning, a decentralized approach to machine learning implementation.</description>
       <pubDate>Wed, 17 Dec 2025 21:27:37 +0000</pubDate>
       <guid>https://kubaik.github.io/federated-learning/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost website speed with caching strategies using Redis and Memcached.</description>
-      <pubDate>Wed, 17 Dec 2025 20:32:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
