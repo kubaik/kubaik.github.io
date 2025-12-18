@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 03:58:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 04:41:02 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UI/UX Done Right</title>
+      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
+      <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
+      <pubDate>Thu, 18 Dec 2025 04:40:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
+    </item>
     <item>
       <title>TS Power Types</title>
       <link>https://kubaik.github.io/ts-power-types/</link>
@@ -138,13 +145,6 @@
       <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
       <pubDate>Wed, 17 Dec 2025 06:42:08 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>GraphQL API</title>
-      <link>https://kubaik.github.io/graphql-api/</link>
-      <description>Learn GraphQL API development best practices and build scalable APIs with ease.</description>
-      <pubDate>Wed, 17 Dec 2025 05:30:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-api/</guid>
     </item>
   </channel>
 </rss>
