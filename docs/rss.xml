@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 02:04:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 03:58:11 +0000</lastBuildDate>
+    <item>
+      <title>TS Power Types</title>
+      <link>https://kubaik.github.io/ts-power-types/</link>
+      <description>Unlock TypeScript&apos;s full potential with advanced power types.</description>
+      <pubDate>Thu, 18 Dec 2025 03:58:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-power-types/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn GraphQL API development best practices and build scalable APIs with ease.</description>
       <pubDate>Wed, 17 Dec 2025 05:30:07 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-api/</guid>
-    </item>
-    <item>
-      <title>Docker 101</title>
-      <link>https://kubaik.github.io/docker-101/</link>
-      <description>Learn Docker basics with our beginner&apos;s guide to containerization.</description>
-      <pubDate>Wed, 17 Dec 2025 04:39:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-101/</guid>
     </item>
   </channel>
 </rss>
