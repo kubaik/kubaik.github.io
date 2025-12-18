@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 14:30:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 15:31:08 +0000</lastBuildDate>
+    <item>
+      <title>Cyber Basics</title>
+      <link>https://kubaik.github.io/cyber-basics/</link>
+      <description>Learn cybersecurity fundamentals with Cyber Basics. Protect yourself online.</description>
+      <pubDate>Thu, 18 Dec 2025 15:31:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-basics/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps faster with React Native. Learn how to create cross-platform apps with one codebase.</description>
       <pubDate>Wed, 17 Dec 2025 18:41:49 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize performance with profiling &amp; benchmarking techniques.</description>
-      <pubDate>Wed, 17 Dec 2025 17:29:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
