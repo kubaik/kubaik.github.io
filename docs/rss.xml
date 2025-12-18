@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 11:25:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 12:57:11 +0000</lastBuildDate>
+    <item>
+      <title>Work Smarter</title>
+      <link>https://kubaik.github.io/work-smarter/</link>
+      <description>Boost productivity with remote work best practices.</description>
+      <pubDate>Thu, 18 Dec 2025 12:57:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/work-smarter/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn functional programming essentials &amp; concepts to improve code quality and scalability.</description>
       <pubDate>Wed, 17 Dec 2025 15:31:24 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-essentials/</guid>
-    </item>
-    <item>
-      <title>Code Your Brand</title>
-      <link>https://kubaik.github.io/code-your-brand/</link>
-      <description>Elevate your dev career with a strong personal brand. Learn how to code your brand for success.</description>
-      <pubDate>Wed, 17 Dec 2025 14:30:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-your-brand/</guid>
     </item>
   </channel>
 </rss>
