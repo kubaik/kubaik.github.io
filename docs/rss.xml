@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 06:42:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 07:28:12 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Learn effective documentation best practices with Doc Right. Improve clarity, accuracy, and productivity.</description>
+      <pubDate>Thu, 18 Dec 2025 07:28:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips.</description>
       <pubDate>Wed, 17 Dec 2025 10:32:13 +0000</pubDate>
       <guid>https://kubaik.github.io/master-memory/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Expert guides &amp; tutorials.</description>
-      <pubDate>Wed, 17 Dec 2025 08:38:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
