@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 21:23:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 22:26:59 +0000</lastBuildDate>
+    <item>
+      <title>Code the Future</title>
+      <link>https://kubaik.github.io/code-the-future/</link>
+      <description>Learn Smart Contract Development &amp; code the future of blockchain technology</description>
+      <pubDate>Thu, 18 Dec 2025 22:26:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-the-future/</guid>
+    </item>
     <item>
       <title>ML Made Easy</title>
       <link>https://kubaik.github.io/ml-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Unlock TypeScript&apos;s full potential with advanced power types.</description>
       <pubDate>Thu, 18 Dec 2025 03:58:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-power-types/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest web dev trends &amp; frameworks</description>
-      <pubDate>Thu, 18 Dec 2025 02:04:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>
