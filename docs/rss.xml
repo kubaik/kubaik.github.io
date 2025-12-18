@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 08:38:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 09:34:19 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Thu, 18 Dec 2025 09:34:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Web3 Unlocked</title>
       <link>https://kubaik.github.io/web3-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Learn scalability patterns to grow efficiently</description>
       <pubDate>Wed, 17 Dec 2025 12:58:42 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smarter/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Wed, 17 Dec 2025 11:26:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
