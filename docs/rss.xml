@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 12:57:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 13:42:06 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with expert cloud security best practices and tips.</description>
+      <pubDate>Thu, 18 Dec 2025 13:41:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn database replication &amp; sharding strategies to scale your app smartly</description>
       <pubDate>Wed, 17 Dec 2025 16:37:29 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>FP Essentials</title>
-      <link>https://kubaik.github.io/fp-essentials/</link>
-      <description>Learn functional programming essentials &amp; concepts to improve code quality and scalability.</description>
-      <pubDate>Wed, 17 Dec 2025 15:31:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-essentials/</guid>
     </item>
   </channel>
 </rss>
