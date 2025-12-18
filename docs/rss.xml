@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 19:21:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 20:27:58 +0000</lastBuildDate>
+    <item>
+      <title>Angular Ent Apps</title>
+      <link>https://kubaik.github.io/angular-ent-apps/</link>
+      <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
+      <pubDate>Thu, 18 Dec 2025 20:27:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Unlock instant insights with real-time data processing. Learn how.</description>
       <pubDate>Wed, 17 Dec 2025 23:26:45 +0000</pubDate>
       <guid>https://kubaik.github.io/process-now/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Simplify cloud migration with expert strategies and best practices.</description>
-      <pubDate>Wed, 17 Dec 2025 22:27:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
