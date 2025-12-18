@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 07:28:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 08:38:05 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Unlocked</title>
+      <link>https://kubaik.github.io/web3-unlocked/</link>
+      <description>Unlock the future of the internet with Web3 and decentralized apps (DApps).</description>
+      <pubDate>Thu, 18 Dec 2025 08:37:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-unlocked/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Streamline AI model deployment with expert strategies and best practices.</description>
       <pubDate>Wed, 17 Dec 2025 11:26:37 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
-    </item>
-    <item>
-      <title>Master Memory</title>
-      <link>https://kubaik.github.io/master-memory/</link>
-      <description>Boost productivity with expert memory management tips.</description>
-      <pubDate>Wed, 17 Dec 2025 10:32:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-memory/</guid>
     </item>
   </channel>
 </rss>
