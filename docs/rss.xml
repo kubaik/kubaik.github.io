@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 09:34:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 10:31:29 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
+      <pubDate>Thu, 18 Dec 2025 10:31:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with pair programming. Learn techniques and best practices.</description>
       <pubDate>Wed, 17 Dec 2025 13:38:54 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Learn scalability patterns to grow efficiently</description>
-      <pubDate>Wed, 17 Dec 2025 12:58:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
