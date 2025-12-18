@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 04:41:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 05:30:22 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake Simplified</title>
+      <link>https://kubaik.github.io/data-lake-simplified/</link>
+      <description>Unlock data insights with simplified data lake architecture. Learn how to build &amp; manage a scalable data lake.</description>
+      <pubDate>Thu, 18 Dec 2025 05:30:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-simplified/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with data-driven decisions using A/B testing and experimentation techniques.</description>
       <pubDate>Wed, 17 Dec 2025 07:29:02 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
-      <pubDate>Wed, 17 Dec 2025 06:42:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
