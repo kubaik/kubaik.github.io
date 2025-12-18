@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 16:38:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 17:29:01 +0000</lastBuildDate>
+    <item>
+      <title>Crack Sys Design</title>
+      <link>https://kubaik.github.io/crack-sys-design/</link>
+      <description>Master sys design interviews with expert tips and tricks.</description>
+      <pubDate>Thu, 18 Dec 2025 17:28:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-sys-design/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with caching strategies using Redis and Memcached.</description>
       <pubDate>Wed, 17 Dec 2025 20:32:36 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-cache/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Learn container security best practices to protect your apps and data.</description>
-      <pubDate>Wed, 17 Dec 2025 19:25:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
