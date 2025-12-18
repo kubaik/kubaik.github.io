@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 10:31:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 11:25:37 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Swift for iOS dev, build apps with ease</description>
+      <pubDate>Thu, 18 Dec 2025 11:25:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Elevate your dev career with a strong personal brand. Learn how to code your brand for success.</description>
       <pubDate>Wed, 17 Dec 2025 14:30:23 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming. Learn techniques and best practices.</description>
-      <pubDate>Wed, 17 Dec 2025 13:38:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
