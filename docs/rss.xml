@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2025 05:30:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Dec 2025 06:42:00 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame debt.</description>
+      <pubDate>Thu, 18 Dec 2025 06:41:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>Data Lake Simplified</title>
       <link>https://kubaik.github.io/data-lake-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Expert guides &amp; tutorials.</description>
       <pubDate>Wed, 17 Dec 2025 08:38:39 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize with data-driven decisions using A/B testing and experimentation techniques.</description>
-      <pubDate>Wed, 17 Dec 2025 07:29:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
