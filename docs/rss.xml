@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 11:24:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 12:55:43 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock the power of multi-cloud with Cloud Evolved. Discover benefits, strategies, and expert insights.</description>
+      <pubDate>Fri, 19 Dec 2025 12:55:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn how to implement these patterns for better architecture.</description>
       <pubDate>Thu, 18 Dec 2025 14:29:54 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
-    </item>
-    <item>
-      <title>Secure Cloud</title>
-      <link>https://kubaik.github.io/secure-cloud/</link>
-      <description>Protect your data with expert cloud security best practices and tips.</description>
-      <pubDate>Thu, 18 Dec 2025 13:41:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-cloud/</guid>
     </item>
   </channel>
 </rss>
