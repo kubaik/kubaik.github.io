@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 10:30:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 11:24:54 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Unlock modern JavaScript with ES6+ essentials.</description>
+      <pubDate>Fri, 19 Dec 2025 11:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>WAF: Web Shield</title>
       <link>https://kubaik.github.io/waf-web-shield/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with expert cloud security best practices and tips.</description>
       <pubDate>Thu, 18 Dec 2025 13:41:58 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>Work Smarter</title>
-      <link>https://kubaik.github.io/work-smarter/</link>
-      <description>Boost productivity with remote work best practices.</description>
-      <pubDate>Thu, 18 Dec 2025 12:57:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smarter/</guid>
     </item>
   </channel>
 </rss>
