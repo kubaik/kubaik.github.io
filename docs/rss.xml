@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 04:00:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 04:43:26 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover secure secrets management strategies to protect your business.</description>
+      <pubDate>Fri, 19 Dec 2025 04:43:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>Edge AI: Smarter Edge</title>
       <link>https://kubaik.github.io/edge-ai-smarter-edge/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective documentation best practices with Doc Right. Improve clarity, accuracy, and productivity.</description>
       <pubDate>Thu, 18 Dec 2025 07:28:04 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame debt.</description>
-      <pubDate>Thu, 18 Dec 2025 06:41:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
