@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 17:24:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 18:38:54 +0000</lastBuildDate>
+    <item>
+      <title>PWA: Future of Apps</title>
+      <link>https://kubaik.github.io/pwa-future-of-apps/</link>
+      <description>Discover the future of apps with PWAs. Learn how they&apos;re revolutionizing mobile experiences.</description>
+      <pubDate>Fri, 19 Dec 2025 18:38:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-future-of-apps/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
       <pubDate>Thu, 18 Dec 2025 20:27:49 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-ent-apps/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect fundamentals</description>
-      <pubDate>Thu, 18 Dec 2025 19:21:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
