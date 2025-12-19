@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 22:26:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 23:25:25 +0000</lastBuildDate>
+    <item>
+      <title>Revive Old Code</title>
+      <link>https://kubaik.github.io/revive-old-code/</link>
+      <description>Breathe new life into outdated code with expert refactoring tips and techniques.</description>
+      <pubDate>Fri, 19 Dec 2025 23:25:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/revive-old-code/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge AI potential: smarter edge computing for enhanced performance</description>
       <pubDate>Fri, 19 Dec 2025 03:59:55 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-ai-smarter-edge/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Optimize GitOps workflows with expert tips and best practices.</description>
-      <pubDate>Fri, 19 Dec 2025 02:07:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>

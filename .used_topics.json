@@ -139,5 +139,6 @@
   "Event-Driven Architecture",
   "Message Queues and Async Processing",
   "AI Model Monitoring and Maintenance",
-  "ETL vs ELT Processes"
+  "ETL vs ELT Processes",
+  "Refactoring Legacy Code"
 ]
