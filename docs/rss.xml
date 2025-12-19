@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 02:07:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 04:00:03 +0000</lastBuildDate>
+    <item>
+      <title>Edge AI: Smarter Edge</title>
+      <link>https://kubaik.github.io/edge-ai-smarter-edge/</link>
+      <description>Unlock Edge AI potential: smarter edge computing for enhanced performance</description>
+      <pubDate>Fri, 19 Dec 2025 03:59:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-ai-smarter-edge/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame debt.</description>
       <pubDate>Thu, 18 Dec 2025 06:41:52 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>Data Lake Simplified</title>
-      <link>https://kubaik.github.io/data-lake-simplified/</link>
-      <description>Unlock data insights with simplified data lake architecture. Learn how to build &amp; manage a scalable data lake.</description>
-      <pubDate>Thu, 18 Dec 2025 05:30:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-simplified/</guid>
     </item>
   </channel>
 </rss>
