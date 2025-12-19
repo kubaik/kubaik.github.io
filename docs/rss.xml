@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 08:37:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 09:31:21 +0000</lastBuildDate>
+    <item>
+      <title>Vuln Free</title>
+      <link>https://kubaik.github.io/vuln-free/</link>
+      <description>Stay vuln free: Learn proactive vulnerability management strategies</description>
+      <pubDate>Fri, 19 Dec 2025 09:31:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuln-free/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn Swift for iOS dev, build apps with ease</description>
       <pubDate>Thu, 18 Dec 2025 11:25:30 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
-      <pubDate>Thu, 18 Dec 2025 10:31:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
