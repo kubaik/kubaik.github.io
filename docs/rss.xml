@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 19:22:18 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 20:30:45 +0000</lastBuildDate>
+    <item>
+      <title>Async Done Right</title>
+      <link>https://kubaik.github.io/async-done-right/</link>
+      <description>Master async processing with message queues for scalable apps.</description>
+      <pubDate>Fri, 19 Dec 2025 20:30:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-done-right/</guid>
+    </item>
     <item>
       <title>EDA Explained</title>
       <link>https://kubaik.github.io/eda-explained/</link>
@@ -138,13 +145,6 @@
       <description>Learn Smart Contract Development &amp; code the future of blockchain technology</description>
       <pubDate>Thu, 18 Dec 2025 22:26:51 +0000</pubDate>
       <guid>https://kubaik.github.io/code-the-future/</guid>
-    </item>
-    <item>
-      <title>ML Made Easy</title>
-      <link>https://kubaik.github.io/ml-made-easy/</link>
-      <description>Unlock machine learning secrets with easy-to-understand explanations of ML algorithms.</description>
-      <pubDate>Thu, 18 Dec 2025 21:23:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-made-easy/</guid>
     </item>
   </channel>
 </rss>
