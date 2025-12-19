@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 18:38:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 19:22:18 +0000</lastBuildDate>
+    <item>
+      <title>EDA Explained</title>
+      <link>https://kubaik.github.io/eda-explained/</link>
+      <description>Unlock the power of Event-Driven Architecture. Learn EDA basics &amp; benefits in our expert guide.</description>
+      <pubDate>Fri, 19 Dec 2025 19:22:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-explained/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock machine learning secrets with easy-to-understand explanations of ML algorithms.</description>
       <pubDate>Thu, 18 Dec 2025 21:23:25 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-made-easy/</guid>
-    </item>
-    <item>
-      <title>Angular Ent Apps</title>
-      <link>https://kubaik.github.io/angular-ent-apps/</link>
-      <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
-      <pubDate>Thu, 18 Dec 2025 20:27:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
     </item>
   </channel>
 </rss>
