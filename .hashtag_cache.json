@@ -846,15 +846,15 @@
     "topic": "Backend Architecture Patterns"
   },
   "mobile_app_security": {
-    "timestamp": "2025-12-11T18:39:28.287120",
+    "timestamp": "2025-12-19T17:24:17.897552",
     "hashtags": [
       "MobileSecurity",
-      "AppDevelopment",
+      "AppThreats",
       "CyberProtection",
-      "TechSafety",
       "ZeroTrust",
-      "CloudSecurity",
-      "DevSecOps"
+      "DevSecOps",
+      "TechRisk",
+      "CloudSafety"
     ],
     "topic": "Mobile App Security"
   },
