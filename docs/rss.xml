@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 20:30:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 21:25:17 +0000</lastBuildDate>
+    <item>
+      <title>AI Model Care</title>
+      <link>https://kubaik.github.io/ai-model-care/</link>
+      <description>Learn AI model care best practices for monitoring and maintenance to ensure peak performance and accuracy.</description>
+      <pubDate>Fri, 19 Dec 2025 21:25:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-model-care/</guid>
+    </item>
     <item>
       <title>Async Done Right</title>
       <link>https://kubaik.github.io/async-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Deep Learning basics with our intro guide to neural networks.</description>
       <pubDate>Thu, 18 Dec 2025 23:26:26 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-101/</guid>
-    </item>
-    <item>
-      <title>Code the Future</title>
-      <link>https://kubaik.github.io/code-the-future/</link>
-      <description>Learn Smart Contract Development &amp; code the future of blockchain technology</description>
-      <pubDate>Thu, 18 Dec 2025 22:26:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-the-future/</guid>
     </item>
   </channel>
 </rss>
