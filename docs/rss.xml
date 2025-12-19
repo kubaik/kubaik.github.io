@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 21:25:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 22:26:54 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Discover the difference between ETL &amp; ELT processes.</description>
+      <pubDate>Fri, 19 Dec 2025 22:26:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>AI Model Care</title>
       <link>https://kubaik.github.io/ai-model-care/</link>
@@ -138,13 +145,6 @@
       <description>Optimize GitOps workflows with expert tips and best practices.</description>
       <pubDate>Fri, 19 Dec 2025 02:07:09 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Deep Learning 101</title>
-      <link>https://kubaik.github.io/deep-learning-101/</link>
-      <description>Unlock Deep Learning basics with our intro guide to neural networks.</description>
-      <pubDate>Thu, 18 Dec 2025 23:26:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-101/</guid>
     </item>
   </channel>
 </rss>
