@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 05:29:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Dec 2025 06:40:49 +0000</lastBuildDate>
+    <item>
+      <title>Flutter Fast</title>
+      <link>https://kubaik.github.io/flutter-fast/</link>
+      <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and tricks.</description>
+      <pubDate>Fri, 19 Dec 2025 06:40:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-fast/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of the internet with Web3 and decentralized apps (DApps).</description>
       <pubDate>Thu, 18 Dec 2025 08:37:58 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-unlocked/</guid>
-    </item>
-    <item>
-      <title>Doc Right</title>
-      <link>https://kubaik.github.io/doc-right/</link>
-      <description>Learn effective documentation best practices with Doc Right. Improve clarity, accuracy, and productivity.</description>
-      <pubDate>Thu, 18 Dec 2025 07:28:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/doc-right/</guid>
     </item>
   </channel>
 </rss>
