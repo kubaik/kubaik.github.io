@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 03:22:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 04:32:45 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flow</title>
+      <link>https://kubaik.github.io/limit-the-flow/</link>
+      <description>Learn about rate limiting &amp; throttling to control traffic &amp; prevent abuse.</description>
+      <pubDate>Sat, 20 Dec 2025 04:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flow/</guid>
+    </item>
     <item>
       <title>Split Smart</title>
       <link>https://kubaik.github.io/split-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert time management tips tailored for engineers.</description>
       <pubDate>Fri, 19 Dec 2025 07:27:50 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-time-hacks/</guid>
-    </item>
-    <item>
-      <title>Flutter Fast</title>
-      <link>https://kubaik.github.io/flutter-fast/</link>
-      <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and tricks.</description>
-      <pubDate>Fri, 19 Dec 2025 06:40:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-fast/</guid>
     </item>
   </channel>
 </rss>
