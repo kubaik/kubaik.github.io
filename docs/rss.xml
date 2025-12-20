@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 11:21:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 12:51:25 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech: 5 Key Uses</title>
+      <link>https://kubaik.github.io/nft-tech-5-key-uses/</link>
+      <description>Discover 5 key uses of NFT tech and its innovative applications.</description>
+      <pubDate>Sat, 20 Dec 2025 12:51:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech-5-key-uses/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>SQL vs NoSQL: Choose the right database for your needs.</description>
       <pubDate>Fri, 19 Dec 2025 15:29:45 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>WCAG 101</title>
-      <link>https://kubaik.github.io/wcag-101/</link>
-      <description>Learn WCAG basics &amp; improve website accessibility with our beginner&apos;s guide to Web Accessibility Standards.</description>
-      <pubDate>Fri, 19 Dec 2025 14:28:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-101/</guid>
     </item>
   </channel>
 </rss>
