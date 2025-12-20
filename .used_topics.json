@@ -142,5 +142,6 @@
   "ETL vs ELT Processes",
   "Refactoring Legacy Code",
   "AutoML and Neural Architecture Search",
-  "Code Splitting Strategies"
+  "Code Splitting Strategies",
+  "Rate Limiting and Throttling"
 ]
