@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 22:24:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 23:24:41 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs</title>
+      <link>https://kubaik.github.io/vector-dbs/</link>
+      <description>Unlock vector power: Learn about Vector DBs &amp; embeddings for next-gen search &amp; AI apps</description>
+      <pubDate>Sat, 20 Dec 2025 23:24:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs/</guid>
+    </item>
     <item>
       <title>Tune Smarter</title>
       <link>https://kubaik.github.io/tune-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn about rate limiting &amp; throttling to control traffic &amp; prevent abuse.</description>
       <pubDate>Sat, 20 Dec 2025 04:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flow/</guid>
-    </item>
-    <item>
-      <title>Split Smart</title>
-      <link>https://kubaik.github.io/split-smart/</link>
-      <description>Boost app performance with code splitting strategies. Learn how to split smart.</description>
-      <pubDate>Sat, 20 Dec 2025 03:22:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smart/</guid>
     </item>
   </channel>
 </rss>
