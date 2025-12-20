@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 07:24:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 08:33:48 +0000</lastBuildDate>
+    <item>
+      <title>Tech Salary Hacks</title>
+      <link>https://kubaik.github.io/tech-salary-hacks/</link>
+      <description>Boost your tech salary with expert negotiation tips and hacks.</description>
+      <pubDate>Sat, 20 Dec 2025 08:33:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials.</description>
       <pubDate>Fri, 19 Dec 2025 11:24:46 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>WAF: Web Shield</title>
-      <link>https://kubaik.github.io/waf-web-shield/</link>
-      <description>Protect your website with a Web Application Firewall (WAF). Learn how to shield your site from cyber threats.</description>
-      <pubDate>Fri, 19 Dec 2025 10:30:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-web-shield/</guid>
     </item>
   </channel>
 </rss>
