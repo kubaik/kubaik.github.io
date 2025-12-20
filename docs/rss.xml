@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 08:33:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 09:26:47 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Compare microservices &amp; monolithic architecture pros &amp; cons</description>
+      <pubDate>Sat, 20 Dec 2025 09:26:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>Tech Salary Hacks</title>
       <link>https://kubaik.github.io/tech-salary-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of multi-cloud with Cloud Evolved. Discover benefits, strategies, and expert insights.</description>
       <pubDate>Fri, 19 Dec 2025 12:55:35 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials.</description>
-      <pubDate>Fri, 19 Dec 2025 11:24:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
