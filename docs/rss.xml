@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 12:51:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 13:32:05 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn Distributed Systems Design best practices &amp; principles to build scalable, efficient systems.</description>
+      <pubDate>Sat, 20 Dec 2025 13:31:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>NFT Tech: 5 Key Uses</title>
       <link>https://kubaik.github.io/nft-tech-5-key-uses/</link>
@@ -138,13 +145,6 @@
       <description>Discover expert mobile app architecture patterns &amp; boost performance with our guide to App Archetypes.</description>
       <pubDate>Fri, 19 Dec 2025 16:35:10 +0000</pubDate>
       <guid>https://kubaik.github.io/app-archetypes/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>SQL vs NoSQL: Choose the right database for your needs.</description>
-      <pubDate>Fri, 19 Dec 2025 15:29:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
