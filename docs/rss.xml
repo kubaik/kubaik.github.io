@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 16:31:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 17:21:52 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Boost database performance with expert query optimization tips.</description>
+      <pubDate>Sat, 20 Dec 2025 17:21:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Master async processing with message queues for scalable apps.</description>
       <pubDate>Fri, 19 Dec 2025 20:30:37 +0000</pubDate>
       <guid>https://kubaik.github.io/async-done-right/</guid>
-    </item>
-    <item>
-      <title>EDA Explained</title>
-      <link>https://kubaik.github.io/eda-explained/</link>
-      <description>Unlock the power of Event-Driven Architecture. Learn EDA basics &amp; benefits in our expert guide.</description>
-      <pubDate>Fri, 19 Dec 2025 19:22:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-explained/</guid>
     </item>
   </channel>
 </rss>
