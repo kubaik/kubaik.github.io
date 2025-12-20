@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 10:26:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 11:21:01 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn how data governance frameworks boost compliance &amp; efficiency. Discover best practices now.</description>
+      <pubDate>Sat, 20 Dec 2025 11:20:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG basics &amp; improve website accessibility with our beginner&apos;s guide to Web Accessibility Standards.</description>
       <pubDate>Fri, 19 Dec 2025 14:28:37 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-101/</guid>
-    </item>
-    <item>
-      <title>Secure APIs</title>
-      <link>https://kubaik.github.io/secure-apis/</link>
-      <description>Protect your data with API security best practices. Learn how to secure APIs and prevent breaches.</description>
-      <pubDate>Fri, 19 Dec 2025 13:37:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-apis/</guid>
     </item>
   </channel>
 </rss>
