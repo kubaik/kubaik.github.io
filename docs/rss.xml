@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 15:25:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 16:31:15 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Unlock Git&apos;s full potential with expert tips and advanced techniques.</description>
+      <pubDate>Sat, 20 Dec 2025 16:31:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Secure Code: SAST/DAST</title>
       <link>https://kubaik.github.io/secure-code-sastdast/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Event-Driven Architecture. Learn EDA basics &amp; benefits in our expert guide.</description>
       <pubDate>Fri, 19 Dec 2025 19:22:10 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-explained/</guid>
-    </item>
-    <item>
-      <title>PWA: Future of Apps</title>
-      <link>https://kubaik.github.io/pwa-future-of-apps/</link>
-      <description>Discover the future of apps with PWAs. Learn how they&apos;re revolutionizing mobile experiences.</description>
-      <pubDate>Fri, 19 Dec 2025 18:38:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/pwa-future-of-apps/</guid>
     </item>
   </channel>
 </rss>
