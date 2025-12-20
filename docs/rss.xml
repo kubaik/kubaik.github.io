@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 02:00:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 03:22:12 +0000</lastBuildDate>
+    <item>
+      <title>Split Smart</title>
+      <link>https://kubaik.github.io/split-smart/</link>
+      <description>Boost app performance with code splitting strategies. Learn how to split smart.</description>
+      <pubDate>Sat, 20 Dec 2025 03:22:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smart/</guid>
+    </item>
     <item>
       <title>AutoML Revved</title>
       <link>https://kubaik.github.io/automl-revved/</link>
@@ -138,13 +145,6 @@
       <description>Build fast, scalable mobile apps with Flutter. Learn expert tips and tricks.</description>
       <pubDate>Fri, 19 Dec 2025 06:40:41 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-fast/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Boost security with SIEM essentials. Learn best practices for effective security monitoring.</description>
-      <pubDate>Fri, 19 Dec 2025 05:29:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
