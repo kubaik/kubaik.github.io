@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 05:27:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 06:39:08 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Learn Python for data science &amp; unlock insights with our expert guide.</description>
+      <pubDate>Sat, 20 Dec 2025 06:39:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>AI Agents Evolved</title>
       <link>https://kubaik.github.io/ai-agents-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Stay vuln free: Learn proactive vulnerability management strategies</description>
       <pubDate>Fri, 19 Dec 2025 09:31:13 +0000</pubDate>
       <guid>https://kubaik.github.io/vuln-free/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intelligent Recommender Systems with expert design tips and strategies.</description>
-      <pubDate>Fri, 19 Dec 2025 08:37:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
