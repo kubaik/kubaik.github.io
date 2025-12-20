@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 06:39:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 07:24:26 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
+      <pubDate>Sat, 20 Dec 2025 07:24:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with a Web Application Firewall (WAF). Learn how to shield your site from cyber threats.</description>
       <pubDate>Fri, 19 Dec 2025 10:30:32 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-web-shield/</guid>
-    </item>
-    <item>
-      <title>Vuln Free</title>
-      <link>https://kubaik.github.io/vuln-free/</link>
-      <description>Stay vuln free: Learn proactive vulnerability management strategies</description>
-      <pubDate>Fri, 19 Dec 2025 09:31:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-free/</guid>
     </item>
   </channel>
 </rss>
