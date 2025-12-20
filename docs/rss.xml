@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 13:32:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 14:24:32 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Unlock Edge Computing&apos;s potential with innovative applications.</description>
+      <pubDate>Sat, 20 Dec 2025 14:24:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from threats. Learn mobile app security best practices.</description>
       <pubDate>Fri, 19 Dec 2025 17:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>App Archetypes</title>
-      <link>https://kubaik.github.io/app-archetypes/</link>
-      <description>Discover expert mobile app architecture patterns &amp; boost performance with our guide to App Archetypes.</description>
-      <pubDate>Fri, 19 Dec 2025 16:35:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-archetypes/</guid>
     </item>
   </channel>
 </rss>
