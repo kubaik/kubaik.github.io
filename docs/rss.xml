@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 17:21:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 18:34:37 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn how high availability systems keep your business &apos;Always On&apos; with minimal downtime and maximum uptime.</description>
+      <pubDate>Sat, 20 Dec 2025 18:34:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Learn AI model care best practices for monitoring and maintenance to ensure peak performance and accuracy.</description>
       <pubDate>Fri, 19 Dec 2025 21:25:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-model-care/</guid>
-    </item>
-    <item>
-      <title>Async Done Right</title>
-      <link>https://kubaik.github.io/async-done-right/</link>
-      <description>Master async processing with message queues for scalable apps.</description>
-      <pubDate>Fri, 19 Dec 2025 20:30:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-done-right/</guid>
     </item>
   </channel>
 </rss>
