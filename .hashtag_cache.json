@@ -621,15 +621,15 @@
     "topic": "Data Mesh Architecture"
   },
   "data_governance_frameworks": {
-    "timestamp": "2025-12-06T03:15:50.795921",
+    "timestamp": "2025-12-20T11:20:53.886063",
     "hashtags": [
       "DataGovernance",
-      "InfoSecurity",
-      "CloudCompliance",
+      "CloudSecurity",
+      "AICompliance",
+      "DataProtection",
+      "TechRegulation",
       "DigitalTrust",
-      "AIRegulation",
-      "DataPrivacy",
-      "TechRiskManagement"
+      "InfoSec"
     ],
     "topic": "Data Governance Frameworks"
   },
