@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Dec 2025 23:25:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 02:00:35 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Revved</title>
+      <link>https://kubaik.github.io/automl-revved/</link>
+      <description>Unlock efficient AI with AutoML and Neural Architecture Search, accelerating innovation</description>
+      <pubDate>Sat, 20 Dec 2025 02:00:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-revved/</guid>
+    </item>
     <item>
       <title>Revive Old Code</title>
       <link>https://kubaik.github.io/revive-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Boost security with SIEM essentials. Learn best practices for effective security monitoring.</description>
       <pubDate>Fri, 19 Dec 2025 05:29:29 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>Edge AI: Smarter Edge</title>
-      <link>https://kubaik.github.io/edge-ai-smarter-edge/</link>
-      <description>Unlock Edge AI potential: smarter edge computing for enhanced performance</description>
-      <pubDate>Fri, 19 Dec 2025 03:59:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-ai-smarter-edge/</guid>
     </item>
   </channel>
 </rss>
