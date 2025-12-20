@@ -157,5 +157,6 @@
   "Application Security Testing (SAST/DAST)",
   "Git Advanced Techniques",
   "Database Query Optimization",
-  "High Availability Systems"
+  "High Availability Systems",
+  "Blue-Green Deployment"
 ]

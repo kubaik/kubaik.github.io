@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 18:34:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Dec 2025 19:20:52 +0000</lastBuildDate>
+    <item>
+      <title>Deploy Smarter</title>
+      <link>https://kubaik.github.io/deploy-smarter/</link>
+      <description>Learn Blue-Green Deployment strategies for zero-downtime releases</description>
+      <pubDate>Sat, 20 Dec 2025 19:20:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-smarter/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Discover the difference between ETL &amp; ELT processes.</description>
       <pubDate>Fri, 19 Dec 2025 22:26:46 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>AI Model Care</title>
-      <link>https://kubaik.github.io/ai-model-care/</link>
-      <description>Learn AI model care best practices for monitoring and maintenance to ensure peak performance and accuracy.</description>
-      <pubDate>Fri, 19 Dec 2025 21:25:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-care/</guid>
     </item>
   </channel>
 </rss>
