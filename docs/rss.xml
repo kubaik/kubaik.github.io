@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 04:03:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 05:28:04 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert backend architecture patterns and blueprints for scalable software design.</description>
+      <pubDate>Sun, 21 Dec 2025 05:27:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Test in Tandem</title>
       <link>https://kubaik.github.io/test-in-tandem/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
       <pubDate>Sat, 20 Dec 2025 07:24:18 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>Python for Data</title>
-      <link>https://kubaik.github.io/python-for-data/</link>
-      <description>Learn Python for data science &amp; unlock insights with our expert guide.</description>
-      <pubDate>Sat, 20 Dec 2025 06:39:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-for-data/</guid>
     </item>
   </channel>
 </rss>
