@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 20:28:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 21:23:37 +0000</lastBuildDate>
+    <item>
+      <title>AI with a Conscience</title>
+      <link>https://kubaik.github.io/ai-with-a-conscience/</link>
+      <description>Explore AI ethics &amp; responsible AI development for a conscientious future.</description>
+      <pubDate>Sun, 21 Dec 2025 21:23:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock vector power: Learn about Vector DBs &amp; embeddings for next-gen search &amp; AI apps</description>
       <pubDate>Sat, 20 Dec 2025 23:24:33 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>Tune Smarter</title>
-      <link>https://kubaik.github.io/tune-smarter/</link>
-      <description>Optimize model performance with expert Hyperparameter Tuning Methods.</description>
-      <pubDate>Sat, 20 Dec 2025 22:24:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-smarter/</guid>
     </item>
   </channel>
 </rss>
