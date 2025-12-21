@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 11:21:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 12:52:21 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: architecture guide for a connected future</description>
+      <pubDate>Sun, 21 Dec 2025 12:52:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s potential with innovative applications.</description>
       <pubDate>Sat, 20 Dec 2025 14:24:24 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn Distributed Systems Design best practices &amp; principles to build scalable, efficient systems.</description>
-      <pubDate>Sat, 20 Dec 2025 13:31:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
