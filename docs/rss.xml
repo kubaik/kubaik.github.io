@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 16:31:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 17:22:48 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Sun, 21 Dec 2025 17:22:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>NET Core Mastery</title>
       <link>https://kubaik.github.io/net-core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment strategies for zero-downtime releases</description>
       <pubDate>Sat, 20 Dec 2025 19:20:45 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-smarter/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Learn how high availability systems keep your business &apos;Always On&apos; with minimal downtime and maximum uptime.</description>
-      <pubDate>Sat, 20 Dec 2025 18:34:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
