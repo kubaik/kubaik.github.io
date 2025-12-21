@@ -164,5 +164,6 @@
   "Hyperparameter Tuning Methods",
   "Vector Databases and Embeddings",
   "RESTful API Design Principles",
-  "Canary Deployments"
+  "Canary Deployments",
+  "Backend Architecture Patterns"
 ]
