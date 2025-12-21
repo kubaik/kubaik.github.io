@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 13:33:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 14:24:41 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twin: Future Now</title>
+      <link>https://kubaik.github.io/digital-twin-future-now/</link>
+      <description>Unlock the future with Digital Twin tech, revolutionizing industries today</description>
+      <pubDate>Sun, 21 Dec 2025 14:24:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
+    </item>
     <item>
       <title>Scaling with TypeScript</title>
       <link>https://kubaik.github.io/scaling-with-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Git&apos;s full potential with expert tips and advanced techniques.</description>
       <pubDate>Sat, 20 Dec 2025 16:31:07 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Boost app security with SAST/DAST testing. Learn how to protect your code from vulnerabilities.</description>
-      <pubDate>Sat, 20 Dec 2025 15:25:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
