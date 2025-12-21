@@ -163,5 +163,6 @@
   "Go Programming Concurrency",
   "Hyperparameter Tuning Methods",
   "Vector Databases and Embeddings",
-  "RESTful API Design Principles"
+  "RESTful API Design Principles",
+  "Canary Deployments"
 ]
