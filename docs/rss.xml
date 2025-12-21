@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 09:27:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 10:27:35 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Learn Ruby on Rails web app development with expert guides and tutorials.</description>
+      <pubDate>Sun, 21 Dec 2025 10:27:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Discover 5 key uses of NFT tech and its innovative applications.</description>
       <pubDate>Sat, 20 Dec 2025 12:51:17 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-5-key-uses/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn how data governance frameworks boost compliance &amp; efficiency. Discover best practices now.</description>
-      <pubDate>Sat, 20 Dec 2025 11:20:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
