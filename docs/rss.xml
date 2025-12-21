@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 08:34:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 09:27:30 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Sun, 21 Dec 2025 09:27:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn how data governance frameworks boost compliance &amp; efficiency. Discover best practices now.</description>
       <pubDate>Sat, 20 Dec 2025 11:20:53 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop essential tech leadership skills to drive innovation &amp; success.</description>
-      <pubDate>Sat, 20 Dec 2025 10:26:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
