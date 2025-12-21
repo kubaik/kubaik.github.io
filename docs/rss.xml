@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 17:22:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 18:36:20 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Simplified</title>
+      <link>https://kubaik.github.io/mlops-simplified/</link>
+      <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows &amp; boost efficiency.</description>
+      <pubDate>Sun, 21 Dec 2025 18:36:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-simplified/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques for text analysis &amp; AI insights.</description>
       <pubDate>Sat, 20 Dec 2025 20:27:36 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-essentials/</guid>
-    </item>
-    <item>
-      <title>Deploy Smarter</title>
-      <link>https://kubaik.github.io/deploy-smarter/</link>
-      <description>Learn Blue-Green Deployment strategies for zero-downtime releases</description>
-      <pubDate>Sat, 20 Dec 2025 19:20:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-smarter/</guid>
     </item>
   </channel>
 </rss>
