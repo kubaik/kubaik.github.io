@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 21:23:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 22:25:59 +0000</lastBuildDate>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing tech</description>
+      <pubDate>Sun, 21 Dec 2025 22:25:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
+    </item>
     <item>
       <title>AI with a Conscience</title>
       <link>https://kubaik.github.io/ai-with-a-conscience/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable &amp; secure APIs. Best practices inside.</description>
       <pubDate>Sun, 21 Dec 2025 02:19:59 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>Vector DBs</title>
-      <link>https://kubaik.github.io/vector-dbs/</link>
-      <description>Unlock vector power: Learn about Vector DBs &amp; embeddings for next-gen search &amp; AI apps</description>
-      <pubDate>Sat, 20 Dec 2025 23:24:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs/</guid>
     </item>
   </channel>
 </rss>
