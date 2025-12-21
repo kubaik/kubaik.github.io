@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 15:25:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 16:31:59 +0000</lastBuildDate>
+    <item>
+      <title>NET Core Mastery</title>
+      <link>https://kubaik.github.io/net-core-mastery/</link>
+      <description>Master C# .NET Core development with expert tips and tutorials.</description>
+      <pubDate>Sun, 21 Dec 2025 16:31:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/net-core-mastery/</guid>
+    </item>
     <item>
       <title>Crypto Boom</title>
       <link>https://kubaik.github.io/crypto-boom/</link>
@@ -138,13 +145,6 @@
       <description>Learn how high availability systems keep your business &apos;Always On&apos; with minimal downtime and maximum uptime.</description>
       <pubDate>Sat, 20 Dec 2025 18:34:29 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Sat, 20 Dec 2025 17:21:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
