@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Dec 2025 23:24:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 02:20:07 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; secure APIs. Best practices inside.</description>
+      <pubDate>Sun, 21 Dec 2025 02:19:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Vector DBs</title>
       <link>https://kubaik.github.io/vector-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of AI agent development and its evolving capabilities.</description>
       <pubDate>Sat, 20 Dec 2025 05:27:05 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-evolved/</guid>
-    </item>
-    <item>
-      <title>Limit the Flow</title>
-      <link>https://kubaik.github.io/limit-the-flow/</link>
-      <description>Learn about rate limiting &amp; throttling to control traffic &amp; prevent abuse.</description>
-      <pubDate>Sat, 20 Dec 2025 04:32:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flow/</guid>
     </item>
   </channel>
 </rss>
