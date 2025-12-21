@@ -2387,15 +2387,15 @@
     "topic": "Cloud Cost Optimization"
   },
   "canary_deployments": {
-    "timestamp": "2025-12-11T22:27:42.574781",
+    "timestamp": "2025-12-21T04:03:14.631144",
     "hashtags": [
       "CloudNative",
       "DevOpsTools",
+      "CanaryReleases",
       "ContinuousDelivery",
-      "Kubernetes",
       "ServerlessTech",
-      "MicroservicesArch",
-      "ZeroDowntimeDeploy"
+      "KubernetesDeploy",
+      "DeploymentStrategies"
     ],
     "topic": "Canary Deployments"
   },
