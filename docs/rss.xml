@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 12:52:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 13:33:04 +0000</lastBuildDate>
+    <item>
+      <title>Scaling with TypeScript</title>
+      <link>https://kubaik.github.io/scaling-with-typescript/</link>
+      <description>Boost efficiency with TypeScript for large-scale apps. Learn scaling strategies and best practices.</description>
+      <pubDate>Sun, 21 Dec 2025 13:32:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Boost app security with SAST/DAST testing. Learn how to protect your code from vulnerabilities.</description>
       <pubDate>Sat, 20 Dec 2025 15:25:29 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Edge Computing</title>
-      <link>https://kubaik.github.io/edge-computing/</link>
-      <description>Unlock Edge Computing&apos;s potential with innovative applications.</description>
-      <pubDate>Sat, 20 Dec 2025 14:24:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing/</guid>
     </item>
   </channel>
 </rss>
