@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 05:28:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 06:39:14 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
+      <pubDate>Sun, 21 Dec 2025 06:39:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with expert negotiation tips and hacks.</description>
       <pubDate>Sat, 20 Dec 2025 08:33:40 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
-      <pubDate>Sat, 20 Dec 2025 07:24:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
