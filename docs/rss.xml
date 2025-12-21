@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 14:24:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Dec 2025 15:25:43 +0000</lastBuildDate>
+    <item>
+      <title>Crypto Boom</title>
+      <link>https://kubaik.github.io/crypto-boom/</link>
+      <description>Discover the rise of cryptocurrency &amp; blockchain in our &apos;Crypto Boom&apos; blog post.</description>
+      <pubDate>Sun, 21 Dec 2025 15:25:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/crypto-boom/</guid>
+    </item>
     <item>
       <title>Digital Twin: Future Now</title>
       <link>https://kubaik.github.io/digital-twin-future-now/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips.</description>
       <pubDate>Sat, 20 Dec 2025 17:21:44 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Unlock Git&apos;s full potential with expert tips and advanced techniques.</description>
-      <pubDate>Sat, 20 Dec 2025 16:31:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
