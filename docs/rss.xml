@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 13:39:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 14:28:23 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Boost coding efficiency with expert debugging techniques.</description>
+      <pubDate>Mon, 22 Dec 2025 14:28:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Master C# .NET Core development with expert tips and tutorials.</description>
       <pubDate>Sun, 21 Dec 2025 16:31:51 +0000</pubDate>
       <guid>https://kubaik.github.io/net-core-mastery/</guid>
-    </item>
-    <item>
-      <title>Crypto Boom</title>
-      <link>https://kubaik.github.io/crypto-boom/</link>
-      <description>Discover the rise of cryptocurrency &amp; blockchain in our &apos;Crypto Boom&apos; blog post.</description>
-      <pubDate>Sun, 21 Dec 2025 15:25:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/crypto-boom/</guid>
     </item>
   </channel>
 </rss>
