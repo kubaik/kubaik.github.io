@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 11:25:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 12:56:04 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
+      <pubDate>Mon, 22 Dec 2025 12:55:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>React Fast</title>
       <link>https://kubaik.github.io/react-fast/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future with Digital Twin tech, revolutionizing industries today</description>
       <pubDate>Sun, 21 Dec 2025 14:24:34 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
-    </item>
-    <item>
-      <title>Scaling with TypeScript</title>
-      <link>https://kubaik.github.io/scaling-with-typescript/</link>
-      <description>Boost efficiency with TypeScript for large-scale apps. Learn scaling strategies and best practices.</description>
-      <pubDate>Sun, 21 Dec 2025 13:32:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
     </item>
   </channel>
 </rss>
