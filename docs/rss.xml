@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Dec 2025 23:24:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 02:13:46 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed with expert tips and tricks.</description>
+      <pubDate>Mon, 22 Dec 2025 02:13:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert backend architecture patterns and blueprints for scalable software design.</description>
       <pubDate>Sun, 21 Dec 2025 05:27:56 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Test in Tandem</title>
-      <link>https://kubaik.github.io/test-in-tandem/</link>
-      <description>Learn about Canary Deployments with &apos;Test in Tandem&apos;. Reduce risk &amp; improve rollout success.</description>
-      <pubDate>Sun, 21 Dec 2025 04:03:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-in-tandem/</guid>
     </item>
   </channel>
 </rss>
