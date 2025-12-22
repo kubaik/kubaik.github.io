@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 08:39:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 09:35:57 +0000</lastBuildDate>
+    <item>
+      <title>Detect Anomalies</title>
+      <link>https://kubaik.github.io/detect-anomalies/</link>
+      <description>Identify unusual patterns with anomaly detection using machine learning. Learn more.</description>
+      <pubDate>Mon, 22 Dec 2025 09:35:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/detect-anomalies/</guid>
+    </item>
     <item>
       <title>API Gateway Patterns</title>
       <link>https://kubaik.github.io/api-gateway-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
       <pubDate>Sun, 21 Dec 2025 11:21:33 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Learn Ruby on Rails web app development with expert guides and tutorials.</description>
-      <pubDate>Sun, 21 Dec 2025 10:27:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
