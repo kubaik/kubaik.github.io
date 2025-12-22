@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 09:35:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 10:30:54 +0000</lastBuildDate>
+    <item>
+      <title>API Test Made Easy</title>
+      <link>https://kubaik.github.io/api-test-made-easy/</link>
+      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
+      <pubDate>Mon, 22 Dec 2025 10:30:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
+    </item>
     <item>
       <title>Detect Anomalies</title>
       <link>https://kubaik.github.io/detect-anomalies/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: architecture guide for a connected future</description>
       <pubDate>Sun, 21 Dec 2025 12:52:13 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
-      <pubDate>Sun, 21 Dec 2025 11:21:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
