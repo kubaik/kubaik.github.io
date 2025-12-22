@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 10:30:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 11:25:15 +0000</lastBuildDate>
+    <item>
+      <title>React Fast</title>
+      <link>https://kubaik.github.io/react-fast/</link>
+      <description>React faster to incidents with a solid response plan. Learn how to prepare and minimize downtime.</description>
+      <pubDate>Mon, 22 Dec 2025 11:25:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-fast/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with TypeScript for large-scale apps. Learn scaling strategies and best practices.</description>
       <pubDate>Sun, 21 Dec 2025 13:32:56 +0000</pubDate>
       <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: architecture guide for a connected future</description>
-      <pubDate>Sun, 21 Dec 2025 12:52:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
