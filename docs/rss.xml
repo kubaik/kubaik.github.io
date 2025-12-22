@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 06:44:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 07:30:19 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top BI tools and techniques.</description>
+      <pubDate>Mon, 22 Dec 2025 07:30:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Sun, 21 Dec 2025 09:27:23 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
-      <pubDate>Sun, 21 Dec 2025 08:34:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
