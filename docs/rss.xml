@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 02:13:46 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 04:08:01 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn to visualize smart and make data-driven decisions.</description>
+      <pubDate>Mon, 22 Dec 2025 04:07:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
       <pubDate>Sun, 21 Dec 2025 06:39:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert backend architecture patterns and blueprints for scalable software design.</description>
-      <pubDate>Sun, 21 Dec 2025 05:27:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
