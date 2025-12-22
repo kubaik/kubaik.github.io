@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 14:28:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Dec 2025 15:29:47 +0000</lastBuildDate>
+    <item>
+      <title>Pen Test Pro</title>
+      <link>https://kubaik.github.io/pen-test-pro/</link>
+      <description>Master penetration testing with expert methodologies and techniques.</description>
+      <pubDate>Mon, 22 Dec 2025 15:29:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/pen-test-pro/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Sun, 21 Dec 2025 17:22:41 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>NET Core Mastery</title>
-      <link>https://kubaik.github.io/net-core-mastery/</link>
-      <description>Master C# .NET Core development with expert tips and tutorials.</description>
-      <pubDate>Sun, 21 Dec 2025 16:31:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/net-core-mastery/</guid>
     </item>
   </channel>
 </rss>
