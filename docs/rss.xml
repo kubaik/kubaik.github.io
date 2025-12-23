@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 16:36:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 17:27:03 +0000</lastBuildDate>
+    <item>
+      <title>Server Smarts</title>
+      <link>https://kubaik.github.io/server-smarts/</link>
+      <description>Optimize server performance with expert backend architecture patterns and strategies.</description>
+      <pubDate>Tue, 23 Dec 2025 17:26:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/server-smarts/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Master Docker containerization with our simplified guide.</description>
       <pubDate>Mon, 22 Dec 2025 18:39:34 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-simplified/</guid>
-    </item>
-    <item>
-      <title>Crypto Boom</title>
-      <link>https://kubaik.github.io/crypto-boom/</link>
-      <description>Discover the future of finance with cryptocurrency &amp; blockchain insights.</description>
-      <pubDate>Mon, 22 Dec 2025 17:25:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/crypto-boom/</guid>
     </item>
   </channel>
 </rss>
