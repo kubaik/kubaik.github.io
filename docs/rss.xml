@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 18:40:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 19:22:48 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs Unleashed</title>
+      <link>https://kubaik.github.io/vector-dbs-unleashed/</link>
+      <description>Unlock Vector DBs&apos; power: scalable embeddings management</description>
+      <pubDate>Tue, 23 Dec 2025 19:22:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-unleashed/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Ace tech interviews with our expert guide. Tips, tricks, and practice to land your dream job.</description>
       <pubDate>Mon, 22 Dec 2025 20:30:35 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
-      <pubDate>Mon, 22 Dec 2025 19:22:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
