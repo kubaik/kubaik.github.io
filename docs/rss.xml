@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 22:26:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 23:25:41 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Done Right</title>
+      <link>https://kubaik.github.io/cicd-done-right/</link>
+      <description>Streamline dev workflows with expert CI/CD pipeline implementation tips.</description>
+      <pubDate>Tue, 23 Dec 2025 23:25:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-done-right/</guid>
+    </item>
     <item>
       <title>Unlock PWA Power</title>
       <link>https://kubaik.github.io/unlock-pwa-power/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
       <pubDate>Tue, 23 Dec 2025 04:02:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>Unlock XAI</title>
-      <link>https://kubaik.github.io/unlock-xai/</link>
-      <description>Discover Explainable AI techniques to unlock transparency in AI decision-making.</description>
-      <pubDate>Tue, 23 Dec 2025 02:08:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-xai/</guid>
     </item>
   </channel>
 </rss>
