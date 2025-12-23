@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 10:31:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 11:25:35 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile site speed with expert tips and tricks.</description>
+      <pubDate>Tue, 23 Dec 2025 11:25:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Unlock SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
       <pubDate>Mon, 22 Dec 2025 12:55:56 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>React Fast</title>
-      <link>https://kubaik.github.io/react-fast/</link>
-      <description>React faster to incidents with a solid response plan. Learn how to prepare and minimize downtime.</description>
-      <pubDate>Mon, 22 Dec 2025 11:25:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-fast/</guid>
     </item>
   </channel>
 </rss>
