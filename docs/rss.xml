@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Dec 2025 23:26:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 02:08:43 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover Explainable AI techniques to unlock transparency in AI decision-making.</description>
+      <pubDate>Tue, 23 Dec 2025 02:08:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn to visualize smart and make data-driven decisions.</description>
       <pubDate>Mon, 22 Dec 2025 04:07:53 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed with expert tips and tricks.</description>
-      <pubDate>Mon, 22 Dec 2025 02:13:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
