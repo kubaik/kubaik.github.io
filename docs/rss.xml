@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 15:29:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 16:36:18 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Unlock Quantum Computing basics &amp; discover the future of tech in our introductory guide.</description>
+      <pubDate>Tue, 23 Dec 2025 16:36:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>IoT Device Control</title>
       <link>https://kubaik.github.io/iot-device-control/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of finance with cryptocurrency &amp; blockchain insights.</description>
       <pubDate>Mon, 22 Dec 2025 17:25:12 +0000</pubDate>
       <guid>https://kubaik.github.io/crypto-boom/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; how to protect your network with a &apos;never trust, always verify&apos; approach.</description>
-      <pubDate>Mon, 22 Dec 2025 16:35:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
