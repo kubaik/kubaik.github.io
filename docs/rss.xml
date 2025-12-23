@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 09:32:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 10:31:31 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
+      <description>Simplify security compliance: Unlock SOC 2 &amp; ISO 27001 certification</description>
+      <pubDate>Tue, 23 Dec 2025 10:31:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>React faster to incidents with a solid response plan. Learn how to prepare and minimize downtime.</description>
       <pubDate>Mon, 22 Dec 2025 11:25:07 +0000</pubDate>
       <guid>https://kubaik.github.io/react-fast/</guid>
-    </item>
-    <item>
-      <title>API Test Made Easy</title>
-      <link>https://kubaik.github.io/api-test-made-easy/</link>
-      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
-      <pubDate>Mon, 22 Dec 2025 10:30:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
     </item>
   </channel>
 </rss>
