@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 02:08:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 04:02:35 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
+      <pubDate>Tue, 23 Dec 2025 04:02:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Improve site speed with lazy loading. Learn how to load less, boost performance.</description>
       <pubDate>Mon, 22 Dec 2025 05:31:09 +0000</pubDate>
       <guid>https://kubaik.github.io/load-less/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Boost insights with data visualization best practices. Learn to visualize smart and make data-driven decisions.</description>
-      <pubDate>Mon, 22 Dec 2025 04:07:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
