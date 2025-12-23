@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 08:38:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 09:32:47 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Tue, 23 Dec 2025 09:32:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
       <pubDate>Mon, 22 Dec 2025 10:30:46 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-made-easy/</guid>
-    </item>
-    <item>
-      <title>Detect Anomalies</title>
-      <link>https://kubaik.github.io/detect-anomalies/</link>
-      <description>Identify unusual patterns with anomaly detection using machine learning. Learn more.</description>
-      <pubDate>Mon, 22 Dec 2025 09:35:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/detect-anomalies/</guid>
     </item>
   </channel>
 </rss>
