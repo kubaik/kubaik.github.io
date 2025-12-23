@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 20:30:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 21:25:46 +0000</lastBuildDate>
+    <item>
+      <title>Unlock AR</title>
+      <link>https://kubaik.github.io/unlock-ar/</link>
+      <description>Discover the future of tech with AR development. Learn how to unlock new realities</description>
+      <pubDate>Tue, 23 Dec 2025 21:25:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ar/</guid>
+    </item>
     <item>
       <title>Rust: Safe by Design</title>
       <link>https://kubaik.github.io/rust-safe-by-design/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
       <pubDate>Mon, 22 Dec 2025 23:26:12 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure zero downtime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
-      <pubDate>Mon, 22 Dec 2025 22:27:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
