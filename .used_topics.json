@@ -27,5 +27,6 @@
   "Quantum Computing Basics",
   "Backend Architecture Patterns",
   "Security Monitoring and SIEM",
-  "Vector Databases and Embeddings"
+  "Vector Databases and Embeddings",
+  "Rust Memory Safety"
 ]
