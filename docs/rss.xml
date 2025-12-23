@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 14:28:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Dec 2025 15:29:35 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Secure &amp; manage IoT devices with ease. Learn expert tips on IoT device control &amp; optimization.</description>
+      <pubDate>Tue, 23 Dec 2025 15:29:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; how to protect your network with a &apos;never trust, always verify&apos; approach.</description>
       <pubDate>Mon, 22 Dec 2025 16:35:02 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>Pen Test Pro</title>
-      <link>https://kubaik.github.io/pen-test-pro/</link>
-      <description>Master penetration testing with expert methodologies and techniques.</description>
-      <pubDate>Mon, 22 Dec 2025 15:29:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/pen-test-pro/</guid>
     </item>
   </channel>
 </rss>
