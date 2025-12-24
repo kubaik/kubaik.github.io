@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 17:23:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 18:38:48 +0000</lastBuildDate>
+    <item>
+      <title>Web3 DApps</title>
+      <link>https://kubaik.github.io/web3-dapps/</link>
+      <description>Discover the future of online apps with Web3 DApps, decentralized and secure.</description>
+      <pubDate>Wed, 24 Dec 2025 18:38:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-dapps/</guid>
+    </item>
     <item>
       <title>Transfer Learn</title>
       <link>https://kubaik.github.io/transfer-learn/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with AR development. Learn how to unlock new realities</description>
       <pubDate>Tue, 23 Dec 2025 21:25:38 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ar/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe by Design</title>
-      <link>https://kubaik.github.io/rust-safe-by-design/</link>
-      <description>Learn how Rust&apos;s design ensures memory safety, preventing common errors and bugs.</description>
-      <pubDate>Tue, 23 Dec 2025 20:30:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-by-design/</guid>
     </item>
   </channel>
 </rss>
