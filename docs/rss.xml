@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Dec 2025 23:25:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 02:06:43 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP secrets: discover techniques for language analysis &amp; processing</description>
+      <pubDate>Wed, 24 Dec 2025 02:06:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
     <item>
       <title>CI/CD Done Right</title>
       <link>https://kubaik.github.io/cicd-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Uncover hidden patterns with ML anomaly detection. Learn how machine learning identifies unusual data behavior.</description>
       <pubDate>Tue, 23 Dec 2025 05:31:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>iOS Dev with Swift</title>
-      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
-      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
-      <pubDate>Tue, 23 Dec 2025 04:02:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
     </item>
   </channel>
 </rss>
