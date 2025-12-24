@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 14:27:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 15:28:29 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
+      <pubDate>Wed, 24 Dec 2025 15:28:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Unlock SIEM essentials for robust security monitoring &amp; threat detection.</description>
       <pubDate>Tue, 23 Dec 2025 18:40:22 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>Server Smarts</title>
-      <link>https://kubaik.github.io/server-smarts/</link>
-      <description>Optimize server performance with expert backend architecture patterns and strategies.</description>
-      <pubDate>Tue, 23 Dec 2025 17:26:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/server-smarts/</guid>
     </item>
   </channel>
 </rss>
