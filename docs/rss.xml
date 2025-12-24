@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 15:28:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 16:33:53 +0000</lastBuildDate>
+    <item>
+      <title>ML Basics</title>
+      <link>https://kubaik.github.io/ml-basics/</link>
+      <description>Unlock ML basics: discover machine learning algorithms &amp; how they work.</description>
+      <pubDate>Wed, 24 Dec 2025 16:33:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-basics/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Vector DBs&apos; power: scalable embeddings management</description>
       <pubDate>Tue, 23 Dec 2025 19:22:40 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-unleashed/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Unlock SIEM essentials for robust security monitoring &amp; threat detection.</description>
-      <pubDate>Tue, 23 Dec 2025 18:40:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
