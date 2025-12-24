@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 08:37:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 09:31:14 +0000</lastBuildDate>
+    <item>
+      <title>Build with .NET Core</title>
+      <link>https://kubaik.github.io/build-with-net-core/</link>
+      <description>Learn to build scalable apps with C# and .NET Core. Discover frameworks, tools, and best practices.</description>
+      <pubDate>Wed, 24 Dec 2025 09:31:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-with-net-core/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Federated Learning, a decentralized approach to AI model training, and its implementation benefits.</description>
       <pubDate>Tue, 23 Dec 2025 12:57:51 +0000</pubDate>
       <guid>https://kubaik.github.io/federated-learning/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile site speed with expert tips and tricks.</description>
-      <pubDate>Tue, 23 Dec 2025 11:25:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
