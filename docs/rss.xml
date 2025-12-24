@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 12:56:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 13:37:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; performance with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
+      <pubDate>Wed, 24 Dec 2025 13:37:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Quantum Computing basics &amp; discover the future of tech in our introductory guide.</description>
       <pubDate>Tue, 23 Dec 2025 16:36:09 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>IoT Device Control</title>
-      <link>https://kubaik.github.io/iot-device-control/</link>
-      <description>Secure &amp; manage IoT devices with ease. Learn expert tips on IoT device control &amp; optimization.</description>
-      <pubDate>Tue, 23 Dec 2025 15:29:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-device-control/</guid>
     </item>
   </channel>
 </rss>
