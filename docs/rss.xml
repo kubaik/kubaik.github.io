@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 04:45:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 05:31:27 +0000</lastBuildDate>
+    <item>
+      <title>CQRS Unlocked</title>
+      <link>https://kubaik.github.io/cqrs-unlocked/</link>
+      <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn expert patterns &amp; practices.</description>
+      <pubDate>Wed, 24 Dec 2025 05:31:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
+    </item>
     <item>
       <title>Contribute Open</title>
       <link>https://kubaik.github.io/contribute-open/</link>
@@ -138,13 +145,6 @@
       <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
       <pubDate>Tue, 23 Dec 2025 08:38:04 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Stop DDoS Attacks</title>
-      <link>https://kubaik.github.io/stop-ddos-attacks/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Tue, 23 Dec 2025 07:29:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-ddos-attacks/</guid>
     </item>
   </channel>
 </rss>
