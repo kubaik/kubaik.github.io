@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 06:43:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 07:29:54 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load: Boost Speed</title>
+      <link>https://kubaik.github.io/lazy-load-boost-speed/</link>
+      <description>Boost website speed with lazy loading. Learn how to implement for faster page loads.</description>
+      <pubDate>Wed, 24 Dec 2025 07:29:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Simplify security compliance: Unlock SOC 2 &amp; ISO 27001 certification</description>
       <pubDate>Tue, 23 Dec 2025 10:31:23 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Tue, 23 Dec 2025 09:32:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
