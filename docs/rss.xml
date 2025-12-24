@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 04:00:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 04:45:38 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open</title>
+      <link>https://kubaik.github.io/contribute-open/</link>
+      <description>Learn how to contribute to open source with our beginner&apos;s guide.</description>
+      <pubDate>Wed, 24 Dec 2025 04:45:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open/</guid>
+    </item>
     <item>
       <title>DB Boosters</title>
       <link>https://kubaik.github.io/db-boosters/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
       <pubDate>Tue, 23 Dec 2025 07:29:41 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-ddos-attacks/</guid>
-    </item>
-    <item>
-      <title>Scale Up: Replicate &amp; Shard</title>
-      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
-      <description>Boost database performance with replication &amp; sharding techniques.</description>
-      <pubDate>Tue, 23 Dec 2025 06:43:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
     </item>
   </channel>
 </rss>
