@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 05:31:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 06:43:14 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices for success.</description>
+      <pubDate>Wed, 24 Dec 2025 06:43:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Tue, 23 Dec 2025 09:32:41 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
-      <pubDate>Tue, 23 Dec 2025 08:38:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
