@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 13:37:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 14:27:04 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Wed, 24 Dec 2025 14:26:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Unlock SSR</title>
       <link>https://kubaik.github.io/unlock-ssr/</link>
@@ -138,13 +145,6 @@
       <description>Optimize server performance with expert backend architecture patterns and strategies.</description>
       <pubDate>Tue, 23 Dec 2025 17:26:55 +0000</pubDate>
       <guid>https://kubaik.github.io/server-smarts/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Unlock Quantum Computing basics &amp; discover the future of tech in our introductory guide.</description>
-      <pubDate>Tue, 23 Dec 2025 16:36:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
