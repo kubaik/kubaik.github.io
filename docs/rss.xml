@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Dec 2025 02:06:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Dec 2025 04:00:28 +0000</lastBuildDate>
+    <item>
+      <title>DB Boosters</title>
+      <link>https://kubaik.github.io/db-boosters/</link>
+      <description>Power up your database with DB Boosters, expert tools for optimized performance.</description>
+      <pubDate>Wed, 24 Dec 2025 04:00:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-boosters/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with replication &amp; sharding techniques.</description>
       <pubDate>Tue, 23 Dec 2025 06:43:17 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Uncover hidden patterns with ML anomaly detection. Learn how machine learning identifies unusual data behavior.</description>
-      <pubDate>Tue, 23 Dec 2025 05:31:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
