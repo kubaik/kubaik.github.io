@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 08:36:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 09:30:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Data Mesh</title>
+      <link>https://kubaik.github.io/unlock-data-mesh/</link>
+      <description>Discover Data Mesh Architecture &amp; unlock decentralized data management</description>
+      <pubDate>Thu, 25 Dec 2025 09:30:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-data-mesh/</guid>
+    </item>
     <item>
       <title>MLOps Made Easy</title>
       <link>https://kubaik.github.io/mlops-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Improve app visibility with expert ASO tips and strategies.</description>
       <pubDate>Wed, 24 Dec 2025 11:24:48 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-aso/</guid>
-    </item>
-    <item>
-      <title>Crack the Code</title>
-      <link>https://kubaik.github.io/crack-the-code/</link>
-      <description>Unlock the secrets of algorithm complexity analysis and optimize your code with expert insights.</description>
-      <pubDate>Wed, 24 Dec 2025 10:29:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-the-code/</guid>
     </item>
   </channel>
 </rss>
