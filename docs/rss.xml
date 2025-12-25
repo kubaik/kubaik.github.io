@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 11:24:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 12:55:02 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS</title>
+      <link>https://kubaik.github.io/tailwind-css/</link>
+      <description>Learn Tailwind CSS: Utility-First Design for faster development</description>
+      <pubDate>Thu, 25 Dec 2025 12:54:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
       <pubDate>Wed, 24 Dec 2025 14:26:56 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Unlock SSR</title>
-      <link>https://kubaik.github.io/unlock-ssr/</link>
-      <description>Boost SEO &amp; performance with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
-      <pubDate>Wed, 24 Dec 2025 13:37:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssr/</guid>
     </item>
   </channel>
 </rss>
