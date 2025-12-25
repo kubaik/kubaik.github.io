@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 12:55:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 13:36:59 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
+      <pubDate>Thu, 25 Dec 2025 13:36:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>Tailwind CSS</title>
       <link>https://kubaik.github.io/tailwind-css/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
       <pubDate>Wed, 24 Dec 2025 15:28:21 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Wed, 24 Dec 2025 14:26:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
