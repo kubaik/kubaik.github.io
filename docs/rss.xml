@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 18:38:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 19:21:58 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Power</title>
+      <link>https://kubaik.github.io/kafka-power/</link>
+      <description>Unlock Kafka Power: Explore Apache Kafka for real-time streaming &amp; data integration solutions.</description>
+      <pubDate>Thu, 25 Dec 2025 19:21:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-power/</guid>
+    </item>
     <item>
       <title>RL Wins</title>
       <link>https://kubaik.github.io/rl-wins/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with MBaaS, a simplified backend solution.</description>
       <pubDate>Wed, 24 Dec 2025 21:24:49 +0000</pubDate>
       <guid>https://kubaik.github.io/mbaas-simplified/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Wed, 24 Dec 2025 20:30:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
