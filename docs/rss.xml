@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 04:02:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 05:31:10 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
+      <pubDate>Thu, 25 Dec 2025 05:31:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>GraphQL API</title>
       <link>https://kubaik.github.io/graphql-api/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with lazy loading. Learn how to implement for faster page loads.</description>
       <pubDate>Wed, 24 Dec 2025 07:29:46 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices for success.</description>
-      <pubDate>Wed, 24 Dec 2025 06:43:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
