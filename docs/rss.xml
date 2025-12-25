@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 14:26:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 15:27:52 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Optimize app performance with expert tips and tools.</description>
+      <pubDate>Thu, 25 Dec 2025 15:27:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn implementation tips and tricks.</description>
       <pubDate>Wed, 24 Dec 2025 17:23:37 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>ML Basics</title>
-      <link>https://kubaik.github.io/ml-basics/</link>
-      <description>Unlock ML basics: discover machine learning algorithms &amp; how they work.</description>
-      <pubDate>Wed, 24 Dec 2025 16:33:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-basics/</guid>
     </item>
   </channel>
 </rss>
