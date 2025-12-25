@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 07:28:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 08:36:37 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Made Easy</title>
+      <link>https://kubaik.github.io/mlops-made-easy/</link>
+      <description>Simplify ML pipeline automation with MLOps Made Easy. Streamline workflows &amp; boost efficiency.</description>
+      <pubDate>Thu, 25 Dec 2025 08:36:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-made-easy/</guid>
+    </item>
     <item>
       <title>WCAG: Accessible Web</title>
       <link>https://kubaik.github.io/wcag-accessible-web/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets of algorithm complexity analysis and optimize your code with expert insights.</description>
       <pubDate>Wed, 24 Dec 2025 10:29:28 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-the-code/</guid>
-    </item>
-    <item>
-      <title>Build with .NET Core</title>
-      <link>https://kubaik.github.io/build-with-net-core/</link>
-      <description>Learn to build scalable apps with C# and .NET Core. Discover frameworks, tools, and best practices.</description>
-      <pubDate>Wed, 24 Dec 2025 09:31:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-with-net-core/</guid>
     </item>
   </channel>
 </rss>
