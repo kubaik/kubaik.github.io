@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 13:36:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 14:26:57 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks to manage data quality, security &amp; compliance effectively.</description>
+      <pubDate>Thu, 25 Dec 2025 14:26:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML basics: discover machine learning algorithms &amp; how they work.</description>
       <pubDate>Wed, 24 Dec 2025 16:33:45 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-basics/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
-      <pubDate>Wed, 24 Dec 2025 15:28:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
