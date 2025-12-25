@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 21:25:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 22:26:39 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Thu, 25 Dec 2025 22:26:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Streamline tasks with RPA: Auto Pilot. Learn how automation boosts efficiency &amp; productivity.</description>
       <pubDate>Thu, 25 Dec 2025 02:08:31 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-auto-pilot/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
-      <pubDate>Wed, 24 Dec 2025 23:25:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
