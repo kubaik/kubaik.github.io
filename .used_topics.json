@@ -60,5 +60,6 @@
   "Application Security Testing (SAST/DAST)",
   "Web Accessibility Standards (WCAG)",
   "MLOps and ML Pipeline Automation",
-  "Data Mesh Architecture"
+  "Data Mesh Architecture",
+  "API Gateway Patterns"
 ]
