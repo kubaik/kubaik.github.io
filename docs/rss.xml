@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 22:26:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 23:25:59 +0000</lastBuildDate>
+    <item>
+      <title>API Test Made Easy</title>
+      <link>https://kubaik.github.io/api-test-made-easy/</link>
+      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
+      <pubDate>Thu, 25 Dec 2025 23:25:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Learn GraphQL API development best practices &amp; build scalable APIs.</description>
       <pubDate>Thu, 25 Dec 2025 04:02:43 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-api/</guid>
-    </item>
-    <item>
-      <title>RPA: Auto Pilot</title>
-      <link>https://kubaik.github.io/rpa-auto-pilot/</link>
-      <description>Streamline tasks with RPA: Auto Pilot. Learn how automation boosts efficiency &amp; productivity.</description>
-      <pubDate>Thu, 25 Dec 2025 02:08:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-auto-pilot/</guid>
     </item>
   </channel>
 </rss>
