@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 17:24:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 18:38:16 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost results with RL Wins. Discover top reinforcement learning strategies.</description>
+      <pubDate>Thu, 25 Dec 2025 18:38:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Wed, 24 Dec 2025 20:30:02 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
-      <pubDate>Wed, 24 Dec 2025 19:21:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
