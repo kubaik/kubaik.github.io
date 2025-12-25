@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 05:31:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Dec 2025 06:42:27 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code</title>
+      <link>https://kubaik.github.io/secure-code/</link>
+      <description>Strengthen app security with SAST &amp; DAST testing. Learn how to identify &amp; fix vulnerabilities.</description>
+      <pubDate>Thu, 25 Dec 2025 06:42:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with expert tips and techniques for web performance optimization.</description>
       <pubDate>Wed, 24 Dec 2025 08:37:49 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up/</guid>
-    </item>
-    <item>
-      <title>Lazy Load: Boost Speed</title>
-      <link>https://kubaik.github.io/lazy-load-boost-speed/</link>
-      <description>Boost website speed with lazy loading. Learn how to implement for faster page loads.</description>
-      <pubDate>Wed, 24 Dec 2025 07:29:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
     </item>
   </channel>
 </rss>
