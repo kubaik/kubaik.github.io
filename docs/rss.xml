@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 04:43:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 05:29:47 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Memory</title>
+      <link>https://kubaik.github.io/optimize-memory/</link>
+      <description>Boost productivity with expert memory management tips and tricks.</description>
+      <pubDate>Fri, 26 Dec 2025 05:29:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-memory/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify ML pipeline automation with MLOps Made Easy. Streamline workflows &amp; boost efficiency.</description>
       <pubDate>Thu, 25 Dec 2025 08:36:29 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-made-easy/</guid>
-    </item>
-    <item>
-      <title>WCAG: Accessible Web</title>
-      <link>https://kubaik.github.io/wcag-accessible-web/</link>
-      <description>Learn WCAG standards for accessible web design &amp; create inclusive online experiences.</description>
-      <pubDate>Thu, 25 Dec 2025 07:28:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-accessible-web/</guid>
     </item>
   </channel>
 </rss>
