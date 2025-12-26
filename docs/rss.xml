@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 12:55:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 13:37:37 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn data science basics &amp; applications.</description>
+      <pubDate>Fri, 26 Dec 2025 13:37:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Mobile App Arch</title>
       <link>https://kubaik.github.io/mobile-app-arch/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
       <pubDate>Thu, 25 Dec 2025 16:34:04 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-ent-apps/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Optimize app performance with expert tips and tools.</description>
-      <pubDate>Thu, 25 Dec 2025 15:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
