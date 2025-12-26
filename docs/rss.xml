@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 19:21:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 20:29:10 +0000</lastBuildDate>
+    <item>
+      <title>EDA Unleashed</title>
+      <link>https://kubaik.github.io/eda-unleashed/</link>
+      <description>Unlock scalable systems with Event-Driven Architecture. Learn how EDA transforms software design.</description>
+      <pubDate>Fri, 26 Dec 2025 20:29:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-unleashed/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
       <pubDate>Thu, 25 Dec 2025 23:25:51 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-made-easy/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
-      <pubDate>Thu, 25 Dec 2025 22:26:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
