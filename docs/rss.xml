@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 20:29:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 21:24:41 +0000</lastBuildDate>
+    <item>
+      <title>Fix Before Breach</title>
+      <link>https://kubaik.github.io/fix-before-breach/</link>
+      <description>Prevent cyber attacks with proactive vulnerability management. Learn how to fix before breach.</description>
+      <pubDate>Fri, 26 Dec 2025 21:24:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-before-breach/</guid>
+    </item>
     <item>
       <title>EDA Unleashed</title>
       <link>https://kubaik.github.io/eda-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Reduce cloud spend with expert cost optimization strategies.</description>
       <pubDate>Fri, 26 Dec 2025 02:07:41 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
-    </item>
-    <item>
-      <title>API Test Made Easy</title>
-      <link>https://kubaik.github.io/api-test-made-easy/</link>
-      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
-      <pubDate>Thu, 25 Dec 2025 23:25:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
     </item>
   </channel>
 </rss>
