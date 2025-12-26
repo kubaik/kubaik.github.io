@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 04:00:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 04:43:34 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Fri, 26 Dec 2025 04:43:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Snowflake Unleashed</title>
       <link>https://kubaik.github.io/snowflake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG standards for accessible web design &amp; create inclusive online experiences.</description>
       <pubDate>Thu, 25 Dec 2025 07:28:00 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-accessible-web/</guid>
-    </item>
-    <item>
-      <title>Secure Code</title>
-      <link>https://kubaik.github.io/secure-code/</link>
-      <description>Strengthen app security with SAST &amp; DAST testing. Learn how to identify &amp; fix vulnerabilities.</description>
-      <pubDate>Thu, 25 Dec 2025 06:42:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code/</guid>
     </item>
   </channel>
 </rss>
