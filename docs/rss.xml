@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 22:26:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 23:25:40 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize testing with profiling and benchmarking techniques.</description>
+      <pubDate>Fri, 26 Dec 2025 23:25:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Migrate Smart</title>
       <link>https://kubaik.github.io/migrate-smart/</link>
@@ -26,13 +33,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture. Learn how EDA transforms software design.</description>
       <pubDate>Fri, 26 Dec 2025 20:29:02 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-unleashed/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Fri, 26 Dec 2025 19:21:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
