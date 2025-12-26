@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 09:29:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 10:29:37 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Web Components</title>
+      <link>https://kubaik.github.io/unlock-web-components/</link>
+      <description>Discover the power of Web Components &amp; Custom Elements. Learn to build reusable UI components.</description>
+      <pubDate>Fri, 26 Dec 2025 10:29:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-web-components/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
       <pubDate>Thu, 25 Dec 2025 13:36:50 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Tailwind CSS</title>
-      <link>https://kubaik.github.io/tailwind-css/</link>
-      <description>Learn Tailwind CSS: Utility-First Design for faster development</description>
-      <pubDate>Thu, 25 Dec 2025 12:54:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/tailwind-css/</guid>
     </item>
   </channel>
 </rss>
