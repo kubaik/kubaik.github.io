@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 15:28:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 16:32:30 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Fri, 26 Dec 2025 16:32:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Blue-Green Done</title>
       <link>https://kubaik.github.io/blue-green-done/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Kafka Power: Explore Apache Kafka for real-time streaming &amp; data integration solutions.</description>
       <pubDate>Thu, 25 Dec 2025 19:21:50 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-power/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost results with RL Wins. Discover top reinforcement learning strategies.</description>
-      <pubDate>Thu, 25 Dec 2025 18:38:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
