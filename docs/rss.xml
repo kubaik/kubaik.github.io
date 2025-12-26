@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Dec 2025 23:25:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 02:07:49 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert cost optimization strategies.</description>
+      <pubDate>Fri, 26 Dec 2025 02:07:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
       <pubDate>Thu, 25 Dec 2025 05:31:02 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>GraphQL API</title>
-      <link>https://kubaik.github.io/graphql-api/</link>
-      <description>Learn GraphQL API development best practices &amp; build scalable APIs.</description>
-      <pubDate>Thu, 25 Dec 2025 04:02:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-api/</guid>
     </item>
   </channel>
 </rss>
