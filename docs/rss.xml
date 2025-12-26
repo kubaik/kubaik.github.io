@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 16:32:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 17:23:54 +0000</lastBuildDate>
+    <item>
+      <title>Cyber Basics</title>
+      <link>https://kubaik.github.io/cyber-basics/</link>
+      <description>Learn cybersecurity fundamentals with Cyber Basics. Protect yourself online.</description>
+      <pubDate>Fri, 26 Dec 2025 17:23:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-basics/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Improve business outcomes with clean data. Learn how Data Quality Management boosts accuracy &amp; efficiency.</description>
       <pubDate>Thu, 25 Dec 2025 20:30:36 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>Kafka Power</title>
-      <link>https://kubaik.github.io/kafka-power/</link>
-      <description>Unlock Kafka Power: Explore Apache Kafka for real-time streaming &amp; data integration solutions.</description>
-      <pubDate>Thu, 25 Dec 2025 19:21:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-power/</guid>
     </item>
   </channel>
 </rss>
