@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 10:29:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 11:24:40 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and advanced techniques.</description>
+      <pubDate>Fri, 26 Dec 2025 11:24:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Unlock Web Components</title>
       <link>https://kubaik.github.io/unlock-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks to manage data quality, security &amp; compliance effectively.</description>
       <pubDate>Thu, 25 Dec 2025 14:26:49 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
-      <pubDate>Thu, 25 Dec 2025 13:36:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
