@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 02:07:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 04:00:23 +0000</lastBuildDate>
+    <item>
+      <title>Snowflake Unleashed</title>
+      <link>https://kubaik.github.io/snowflake-unleashed/</link>
+      <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform.</description>
+      <pubDate>Fri, 26 Dec 2025 04:00:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Strengthen app security with SAST &amp; DAST testing. Learn how to identify &amp; fix vulnerabilities.</description>
       <pubDate>Thu, 25 Dec 2025 06:42:18 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
-      <pubDate>Thu, 25 Dec 2025 05:31:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
