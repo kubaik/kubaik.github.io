@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 08:36:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 09:29:51 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Fri, 26 Dec 2025 09:29:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Learn Tailwind CSS: Utility-First Design for faster development</description>
       <pubDate>Thu, 25 Dec 2025 12:54:54 +0000</pubDate>
       <guid>https://kubaik.github.io/tailwind-css/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
-      <pubDate>Thu, 25 Dec 2025 11:24:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
