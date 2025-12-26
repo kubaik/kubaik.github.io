@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 18:38:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 19:21:30 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Fri, 26 Dec 2025 19:21:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Thu, 25 Dec 2025 22:26:31 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Canary Deploy</title>
-      <link>https://kubaik.github.io/canary-deploy/</link>
-      <description>Learn about Canary Deploy, a phased rollout strategy to reduce deployment risk.</description>
-      <pubDate>Thu, 25 Dec 2025 21:25:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-deploy/</guid>
     </item>
   </channel>
 </rss>
