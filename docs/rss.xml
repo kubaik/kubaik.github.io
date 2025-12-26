@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 06:41:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 07:28:07 +0000</lastBuildDate>
+    <item>
+      <title>FP Basics</title>
+      <link>https://kubaik.github.io/fp-basics/</link>
+      <description>Learn core Functional Programming concepts and principles in our FP Basics guide.</description>
+      <pubDate>Fri, 26 Dec 2025 07:27:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-basics/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn API Gateway patterns for secure, scalable APIs.</description>
       <pubDate>Thu, 25 Dec 2025 10:29:32 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-patterns/</guid>
-    </item>
-    <item>
-      <title>Unlock Data Mesh</title>
-      <link>https://kubaik.github.io/unlock-data-mesh/</link>
-      <description>Discover Data Mesh Architecture &amp; unlock decentralized data management</description>
-      <pubDate>Thu, 25 Dec 2025 09:30:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-data-mesh/</guid>
     </item>
   </channel>
 </rss>
