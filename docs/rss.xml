@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 21:24:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 22:26:51 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Streamline cloud migration with expert strategies and best practices.</description>
+      <pubDate>Fri, 26 Dec 2025 22:26:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Fix Before Breach</title>
       <link>https://kubaik.github.io/fix-before-breach/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform.</description>
       <pubDate>Fri, 26 Dec 2025 04:00:14 +0000</pubDate>
       <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert cost optimization strategies.</description>
-      <pubDate>Fri, 26 Dec 2025 02:07:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
