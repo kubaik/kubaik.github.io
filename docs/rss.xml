@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 05:29:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 06:41:42 +0000</lastBuildDate>
+    <item>
+      <title>Vue.js Components</title>
+      <link>https://kubaik.github.io/vuejs-components/</link>
+      <description>Learn Vue.js component architecture and build reusable UI elements with ease.</description>
+      <pubDate>Fri, 26 Dec 2025 06:41:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuejs-components/</guid>
+    </item>
     <item>
       <title>Optimize Memory</title>
       <link>https://kubaik.github.io/optimize-memory/</link>
@@ -138,13 +145,6 @@
       <description>Discover Data Mesh Architecture &amp; unlock decentralized data management</description>
       <pubDate>Thu, 25 Dec 2025 09:30:11 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-data-mesh/</guid>
-    </item>
-    <item>
-      <title>MLOps Made Easy</title>
-      <link>https://kubaik.github.io/mlops-made-easy/</link>
-      <description>Simplify ML pipeline automation with MLOps Made Easy. Streamline workflows &amp; boost efficiency.</description>
-      <pubDate>Thu, 25 Dec 2025 08:36:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-made-easy/</guid>
     </item>
   </channel>
 </rss>
