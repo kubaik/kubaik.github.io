@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 17:23:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 18:38:08 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast &amp; Secure</title>
+      <link>https://kubaik.github.io/jamstack-fast-secure/</link>
+      <description>Boost speed &amp; security with Jamstack Architecture. Learn how.</description>
+      <pubDate>Fri, 26 Dec 2025 18:37:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
+    </item>
     <item>
       <title>Cyber Basics</title>
       <link>https://kubaik.github.io/cyber-basics/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Canary Deploy, a phased rollout strategy to reduce deployment risk.</description>
       <pubDate>Thu, 25 Dec 2025 21:25:09 +0000</pubDate>
       <guid>https://kubaik.github.io/canary-deploy/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve business outcomes with clean data. Learn how Data Quality Management boosts accuracy &amp; efficiency.</description>
-      <pubDate>Thu, 25 Dec 2025 20:30:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
