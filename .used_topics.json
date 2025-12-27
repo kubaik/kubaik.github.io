@@ -101,5 +101,6 @@
   "Data Visualization Best Practices",
   "Responsive Web Design Techniques",
   "Push Notifications Implementation",
-  "JWT Authentication Implementation"
+  "JWT Authentication Implementation",
+  "Delta Lake and Data Lakehouse"
 ]
