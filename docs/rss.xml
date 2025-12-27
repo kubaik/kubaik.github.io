@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 19:21:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 20:29:56 +0000</lastBuildDate>
+    <item>
+      <title>AI Meets Edge</title>
+      <link>https://kubaik.github.io/ai-meets-edge/</link>
+      <description>Unlock Edge potential with AI. Learn how AI enhances Edge Computing.</description>
+      <pubDate>Sat, 27 Dec 2025 20:29:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
+    </item>
     <item>
       <title>Smart Contracts</title>
       <link>https://kubaik.github.io/smart-contracts/</link>
@@ -138,13 +145,6 @@
       <description>Optimize testing with profiling and benchmarking techniques.</description>
       <pubDate>Fri, 26 Dec 2025 23:25:32 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Streamline cloud migration with expert strategies and best practices.</description>
-      <pubDate>Fri, 26 Dec 2025 22:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
