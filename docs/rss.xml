@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 23:25:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 02:05:36 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Unlock Edge Computing&apos;s full potential with innovative applications.</description>
+      <pubDate>Sat, 27 Dec 2025 02:05:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with expert database indexing strategies.</description>
       <pubDate>Fri, 26 Dec 2025 04:43:25 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Snowflake Unleashed</title>
-      <link>https://kubaik.github.io/snowflake-unleashed/</link>
-      <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform.</description>
-      <pubDate>Fri, 26 Dec 2025 04:00:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
     </item>
   </channel>
 </rss>
