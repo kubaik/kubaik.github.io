@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 22:25:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 23:25:46 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits of SSG.</description>
+      <pubDate>Sat, 27 Dec 2025 23:25:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Boost user experience with responsive web design techniques</description>
       <pubDate>Sat, 27 Dec 2025 04:39:33 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Visualize Right</title>
-      <link>https://kubaik.github.io/visualize-right/</link>
-      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Right&apos;.</description>
-      <pubDate>Sat, 27 Dec 2025 03:58:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-right/</guid>
     </item>
   </channel>
 </rss>
