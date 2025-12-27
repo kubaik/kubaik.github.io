@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 14:25:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 15:26:10 +0000</lastBuildDate>
+    <item>
+      <title>Protect Your Site: WAF</title>
+      <link>https://kubaik.github.io/protect-your-site-waf/</link>
+      <description>Safeguard your website with a Web Application Firewall (WAF). Learn how to protect against threats and cyber attacks.</description>
+      <pubDate>Sat, 27 Dec 2025 15:26:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/protect-your-site-waf/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity fundamentals with Cyber Basics. Protect yourself online.</description>
       <pubDate>Fri, 26 Dec 2025 17:23:46 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-basics/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Fri, 26 Dec 2025 16:32:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
