@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 06:40:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 07:25:05 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Delta Lake</title>
+      <link>https://kubaik.github.io/unlock-delta-lake/</link>
+      <description>Discover Delta Lake &amp; unlock the power of Data Lakehouse for scalable &amp; reliable data management.</description>
+      <pubDate>Sat, 27 Dec 2025 07:24:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-delta-lake/</guid>
+    </item>
     <item>
       <title>JWT Auth Done</title>
       <link>https://kubaik.github.io/jwt-auth-done/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Fri, 26 Dec 2025 09:29:43 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Discover the future of AI with agent development. Learn how to create intelligent agents.</description>
-      <pubDate>Fri, 26 Dec 2025 08:36:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
