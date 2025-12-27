@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 07:25:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 08:35:00 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Sat, 27 Dec 2025 08:34:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>Unlock Delta Lake</title>
       <link>https://kubaik.github.io/unlock-delta-lake/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Web Components &amp; Custom Elements. Learn to build reusable UI components.</description>
       <pubDate>Fri, 26 Dec 2025 10:29:29 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-web-components/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity. Learn how to recover fast.</description>
-      <pubDate>Fri, 26 Dec 2025 09:29:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
