@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 13:33:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 14:25:11 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Unlock IoT potential with our expert blueprint, guiding you through device integration to data analysis.</description>
+      <pubDate>Sat, 27 Dec 2025 14:25:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Write to Thrive</title>
       <link>https://kubaik.github.io/write-to-thrive/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
       <pubDate>Fri, 26 Dec 2025 16:32:21 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Blue-Green Done</title>
-      <link>https://kubaik.github.io/blue-green-done/</link>
-      <description>Learn Blue-Green Deployment, a seamless app release strategy</description>
-      <pubDate>Fri, 26 Dec 2025 15:28:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-done/</guid>
     </item>
   </channel>
 </rss>
