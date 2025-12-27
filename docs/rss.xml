@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 11:22:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 12:53:10 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin: Fast Backend</title>
+      <link>https://kubaik.github.io/kotlin-fast-backend/</link>
+      <description>Boost backend dev with Kotlin. Learn how Kotlin accelerates server-side development.</description>
+      <pubDate>Sat, 27 Dec 2025 12:53:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-fast-backend/</guid>
+    </item>
     <item>
       <title>Mesh Up: Simplify Microservices</title>
       <link>https://kubaik.github.io/mesh-up-simplify-microservices/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks.</description>
       <pubDate>Fri, 26 Dec 2025 14:27:22 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Python for Data</title>
-      <link>https://kubaik.github.io/python-for-data/</link>
-      <description>Unlock data insights with Python. Learn data science basics &amp; applications.</description>
-      <pubDate>Fri, 26 Dec 2025 13:37:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-for-data/</guid>
     </item>
   </channel>
 </rss>
