@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 12:53:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 13:33:49 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Boost your career with technical writing skills. Learn to communicate complex ideas with clarity.</description>
+      <pubDate>Sat, 27 Dec 2025 13:33:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>Kotlin: Fast Backend</title>
       <link>https://kubaik.github.io/kotlin-fast-backend/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment, a seamless app release strategy</description>
       <pubDate>Fri, 26 Dec 2025 15:28:25 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-done/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Fri, 26 Dec 2025 14:27:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
