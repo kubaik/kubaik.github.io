@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 05:28:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 06:40:13 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Done</title>
+      <link>https://kubaik.github.io/jwt-auth-done/</link>
+      <description>Learn how to implement JWT authentication securely and efficiently in your app.</description>
+      <pubDate>Sat, 27 Dec 2025 06:40:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of AI with agent development. Learn how to create intelligent agents.</description>
       <pubDate>Fri, 26 Dec 2025 08:36:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents/</guid>
-    </item>
-    <item>
-      <title>FP Basics</title>
-      <link>https://kubaik.github.io/fp-basics/</link>
-      <description>Learn core Functional Programming concepts and principles in our FP Basics guide.</description>
-      <pubDate>Fri, 26 Dec 2025 07:27:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-basics/</guid>
     </item>
   </channel>
 </rss>
