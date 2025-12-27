@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 17:23:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 18:36:51 +0000</lastBuildDate>
+    <item>
+      <title>Build Your Brand</title>
+      <link>https://kubaik.github.io/build-your-brand/</link>
+      <description>Boost your tech career with a strong portfolio. Learn how to build your brand and showcase skills.</description>
+      <pubDate>Sat, 27 Dec 2025 18:36:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-your-brand/</guid>
+    </item>
     <item>
       <title>Deploy AI Smarter</title>
       <link>https://kubaik.github.io/deploy-ai-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Prevent cyber attacks with proactive vulnerability management. Learn how to fix before breach.</description>
       <pubDate>Fri, 26 Dec 2025 21:24:33 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-before-breach/</guid>
-    </item>
-    <item>
-      <title>EDA Unleashed</title>
-      <link>https://kubaik.github.io/eda-unleashed/</link>
-      <description>Unlock scalable systems with Event-Driven Architecture. Learn how EDA transforms software design.</description>
-      <pubDate>Fri, 26 Dec 2025 20:29:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-unleashed/</guid>
     </item>
   </channel>
 </rss>
