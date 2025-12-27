@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 18:36:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 19:21:04 +0000</lastBuildDate>
+    <item>
+      <title>Smart Contracts</title>
+      <link>https://kubaik.github.io/smart-contracts/</link>
+      <description>Unlock efficient transactions with smart contract development. Learn how to build secure &amp; automated contracts.</description>
+      <pubDate>Sat, 27 Dec 2025 19:20:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-contracts/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Streamline cloud migration with expert strategies and best practices.</description>
       <pubDate>Fri, 26 Dec 2025 22:26:42 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-smart/</guid>
-    </item>
-    <item>
-      <title>Fix Before Breach</title>
-      <link>https://kubaik.github.io/fix-before-breach/</link>
-      <description>Prevent cyber attacks with proactive vulnerability management. Learn how to fix before breach.</description>
-      <pubDate>Fri, 26 Dec 2025 21:24:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-before-breach/</guid>
     </item>
   </channel>
 </rss>
