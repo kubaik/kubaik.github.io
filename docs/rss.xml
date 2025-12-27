@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 02:05:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 03:58:30 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Right</title>
+      <link>https://kubaik.github.io/visualize-right/</link>
+      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Right&apos;.</description>
+      <pubDate>Sat, 27 Dec 2025 03:58:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-right/</guid>
+    </item>
     <item>
       <title>Edge Computing</title>
       <link>https://kubaik.github.io/edge-computing/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips and tricks.</description>
       <pubDate>Fri, 26 Dec 2025 05:29:39 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-memory/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Fri, 26 Dec 2025 04:43:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
