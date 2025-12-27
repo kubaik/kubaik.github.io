@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Dec 2025 16:32:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Dec 2025 17:23:05 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Streamline AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Sat, 27 Dec 2025 17:22:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture. Learn how EDA transforms software design.</description>
       <pubDate>Fri, 26 Dec 2025 20:29:02 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-unleashed/</guid>
-    </item>
-    <item>
-      <title>Jamstack: Fast &amp; Secure</title>
-      <link>https://kubaik.github.io/jamstack-fast-secure/</link>
-      <description>Boost speed &amp; security with Jamstack Architecture. Learn how.</description>
-      <pubDate>Fri, 26 Dec 2025 18:37:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
     </item>
   </channel>
 </rss>
