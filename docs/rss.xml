@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 22:26:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 23:25:58 +0000</lastBuildDate>
+    <item>
+      <title>Secure the Cloud</title>
+      <link>https://kubaik.github.io/secure-the-cloud/</link>
+      <description>Protect your cloud data with expert security tips and best practices.</description>
+      <pubDate>Sun, 28 Dec 2025 23:25:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-the-cloud/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock responsible AI practices with our expert guide to AI ethics and governance.</description>
       <pubDate>Sun, 28 Dec 2025 04:11:48 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-done-right/</guid>
-    </item>
-    <item>
-      <title>Blockchain 101</title>
-      <link>https://kubaik.github.io/blockchain-101/</link>
-      <description>Learn the basics of blockchain tech and its applications in our beginner&apos;s guide, Blockchain 101.</description>
-      <pubDate>Sun, 28 Dec 2025 02:26:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-101/</guid>
     </item>
   </channel>
 </rss>
