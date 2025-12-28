@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 04:11:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 05:31:54 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Discover the power of live web apps, enabling real-time engagement and interaction.</description>
+      <pubDate>Sun, 28 Dec 2025 05:31:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>AI Done Right</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover Delta Lake &amp; unlock the power of Data Lakehouse for scalable &amp; reliable data management.</description>
       <pubDate>Sat, 27 Dec 2025 07:24:57 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-delta-lake/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Done</title>
-      <link>https://kubaik.github.io/jwt-auth-done/</link>
-      <description>Learn how to implement JWT authentication securely and efficiently in your app.</description>
-      <pubDate>Sat, 27 Dec 2025 06:40:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
     </item>
   </channel>
 </rss>
