@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 13:34:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 14:25:58 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
+      <pubDate>Sun, 28 Dec 2025 14:25:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials.</description>
       <pubDate>Sat, 27 Dec 2025 16:32:16 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Protect Your Site: WAF</title>
-      <link>https://kubaik.github.io/protect-your-site-waf/</link>
-      <description>Safeguard your website with a Web Application Firewall (WAF). Learn how to protect against threats and cyber attacks.</description>
-      <pubDate>Sat, 27 Dec 2025 15:26:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/protect-your-site-waf/</guid>
     </item>
   </channel>
 </rss>
