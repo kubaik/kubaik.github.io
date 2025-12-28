@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 11:23:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 12:53:56 +0000</lastBuildDate>
+    <item>
+      <title>Flutter App Dev</title>
+      <link>https://kubaik.github.io/flutter-app-dev/</link>
+      <description>Learn Flutter app dev for seamless mobile experiences.</description>
+      <pubDate>Sun, 28 Dec 2025 12:53:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
+    </item>
     <item>
       <title>Rails Web Apps</title>
       <link>https://kubaik.github.io/rails-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock IoT potential with our expert blueprint, guiding you through device integration to data analysis.</description>
       <pubDate>Sat, 27 Dec 2025 14:25:03 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Write to Thrive</title>
-      <link>https://kubaik.github.io/write-to-thrive/</link>
-      <description>Boost your career with technical writing skills. Learn to communicate complex ideas with clarity.</description>
-      <pubDate>Sat, 27 Dec 2025 13:33:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-thrive/</guid>
     </item>
   </channel>
 </rss>
