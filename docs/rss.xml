@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 10:28:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 11:23:10 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Learn Ruby on Rails web app development with expert guides and tutorials.</description>
+      <pubDate>Sun, 28 Dec 2025 11:23:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Boost your career with technical writing skills. Learn to communicate complex ideas with clarity.</description>
       <pubDate>Sat, 27 Dec 2025 13:33:42 +0000</pubDate>
       <guid>https://kubaik.github.io/write-to-thrive/</guid>
-    </item>
-    <item>
-      <title>Kotlin: Fast Backend</title>
-      <link>https://kubaik.github.io/kotlin-fast-backend/</link>
-      <description>Boost backend dev with Kotlin. Learn how Kotlin accelerates server-side development.</description>
-      <pubDate>Sat, 27 Dec 2025 12:53:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-fast-backend/</guid>
     </item>
   </channel>
 </rss>
