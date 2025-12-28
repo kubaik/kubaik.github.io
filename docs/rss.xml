@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 02:26:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 04:11:57 +0000</lastBuildDate>
+    <item>
+      <title>AI Done Right</title>
+      <link>https://kubaik.github.io/ai-done-right/</link>
+      <description>Unlock responsible AI practices with our expert guide to AI ethics and governance.</description>
+      <pubDate>Sun, 28 Dec 2025 04:11:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-done-right/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to implement JWT authentication securely and efficiently in your app.</description>
       <pubDate>Sat, 27 Dec 2025 06:40:04 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-done/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Boost engagement with perfect push notifications. Learn expert implementation tips.</description>
-      <pubDate>Sat, 27 Dec 2025 05:28:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
