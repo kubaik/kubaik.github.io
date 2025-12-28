@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 16:33:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 17:24:15 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your API</title>
+      <link>https://kubaik.github.io/secure-your-api/</link>
+      <description>Protect your API from threats. Learn expert security best practices.</description>
+      <pubDate>Sun, 28 Dec 2025 17:24:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-api/</guid>
+    </item>
     <item>
       <title>Boost WA Speed</title>
       <link>https://kubaik.github.io/boost-wa-speed/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient transactions with smart contract development. Learn how to build secure &amp; automated contracts.</description>
       <pubDate>Sat, 27 Dec 2025 19:20:56 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-contracts/</guid>
-    </item>
-    <item>
-      <title>Build Your Brand</title>
-      <link>https://kubaik.github.io/build-your-brand/</link>
-      <description>Boost your tech career with a strong portfolio. Learn how to build your brand and showcase skills.</description>
-      <pubDate>Sat, 27 Dec 2025 18:36:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-brand/</guid>
     </item>
   </channel>
 </rss>

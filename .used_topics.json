@@ -132,5 +132,6 @@
   "Apache Spark Big Data Processing",
   "SQL vs NoSQL Databases",
   "Data Lake Architecture",
-  "WebAssembly Performance Optimization"
+  "WebAssembly Performance Optimization",
+  "API Security Best Practices"
 ]
