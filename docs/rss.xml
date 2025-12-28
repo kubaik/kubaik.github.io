@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 20:30:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 21:25:18 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Accelerate your network with expert optimization tips.</description>
+      <pubDate>Sun, 28 Dec 2025 21:25:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits of SSG.</description>
       <pubDate>Sat, 27 Dec 2025 23:25:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Discover the power of Google Cloud Platform. Learn how to unlock its full potential.</description>
-      <pubDate>Sat, 27 Dec 2025 22:25:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
