@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 18:37:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 19:21:28 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Boost productivity with effective time management strategies for engineers.</description>
+      <pubDate>Sun, 28 Dec 2025 19:21:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>Split Smart</title>
       <link>https://kubaik.github.io/split-smart/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with AutoML Boost. Discover how Neural Architecture Search accelerates model development.</description>
       <pubDate>Sat, 27 Dec 2025 21:23:45 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-boost/</guid>
-    </item>
-    <item>
-      <title>AI Meets Edge</title>
-      <link>https://kubaik.github.io/ai-meets-edge/</link>
-      <description>Unlock Edge potential with AI. Learn how AI enhances Edge Computing.</description>
-      <pubDate>Sat, 27 Dec 2025 20:29:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
     </item>
   </channel>
 </rss>
