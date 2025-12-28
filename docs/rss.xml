@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 15:26:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 16:33:01 +0000</lastBuildDate>
+    <item>
+      <title>Boost WA Speed</title>
+      <link>https://kubaik.github.io/boost-wa-speed/</link>
+      <description>Optimize WebAssembly performance with expert tips and tricks in &apos;Boost WA Speed&apos;.</description>
+      <pubDate>Sun, 28 Dec 2025 16:32:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
+    </item>
     <item>
       <title>Data Lake 101</title>
       <link>https://kubaik.github.io/data-lake-101/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech career with a strong portfolio. Learn how to build your brand and showcase skills.</description>
       <pubDate>Sat, 27 Dec 2025 18:36:42 +0000</pubDate>
       <guid>https://kubaik.github.io/build-your-brand/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Sat, 27 Dec 2025 17:22:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
