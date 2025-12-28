@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 06:40:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 07:26:31 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure&apos;s full potential with expert guides and tutorials.</description>
+      <pubDate>Sun, 28 Dec 2025 07:26:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>Negotiate Like Pro</title>
       <link>https://kubaik.github.io/negotiate-like-pro/</link>
@@ -138,13 +145,6 @@
       <description>Discover Deep Learning basics &amp; neural networks fundamentals in this introductory guide.</description>
       <pubDate>Sat, 27 Dec 2025 09:27:18 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-101/</guid>
-    </item>
-    <item>
-      <title>Code Review Done Right</title>
-      <link>https://kubaik.github.io/code-review-done-right/</link>
-      <description>Improve code quality with expert review tips and best practices.</description>
-      <pubDate>Sat, 27 Dec 2025 08:34:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-review-done-right/</guid>
     </item>
   </channel>
 </rss>
