@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Dec 2025 08:35:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Dec 2025 09:27:23 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full Stack</title>
+      <link>https://kubaik.github.io/nextjs-full-stack/</link>
+      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps.</description>
+      <pubDate>Sun, 28 Dec 2025 09:27:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Simplify microservices with Service Mesh Architecture. Learn how to streamline your setup</description>
       <pubDate>Sat, 27 Dec 2025 11:22:18 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up-simplify-microservices/</guid>
-    </item>
-    <item>
-      <title>Cloud Mastery: AWS</title>
-      <link>https://kubaik.github.io/cloud-mastery-aws/</link>
-      <description>Unlock cloud potential with expert AWS architecture guidance.</description>
-      <pubDate>Sat, 27 Dec 2025 10:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
     </item>
   </channel>
 </rss>
