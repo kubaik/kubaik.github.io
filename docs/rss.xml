@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 14:29:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 15:30:32 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Discover the latest in PHP modern development and take your coding skills to the next level.</description>
+      <pubDate>Mon, 29 Dec 2025 15:30:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>VR Now</title>
       <link>https://kubaik.github.io/vr-now/</link>
@@ -138,13 +145,6 @@
       <description>Protect your API from threats. Learn expert security best practices.</description>
       <pubDate>Sun, 28 Dec 2025 17:24:07 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-api/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Optimize WebAssembly performance with expert tips and tricks in &apos;Boost WA Speed&apos;.</description>
-      <pubDate>Sun, 28 Dec 2025 16:32:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
