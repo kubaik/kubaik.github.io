@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 09:37:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 10:31:23 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn design patterns in practice, boost productivity &amp; create stunning visuals with &apos;Design Done Right&apos; expert tips.</description>
+      <pubDate>Mon, 29 Dec 2025 10:31:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Flutter app dev for seamless mobile experiences.</description>
       <pubDate>Sun, 28 Dec 2025 12:53:49 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Learn Ruby on Rails web app development with expert guides and tutorials.</description>
-      <pubDate>Sun, 28 Dec 2025 11:23:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
