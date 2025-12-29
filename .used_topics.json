@@ -157,5 +157,6 @@
   "Serverless Architecture Patterns",
   "TypeScript for Large-Scale Apps",
   "Database Query Optimization",
-  "Mobile CI/CD Automation"
+  "Mobile CI/CD Automation",
+  "Message Queues and Async Processing"
 ]
