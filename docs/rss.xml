@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 04:14:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 05:35:22 +0000</lastBuildDate>
+    <item>
+      <title>TS Power Types</title>
+      <link>https://kubaik.github.io/ts-power-types/</link>
+      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
+      <pubDate>Mon, 29 Dec 2025 05:35:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-power-types/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure&apos;s full potential with expert guides and tutorials.</description>
       <pubDate>Sun, 28 Dec 2025 07:26:22 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>Negotiate Like Pro</title>
-      <link>https://kubaik.github.io/negotiate-like-pro/</link>
-      <description>Boost your tech salary with expert negotiation tips and strategies in &apos;Negotiate Like Pro&apos;</description>
-      <pubDate>Sun, 28 Dec 2025 06:40:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
     </item>
   </channel>
 </rss>
