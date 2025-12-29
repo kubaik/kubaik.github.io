@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SRE 101 - AI Tech Blog</title>
+        <meta name="description" content="Learn SRE fundamentals & improve system reliability with our beginner's guide to Site Reliability Engineering.">
+        <meta name="keywords" content="WebDev, SRE 101, Site Reliability Engineering, DevOpsTools, reliability in software development., SRE implementation, SRE basics, cloud infrastructure reliability, SRE principles, CloudEngineering, reliability engineering, technology, DevOps practices, CloudNative, site reliability">
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn SRE fundamentals & improve system reliability with our beginner's guide to Site Reliability Engineering.">
+    <meta property="og:title" content="SRE 101">
+    <meta property="og:description" content="Learn SRE fundamentals & improve system reliability with our beginner's guide to Site Reliability Engineering.">
+    <meta property="og:url" content="https://kubaik.github.io/sre-101/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI Tech Blog">
+    <meta property="article:published_time" content="2025-12-29T23:26:08.614738">
+    <meta property="article:modified_time" content="2025-12-29T23:26:08.614746">
+    <meta property="og:image" content="/static/images/sre-101.jpg">
+    <meta property="og:image:alt" content="SRE 101">
+    <meta name="twitter:image" content="/static/images/sre-101.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SRE 101">
+    <meta name="twitter:description" content="Learn SRE fundamentals & improve system reliability with our beginner's guide to Site Reliability Engineering.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/sre-101/">
+    <meta name="keywords" content="WebDev, SRE 101, Site Reliability Engineering, DevOpsTools, reliability in software development., SRE implementation, SRE basics, cloud infrastructure reliability, SRE principles, CloudEngineering, reliability engineering, technology, DevOps practices, CloudNative, site reliability">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SRE 101",
+  "description": "Learn SRE fundamentals & improve system reliability with our beginner's guide to Site Reliability Engineering.",
+  "author": {
+    "@type": "Organization",
+    "name": "AI Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2025-12-29T23:26:08.614738",
+  "dateModified": "2025-12-29T23:26:08.614746",
+  "url": "https://kubaik.github.io/sre-101/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/sre-101/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/sre-101.jpg"
+  },
+  "keywords": [
+    "WebDev",
+    "SRE 101",
+    "Site Reliability Engineering",
+    "DevOpsTools",
+    "reliability in software development.",
+    "SRE implementation",
+    "SRE basics",
+    "cloud infrastructure reliability",
+    "SRE principles",
+    "CloudEngineering",
+    "reliability engineering",
+    "technology",
+    "DevOps practices",
+    "CloudNative",
+    "site reliability"
+  ]
+}
+</script>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <!-- Header Ad Slot -->
+        <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <header>
+            <div class="container">
+                <h1><a href="/">AI Tech Blog</a></h1>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/terms-of-service/">Terms</a>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+            <article class="blog-post">
+                <header class="post-header">
+                    <h1>SRE 101</h1>
+                    <div class="post-meta">
+                        <time datetime="2025-12-29T23:26:08.614738">2025-12-29</time>
+                        
+                        <div class="tags">
+                            
+                            <span class="tag">CloudEngineering</span>
+                            
+                            <span class="tag">CloudNative</span>
+                            
+                            <span class="tag">reliability engineering</span>
+                            
+                            <span class="tag">technology</span>
+                            
+                            <span class="tag">site reliability</span>
+                            
+                            <span class="tag">WebDev</span>
+                            
+                            <span class="tag">SRE 101</span>
+                            
+                            <span class="tag">Site Reliability Engineering</span>
+                            
+                            <span class="tag">DevOpsTools</span>
+                            
+                            <span class="tag">IndieHackers</span>
+                            
+                            <span class="tag">SiteReliability</span>
+                            
+                            <span class="tag">developer</span>
+                            
+                            <span class="tag">IndieDev</span>
+                            
+                            <span class="tag">DataScience</span>
+                            
+                            <span class="tag">SRE basics</span>
+                            
+                        </div>
+                        
+                    </div>
+                </header>
+                <div class="post-content">
+                    <h2 id="introduction-to-site-reliability-engineering">Introduction to Site Reliability Engineering</h2>
+<p>Site Reliability Engineering (SRE) is a set of practices that combines software engineering and operations to improve the reliability, performance, and efficiency of large-scale systems. The concept of SRE was first introduced by Google in the early 2000s and has since been adopted by many other companies, including Amazon, Microsoft, and Netflix. The primary goal of SRE is to ensure that systems are designed to be scalable, maintainable, and highly available, with a focus on automation, monitoring, and continuous improvement.</p>
+<h3 id="key-principles-of-sre">Key Principles of SRE</h3>
+<p>The key principles of SRE include:
+* <strong>Service Level Objectives (SLOs)</strong>: Define the desired level of service reliability and performance, typically measured in terms of latency, throughput, and error rates.
+* <strong>Service Level Indicators (SLIs)</strong>: Measure the actual performance of the system against the SLOs, providing a quantitative assessment of system reliability.
+* <strong>Error Budgets</strong>: Allocate a budget for errors, allowing for a certain amount of downtime or errors while still meeting the SLOs.
+* <strong>Blameless Postmortems</strong>: Conduct thorough investigations of system failures, focusing on identifying root causes and implementing improvements rather than assigning blame.</p>
+<h2 id="implementing-sre-in-practice">Implementing SRE in Practice</h2>
+<p>To implement SRE in practice, teams can follow these steps:
+1. <strong>Define SLOs and SLIs</strong>: Establish clear metrics for measuring system performance and reliability, such as 99.99% uptime or average latency of 50ms.
+2. <strong>Implement monitoring and logging</strong>: Use tools like Prometheus, Grafana, and ELK Stack to collect and visualize system metrics and logs.
+3. <strong>Automate deployment and rollback</strong>: Utilize tools like Kubernetes, Ansible, or Terraform to automate deployment and rollback of applications.
+4. <strong>Conduct blameless postmortems</strong>: Hold regular postmortem meetings to discuss system failures and identify areas for improvement.</p>
+<h3 id="example-code-implementing-slos-with-prometheus">Example Code: Implementing SLOs with Prometheus</h3>
+<p>The following example code demonstrates how to implement SLOs using Prometheus:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">prometheus_client</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">Gauge</span>
+
+<span class="c1"># Define a counter for errors</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;errors&#39;</span><span class="p">,</span> <span class="s1">&#39;Number of errors&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define a gauge for latency</span>
+<span class="n">latency</span> <span class="o">=</span> <span class="n">Gauge</span><span class="p">(</span><span class="s1">&#39;latency&#39;</span><span class="p">,</span> <span class="s1">&#39;Average latency&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define an SLO for 99.99% uptime</span>
+<span class="n">slo_uptime</span> <span class="o">=</span> <span class="mf">0.9999</span>
+
+<span class="c1"># Define an SLO for average latency of 50ms</span>
+<span class="n">slo_latency</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># Collect metrics and calculate SLOs</span>
+<span class="k">def</span> <span class="nf">collect_metrics</span><span class="p">():</span>
+    <span class="c1"># Collect error metrics</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
+
+    <span class="c1"># Collect latency metrics</span>
+    <span class="n">latency</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+
+    <span class="c1"># Calculate SLOs</span>
+    <span class="n">slo_uptime_actual</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">slo_latency_actual</span> <span class="o">=</span> <span class="n">latency</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+    <span class="c1"># Check if SLOs are met</span>
+    <span class="k">if</span> <span class="n">slo_uptime_actual</span> <span class="o">&lt;</span> <span class="n">slo_uptime</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLO for uptime not met&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">slo_latency_actual</span> <span class="o">&gt;</span> <span class="n">slo_latency</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLO for latency not met&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run the metric collection function</span>
+<span class="n">collect_metrics</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This code defines a counter for errors and a gauge for latency, and calculates the actual SLO values based on the collected metrics.</p>
+<h2 id="tools-and-platforms-for-sre">Tools and Platforms for SRE</h2>
+<p>Several tools and platforms are available to support SRE practices, including:
+* <strong>Kubernetes</strong>: An open-source container orchestration platform for automating deployment and management of applications.
+* <strong>Prometheus</strong>: An open-source monitoring system for collecting and visualizing system metrics.
+* <strong>Grafana</strong>: An open-source visualization platform for creating dashboards and charts.
+* <strong>ELK Stack</strong>: A logging and analytics platform for collecting and analyzing log data.
+* <strong>AWS Well-Architected Framework</strong>: A framework for designing and operating reliable, secure, and high-performing workloads in the cloud.</p>
+<h3 id="example-code-automating-deployment-with-kubernetes">Example Code: Automating Deployment with Kubernetes</h3>
+<p>The following example code demonstrates how to automate deployment of an application using Kubernetes:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
+<span class="n">metadata</span><span class="o">:</span>
+<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">example</span><span class="o">-</span><span class="n">deployment</span>
+<span class="n">spec</span><span class="o">:</span>
+<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
+<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
+<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">example</span>
+<span class="w">  </span><span class="n">template</span><span class="o">:</span>
+<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
+<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
+<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">example</span>
+<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
+<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">example</span>
+<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">example</span><span class="o">/</span><span class="n">image</span>
+<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
+<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
+</code></pre></div>
+
+<p>This code defines a Kubernetes deployment YAML file that automates the deployment of an application with 3 replicas.</p>
+<h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
+<p>Some common problems encountered in SRE include:
+* <strong>Inadequate monitoring and logging</strong>: Implement comprehensive monitoring and logging using tools like Prometheus, Grafana, and ELK Stack.
+* <strong>Insufficient automation</strong>: Automate deployment and rollback using tools like Kubernetes, Ansible, or Terraform.
+* <strong>Inadequate error handling</strong>: Implement robust error handling mechanisms, such as retry logic and circuit breakers.
+* <strong>Inadequate capacity planning</strong>: Conduct regular capacity planning exercises to ensure sufficient resources are available to meet demand.</p>
+<h3 id="example-code-implementing-error-handling-with-circuit-breakers">Example Code: Implementing Error Handling with Circuit Breakers</h3>
+<p>The following example code demonstrates how to implement error handling using circuit breakers:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">circuit_breaker</span><span class="p">(</span><span class="n">max_failures</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="n">failures</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">last_failure</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">nonlocal</span> <span class="n">failures</span><span class="p">,</span> <span class="n">last_failure</span>
+
+            <span class="k">if</span> <span class="n">failures</span> <span class="o">&gt;=</span> <span class="n">max_failures</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_failure</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Circuit breaker tripped&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">failures</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">failures</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">last_failure</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="c1"># Define a function with circuit breaker</span>
+<span class="nd">@circuit_breaker</span><span class="p">(</span><span class="n">max_failures</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">example_function</span><span class="p">():</span>
+    <span class="c1"># Simulate a failure</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Example failure&quot;</span><span class="p">)</span>
+
+<span class="c1"># Call the function</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">example_function</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This code defines a circuit breaker decorator that trips after 3 failures within a 60-second window, preventing further calls to the function.</p>
+<h2 id="real-world-use-cases">Real-World Use Cases</h2>
+<p>Several companies have successfully implemented SRE practices, including:
+* <strong>Google</strong>: Google has been using SRE practices for over a decade, with a focus on automation, monitoring, and continuous improvement.
+* <strong>Amazon</strong>: Amazon has implemented SRE practices to improve the reliability and performance of its e-commerce platform.
+* <strong>Netflix</strong>: Netflix has used SRE practices to improve the reliability and performance of its streaming service.</p>
+<h3 id="metrics-and-performance-benchmarks">Metrics and Performance Benchmarks</h3>
+<p>Some real-world metrics and performance benchmarks include:
+* <strong>Google</strong>: 99.99% uptime for its search service, with an average latency of 50ms.
+* <strong>Amazon</strong>: 99.95% uptime for its e-commerce platform, with an average latency of 100ms.
+* <strong>Netflix</strong>: 99.99% uptime for its streaming service, with an average latency of 50ms.</p>
+<h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
+<p>In conclusion, SRE is a set of practices that combines software engineering and operations to improve the reliability, performance, and efficiency of large-scale systems. By implementing SRE practices, teams can improve the reliability and performance of their systems, reduce downtime and errors, and increase customer satisfaction.</p>
+<p>To get started with SRE, teams can follow these next steps:
+1. <strong>Define SLOs and SLIs</strong>: Establish clear metrics for measuring system performance and reliability.
+2. <strong>Implement monitoring and logging</strong>: Use tools like Prometheus, Grafana, and ELK Stack to collect and visualize system metrics and logs.
+3. <strong>Automate deployment and rollback</strong>: Utilize tools like Kubernetes, Ansible, or Terraform to automate deployment and rollback of applications.
+4. <strong>Conduct blameless postmortems</strong>: Hold regular postmortem meetings to discuss system failures and identify areas for improvement.
+5. <strong>Continuously monitor and improve</strong>: Regularly review system performance and reliability, and implement improvements to meet SLOs and SLIs.</p>
+<p>Some recommended resources for further learning include:
+* <strong>"Site Reliability Engineering" by Google</strong>: A book that provides a comprehensive introduction to SRE practices.
+* <strong>"The SRE Handbook" by O'Reilly</strong>: A book that provides a detailed guide to implementing SRE practices.
+* <strong>SRE Weekly</strong>: A weekly newsletter that provides news, articles, and resources on SRE practices.</p>
+<p>By following these next steps and recommended resources, teams can start implementing SRE practices and improving the reliability and performance of their systems.</p>
+                    
+                    <!-- Middle Ad Slot -->
+                    <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+                </div>
+                
+                <!-- Affiliate Disclaimer -->
+                
+            </article>
+        </main>
+        
+        <!-- Footer Ad Slot -->
+        <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+        
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 AI Tech Blog. Powered by AI.</p>
+            </div>
+        </footer>
+    </body>
+    </html>
