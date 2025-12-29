@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 02:24:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 04:14:37 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Mon, 29 Dec 2025 04:14:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with expert negotiation tips and strategies in &apos;Negotiate Like Pro&apos;</description>
       <pubDate>Sun, 28 Dec 2025 06:40:10 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
-    </item>
-    <item>
-      <title>Live Web Apps</title>
-      <link>https://kubaik.github.io/live-web-apps/</link>
-      <description>Discover the power of live web apps, enabling real-time engagement and interaction.</description>
-      <pubDate>Sun, 28 Dec 2025 05:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/live-web-apps/</guid>
     </item>
   </channel>
 </rss>
