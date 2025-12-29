@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 16:34:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 17:25:17 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Learn expert Serverless Architecture Patterns for scalable apps</description>
+      <pubDate>Mon, 29 Dec 2025 17:25:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done</title>
       <link>https://kubaik.github.io/mobile-uiux-done/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with effective time management strategies for engineers.</description>
       <pubDate>Sun, 28 Dec 2025 19:21:20 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-your-time/</guid>
-    </item>
-    <item>
-      <title>Split Smart</title>
-      <link>https://kubaik.github.io/split-smart/</link>
-      <description>Boost app performance with smart code splitting strategies.</description>
-      <pubDate>Sun, 28 Dec 2025 18:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smart/</guid>
     </item>
   </channel>
 </rss>
