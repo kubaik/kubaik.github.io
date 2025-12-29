@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 11:26:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 12:58:57 +0000</lastBuildDate>
+    <item>
+      <title>Tune Up!</title>
+      <link>https://kubaik.github.io/tune-up/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Mon, 29 Dec 2025 12:58:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-up/</guid>
+    </item>
     <item>
       <title>Cloud Evolved</title>
       <link>https://kubaik.github.io/cloud-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
       <pubDate>Sun, 28 Dec 2025 14:25:50 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock big data insights with Apache Spark. Learn how to process &amp; analyze large datasets with ease.</description>
-      <pubDate>Sun, 28 Dec 2025 13:34:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
