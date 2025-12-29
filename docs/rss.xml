@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 17:25:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 18:39:23 +0000</lastBuildDate>
+    <item>
+      <title>Scale with TypeScript</title>
+      <link>https://kubaik.github.io/scale-with-typescript/</link>
+      <description>Boost efficiency with TypeScript for large-scale apps. Learn how to scale with confidence.</description>
+      <pubDate>Mon, 29 Dec 2025 18:39:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with expert image optimization techniques.</description>
       <pubDate>Sun, 28 Dec 2025 20:30:04 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>Engineer Your Time</title>
-      <link>https://kubaik.github.io/engineer-your-time/</link>
-      <description>Boost productivity with effective time management strategies for engineers.</description>
-      <pubDate>Sun, 28 Dec 2025 19:21:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-your-time/</guid>
     </item>
   </channel>
 </rss>
