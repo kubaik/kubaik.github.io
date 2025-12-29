@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 13:44:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 14:29:05 +0000</lastBuildDate>
+    <item>
+      <title>VR Now</title>
+      <link>https://kubaik.github.io/vr-now/</link>
+      <description>Discover the latest VR applications and innovations shaping the future.</description>
+      <pubDate>Mon, 29 Dec 2025 14:28:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-now/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Optimize WebAssembly performance with expert tips and tricks in &apos;Boost WA Speed&apos;.</description>
       <pubDate>Sun, 28 Dec 2025 16:32:53 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide.</description>
-      <pubDate>Sun, 28 Dec 2025 15:26:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
