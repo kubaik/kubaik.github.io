@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 21:25:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 22:26:52 +0000</lastBuildDate>
+    <item>
+      <title>Scrum vs Kanban</title>
+      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
+      <description>Scrum or Kanban? Learn the differences and choose the best Agile method for your team&apos;s success.</description>
+      <pubDate>Mon, 29 Dec 2025 22:26:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
+    </item>
     <item>
       <title>Async Made Easy</title>
       <link>https://kubaik.github.io/async-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn to craft intuitive Recommender Systems with &apos;Design Smart&apos; expert insights and strategies.</description>
       <pubDate>Mon, 29 Dec 2025 02:24:03 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Secure the Cloud</title>
-      <link>https://kubaik.github.io/secure-the-cloud/</link>
-      <description>Protect your cloud data with expert security tips and best practices.</description>
-      <pubDate>Sun, 28 Dec 2025 23:25:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-the-cloud/</guid>
     </item>
   </channel>
 </rss>
