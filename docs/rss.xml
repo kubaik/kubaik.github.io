@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 12:58:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 13:44:20 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Master React with expert best practices and patterns for efficient coding.</description>
+      <pubDate>Mon, 29 Dec 2025 13:44:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Tune Up!</title>
       <link>https://kubaik.github.io/tune-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide.</description>
       <pubDate>Sun, 28 Dec 2025 15:26:38 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Sun, 28 Dec 2025 14:25:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
