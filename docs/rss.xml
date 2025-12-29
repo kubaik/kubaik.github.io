@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 05:35:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 06:46:05 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop essential tech leadership skills to drive innovation and success.</description>
+      <pubDate>Mon, 29 Dec 2025 06:45:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>TS Power Types</title>
       <link>https://kubaik.github.io/ts-power-types/</link>
@@ -138,13 +145,6 @@
       <description>Compare ETL vs ELT: Which data integration process is best for your business?</description>
       <pubDate>Sun, 28 Dec 2025 08:35:11 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure&apos;s full potential with expert guides and tutorials.</description>
-      <pubDate>Sun, 28 Dec 2025 07:26:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
