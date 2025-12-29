@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Dec 2025 20:31:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 21:25:45 +0000</lastBuildDate>
+    <item>
+      <title>Async Made Easy</title>
+      <link>https://kubaik.github.io/async-made-easy/</link>
+      <description>Simplify async processing with message queues. Learn how to boost app performance.</description>
+      <pubDate>Mon, 29 Dec 2025 21:25:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-made-easy/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Protect your cloud data with expert security tips and best practices.</description>
       <pubDate>Sun, 28 Dec 2025 23:25:50 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-the-cloud/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Discover the 5G revolution: faster speeds, new tech, and a changed world.</description>
-      <pubDate>Sun, 28 Dec 2025 22:26:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>
