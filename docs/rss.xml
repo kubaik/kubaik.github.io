@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 18:41:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 19:22:24 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
+      <pubDate>Tue, 30 Dec 2025 19:22:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>No-Code Rev&quot;
 (or) 
@@ -140,13 +147,6 @@
       <description>A comprehensive guide to SOLID Design Principles covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Dec 2025 01:20:48 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-solid-design-principles-a-complete-g/</guid>
-    </item>
-    <item>
-      <title>SRE 101</title>
-      <link>https://kubaik.github.io/sre-101/</link>
-      <description>Learn SRE fundamentals &amp; improve system reliability with our beginner&apos;s guide to Site Reliability Engineering.</description>
-      <pubDate>Mon, 29 Dec 2025 23:26:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-101/</guid>
     </item>
   </channel>
 </rss>
