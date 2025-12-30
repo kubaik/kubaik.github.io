@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 09:32:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 10:31:22 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve documentation with best practices. Learn how to create clear, concise docs with Doc Right.</description>
+      <pubDate>Tue, 30 Dec 2025 10:31:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Balance Done</title>
       <link>https://kubaik.github.io/balance-done/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest in PHP modern development and take your coding skills to the next level.</description>
       <pubDate>Mon, 29 Dec 2025 15:30:23 +0000</pubDate>
       <guid>https://kubaik.github.io/php-evolved/</guid>
-    </item>
-    <item>
-      <title>VR Now</title>
-      <link>https://kubaik.github.io/vr-now/</link>
-      <description>Discover the latest VR applications and innovations shaping the future.</description>
-      <pubDate>Mon, 29 Dec 2025 14:28:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-now/</guid>
     </item>
   </channel>
 </rss>
