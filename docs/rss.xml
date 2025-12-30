@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 01:21:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 01:33:39 +0000</lastBuildDate>
+    <item>
+      <title>Understanding AI Model Monitoring and Maintenance: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</link>
+      <description>A comprehensive guide to AI Model Monitoring and Maintenance covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Tue, 30 Dec 2025 01:33:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</guid>
+    </item>
     <item>
       <title>Understanding SOLID Design Principles: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-solid-design-principles-a-complete-g/</link>
@@ -138,13 +145,6 @@
       <description>Develop essential tech leadership skills to drive innovation and success.</description>
       <pubDate>Mon, 29 Dec 2025 06:45:57 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>TS Power Types</title>
-      <link>https://kubaik.github.io/ts-power-types/</link>
-      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
-      <pubDate>Mon, 29 Dec 2025 05:35:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ts-power-types/</guid>
     </item>
   </channel>
 </rss>
