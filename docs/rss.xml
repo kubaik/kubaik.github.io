@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 01:33:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 01:35:11 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Improve website load times with expert frontend performance tuning tips.</description>
+      <pubDate>Tue, 30 Dec 2025 01:35:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Understanding AI Model Monitoring and Maintenance: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI-driven time series forecasting. Learn more.</description>
       <pubDate>Mon, 29 Dec 2025 07:32:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop essential tech leadership skills to drive innovation and success.</description>
-      <pubDate>Mon, 29 Dec 2025 06:45:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
