@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 19:22:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 20:31:14 +0000</lastBuildDate>
+    <item>
+      <title>Dev Done Right</title>
+      <link>https://kubaik.github.io/dev-done-right/</link>
+      <description>Streamline dev workflows with expert project management tips and best practices.</description>
+      <pubDate>Tue, 30 Dec 2025 20:31:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-done-right/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -140,13 +147,6 @@
       <description>A comprehensive guide to AI Model Monitoring and Maintenance covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Tue, 30 Dec 2025 01:33:26 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</guid>
-    </item>
-    <item>
-      <title>Understanding SOLID Design Principles: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-solid-design-principles-a-complete-g/</link>
-      <description>A comprehensive guide to SOLID Design Principles covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Dec 2025 01:20:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-solid-design-principles-a-complete-g/</guid>
     </item>
   </channel>
 </rss>
