@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 21:27:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 22:26:39 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from threats. Learn mobile app security best practices.</description>
+      <pubDate>Tue, 30 Dec 2025 22:26:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Respond Smarter</title>
       <link>https://kubaik.github.io/respond-smarter/</link>
@@ -140,13 +147,6 @@
       <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
       <pubDate>Tue, 30 Dec 2025 02:09:13 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Improve website load times with expert frontend performance tuning tips.</description>
-      <pubDate>Tue, 30 Dec 2025 01:35:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
