@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 02:09:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 04:04:12 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Simplify</title>
+      <link>https://kubaik.github.io/log-on-simplify/</link>
+      <description>Simplify log management with our expert solutions, streamline analysis &amp; boost security.</description>
+      <pubDate>Tue, 30 Dec 2025 04:04:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-simplify/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock DevOps success with expert best practices and cultural tips.</description>
       <pubDate>Mon, 29 Dec 2025 09:37:31 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Tame Debt</title>
-      <link>https://kubaik.github.io/tame-debt/</link>
-      <description>Master technical debt management with expert strategies to tame debt, boost efficiency, and drive innovation.</description>
-      <pubDate>Mon, 29 Dec 2025 08:40:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-debt/</guid>
     </item>
   </channel>
 </rss>
