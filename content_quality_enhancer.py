@@ -16,9 +16,11 @@ class ContentQualityEnhancer:
     
     def __init__(self, api_key: str = None):
         self.api_key = api_key
-        self.min_word_count = 1200  # AdSense prefers 1000+ words
-        self.min_unique_paragraphs = 8
-        self.min_sections = 5
+        self.min_word_count = 2000  # Increase to 2000+
+        self.min_unique_paragraphs = 15  # Increase
+        self.min_sections = 8  # Increase
+        self.require_personal_touch = True  
+        self.require_original_images = True  
     
     async def enhance_post_for_adsense(self, post, topic: str) -> Dict:
         """
@@ -59,7 +61,7 @@ class ContentQualityEnhancer:
         }
     
     async def _generate_enhanced_content(self, topic: str, title: str) -> str:
-        """Generate high-quality, AdSense-friendly content"""
+        """Generate high-quality, AdSense-friendly content with personalization"""
         
         if not self.api_key:
             return self._generate_enhanced_fallback(topic, title)
@@ -67,120 +69,295 @@ class ContentQualityEnhancer:
         try:
             content_sections = []
             
-            # 1. Compelling Introduction
+            # 1. Personal Hook Introduction (200-250 words)
             intro = await self._generate_section(
-                "introduction",
+                "personal_introduction",
                 topic,
                 title,
-                "Write a compelling 200-word introduction that hooks readers and explains why this topic matters. Include a personal touch or relatable scenario."
+                """Write a compelling 200-250 word introduction that:
+                - Starts with a personal anecdote or real experience related to this topic
+                - Explains a specific problem you encountered and why it matters
+                - Uses conversational tone with 'I', 'we', 'you' pronouns
+                - Includes specific numbers, timeframes, or concrete examples
+                - Hooks readers with relatable scenarios
+                Example start: "Last year, I spent three months struggling with..."
+                Avoid generic openings like "In today's world..." or "Technology is changing..."
+                """
             )
             content_sections.append(intro)
             
-            # 2. Core Concept Explanation
-            core_concept = await self._generate_section(
-                "core_concept",
+            # 2. Personal Story / Real Experience (250-300 words)
+            personal_story = await self._generate_section(
+                "personal_experience",
                 topic,
                 title,
-                "Explain the core concept in detail with unique insights. Use 250 words. Include what makes this topic important and relevant today."
+                """Share a detailed personal experience or case study about {topic}:
+                - Describe a specific situation where you used or learned about this
+                - Include concrete details: dates, places, specific challenges
+                - Explain what worked and what didn't
+                - Share mistakes made and lessons learned
+                - Use first-person narrative ("I discovered...", "After trying...")
+                - Include actual numbers or results if applicable
+                Make this feel like a story, not a textbook explanation.
+                """
             )
-            content_sections.append(f"## Understanding {topic}\n\n{core_concept}")
+            content_sections.append(f"## My Journey with {topic}\n\n{personal_story}")
             
-            # 3. Detailed Benefits/Features
-            benefits = await self._generate_section(
-                "benefits",
+            # 3. The Problem-Solution Framework (300-350 words)
+            problem_solution = await self._generate_section(
+                "problem_solution",
                 topic,
                 title,
-                "Write about 5-7 specific benefits or features with detailed explanations. Use 300 words. Make each point unique and valuable."
+                """Describe a specific problem and solution framework:
+                - Start with a relatable problem statement
+                - Explain why traditional approaches fail
+                - Introduce your unique solution or perspective
+                - Include a "before vs after" comparison
+                - Add specific metrics or improvements observed
+                - Use subheadings like "The Problem:", "Why It Matters:", "The Solution:"
+                Be opinionated and take a clear stance.
+                """
             )
-            content_sections.append(f"## Key Benefits and Features\n\n{benefits}")
+            content_sections.append(f"## Understanding the Real Challenge\n\n{problem_solution}")
             
-            # 4. Practical Implementation Guide
-            implementation = await self._generate_section(
-                "implementation",
+            # 4. Detailed How-To with Personal Tips (400-450 words)
+            detailed_guide = await self._generate_section(
+                "detailed_implementation",
                 topic,
                 title,
-                "Provide a step-by-step implementation guide with practical examples. Use 250 words. Include real-world scenarios."
+                """Create a step-by-step implementation guide with personal insights:
+                - Break down into 5-7 clear, actionable steps
+                - For each step, add a "Pro Tip:" based on personal experience
+                - Include common pitfalls and how to avoid them
+                - Add time estimates for each step
+                - Include "What I Wish I Knew:" callouts
+                - Mention specific tools, versions, or resources you actually used
+                - Use conversational language: "Here's what I do...", "I've found that..."
+                Format with clear numbered steps and personal commentary.
+                """
             )
-            content_sections.append(f"## How to Implement {topic}\n\n{implementation}")
+            content_sections.append(f"## My Step-by-Step Approach\n\n{detailed_guide}")
             
-            # 5. Best Practices and Expert Tips
-            best_practices = await self._generate_section(
-                "best_practices",
+            # 5. Real-World Case Study or Example (300-350 words)
+            case_study = await self._generate_section(
+                "case_study",
                 topic,
                 title,
-                "Share 6-8 expert tips and best practices with detailed explanations. Use 300 words. Make these actionable and specific."
+                """Present a detailed, specific case study:
+                - Use a real or realistic scenario with specific details
+                - Include actual company names, projects, or situations (or realistic pseudonyms)
+                - Provide concrete before/after metrics
+                - Explain the decision-making process
+                - Share unexpected outcomes or surprises
+                - Format as: Background → Challenge → Approach → Results → Lessons
+                - Include actual numbers: costs, time saved, performance improvements
+                Make this feel like investigative journalism, not marketing copy.
+                """
             )
-            content_sections.append(f"## Best Practices and Expert Tips\n\n{best_practices}")
+            content_sections.append(f"## Real-World Application: A Case Study\n\n{case_study}")
             
-            # 6. Common Challenges and Solutions
-            challenges = await self._generate_section(
-                "challenges",
+            # 6. Expert Insights & Interviews (250-300 words)
+            expert_insights = await self._generate_section(
+                "expert_perspective",
                 topic,
                 title,
-                "Discuss 4-5 common challenges and their solutions. Use 250 words. Be specific and practical."
+                """Share expert insights or perspectives:
+                - Reference specific experts, authors, or practitioners in the field
+                - Include paraphrased insights from industry leaders
+                - Add "According to [Expert]..." style attributions
+                - Contrast different schools of thought or approaches
+                - Add your personal take: "While [Expert] suggests X, I've found Y works better because..."
+                - Reference specific books, talks, or resources
+                Cite actual industry figures and add your unique interpretation.
+                """
             )
-            content_sections.append(f"## Common Challenges and How to Overcome Them\n\n{challenges}")
+            content_sections.append(f"## What the Experts Say (And What I Think)\n\n{expert_insights}")
             
-            # 7. Real-world Examples/Case Studies
-            examples = await self._generate_section(
-                "examples",
+            # 7. Common Mistakes & How I Overcame Them (300-350 words)
+            mistakes_lessons = await self._generate_section(
+                "mistakes_lessons",
                 topic,
                 title,
-                "Provide 2-3 real-world examples or mini case studies. Use 200 words. Show practical applications."
+                """Share authentic mistakes and lessons learned:
+                - List 5-7 specific mistakes you or others made
+                - For each mistake, explain: what happened, why it happened, how to avoid it
+                - Use vulnerability: "I wasted two weeks because I didn't..."
+                - Include cost of mistakes (time, money, frustration)
+                - Add "Red flags to watch for"
+                - Share embarrassing moments or failures
+                - End each with a concrete prevention strategy
+                Make this brutally honest and relatable.
+                """
             )
-            content_sections.append(f"## Real-World Applications\n\n{examples}")
+            content_sections.append(f"## Mistakes I Made (So You Don't Have To)\n\n{mistakes_lessons}")
             
-            # 8. FAQ Section
-            faq = await self._generate_section(
-                "faq",
+            # 8. Tools & Resources I Actually Use (250-300 words)
+            tools_resources = await self._generate_section(
+                "tools_resources",
                 topic,
                 title,
-                "Create 5-6 frequently asked questions with detailed answers. Use 250 words total."
+                """Recommend specific tools and resources:
+                - List 5-8 specific tools/resources with exact names
+                - For each, explain: what it does, why you chose it, pros/cons
+                - Include free vs paid options
+                - Add pricing information where relevant
+                - Share your personal workflow: "My tech stack includes..."
+                - Rate each tool (e.g., "9/10 for beginners")
+                - Mention alternatives you tried and why you switched
+                - Include affiliate disclosure if recommending products
+                Be specific: not "project management tools" but "Asana vs Monday.com"
+                """
             )
-            content_sections.append(f"## Frequently Asked Questions\n\n{faq}")
+            content_sections.append(f"## Tools & Resources in My Arsenal\n\n{tools_resources}")
             
-            # 9. Future Trends
-            trends = await self._generate_section(
-                "trends",
+            # 9. Advanced Tips & Pro Strategies (300-350 words)
+            advanced_tips = await self._generate_section(
+                "advanced_strategies",
                 topic,
                 title,
-                "Discuss future trends and what's coming next. Use 150 words. Be insightful and forward-thinking."
+                """Share advanced, non-obvious strategies:
+                - Include 6-8 tips that go beyond basic advice
+                - Label difficulty: [Beginner], [Intermediate], [Advanced]
+                - Share "insider" knowledge or shortcuts you discovered
+                - Include specific configurations, settings, or parameters
+                - Add time-saving hacks: "This one trick saves me 5 hours/week..."
+                - Include contrarian takes: "Most people do X, but I found Y works better"
+                - Add ROI or impact metrics for each tip
+                Make these feel like secret weapons, not common knowledge.
+                """
             )
-            content_sections.append(f"## Future Trends and Predictions\n\n{trends}")
+            content_sections.append(f"## Advanced Strategies That Work\n\n{advanced_tips}")
             
-            # 10. Actionable Conclusion
+            # 10. Interactive FAQ (300-350 words)
+            interactive_faq = await self._generate_section(
+                "interactive_faq",
+                topic,
+                title,
+                """Create engaging FAQs based on real questions:
+                - Write 6-8 questions that real users actually ask
+                - Start questions with who, what, when, where, why, how
+                - Provide detailed, personal answers (not generic responses)
+                - Include your opinion in answers: "In my experience..."
+                - Add surprising or counter-intuitive answers
+                - Reference your earlier personal examples
+                - End some answers with follow-up resources
+                Format: **Q: [Question]** followed by detailed A:
+                """
+            )
+            content_sections.append(f"## Your Questions Answered\n\n{interactive_faq}")
+            
+            # 11. Future Trends & My Predictions (200-250 words)
+            future_trends = await self._generate_section(
+                "future_predictions",
+                topic,
+                title,
+                """Share informed predictions about the future:
+                - Identify 3-5 emerging trends in this space
+                - Base predictions on current signals and data
+                - Add personal commentary: "I believe we'll see..."
+                - Include contrarian predictions if applicable
+                - Set timeframes: "Within 2 years...", "By 2027..."
+                - Explain your reasoning
+                - Suggest how readers can prepare
+                Be bold with predictions while showing your reasoning.
+                """
+            )
+            content_sections.append(f"## Where This is Heading (My Predictions)\n\n{future_trends}")
+            
+            # 12. Personal Action Plan & Next Steps (250-300 words)
+            action_plan = await self._generate_section(
+                "personalized_action_plan",
+                topic,
+                title,
+                """Create a practical, personalized action plan:
+                - Offer 3 different paths based on reader's level:
+                * "If you're just starting..." (Beginner path)
+                * "If you have some experience..." (Intermediate path)
+                * "If you're advanced..." (Expert path)
+                - Include timeline: "Week 1:", "Month 1:", "Quarter 1:"
+                - Add specific milestones and success metrics
+                - Include a "Start today" checklist with 3-5 immediate actions
+                - Offer to connect: "Questions? Here's how to reach me..."
+                - Add motivational close with personal encouragement
+                Make this feel like coaching, not just information.
+                """
+            )
+            content_sections.append(f"## Your Personalized Action Plan\n\n{action_plan}")
+            
+            # 13. Personal Sign-Off & CTA (150-200 words)
             conclusion = await self._generate_section(
-                "conclusion",
+                "personal_conclusion",
                 topic,
                 title,
-                "Write a powerful conclusion with specific action steps readers can take. Use 200 words. Make it memorable and actionable."
+                """Write a warm, personal conclusion:
+                - Summarize key takeaway in one sentence
+                - Share final personal reflection or encouragement
+                - Invite engagement: "What's your experience with {topic}?"
+                - Ask a specific question to encourage comments
+                - Offer additional help: "Stuck on step 3? Email me at..."
+                - Add social proof if available: "Over 500 readers have used this guide..."
+                - Include a clear call-to-action (subscribe, comment, share)
+                - Sign off personally: "Good luck on your journey, [Author Name]"
+                Make this feel like ending a conversation with a friend.
+                """
             )
-            content_sections.append(f"## Key Takeaways and Next Steps\n\n{conclusion}")
+            content_sections.append(f"## Final Thoughts\n\n{conclusion}")
+            
+            # 14. Additional Resources & Reading (Optional)
+            resources = await self._generate_section(
+                "curated_resources",
+                topic,
+                title,
+                """Curate additional resources:
+                - List 5-7 specific articles, books, videos, or courses
+                - Add brief annotation for each: what it covers, why it's valuable
+                - Include mix of free and paid resources
+                - Organize by category: "For beginners:", "Deep dives:", "Tools:"
+                - Add your personal recommendation level (Must-read, Useful, Optional)
+                - Include publication dates to show currency
+                Keep this concise but valuable - actual resources, not generic suggestions.
+                """
+            )
+            content_sections.append(f"## Recommended Resources\n\n{resources}")
             
             return "\n\n".join(content_sections)
-            
-        except Exception as e:
-            print(f"Error generating enhanced content: {e}")
-            return self._generate_enhanced_fallback(topic, title)
+        
+    except Exception as e:
+        print(f"Error generating enhanced content: {e}")
+        return self._generate_enhanced_fallback(topic, title)
+
     
     async def _generate_section(self, section_type: str, topic: str, 
                                 title: str, instruction: str) -> str:
-        """Generate a specific section using OpenAI API"""
+            """Generate a specific section using OpenAI API"""
         
         messages = [
             {
                 "role": "system",
-                "content": "You are an expert content writer creating high-quality, original blog content. Write naturally, avoid generic phrases, and provide unique insights."
+                "content": """You are an expert content writer with deep personal experience in technology and development. 
+                Write in a conversational, authentic voice as if sharing knowledge with a colleague. 
+                Use personal pronouns (I, we, you). Share real experiences, specific details, and unique insights.
+                Avoid generic statements, corporate jargon, and obvious advice. 
+                Be opinionated, specific, and actionable. Include concrete examples with numbers, timeframes, and results.
+                Write like a human sharing hard-won knowledge, not an AI generating content."""
             },
             {
                 "role": "user",
                 "content": f"""Topic: {topic}
-Article Title: {title}
-Section: {section_type}
+    Article Title: {title}
+    Section: {section_type}
 
-{instruction}
+    {instruction}
 
-Write original, valuable content that provides real insights. Avoid generic statements. Be specific and practical."""
+    Remember:
+    - Use specific, concrete details
+    - Share personal experiences and opinions
+    - Include numbers, metrics, and timeframes
+    - Be conversational and authentic
+    - Avoid generic, obvious statements
+    - Take clear stances on debatable points
+
+    Write original, valuable content that provides real insights."""
             }
         ]
         
