@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 06:42:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 07:29:01 +0000</lastBuildDate>
+    <item>
+      <title>Data Boost</title>
+      <link>https://kubaik.github.io/data-boost/</link>
+      <description>Unlock insights with Data Boost. Discover expert data warehousing solutions.</description>
+      <pubDate>Tue, 30 Dec 2025 07:28:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-boost/</guid>
+    </item>
     <item>
       <title>Designing Distributed</title>
       <link>https://kubaik.github.io/designing-distributed/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Mon, 29 Dec 2025 12:58:49 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-up/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock flexibility with multi-cloud architecture. Learn how to thrive in a cloud-agnostic world.</description>
-      <pubDate>Mon, 29 Dec 2025 11:26:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
