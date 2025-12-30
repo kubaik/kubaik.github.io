@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 04:04:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 05:30:49 +0000</lastBuildDate>
+    <item>
+      <title>Ace System Design</title>
+      <link>https://kubaik.github.io/ace-system-design/</link>
+      <description>Boost your interview skills with expert system design tips and strategies.</description>
+      <pubDate>Tue, 30 Dec 2025 05:30:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ace-system-design/</guid>
+    </item>
     <item>
       <title>Log On: Simplify</title>
       <link>https://kubaik.github.io/log-on-simplify/</link>
@@ -138,13 +145,6 @@
       <description>Learn design patterns in practice, boost productivity &amp; create stunning visuals with &apos;Design Done Right&apos; expert tips.</description>
       <pubDate>Mon, 29 Dec 2025 10:31:15 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
-      <pubDate>Mon, 29 Dec 2025 09:37:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
