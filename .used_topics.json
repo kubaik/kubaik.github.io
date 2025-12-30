@@ -173,5 +173,6 @@
   "Load Balancing Techniques",
   "Documentation Best Practices",
   "Feature Engineering Techniques",
-  "Infrastructure as Code (Terraform)"
+  "Infrastructure as Code (Terraform)",
+  "Scalability Patterns"
 ]
