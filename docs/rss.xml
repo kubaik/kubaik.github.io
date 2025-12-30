@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 20:31:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 21:27:14 +0000</lastBuildDate>
+    <item>
+      <title>Respond Smarter</title>
+      <link>https://kubaik.github.io/respond-smarter/</link>
+      <description>Boost incident response with smart planning strategies</description>
+      <pubDate>Tue, 30 Dec 2025 21:27:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/respond-smarter/</guid>
+    </item>
     <item>
       <title>Dev Done Right</title>
       <link>https://kubaik.github.io/dev-done-right/</link>
@@ -140,13 +147,6 @@
       <description>Improve website load times with expert frontend performance tuning tips.</description>
       <pubDate>Tue, 30 Dec 2025 01:35:03 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Understanding AI Model Monitoring and Maintenance: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</link>
-      <description>A comprehensive guide to AI Model Monitoring and Maintenance covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 30 Dec 2025 01:33:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</guid>
     </item>
   </channel>
 </rss>
