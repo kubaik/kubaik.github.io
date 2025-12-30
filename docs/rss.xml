@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 12:57:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 13:41:46 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smarter</title>
+      <link>https://kubaik.github.io/scale-smarter/</link>
+      <description>Learn scalability patterns to grow your business efficiently</description>
+      <pubDate>Tue, 30 Dec 2025 13:41:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smarter/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Cloud</title>
       <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with TypeScript for large-scale apps. Learn how to scale with confidence.</description>
       <pubDate>Mon, 29 Dec 2025 18:39:16 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Learn expert Serverless Architecture Patterns for scalable apps</description>
-      <pubDate>Mon, 29 Dec 2025 17:25:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
