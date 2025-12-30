@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 07:29:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 08:37:44 +0000</lastBuildDate>
+    <item>
+      <title>Smart AI: Multi-Modal</title>
+      <link>https://kubaik.github.io/smart-ai-multi-modal/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, combining speech, vision &amp; more for innovative applications.</description>
+      <pubDate>Tue, 30 Dec 2025 08:37:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-ai-multi-modal/</guid>
+    </item>
     <item>
       <title>Data Boost</title>
       <link>https://kubaik.github.io/data-boost/</link>
@@ -138,13 +145,6 @@
       <description>Master React with expert best practices and patterns for efficient coding.</description>
       <pubDate>Mon, 29 Dec 2025 13:44:12 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Tune Up!</title>
-      <link>https://kubaik.github.io/tune-up/</link>
-      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
-      <pubDate>Mon, 29 Dec 2025 12:58:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-up/</guid>
     </item>
   </channel>
 </rss>
