@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 15:30:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 16:36:23 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flood</title>
+      <link>https://kubaik.github.io/limit-the-flood/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent overload and ensure system stability.</description>
+      <pubDate>Tue, 30 Dec 2025 16:36:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flood/</guid>
+    </item>
     <item>
       <title>Digital Twin: Future Now</title>
       <link>https://kubaik.github.io/digital-twin-future-now/</link>
@@ -138,13 +145,6 @@
       <description>Simplify async processing with message queues. Learn how to boost app performance.</description>
       <pubDate>Mon, 29 Dec 2025 21:25:37 +0000</pubDate>
       <guid>https://kubaik.github.io/async-made-easy/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
-      <pubDate>Mon, 29 Dec 2025 20:31:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>

@@ -176,5 +176,6 @@
   "Infrastructure as Code (Terraform)",
   "Scalability Patterns",
   "Computer Vision Applications",
-  "Digital Twin Technology"
+  "Digital Twin Technology",
+  "Rate Limiting and Throttling"
 ]
