@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 13:41:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 14:28:52 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Discover innovative computer vision applications transforming industries</description>
+      <pubDate>Tue, 30 Dec 2025 14:28:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Scale Smarter</title>
       <link>https://kubaik.github.io/scale-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with expert DB query optimization tips.</description>
       <pubDate>Mon, 29 Dec 2025 19:21:59 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-db-queries/</guid>
-    </item>
-    <item>
-      <title>Scale with TypeScript</title>
-      <link>https://kubaik.github.io/scale-with-typescript/</link>
-      <description>Boost efficiency with TypeScript for large-scale apps. Learn how to scale with confidence.</description>
-      <pubDate>Mon, 29 Dec 2025 18:39:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
     </item>
   </channel>
 </rss>
