@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 08:37:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 09:32:39 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Master load balancing techniques for optimal performance and reliability.</description>
+      <pubDate>Tue, 30 Dec 2025 09:32:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>Smart AI: Multi-Modal</title>
       <link>https://kubaik.github.io/smart-ai-multi-modal/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest VR applications and innovations shaping the future.</description>
       <pubDate>Mon, 29 Dec 2025 14:28:57 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-now/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Master React with expert best practices and patterns for efficient coding.</description>
-      <pubDate>Mon, 29 Dec 2025 13:44:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
