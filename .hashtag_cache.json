@@ -1155,15 +1155,15 @@
     "topic": "Database Replication and Sharding"
   },
   "infrastructure_as_code_(terraform)": {
-    "timestamp": "2025-12-14T23:24:17.999960",
+    "timestamp": "2025-12-30T12:57:48.294621",
     "hashtags": [
-      "CloudInfrastructure",
+      "CloudEngineering",
       "DevOpsTools",
       "Terraform",
       "InfrastructureAsCode",
-      "CloudComputing",
+      "CloudNative",
       "DevSecOps",
-      "ServerlessArchitecture"
+      "IaCManagement"
     ],
     "topic": "Infrastructure as Code (Terraform)"
   },
