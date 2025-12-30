@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 10:31:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 11:25:36 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock model potential with expert feature engineering techniques.</description>
+      <pubDate>Tue, 30 Dec 2025 11:25:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Elevate mobile apps with expert UI/UX tips and best practices.</description>
       <pubDate>Mon, 29 Dec 2025 16:34:21 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-uiux-done/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Discover the latest in PHP modern development and take your coding skills to the next level.</description>
-      <pubDate>Mon, 29 Dec 2025 15:30:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
