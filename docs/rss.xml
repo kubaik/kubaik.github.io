@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Dec 2025 16:36:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 17:27:30 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques. Learn how to code together effectively.</description>
+      <pubDate>Tue, 30 Dec 2025 17:27:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Limit the Flood</title>
       <link>https://kubaik.github.io/limit-the-flood/</link>
@@ -138,13 +145,6 @@
       <description>Scrum or Kanban? Learn the differences and choose the best Agile method for your team&apos;s success.</description>
       <pubDate>Mon, 29 Dec 2025 22:26:43 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Async Made Easy</title>
-      <link>https://kubaik.github.io/async-made-easy/</link>
-      <description>Simplify async processing with message queues. Learn how to boost app performance.</description>
-      <pubDate>Mon, 29 Dec 2025 21:25:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-made-easy/</guid>
     </item>
   </channel>
 </rss>
