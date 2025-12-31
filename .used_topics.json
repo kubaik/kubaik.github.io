@@ -184,5 +184,6 @@
   "Project Management for Developers",
   "Incident Response Planning",
   "Mobile App Security",
-  "Remote Work Best Practices"
+  "Remote Work Best Practices",
+  "Caching Strategies (Redis, Memcached)"
 ]
