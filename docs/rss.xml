@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 05:31:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 06:42:48 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Evolved</title>
+      <link>https://kubaik.github.io/web-dev-evolved/</link>
+      <description>Discover the latest web dev trends and frameworks, transforming the way you build online.</description>
+      <pubDate>Wed, 31 Dec 2025 06:42:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -140,13 +147,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, combining speech, vision &amp; more for innovative applications.</description>
       <pubDate>Tue, 30 Dec 2025 08:37:36 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-ai-multi-modal/</guid>
-    </item>
-    <item>
-      <title>Data Boost</title>
-      <link>https://kubaik.github.io/data-boost/</link>
-      <description>Unlock insights with Data Boost. Discover expert data warehousing solutions.</description>
-      <pubDate>Tue, 30 Dec 2025 07:28:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-boost/</guid>
     </item>
   </channel>
 </rss>
