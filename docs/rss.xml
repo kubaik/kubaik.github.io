@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 06:42:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 07:29:34 +0000</lastBuildDate>
+    <item>
+      <title>Revamp Old Code</title>
+      <link>https://kubaik.github.io/revamp-old-code/</link>
+      <description>Breathe new life into outdated code. Learn how to refactor legacy code for improved performance.</description>
+      <pubDate>Wed, 31 Dec 2025 07:29:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/revamp-old-code/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -140,13 +147,6 @@
       <description>Master load balancing techniques for optimal performance and reliability.</description>
       <pubDate>Tue, 30 Dec 2025 09:32:31 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-done/</guid>
-    </item>
-    <item>
-      <title>Smart AI: Multi-Modal</title>
-      <link>https://kubaik.github.io/smart-ai-multi-modal/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, combining speech, vision &amp; more for innovative applications.</description>
-      <pubDate>Tue, 30 Dec 2025 08:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-ai-multi-modal/</guid>
     </item>
   </channel>
 </rss>
