@@ -188,5 +188,6 @@
   "Caching Strategies (Redis, Memcached)",
   "GitOps Workflow Implementation",
   "Database Design and Normalization",
-  "Modern Web Development Frameworks"
+  "Modern Web Development Frameworks",
+  "Refactoring Legacy Code"
 ]
