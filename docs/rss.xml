@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 21:25:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 22:27:26 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
+      <pubDate>Wed, 31 Dec 2025 22:27:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with caching strategies using Redis and Memcached.</description>
       <pubDate>Wed, 31 Dec 2025 02:09:30 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-cache/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from threats. Learn mobile app security best practices.</description>
-      <pubDate>Tue, 30 Dec 2025 22:26:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
