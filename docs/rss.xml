@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 16:34:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 17:24:31 +0000</lastBuildDate>
+    <item>
+      <title>CQRS Unleashed</title>
+      <link>https://kubaik.github.io/cqrs-unleashed/</link>
+      <description>Unlock scalable apps with CQRS &amp; Event Sourcing. Learn patterns &amp; practices for success.</description>
+      <pubDate>Wed, 31 Dec 2025 17:24:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-unleashed/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,15 +145,6 @@
       <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
       <pubDate>Tue, 30 Dec 2025 19:22:15 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>No-Code Rev&quot;
-(or) 
-&quot;Code Less</title>
-      <link>https://kubaik.github.io/no-code-rev-or-code-less/</link>
-      <description>Revolutionize development with low-code/no-code platforms</description>
-      <pubDate>Tue, 30 Dec 2025 18:40:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-rev-or-code-less/</guid>
     </item>
   </channel>
 </rss>
