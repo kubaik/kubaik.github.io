@@ -185,5 +185,6 @@
   "Incident Response Planning",
   "Mobile App Security",
   "Remote Work Best Practices",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "GitOps Workflow Implementation"
 ]

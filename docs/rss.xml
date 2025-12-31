@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 02:09:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 04:02:44 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Learn how to implement GitOps workflow for efficient deployment &amp; management of cloud-native apps.</description>
+      <pubDate>Wed, 31 Dec 2025 04:02:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -140,13 +147,6 @@
       <description>Learn distributed systems design principles and patterns for scalable, resilient architectures.</description>
       <pubDate>Tue, 30 Dec 2025 06:42:07 +0000</pubDate>
       <guid>https://kubaik.github.io/designing-distributed/</guid>
-    </item>
-    <item>
-      <title>Ace System Design</title>
-      <link>https://kubaik.github.io/ace-system-design/</link>
-      <description>Boost your interview skills with expert system design tips and strategies.</description>
-      <pubDate>Tue, 30 Dec 2025 05:30:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-system-design/</guid>
     </item>
   </channel>
 </rss>
