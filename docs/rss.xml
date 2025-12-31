@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 12:56:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 13:37:43 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with Reinforcement Learning strategies</description>
+      <pubDate>Wed, 31 Dec 2025 13:37:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Code Less, Achieve More</title>
       <link>https://kubaik.github.io/code-less-achieve-more/</link>
@@ -140,13 +147,6 @@
       <description>Unlock the future with Digital Twin tech, revolutionizing industries today.</description>
       <pubDate>Tue, 30 Dec 2025 15:30:23 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Discover innovative computer vision applications transforming industries</description>
-      <pubDate>Tue, 30 Dec 2025 14:28:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
