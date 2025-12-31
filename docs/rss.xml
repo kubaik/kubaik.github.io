@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 09:31:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 10:29:37 +0000</lastBuildDate>
+    <item>
+      <title>Data Flow</title>
+      <link>https://kubaik.github.io/data-flow/</link>
+      <description>Optimize data flow with efficient engineering pipelines, streamlining data processing and analysis.</description>
+      <pubDate>Wed, 31 Dec 2025 10:29:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-flow/</guid>
+    </item>
     <item>
       <title>Instant Insights</title>
       <link>https://kubaik.github.io/instant-insights/</link>
@@ -140,13 +147,6 @@
       <description>Learn Terraform: Code Your Cloud and automate infrastructure management with Infrastructure as Code (IaC)</description>
       <pubDate>Tue, 30 Dec 2025 12:57:48 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Unlock model potential with expert feature engineering techniques.</description>
-      <pubDate>Tue, 30 Dec 2025 11:25:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
