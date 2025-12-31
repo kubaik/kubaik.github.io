@@ -186,5 +186,6 @@
   "Mobile App Security",
   "Remote Work Best Practices",
   "Caching Strategies (Redis, Memcached)",
-  "GitOps Workflow Implementation"
+  "GitOps Workflow Implementation",
+  "Database Design and Normalization"
 ]
