@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 10:29:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 11:24:55 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Simplified</title>
+      <link>https://kubaik.github.io/graphql-simplified/</link>
+      <description>Learn GraphQL basics &amp; build scalable APIs with ease</description>
+      <pubDate>Wed, 31 Dec 2025 11:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-simplified/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -140,13 +147,6 @@
       <description>Learn scalability patterns to grow your business efficiently</description>
       <pubDate>Tue, 30 Dec 2025 13:41:37 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smarter/</guid>
-    </item>
-    <item>
-      <title>Terraform: Code Your Cloud</title>
-      <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
-      <description>Learn Terraform: Code Your Cloud and automate infrastructure management with Infrastructure as Code (IaC)</description>
-      <pubDate>Tue, 30 Dec 2025 12:57:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
     </item>
   </channel>
 </rss>
