@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 11:24:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 12:56:18 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Unlock efficiency with low-code/no-code platforms. Reduce coding, boost productivity.</description>
+      <pubDate>Wed, 31 Dec 2025 12:56:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>GraphQL Simplified</title>
       <link>https://kubaik.github.io/graphql-simplified/</link>
@@ -140,13 +147,6 @@
       <description>Discover innovative computer vision applications transforming industries</description>
       <pubDate>Tue, 30 Dec 2025 14:28:44 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Learn scalability patterns to grow your business efficiently</description>
-      <pubDate>Tue, 30 Dec 2025 13:41:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
