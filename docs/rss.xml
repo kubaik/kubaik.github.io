@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 22:27:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 23:26:51 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
+      <pubDate>Wed, 31 Dec 2025 23:26:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to implement GitOps workflow for efficient deployment &amp; management of cloud-native apps.</description>
       <pubDate>Wed, 31 Dec 2025 04:02:36 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost site speed with caching strategies using Redis and Memcached.</description>
-      <pubDate>Wed, 31 Dec 2025 02:09:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
