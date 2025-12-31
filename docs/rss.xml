@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 08:37:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 09:31:45 +0000</lastBuildDate>
+    <item>
+      <title>Instant Insights</title>
+      <link>https://kubaik.github.io/instant-insights/</link>
+      <description>Unlock instant insights with real-time data processing. Discover how to make data-driven decisions faster.</description>
+      <pubDate>Wed, 31 Dec 2025 09:31:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/instant-insights/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -140,13 +147,6 @@
       <description>Unlock model potential with expert feature engineering techniques.</description>
       <pubDate>Tue, 30 Dec 2025 11:25:27 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>Doc Right</title>
-      <link>https://kubaik.github.io/doc-right/</link>
-      <description>Improve documentation with best practices. Learn how to create clear, concise docs with Doc Right.</description>
-      <pubDate>Tue, 30 Dec 2025 10:31:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/doc-right/</guid>
     </item>
   </channel>
 </rss>
