@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Dec 2025 17:24:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 18:38:45 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
+      <pubDate>Wed, 31 Dec 2025 18:38:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>CQRS Unleashed</title>
       <link>https://kubaik.github.io/cqrs-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflows with expert project management tips and best practices.</description>
       <pubDate>Tue, 30 Dec 2025 20:31:07 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-done-right/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
-      <pubDate>Tue, 30 Dec 2025 19:22:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
