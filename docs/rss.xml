@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 14:26:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 15:28:18 +0000</lastBuildDate>
+    <item>
+      <title>Angular Enters</title>
+      <link>https://kubaik.github.io/angular-enters/</link>
+      <description>Unlock scalable &amp; secure apps with Angular Enterprise Solutions</description>
+      <pubDate>Thu, 01 Jan 2026 15:28:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-enters/</guid>
+    </item>
     <item>
       <title>Next.js: Full Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable apps with CQRS &amp; Event Sourcing. Learn patterns &amp; practices for success.</description>
       <pubDate>Wed, 31 Dec 2025 17:24:23 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unleashed/</guid>
-    </item>
-    <item>
-      <title>Build Your Brand</title>
-      <link>https://kubaik.github.io/build-your-brand/</link>
-      <description>Establish credibility with a strong tech portfolio. Learn how to build yours today.</description>
-      <pubDate>Wed, 31 Dec 2025 16:34:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-brand/</guid>
     </item>
   </channel>
 </rss>
