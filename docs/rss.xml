@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 08:37:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 09:32:35 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Learn how to contribute to open source projects with our step-by-step guide.</description>
+      <pubDate>Thu, 01 Jan 2026 09:32:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>FL Made Easy</title>
       <link>https://kubaik.github.io/fl-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn GraphQL basics &amp; build scalable APIs with ease</description>
       <pubDate>Wed, 31 Dec 2025 11:24:46 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-simplified/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Optimize data flow with efficient engineering pipelines, streamlining data processing and analysis.</description>
-      <pubDate>Wed, 31 Dec 2025 10:29:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
