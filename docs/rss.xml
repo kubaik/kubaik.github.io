@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 16:35:21 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 17:26:10 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
+      <pubDate>Thu, 01 Jan 2026 17:26:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>Migrate Smart</title>
       <link>https://kubaik.github.io/migrate-smart/</link>
@@ -138,13 +145,6 @@
       <description>Maximize network speed with expert optimization tips.</description>
       <pubDate>Wed, 31 Dec 2025 19:21:17 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
-      <pubDate>Wed, 31 Dec 2025 18:38:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
