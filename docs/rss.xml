@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 22:27:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 23:27:01 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Thu, 01 Jan 2026 23:26:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Data Mesh: Scale Insights</title>
       <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential at the edge with our expert insights on Edge Computing applications and innovations.</description>
       <pubDate>Thu, 01 Jan 2026 02:26:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Memory</title>
-      <link>https://kubaik.github.io/rust-safe-memory/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
-      <pubDate>Wed, 31 Dec 2025 23:26:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
     </item>
   </channel>
 </rss>
