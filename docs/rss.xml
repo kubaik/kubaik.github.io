@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 20:31:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 21:26:29 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Optimize code with smart splitting strategies, boost performance &amp; speed.</description>
+      <pubDate>Thu, 01 Jan 2026 21:26:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>Dev Done Right</title>
       <link>https://kubaik.github.io/dev-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
       <pubDate>Wed, 31 Dec 2025 22:27:17 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>Work Smarter</title>
-      <link>https://kubaik.github.io/work-smarter/</link>
-      <description>Boost productivity with remote work best practices and expert tips.</description>
-      <pubDate>Wed, 31 Dec 2025 21:25:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smarter/</guid>
     </item>
   </channel>
 </rss>
