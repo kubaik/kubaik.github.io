@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 21:26:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 22:27:06 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh: Scale Insights</title>
+      <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
+      <description>Unlock scalable insights with Data Mesh Architecture. Learn how to revolutionize data management.</description>
+      <pubDate>Thu, 01 Jan 2026 22:26:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
+    </item>
     <item>
       <title>Split Smarter</title>
       <link>https://kubaik.github.io/split-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
       <pubDate>Wed, 31 Dec 2025 23:26:43 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
-      <pubDate>Wed, 31 Dec 2025 22:27:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
