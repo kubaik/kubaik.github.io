@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 12:56:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 13:38:46 +0000</lastBuildDate>
+    <item>
+      <title>Ace System Design</title>
+      <link>https://kubaik.github.io/ace-system-design/</link>
+      <description>Master system design interviews with expert tips and strategies.</description>
+      <pubDate>Thu, 01 Jan 2026 13:38:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ace-system-design/</guid>
+    </item>
     <item>
       <title>Unlock PWA Power</title>
       <link>https://kubaik.github.io/unlock-pwa-power/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG standards for inclusive web design &amp; accessibility</description>
       <pubDate>Wed, 31 Dec 2025 15:28:00 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-access-all/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Wed, 31 Dec 2025 14:26:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
