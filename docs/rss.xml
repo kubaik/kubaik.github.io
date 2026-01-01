@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 04:13:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 05:34:36 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast Sites</title>
+      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
+      <description>Learn how Jamstack architecture boosts site speed &amp; performance for a better user experience.</description>
+      <pubDate>Thu, 01 Jan 2026 05:34:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
+    </item>
     <item>
       <title>Scale with Ease</title>
       <link>https://kubaik.github.io/scale-with-ease/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code. Learn how to refactor legacy code for improved performance.</description>
       <pubDate>Wed, 31 Dec 2025 07:29:25 +0000</pubDate>
       <guid>https://kubaik.github.io/revamp-old-code/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest web dev trends and frameworks, transforming the way you build online.</description>
-      <pubDate>Wed, 31 Dec 2025 06:42:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>

@@ -2276,16 +2276,16 @@
     "topic": "OAuth 2.0 and OpenID Connect"
   },
   "jamstack_architecture": {
-    "timestamp": "2025-12-26T18:37:59.974134",
+    "timestamp": "2026-01-01T05:34:28.322910",
     "hashtags": [
       "Jamstack",
       "Serverless",
       "CloudNative",
       "WebDevelopment",
       "HeadlessCMS",
-      "StaticSiteGen",
+      "StaticSite",
       "ModernWebDev",
-      "DevOps"
+      "CloudArchitecture"
     ],
     "topic": "Jamstack Architecture"
   },
