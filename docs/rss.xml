@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 07:29:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 08:37:36 +0000</lastBuildDate>
+    <item>
+      <title>FL Made Easy</title>
+      <link>https://kubaik.github.io/fl-made-easy/</link>
+      <description>Simplify Federated Learning implementation with our expert guide.</description>
+      <pubDate>Thu, 01 Jan 2026 08:37:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/fl-made-easy/</guid>
+    </item>
     <item>
       <title>Revive Old Code</title>
       <link>https://kubaik.github.io/revive-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Optimize data flow with efficient engineering pipelines, streamlining data processing and analysis.</description>
       <pubDate>Wed, 31 Dec 2025 10:29:28 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Instant Insights</title>
-      <link>https://kubaik.github.io/instant-insights/</link>
-      <description>Unlock instant insights with real-time data processing. Discover how to make data-driven decisions faster.</description>
-      <pubDate>Wed, 31 Dec 2025 09:31:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/instant-insights/</guid>
     </item>
   </channel>
 </rss>
