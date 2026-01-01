@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 18:39:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 20:31:32 +0000</lastBuildDate>
+    <item>
+      <title>Dev Done Right</title>
+      <link>https://kubaik.github.io/dev-done-right/</link>
+      <description>Streamline dev projects with expert tips and tools. Learn how to manage like a pro.</description>
+      <pubDate>Thu, 01 Jan 2026 20:31:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-done-right/</guid>
+    </item>
     <item>
       <title>Web Components Simplified</title>
       <link>https://kubaik.github.io/web-components-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with remote work best practices and expert tips.</description>
       <pubDate>Wed, 31 Dec 2025 21:25:18 +0000</pubDate>
       <guid>https://kubaik.github.io/work-smarter/</guid>
-    </item>
-    <item>
-      <title>Flutter Fast</title>
-      <link>https://kubaik.github.io/flutter-fast/</link>
-      <description>Boost mobile app dev with Flutter Fast. Learn expert tips and tricks.</description>
-      <pubDate>Wed, 31 Dec 2025 20:30:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-fast/</guid>
     </item>
   </channel>
 </rss>
