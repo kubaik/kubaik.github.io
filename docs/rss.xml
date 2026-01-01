@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 09:32:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 10:30:57 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop essential tech leadership skills to drive innovation and success.</description>
+      <pubDate>Thu, 01 Jan 2026 10:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms. Reduce coding, boost productivity.</description>
       <pubDate>Wed, 31 Dec 2025 12:56:10 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>GraphQL Simplified</title>
-      <link>https://kubaik.github.io/graphql-simplified/</link>
-      <description>Learn GraphQL basics &amp; build scalable APIs with ease</description>
-      <pubDate>Wed, 31 Dec 2025 11:24:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-simplified/</guid>
     </item>
   </channel>
 </rss>
