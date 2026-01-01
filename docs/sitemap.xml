@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/migrate-smart/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/angular-enters/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nextjs-full-stack/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ace-system-design/</loc><priority>0.9</priority></url>
@@ -117,7 +118,6 @@
 <url><loc>https://kubaik.github.io/design-smarter/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/visualize-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/edge-computing/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/migrate-smart/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/fix-before-breach/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/eda-unleashed/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jamstack-fast-secure/</loc><priority>0.9</priority></url>

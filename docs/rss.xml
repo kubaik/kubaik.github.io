@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 15:28:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 16:35:21 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Maximize cloud potential with expert migration strategies &amp; tips.</description>
+      <pubDate>Thu, 01 Jan 2026 16:35:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Angular Enters</title>
       <link>https://kubaik.github.io/angular-enters/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
       <pubDate>Wed, 31 Dec 2025 18:38:37 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>CQRS Unleashed</title>
-      <link>https://kubaik.github.io/cqrs-unleashed/</link>
-      <description>Unlock scalable apps with CQRS &amp; Event Sourcing. Learn patterns &amp; practices for success.</description>
-      <pubDate>Wed, 31 Dec 2025 17:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unleashed/</guid>
     </item>
   </channel>
 </rss>
