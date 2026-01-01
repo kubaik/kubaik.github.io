@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 02:26:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 04:13:40 +0000</lastBuildDate>
+    <item>
+      <title>Scale with Ease</title>
+      <link>https://kubaik.github.io/scale-with-ease/</link>
+      <description>Boost performance with database replication and sharding techniques.</description>
+      <pubDate>Thu, 01 Jan 2026 04:13:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-ease/</guid>
+    </item>
     <item>
       <title>AI at the Edge</title>
       <link>https://kubaik.github.io/ai-at-the-edge/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest web dev trends and frameworks, transforming the way you build online.</description>
       <pubDate>Wed, 31 Dec 2025 06:42:39 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn database design best practices &amp; normalization techniques to optimize performance.</description>
-      <pubDate>Wed, 31 Dec 2025 05:31:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
