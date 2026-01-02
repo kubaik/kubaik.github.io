@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 13:37:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 14:28:29 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Manage tech debt effectively with expert strategies and best practices.</description>
+      <pubDate>Fri, 02 Jan 2026 14:28:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable &amp; secure apps with Angular Enterprise Solutions</description>
       <pubDate>Thu, 01 Jan 2026 15:28:10 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-enters/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full Stack</title>
-      <link>https://kubaik.github.io/nextjs-full-stack/</link>
-      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
-      <pubDate>Thu, 01 Jan 2026 14:26:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
     </item>
   </channel>
 </rss>
