@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 08:37:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 09:31:56 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed with expert optimization tips and techniques.</description>
+      <pubDate>Fri, 02 Jan 2026 09:31:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Transfer Learn</title>
       <link>https://kubaik.github.io/transfer-learn/</link>
@@ -138,13 +145,6 @@
       <description>Develop essential tech leadership skills to drive innovation and success.</description>
       <pubDate>Thu, 01 Jan 2026 10:30:49 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Learn how to contribute to open source projects with our step-by-step guide.</description>
-      <pubDate>Thu, 01 Jan 2026 09:32:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
