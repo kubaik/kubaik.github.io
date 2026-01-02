@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 10:29:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 11:24:16 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
+      <pubDate>Fri, 02 Jan 2026 11:24:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>Real-Time Web</title>
       <link>https://kubaik.github.io/real-time-web/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of mobile apps with PWAs. Learn how to unlock their power and boost user engagement.</description>
       <pubDate>Thu, 01 Jan 2026 12:56:11 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-pwa-power/</guid>
-    </item>
-    <item>
-      <title>TypeScript at Scale</title>
-      <link>https://kubaik.github.io/typescript-at-scale/</link>
-      <description>Learn how to use TypeScript for large-scale apps and improve code maintainability.</description>
-      <pubDate>Thu, 01 Jan 2026 11:24:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-at-scale/</guid>
     </item>
   </channel>
 </rss>
