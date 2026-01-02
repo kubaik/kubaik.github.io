@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 16:34:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 17:24:46 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Supercharge VS Code with top extensions for productivity</description>
+      <pubDate>Fri, 02 Jan 2026 17:24:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>Blue-Green Done</title>
       <link>https://kubaik.github.io/blue-green-done/</link>
@@ -138,13 +145,6 @@
       <description>Learn Web Components &amp; Custom Elements made easy.</description>
       <pubDate>Thu, 01 Jan 2026 18:38:55 +0000</pubDate>
       <guid>https://kubaik.github.io/web-components-simplified/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
-      <pubDate>Thu, 01 Jan 2026 17:26:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
