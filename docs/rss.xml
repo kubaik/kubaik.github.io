@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 07:30:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 08:37:49 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient AI: Learn how to implement transfer learning for enhanced model performance.</description>
+      <pubDate>Fri, 02 Jan 2026 08:37:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to contribute to open source projects with our step-by-step guide.</description>
       <pubDate>Thu, 01 Jan 2026 09:32:27 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>FL Made Easy</title>
-      <link>https://kubaik.github.io/fl-made-easy/</link>
-      <description>Simplify Federated Learning implementation with our expert guide.</description>
-      <pubDate>Thu, 01 Jan 2026 08:37:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/fl-made-easy/</guid>
     </item>
   </channel>
 </rss>
