@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 23:27:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 02:11:17 +0000</lastBuildDate>
+    <item>
+      <title>Tech Salary Hacks</title>
+      <link>https://kubaik.github.io/tech-salary-hacks/</link>
+      <description>Boost your tech salary with expert negotiation tips and hacks.</description>
+      <pubDate>Fri, 02 Jan 2026 02:11:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with database replication and sharding techniques.</description>
       <pubDate>Thu, 01 Jan 2026 04:13:32 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-ease/</guid>
-    </item>
-    <item>
-      <title>AI at the Edge</title>
-      <link>https://kubaik.github.io/ai-at-the-edge/</link>
-      <description>Unlock AI&apos;s potential at the edge with our expert insights on Edge Computing applications and innovations.</description>
-      <pubDate>Thu, 01 Jan 2026 02:26:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
     </item>
   </channel>
 </rss>
