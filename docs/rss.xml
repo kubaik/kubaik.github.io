@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 21:21:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 22:28:05 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: expert guide to Internet of Things architecture</description>
+      <pubDate>Fri, 02 Jan 2026 22:27:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Secure Cloud</title>
       <link>https://kubaik.github.io/secure-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with expert negotiation tips and hacks.</description>
       <pubDate>Fri, 02 Jan 2026 02:11:09 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Thu, 01 Jan 2026 23:26:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
