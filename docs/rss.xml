@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 17:24:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 18:38:46 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Top Solutions</title>
+      <link>https://kubaik.github.io/log-on-top-solutions/</link>
+      <description>Streamline log analysis with top solutions for efficient monitoring and insights.</description>
+      <pubDate>Fri, 02 Jan 2026 18:38:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-top-solutions/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev projects with expert tips and tools. Learn how to manage like a pro.</description>
       <pubDate>Thu, 01 Jan 2026 20:31:23 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-done-right/</guid>
-    </item>
-    <item>
-      <title>Web Components Simplified</title>
-      <link>https://kubaik.github.io/web-components-simplified/</link>
-      <description>Learn Web Components &amp; Custom Elements made easy.</description>
-      <pubDate>Thu, 01 Jan 2026 18:38:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-components-simplified/</guid>
     </item>
   </channel>
 </rss>
