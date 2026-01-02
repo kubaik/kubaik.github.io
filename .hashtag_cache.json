@@ -1685,16 +1685,15 @@
     "topic": "CI/CD Pipeline Implementation"
   },
   "go_programming_concurrency": {
-    "timestamp": "2025-12-23T13:41:42.999443",
+    "timestamp": "2026-01-02T19:18:24.472584",
     "hashtags": [
       "GoLang",
       "ConcurrencyMatters",
       "CloudNative",
       "DevOpsTools",
-      "ParallelProgramming",
-      "SystemDesign",
-      "GolangConcurrency",
-      "AsyncProgramming"
+      "ParallelProcessing",
+      "GoConcurrent",
+      "SystemProgramming"
     ],
     "topic": "Go Programming Concurrency"
   },
