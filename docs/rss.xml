@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 15:29:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 16:34:20 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green Done</title>
+      <link>https://kubaik.github.io/blue-green-done/</link>
+      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks.</description>
+      <pubDate>Fri, 02 Jan 2026 16:34:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-done/</guid>
+    </item>
     <item>
       <title>K8s Mastery</title>
       <link>https://kubaik.github.io/k8s-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Serverless Architecture Patterns for scalable, cost-effective apps.</description>
       <pubDate>Thu, 01 Jan 2026 17:26:01 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Maximize cloud potential with expert migration strategies &amp; tips.</description>
-      <pubDate>Thu, 01 Jan 2026 16:35:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>

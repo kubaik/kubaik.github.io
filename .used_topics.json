@@ -44,5 +44,6 @@
   "Vue.js Component Architecture",
   "Generative AI and Large Language Models",
   "Technical Debt Management",
-  "Kubernetes Orchestration"
+  "Kubernetes Orchestration",
+  "Blue-Green Deployment"
 ]
