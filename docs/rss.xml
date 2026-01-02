@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 09:31:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 10:29:21 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Web</title>
+      <link>https://kubaik.github.io/real-time-web/</link>
+      <description>Discover the power of real-time web apps and transform your online experience.</description>
+      <pubDate>Fri, 02 Jan 2026 10:29:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-web/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to use TypeScript for large-scale apps and improve code maintainability.</description>
       <pubDate>Thu, 01 Jan 2026 11:24:07 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-at-scale/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop essential tech leadership skills to drive innovation and success.</description>
-      <pubDate>Thu, 01 Jan 2026 10:30:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
