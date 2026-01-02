@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Jan 2026 02:11:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Jan 2026 04:06:48 +0000</lastBuildDate>
+    <item>
+      <title>Mobile App Arch</title>
+      <link>https://kubaik.github.io/mobile-app-arch/</link>
+      <description>Learn expert Mobile App Architecture Patterns for scalable and efficient app design.</description>
+      <pubDate>Fri, 02 Jan 2026 04:06:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-app-arch/</guid>
+    </item>
     <item>
       <title>Tech Salary Hacks</title>
       <link>https://kubaik.github.io/tech-salary-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Jamstack architecture boosts site speed &amp; performance for a better user experience.</description>
       <pubDate>Thu, 01 Jan 2026 05:34:28 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
-    </item>
-    <item>
-      <title>Scale with Ease</title>
-      <link>https://kubaik.github.io/scale-with-ease/</link>
-      <description>Boost performance with database replication and sharding techniques.</description>
-      <pubDate>Thu, 01 Jan 2026 04:13:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-ease/</guid>
     </item>
   </channel>
 </rss>
