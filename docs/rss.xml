@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 14:25:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 15:26:31 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake: The Future</title>
+      <link>https://kubaik.github.io/delta-lake-the-future/</link>
+      <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse.</description>
+      <pubDate>Sat, 03 Jan 2026 15:26:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
+    </item>
     <item>
       <title>Web3 Unlocked</title>
       <link>https://kubaik.github.io/web3-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Streamline log analysis with top solutions for efficient monitoring and insights.</description>
       <pubDate>Fri, 02 Jan 2026 18:38:37 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-top-solutions/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Supercharge VS Code with top extensions for productivity</description>
-      <pubDate>Fri, 02 Jan 2026 17:24:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
