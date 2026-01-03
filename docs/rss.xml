@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 06:40:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 07:25:50 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality.</description>
+      <pubDate>Sat, 03 Jan 2026 07:25:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of real-time web apps and transform your online experience.</description>
       <pubDate>Fri, 02 Jan 2026 10:29:13 +0000</pubDate>
       <guid>https://kubaik.github.io/real-time-web/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed with expert optimization tips and techniques.</description>
-      <pubDate>Fri, 02 Jan 2026 09:31:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
