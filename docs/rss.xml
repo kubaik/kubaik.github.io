@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 11:22:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 12:53:33 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Optimize performance with profiling and benchmarking techniques.</description>
+      <pubDate>Sat, 03 Jan 2026 12:53:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Test Smart</title>
       <link>https://kubaik.github.io/test-smart/</link>
@@ -138,13 +145,6 @@
       <description>Master Kubernetes orchestration with expert tips and best practices.</description>
       <pubDate>Fri, 02 Jan 2026 15:29:20 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-mastery/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Manage tech debt effectively with expert strategies and best practices.</description>
-      <pubDate>Fri, 02 Jan 2026 14:28:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
