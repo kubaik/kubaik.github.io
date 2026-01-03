@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 04:39:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 05:28:35 +0000</lastBuildDate>
+    <item>
+      <title>FP Essentials</title>
+      <link>https://kubaik.github.io/fp-essentials/</link>
+      <description>Learn core Functional Programming concepts and transform your coding skills with FP Essentials.</description>
+      <pubDate>Sat, 03 Jan 2026 05:28:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-essentials/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI: Learn how to implement transfer learning for enhanced model performance.</description>
       <pubDate>Fri, 02 Jan 2026 08:37:41 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock big data insights with Apache Spark. Learn how to process &amp; analyze large datasets with ease.</description>
-      <pubDate>Fri, 02 Jan 2026 07:30:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
