@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 12:53:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 13:34:02 +0000</lastBuildDate>
+    <item>
+      <title>Unlock AWS</title>
+      <link>https://kubaik.github.io/unlock-aws/</link>
+      <description>Master AWS Cloud Architecture with expert tips and best practices.</description>
+      <pubDate>Sat, 03 Jan 2026 13:33:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-aws/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks.</description>
       <pubDate>Fri, 02 Jan 2026 16:34:12 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-done/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
-      <pubDate>Fri, 02 Jan 2026 15:29:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
