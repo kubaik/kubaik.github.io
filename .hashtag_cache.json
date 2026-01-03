@@ -2311,15 +2311,15 @@
     "topic": "Federated Learning Implementation"
   },
   "penetration_testing_methodologies": {
-    "timestamp": "2025-12-22T15:29:39.680493",
+    "timestamp": "2026-01-03T11:22:27.047474",
     "hashtags": [
       "CyberSecurity",
       "PenTest",
-      "CloudSecurity",
       "VulnerabilityAssessment",
-      "ZeroTrust",
-      "ArtificialIntelligence",
-      "RedTeamOperations"
+      "AIpoweredTesting",
+      "CloudSecurity",
+      "DevSecOps",
+      "ZeroTrustArchitecture"
     ],
     "topic": "Penetration Testing Methodologies"
   },

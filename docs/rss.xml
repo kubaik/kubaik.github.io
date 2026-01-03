@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 10:28:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 11:22:34 +0000</lastBuildDate>
+    <item>
+      <title>Test Smart</title>
+      <link>https://kubaik.github.io/test-smart/</link>
+      <description>Learn expert penetration testing methodologies to secure your systems with our &apos;Test Smart&apos; guide.</description>
+      <pubDate>Sat, 03 Jan 2026 11:22:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smart/</guid>
+    </item>
     <item>
       <title>Responsive Web Design</title>
       <link>https://kubaik.github.io/responsive-web-design/</link>
@@ -138,13 +145,6 @@
       <description>Manage tech debt effectively with expert strategies and best practices.</description>
       <pubDate>Fri, 02 Jan 2026 14:28:20 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
-      <pubDate>Fri, 02 Jan 2026 13:37:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
