@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 18:37:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 19:21:12 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions. Learn A/B testing and experimentation strategies.</description>
+      <pubDate>Sat, 03 Jan 2026 19:21:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>SSG Simplified</title>
       <link>https://kubaik.github.io/ssg-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: expert guide to Internet of Things architecture</description>
       <pubDate>Fri, 02 Jan 2026 22:27:56 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Secure Cloud</title>
-      <link>https://kubaik.github.io/secure-cloud/</link>
-      <description>Protect your data with expert cloud security best practices &amp; tips.</description>
-      <pubDate>Fri, 02 Jan 2026 21:21:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-cloud/</guid>
     </item>
   </channel>
 </rss>
