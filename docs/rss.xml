@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 08:35:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 09:27:27 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
+      <pubDate>Sat, 03 Jan 2026 09:27:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master Vue.js components and boost app performance with expert architecture tips.</description>
       <pubDate>Fri, 02 Jan 2026 12:55:27 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-component-mastery/</guid>
-    </item>
-    <item>
-      <title>Unlock SSR</title>
-      <link>https://kubaik.github.io/unlock-ssr/</link>
-      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
-      <pubDate>Fri, 02 Jan 2026 11:24:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssr/</guid>
     </item>
   </channel>
 </rss>
