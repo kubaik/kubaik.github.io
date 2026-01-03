@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 17:23:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 18:37:17 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits in our simplified guide.</description>
+      <pubDate>Sat, 03 Jan 2026 18:37:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>React Fast</title>
       <link>https://kubaik.github.io/react-fast/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with expert cloud security best practices &amp; tips.</description>
       <pubDate>Fri, 02 Jan 2026 21:21:14 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>Engineer Your Time</title>
-      <link>https://kubaik.github.io/engineer-your-time/</link>
-      <description>Boost productivity with expert time management tips tailored for engineers.</description>
-      <pubDate>Fri, 02 Jan 2026 20:30:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-your-time/</guid>
     </item>
   </channel>
 </rss>
