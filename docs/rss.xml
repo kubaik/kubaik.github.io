@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 05:28:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 06:40:19 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Evolved</title>
+      <link>https://kubaik.github.io/web-dev-evolved/</link>
+      <description>Discover the latest modern web dev frameworks &amp; trends shaping the industry&apos;s future.</description>
+      <pubDate>Sat, 03 Jan 2026 06:40:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
+    </item>
     <item>
       <title>FP Essentials</title>
       <link>https://kubaik.github.io/fp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile speed with expert optimization tips and techniques.</description>
       <pubDate>Fri, 02 Jan 2026 09:31:48 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Transfer Learn</title>
-      <link>https://kubaik.github.io/transfer-learn/</link>
-      <description>Unlock efficient AI: Learn how to implement transfer learning for enhanced model performance.</description>
-      <pubDate>Fri, 02 Jan 2026 08:37:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-learn/</guid>
     </item>
   </channel>
 </rss>
