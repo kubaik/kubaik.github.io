@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 09:27:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 10:28:06 +0000</lastBuildDate>
+    <item>
+      <title>Responsive Web Design</title>
+      <link>https://kubaik.github.io/responsive-web-design/</link>
+      <description>Learn responsive web design techniques for a seamless user experience across devices.</description>
+      <pubDate>Sat, 03 Jan 2026 10:27:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/responsive-web-design/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
       <pubDate>Fri, 02 Jan 2026 13:37:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Vue Component Mastery</title>
-      <link>https://kubaik.github.io/vue-component-mastery/</link>
-      <description>Master Vue.js components and boost app performance with expert architecture tips.</description>
-      <pubDate>Fri, 02 Jan 2026 12:55:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/vue-component-mastery/</guid>
     </item>
   </channel>
 </rss>
