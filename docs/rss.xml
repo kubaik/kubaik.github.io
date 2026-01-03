@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 20:29:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 21:24:55 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Done Right</title>
+      <link>https://kubaik.github.io/cicd-done-right/</link>
+      <description>Boost efficiency with expert CI/CD pipeline implementation tips.</description>
+      <pubDate>Sat, 03 Jan 2026 21:24:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-done-right/</guid>
+    </item>
     <item>
       <title>XAI Uncovered</title>
       <link>https://kubaik.github.io/xai-uncovered/</link>
@@ -138,13 +145,6 @@
       <description>Secure your data with encryption &amp; key management best practices. Learn how to protect your assets.</description>
       <pubDate>Sat, 03 Jan 2026 02:04:42 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>VecDBs Unlocked</title>
-      <link>https://kubaik.github.io/vecdbs-unlocked/</link>
-      <description>Unlock vector database power: explore embeddings, use cases, and more in VecDBs Unlocked.</description>
-      <pubDate>Fri, 02 Jan 2026 23:25:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/vecdbs-unlocked/</guid>
     </item>
   </channel>
 </rss>
