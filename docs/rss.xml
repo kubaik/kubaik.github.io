@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 03:57:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 04:39:13 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
+      <pubDate>Sat, 03 Jan 2026 04:39:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
     <item>
       <title>IoT Device Mastery</title>
       <link>https://kubaik.github.io/iot-device-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Unlock big data insights with Apache Spark. Learn how to process &amp; analyze large datasets with ease.</description>
       <pubDate>Fri, 02 Jan 2026 07:30:12 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Tailwind CSS: Utility-First</title>
-      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
-      <description>Learn Tailwind CSS utility-first design for efficient, customizable styling</description>
-      <pubDate>Fri, 02 Jan 2026 06:42:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
     </item>
   </channel>
 </rss>
