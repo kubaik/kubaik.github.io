@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 07:25:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 08:35:13 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn Distributed Systems Design principles and best practices to build scalable, efficient architectures.</description>
+      <pubDate>Sat, 03 Jan 2026 08:35:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
       <pubDate>Fri, 02 Jan 2026 11:24:08 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssr/</guid>
-    </item>
-    <item>
-      <title>Real-Time Web</title>
-      <link>https://kubaik.github.io/real-time-web/</link>
-      <description>Discover the power of real-time web apps and transform your online experience.</description>
-      <pubDate>Fri, 02 Jan 2026 10:29:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-web/</guid>
     </item>
   </channel>
 </rss>
