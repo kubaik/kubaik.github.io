@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jan 2026 19:21:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jan 2026 20:29:55 +0000</lastBuildDate>
+    <item>
+      <title>XAI Uncovered</title>
+      <link>https://kubaik.github.io/xai-uncovered/</link>
+      <description>Unlock XAI secrets: Discover Explainable AI techniques for transparent decision-making</description>
+      <pubDate>Sat, 03 Jan 2026 20:29:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/xai-uncovered/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock vector database power: explore embeddings, use cases, and more in VecDBs Unlocked.</description>
       <pubDate>Fri, 02 Jan 2026 23:25:52 +0000</pubDate>
       <guid>https://kubaik.github.io/vecdbs-unlocked/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: expert guide to Internet of Things architecture</description>
-      <pubDate>Fri, 02 Jan 2026 22:27:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
