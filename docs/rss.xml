@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 11:22:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 12:54:11 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Sun, 04 Jan 2026 12:54:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -96,13 +103,6 @@
       <description>Unlock XAI secrets: Discover Explainable AI techniques for transparent decision-making</description>
       <pubDate>Sat, 03 Jan 2026 20:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/xai-uncovered/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize with data-driven decisions. Learn A/B testing and experimentation strategies.</description>
-      <pubDate>Sat, 03 Jan 2026 19:21:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>SSG Simplified</title>
