@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 17:24:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 18:37:26 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Backend</title>
+      <link>https://kubaik.github.io/kotlin-backend/</link>
+      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
+      <pubDate>Sun, 04 Jan 2026 18:37:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-backend/</guid>
+    </item>
     <item>
       <title>AutoML Pipelines</title>
       <link>https://kubaik.github.io/automl-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Unlock XAI secrets: Discover Explainable AI techniques for transparent decision-making</description>
       <pubDate>Sat, 03 Jan 2026 20:29:47 +0000</pubDate>
       <guid>https://kubaik.github.io/xai-uncovered/</guid>
-    </item>
-    <item>
-      <title>SSG Simplified</title>
-      <link>https://kubaik.github.io/ssg-simplified/</link>
-      <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits in our simplified guide.</description>
-      <pubDate>Sat, 03 Jan 2026 18:37:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssg-simplified/</guid>
     </item>
   </channel>
 </rss>
