@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 21:25:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 22:27:00 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UI/UX Done Right</title>
+      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
+      <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
+      <pubDate>Sun, 04 Jan 2026 22:26:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Simplify load balancing with expert techniques and tools for a seamless user experience.</description>
       <pubDate>Sun, 04 Jan 2026 02:28:11 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>Tune Up</title>
-      <link>https://kubaik.github.io/tune-up/</link>
-      <description>Optimize model performance with top hyperparameter tuning methods.</description>
-      <pubDate>Sat, 03 Jan 2026 23:25:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-up/</guid>
     </item>
   </channel>
 </rss>
