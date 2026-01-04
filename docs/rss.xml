@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 20:30:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 21:25:12 +0000</lastBuildDate>
+    <item>
+      <title>Code Clean</title>
+      <link>https://kubaik.github.io/code-clean/</link>
+      <description>Learn clean code principles for efficient coding</description>
+      <pubDate>Sun, 04 Jan 2026 21:25:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-clean/</guid>
+    </item>
     <item>
       <title>NFT Tech: Beyond Art</title>
       <link>https://kubaik.github.io/nft-tech-beyond-art/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with top hyperparameter tuning methods.</description>
       <pubDate>Sat, 03 Jan 2026 23:25:44 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-up/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Compare ETL vs ELT: Learn key differences &amp; choose the best data integration process for your business needs.</description>
-      <pubDate>Sat, 03 Jan 2026 22:26:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
