@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 09:26:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 10:27:37 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and revolutionizing experiences.</description>
+      <pubDate>Sun, 04 Jan 2026 10:27:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Smart Data Storage</title>
       <link>https://kubaik.github.io/smart-data-storage/</link>
@@ -138,13 +145,6 @@
       <description>Optimize performance with profiling and benchmarking techniques.</description>
       <pubDate>Sat, 03 Jan 2026 12:53:24 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Test Smart</title>
-      <link>https://kubaik.github.io/test-smart/</link>
-      <description>Learn expert penetration testing methodologies to secure your systems with our &apos;Test Smart&apos; guide.</description>
-      <pubDate>Sat, 03 Jan 2026 11:22:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smart/</guid>
     </item>
   </channel>
 </rss>
