@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 16:32:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 17:24:00 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Pipelines</title>
+      <link>https://kubaik.github.io/automl-pipelines/</link>
+      <description>Simplify MLOps with AutoML pipelines. Learn how to automate ML workflows for efficiency and scalability.</description>
+      <pubDate>Sun, 04 Jan 2026 17:23:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-pipelines/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster websites with Static Site Generation (SSG). Learn the basics and benefits in our simplified guide.</description>
       <pubDate>Sat, 03 Jan 2026 18:37:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>React Fast</title>
-      <link>https://kubaik.github.io/react-fast/</link>
-      <description>Develop a swift incident response plan with React Fast. Learn how to minimize downtime and protect your business.</description>
-      <pubDate>Sat, 03 Jan 2026 17:23:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-fast/</guid>
     </item>
   </channel>
 </rss>
