@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 05:32:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 06:41:08 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain 101</title>
+      <link>https://kubaik.github.io/blockchain-101/</link>
+      <description>Unlock blockchain basics: learn how it works, benefits &amp; real-world uses.</description>
+      <pubDate>Sun, 04 Jan 2026 06:40:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-101/</guid>
+    </item>
     <item>
       <title>Data Lake 101</title>
       <link>https://kubaik.github.io/data-lake-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn Distributed Systems Design principles and best practices to build scalable, efficient architectures.</description>
       <pubDate>Sat, 03 Jan 2026 08:35:05 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality.</description>
-      <pubDate>Sat, 03 Jan 2026 07:25:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
