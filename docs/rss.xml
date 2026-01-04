@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 04:14:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 05:32:45 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake Architecture basics &amp; best practices in our introductory guide, Data Lake 101.</description>
+      <pubDate>Sun, 04 Jan 2026 05:32:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>Double Vision: Digital Twins</title>
       <link>https://kubaik.github.io/double-vision-digital-twins/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality.</description>
       <pubDate>Sat, 03 Jan 2026 07:25:41 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest modern web dev frameworks &amp; trends shaping the industry&apos;s future.</description>
-      <pubDate>Sat, 03 Jan 2026 06:40:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>
