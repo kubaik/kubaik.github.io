@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 15:26:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 16:32:57 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Optimize app speed with expert tips and tools for Application Performance Monitoring.</description>
+      <pubDate>Sun, 04 Jan 2026 16:32:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>JWT Auth Made Easy</title>
       <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Develop a swift incident response plan with React Fast. Learn how to minimize downtime and protect your business.</description>
       <pubDate>Sat, 03 Jan 2026 17:23:47 +0000</pubDate>
       <guid>https://kubaik.github.io/react-fast/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore Computer Vision tech &amp; its innovative applications</description>
-      <pubDate>Sat, 03 Jan 2026 16:33:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
