@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 06:41:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 07:27:15 +0000</lastBuildDate>
+    <item>
+      <title>AI Forecasts</title>
+      <link>https://kubaik.github.io/ai-forecasts/</link>
+      <description>Unlock accurate predictions with AI time series forecasting techniques.</description>
+      <pubDate>Sun, 04 Jan 2026 07:27:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-forecasts/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Protect your apps with secure containers. Learn expert security best practices.</description>
       <pubDate>Sat, 03 Jan 2026 09:27:19 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn Distributed Systems Design principles and best practices to build scalable, efficient architectures.</description>
-      <pubDate>Sat, 03 Jan 2026 08:35:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
