@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 10:27:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 11:22:34 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
+      <pubDate>Sun, 04 Jan 2026 11:22:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Master AWS Cloud Architecture with expert tips and best practices.</description>
       <pubDate>Sat, 03 Jan 2026 13:33:53 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-aws/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize performance with profiling and benchmarking techniques.</description>
-      <pubDate>Sat, 03 Jan 2026 12:53:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
