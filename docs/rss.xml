@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 12:54:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 13:34:35 +0000</lastBuildDate>
+    <item>
+      <title>WAF: Web Security</title>
+      <link>https://kubaik.github.io/waf-web-security/</link>
+      <description>Protect your website with a Web Application Firewall (WAF). Learn how to safeguard against cyber threats.</description>
+      <pubDate>Sun, 04 Jan 2026 13:34:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-web-security/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Web3 and DApps. Learn how decentralization is revolutionizing the internet.</description>
       <pubDate>Sat, 03 Jan 2026 14:25:20 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-unlocked/</guid>
-    </item>
-    <item>
-      <title>Unlock AWS</title>
-      <link>https://kubaik.github.io/unlock-aws/</link>
-      <description>Master AWS Cloud Architecture with expert tips and best practices.</description>
-      <pubDate>Sat, 03 Jan 2026 13:33:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-aws/</guid>
     </item>
   </channel>
 </rss>
