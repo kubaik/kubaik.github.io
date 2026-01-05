@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 13:00:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 14:32:29 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Boost efficiency with DevOps best practices &amp; culture tips.</description>
+      <pubDate>Mon, 05 Jan 2026 14:32:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, transforming human-AI interaction.</description>
       <pubDate>Sun, 04 Jan 2026 14:24:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-evolved/</guid>
-    </item>
-    <item>
-      <title>WAF: Web Security</title>
-      <link>https://kubaik.github.io/waf-web-security/</link>
-      <description>Protect your website with a Web Application Firewall (WAF). Learn how to safeguard against cyber threats.</description>
-      <pubDate>Sun, 04 Jan 2026 13:34:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-web-security/</guid>
     </item>
   </channel>
 </rss>
