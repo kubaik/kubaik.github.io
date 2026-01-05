@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 17:28:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 18:42:38 +0000</lastBuildDate>
+    <item>
+      <title>Cache Smarter</title>
+      <link>https://kubaik.github.io/cache-smarter/</link>
+      <description>Boost app speed with smart caching. Learn Redis &amp; Memcached strategies.</description>
+      <pubDate>Mon, 05 Jan 2026 18:42:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/cache-smarter/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn Kotlin for backend development and boost your server-side skills.</description>
       <pubDate>Sun, 04 Jan 2026 18:37:17 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-backend/</guid>
-    </item>
-    <item>
-      <title>AutoML Pipelines</title>
-      <link>https://kubaik.github.io/automl-pipelines/</link>
-      <description>Simplify MLOps with AutoML pipelines. Learn how to automate ML workflows for efficiency and scalability.</description>
-      <pubDate>Sun, 04 Jan 2026 17:23:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-pipelines/</guid>
     </item>
   </channel>
 </rss>
