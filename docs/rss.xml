@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jan 2026 23:26:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 02:27:35 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn how high availability systems ensure 24/7 uptime and minimize downtime for maximum productivity.</description>
+      <pubDate>Mon, 05 Jan 2026 02:27:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Smart Contract Dev</title>
       <link>https://kubaik.github.io/smart-contract-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake Architecture basics &amp; best practices in our introductory guide, Data Lake 101.</description>
       <pubDate>Sun, 04 Jan 2026 05:32:36 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>Double Vision: Digital Twins</title>
-      <link>https://kubaik.github.io/double-vision-digital-twins/</link>
-      <description>Explore Digital Twin tech &amp; its revolutionary impact on industries, transforming operations with virtual replicas.</description>
-      <pubDate>Sun, 04 Jan 2026 04:14:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-vision-digital-twins/</guid>
     </item>
   </channel>
 </rss>
