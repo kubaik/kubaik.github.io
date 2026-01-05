@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 04:20:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 05:40:35 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud expenses with expert optimization tips and strategies.</description>
+      <pubDate>Mon, 05 Jan 2026 05:40:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Write to Inform</title>
       <link>https://kubaik.github.io/write-to-inform/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI time series forecasting techniques.</description>
       <pubDate>Sun, 04 Jan 2026 07:27:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Blockchain 101</title>
-      <link>https://kubaik.github.io/blockchain-101/</link>
-      <description>Unlock blockchain basics: learn how it works, benefits &amp; real-world uses.</description>
-      <pubDate>Sun, 04 Jan 2026 06:40:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-101/</guid>
     </item>
   </channel>
 </rss>
