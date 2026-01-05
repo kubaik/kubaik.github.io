@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 05:40:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 06:50:21 +0000</lastBuildDate>
+    <item>
+      <title>Vuln Free</title>
+      <link>https://kubaik.github.io/vuln-free/</link>
+      <description>Stay ahead of threats with effective vulnerability management strategies.</description>
+      <pubDate>Mon, 05 Jan 2026 06:50:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuln-free/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Unlock secure auth with OAuth 2.0 &amp; OpenID Connect. Learn the basics &amp; benefits.</description>
       <pubDate>Sun, 04 Jan 2026 08:36:09 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>AI Forecasts</title>
-      <link>https://kubaik.github.io/ai-forecasts/</link>
-      <description>Unlock accurate predictions with AI time series forecasting techniques.</description>
-      <pubDate>Sun, 04 Jan 2026 07:27:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasts/</guid>
     </item>
   </channel>
 </rss>
