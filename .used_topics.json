@@ -107,5 +107,6 @@
   "API Testing Tools (Postman, Insomnia)",
   "Code Review Best Practices",
   "DevOps Best Practices and Culture",
-  "AI Model Training Best Practices"
+  "AI Model Training Best Practices",
+  "Canary Deployments"
 ]
