@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 11:26:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 13:00:58 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Mon, 05 Jan 2026 13:00:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>API Testing Simplified</title>
       <link>https://kubaik.github.io/api-testing-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with a Web Application Firewall (WAF). Learn how to safeguard against cyber threats.</description>
       <pubDate>Sun, 04 Jan 2026 13:34:27 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-web-security/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Sun, 04 Jan 2026 12:54:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
