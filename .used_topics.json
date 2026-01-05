@@ -109,5 +109,6 @@
   "DevOps Best Practices and Culture",
   "AI Model Training Best Practices",
   "Canary Deployments",
-  "Android Development with Kotlin"
+  "Android Development with Kotlin",
+  "Caching Strategies (Redis, Memcached)"
 ]
