@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 19:26:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 20:33:28 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Unlock agile testing with BDD Simplified. Learn behavior-driven development basics.</description>
+      <pubDate>Mon, 05 Jan 2026 20:33:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover NFT tech&apos;s vast potential beyond art, exploring innovative use cases and applications.</description>
       <pubDate>Sun, 04 Jan 2026 20:30:40 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-beyond-art/</guid>
-    </item>
-    <item>
-      <title>Build Fast with .NET Core</title>
-      <link>https://kubaik.github.io/build-fast-with-net-core/</link>
-      <description>Boost dev speed with .NET Core. Learn how to build fast, scalable C# applications.</description>
-      <pubDate>Sun, 04 Jan 2026 19:21:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-fast-with-net-core/</guid>
     </item>
   </channel>
 </rss>
