@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 06:50:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 07:35:34 +0000</lastBuildDate>
+    <item>
+      <title>Secure APIs</title>
+      <link>https://kubaik.github.io/secure-apis/</link>
+      <description>Protect your APIs with expert security tips and best practices.</description>
+      <pubDate>Mon, 05 Jan 2026 07:35:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-apis/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Discover smart data storage solutions with our expert data warehousing insights.</description>
       <pubDate>Sun, 04 Jan 2026 09:26:41 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-data-storage/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Unlock secure auth with OAuth 2.0 &amp; OpenID Connect. Learn the basics &amp; benefits.</description>
-      <pubDate>Sun, 04 Jan 2026 08:36:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
