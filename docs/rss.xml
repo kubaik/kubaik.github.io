@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 08:42:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 09:40:25 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Mon, 05 Jan 2026 09:40:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
       <pubDate>Sun, 04 Jan 2026 11:22:26 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>VR Beyond Gaming</title>
-      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
-      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and revolutionizing experiences.</description>
-      <pubDate>Sun, 04 Jan 2026 10:27:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
     </item>
   </channel>
 </rss>
