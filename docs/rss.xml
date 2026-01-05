@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 07:35:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 08:42:42 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Boost efficiency with RPA. Learn how automation can transform your business.</description>
+      <pubDate>Mon, 05 Jan 2026 08:42:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Secure APIs</title>
       <link>https://kubaik.github.io/secure-apis/</link>
@@ -138,13 +145,6 @@
       <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and revolutionizing experiences.</description>
       <pubDate>Sun, 04 Jan 2026 10:27:29 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
-    </item>
-    <item>
-      <title>Smart Data Storage</title>
-      <link>https://kubaik.github.io/smart-data-storage/</link>
-      <description>Discover smart data storage solutions with our expert data warehousing insights.</description>
-      <pubDate>Sun, 04 Jan 2026 09:26:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-data-storage/</guid>
     </item>
   </channel>
 </rss>
