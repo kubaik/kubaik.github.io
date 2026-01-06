@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Jan 2026 23:27:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 02:11:15 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Learn Python for data science and unlock insights with our expert guide.</description>
+      <pubDate>Tue, 06 Jan 2026 02:11:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -138,13 +145,6 @@
       <description>Learn how high availability systems ensure 24/7 uptime and minimize downtime for maximum productivity.</description>
       <pubDate>Mon, 05 Jan 2026 02:27:26 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Smart Contract Dev</title>
-      <link>https://kubaik.github.io/smart-contract-dev/</link>
-      <description>Learn smart contract dev with expert guides and tutorials.</description>
-      <pubDate>Sun, 04 Jan 2026 23:26:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-contract-dev/</guid>
     </item>
   </channel>
 </rss>
