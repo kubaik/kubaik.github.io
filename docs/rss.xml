@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 14:30:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 15:31:06 +0000</lastBuildDate>
+    <item>
+      <title>AI Model Care</title>
+      <link>https://kubaik.github.io/ai-model-care/</link>
+      <description>Ensure peak AI performance with expert model monitoring and maintenance tips.</description>
+      <pubDate>Tue, 06 Jan 2026 15:30:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-model-care/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
       <pubDate>Mon, 05 Jan 2026 17:28:40 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Canary Deploy</title>
-      <link>https://kubaik.github.io/canary-deploy/</link>
-      <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new software releases.</description>
-      <pubDate>Mon, 05 Jan 2026 16:35:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-deploy/</guid>
     </item>
   </channel>
 </rss>
