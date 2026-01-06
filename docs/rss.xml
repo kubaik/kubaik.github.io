@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 19:23:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 20:32:15 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; blueprints for scalable development.</description>
+      <pubDate>Tue, 06 Jan 2026 20:32:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build scalable Ruby on Rails web apps with ease.</description>
       <pubDate>Mon, 05 Jan 2026 22:28:17 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-web-apps/</guid>
-    </item>
-    <item>
-      <title>ML Algos Demystified</title>
-      <link>https://kubaik.github.io/ml-algos-demystified/</link>
-      <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
-      <pubDate>Mon, 05 Jan 2026 21:28:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-algos-demystified/</guid>
     </item>
   </channel>
 </rss>
