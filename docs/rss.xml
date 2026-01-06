@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 05:32:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 06:45:09 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and advanced techniques.</description>
+      <pubDate>Tue, 06 Jan 2026 06:45:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead of threats with effective vulnerability management strategies.</description>
       <pubDate>Mon, 05 Jan 2026 06:50:13 +0000</pubDate>
       <guid>https://kubaik.github.io/vuln-free/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud expenses with expert optimization tips and strategies.</description>
-      <pubDate>Mon, 05 Jan 2026 05:40:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
