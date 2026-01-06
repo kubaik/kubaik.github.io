@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 20:32:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:28:09 +0000</lastBuildDate>
+    <item>
+      <title>Async Done Right</title>
+      <link>https://kubaik.github.io/async-done-right/</link>
+      <description>Boost app performance with async processing &amp; message queues. Learn how to do it right.</description>
+      <pubDate>Tue, 06 Jan 2026 21:28:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-done-right/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Streamline data workflows with efficient engineering pipelines.</description>
       <pubDate>Mon, 05 Jan 2026 23:27:03 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Learn to build scalable Ruby on Rails web apps with ease.</description>
-      <pubDate>Mon, 05 Jan 2026 22:28:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
