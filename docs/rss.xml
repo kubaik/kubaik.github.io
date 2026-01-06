@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 17:29:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 18:41:24 +0000</lastBuildDate>
+    <item>
+      <title>Crack Code Complexity</title>
+      <link>https://kubaik.github.io/crack-code-complexity/</link>
+      <description>Master algorithm complexity analysis &amp; optimize code performance</description>
+      <pubDate>Tue, 06 Jan 2026 18:41:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
+    </item>
     <item>
       <title>AI Agents: Build</title>
       <link>https://kubaik.github.io/ai-agents-build/</link>
@@ -138,13 +145,6 @@
       <description>Unlock agile testing with BDD Simplified. Learn behavior-driven development basics.</description>
       <pubDate>Mon, 05 Jan 2026 20:33:20 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Maximize engagement with effective push notifications. Learn how to implement push done right.</description>
-      <pubDate>Mon, 05 Jan 2026 19:26:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
