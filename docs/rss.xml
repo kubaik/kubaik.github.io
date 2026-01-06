@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 13:44:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 14:30:13 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Improve insights with clean data. Learn why data quality matters.</description>
+      <pubDate>Tue, 06 Jan 2026 14:30:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>Cyber Basics</title>
       <link>https://kubaik.github.io/cyber-basics/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new software releases.</description>
       <pubDate>Mon, 05 Jan 2026 16:35:43 +0000</pubDate>
       <guid>https://kubaik.github.io/canary-deploy/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Optimize AI model training with expert tips and best practices.</description>
-      <pubDate>Mon, 05 Jan 2026 15:31:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
