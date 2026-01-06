@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 06:45:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 07:32:52 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS, a modern JavaScript framework for building fast, scalable web apps.</description>
+      <pubDate>Tue, 06 Jan 2026 07:32:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Protect your APIs with expert security tips and best practices.</description>
       <pubDate>Mon, 05 Jan 2026 07:35:25 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-apis/</guid>
-    </item>
-    <item>
-      <title>Vuln Free</title>
-      <link>https://kubaik.github.io/vuln-free/</link>
-      <description>Stay ahead of threats with effective vulnerability management strategies.</description>
-      <pubDate>Mon, 05 Jan 2026 06:50:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-free/</guid>
     </item>
   </channel>
 </rss>
