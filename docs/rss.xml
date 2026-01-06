@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 07:32:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 08:40:39 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your mobile app from threats. Learn expert security tips and best practices.</description>
+      <pubDate>Tue, 06 Jan 2026 08:40:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with RPA. Learn how automation can transform your business.</description>
       <pubDate>Mon, 05 Jan 2026 08:42:34 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>Secure APIs</title>
-      <link>https://kubaik.github.io/secure-apis/</link>
-      <description>Protect your APIs with expert security tips and best practices.</description>
-      <pubDate>Mon, 05 Jan 2026 07:35:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-apis/</guid>
     </item>
   </channel>
 </rss>
