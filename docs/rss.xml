@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 09:34:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 10:31:52 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
+      <pubDate>Tue, 06 Jan 2026 10:31:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>BI Tools: Boost Insights</title>
       <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with Postman &amp; Insomnia. Learn how to streamline your workflow and ensure seamless integration.</description>
       <pubDate>Mon, 05 Jan 2026 11:26:22 +0000</pubDate>
       <guid>https://kubaik.github.io/api-testing-simplified/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Mon, 05 Jan 2026 09:40:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
