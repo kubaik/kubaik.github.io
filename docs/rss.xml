@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Jan 2026 08:40:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 09:34:00 +0000</lastBuildDate>
+    <item>
+      <title>BI Tools: Boost Insights</title>
+      <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
+      <description>Unlock data-driven insights with top BI tools and boost business performance.</description>
+      <pubDate>Tue, 06 Jan 2026 09:33:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-tools-boost-insights/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Mon, 05 Jan 2026 09:40:16 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Boost efficiency with RPA. Learn how automation can transform your business.</description>
-      <pubDate>Mon, 05 Jan 2026 08:42:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
