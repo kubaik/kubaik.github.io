@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/svelte-js/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/git-pro-tips/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ios-dev-with-swift/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/doc-right/</loc><priority>0.9</priority></url>
@@ -237,7 +238,6 @@
 <url><loc>https://kubaik.github.io/iot-device-control/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/federated-learning/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/unlock-soc-2-iso-27001/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/svelte-js/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/stop-ddos-attacks/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/scale-up-replicate-shard/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ml-anomaly-detection/</loc><priority>0.9</priority></url>
