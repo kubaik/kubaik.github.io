@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 22:28:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 23:27:32 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
+      <pubDate>Wed, 07 Jan 2026 23:27:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert tools and solutions.</description>
       <pubDate>Wed, 07 Jan 2026 04:05:28 +0000</pubDate>
       <guid>https://kubaik.github.io/db-boosters/</guid>
-    </item>
-    <item>
-      <title>Lazy Load Now</title>
-      <link>https://kubaik.github.io/lazy-load-now/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
-      <pubDate>Wed, 07 Jan 2026 02:10:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-now/</guid>
     </item>
   </channel>
 </rss>
