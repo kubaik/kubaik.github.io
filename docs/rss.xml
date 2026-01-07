@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 13:00:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 13:48:41 +0000</lastBuildDate>
+    <item>
+      <title>Boost ASO</title>
+      <link>https://kubaik.github.io/boost-aso/</link>
+      <description>Maximize app visibility with expert ASO tips and strategies.</description>
+      <pubDate>Wed, 07 Jan 2026 13:48:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-aso/</guid>
+    </item>
     <item>
       <title>DLNN: AI Evolved</title>
       <link>https://kubaik.github.io/dlnn-ai-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Ensure peak AI performance with expert model monitoring and maintenance tips.</description>
       <pubDate>Tue, 06 Jan 2026 15:30:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-model-care/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve insights with clean data. Learn why data quality matters.</description>
-      <pubDate>Tue, 06 Jan 2026 14:30:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
