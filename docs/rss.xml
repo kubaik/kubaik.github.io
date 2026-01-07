@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 19:26:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 20:33:35 +0000</lastBuildDate>
+    <item>
+      <title>Snowflake Unleashed</title>
+      <link>https://kubaik.github.io/snowflake-unleashed/</link>
+      <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform, a game-changer in cloud-based data warehousing.</description>
+      <pubDate>Wed, 07 Jan 2026 20:33:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with pair programming techniques and best practices.</description>
       <pubDate>Tue, 06 Jan 2026 22:28:39 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>Async Done Right</title>
-      <link>https://kubaik.github.io/async-done-right/</link>
-      <description>Boost app performance with async processing &amp; message queues. Learn how to do it right.</description>
-      <pubDate>Tue, 06 Jan 2026 21:28:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-done-right/</guid>
     </item>
   </channel>
 </rss>
