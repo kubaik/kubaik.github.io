@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 15:33:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 16:39:11 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Discover edge computing applications transforming industries with real-time data processing.</description>
+      <pubDate>Wed, 07 Jan 2026 16:39:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Master algorithm complexity analysis &amp; optimize code performance</description>
       <pubDate>Tue, 06 Jan 2026 18:41:15 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-code-complexity/</guid>
-    </item>
-    <item>
-      <title>AI Agents: Build</title>
-      <link>https://kubaik.github.io/ai-agents-build/</link>
-      <description>Learn to build AI agents with our expert guide, covering development and implementation.</description>
-      <pubDate>Tue, 06 Jan 2026 17:29:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-build/</guid>
     </item>
   </channel>
 </rss>
