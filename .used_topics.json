@@ -136,5 +136,6 @@
   "Backend Architecture Patterns",
   "Message Queues and Async Processing",
   "Pair Programming Techniques",
-  "Database Design and Normalization"
+  "Database Design and Normalization",
+  "Lazy Loading Implementation"
 ]
