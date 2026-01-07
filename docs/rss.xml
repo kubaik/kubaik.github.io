@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 06:44:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 07:31:53 +0000</lastBuildDate>
+    <item>
+      <title>Block Bounty</title>
+      <link>https://kubaik.github.io/block-bounty/</link>
+      <description>Unlock crypto rewards with Block Bounty. Discover blockchain&apos;s best-kept secrets.</description>
+      <pubDate>Wed, 07 Jan 2026 07:31:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-bounty/</guid>
+    </item>
     <item>
       <title>Tech Interview Prep</title>
       <link>https://kubaik.github.io/tech-interview-prep/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data-driven insights with top BI tools and boost business performance.</description>
       <pubDate>Tue, 06 Jan 2026 09:33:51 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-tools-boost-insights/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your mobile app from threats. Learn expert security tips and best practices.</description>
-      <pubDate>Tue, 06 Jan 2026 08:40:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
