@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 21:28:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 22:28:25 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Wed, 07 Jan 2026 22:28:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
       <pubDate>Wed, 07 Jan 2026 02:10:50 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-now/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn database design best practices and normalization techniques.</description>
-      <pubDate>Tue, 06 Jan 2026 23:27:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
