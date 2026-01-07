@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 20:33:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 21:28:00 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Accelerated</title>
+      <link>https://kubaik.github.io/automl-accelerated/</link>
+      <description>Unlock efficient AI with AutoML Accelerated. Discover Neural Architecture Search and automate ML model development.</description>
+      <pubDate>Wed, 07 Jan 2026 21:27:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-accelerated/</guid>
+    </item>
     <item>
       <title>Snowflake Unleashed</title>
       <link>https://kubaik.github.io/snowflake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn database design best practices and normalization techniques.</description>
       <pubDate>Tue, 06 Jan 2026 23:27:53 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques and best practices.</description>
-      <pubDate>Tue, 06 Jan 2026 22:28:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
