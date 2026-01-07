@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 18:42:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 19:26:17 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP</title>
+      <link>https://kubaik.github.io/unlock-gcp/</link>
+      <description>Unlock GCP: Master Google Cloud Platform &amp; boost innovation</description>
+      <pubDate>Wed, 07 Jan 2026 19:26:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with async processing &amp; message queues. Learn how to do it right.</description>
       <pubDate>Tue, 06 Jan 2026 21:28:00 +0000</pubDate>
       <guid>https://kubaik.github.io/async-done-right/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert Backend Architecture Patterns &amp; blueprints for scalable development.</description>
-      <pubDate>Tue, 06 Jan 2026 20:32:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
