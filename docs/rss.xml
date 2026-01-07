@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 05:32:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 06:44:09 +0000</lastBuildDate>
+    <item>
+      <title>Tech Interview Prep</title>
+      <link>https://kubaik.github.io/tech-interview-prep/</link>
+      <description>Boost your tech career with our expert interview prep guide.</description>
+      <pubDate>Wed, 07 Jan 2026 06:44:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Protect your mobile app from threats. Learn expert security tips and best practices.</description>
       <pubDate>Tue, 06 Jan 2026 08:40:29 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Discover Svelte JS, a modern JavaScript framework for building fast, scalable web apps.</description>
-      <pubDate>Tue, 06 Jan 2026 07:32:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
