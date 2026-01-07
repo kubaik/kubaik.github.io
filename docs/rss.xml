@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 17:32:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 18:42:36 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up</title>
+      <link>https://kubaik.github.io/speed-up/</link>
+      <description>Boost website speed with expert tips and techniques for web performance optimization.</description>
+      <pubDate>Wed, 07 Jan 2026 18:42:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; blueprints for scalable development.</description>
       <pubDate>Tue, 06 Jan 2026 20:32:07 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline coding with Auto Dev Flow. Learn how to automate your workflow for increased productivity.</description>
-      <pubDate>Tue, 06 Jan 2026 19:23:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
