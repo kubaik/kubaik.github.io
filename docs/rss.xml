@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 02:10:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 04:05:37 +0000</lastBuildDate>
+    <item>
+      <title>DB Boosters</title>
+      <link>https://kubaik.github.io/db-boosters/</link>
+      <description>Boost database performance with expert tools and solutions.</description>
+      <pubDate>Wed, 07 Jan 2026 04:05:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-boosters/</guid>
+    </item>
     <item>
       <title>Lazy Load Now</title>
       <link>https://kubaik.github.io/lazy-load-now/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and advanced techniques.</description>
       <pubDate>Tue, 06 Jan 2026 06:45:01 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>iOS Dev with Swift</title>
-      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
-      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
-      <pubDate>Tue, 06 Jan 2026 05:32:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
     </item>
   </channel>
 </rss>
