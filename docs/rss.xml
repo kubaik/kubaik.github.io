@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 07:31:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 08:40:01 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Shield</title>
+      <link>https://kubaik.github.io/ddos-shield/</link>
+      <description>Safeguard your site with expert DDoS protection strategies</description>
+      <pubDate>Wed, 07 Jan 2026 08:39:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-shield/</guid>
+    </item>
     <item>
       <title>Block Bounty</title>
       <link>https://kubaik.github.io/block-bounty/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
       <pubDate>Tue, 06 Jan 2026 10:31:43 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>BI Tools: Boost Insights</title>
-      <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
-      <description>Unlock data-driven insights with top BI tools and boost business performance.</description>
-      <pubDate>Tue, 06 Jan 2026 09:33:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-tools-boost-insights/</guid>
     </item>
   </channel>
 </rss>
