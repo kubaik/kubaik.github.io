@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 13:48:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 14:31:55 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway: 5 Key Patterns</title>
+      <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
+      <description>Learn 5 essential API Gateway patterns to improve security, scalability, and performance.</description>
+      <pubDate>Wed, 07 Jan 2026 14:31:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
+    </item>
     <item>
       <title>Boost ASO</title>
       <link>https://kubaik.github.io/boost-aso/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles and best practices for scalable, maintainable architectures.</description>
       <pubDate>Tue, 06 Jan 2026 16:38:31 +0000</pubDate>
       <guid>https://kubaik.github.io/rest-done-right/</guid>
-    </item>
-    <item>
-      <title>AI Model Care</title>
-      <link>https://kubaik.github.io/ai-model-care/</link>
-      <description>Ensure peak AI performance with expert model monitoring and maintenance tips.</description>
-      <pubDate>Tue, 06 Jan 2026 15:30:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-care/</guid>
     </item>
   </channel>
 </rss>
