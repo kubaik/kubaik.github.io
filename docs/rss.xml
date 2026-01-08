@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 21:29:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 22:28:46 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn design patterns in practice, expert tips and real-world examples to elevate your design skills.</description>
+      <pubDate>Thu, 08 Jan 2026 22:28:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your business with expert security compliance solutions for SOC 2 and ISO 27001 certification.</description>
       <pubDate>Thu, 08 Jan 2026 02:11:03 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-biz/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
-      <pubDate>Wed, 07 Jan 2026 23:27:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
