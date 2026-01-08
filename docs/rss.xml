@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jan 2026 23:27:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 02:11:12 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Biz</title>
+      <link>https://kubaik.github.io/secure-your-biz/</link>
+      <description>Safeguard your business with expert security compliance solutions for SOC 2 and ISO 27001 certification.</description>
+      <pubDate>Thu, 08 Jan 2026 02:11:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-biz/</guid>
+    </item>
     <item>
       <title>Visualize Smart</title>
       <link>https://kubaik.github.io/visualize-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; protect your network with a &apos;never trust, always verify&apos; approach.</description>
       <pubDate>Wed, 07 Jan 2026 05:32:26 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>DB Boosters</title>
-      <link>https://kubaik.github.io/db-boosters/</link>
-      <description>Boost database performance with expert tools and solutions.</description>
-      <pubDate>Wed, 07 Jan 2026 04:05:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-boosters/</guid>
     </item>
   </channel>
 </rss>
