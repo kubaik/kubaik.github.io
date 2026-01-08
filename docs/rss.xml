@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 18:38:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 19:26:12 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
+      <pubDate>Thu, 08 Jan 2026 19:26:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with AutoML Accelerated. Discover Neural Architecture Search and automate ML model development.</description>
       <pubDate>Wed, 07 Jan 2026 21:27:51 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>Snowflake Unleashed</title>
-      <link>https://kubaik.github.io/snowflake-unleashed/</link>
-      <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform, a game-changer in cloud-based data warehousing.</description>
-      <pubDate>Wed, 07 Jan 2026 20:33:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
     </item>
   </channel>
 </rss>
