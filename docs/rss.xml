@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 13:00:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 13:49:41 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Learn expert-approved React best practices and patterns for efficient coding.</description>
+      <pubDate>Thu, 08 Jan 2026 13:49:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Learn to craft intelligent Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
       <pubDate>Wed, 07 Jan 2026 15:33:33 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>API Gateway: 5 Key Patterns</title>
-      <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
-      <description>Learn 5 essential API Gateway patterns to improve security, scalability, and performance.</description>
-      <pubDate>Wed, 07 Jan 2026 14:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
     </item>
   </channel>
 </rss>
