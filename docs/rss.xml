@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 11:27:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 13:00:33 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Boost database performance with expert query optimization tips and techniques.</description>
+      <pubDate>Thu, 08 Jan 2026 13:00:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Learn 5 essential API Gateway patterns to improve security, scalability, and performance.</description>
       <pubDate>Wed, 07 Jan 2026 14:31:46 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
-    </item>
-    <item>
-      <title>Boost ASO</title>
-      <link>https://kubaik.github.io/boost-aso/</link>
-      <description>Maximize app visibility with expert ASO tips and strategies.</description>
-      <pubDate>Wed, 07 Jan 2026 13:48:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-aso/</guid>
     </item>
   </channel>
 </rss>
