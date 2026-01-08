@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 05:32:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 06:44:09 +0000</lastBuildDate>
+    <item>
+      <title>AR Boom</title>
+      <link>https://kubaik.github.io/ar-boom/</link>
+      <description>Discover the future of tech with AR development trends and innovations in our latest blog post.</description>
+      <pubDate>Thu, 08 Jan 2026 06:44:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-boom/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your site with expert DDoS protection strategies</description>
       <pubDate>Wed, 07 Jan 2026 08:39:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-shield/</guid>
-    </item>
-    <item>
-      <title>Block Bounty</title>
-      <link>https://kubaik.github.io/block-bounty/</link>
-      <description>Unlock crypto rewards with Block Bounty. Discover blockchain&apos;s best-kept secrets.</description>
-      <pubDate>Wed, 07 Jan 2026 07:31:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/block-bounty/</guid>
     </item>
   </channel>
 </rss>
