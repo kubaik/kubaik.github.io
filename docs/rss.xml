@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 17:33:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 18:38:39 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for better SEO.</description>
+      <pubDate>Thu, 08 Jan 2026 18:38:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>BaaS Simplified</title>
       <link>https://kubaik.github.io/baas-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data&apos;s full potential with Snowflake Cloud Data Platform, a game-changer in cloud-based data warehousing.</description>
       <pubDate>Wed, 07 Jan 2026 20:33:26 +0000</pubDate>
       <guid>https://kubaik.github.io/snowflake-unleashed/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Unlock GCP: Master Google Cloud Platform &amp; boost innovation</description>
-      <pubDate>Wed, 07 Jan 2026 19:26:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
