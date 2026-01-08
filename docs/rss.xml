@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 02:11:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 04:05:25 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Essentials</title>
+      <link>https://kubaik.github.io/siem-essentials/</link>
+      <description>Master SIEM essentials for effective security monitoring &amp; threat detection.</description>
+      <pubDate>Thu, 08 Jan 2026 04:05:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-essentials/</guid>
+    </item>
     <item>
       <title>Secure Your Biz</title>
       <link>https://kubaik.github.io/secure-your-biz/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech career with our expert interview prep guide.</description>
       <pubDate>Wed, 07 Jan 2026 06:44:00 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-prep/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; protect your network with a &apos;never trust, always verify&apos; approach.</description>
-      <pubDate>Wed, 07 Jan 2026 05:32:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
