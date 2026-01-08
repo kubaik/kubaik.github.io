@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 19:26:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 20:33:14 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution: faster speeds, new possibilities.</description>
+      <pubDate>Thu, 08 Jan 2026 20:33:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
       <pubDate>Wed, 07 Jan 2026 22:28:17 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Unlock efficient AI with AutoML Accelerated. Discover Neural Architecture Search and automate ML model development.</description>
-      <pubDate>Wed, 07 Jan 2026 21:27:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
