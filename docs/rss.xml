@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 04:05:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 05:32:13 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Thu, 08 Jan 2026 05:32:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock crypto rewards with Block Bounty. Discover blockchain&apos;s best-kept secrets.</description>
       <pubDate>Wed, 07 Jan 2026 07:31:45 +0000</pubDate>
       <guid>https://kubaik.github.io/block-bounty/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Prep</title>
-      <link>https://kubaik.github.io/tech-interview-prep/</link>
-      <description>Boost your tech career with our expert interview prep guide.</description>
-      <pubDate>Wed, 07 Jan 2026 06:44:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
     </item>
   </channel>
 </rss>
