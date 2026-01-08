@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 14:32:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 15:34:00 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Thu, 08 Jan 2026 15:33:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Discover edge computing applications transforming industries with real-time data processing.</description>
       <pubDate>Wed, 07 Jan 2026 16:39:02 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intelligent Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
-      <pubDate>Wed, 07 Jan 2026 15:33:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
