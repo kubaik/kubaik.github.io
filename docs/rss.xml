@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 20:33:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jan 2026 21:29:41 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
+      <description>A comprehensive guide to Disaster Recovery Planning covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 08 Jan 2026 21:29:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
       <pubDate>Wed, 07 Jan 2026 23:27:23 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Wed, 07 Jan 2026 22:28:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
