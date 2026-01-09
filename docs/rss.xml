@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 06:44:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 07:32:01 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock flexibility with Multi-Cloud Architecture. Learn how to thrive in a cloud-evolved world.</description>
+      <pubDate>Fri, 09 Jan 2026 07:31:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>SRE 101</title>
       <link>https://kubaik.github.io/sre-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to ensure data quality, security &amp; compliance.</description>
       <pubDate>Thu, 08 Jan 2026 09:35:52 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Boost app security with SAST/DAST testing. Learn how to identify vulnerabilities.</description>
-      <pubDate>Thu, 08 Jan 2026 08:39:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
