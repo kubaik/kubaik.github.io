@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 20:32:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 21:27:59 +0000</lastBuildDate>
+    <item>
+      <title>C# Core Mastery</title>
+      <link>https://kubaik.github.io/c-core-mastery/</link>
+      <description>Unlock C# .NET Core mastery, boost app performance &amp; scalability with expert guides and tutorials.</description>
+      <pubDate>Fri, 09 Jan 2026 21:27:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/c-core-mastery/</guid>
+    </item>
     <item>
       <title>IoT Sorted</title>
       <link>https://kubaik.github.io/iot-sorted/</link>
@@ -138,13 +145,6 @@
       <description>Learn design patterns in practice, expert tips and real-world examples to elevate your design skills.</description>
       <pubDate>Thu, 08 Jan 2026 22:28:37 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
-      <description>A comprehensive guide to Disaster Recovery Planning covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 08 Jan 2026 21:29:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</guid>
     </item>
   </channel>
 </rss>
