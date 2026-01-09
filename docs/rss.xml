@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Jan 2026 23:24:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 02:12:14 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Discover ML anomaly detection techniques to identify unusual patterns in data.</description>
+      <pubDate>Fri, 09 Jan 2026 02:12:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>AI Done Right</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with expert database indexing strategies.</description>
       <pubDate>Thu, 08 Jan 2026 05:32:04 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Master SIEM essentials for effective security monitoring &amp; threat detection.</description>
-      <pubDate>Thu, 08 Jan 2026 04:05:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
