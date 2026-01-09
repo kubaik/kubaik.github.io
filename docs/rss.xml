@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 13:45:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 14:31:23 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Streamline AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Fri, 09 Jan 2026 14:31:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>Data in Motion</title>
       <link>https://kubaik.github.io/data-in-motion/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks.</description>
       <pubDate>Thu, 08 Jan 2026 16:39:19 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Thu, 08 Jan 2026 15:33:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
