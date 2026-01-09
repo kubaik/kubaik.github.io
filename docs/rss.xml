@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 17:29:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 18:42:08 +0000</lastBuildDate>
+    <item>
+      <title>Load Less</title>
+      <link>https://kubaik.github.io/load-less/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement Load Less for a faster user experience.</description>
+      <pubDate>Fri, 09 Jan 2026 18:41:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-less/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
       <pubDate>Thu, 08 Jan 2026 19:26:03 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for better SEO.</description>
-      <pubDate>Thu, 08 Jan 2026 18:38:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
