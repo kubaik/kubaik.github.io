@@ -2774,15 +2774,15 @@
     "topic": "Technical Debt Management"
   },
   "service_mesh_architecture": {
-    "timestamp": "2025-12-27T11:22:18.318123",
+    "timestamp": "2026-01-09T15:31:33.590253",
     "hashtags": [
       "CloudNative",
-      "Microservices",
       "ServiceMesh",
+      "Microservices",
       "Kubernetes",
-      "DevOps",
-      "CloudArchitecture",
-      "ServerlessComputing"
+      "DevOpsTools",
+      "Observability",
+      "ServerlessArchitecture"
     ],
     "topic": "Service Mesh Architecture"
   },
