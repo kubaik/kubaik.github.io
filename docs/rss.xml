@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 09:35:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 10:31:44 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Learn Apache Kafka Streams for real-time data processing and event-driven architectures.</description>
+      <pubDate>Fri, 09 Jan 2026 10:31:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>TypeScript Pro Tips</title>
       <link>https://kubaik.github.io/typescript-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips and techniques.</description>
       <pubDate>Thu, 08 Jan 2026 13:00:24 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Thu, 08 Jan 2026 11:27:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
