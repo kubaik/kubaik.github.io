@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 14:31:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 15:31:42 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Unlock microservices management with Service Mesh Architecture. Learn how to &apos;Mesh Up&apos; your apps for scalability &amp; security.</description>
+      <pubDate>Fri, 09 Jan 2026 15:31:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>Deploy AI Smarter</title>
       <link>https://kubaik.github.io/deploy-ai-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock mobile app potential with BaaS. Learn how to simplify development and boost performance.</description>
       <pubDate>Thu, 08 Jan 2026 17:33:14 +0000</pubDate>
       <guid>https://kubaik.github.io/baas-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Thu, 08 Jan 2026 16:39:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
