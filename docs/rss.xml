@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 02:12:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 04:05:23 +0000</lastBuildDate>
+    <item>
+      <title>EDA Unleashed</title>
+      <link>https://kubaik.github.io/eda-unleashed/</link>
+      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
+      <pubDate>Fri, 09 Jan 2026 04:05:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-unleashed/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with AR development trends and innovations in our latest blog post.</description>
       <pubDate>Thu, 08 Jan 2026 06:44:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-boom/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Thu, 08 Jan 2026 05:32:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
