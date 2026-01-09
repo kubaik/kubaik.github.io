@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 05:32:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 06:44:19 +0000</lastBuildDate>
+    <item>
+      <title>SRE 101</title>
+      <link>https://kubaik.github.io/sre-101/</link>
+      <description>Learn Site Reliability Engineering basics &amp; improve system reliability</description>
+      <pubDate>Fri, 09 Jan 2026 06:44:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-101/</guid>
+    </item>
     <item>
       <title>Boost WA Speed</title>
       <link>https://kubaik.github.io/boost-wa-speed/</link>
@@ -138,13 +145,6 @@
       <description>Boost app security with SAST/DAST testing. Learn how to identify vulnerabilities.</description>
       <pubDate>Thu, 08 Jan 2026 08:39:42 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Limit the Load</title>
-      <link>https://kubaik.github.io/limit-the-load/</link>
-      <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure smooth system performance.</description>
-      <pubDate>Thu, 08 Jan 2026 07:31:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-load/</guid>
     </item>
   </channel>
 </rss>
