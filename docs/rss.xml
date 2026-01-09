@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 10:31:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 11:26:29 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Fri, 09 Jan 2026 11:26:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert-approved React best practices and patterns for efficient coding.</description>
       <pubDate>Thu, 08 Jan 2026 13:49:32 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips and techniques.</description>
-      <pubDate>Thu, 08 Jan 2026 13:00:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
