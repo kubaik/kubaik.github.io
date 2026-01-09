@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 15:31:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 16:37:36 +0000</lastBuildDate>
+    <item>
+      <title>Terraform: Code Your Infrastructure</title>
+      <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
+      <description>Learn Terraform: automate infrastructure deployment with code. Boost efficiency &amp; scalability.</description>
+      <pubDate>Fri, 09 Jan 2026 16:37:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
+    </item>
     <item>
       <title>Mesh Up</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for better SEO.</description>
       <pubDate>Thu, 08 Jan 2026 18:38:30 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>BaaS Simplified</title>
-      <link>https://kubaik.github.io/baas-simplified/</link>
-      <description>Unlock mobile app potential with BaaS. Learn how to simplify development and boost performance.</description>
-      <pubDate>Thu, 08 Jan 2026 17:33:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/baas-simplified/</guid>
     </item>
   </channel>
 </rss>

@@ -191,5 +191,6 @@
   "Debugging Techniques",
   "Real-Time Data Processing",
   "AI Model Deployment Strategies",
-  "Service Mesh Architecture"
+  "Service Mesh Architecture",
+  "Infrastructure as Code (Terraform)"
 ]
