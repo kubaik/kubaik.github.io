@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 04:05:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 05:32:53 +0000</lastBuildDate>
+    <item>
+      <title>Boost WA Speed</title>
+      <link>https://kubaik.github.io/boost-wa-speed/</link>
+      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
+      <pubDate>Fri, 09 Jan 2026 05:32:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
+    </item>
     <item>
       <title>EDA Unleashed</title>
       <link>https://kubaik.github.io/eda-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure smooth system performance.</description>
       <pubDate>Thu, 08 Jan 2026 07:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-load/</guid>
-    </item>
-    <item>
-      <title>AR Boom</title>
-      <link>https://kubaik.github.io/ar-boom/</link>
-      <description>Discover the future of tech with AR development trends and innovations in our latest blog post.</description>
-      <pubDate>Thu, 08 Jan 2026 06:44:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-boom/</guid>
     </item>
   </channel>
 </rss>
