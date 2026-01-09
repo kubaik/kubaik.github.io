@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 21:27:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 22:28:27 +0000</lastBuildDate>
+    <item>
+      <title>Detect Anomalies</title>
+      <link>https://kubaik.github.io/detect-anomalies/</link>
+      <description>Uncover hidden patterns with anomaly detection using machine learning. Learn more.</description>
+      <pubDate>Fri, 09 Jan 2026 22:28:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/detect-anomalies/</guid>
+    </item>
     <item>
       <title>C# Core Mastery</title>
       <link>https://kubaik.github.io/c-core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with ethics &amp; responsibility. Learn how to do AI right.</description>
       <pubDate>Thu, 08 Jan 2026 23:24:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-done-right/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn design patterns in practice, expert tips and real-world examples to elevate your design skills.</description>
-      <pubDate>Thu, 08 Jan 2026 22:28:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
