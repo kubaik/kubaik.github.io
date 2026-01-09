@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 12:59:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 13:45:49 +0000</lastBuildDate>
+    <item>
+      <title>Data in Motion</title>
+      <link>https://kubaik.github.io/data-in-motion/</link>
+      <description>Unlock real-time insights with data in motion. Learn how to process data instantly.</description>
+      <pubDate>Fri, 09 Jan 2026 13:45:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-in-motion/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
       <pubDate>Thu, 08 Jan 2026 15:33:50 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert frontend performance tuning tips.</description>
-      <pubDate>Thu, 08 Jan 2026 14:32:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
