@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/go-concurrency/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/load-less/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/debug-smarter/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/terraform-code-your-infrastructure/</loc><priority>0.9</priority></url>
@@ -146,7 +147,6 @@
 <url><loc>https://kubaik.github.io/iot-blueprint/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/secure-cloud/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/engineer-your-time/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/go-concurrency/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/log-on-top-solutions/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/boost-code-top-vs-extensions/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/blue-green-done/</loc><priority>0.9</priority></url>
