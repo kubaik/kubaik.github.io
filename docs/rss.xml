@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 21:25:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 22:26:47 +0000</lastBuildDate>
+    <item>
+      <title>SRE: Fixing Tech</title>
+      <link>https://kubaik.github.io/sre-fixing-tech/</link>
+      <description>Learn how Site Reliability Engineering (SRE) optimizes tech systems for reliability &amp; efficiency</description>
+      <pubDate>Sat, 10 Jan 2026 22:26:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
+    </item>
     <item>
       <title>Tech Interview Prep</title>
       <link>https://kubaik.github.io/tech-interview-prep/</link>
@@ -138,13 +145,6 @@
       <description>Streamline AI model deployment with expert strategies and best practices.</description>
       <pubDate>Sat, 10 Jan 2026 03:59:27 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smart/</guid>
-    </item>
-    <item>
-      <title>Unlock Async Power</title>
-      <link>https://kubaik.github.io/unlock-async-power/</link>
-      <description>Boost app performance with async processing &amp; message queues. Learn how to unlock their power.</description>
-      <pubDate>Sat, 10 Jan 2026 02:07:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-async-power/</guid>
     </item>
   </channel>
 </rss>
