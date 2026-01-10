@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 11:22:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 12:53:41 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with our expert guide and secure your apps with ease.</description>
+      <pubDate>Sat, 10 Jan 2026 12:53:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>Vector DBs</title>
       <link>https://kubaik.github.io/vector-dbs/</link>
@@ -138,13 +145,6 @@
       <description>Unlock microservices management with Service Mesh Architecture. Learn how to &apos;Mesh Up&apos; your apps for scalability &amp; security.</description>
       <pubDate>Fri, 09 Jan 2026 15:31:33 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Fri, 09 Jan 2026 14:31:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
