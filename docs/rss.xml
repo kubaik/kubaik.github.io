@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 22:26:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 23:26:21 +0000</lastBuildDate>
+    <item>
+      <title>DW Made Easy</title>
+      <link>https://kubaik.github.io/dw-made-easy/</link>
+      <description>Simplify data management with DW Made Easy. Discover efficient data warehousing solutions.</description>
+      <pubDate>Sat, 10 Jan 2026 23:26:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/dw-made-easy/</guid>
+    </item>
     <item>
       <title>SRE: Fixing Tech</title>
       <link>https://kubaik.github.io/sre-fixing-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build a standout tech portfolio with our expert blueprint and boost your career prospects.</description>
       <pubDate>Sat, 10 Jan 2026 04:41:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-portfolio-blueprint/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smart</title>
-      <link>https://kubaik.github.io/deploy-ai-smart/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Sat, 10 Jan 2026 03:59:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smart/</guid>
     </item>
   </channel>
 </rss>
