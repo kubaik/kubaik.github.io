@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 05:29:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 06:39:29 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
+      <pubDate>Sat, 10 Jan 2026 06:39:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>GraphQL Mastery</title>
       <link>https://kubaik.github.io/graphql-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Discover 5 key feature engineering techniques to unlock data insights and boost model performance.</description>
       <pubDate>Fri, 09 Jan 2026 08:39:43 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-data-5-key-techniques/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock flexibility with Multi-Cloud Architecture. Learn how to thrive in a cloud-evolved world.</description>
-      <pubDate>Fri, 09 Jan 2026 07:31:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
