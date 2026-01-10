@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 04:41:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 05:29:00 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Mastery</title>
+      <link>https://kubaik.github.io/graphql-mastery/</link>
+      <description>Unlock GraphQL mastery: expert guides and tutorials for API development</description>
+      <pubDate>Sat, 10 Jan 2026 05:28:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-mastery/</guid>
+    </item>
     <item>
       <title>Tech Portfolio Blueprint</title>
       <link>https://kubaik.github.io/tech-portfolio-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Unlock flexibility with Multi-Cloud Architecture. Learn how to thrive in a cloud-evolved world.</description>
       <pubDate>Fri, 09 Jan 2026 07:31:52 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>SRE 101</title>
-      <link>https://kubaik.github.io/sre-101/</link>
-      <description>Learn Site Reliability Engineering basics &amp; improve system reliability</description>
-      <pubDate>Fri, 09 Jan 2026 06:44:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-101/</guid>
     </item>
   </channel>
 </rss>
