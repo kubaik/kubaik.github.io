@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 13:34:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 14:26:01 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Learn scalable design patterns to boost growth efficiently</description>
+      <pubDate>Sat, 10 Jan 2026 14:25:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Improve coding skills with expert debugging techniques and tools.</description>
       <pubDate>Fri, 09 Jan 2026 17:29:34 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-smarter/</guid>
-    </item>
-    <item>
-      <title>Terraform: Code Your Infrastructure</title>
-      <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
-      <description>Learn Terraform: automate infrastructure deployment with code. Boost efficiency &amp; scalability.</description>
-      <pubDate>Fri, 09 Jan 2026 16:37:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
     </item>
   </channel>
 </rss>
