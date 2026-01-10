@@ -1931,15 +1931,16 @@
     "topic": "Apache Kafka for Streaming"
   },
   "ruby_on_rails_web_apps": {
-    "timestamp": "2026-01-05T22:28:17.514269",
+    "timestamp": "2026-01-10T07:25:36.253956",
     "hashtags": [
       "RubyOnRails",
       "WebDevelopment",
       "FullStack",
       "CloudNative",
-      "ServerlessApps",
-      "DevOpsTools",
-      "CodingIsFun"
+      "DevOps",
+      "Serverless",
+      "CodingIsFun",
+      "WebApps"
     ],
     "topic": "Ruby on Rails Web Apps"
   },
