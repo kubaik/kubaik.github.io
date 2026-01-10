@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 12:53:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 13:34:09 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down</title>
+      <link>https://kubaik.github.io/lock-it-down/</link>
+      <description>Safeguard your data with encryption &amp; key management expertise. Learn how to &apos;Lock It Down&apos; and protect your digital assets.</description>
+      <pubDate>Sat, 10 Jan 2026 13:34:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down/</guid>
+    </item>
     <item>
       <title>JWT Auth Made Easy</title>
       <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: automate infrastructure deployment with code. Boost efficiency &amp; scalability.</description>
       <pubDate>Fri, 09 Jan 2026 16:37:28 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
-    </item>
-    <item>
-      <title>Mesh Up</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservices management with Service Mesh Architecture. Learn how to &apos;Mesh Up&apos; your apps for scalability &amp; security.</description>
-      <pubDate>Fri, 09 Jan 2026 15:31:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
