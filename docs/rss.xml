@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 14:26:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 15:26:39 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Sat, 10 Jan 2026 15:26:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement Load Less for a faster user experience.</description>
       <pubDate>Fri, 09 Jan 2026 18:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/load-less/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Improve coding skills with expert debugging techniques and tools.</description>
-      <pubDate>Fri, 09 Jan 2026 17:29:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
