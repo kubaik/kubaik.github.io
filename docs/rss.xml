@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 18:37:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 19:21:18 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Boost visibility into app performance with monitoring and observability insights.</description>
+      <pubDate>Sat, 10 Jan 2026 19:21:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>Boost ASO</title>
       <link>https://kubaik.github.io/boost-aso/</link>
@@ -138,13 +145,6 @@
       <description>Uncover hidden patterns with anomaly detection using machine learning. Learn more.</description>
       <pubDate>Fri, 09 Jan 2026 22:28:18 +0000</pubDate>
       <guid>https://kubaik.github.io/detect-anomalies/</guid>
-    </item>
-    <item>
-      <title>C# Core Mastery</title>
-      <link>https://kubaik.github.io/c-core-mastery/</link>
-      <description>Unlock C# .NET Core mastery, boost app performance &amp; scalability with expert guides and tutorials.</description>
-      <pubDate>Fri, 09 Jan 2026 21:27:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/c-core-mastery/</guid>
     </item>
   </channel>
 </rss>
