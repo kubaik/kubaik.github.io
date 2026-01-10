@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 02:08:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 03:59:36 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smart</title>
+      <link>https://kubaik.github.io/deploy-ai-smart/</link>
+      <description>Streamline AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Sat, 10 Jan 2026 03:59:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smart/</guid>
+    </item>
     <item>
       <title>Unlock Async Power</title>
       <link>https://kubaik.github.io/unlock-async-power/</link>
@@ -138,13 +145,6 @@
       <description>Optimize WebAssembly performance with expert tips and tricks.</description>
       <pubDate>Fri, 09 Jan 2026 05:32:44 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>EDA Unleashed</title>
-      <link>https://kubaik.github.io/eda-unleashed/</link>
-      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
-      <pubDate>Fri, 09 Jan 2026 04:05:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-unleashed/</guid>
     </item>
   </channel>
 </rss>
