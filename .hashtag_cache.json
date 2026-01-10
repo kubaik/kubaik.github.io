@@ -2706,16 +2706,15 @@
     "topic": "Hyperparameter Tuning Methods"
   },
   "aws_cloud_architecture": {
-    "timestamp": "2026-01-03T13:33:53.585179",
+    "timestamp": "2026-01-10T10:27:29.622671",
     "hashtags": [
       "CloudComputing",
       "AWSArchitecture",
       "ServerlessFirst",
-      "CloudNative",
-      "DevOpsTools",
+      "CloudNativeApps",
       "AIonCloud",
-      "MicroservicesArchitecture",
-      "DigitalTransformation"
+      "DevOpsTools",
+      "CloudSecurity"
     ],
     "topic": "AWS Cloud Architecture"
   },
