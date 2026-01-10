@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 20:29:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 21:25:01 +0000</lastBuildDate>
+    <item>
+      <title>Tech Interview Prep</title>
+      <link>https://kubaik.github.io/tech-interview-prep/</link>
+      <description>Ace your tech interview with our expert guide, tips &amp; tricks.</description>
+      <pubDate>Sat, 10 Jan 2026 21:24:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with async processing &amp; message queues. Learn how to unlock their power.</description>
       <pubDate>Sat, 10 Jan 2026 02:07:54 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-async-power/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Discover the basics of quantum computing and unlock its potential in our introductory guide, Quantum 101.</description>
-      <pubDate>Fri, 09 Jan 2026 23:27:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
