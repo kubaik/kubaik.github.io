@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 10:27:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 11:22:31 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs</title>
+      <link>https://kubaik.github.io/vector-dbs/</link>
+      <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
+      <pubDate>Sat, 10 Jan 2026 11:22:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs/</guid>
+    </item>
     <item>
       <title>AWS Cloud Blueprint</title>
       <link>https://kubaik.github.io/aws-cloud-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Streamline AI model deployment with expert strategies and best practices.</description>
       <pubDate>Fri, 09 Jan 2026 14:31:14 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
-    </item>
-    <item>
-      <title>Data in Motion</title>
-      <link>https://kubaik.github.io/data-in-motion/</link>
-      <description>Unlock real-time insights with data in motion. Learn how to process data instantly.</description>
-      <pubDate>Fri, 09 Jan 2026 13:45:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-in-motion/</guid>
     </item>
   </channel>
 </rss>
