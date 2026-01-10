@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 06:39:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 07:25:43 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
+      <pubDate>Sat, 10 Jan 2026 07:25:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Boost TypeScript skills with expert tips on advanced types and best practices.</description>
       <pubDate>Fri, 09 Jan 2026 09:35:15 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Unlock Data: 5 Key Techniques</title>
-      <link>https://kubaik.github.io/unlock-data-5-key-techniques/</link>
-      <description>Discover 5 key feature engineering techniques to unlock data insights and boost model performance.</description>
-      <pubDate>Fri, 09 Jan 2026 08:39:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-data-5-key-techniques/</guid>
     </item>
   </channel>
 </rss>
