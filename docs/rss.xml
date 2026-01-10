@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 17:24:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 18:37:54 +0000</lastBuildDate>
+    <item>
+      <title>Boost ASO</title>
+      <link>https://kubaik.github.io/boost-aso/</link>
+      <description>Maximize app visibility with expert ASO tips and strategies.</description>
+      <pubDate>Sat, 10 Jan 2026 18:37:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-aso/</guid>
+    </item>
     <item>
       <title>AutoML Boost</title>
       <link>https://kubaik.github.io/automl-boost/</link>
@@ -138,13 +145,6 @@
       <description>Unlock C# .NET Core mastery, boost app performance &amp; scalability with expert guides and tutorials.</description>
       <pubDate>Fri, 09 Jan 2026 21:27:50 +0000</pubDate>
       <guid>https://kubaik.github.io/c-core-mastery/</guid>
-    </item>
-    <item>
-      <title>IoT Sorted</title>
-      <link>https://kubaik.github.io/iot-sorted/</link>
-      <description>Simplify IoT device management with expert tips and solutions in &apos;IoT Sorted&apos; blog post.</description>
-      <pubDate>Fri, 09 Jan 2026 20:32:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-sorted/</guid>
     </item>
   </channel>
 </rss>
