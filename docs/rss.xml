@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 19:21:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 20:29:38 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP</title>
+      <link>https://kubaik.github.io/unlock-gcp/</link>
+      <description>Discover the power of Google Cloud Platform with Unlock GCP. Learn expert tips and tricks to maximize your cloud potential.</description>
+      <pubDate>Sat, 10 Jan 2026 20:29:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Discover the basics of quantum computing and unlock its potential in our introductory guide, Quantum 101.</description>
       <pubDate>Fri, 09 Jan 2026 23:27:18 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>Detect Anomalies</title>
-      <link>https://kubaik.github.io/detect-anomalies/</link>
-      <description>Uncover hidden patterns with anomaly detection using machine learning. Learn more.</description>
-      <pubDate>Fri, 09 Jan 2026 22:28:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/detect-anomalies/</guid>
     </item>
   </channel>
 </rss>
