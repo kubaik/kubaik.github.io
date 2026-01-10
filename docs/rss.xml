@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 03:59:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Jan 2026 04:41:43 +0000</lastBuildDate>
+    <item>
+      <title>Tech Portfolio Blueprint</title>
+      <link>https://kubaik.github.io/tech-portfolio-blueprint/</link>
+      <description>Learn to build a standout tech portfolio with our expert blueprint and boost your career prospects.</description>
+      <pubDate>Sat, 10 Jan 2026 04:41:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-portfolio-blueprint/</guid>
+    </item>
     <item>
       <title>Deploy AI Smart</title>
       <link>https://kubaik.github.io/deploy-ai-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn Site Reliability Engineering basics &amp; improve system reliability</description>
       <pubDate>Fri, 09 Jan 2026 06:44:10 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-101/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
-      <pubDate>Fri, 09 Jan 2026 05:32:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
