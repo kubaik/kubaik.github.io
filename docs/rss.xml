@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 08:35:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 09:28:15 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Sun, 11 Jan 2026 09:28:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Dev PM</title>
       <link>https://kubaik.github.io/dev-pm/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
       <pubDate>Sat, 10 Jan 2026 11:22:22 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>AWS Cloud Blueprint</title>
-      <link>https://kubaik.github.io/aws-cloud-blueprint/</link>
-      <description>Design a scalable AWS Cloud Architecture with our expert blueprint guide.</description>
-      <pubDate>Sat, 10 Jan 2026 10:27:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-cloud-blueprint/</guid>
     </item>
   </channel>
 </rss>
