@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 21:25:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 22:26:38 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development and boost your skills.</description>
+      <pubDate>Sun, 11 Jan 2026 22:26:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Revamp Old Code</title>
       <link>https://kubaik.github.io/revamp-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Simplify data management with DW Made Easy. Discover efficient data warehousing solutions.</description>
       <pubDate>Sat, 10 Jan 2026 23:26:12 +0000</pubDate>
       <guid>https://kubaik.github.io/dw-made-easy/</guid>
-    </item>
-    <item>
-      <title>SRE: Fixing Tech</title>
-      <link>https://kubaik.github.io/sre-fixing-tech/</link>
-      <description>Learn how Site Reliability Engineering (SRE) optimizes tech systems for reliability &amp; efficiency</description>
-      <pubDate>Sat, 10 Jan 2026 22:26:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
     </item>
   </channel>
 </rss>
