@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jan 2026 23:26:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 02:27:53 +0000</lastBuildDate>
+    <item>
+      <title>PWA: Future of Web</title>
+      <link>https://kubaik.github.io/pwa-future-of-web/</link>
+      <description>Discover the future of web development with Progressive Web Apps (PWA)</description>
+      <pubDate>Sun, 11 Jan 2026 02:27:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-future-of-web/</guid>
+    </item>
     <item>
       <title>DW Made Easy</title>
       <link>https://kubaik.github.io/dw-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GraphQL mastery: expert guides and tutorials for API development</description>
       <pubDate>Sat, 10 Jan 2026 05:28:51 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-mastery/</guid>
-    </item>
-    <item>
-      <title>Tech Portfolio Blueprint</title>
-      <link>https://kubaik.github.io/tech-portfolio-blueprint/</link>
-      <description>Learn to build a standout tech portfolio with our expert blueprint and boost your career prospects.</description>
-      <pubDate>Sat, 10 Jan 2026 04:41:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-portfolio-blueprint/</guid>
     </item>
   </channel>
 </rss>
