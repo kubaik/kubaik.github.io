@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 09:28:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 10:28:53 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Master backend architecture with proven patterns and blueprints.</description>
+      <pubDate>Sun, 11 Jan 2026 10:28:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify JWT auth implementation with our expert guide and secure your apps with ease.</description>
       <pubDate>Sat, 10 Jan 2026 12:53:32 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
-    </item>
-    <item>
-      <title>Vector DBs</title>
-      <link>https://kubaik.github.io/vector-dbs/</link>
-      <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
-      <pubDate>Sat, 10 Jan 2026 11:22:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs/</guid>
     </item>
   </channel>
 </rss>
