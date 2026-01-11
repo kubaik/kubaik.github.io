@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 22:26:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 23:26:26 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top BI tools and techniques.</description>
+      <pubDate>Sun, 11 Jan 2026 23:26:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of web development with Progressive Web Apps (PWA)</description>
       <pubDate>Sun, 11 Jan 2026 02:27:44 +0000</pubDate>
       <guid>https://kubaik.github.io/pwa-future-of-web/</guid>
-    </item>
-    <item>
-      <title>DW Made Easy</title>
-      <link>https://kubaik.github.io/dw-made-easy/</link>
-      <description>Simplify data management with DW Made Easy. Discover efficient data warehousing solutions.</description>
-      <pubDate>Sat, 10 Jan 2026 23:26:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/dw-made-easy/</guid>
     </item>
   </channel>
 </rss>
