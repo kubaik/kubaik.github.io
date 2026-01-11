@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 05:32:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 06:41:20 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Cache</title>
+      <link>https://kubaik.github.io/boost-speed-cache/</link>
+      <description>Boost site speed with caching strategies using Redis and Memcached.</description>
+      <pubDate>Sun, 11 Jan 2026 06:41:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of blockchain technology and its applications in our beginner&apos;s guide, Blockchain 101.</description>
       <pubDate>Sat, 10 Jan 2026 08:34:40 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-101/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
-      <pubDate>Sat, 10 Jan 2026 07:25:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
