@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 18:37:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 19:21:24 +0000</lastBuildDate>
+    <item>
+      <title>EDA Unleashed</title>
+      <link>https://kubaik.github.io/eda-unleashed/</link>
+      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
+      <pubDate>Sun, 11 Jan 2026 19:21:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-unleashed/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Google Cloud Platform with Unlock GCP. Learn expert tips and tricks to maximize your cloud potential.</description>
       <pubDate>Sat, 10 Jan 2026 20:29:29 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Boost visibility into app performance with monitoring and observability insights.</description>
-      <pubDate>Sat, 10 Jan 2026 19:21:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>

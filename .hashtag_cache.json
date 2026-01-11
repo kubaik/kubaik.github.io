@@ -1693,13 +1693,13 @@
     "topic": "Go Programming Concurrency"
   },
   "event-driven_architecture": {
-    "timestamp": "2026-01-09T04:05:15.214341",
+    "timestamp": "2026-01-11T19:21:15.429200",
     "hashtags": [
       "EventDriven",
       "CloudNative",
       "Serverless",
       "Microservices",
-      "RealTimeSystems",
+      "RealTimeData",
       "SoftwareArchitecture",
       "DigitalTransformation"
     ],
