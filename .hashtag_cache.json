@@ -1029,15 +1029,16 @@
     "topic": "Refactoring Legacy Code"
   },
   "kotlin_for_backend_development": {
-    "timestamp": "2026-01-04T18:37:17.901412",
+    "timestamp": "2026-01-11T22:26:29.230488",
     "hashtags": [
       "KotlinDev",
       "BackendEngineering",
-      "JavaAlternatives",
+      "JavaAlternative",
       "CloudNative",
-      "ServerlessTech",
-      "SoftwareDevelopment",
-      "MobileFirstDev"
+      "ServerSideProgramming",
+      "AndroidToBackend",
+      "ModernBackendDev",
+      "KotlinForServer"
     ],
     "topic": "Kotlin for Backend Development"
   },
