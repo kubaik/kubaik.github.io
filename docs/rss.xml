@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 12:54:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 13:34:59 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Kotlin Android dev with expert guides and tutorials.</description>
+      <pubDate>Sun, 11 Jan 2026 13:34:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Sat, 10 Jan 2026 15:26:30 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Learn scalable design patterns to boost growth efficiently</description>
-      <pubDate>Sat, 10 Jan 2026 14:25:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
