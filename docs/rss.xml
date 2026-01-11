@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 15:27:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 16:32:56 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast Sites</title>
+      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
+      <description>Boost site speed with Jamstack Architecture. Learn how to build fast, secure, and scalable websites.</description>
+      <pubDate>Sun, 11 Jan 2026 16:32:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
+    </item>
     <item>
       <title>XAI Uncovered</title>
       <link>https://kubaik.github.io/xai-uncovered/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI potential with AutoML Boost, exploring Neural Architecture Search for optimized machine learning models.</description>
       <pubDate>Sat, 10 Jan 2026 17:23:51 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-boost/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Sat, 10 Jan 2026 16:32:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
