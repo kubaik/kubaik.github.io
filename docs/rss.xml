@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 20:30:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 21:25:13 +0000</lastBuildDate>
+    <item>
+      <title>Revamp Old Code</title>
+      <link>https://kubaik.github.io/revamp-old-code/</link>
+      <description>Breathe new life into outdated code. Learn how to refactor legacy code for improved performance and maintainability.</description>
+      <pubDate>Sun, 11 Jan 2026 21:25:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/revamp-old-code/</guid>
+    </item>
     <item>
       <title>Engineer Your Time</title>
       <link>https://kubaik.github.io/engineer-your-time/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Site Reliability Engineering (SRE) optimizes tech systems for reliability &amp; efficiency</description>
       <pubDate>Sat, 10 Jan 2026 22:26:38 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Prep</title>
-      <link>https://kubaik.github.io/tech-interview-prep/</link>
-      <description>Ace your tech interview with our expert guide, tips &amp; tricks.</description>
-      <pubDate>Sat, 10 Jan 2026 21:24:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
     </item>
   </channel>
 </rss>
