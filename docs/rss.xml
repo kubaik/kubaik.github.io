@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 19:21:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 20:30:39 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Maximize productivity with expert time management tips for engineers.</description>
+      <pubDate>Sun, 11 Jan 2026 20:30:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>EDA Unleashed</title>
       <link>https://kubaik.github.io/eda-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Ace your tech interview with our expert guide, tips &amp; tricks.</description>
       <pubDate>Sat, 10 Jan 2026 21:24:52 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-prep/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Discover the power of Google Cloud Platform with Unlock GCP. Learn expert tips and tricks to maximize your cloud potential.</description>
-      <pubDate>Sat, 10 Jan 2026 20:29:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
