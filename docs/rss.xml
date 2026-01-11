@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 02:27:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 04:13:46 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with expert cloud security best practices and tips.</description>
+      <pubDate>Sun, 11 Jan 2026 04:13:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>PWA: Future of Web</title>
       <link>https://kubaik.github.io/pwa-future-of-web/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
       <pubDate>Sat, 10 Jan 2026 06:39:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>GraphQL Mastery</title>
-      <link>https://kubaik.github.io/graphql-mastery/</link>
-      <description>Unlock GraphQL mastery: expert guides and tutorials for API development</description>
-      <pubDate>Sat, 10 Jan 2026 05:28:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-mastery/</guid>
     </item>
   </channel>
 </rss>
