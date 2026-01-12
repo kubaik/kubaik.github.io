@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 10:33:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 11:27:54 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Mon, 12 Jan 2026 11:27:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Master GitOps workflow implementation for efficient devops and automated deployments.</description>
       <pubDate>Sun, 11 Jan 2026 12:54:41 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Work Smart</title>
-      <link>https://kubaik.github.io/work-smart/</link>
-      <description>Boost productivity with remote work best practices and tips to succeed from anywhere.</description>
-      <pubDate>Sun, 11 Jan 2026 11:23:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smart/</guid>
     </item>
   </channel>
 </rss>
