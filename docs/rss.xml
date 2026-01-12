@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Jan 2026 23:26:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 02:23:45 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable streaming apps.</description>
+      <pubDate>Mon, 12 Jan 2026 02:23:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with expert cloud security best practices and tips.</description>
       <pubDate>Sun, 11 Jan 2026 04:13:37 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>PWA: Future of Web</title>
-      <link>https://kubaik.github.io/pwa-future-of-web/</link>
-      <description>Discover the future of web development with Progressive Web Apps (PWA)</description>
-      <pubDate>Sun, 11 Jan 2026 02:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/pwa-future-of-web/</guid>
     </item>
   </channel>
 </rss>
