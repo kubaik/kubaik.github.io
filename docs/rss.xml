@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 18:42:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 19:26:29 +0000</lastBuildDate>
+    <item>
+      <title>Scaling with TypeScript</title>
+      <link>https://kubaik.github.io/scaling-with-typescript/</link>
+      <description>Learn how TypeScript boosts performance in large-scale apps, ensuring scalability and reliability.</description>
+      <pubDate>Mon, 12 Jan 2026 19:26:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
+    </item>
     <item>
       <title>Docker Done Right</title>
       <link>https://kubaik.github.io/docker-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Maximize productivity with expert time management tips for engineers.</description>
       <pubDate>Sun, 11 Jan 2026 20:30:31 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-your-time/</guid>
-    </item>
-    <item>
-      <title>EDA Unleashed</title>
-      <link>https://kubaik.github.io/eda-unleashed/</link>
-      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
-      <pubDate>Sun, 11 Jan 2026 19:21:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-unleashed/</guid>
     </item>
   </channel>
 </rss>
