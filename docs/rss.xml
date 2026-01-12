@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 22:26:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 23:23:02 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UI/UX Done Right</title>
+      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
+      <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
+      <pubDate>Mon, 12 Jan 2026 23:22:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
+    </item>
     <item>
       <title>Real-Time Web</title>
       <link>https://kubaik.github.io/real-time-web/</link>
@@ -138,13 +145,6 @@
       <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable streaming apps.</description>
       <pubDate>Mon, 12 Jan 2026 02:23:36 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top BI tools and techniques.</description>
-      <pubDate>Sun, 11 Jan 2026 23:26:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
