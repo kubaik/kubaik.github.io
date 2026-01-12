@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 13:01:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 14:33:27 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Discover the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
+      <pubDate>Mon, 12 Jan 2026 14:33:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
       <pubDate>Sun, 11 Jan 2026 15:27:06 +0000</pubDate>
       <guid>https://kubaik.github.io/xai-uncovered/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Kotlin Android dev with expert guides and tutorials.</description>
-      <pubDate>Sun, 11 Jan 2026 13:34:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
