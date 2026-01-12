@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 16:36:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 17:30:03 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons for optimal software design.</description>
+      <pubDate>Mon, 12 Jan 2026 17:29:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>Cyber 101</title>
       <link>https://kubaik.github.io/cyber-101/</link>
@@ -138,13 +145,6 @@
       <description>Boost business with clean data. Learn why data quality matters.</description>
       <pubDate>Sun, 11 Jan 2026 18:37:36 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for web use.</description>
-      <pubDate>Sun, 11 Jan 2026 17:23:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
