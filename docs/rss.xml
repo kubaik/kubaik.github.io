@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 04:15:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 05:36:16 +0000</lastBuildDate>
+    <item>
+      <title>TS Advanced Types</title>
+      <link>https://kubaik.github.io/ts-advanced-types/</link>
+      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
+      <pubDate>Mon, 12 Jan 2026 05:36:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-advanced-types/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with caching strategies using Redis and Memcached.</description>
       <pubDate>Sun, 11 Jan 2026 06:41:12 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-cache/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Learn DevOps best practices and culture to boost efficiency and collaboration in your team.</description>
-      <pubDate>Sun, 11 Jan 2026 05:32:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
