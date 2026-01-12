@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 15:33:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 16:36:06 +0000</lastBuildDate>
+    <item>
+      <title>Cyber 101</title>
+      <link>https://kubaik.github.io/cyber-101/</link>
+      <description>Learn cybersecurity basics with Cyber 101. Protect yourself online with essential tips and best practices.</description>
+      <pubDate>Mon, 12 Jan 2026 16:35:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-101/</guid>
+    </item>
     <item>
       <title>Code Less, Achieve More</title>
       <link>https://kubaik.github.io/code-less-achieve-more/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with image optimization techniques. Learn how to compress and optimize images for web use.</description>
       <pubDate>Sun, 11 Jan 2026 17:23:48 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>Jamstack: Fast Sites</title>
-      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
-      <description>Boost site speed with Jamstack Architecture. Learn how to build fast, secure, and scalable websites.</description>
-      <pubDate>Sun, 11 Jan 2026 16:32:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
     </item>
   </channel>
 </rss>
