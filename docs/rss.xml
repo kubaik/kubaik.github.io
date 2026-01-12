@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 07:34:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 08:42:05 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake Blueprint</title>
+      <link>https://kubaik.github.io/data-lake-blueprint/</link>
+      <description>Unlock data insights with our Data Lake Blueprint, a guide to building a scalable architecture.</description>
+      <pubDate>Mon, 12 Jan 2026 08:41:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
+    </item>
     <item>
       <title>Boost with Azure</title>
       <link>https://kubaik.github.io/boost-with-azure/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Sun, 11 Jan 2026 09:28:06 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Dev PM</title>
-      <link>https://kubaik.github.io/dev-pm/</link>
-      <description>Master dev project management: tips, tools &amp; best practices for success.</description>
-      <pubDate>Sun, 11 Jan 2026 08:35:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-pm/</guid>
     </item>
   </channel>
 </rss>
