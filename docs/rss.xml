@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 17:30:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 18:42:27 +0000</lastBuildDate>
+    <item>
+      <title>Docker Done Right</title>
+      <link>https://kubaik.github.io/docker-done-right/</link>
+      <description>Master Docker containerization with our expert guide, best practices, and tips for seamless deployment.</description>
+      <pubDate>Mon, 12 Jan 2026 18:42:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-done-right/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
       <pubDate>Sun, 11 Jan 2026 19:21:15 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-unleashed/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Boost business with clean data. Learn why data quality matters.</description>
-      <pubDate>Sun, 11 Jan 2026 18:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
