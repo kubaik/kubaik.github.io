@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 08:42:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 09:40:22 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
+      <pubDate>Mon, 12 Jan 2026 09:40:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Data Lake Blueprint</title>
       <link>https://kubaik.github.io/data-lake-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Master backend architecture with proven patterns and blueprints.</description>
       <pubDate>Sun, 11 Jan 2026 10:28:45 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Sun, 11 Jan 2026 09:28:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
