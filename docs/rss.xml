@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 20:32:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 21:28:35 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient AI with Transfer Learning. Learn how to implement it for smarter models.</description>
+      <pubDate>Mon, 12 Jan 2026 21:28:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Learn Kotlin for backend development and boost your skills.</description>
       <pubDate>Sun, 11 Jan 2026 22:26:28 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
-    </item>
-    <item>
-      <title>Revamp Old Code</title>
-      <link>https://kubaik.github.io/revamp-old-code/</link>
-      <description>Breathe new life into outdated code. Learn how to refactor legacy code for improved performance and maintainability.</description>
-      <pubDate>Sun, 11 Jan 2026 21:25:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/revamp-old-code/</guid>
     </item>
   </channel>
 </rss>
