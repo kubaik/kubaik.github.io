@@ -2479,15 +2479,15 @@
     "topic": "Generative AI and Large Language Models"
   },
   "log_management_solutions": {
-    "timestamp": "2026-01-02T18:38:38.190174",
+    "timestamp": "2026-01-12T13:01:47.470228",
     "hashtags": [
       "CloudSecurity",
-      "DevSecOps",
       "LogAnalysis",
       "CyberResilience",
+      "DevSecOps",
+      "DataVisibility",
       "Observability",
-      "ITOperations",
-      "ArtificialIntelligenceForSecurity"
+      "TechOps"
     ],
     "topic": "Log Management Solutions"
   },
