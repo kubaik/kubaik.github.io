@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 14:33:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 15:33:55 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
+      <pubDate>Mon, 12 Jan 2026 15:33:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with Jamstack Architecture. Learn how to build fast, secure, and scalable websites.</description>
       <pubDate>Sun, 11 Jan 2026 16:32:47 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
-    </item>
-    <item>
-      <title>XAI Uncovered</title>
-      <link>https://kubaik.github.io/xai-uncovered/</link>
-      <description>Unlock Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
-      <pubDate>Sun, 11 Jan 2026 15:27:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/xai-uncovered/</guid>
     </item>
   </channel>
 </rss>
