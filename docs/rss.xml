@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 19:26:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 20:32:47 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
+      <pubDate>Mon, 12 Jan 2026 20:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Scaling with TypeScript</title>
       <link>https://kubaik.github.io/scaling-with-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code. Learn how to refactor legacy code for improved performance and maintainability.</description>
       <pubDate>Sun, 11 Jan 2026 21:25:04 +0000</pubDate>
       <guid>https://kubaik.github.io/revamp-old-code/</guid>
-    </item>
-    <item>
-      <title>Engineer Your Time</title>
-      <link>https://kubaik.github.io/engineer-your-time/</link>
-      <description>Maximize productivity with expert time management tips for engineers.</description>
-      <pubDate>Sun, 11 Jan 2026 20:30:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-your-time/</guid>
     </item>
   </channel>
 </rss>
