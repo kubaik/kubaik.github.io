@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 21:28:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 22:26:03 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Web</title>
+      <link>https://kubaik.github.io/real-time-web/</link>
+      <description>Discover the power of real-time web apps and transform your online experience with instant updates and interactive functionality.</description>
+      <pubDate>Mon, 12 Jan 2026 22:25:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-web/</guid>
+    </item>
     <item>
       <title>Transfer Learn</title>
       <link>https://kubaik.github.io/transfer-learn/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top BI tools and techniques.</description>
       <pubDate>Sun, 11 Jan 2026 23:26:17 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development and boost your skills.</description>
-      <pubDate>Sun, 11 Jan 2026 22:26:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
