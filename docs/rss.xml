@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 09:40:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jan 2026 10:33:54 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Optimize with serverless architecture patterns, expert insights, and best practices.</description>
+      <pubDate>Mon, 12 Jan 2026 10:33:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with remote work best practices and tips to succeed from anywhere.</description>
       <pubDate>Sun, 11 Jan 2026 11:23:21 +0000</pubDate>
       <guid>https://kubaik.github.io/work-smart/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Master backend architecture with proven patterns and blueprints.</description>
-      <pubDate>Sun, 11 Jan 2026 10:28:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
