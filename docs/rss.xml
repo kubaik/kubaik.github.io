@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 07:31:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 08:39:56 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Boost coding productivity with top VS Code extensions. Discover must-have tools to streamline your workflow.</description>
+      <pubDate>Tue, 13 Jan 2026 08:39:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
       <pubDate>Mon, 12 Jan 2026 09:40:14 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>Data Lake Blueprint</title>
-      <link>https://kubaik.github.io/data-lake-blueprint/</link>
-      <description>Unlock data insights with our Data Lake Blueprint, a guide to building a scalable architecture.</description>
-      <pubDate>Mon, 12 Jan 2026 08:41:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
     </item>
   </channel>
 </rss>
