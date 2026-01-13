@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 05:32:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 06:44:55 +0000</lastBuildDate>
+    <item>
+      <title>Boost Memory</title>
+      <link>https://kubaik.github.io/boost-memory/</link>
+      <description>Improve focus &amp; retain info with proven memory management tips.</description>
+      <pubDate>Tue, 13 Jan 2026 06:44:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-memory/</guid>
+    </item>
     <item>
       <title>NLP Essentials</title>
       <link>https://kubaik.github.io/nlp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with Azure. Discover scalable solutions.</description>
       <pubDate>Mon, 12 Jan 2026 07:34:23 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-with-azure/</guid>
-    </item>
-    <item>
-      <title>DLNN: AI Revolution</title>
-      <link>https://kubaik.github.io/dlnn-ai-revolution/</link>
-      <description>Unlock AI&apos;s potential with Deep Learning Neural Networks (DLNN) &amp; discover the future of tech</description>
-      <pubDate>Mon, 12 Jan 2026 06:48:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/dlnn-ai-revolution/</guid>
     </item>
   </channel>
 </rss>
