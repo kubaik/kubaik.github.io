@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 19:26:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 20:33:41 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Unlock Edge Computing&apos;s potential with real-world applications.</description>
+      <pubDate>Tue, 13 Jan 2026 20:33:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Boost Network Speed</title>
       <link>https://kubaik.github.io/boost-network-speed/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn how to implement it for smarter models.</description>
       <pubDate>Mon, 12 Jan 2026 21:28:26 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
-      <pubDate>Mon, 12 Jan 2026 20:32:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
