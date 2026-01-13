@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 06:44:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 07:31:37 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Tue, 13 Jan 2026 07:31:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Boost Memory</title>
       <link>https://kubaik.github.io/boost-memory/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with our Data Lake Blueprint, a guide to building a scalable architecture.</description>
       <pubDate>Mon, 12 Jan 2026 08:41:57 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
-    </item>
-    <item>
-      <title>Boost with Azure</title>
-      <link>https://kubaik.github.io/boost-with-azure/</link>
-      <description>Unlock cloud potential with Azure. Discover scalable solutions.</description>
-      <pubDate>Mon, 12 Jan 2026 07:34:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-with-azure/</guid>
     </item>
   </channel>
 </rss>
