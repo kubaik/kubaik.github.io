@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 04:05:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 05:32:43 +0000</lastBuildDate>
+    <item>
+      <title>NLP Essentials</title>
+      <link>https://kubaik.github.io/nlp-essentials/</link>
+      <description>Unlock NLP techniques for text analysis, sentiment &amp; more.</description>
+      <pubDate>Tue, 13 Jan 2026 05:32:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-essentials/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning Neural Networks (DLNN) &amp; discover the future of tech</description>
       <pubDate>Mon, 12 Jan 2026 06:48:34 +0000</pubDate>
       <guid>https://kubaik.github.io/dlnn-ai-revolution/</guid>
-    </item>
-    <item>
-      <title>TS Advanced Types</title>
-      <link>https://kubaik.github.io/ts-advanced-types/</link>
-      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
-      <pubDate>Mon, 12 Jan 2026 05:36:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ts-advanced-types/</guid>
     </item>
   </channel>
 </rss>
