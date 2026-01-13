@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 10:33:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 11:27:34 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh: Scale Insights</title>
+      <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
+      <description>Unlock scalable insights with Data Mesh Architecture. Learn how to maximize data value.</description>
+      <pubDate>Tue, 13 Jan 2026 11:27:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
+    </item>
     <item>
       <title>Crack SDIs</title>
       <link>https://kubaik.github.io/crack-sdis/</link>
@@ -138,13 +145,6 @@
       <description>Boost security &amp; efficiency with smart log management solutions.</description>
       <pubDate>Mon, 12 Jan 2026 13:01:47 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices.</description>
-      <pubDate>Mon, 12 Jan 2026 11:27:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
