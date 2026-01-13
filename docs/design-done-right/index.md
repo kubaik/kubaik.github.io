@@ -1,101 +1,160 @@
 # Design Done Right
 
 ## Introduction to Design Patterns
-Design patterns are reusable solutions to common problems that arise during software development. They provide a proven development paradigm, helping developers create more maintainable, flexible, and scalable software systems. In this article, we will delve into the world of design patterns, exploring their practical applications, benefits, and implementation details.
+Design patterns are reusable solutions to common problems that arise during software development. They provide a proven development paradigm, helping developers create more maintainable, flexible, and scalable software systems. In this article, we will explore design patterns in practice, focusing on their application, benefits, and implementation details.
 
-### Types of Design Patterns
-There are three main categories of design patterns: creational, structural, and behavioral. Creational patterns deal with object creation and initialization, structural patterns focus on the composition of objects, and behavioral patterns define the interactions between objects. Some of the most commonly used design patterns include:
+### Benefits of Design Patterns
+The use of design patterns offers several benefits, including:
+* Improved code readability and maintainability
+* Reduced development time and costs
+* Enhanced scalability and flexibility
+* Simplified debugging and testing
+* Better collaboration among team members
 
-* Singleton pattern: ensures a class has only one instance and provides a global point of access to that instance
-* Factory pattern: provides a way to create objects without specifying the exact class of object that will be created
-* Observer pattern: defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified
+To demonstrate the effectiveness of design patterns, let's consider a real-world example. Suppose we are building an e-commerce platform using Node.js and Express.js. We can use the Factory pattern to create different types of payment gateways, such as PayPal, Stripe, or Bank Transfer.
 
-## Practical Code Examples
-Let's take a closer look at some practical code examples that demonstrate the implementation of design patterns.
-
-### Singleton Pattern Example
-The singleton pattern is useful when you want to control access to a resource that should have a single point of control, such as a configuration manager or a database connection pool. Here's an example implementation in Python:
-```python
-class ConfigurationManager:
-    _instance = None
-
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(ConfigurationManager, cls).__new__(cls)
-        return cls._instance
-
-    def get_config(self, key):
-        # retrieve configuration value from database or file
-        return "config_value"
-
-# usage
-config_manager1 = ConfigurationManager()
-config_manager2 = ConfigurationManager()
-
-print(config_manager1 is config_manager2)  # True
-```
-In this example, the `ConfigurationManager` class ensures that only one instance of the class is created, and provides a global point of access to that instance.
-
-### Factory Pattern Example
-The factory pattern is useful when you want to decouple object creation from the specific class of object being created. Here's an example implementation in Java:
-```java
-public abstract class PaymentGateway {
-    public abstract void processPayment();
+```javascript
+// payment_gateway_factory.js
+class PaymentGatewayFactory {
+  static createPaymentGateway(type) {
+    switch (type) {
+      case 'paypal':
+        return new PayPalGateway();
+      case 'stripe':
+        return new StripeGateway();
+      case 'bank_transfer':
+        return new BankTransferGateway();
+      default:
+        throw new Error('Unsupported payment gateway type');
+    }
+  }
 }
 
-public class PayPalPaymentGateway extends PaymentGateway {
-    @Override
-    public void processPayment() {
-        // process payment using PayPal API
-    }
+// paypal_gateway.js
+class PayPalGateway {
+  processPayment(amount) {
+    console.log(`Processing PayPal payment of $${amount}`);
+  }
 }
 
-public class StripePaymentGateway extends PaymentGateway {
-    @Override
-    public void processPayment() {
-        // process payment using Stripe API
-    }
+// stripe_gateway.js
+class StripeGateway {
+  processPayment(amount) {
+    console.log(`Processing Stripe payment of $${amount}`);
+  }
 }
 
-public class PaymentGatewayFactory {
-    public static PaymentGateway createPaymentGateway(String type) {
-        if (type.equals("paypal")) {
-            return new PayPalPaymentGateway();
-        } else if (type.equals("stripe")) {
-            return new StripePaymentGateway();
-        } else {
-            throw new UnsupportedOperationException();
-        }
-    }
+// bank_transfer_gateway.js
+class BankTransferGateway {
+  processPayment(amount) {
+    console.log(`Processing Bank Transfer payment of $${amount}`);
+  }
 }
 
 // usage
-PaymentGateway paymentGateway = PaymentGatewayFactory.createPaymentGateway("paypal");
-paymentGateway.processPayment();
+const paymentGatewayFactory = require('./payment_gateway_factory');
+const paypalGateway = paymentGatewayFactory.createPaymentGateway('paypal');
+paypalGateway.processPayment(100);
 ```
-In this example, the `PaymentGatewayFactory` class provides a way to create `PaymentGateway` objects without specifying the exact class of object that will be created.
 
-### Observer Pattern Example
-The observer pattern is useful when you want to define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified. Here's an example implementation in JavaScript:
+In this example, we define a `PaymentGatewayFactory` class that creates instances of different payment gateways based on the specified type. This approach decouples the payment gateway creation logic from the specific implementation details, making it easier to add or remove payment gateways in the future.
+
+## Creational Design Patterns
+Creational design patterns deal with object creation mechanisms. They define the best way to create objects, reducing the complexity of a system and improving its performance.
+
+### Singleton Pattern
+The Singleton pattern restricts object creation to a single instance. This pattern is useful when we need to control access to a resource, such as a database connection or a configuration file.
+
+```java
+// singleton.java
+public class Singleton {
+  private static Singleton instance;
+  private static final Object lock = new Object();
+
+  private Singleton() {}
+
+  public static Singleton getInstance() {
+    synchronized (lock) {
+      if (instance == null) {
+        instance = new Singleton();
+      }
+      return instance;
+    }
+  }
+
+  public void doSomething() {
+    System.out.println("Singleton instance is doing something");
+  }
+}
+
+// usage
+Singleton singleton1 = Singleton.getInstance();
+Singleton singleton2 = Singleton.getInstance();
+
+System.out.println(singleton1 == singleton2); // true
+```
+
+In this example, we define a `Singleton` class that ensures only one instance is created. The `getInstance()` method is synchronized to prevent concurrent access and ensure thread safety.
+
+## Structural Design Patterns
+Structural design patterns deal with the composition of objects. They define the relationships between objects and how they interact with each other.
+
+### Adapter Pattern
+The Adapter pattern allows two incompatible objects to work together by converting the interface of one object into an interface expected by the other object.
+
+```python
+# adapter.py
+class OldSystem:
+  def old_method(self):
+    print("Old system is working")
+
+class NewSystem:
+  def new_method(self):
+    print("New system is working")
+
+class Adapter:
+  def __init__(self, old_system):
+    self.old_system = old_system
+
+  def new_method(self):
+    self.old_system.old_method()
+
+# usage
+old_system = OldSystem()
+adapter = Adapter(old_system)
+adapter.new_method()  # Output: Old system is working
+```
+
+In this example, we define an `Adapter` class that wraps an `OldSystem` instance and provides a `new_method()` interface compatible with the `NewSystem`. This allows us to use the `OldSystem` with the `NewSystem` without modifying either of them.
+
+## Behavioral Design Patterns
+Behavioral design patterns deal with the interactions between objects. They define the behavior of objects and how they communicate with each other.
+
+### Observer Pattern
+The Observer pattern allows objects to be notified of changes to other objects without having a direct reference to each other.
+
 ```javascript
+// observer.js
 class Subject {
-    constructor() {
-        this.observers = [];
-    }
+  constructor() {
+    this.observers = [];
+  }
 
-    registerObserver(observer) {
-        this.observers.push(observer);
-    }
+  registerObserver(observer) {
+    this.observers.push(observer);
+  }
 
-    notifyObservers() {
-        this.observers.forEach(observer => observer.update());
-    }
+  notifyObservers(data) {
+    this.observers.forEach((observer) => {
+      observer.update(data);
+    });
+  }
 }
 
 class Observer {
-    update() {
-        console.log("Observer notified");
-    }
+  update(data) {
+    console.log(`Received update: ${data}`);
+  }
 }
 
 // usage
@@ -106,57 +165,57 @@ const observer2 = new Observer();
 subject.registerObserver(observer1);
 subject.registerObserver(observer2);
 
-subject.notifyObservers();
+subject.notifyObservers('Hello, world!');
 ```
-In this example, the `Subject` class defines a one-to-many dependency between objects, and the `Observer` class defines the behavior that should be executed when the subject changes state.
 
-## Tools and Platforms
-There are several tools and platforms that can help you implement design patterns in your software development projects. Some popular ones include:
+In this example, we define a `Subject` class that maintains a list of observers. When the subject's state changes, it notifies all registered observers by calling their `update()` method.
 
-* **Apache Commons**: a collection of reusable Java components that provide implementations of various design patterns
-* **Google Guava**: a Java library that provides implementations of various design patterns, including the singleton and factory patterns
-* **Microsoft Azure**: a cloud platform that provides a range of services and tools for building scalable and maintainable software systems
+## Real-World Use Cases
+Design patterns are widely used in various industries and applications. Here are some real-world use cases:
+
+1. **E-commerce platforms**: Online shopping platforms like Amazon, eBay, and Walmart use design patterns to manage their complex systems, including payment gateways, inventory management, and order processing.
+2. **Social media platforms**: Social media platforms like Facebook, Twitter, and Instagram use design patterns to handle user interactions, data storage, and content delivery.
+3. **Gaming engines**: Gaming engines like Unity and Unreal Engine use design patterns to manage game objects, physics, and graphics rendering.
+4. **Database systems**: Database systems like MySQL, PostgreSQL, and MongoDB use design patterns to manage data storage, retrieval, and querying.
 
 ## Performance Benchmarks
-Design patterns can have a significant impact on the performance of your software system. Here are some real-world performance benchmarks that demonstrate the benefits of using design patterns:
+To demonstrate the performance benefits of design patterns, let's consider a benchmarking example. Suppose we are building a web application that handles a large number of concurrent requests. We can use the Singleton pattern to manage a pool of database connections, reducing the overhead of creating and closing connections for each request.
 
-* **Singleton pattern**: using the singleton pattern can reduce memory usage by up to 50% in certain scenarios, according to a study by the University of California, Berkeley
-* **Factory pattern**: using the factory pattern can improve object creation performance by up to 30% in certain scenarios, according to a study by the University of Illinois
-* **Observer pattern**: using the observer pattern can reduce the number of database queries by up to 70% in certain scenarios, according to a study by the University of Michigan
+| Pattern | Requests per second | Response time (ms) |
+| --- | --- | --- |
+| Without Singleton | 100 | 500 |
+| With Singleton | 500 | 100 |
+
+In this example, using the Singleton pattern to manage database connections improves the request throughput by 5x and reduces the response time by 5x.
+
+## Pricing and Cost Savings
+Design patterns can also help reduce costs by minimizing the amount of code that needs to be written and maintained. Let's consider an example of a cloud-based application that uses the Factory pattern to create instances of different cloud services, such as Amazon S3, Google Cloud Storage, or Microsoft Azure Blob Storage.
+
+| Cloud Service | Cost per GB-month |
+| --- | --- |
+| Amazon S3 | $0.023 |
+| Google Cloud Storage | $0.026 |
+| Microsoft Azure Blob Storage | $0.024 |
+
+By using the Factory pattern to create instances of different cloud services, we can switch between services based on cost and performance considerations, reducing our overall storage costs by up to 10%.
 
 ## Common Problems and Solutions
-Here are some common problems that you may encounter when implementing design patterns, along with specific solutions:
+Here are some common problems that design patterns can help solve:
 
-* **Problem: tight coupling between objects**
-Solution: use the dependency injection pattern to decouple objects and reduce coupling
-* **Problem: low performance due to excessive object creation**
-Solution: use the singleton or factory pattern to reduce object creation and improve performance
-* **Problem: difficulty in testing and debugging**
-Solution: use the mock object pattern to isolate dependencies and improve testability
-
-## Use Cases and Implementation Details
-Here are some concrete use cases for design patterns, along with implementation details:
-
-1. **Use case: building a scalable e-commerce platform**
-Implementation details: use the factory pattern to create objects, the singleton pattern to control access to resources, and the observer pattern to define a one-to-many dependency between objects
-2. **Use case: building a real-time analytics system**
-Implementation details: use the observer pattern to define a one-to-many dependency between objects, the singleton pattern to control access to resources, and the factory pattern to create objects
-3. **Use case: building a cloud-based content management system**
-Implementation details: use the singleton pattern to control access to resources, the factory pattern to create objects, and the observer pattern to define a one-to-many dependency between objects
-
-## Pricing Data and Cost Savings
-Using design patterns can have a significant impact on the cost of software development and maintenance. Here are some real-world pricing data and cost savings that demonstrate the benefits of using design patterns:
-
-* **Pricing data**: according to a study by the Standish Group, using design patterns can reduce software development costs by up to 40%
-* **Cost savings**: according to a study by the Gartner Group, using design patterns can reduce software maintenance costs by up to 30%
+* **Tight coupling**: Use the Adapter pattern to decouple objects with incompatible interfaces.
+* **Code duplication**: Use the Template Method pattern to extract common logic into a base class.
+* **Performance issues**: Use the Singleton pattern to manage resources and reduce overhead.
+* **Scalability issues**: Use the Factory pattern to create instances of different services and scale horizontally.
 
 ## Conclusion and Next Steps
-In conclusion, design patterns are a powerful tool for building maintainable, flexible, and scalable software systems. By using design patterns, you can reduce coupling, improve performance, and increase testability. To get started with design patterns, follow these next steps:
+In conclusion, design patterns are essential for building robust, maintainable, and scalable software systems. By applying design patterns in practice, we can improve code readability, reduce development time, and enhance system performance.
 
-1. **Learn about different design patterns**: start by learning about the different types of design patterns, including creational, structural, and behavioral patterns
-2. **Choose a programming language**: choose a programming language that supports design patterns, such as Java, Python, or JavaScript
-3. **Start with a simple example**: start by implementing a simple design pattern, such as the singleton or factory pattern
-4. **Experiment and refine**: experiment with different design patterns and refine your implementation based on performance benchmarks and pricing data
-5. **Join a community**: join a community of developers who are using design patterns to learn from their experiences and share your own knowledge and expertise.
+To get started with design patterns, follow these next steps:
 
-By following these next steps, you can start using design patterns to build better software systems and achieve significant cost savings and performance improvements.
+1. **Learn the basics**: Study the fundamental design patterns, including Creational, Structural, and Behavioral patterns.
+2. **Practice with examples**: Implement design patterns in small projects or exercises to gain hands-on experience.
+3. **Apply to real-world projects**: Integrate design patterns into your existing projects or new developments to improve code quality and system performance.
+4. **Explore tools and platforms**: Familiarize yourself with tools and platforms that support design patterns, such as Eclipse, Visual Studio, or IntelliJ IDEA.
+5. **Join online communities**: Participate in online forums, discussions, and meetups to learn from others and share your experiences with design patterns.
+
+By following these steps and applying design patterns in practice, you can take your software development skills to the next level and build better, more maintainable systems.
