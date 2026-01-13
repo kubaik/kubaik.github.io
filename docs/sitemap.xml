@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/ddos-defense/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/boost-memory/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nlp-essentials/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/swift-ios-dev/</loc><priority>0.9</priority></url>
@@ -327,7 +328,6 @@
 <url><loc>https://kubaik.github.io/code-the-future/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ml-made-easy/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/crack-sys-design/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/ddos-defense/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/data-lake-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/process-now/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/master-memory/</loc><priority>0.9</priority></url>
