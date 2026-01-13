@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 08:39:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 09:35:32 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn how to apply design patterns for intuitive interfaces and user experiences.</description>
+      <pubDate>Tue, 13 Jan 2026 09:35:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with serverless architecture patterns, expert insights, and best practices.</description>
       <pubDate>Mon, 12 Jan 2026 10:33:45 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Unlock efficiency with RPA. Automate tasks, boost productivity</description>
-      <pubDate>Mon, 12 Jan 2026 09:40:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
