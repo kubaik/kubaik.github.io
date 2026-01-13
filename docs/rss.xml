@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jan 2026 23:23:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 02:09:00 +0000</lastBuildDate>
+    <item>
+      <title>Snowflake Unlocked</title>
+      <link>https://kubaik.github.io/snowflake-unlocked/</link>
+      <description>Unlock Snowflake&apos;s full potential with expert insights and tips on the Cloud Data Platform.</description>
+      <pubDate>Tue, 13 Jan 2026 02:08:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/snowflake-unlocked/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Which agile method is best for your team?</description>
       <pubDate>Mon, 12 Jan 2026 04:14:51 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable streaming apps.</description>
-      <pubDate>Mon, 12 Jan 2026 02:23:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
