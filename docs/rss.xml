@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 09:35:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 10:33:13 +0000</lastBuildDate>
+    <item>
+      <title>Crack SDIs</title>
+      <link>https://kubaik.github.io/crack-sdis/</link>
+      <description>Master System Design Interviews with expert tips and tricks.</description>
+      <pubDate>Tue, 13 Jan 2026 10:33:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-sdis/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Master Agile development with expert tips and best practices.</description>
       <pubDate>Mon, 12 Jan 2026 11:27:46 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-done-right/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Optimize with serverless architecture patterns, expert insights, and best practices.</description>
-      <pubDate>Mon, 12 Jan 2026 10:33:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
