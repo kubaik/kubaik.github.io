@@ -85,5 +85,6 @@
   "Web Components and Custom Elements",
   "Mobile Backend as a Service (BaaS)",
   "Network Performance Optimization",
-  "Edge Computing Applications"
+  "Edge Computing Applications",
+  "CQRS and Event Sourcing"
 ]
