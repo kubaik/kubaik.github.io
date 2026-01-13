@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 14:33:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 15:34:16 +0000</lastBuildDate>
+    <item>
+      <title>Train Smart</title>
+      <link>https://kubaik.github.io/train-smart/</link>
+      <description>Optimize AI model performance with expert training best practices.</description>
+      <pubDate>Tue, 13 Jan 2026 15:34:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smart/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity basics with Cyber 101. Protect yourself online with essential tips and best practices.</description>
       <pubDate>Mon, 12 Jan 2026 16:35:57 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-101/</guid>
-    </item>
-    <item>
-      <title>Code Less, Achieve More</title>
-      <link>https://kubaik.github.io/code-less-achieve-more/</link>
-      <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
-      <pubDate>Mon, 12 Jan 2026 15:33:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
     </item>
   </channel>
 </rss>
