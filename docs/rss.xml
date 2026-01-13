@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 17:33:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 18:40:01 +0000</lastBuildDate>
+    <item>
+      <title>Mobile BaaS Simplified</title>
+      <link>https://kubaik.github.io/mobile-baas-simplified/</link>
+      <description>Streamline mobile app development with Mobile BaaS. Learn how to simplify your backend infrastructure.</description>
+      <pubDate>Tue, 13 Jan 2026 18:39:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-baas-simplified/</guid>
+    </item>
     <item>
       <title>Boost UI with Web Components</title>
       <link>https://kubaik.github.io/boost-ui-with-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn how TypeScript boosts performance in large-scale apps, ensuring scalability and reliability.</description>
       <pubDate>Mon, 12 Jan 2026 19:26:20 +0000</pubDate>
       <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Docker Done Right</title>
-      <link>https://kubaik.github.io/docker-done-right/</link>
-      <description>Master Docker containerization with our expert guide, best practices, and tips for seamless deployment.</description>
-      <pubDate>Mon, 12 Jan 2026 18:42:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-done-right/</guid>
     </item>
   </channel>
 </rss>
