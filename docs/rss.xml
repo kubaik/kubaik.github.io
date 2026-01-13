@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 13:01:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 14:33:12 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure seamless uptime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
+      <pubDate>Tue, 13 Jan 2026 14:33:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
       <pubDate>Mon, 12 Jan 2026 15:33:46 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
-      <pubDate>Mon, 12 Jan 2026 14:33:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
