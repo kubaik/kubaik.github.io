@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jan 2026 18:40:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Jan 2026 19:26:30 +0000</lastBuildDate>
+    <item>
+      <title>Boost Network Speed</title>
+      <link>https://kubaik.github.io/boost-network-speed/</link>
+      <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
+      <pubDate>Tue, 13 Jan 2026 19:26:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-network-speed/</guid>
+    </item>
     <item>
       <title>Mobile BaaS Simplified</title>
       <link>https://kubaik.github.io/mobile-baas-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
       <pubDate>Mon, 12 Jan 2026 20:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Scaling with TypeScript</title>
-      <link>https://kubaik.github.io/scaling-with-typescript/</link>
-      <description>Learn how TypeScript boosts performance in large-scale apps, ensuring scalability and reliability.</description>
-      <pubDate>Mon, 12 Jan 2026 19:26:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
     </item>
   </channel>
 </rss>
