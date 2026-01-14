@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 09:36:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 10:33:33 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full Stack</title>
+      <link>https://kubaik.github.io/nextjs-full-stack/</link>
+      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
+      <pubDate>Wed, 14 Jan 2026 10:33:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
+    </item>
     <item>
       <title>Secure Your API</title>
       <link>https://kubaik.github.io/secure-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable insights with Data Mesh Architecture. Learn how to maximize data value.</description>
       <pubDate>Tue, 13 Jan 2026 11:27:25 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
-    </item>
-    <item>
-      <title>Crack SDIs</title>
-      <link>https://kubaik.github.io/crack-sdis/</link>
-      <description>Master System Design Interviews with expert tips and tricks.</description>
-      <pubDate>Tue, 13 Jan 2026 10:33:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sdis/</guid>
     </item>
   </channel>
 </rss>
