@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 20:29:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 21:29:30 +0000</lastBuildDate>
+    <item>
+      <title>Boost Query Speed</title>
+      <link>https://kubaik.github.io/boost-query-speed/</link>
+      <description>Improve database performance with expert query optimization tips.</description>
+      <pubDate>Wed, 14 Jan 2026 21:29:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-query-speed/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead with AI model monitoring &amp; maintenance. Learn how to optimize performance &amp; prevent errors.</description>
       <pubDate>Tue, 13 Jan 2026 22:29:45 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pulse-check/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing. Learn how.</description>
-      <pubDate>Tue, 13 Jan 2026 21:28:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
