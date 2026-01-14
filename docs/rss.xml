@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 07:32:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 08:39:59 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents</title>
+      <link>https://kubaik.github.io/ai-agents/</link>
+      <description>Unlock AI potential with cutting-edge agent development insights.</description>
+      <pubDate>Wed, 14 Jan 2026 08:39:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents/</guid>
+    </item>
     <item>
       <title>Design Decentralized</title>
       <link>https://kubaik.github.io/design-decentralized/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to apply design patterns for intuitive interfaces and user experiences.</description>
       <pubDate>Tue, 13 Jan 2026 09:35:23 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Boost coding productivity with top VS Code extensions. Discover must-have tools to streamline your workflow.</description>
-      <pubDate>Tue, 13 Jan 2026 08:39:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
