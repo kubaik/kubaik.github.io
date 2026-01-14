@@ -88,5 +88,6 @@
   "Edge Computing Applications",
   "CQRS and Event Sourcing",
   "AI Model Monitoring and Maintenance",
-  "CI/CD Pipeline Implementation"
+  "CI/CD Pipeline Implementation",
+  "Test-Driven Development (TDD)"
 ]
