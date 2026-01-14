@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 16:40:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 17:33:22 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert optimization tips and strategies.</description>
+      <pubDate>Wed, 14 Jan 2026 17:33:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with Mobile BaaS. Learn how to simplify your backend infrastructure.</description>
       <pubDate>Tue, 13 Jan 2026 18:39:52 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-baas-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost UI with Web Components</title>
-      <link>https://kubaik.github.io/boost-ui-with-web-components/</link>
-      <description>Supercharge your UI with Web Components &amp; Custom Elements. Learn how to boost performance &amp; simplify development.</description>
-      <pubDate>Tue, 13 Jan 2026 17:33:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ui-with-web-components/</guid>
     </item>
   </channel>
 </rss>
