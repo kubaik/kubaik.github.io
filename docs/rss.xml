@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 22:30:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 23:24:29 +0000</lastBuildDate>
+    <item>
+      <title>Flutter Dev</title>
+      <link>https://kubaik.github.io/flutter-dev/</link>
+      <description>Learn Flutter mobile development with expert tips and tutorials.</description>
+      <pubDate>Wed, 14 Jan 2026 23:24:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-dev/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Learn Test-Driven Development for smarter coding</description>
       <pubDate>Wed, 14 Jan 2026 02:22:32 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smart/</guid>
-    </item>
-    <item>
-      <title>CI/CD Done Right</title>
-      <link>https://kubaik.github.io/cicd-done-right/</link>
-      <description>Streamline dev workflows with expert CI/CD pipeline implementation tips</description>
-      <pubDate>Tue, 13 Jan 2026 23:26:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-done-right/</guid>
     </item>
   </channel>
 </rss>
