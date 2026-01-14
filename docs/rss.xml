@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 19:25:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 20:29:29 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and lives.</description>
+      <pubDate>Wed, 14 Jan 2026 20:29:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Infrastructure</title>
       <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable architecture with CQRS &amp; Event Sourcing. Learn how.</description>
       <pubDate>Tue, 13 Jan 2026 21:28:47 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
-    </item>
-    <item>
-      <title>Edge Computing</title>
-      <link>https://kubaik.github.io/edge-computing/</link>
-      <description>Unlock Edge Computing&apos;s potential with real-world applications.</description>
-      <pubDate>Tue, 13 Jan 2026 20:33:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing/</guid>
     </item>
   </channel>
 </rss>
