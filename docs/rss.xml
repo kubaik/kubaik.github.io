@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 08:39:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 09:36:29 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your API</title>
+      <link>https://kubaik.github.io/secure-your-api/</link>
+      <description>Protect your API from threats with expert security tips and best practices.</description>
+      <pubDate>Wed, 14 Jan 2026 09:36:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-api/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Master System Design Interviews with expert tips and tricks.</description>
       <pubDate>Tue, 13 Jan 2026 10:33:04 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-sdis/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn how to apply design patterns for intuitive interfaces and user experiences.</description>
-      <pubDate>Tue, 13 Jan 2026 09:35:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
