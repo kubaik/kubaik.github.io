@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 13:01:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 14:32:59 +0000</lastBuildDate>
+    <item>
+      <title>Vue.js Components</title>
+      <link>https://kubaik.github.io/vuejs-components/</link>
+      <description>Learn Vue.js component architecture &amp; build reusable UI elements with ease.</description>
+      <pubDate>Wed, 14 Jan 2026 14:32:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuejs-components/</guid>
+    </item>
     <item>
       <title>Crypto Unlocked</title>
       <link>https://kubaik.github.io/crypto-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Optimize AI model performance with expert training best practices.</description>
       <pubDate>Tue, 13 Jan 2026 15:34:06 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smart/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure seamless uptime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
-      <pubDate>Tue, 13 Jan 2026 14:33:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
