@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 18:42:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 19:25:50 +0000</lastBuildDate>
+    <item>
+      <title>Terraform: Code Your Infrastructure</title>
+      <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
+      <description>Learn Terraform: Manage infrastructure as code for scalable, secure deployments.</description>
+      <pubDate>Wed, 14 Jan 2026 19:25:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
+    </item>
     <item>
       <title>Lock It Down: SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s potential with real-world applications.</description>
       <pubDate>Tue, 13 Jan 2026 20:33:32 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>Boost Network Speed</title>
-      <link>https://kubaik.github.io/boost-network-speed/</link>
-      <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
-      <pubDate>Tue, 13 Jan 2026 19:26:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-network-speed/</guid>
     </item>
   </channel>
 </rss>
