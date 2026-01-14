@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 02:22:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 04:12:58 +0000</lastBuildDate>
+    <item>
+      <title>Deploy Smarter</title>
+      <link>https://kubaik.github.io/deploy-smarter/</link>
+      <description>Learn how Canary Deployments boost app reliability</description>
+      <pubDate>Wed, 14 Jan 2026 04:12:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-smarter/</guid>
+    </item>
     <item>
       <title>TDD: Code Smart</title>
       <link>https://kubaik.github.io/tdd-code-smart/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques for text analysis, sentiment &amp; more.</description>
       <pubDate>Tue, 13 Jan 2026 05:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-essentials/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Tue, 13 Jan 2026 04:05:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
