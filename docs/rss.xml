@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 04:12:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 05:32:39 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost dev skills with pair programming techniques &amp; best practices in our &apos;Code Together&apos; guide.</description>
+      <pubDate>Wed, 14 Jan 2026 05:32:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Deploy Smarter</title>
       <link>https://kubaik.github.io/deploy-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve focus &amp; retain info with proven memory management tips.</description>
       <pubDate>Tue, 13 Jan 2026 06:44:46 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>NLP Essentials</title>
-      <link>https://kubaik.github.io/nlp-essentials/</link>
-      <description>Unlock NLP techniques for text analysis, sentiment &amp; more.</description>
-      <pubDate>Tue, 13 Jan 2026 05:32:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-essentials/</guid>
     </item>
   </channel>
 </rss>
