@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 11:28:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 13:01:50 +0000</lastBuildDate>
+    <item>
+      <title>Crypto Unlocked</title>
+      <link>https://kubaik.github.io/crypto-unlocked/</link>
+      <description>Unlock the world of crypto &amp; blockchain. Discover trends, insights &amp; innovations shaping the future.</description>
+      <pubDate>Wed, 14 Jan 2026 13:01:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/crypto-unlocked/</guid>
+    </item>
     <item>
       <title>Tame Debt</title>
       <link>https://kubaik.github.io/tame-debt/</link>
@@ -138,13 +145,6 @@
       <description>Ensure seamless uptime with high availability systems. Learn more about &apos;Always On&apos; solutions.</description>
       <pubDate>Tue, 13 Jan 2026 14:33:02 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Vuln Free</title>
-      <link>https://kubaik.github.io/vuln-free/</link>
-      <description>Stay ahead of threats with effective vulnerability management strategies.</description>
-      <pubDate>Tue, 13 Jan 2026 13:01:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-free/</guid>
     </item>
   </channel>
 </rss>
