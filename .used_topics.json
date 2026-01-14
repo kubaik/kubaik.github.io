@@ -89,5 +89,6 @@
   "CQRS and Event Sourcing",
   "AI Model Monitoring and Maintenance",
   "CI/CD Pipeline Implementation",
-  "Test-Driven Development (TDD)"
+  "Test-Driven Development (TDD)",
+  "Canary Deployments"
 ]
