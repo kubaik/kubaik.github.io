@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 17:33:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 18:42:43 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down: SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</link>
+      <description>Boost security compliance with SOC 2 &amp; ISO 27001 guidelines</description>
+      <pubDate>Wed, 14 Jan 2026 18:42:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
       <pubDate>Tue, 13 Jan 2026 19:26:21 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Mobile BaaS Simplified</title>
-      <link>https://kubaik.github.io/mobile-baas-simplified/</link>
-      <description>Streamline mobile app development with Mobile BaaS. Learn how to simplify your backend infrastructure.</description>
-      <pubDate>Tue, 13 Jan 2026 18:39:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-baas-simplified/</guid>
     </item>
   </channel>
 </rss>
