@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 14:32:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 15:32:55 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost results with RL strategies. Discover expert tips and insights.</description>
+      <pubDate>Wed, 14 Jan 2026 15:32:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB tools for efficient database management and optimization.</description>
       <pubDate>Tue, 13 Jan 2026 16:40:55 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>Train Smart</title>
-      <link>https://kubaik.github.io/train-smart/</link>
-      <description>Optimize AI model performance with expert training best practices.</description>
-      <pubDate>Tue, 13 Jan 2026 15:34:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smart/</guid>
     </item>
   </channel>
 </rss>
