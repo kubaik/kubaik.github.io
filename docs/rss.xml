@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 02:10:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 04:07:57 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
+      <pubDate>Thu, 15 Jan 2026 04:07:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Boost dev skills with pair programming techniques &amp; best practices in our &apos;Code Together&apos; guide.</description>
       <pubDate>Wed, 14 Jan 2026 05:32:30 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>Deploy Smarter</title>
-      <link>https://kubaik.github.io/deploy-smarter/</link>
-      <description>Learn how Canary Deployments boost app reliability</description>
-      <pubDate>Wed, 14 Jan 2026 04:12:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-smarter/</guid>
     </item>
   </channel>
 </rss>
