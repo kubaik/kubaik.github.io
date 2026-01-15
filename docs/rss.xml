@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 11:28:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 13:00:41 +0000</lastBuildDate>
+    <item>
+      <title>Code Smart</title>
+      <link>https://kubaik.github.io/code-smart/</link>
+      <description>Learn smart contract development best practices and coding techniques.</description>
+      <pubDate>Thu, 15 Jan 2026 13:00:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-smart/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture &amp; build reusable UI elements with ease.</description>
       <pubDate>Wed, 14 Jan 2026 14:32:50 +0000</pubDate>
       <guid>https://kubaik.github.io/vuejs-components/</guid>
-    </item>
-    <item>
-      <title>Crypto Unlocked</title>
-      <link>https://kubaik.github.io/crypto-unlocked/</link>
-      <description>Unlock the world of crypto &amp; blockchain. Discover trends, insights &amp; innovations shaping the future.</description>
-      <pubDate>Wed, 14 Jan 2026 13:01:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/crypto-unlocked/</guid>
     </item>
   </channel>
 </rss>
