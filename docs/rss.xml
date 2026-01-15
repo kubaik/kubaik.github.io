@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 13:49:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 14:39:31 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Thu, 15 Jan 2026 14:39:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest modern web development frameworks &amp; tools transforming the industry.</description>
       <pubDate>Wed, 14 Jan 2026 16:39:46 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost results with RL strategies. Discover expert tips and insights.</description>
-      <pubDate>Wed, 14 Jan 2026 15:32:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
