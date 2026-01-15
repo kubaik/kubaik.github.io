@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 15:33:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 16:43:36 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Master React with expert best practices and patterns for scalable, efficient code.</description>
+      <pubDate>Thu, 15 Jan 2026 16:43:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>ML Unlocked</title>
       <link>https://kubaik.github.io/ml-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Boost security compliance with SOC 2 &amp; ISO 27001 guidelines</description>
       <pubDate>Wed, 14 Jan 2026 18:42:33 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert optimization tips and strategies.</description>
-      <pubDate>Wed, 14 Jan 2026 17:33:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
