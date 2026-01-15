@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 18:48:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 19:31:07 +0000</lastBuildDate>
+    <item>
+      <title>Pen Test Blueprint</title>
+      <link>https://kubaik.github.io/pen-test-blueprint/</link>
+      <description>Master pen testing with our step-by-step blueprint. Learn methodologies &amp; techniques.</description>
+      <pubDate>Thu, 15 Jan 2026 19:30:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/pen-test-blueprint/</guid>
+    </item>
     <item>
       <title>Split Smart</title>
       <link>https://kubaik.github.io/split-smart/</link>
@@ -138,13 +145,6 @@
       <description>Improve database performance with expert query optimization tips.</description>
       <pubDate>Wed, 14 Jan 2026 21:29:20 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-query-speed/</guid>
-    </item>
-    <item>
-      <title>VR Beyond Gaming</title>
-      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
-      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and lives.</description>
-      <pubDate>Wed, 14 Jan 2026 20:29:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
     </item>
   </channel>
 </rss>
