@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 20:34:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 21:28:59 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Unlock modern JavaScript with ES6+ essentials.</description>
+      <pubDate>Thu, 15 Jan 2026 21:28:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>API Gateway Done Right</title>
       <link>https://kubaik.github.io/api-gateway-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Flutter mobile development with expert tips and tutorials.</description>
       <pubDate>Wed, 14 Jan 2026 23:24:21 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-dev/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
-      <pubDate>Wed, 14 Jan 2026 22:30:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
