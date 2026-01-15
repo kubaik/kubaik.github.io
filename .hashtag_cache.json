@@ -2443,16 +2443,15 @@
     "topic": "Cloud Security Best Practices"
   },
   "application_performance_monitoring": {
-    "timestamp": "2026-01-04T16:32:49.166814",
+    "timestamp": "2026-01-15T17:38:58.425238",
     "hashtags": [
       "APM",
-      "CloudNative",
       "DevOpsTools",
+      "CloudMonitoring",
+      "AppPerformance",
       "Observability",
       "TechOptimization",
-      "DigitalTransformation",
-      "MicroservicesMonitoring",
-      "PerformanceEngineering"
+      "DigitalTransformation"
     ],
     "topic": "Application Performance Monitoring"
   },

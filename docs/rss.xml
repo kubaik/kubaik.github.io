@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 16:43:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 17:39:07 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Optimize app speed with APM tools and expert tips.</description>
+      <pubDate>Thu, 15 Jan 2026 17:38:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: Manage infrastructure as code for scalable, secure deployments.</description>
       <pubDate>Wed, 14 Jan 2026 19:25:41 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
-    </item>
-    <item>
-      <title>Lock It Down: SOC 2 &amp; ISO 27001</title>
-      <link>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</link>
-      <description>Boost security compliance with SOC 2 &amp; ISO 27001 guidelines</description>
-      <pubDate>Wed, 14 Jan 2026 18:42:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down-soc-2-iso-27001/</guid>
     </item>
   </channel>
 </rss>
