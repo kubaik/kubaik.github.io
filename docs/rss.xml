@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jan 2026 23:24:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 02:10:54 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint for a connected future</description>
+      <pubDate>Thu, 15 Jan 2026 02:10:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Flutter Dev</title>
       <link>https://kubaik.github.io/flutter-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Canary Deployments boost app reliability</description>
       <pubDate>Wed, 14 Jan 2026 04:12:49 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-smarter/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smart</title>
-      <link>https://kubaik.github.io/tdd-code-smart/</link>
-      <description>Learn Test-Driven Development for smarter coding</description>
-      <pubDate>Wed, 14 Jan 2026 02:22:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smart/</guid>
     </item>
   </channel>
 </rss>
