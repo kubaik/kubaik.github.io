@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 21:28:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 22:29:30 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Thu, 15 Jan 2026 22:29:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint for a connected future</description>
       <pubDate>Thu, 15 Jan 2026 02:10:45 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Flutter Dev</title>
-      <link>https://kubaik.github.io/flutter-dev/</link>
-      <description>Learn Flutter mobile development with expert tips and tutorials.</description>
-      <pubDate>Wed, 14 Jan 2026 23:24:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-dev/</guid>
     </item>
   </channel>
 </rss>
