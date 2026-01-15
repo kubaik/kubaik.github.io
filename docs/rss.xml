@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 05:33:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 06:43:38 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flood</title>
+      <link>https://kubaik.github.io/limit-the-flood/</link>
+      <description>Learn how rate limiting &amp; throttling protect systems from overload, preventing crashes &amp; ensuring smooth performance.</description>
+      <pubDate>Thu, 15 Jan 2026 06:43:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flood/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn decentralized system design principles and build scalable, fault-tolerant architectures.</description>
       <pubDate>Wed, 14 Jan 2026 07:32:19 +0000</pubDate>
       <guid>https://kubaik.github.io/design-decentralized/</guid>
-    </item>
-    <item>
-      <title>NFT Tech Unlocked</title>
-      <link>https://kubaik.github.io/nft-tech-unlocked/</link>
-      <description>Unlock NFT potential: Explore tech &amp; use cases</description>
-      <pubDate>Wed, 14 Jan 2026 06:44:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-unlocked/</guid>
     </item>
   </channel>
 </rss>
