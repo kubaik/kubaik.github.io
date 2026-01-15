@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 07:32:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Jan 2026 08:39:59 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up</title>
+      <link>https://kubaik.github.io/speed-up/</link>
+      <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
+      <pubDate>Thu, 15 Jan 2026 08:39:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Protect your API from threats with expert security tips and best practices.</description>
       <pubDate>Wed, 14 Jan 2026 09:36:21 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-api/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Unlock AI potential with cutting-edge agent development insights.</description>
-      <pubDate>Wed, 14 Jan 2026 08:39:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
