@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 19:25:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 20:29:08 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark. Learn Big Data processing &amp; analytics.</description>
+      <pubDate>Fri, 16 Jan 2026 20:28:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Crack Complexity</title>
       <link>https://kubaik.github.io/crack-complexity/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Thu, 15 Jan 2026 22:29:21 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials.</description>
-      <pubDate>Thu, 15 Jan 2026 21:28:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
