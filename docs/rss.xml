@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 06:44:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 07:31:08 +0000</lastBuildDate>
+    <item>
+      <title>Blue/Green Deploy</title>
+      <link>https://kubaik.github.io/bluegreen-deploy/</link>
+      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
+      <pubDate>Fri, 16 Jan 2026 07:30:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/bluegreen-deploy/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods and techniques.</description>
       <pubDate>Thu, 15 Jan 2026 09:35:08 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-up/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
-      <pubDate>Thu, 15 Jan 2026 08:39:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
