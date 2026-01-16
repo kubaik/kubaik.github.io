@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 20:29:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 21:28:17 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop key tech leadership skills to drive innovation &amp; success.</description>
+      <pubDate>Fri, 16 Jan 2026 21:28:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Service Mesh Architecture &amp; its benefits in &apos;Mesh Up!&apos; Discover how to streamline microservices management.</description>
       <pubDate>Thu, 15 Jan 2026 23:28:34 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Thu, 15 Jan 2026 22:29:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
