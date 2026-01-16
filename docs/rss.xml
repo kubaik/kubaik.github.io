@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 12:59:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 13:46:31 +0000</lastBuildDate>
+    <item>
+      <title>AI With A Conscience</title>
+      <link>https://kubaik.github.io/ai-with-a-conscience/</link>
+      <description>Explore the future of AI with a conscience, prioritizing ethics and responsibility.</description>
+      <pubDate>Fri, 16 Jan 2026 13:46:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Machine Learning secrets. Learn ML algorithms &amp; boost business insights.</description>
       <pubDate>Thu, 15 Jan 2026 15:33:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-unlocked/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Thu, 15 Jan 2026 14:39:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
