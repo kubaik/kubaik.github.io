@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 21:28:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 22:28:19 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Discover the power of Static Site Generation (SSG) made easy.</description>
+      <pubDate>Fri, 16 Jan 2026 22:28:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn responsive web design techniques to create mobile-friendly sites</description>
       <pubDate>Fri, 16 Jan 2026 02:12:49 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Learn about Service Mesh Architecture &amp; its benefits in &apos;Mesh Up!&apos; Discover how to streamline microservices management.</description>
-      <pubDate>Thu, 15 Jan 2026 23:28:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
