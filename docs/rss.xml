@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 10:32:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 11:27:02 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with React Native, one codebase for all.</description>
+      <pubDate>Fri, 16 Jan 2026 11:26:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Digital Twins</title>
       <link>https://kubaik.github.io/digital-twins/</link>
@@ -138,13 +145,6 @@
       <description>Learn clean code principles to boost dev efficiency &amp; readability.</description>
       <pubDate>Thu, 15 Jan 2026 13:49:40 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>Code Smart</title>
-      <link>https://kubaik.github.io/code-smart/</link>
-      <description>Learn smart contract development best practices and coding techniques.</description>
-      <pubDate>Thu, 15 Jan 2026 13:00:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-smart/</guid>
     </item>
   </channel>
 </rss>
