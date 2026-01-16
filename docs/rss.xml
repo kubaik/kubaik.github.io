@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 04:05:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 05:32:40 +0000</lastBuildDate>
+    <item>
+      <title>Write Right</title>
+      <link>https://kubaik.github.io/write-right/</link>
+      <description>Improve your technical writing skills with expert tips and best practices.</description>
+      <pubDate>Fri, 16 Jan 2026 05:32:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-right/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost your dev career with personal branding tips and strategies.</description>
       <pubDate>Thu, 15 Jan 2026 07:32:10 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>Limit the Flood</title>
-      <link>https://kubaik.github.io/limit-the-flood/</link>
-      <description>Learn how rate limiting &amp; throttling protect systems from overload, preventing crashes &amp; ensuring smooth performance.</description>
-      <pubDate>Thu, 15 Jan 2026 06:43:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flood/</guid>
     </item>
   </channel>
 </rss>
