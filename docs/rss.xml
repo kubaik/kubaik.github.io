@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 08:38:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 09:34:12 +0000</lastBuildDate>
+    <item>
+      <title>WCAG Simplified</title>
+      <link>https://kubaik.github.io/wcag-simplified/</link>
+      <description>Unlock accessible web design with simplified WCAG guidelines</description>
+      <pubDate>Fri, 16 Jan 2026 09:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-simplified/</guid>
+    </item>
     <item>
       <title>Delta Lake Unleashed</title>
       <link>https://kubaik.github.io/delta-lake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and advanced techniques.</description>
       <pubDate>Thu, 15 Jan 2026 11:27:54 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Minimize downtime with a solid disaster recovery plan. Learn how to recover fast and ensure business continuity.</description>
-      <pubDate>Thu, 15 Jan 2026 10:32:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
