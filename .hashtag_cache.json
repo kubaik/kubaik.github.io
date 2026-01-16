@@ -1561,15 +1561,15 @@
     "topic": "Database Design and Normalization"
   },
   "web_application_firewall_(waf)": {
-    "timestamp": "2026-01-04T13:34:27.312232",
+    "timestamp": "2026-01-16T18:42:18.942418",
     "hashtags": [
       "CyberSecurity",
-      "WebAppSecurity",
+      "WebAppSec",
       "CloudNative",
+      "AppFirewall",
       "ZeroTrust",
-      "AppSec",
-      "WebProtection",
-      "DevSecOps"
+      "DevSecOps",
+      "WebProtection"
     ],
     "topic": "Web Application Firewall (WAF)"
   },
