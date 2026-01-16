@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 07:31:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 08:38:51 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake Unleashed</title>
+      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
+      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn more</description>
+      <pubDate>Fri, 16 Jan 2026 08:38:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
+    </item>
     <item>
       <title>Blue/Green Deploy</title>
       <link>https://kubaik.github.io/bluegreen-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Minimize downtime with a solid disaster recovery plan. Learn how to recover fast and ensure business continuity.</description>
       <pubDate>Thu, 15 Jan 2026 10:32:50 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>Tune Up</title>
-      <link>https://kubaik.github.io/tune-up/</link>
-      <description>Optimize model performance with expert hyperparameter tuning methods and techniques.</description>
-      <pubDate>Thu, 15 Jan 2026 09:35:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-up/</guid>
     </item>
   </channel>
 </rss>
