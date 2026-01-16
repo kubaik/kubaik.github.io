@@ -2600,15 +2600,14 @@
     "topic": "Real-Time Data Processing"
   },
   "blue-green_deployment": {
-    "timestamp": "2026-01-02T16:34:12.381059",
+    "timestamp": "2026-01-16T07:30:59.859786",
     "hashtags": [
       "CloudNative",
       "DevOpsTools",
       "ZeroDowntime",
-      "ContinuousDelivery",
       "DeploymentStrategies",
-      "ServerlessArchitecture",
-      "KubernetesDeployments"
+      "ServerlessTech",
+      "KubernetesDeploy"
     ],
     "topic": "Blue-Green Deployment"
   },
