@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 15:31:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 16:38:24 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft intelligent Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
+      <pubDate>Fri, 16 Jan 2026 16:38:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Optimize code with smart splitting strategies, boost performance &amp; speed.</description>
       <pubDate>Thu, 15 Jan 2026 18:48:25 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smart/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Optimize app speed with APM tools and expert tips.</description>
-      <pubDate>Thu, 15 Jan 2026 17:38:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
