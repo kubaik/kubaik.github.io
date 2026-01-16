@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 09:34:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 10:32:53 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twins</title>
+      <link>https://kubaik.github.io/digital-twins/</link>
+      <description>Discover Digital Twin tech: virtual replicas for smarter operations &amp; innovation</description>
+      <pubDate>Fri, 16 Jan 2026 10:32:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twins/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn smart contract development best practices and coding techniques.</description>
       <pubDate>Thu, 15 Jan 2026 13:00:33 +0000</pubDate>
       <guid>https://kubaik.github.io/code-smart/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and advanced techniques.</description>
-      <pubDate>Thu, 15 Jan 2026 11:27:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
