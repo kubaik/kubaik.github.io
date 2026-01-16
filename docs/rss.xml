@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Jan 2026 23:28:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 02:12:58 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn responsive web design techniques to create mobile-friendly sites</description>
+      <pubDate>Fri, 16 Jan 2026 02:12:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>Mesh Up!</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock BDD basics: simplify testing with behavior-driven development techniques.</description>
       <pubDate>Thu, 15 Jan 2026 05:33:07 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
-      <pubDate>Thu, 15 Jan 2026 04:07:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
