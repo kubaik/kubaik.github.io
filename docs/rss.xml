@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 04:39:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 05:27:54 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
+      <pubDate>Sat, 17 Jan 2026 05:27:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Boost ML: 5 Top FE Tips</title>
       <link>https://kubaik.github.io/boost-ml-5-top-fe-tips/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
       <pubDate>Fri, 16 Jan 2026 07:30:59 +0000</pubDate>
       <guid>https://kubaik.github.io/bluegreen-deploy/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query speed with expert database indexing strategies and techniques.</description>
-      <pubDate>Fri, 16 Jan 2026 06:44:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
