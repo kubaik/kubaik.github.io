@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 08:34:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 09:27:48 +0000</lastBuildDate>
+    <item>
+      <title>Data Flow</title>
+      <link>https://kubaik.github.io/data-flow/</link>
+      <description>Streamline data workflows with efficient engineering pipelines.</description>
+      <pubDate>Sat, 17 Jan 2026 09:27:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-flow/</guid>
+    </item>
     <item>
       <title>Visualize Smarter</title>
       <link>https://kubaik.github.io/visualize-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with React Native, one codebase for all.</description>
       <pubDate>Fri, 16 Jan 2026 11:26:53 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Digital Twins</title>
-      <link>https://kubaik.github.io/digital-twins/</link>
-      <description>Discover Digital Twin tech: virtual replicas for smarter operations &amp; innovation</description>
-      <pubDate>Fri, 16 Jan 2026 10:32:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twins/</guid>
     </item>
   </channel>
 </rss>
