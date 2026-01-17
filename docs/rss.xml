@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 09:27:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 10:27:40 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
+      <pubDate>Sat, 17 Jan 2026 10:27:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution: faster speeds, new use cases, and a transformed future.</description>
       <pubDate>Fri, 16 Jan 2026 12:59:30 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with React Native, one codebase for all.</description>
-      <pubDate>Fri, 16 Jan 2026 11:26:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
