@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 20:29:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 21:24:33 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
+      <pubDate>Sat, 17 Jan 2026 21:24:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>FP Basics</title>
       <link>https://kubaik.github.io/fp-basics/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert database design &amp; normalization techniques to optimize performance and scalability.</description>
       <pubDate>Sat, 17 Jan 2026 02:06:12 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Boost engagement with perfect push notifications. Learn implementation best practices.</description>
-      <pubDate>Fri, 16 Jan 2026 23:27:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
