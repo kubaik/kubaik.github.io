@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 06:39:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 07:25:56 +0000</lastBuildDate>
+    <item>
+      <title>Tech Salary Hacks</title>
+      <link>https://kubaik.github.io/tech-salary-hacks/</link>
+      <description>Boost your tech salary with expert negotiation tips and hacks.</description>
+      <pubDate>Sat, 17 Jan 2026 07:25:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
+    </item>
     <item>
       <title>AI Meets Edge</title>
       <link>https://kubaik.github.io/ai-meets-edge/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accessible web design with simplified WCAG guidelines</description>
       <pubDate>Fri, 16 Jan 2026 09:34:03 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>Delta Lake Unleashed</title>
-      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
-      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn more</description>
-      <pubDate>Fri, 16 Jan 2026 08:38:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
     </item>
   </channel>
 </rss>
