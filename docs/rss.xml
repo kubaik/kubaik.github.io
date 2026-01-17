@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 10:27:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 11:23:17 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up Mobile</title>
+      <link>https://kubaik.github.io/speed-up-mobile/</link>
+      <description>Boost mobile speed &amp; performance with expert tips and tricks.</description>
+      <pubDate>Sat, 17 Jan 2026 11:23:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up-mobile/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Explore the future of AI with a conscience, prioritizing ethics and responsibility.</description>
       <pubDate>Fri, 16 Jan 2026 13:46:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Discover the 5G revolution: faster speeds, new use cases, and a transformed future.</description>
-      <pubDate>Fri, 16 Jan 2026 12:59:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>
