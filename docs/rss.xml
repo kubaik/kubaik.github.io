@@ -5,20 +5,20 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 22:26:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 23:26:10 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Sat, 17 Jan 2026 23:26:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
       <description>Discover Svelte JS: Unlock efficient web development with modern JavaScript frameworks.</description>
       <pubDate>Sat, 17 Jan 2026 22:26:38 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
-      <pubDate>Sat, 17 Jan 2026 21:24:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>FP Basics</title>
