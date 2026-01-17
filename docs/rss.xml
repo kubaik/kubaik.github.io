@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 07:25:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 08:34:52 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smarter</title>
+      <link>https://kubaik.github.io/visualize-smarter/</link>
+      <description>Boost insights with data visualization best practices. Learn how to visualize smarter and make informed decisions.</description>
+      <pubDate>Sat, 17 Jan 2026 08:34:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smarter/</guid>
+    </item>
     <item>
       <title>Tech Salary Hacks</title>
       <link>https://kubaik.github.io/tech-salary-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech: virtual replicas for smarter operations &amp; innovation</description>
       <pubDate>Fri, 16 Jan 2026 10:32:44 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twins/</guid>
-    </item>
-    <item>
-      <title>WCAG Simplified</title>
-      <link>https://kubaik.github.io/wcag-simplified/</link>
-      <description>Unlock accessible web design with simplified WCAG guidelines</description>
-      <pubDate>Fri, 16 Jan 2026 09:34:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-simplified/</guid>
     </item>
   </channel>
 </rss>
