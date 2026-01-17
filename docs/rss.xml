@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 11:23:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 12:53:35 +0000</lastBuildDate>
+    <item>
+      <title>Balance Traffic</title>
+      <link>https://kubaik.github.io/balance-traffic/</link>
+      <description>Optimize server performance with expert load balancing techniques.</description>
+      <pubDate>Sat, 17 Jan 2026 12:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-traffic/</guid>
+    </item>
     <item>
       <title>Speed Up Mobile</title>
       <link>https://kubaik.github.io/speed-up-mobile/</link>
@@ -138,13 +145,6 @@
       <description>Explore Computer Vision tech &amp; its innovative applications</description>
       <pubDate>Fri, 16 Jan 2026 14:31:07 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>AI With A Conscience</title>
-      <link>https://kubaik.github.io/ai-with-a-conscience/</link>
-      <description>Explore the future of AI with a conscience, prioritizing ethics and responsibility.</description>
-      <pubDate>Fri, 16 Jan 2026 13:46:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-with-a-conscience/</guid>
     </item>
   </channel>
 </rss>
