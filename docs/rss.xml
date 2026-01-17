@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 03:58:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 04:39:27 +0000</lastBuildDate>
+    <item>
+      <title>Boost ML: 5 Top FE Tips</title>
+      <link>https://kubaik.github.io/boost-ml-5-top-fe-tips/</link>
+      <description>Unlock ML potential with 5 essential FE tips. Boost model performance now.</description>
+      <pubDate>Sat, 17 Jan 2026 04:39:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-ml-5-top-fe-tips/</guid>
+    </item>
     <item>
       <title>SSR Boost</title>
       <link>https://kubaik.github.io/ssr-boost/</link>
@@ -138,13 +145,6 @@
       <description>Boost query speed with expert database indexing strategies and techniques.</description>
       <pubDate>Fri, 16 Jan 2026 06:44:05 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Write Right</title>
-      <link>https://kubaik.github.io/write-right/</link>
-      <description>Improve your technical writing skills with expert tips and best practices.</description>
-      <pubDate>Fri, 16 Jan 2026 05:32:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-right/</guid>
     </item>
   </channel>
 </rss>
