@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 18:37:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 19:20:55 +0000</lastBuildDate>
+    <item>
+      <title>Smart Fusion: Multi-Modal AI</title>
+      <link>https://kubaik.github.io/smart-fusion-multi-modal-ai/</link>
+      <description>Discover Smart Fusion, the future of AI. Learn about multi-modal systems merging text, vision &amp; more.</description>
+      <pubDate>Sat, 17 Jan 2026 19:20:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-fusion-multi-modal-ai/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Static Site Generation (SSG) made easy.</description>
       <pubDate>Fri, 16 Jan 2026 22:28:10 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop key tech leadership skills to drive innovation &amp; success.</description>
-      <pubDate>Fri, 16 Jan 2026 21:28:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
