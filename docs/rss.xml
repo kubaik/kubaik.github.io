@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 21:24:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 22:26:47 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS: Unlock efficient web development with modern JavaScript frameworks.</description>
+      <pubDate>Sat, 17 Jan 2026 22:26:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster loads with Server-Side Rendering (SSR). Learn how to boost performance now.</description>
       <pubDate>Sat, 17 Jan 2026 03:58:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ssr-boost/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn expert database design &amp; normalization techniques to optimize performance and scalability.</description>
-      <pubDate>Sat, 17 Jan 2026 02:06:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
