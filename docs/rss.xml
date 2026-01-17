@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Jan 2026 23:27:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 02:06:21 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn expert database design &amp; normalization techniques to optimize performance and scalability.</description>
+      <pubDate>Sat, 17 Jan 2026 02:06:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -54,13 +61,6 @@
       <description>Learn how Rust&apos;s design ensures memory safety, preventing common errors and bugs.</description>
       <pubDate>Fri, 16 Jan 2026 17:30:09 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-by-design/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intelligent Recommender Systems with Design Smart, expert guide to personalized user experiences.</description>
-      <pubDate>Fri, 16 Jan 2026 16:38:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
     <item>
       <title>Zero Trust: Secure All</title>
