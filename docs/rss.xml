@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 12:53:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 13:34:00 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Sat, 17 Jan 2026 13:33:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>Balance Traffic</title>
       <link>https://kubaik.github.io/balance-traffic/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; how to secure your network with a &apos;never trust&apos; approach.</description>
       <pubDate>Fri, 16 Jan 2026 15:31:28 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore Computer Vision tech &amp; its innovative applications</description>
-      <pubDate>Fri, 16 Jan 2026 14:31:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
