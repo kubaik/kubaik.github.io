@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 15:27:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 16:31:28 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Essentials</title>
+      <link>https://kubaik.github.io/siem-essentials/</link>
+      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
+      <pubDate>Sat, 17 Jan 2026 16:31:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-essentials/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Master algorithm complexity analysis &amp; simplify code with expert tips.</description>
       <pubDate>Fri, 16 Jan 2026 19:24:51 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-complexity/</guid>
-    </item>
-    <item>
-      <title>WAF: Web Shield</title>
-      <link>https://kubaik.github.io/waf-web-shield/</link>
-      <description>Protect your website with a Web Application Firewall (WAF). Learn how to shield your site from cyber threats.</description>
-      <pubDate>Fri, 16 Jan 2026 18:42:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-web-shield/</guid>
     </item>
   </channel>
 </rss>
