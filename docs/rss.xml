@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 05:27:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 06:39:56 +0000</lastBuildDate>
+    <item>
+      <title>AI Meets Edge</title>
+      <link>https://kubaik.github.io/ai-meets-edge/</link>
+      <description>Unlock Edge potential with AI. Discover how AI transforms Edge Computing.</description>
+      <pubDate>Sat, 17 Jan 2026 06:39:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn more</description>
       <pubDate>Fri, 16 Jan 2026 08:38:42 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
-    </item>
-    <item>
-      <title>Blue/Green Deploy</title>
-      <link>https://kubaik.github.io/bluegreen-deploy/</link>
-      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
-      <pubDate>Fri, 16 Jan 2026 07:30:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/bluegreen-deploy/</guid>
     </item>
   </channel>
 </rss>
