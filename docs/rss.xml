@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 14:26:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Jan 2026 15:27:06 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
+      <pubDate>Sat, 17 Jan 2026 15:26:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>Boost WA Speed</title>
       <link>https://kubaik.github.io/boost-wa-speed/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with a Web Application Firewall (WAF). Learn how to shield your site from cyber threats.</description>
       <pubDate>Fri, 16 Jan 2026 18:42:18 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-web-shield/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe by Design</title>
-      <link>https://kubaik.github.io/rust-safe-by-design/</link>
-      <description>Learn how Rust&apos;s design ensures memory safety, preventing common errors and bugs.</description>
-      <pubDate>Fri, 16 Jan 2026 17:30:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-by-design/</guid>
     </item>
   </channel>
 </rss>
