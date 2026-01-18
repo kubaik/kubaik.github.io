@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 11:22:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 12:53:37 +0000</lastBuildDate>
+    <item>
+      <title>Angular at Scale</title>
+      <link>https://kubaik.github.io/angular-at-scale/</link>
+      <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
+      <pubDate>Sun, 18 Jan 2026 12:53:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-at-scale/</guid>
+    </item>
     <item>
       <title>Secure Code: SAST/DAST</title>
       <link>https://kubaik.github.io/secure-code-sastdast/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Sat, 17 Jan 2026 13:33:50 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Balance Traffic</title>
-      <link>https://kubaik.github.io/balance-traffic/</link>
-      <description>Optimize server performance with expert load balancing techniques.</description>
-      <pubDate>Sat, 17 Jan 2026 12:53:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-traffic/</guid>
     </item>
   </channel>
 </rss>
