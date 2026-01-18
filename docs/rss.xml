@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 21:25:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 22:27:14 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn Python for data science and boost your analysis skills.</description>
+      <pubDate>Sun, 18 Jan 2026 22:27:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Cloud Freedom</title>
       <link>https://kubaik.github.io/cloud-freedom/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with FL Done Right. Learn expert Federated Learning implementation tips and best practices.</description>
       <pubDate>Sun, 18 Jan 2026 02:26:26 +0000</pubDate>
       <guid>https://kubaik.github.io/fl-done-right/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
-      <pubDate>Sat, 17 Jan 2026 23:26:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
