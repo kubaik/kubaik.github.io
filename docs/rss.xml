@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 23:26:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 02:26:36 +0000</lastBuildDate>
+    <item>
+      <title>FL Done Right</title>
+      <link>https://kubaik.github.io/fl-done-right/</link>
+      <description>Unlock efficient AI with FL Done Right. Learn expert Federated Learning implementation tips and best practices.</description>
+      <pubDate>Sun, 18 Jan 2026 02:26:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/fl-done-right/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML potential with 5 essential FE tips. Boost model performance now.</description>
       <pubDate>Sat, 17 Jan 2026 04:39:18 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-ml-5-top-fe-tips/</guid>
-    </item>
-    <item>
-      <title>SSR Boost</title>
-      <link>https://kubaik.github.io/ssr-boost/</link>
-      <description>Unlock faster loads with Server-Side Rendering (SSR). Learn how to boost performance now.</description>
-      <pubDate>Sat, 17 Jan 2026 03:58:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-boost/</guid>
     </item>
   </channel>
 </rss>
