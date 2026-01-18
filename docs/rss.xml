@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 17:23:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 18:36:38 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Simplified</title>
+      <link>https://kubaik.github.io/mlops-simplified/</link>
+      <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows and boost efficiency.</description>
+      <pubDate>Sun, 18 Jan 2026 18:36:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-simplified/</guid>
+    </item>
     <item>
       <title>AI Forecasts</title>
       <link>https://kubaik.github.io/ai-forecasts/</link>
@@ -138,13 +145,6 @@
       <description>Discover Smart Fusion, the future of AI. Learn about multi-modal systems merging text, vision &amp; more.</description>
       <pubDate>Sat, 17 Jan 2026 19:20:46 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-fusion-multi-modal-ai/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize performance with profiling &amp; benchmarking techniques.</description>
-      <pubDate>Sat, 17 Jan 2026 18:37:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
