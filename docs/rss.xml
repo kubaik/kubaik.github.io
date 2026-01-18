@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 09:28:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 10:28:32 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Revolution</title>
+      <link>https://kubaik.github.io/web3-revolution/</link>
+      <description>Discover the Web3 revolution &amp; the power of decentralized apps (DApps)</description>
+      <pubDate>Sun, 18 Jan 2026 10:28:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-revolution/</guid>
+    </item>
     <item>
       <title>Respond Smarter</title>
       <link>https://kubaik.github.io/respond-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Sat, 17 Jan 2026 11:23:08 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up-mobile/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
-      <pubDate>Sat, 17 Jan 2026 10:27:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
