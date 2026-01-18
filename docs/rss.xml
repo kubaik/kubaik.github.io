@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 10:28:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 11:22:22 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code: SAST/DAST</title>
+      <link>https://kubaik.github.io/secure-code-sastdast/</link>
+      <description>Learn about SAST/DAST in app security testing. Protect your code with secure coding practices.</description>
+      <pubDate>Sun, 18 Jan 2026 11:22:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
+    </item>
     <item>
       <title>Web3 Revolution</title>
       <link>https://kubaik.github.io/web3-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Optimize server performance with expert load balancing techniques.</description>
       <pubDate>Sat, 17 Jan 2026 12:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-traffic/</guid>
-    </item>
-    <item>
-      <title>Speed Up Mobile</title>
-      <link>https://kubaik.github.io/speed-up-mobile/</link>
-      <description>Boost mobile speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Sat, 17 Jan 2026 11:23:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up-mobile/</guid>
     </item>
   </channel>
 </rss>
