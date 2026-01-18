@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 04:10:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 05:30:50 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
+      <pubDate>Sun, 18 Jan 2026 05:30:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>AR Dev 101</title>
       <link>https://kubaik.github.io/ar-dev-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge potential with AI. Discover how AI transforms Edge Computing.</description>
       <pubDate>Sat, 17 Jan 2026 06:39:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-meets-edge/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Sat, 17 Jan 2026 05:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
