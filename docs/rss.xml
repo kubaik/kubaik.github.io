@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 02:26:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 04:10:19 +0000</lastBuildDate>
+    <item>
+      <title>AR Dev 101</title>
+      <link>https://kubaik.github.io/ar-dev-101/</link>
+      <description>Learn AR development basics &amp; start building immersive experiences with our beginner&apos;s guide.</description>
+      <pubDate>Sun, 18 Jan 2026 04:10:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-dev-101/</guid>
+    </item>
     <item>
       <title>FL Done Right</title>
       <link>https://kubaik.github.io/fl-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
       <pubDate>Sat, 17 Jan 2026 05:27:44 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Boost ML: 5 Top FE Tips</title>
-      <link>https://kubaik.github.io/boost-ml-5-top-fe-tips/</link>
-      <description>Unlock ML potential with 5 essential FE tips. Boost model performance now.</description>
-      <pubDate>Sat, 17 Jan 2026 04:39:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ml-5-top-fe-tips/</guid>
     </item>
   </channel>
 </rss>
