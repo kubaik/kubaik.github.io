@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 18:36:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 19:21:47 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Boost container security with expert tips and best practices.</description>
+      <pubDate>Sun, 18 Jan 2026 19:21:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>MLOps Simplified</title>
       <link>https://kubaik.github.io/mlops-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn the fundamentals of Functional Programming with FP Basics.</description>
       <pubDate>Sat, 17 Jan 2026 20:29:48 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-basics/</guid>
-    </item>
-    <item>
-      <title>Smart Fusion: Multi-Modal AI</title>
-      <link>https://kubaik.github.io/smart-fusion-multi-modal-ai/</link>
-      <description>Discover Smart Fusion, the future of AI. Learn about multi-modal systems merging text, vision &amp; more.</description>
-      <pubDate>Sat, 17 Jan 2026 19:20:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-fusion-multi-modal-ai/</guid>
     </item>
   </channel>
 </rss>
