@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 13:34:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 14:25:19 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS: Utility-First</title>
+      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
+      <description>Learn Tailwind CSS utility-first design for faster styling</description>
+      <pubDate>Sun, 18 Jan 2026 14:25:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with expert guides and tutorials.</description>
       <pubDate>Sat, 17 Jan 2026 15:26:56 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Unlock WebAssembly&apos;s full potential with expert performance optimization tips.</description>
-      <pubDate>Sat, 17 Jan 2026 14:25:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
