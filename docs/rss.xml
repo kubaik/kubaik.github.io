@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 19:21:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 20:30:24 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Streamline cloud migration with expert strategies and best practices.</description>
+      <pubDate>Sun, 18 Jan 2026 20:30:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Discover Svelte JS: Unlock efficient web development with modern JavaScript frameworks.</description>
       <pubDate>Sat, 17 Jan 2026 22:26:38 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>FP Basics</title>
-      <link>https://kubaik.github.io/fp-basics/</link>
-      <description>Learn the fundamentals of Functional Programming with FP Basics.</description>
-      <pubDate>Sat, 17 Jan 2026 20:29:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-basics/</guid>
     </item>
   </channel>
 </rss>
