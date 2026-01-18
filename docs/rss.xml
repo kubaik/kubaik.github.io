@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 12:53:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 13:34:14 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve documentation with best practices and expert tips in &apos;Doc Right&apos;</description>
+      <pubDate>Sun, 18 Jan 2026 13:34:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Angular at Scale</title>
       <link>https://kubaik.github.io/angular-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Unlock WebAssembly&apos;s full potential with expert performance optimization tips.</description>
       <pubDate>Sat, 17 Jan 2026 14:25:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Sat, 17 Jan 2026 13:33:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
