@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 06:40:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 07:26:59 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Sun, 18 Jan 2026 07:26:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>App Architecture</title>
       <link>https://kubaik.github.io/app-architecture/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn how to visualize smarter and make informed decisions.</description>
       <pubDate>Sat, 17 Jan 2026 08:34:42 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smarter/</guid>
-    </item>
-    <item>
-      <title>Tech Salary Hacks</title>
-      <link>https://kubaik.github.io/tech-salary-hacks/</link>
-      <description>Boost your tech salary with expert negotiation tips and hacks.</description>
-      <pubDate>Sat, 17 Jan 2026 07:25:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-salary-hacks/</guid>
     </item>
   </channel>
 </rss>
