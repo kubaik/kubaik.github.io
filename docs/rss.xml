@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 22:27:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 23:26:34 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development and boost your server-side skills.</description>
+      <pubDate>Sun, 18 Jan 2026 23:26:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn AR development basics &amp; start building immersive experiences with our beginner&apos;s guide.</description>
       <pubDate>Sun, 18 Jan 2026 04:10:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-dev-101/</guid>
-    </item>
-    <item>
-      <title>FL Done Right</title>
-      <link>https://kubaik.github.io/fl-done-right/</link>
-      <description>Unlock efficient AI with FL Done Right. Learn expert Federated Learning implementation tips and best practices.</description>
-      <pubDate>Sun, 18 Jan 2026 02:26:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/fl-done-right/</guid>
     </item>
   </channel>
 </rss>
