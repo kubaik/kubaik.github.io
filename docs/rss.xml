@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 07:26:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jan 2026 08:34:51 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Learn database replication &amp; sharding strategies to scale your app smartly</description>
+      <pubDate>Sun, 18 Jan 2026 08:34:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Streamline data workflows with efficient engineering pipelines.</description>
       <pubDate>Sat, 17 Jan 2026 09:27:39 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Visualize Smarter</title>
-      <link>https://kubaik.github.io/visualize-smarter/</link>
-      <description>Boost insights with data visualization best practices. Learn how to visualize smarter and make informed decisions.</description>
-      <pubDate>Sat, 17 Jan 2026 08:34:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smarter/</guid>
     </item>
   </channel>
 </rss>
