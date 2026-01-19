@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 14:35:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 15:34:36 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Done Right</title>
+      <link>https://kubaik.github.io/graphql-done-right/</link>
+      <description>Learn expert GraphQL API development techniques and best practices.</description>
+      <pubDate>Mon, 19 Jan 2026 15:34:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-done-right/</guid>
+    </item>
     <item>
       <title>Vision Tech</title>
       <link>https://kubaik.github.io/vision-tech/</link>
@@ -138,13 +145,6 @@
       <description>Simplify Kubernetes orchestration with expert tips and guides.</description>
       <pubDate>Sun, 18 Jan 2026 16:32:49 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-simplified/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
-      <pubDate>Sun, 18 Jan 2026 15:26:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
