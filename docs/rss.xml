@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 17:29:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 18:41:50 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques. Learn to code together effectively.</description>
+      <pubDate>Mon, 19 Jan 2026 18:41:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Boost container security with expert tips and best practices.</description>
       <pubDate>Sun, 18 Jan 2026 19:21:37 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>MLOps Simplified</title>
-      <link>https://kubaik.github.io/mlops-simplified/</link>
-      <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows and boost efficiency.</description>
-      <pubDate>Sun, 18 Jan 2026 18:36:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-simplified/</guid>
     </item>
   </channel>
 </rss>
