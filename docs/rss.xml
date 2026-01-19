@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 02:23:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 04:16:09 +0000</lastBuildDate>
+    <item>
+      <title>Build Your Brand</title>
+      <link>https://kubaik.github.io/build-your-brand/</link>
+      <description>Establish a strong online presence with a solid tech portfolio. Learn how to build your brand and boost your career.</description>
+      <pubDate>Mon, 19 Jan 2026 04:15:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-your-brand/</guid>
+    </item>
     <item>
       <title>Digital Twin: Future Now</title>
       <link>https://kubaik.github.io/digital-twin-future-now/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
       <pubDate>Sun, 18 Jan 2026 06:40:41 +0000</pubDate>
       <guid>https://kubaik.github.io/app-architecture/</guid>
-    </item>
-    <item>
-      <title>iOS Dev with Swift</title>
-      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
-      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
-      <pubDate>Sun, 18 Jan 2026 05:30:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
     </item>
   </channel>
 </rss>
