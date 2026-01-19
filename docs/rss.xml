@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 11:28:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 13:04:48 +0000</lastBuildDate>
+    <item>
+      <title>Boost with Azure</title>
+      <link>https://kubaik.github.io/boost-with-azure/</link>
+      <description>Unlock cloud potential with Azure. Discover scalable solutions</description>
+      <pubDate>Mon, 19 Jan 2026 13:04:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-with-azure/</guid>
+    </item>
     <item>
       <title>Crack Complexity</title>
       <link>https://kubaik.github.io/crack-complexity/</link>
@@ -138,13 +145,6 @@
       <description>Learn Tailwind CSS utility-first design for faster styling</description>
       <pubDate>Sun, 18 Jan 2026 14:25:10 +0000</pubDate>
       <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
-    </item>
-    <item>
-      <title>Doc Right</title>
-      <link>https://kubaik.github.io/doc-right/</link>
-      <description>Improve documentation with best practices and expert tips in &apos;Doc Right&apos;</description>
-      <pubDate>Sun, 18 Jan 2026 13:34:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/doc-right/</guid>
     </item>
   </channel>
 </rss>
