@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 04:16:09 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 05:37:42 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with top cloud security best practices and expert tips.</description>
+      <pubDate>Mon, 19 Jan 2026 05:37:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Sun, 18 Jan 2026 07:26:50 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>App Architecture</title>
-      <link>https://kubaik.github.io/app-architecture/</link>
-      <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
-      <pubDate>Sun, 18 Jan 2026 06:40:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-architecture/</guid>
     </item>
   </channel>
 </rss>
