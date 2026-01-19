@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 19:24:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 20:32:20 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
+      <pubDate>Mon, 19 Jan 2026 20:32:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
     <item>
       <title>Lockdown APIs</title>
       <link>https://kubaik.github.io/lockdown-apis/</link>
@@ -138,13 +145,6 @@
       <description>Break free from vendor lock-in with multi-cloud architecture, unlocking flexibility and scalability.</description>
       <pubDate>Sun, 18 Jan 2026 21:25:15 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-freedom/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Streamline cloud migration with expert strategies and best practices.</description>
-      <pubDate>Sun, 18 Jan 2026 20:30:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
