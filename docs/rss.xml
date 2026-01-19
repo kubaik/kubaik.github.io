@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 06:50:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 07:35:10 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Evolved</title>
+      <link>https://kubaik.github.io/web-dev-evolved/</link>
+      <description>Discover the latest web dev trends and frameworks</description>
+      <pubDate>Mon, 19 Jan 2026 07:35:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
+    </item>
     <item>
       <title>Tech Interview Prep</title>
       <link>https://kubaik.github.io/tech-interview-prep/</link>
@@ -138,13 +145,6 @@
       <description>Boost incident response with smart planning. Learn how to respond faster &amp; smarter.</description>
       <pubDate>Sun, 18 Jan 2026 09:28:38 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-smarter/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Learn database replication &amp; sharding strategies to scale your app smartly</description>
-      <pubDate>Sun, 18 Jan 2026 08:34:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
