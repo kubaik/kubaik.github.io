@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 07:35:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 08:42:09 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full-Stack Made Easy</title>
+      <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
+      <description>Simplify full-stack dev with Next.js. Learn how to build fast, scalable apps with ease.</description>
+      <pubDate>Mon, 19 Jan 2026 08:42:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Discover the Web3 revolution &amp; the power of decentralized apps (DApps)</description>
       <pubDate>Sun, 18 Jan 2026 10:28:23 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-revolution/</guid>
-    </item>
-    <item>
-      <title>Respond Smarter</title>
-      <link>https://kubaik.github.io/respond-smarter/</link>
-      <description>Boost incident response with smart planning. Learn how to respond faster &amp; smarter.</description>
-      <pubDate>Sun, 18 Jan 2026 09:28:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/respond-smarter/</guid>
     </item>
   </channel>
 </rss>
