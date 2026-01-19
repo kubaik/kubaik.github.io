@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Jan 2026 23:26:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 02:23:58 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twin: Future Now</title>
+      <link>https://kubaik.github.io/digital-twin-future-now/</link>
+      <description>Discover the future of innovation with Digital Twin Technology, revolutionizing industries now.</description>
+      <pubDate>Mon, 19 Jan 2026 02:23:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
       <pubDate>Sun, 18 Jan 2026 05:30:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>AR Dev 101</title>
-      <link>https://kubaik.github.io/ar-dev-101/</link>
-      <description>Learn AR development basics &amp; start building immersive experiences with our beginner&apos;s guide.</description>
-      <pubDate>Sun, 18 Jan 2026 04:10:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-dev-101/</guid>
     </item>
   </channel>
 </rss>
