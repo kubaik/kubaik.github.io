@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 15:34:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 16:38:27 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Improve decision-making with clean data. Learn why data quality matters.</description>
+      <pubDate>Mon, 19 Jan 2026 16:38:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>GraphQL Done Right</title>
       <link>https://kubaik.github.io/graphql-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI time series forecasting techniques.</description>
       <pubDate>Sun, 18 Jan 2026 17:23:44 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>K8s Simplified</title>
-      <link>https://kubaik.github.io/k8s-simplified/</link>
-      <description>Simplify Kubernetes orchestration with expert tips and guides.</description>
-      <pubDate>Sun, 18 Jan 2026 16:32:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-simplified/</guid>
     </item>
   </channel>
 </rss>
