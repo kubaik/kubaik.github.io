@@ -2251,15 +2251,15 @@
     "topic": "CSS Grid and Flexbox Mastery"
   },
   "rate_limiting_and_throttling": {
-    "timestamp": "2026-01-15T06:43:30.024411",
+    "timestamp": "2026-01-19T22:29:13.127770",
     "hashtags": [
       "APIManagement",
       "CloudSecurity",
       "RateLimiting",
+      "ThrottlingControl",
       "DevOpsTools",
-      "Throttling",
-      "CyberSecurityMeasures",
-      "TrafficControl"
+      "TrafficManagement",
+      "ServerlessArchitecture"
     ],
     "topic": "Rate Limiting and Throttling"
   },
