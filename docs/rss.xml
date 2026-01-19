@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 08:42:09 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 09:42:29 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
+      <pubDate>Mon, 19 Jan 2026 09:42:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Made Easy</title>
       <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn about SAST/DAST in app security testing. Protect your code with secure coding practices.</description>
       <pubDate>Sun, 18 Jan 2026 11:22:12 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Web3 Revolution</title>
-      <link>https://kubaik.github.io/web3-revolution/</link>
-      <description>Discover the Web3 revolution &amp; the power of decentralized apps (DApps)</description>
-      <pubDate>Sun, 18 Jan 2026 10:28:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-revolution/</guid>
     </item>
   </channel>
 </rss>
