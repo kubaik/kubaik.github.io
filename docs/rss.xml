@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 16:38:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 17:29:39 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Improve app speed with expert tips on Application Performance Monitoring.</description>
+      <pubDate>Mon, 19 Jan 2026 17:29:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Simplify ML pipeline automation with MLOps. Learn how to streamline workflows and boost efficiency.</description>
       <pubDate>Sun, 18 Jan 2026 18:36:28 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-simplified/</guid>
-    </item>
-    <item>
-      <title>AI Forecasts</title>
-      <link>https://kubaik.github.io/ai-forecasts/</link>
-      <description>Unlock accurate predictions with AI time series forecasting techniques.</description>
-      <pubDate>Sun, 18 Jan 2026 17:23:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasts/</guid>
     </item>
   </channel>
 </rss>
