@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 09:42:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 10:37:17 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices for building scalable apps.</description>
+      <pubDate>Mon, 19 Jan 2026 10:37:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
       <pubDate>Sun, 18 Jan 2026 12:53:28 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-at-scale/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Learn about SAST/DAST in app security testing. Protect your code with secure coding practices.</description>
-      <pubDate>Sun, 18 Jan 2026 11:22:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
