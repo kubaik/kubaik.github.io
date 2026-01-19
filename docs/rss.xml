@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 18:41:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 19:24:59 +0000</lastBuildDate>
+    <item>
+      <title>Lockdown APIs</title>
+      <link>https://kubaik.github.io/lockdown-apis/</link>
+      <description>Boost API security with expert tips and best practices to protect your data.</description>
+      <pubDate>Mon, 19 Jan 2026 19:24:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/lockdown-apis/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Streamline cloud migration with expert strategies and best practices.</description>
       <pubDate>Sun, 18 Jan 2026 20:30:14 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-smart/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Boost container security with expert tips and best practices.</description>
-      <pubDate>Sun, 18 Jan 2026 19:21:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
