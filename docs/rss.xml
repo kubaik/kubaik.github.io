@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 10:37:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 11:28:20 +0000</lastBuildDate>
+    <item>
+      <title>Crack Complexity</title>
+      <link>https://kubaik.github.io/crack-complexity/</link>
+      <description>Simplify code with algorithm complexity analysis. Learn to crack complexity and optimize performance.</description>
+      <pubDate>Mon, 19 Jan 2026 11:28:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-complexity/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Improve documentation with best practices and expert tips in &apos;Doc Right&apos;</description>
       <pubDate>Sun, 18 Jan 2026 13:34:05 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Angular at Scale</title>
-      <link>https://kubaik.github.io/angular-at-scale/</link>
-      <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
-      <pubDate>Sun, 18 Jan 2026 12:53:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-at-scale/</guid>
     </item>
   </channel>
 </rss>
