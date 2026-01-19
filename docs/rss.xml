@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 20:32:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 21:27:47 +0000</lastBuildDate>
+    <item>
+      <title>Profile &amp; Optimize</title>
+      <link>https://kubaik.github.io/profile-optimize/</link>
+      <description>Boost performance with profiling &amp; benchmarking techniques. Learn how to optimize your code for better results.</description>
+      <pubDate>Mon, 19 Jan 2026 21:27:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/profile-optimize/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn Python for data science and boost your analysis skills.</description>
       <pubDate>Sun, 18 Jan 2026 22:27:04 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Cloud Freedom</title>
-      <link>https://kubaik.github.io/cloud-freedom/</link>
-      <description>Break free from vendor lock-in with multi-cloud architecture, unlocking flexibility and scalability.</description>
-      <pubDate>Sun, 18 Jan 2026 21:25:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-freedom/</guid>
     </item>
   </channel>
 </rss>
