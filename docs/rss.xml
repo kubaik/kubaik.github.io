@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 16:43:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 17:36:46 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock cloud potential with multi-cloud architecture. Learn more.</description>
+      <pubDate>Tue, 20 Jan 2026 17:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>Federated Learning</title>
       <link>https://kubaik.github.io/federated-learning/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with pair programming techniques. Learn to code together effectively.</description>
       <pubDate>Mon, 19 Jan 2026 18:41:41 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Improve app speed with expert tips on Application Performance Monitoring.</description>
-      <pubDate>Mon, 19 Jan 2026 17:29:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
