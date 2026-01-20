@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 13:05:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 14:38:38 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
+      <pubDate>Tue, 20 Jan 2026 14:38:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert GraphQL API development techniques and best practices.</description>
       <pubDate>Mon, 19 Jan 2026 15:34:26 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-done-right/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore innovative computer vision applications transforming industries.</description>
-      <pubDate>Mon, 19 Jan 2026 14:35:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
