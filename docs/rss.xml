@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 10:36:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 11:30:02 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Master time management as an engineer. Boost productivity &amp; efficiency with expert tips.</description>
+      <pubDate>Tue, 20 Jan 2026 11:29:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>Boost CLI Productivity</title>
       <link>https://kubaik.github.io/boost-cli-productivity/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with Azure. Discover scalable solutions</description>
       <pubDate>Mon, 19 Jan 2026 13:04:39 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-with-azure/</guid>
-    </item>
-    <item>
-      <title>Crack Complexity</title>
-      <link>https://kubaik.github.io/crack-complexity/</link>
-      <description>Simplify code with algorithm complexity analysis. Learn to crack complexity and optimize performance.</description>
-      <pubDate>Mon, 19 Jan 2026 11:28:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-complexity/</guid>
     </item>
   </channel>
 </rss>
