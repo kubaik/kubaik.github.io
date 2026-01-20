@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 14:38:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 15:38:44 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn how high availability systems ensure &apos;Always On&apos; uptime and minimize downtime for critical applications.</description>
+      <pubDate>Tue, 20 Jan 2026 15:38:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Improve decision-making with clean data. Learn why data quality matters.</description>
       <pubDate>Mon, 19 Jan 2026 16:38:17 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>GraphQL Done Right</title>
-      <link>https://kubaik.github.io/graphql-done-right/</link>
-      <description>Learn expert GraphQL API development techniques and best practices.</description>
-      <pubDate>Mon, 19 Jan 2026 15:34:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-done-right/</guid>
     </item>
   </channel>
 </rss>
