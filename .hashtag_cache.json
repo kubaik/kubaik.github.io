@@ -2789,14 +2789,14 @@
     "topic": "AutoML and Neural Architecture Search"
   },
   "high_availability_systems": {
-    "timestamp": "2026-01-13T14:33:03.087189",
+    "timestamp": "2026-01-20T15:38:35.278031",
     "hashtags": [
       "CloudComputing",
-      "DevOpsTools",
+      "DevOps",
       "SystemResilience",
       "Microservices",
-      "ZeroDowntime",
-      "CyberResilience",
+      "AzureArchitecture",
+      "Kubernetes",
       "DigitalTransformation"
     ],
     "topic": "High Availability Systems"
