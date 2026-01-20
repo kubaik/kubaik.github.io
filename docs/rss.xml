@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Jan 2026 23:28:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 02:12:49 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Revolution</title>
+      <link>https://kubaik.github.io/web3-revolution/</link>
+      <description>Discover the future of internet with Web3 and DApps, empowering a decentralized revolution.</description>
+      <pubDate>Tue, 20 Jan 2026 02:12:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-revolution/</guid>
+    </item>
     <item>
       <title>RPA Revolt</title>
       <link>https://kubaik.github.io/rpa-revolt/</link>
@@ -138,13 +145,6 @@
       <description>Establish a strong online presence with a solid tech portfolio. Learn how to build your brand and boost your career.</description>
       <pubDate>Mon, 19 Jan 2026 04:15:59 +0000</pubDate>
       <guid>https://kubaik.github.io/build-your-brand/</guid>
-    </item>
-    <item>
-      <title>Digital Twin: Future Now</title>
-      <link>https://kubaik.github.io/digital-twin-future-now/</link>
-      <description>Discover the future of innovation with Digital Twin Technology, revolutionizing industries now.</description>
-      <pubDate>Mon, 19 Jan 2026 02:23:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
     </item>
   </channel>
 </rss>
