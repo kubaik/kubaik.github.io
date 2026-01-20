@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 11:30:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 13:05:35 +0000</lastBuildDate>
+    <item>
+      <title>OAuth 2.0 &amp; OIDC</title>
+      <link>https://kubaik.github.io/oauth-20-oidc/</link>
+      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, differences &amp; use cases.</description>
+      <pubDate>Tue, 20 Jan 2026 13:05:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
+    </item>
     <item>
       <title>Engineer Your Time</title>
       <link>https://kubaik.github.io/engineer-your-time/</link>
@@ -138,13 +145,6 @@
       <description>Explore innovative computer vision applications transforming industries.</description>
       <pubDate>Mon, 19 Jan 2026 14:35:41 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Boost with Azure</title>
-      <link>https://kubaik.github.io/boost-with-azure/</link>
-      <description>Unlock cloud potential with Azure. Discover scalable solutions</description>
-      <pubDate>Mon, 19 Jan 2026 13:04:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-with-azure/</guid>
     </item>
   </channel>
 </rss>
