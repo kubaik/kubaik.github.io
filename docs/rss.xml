@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 21:28:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 22:29:27 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Discover edge computing applications &amp; transform data processing at the network&apos;s edge.</description>
+      <pubDate>Tue, 20 Jan 2026 22:29:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn rate limiting &amp; throttling techniques to prevent overload and ensure system security.</description>
       <pubDate>Mon, 19 Jan 2026 22:29:12 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flood/</guid>
-    </item>
-    <item>
-      <title>Profile &amp; Optimize</title>
-      <link>https://kubaik.github.io/profile-optimize/</link>
-      <description>Boost performance with profiling &amp; benchmarking techniques. Learn how to optimize your code for better results.</description>
-      <pubDate>Mon, 19 Jan 2026 21:27:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/profile-optimize/</guid>
     </item>
   </channel>
 </rss>
