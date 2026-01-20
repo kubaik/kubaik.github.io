@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 04:10:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 05:36:12 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Web Components</title>
+      <link>https://kubaik.github.io/unlock-web-components/</link>
+      <description>Discover the power of Web Components &amp; Custom Elements. Build reusable UI components with ease.</description>
+      <pubDate>Tue, 20 Jan 2026 05:36:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-web-components/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech career with our expert interview prep guide.</description>
       <pubDate>Mon, 19 Jan 2026 06:50:15 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-prep/</guid>
-    </item>
-    <item>
-      <title>Secure Cloud</title>
-      <link>https://kubaik.github.io/secure-cloud/</link>
-      <description>Protect your data with top cloud security best practices and expert tips.</description>
-      <pubDate>Mon, 19 Jan 2026 05:37:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-cloud/</guid>
     </item>
   </channel>
 </rss>
