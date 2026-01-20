@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 09:40:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 10:36:43 +0000</lastBuildDate>
+    <item>
+      <title>Boost CLI Productivity</title>
+      <link>https://kubaik.github.io/boost-cli-productivity/</link>
+      <description>Boost CLI productivity with expert tips and tricks to streamline your workflow.</description>
+      <pubDate>Tue, 20 Jan 2026 10:36:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Simplify code with algorithm complexity analysis. Learn to crack complexity and optimize performance.</description>
       <pubDate>Mon, 19 Jan 2026 11:28:11 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-complexity/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices for building scalable apps.</description>
-      <pubDate>Mon, 19 Jan 2026 10:37:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
