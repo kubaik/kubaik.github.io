@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 08:42:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 09:40:13 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and tricks for advanced techniques.</description>
+      <pubDate>Tue, 20 Jan 2026 09:40:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices for building scalable apps.</description>
       <pubDate>Mon, 19 Jan 2026 10:37:08 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
-      <pubDate>Mon, 19 Jan 2026 09:42:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
