@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 15:38:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 16:43:40 +0000</lastBuildDate>
+    <item>
+      <title>Federated Learning</title>
+      <link>https://kubaik.github.io/federated-learning/</link>
+      <description>Unlock secure data collaboration with Federated Learning. Learn how to implement FL and boost AI model accuracy.</description>
+      <pubDate>Tue, 20 Jan 2026 16:43:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/federated-learning/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Improve app speed with expert tips on Application Performance Monitoring.</description>
       <pubDate>Mon, 19 Jan 2026 17:29:29 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve decision-making with clean data. Learn why data quality matters.</description>
-      <pubDate>Mon, 19 Jan 2026 16:38:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
