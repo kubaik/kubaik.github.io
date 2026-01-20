@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 02:12:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 04:10:48 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Essentials</title>
+      <link>https://kubaik.github.io/siem-essentials/</link>
+      <description>Unlock SIEM essentials for robust security monitoring &amp; threat detection.</description>
+      <pubDate>Tue, 20 Jan 2026 04:10:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-essentials/</guid>
+    </item>
     <item>
       <title>Web3 Revolution</title>
       <link>https://kubaik.github.io/web3-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with top cloud security best practices and expert tips.</description>
       <pubDate>Mon, 19 Jan 2026 05:37:33 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>Build Your Brand</title>
-      <link>https://kubaik.github.io/build-your-brand/</link>
-      <description>Establish a strong online presence with a solid tech portfolio. Learn how to build your brand and boost your career.</description>
-      <pubDate>Mon, 19 Jan 2026 04:15:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-brand/</guid>
     </item>
   </channel>
 </rss>

@@ -2646,15 +2646,15 @@
     "topic": "Data Warehousing Solutions"
   },
   "security_monitoring_and_siem": {
-    "timestamp": "2026-01-17T16:31:21.017281",
+    "timestamp": "2026-01-20T04:10:39.921659",
     "hashtags": [
       "CyberSecurity",
       "SIEM",
-      "ThreatDetection",
       "CloudSecurity",
-      "ArtificialIntelligence",
-      "IncidentResponse",
-      "ZeroTrust"
+      "ThreatDetection",
+      "AIPoweredSecurity",
+      "SecurityIntelligence",
+      "IncidentResponse"
     ],
     "topic": "Security Monitoring and SIEM"
   },
