@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 22:29:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 23:30:26 +0000</lastBuildDate>
+    <item>
+      <title>AR Development</title>
+      <link>https://kubaik.github.io/ar-development/</link>
+      <description>Unlock AR potential with expert development insights and trends.</description>
+      <pubDate>Tue, 20 Jan 2026 23:30:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-development/</guid>
+    </item>
     <item>
       <title>Edge Computing</title>
       <link>https://kubaik.github.io/edge-computing/</link>
@@ -138,13 +145,6 @@
       <description>Discover the RPA revolution: automate tasks, boost efficiency</description>
       <pubDate>Mon, 19 Jan 2026 23:28:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-revolt/</guid>
-    </item>
-    <item>
-      <title>Limit the Flood</title>
-      <link>https://kubaik.github.io/limit-the-flood/</link>
-      <description>Learn rate limiting &amp; throttling techniques to prevent overload and ensure system security.</description>
-      <pubDate>Mon, 19 Jan 2026 22:29:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flood/</guid>
     </item>
   </channel>
 </rss>
