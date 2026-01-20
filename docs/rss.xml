@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 06:48:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 07:35:41 +0000</lastBuildDate>
+    <item>
+      <title>Go Concurrency</title>
+      <link>https://kubaik.github.io/go-concurrency/</link>
+      <description>Unlock efficient coding with Go concurrency. Learn how to write scalable programs.</description>
+      <pubDate>Tue, 20 Jan 2026 07:35:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-concurrency/</guid>
+    </item>
     <item>
       <title>Code Less, Achieve More</title>
       <link>https://kubaik.github.io/code-less-achieve-more/</link>
@@ -138,13 +145,6 @@
       <description>Simplify full-stack dev with Next.js. Learn how to build fast, scalable apps with ease.</description>
       <pubDate>Mon, 19 Jan 2026 08:42:00 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest web dev trends and frameworks</description>
-      <pubDate>Mon, 19 Jan 2026 07:35:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>
