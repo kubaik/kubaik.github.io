@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 07:35:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 08:42:04 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Tue, 20 Jan 2026 08:41:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
       <pubDate>Mon, 19 Jan 2026 09:42:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full-Stack Made Easy</title>
-      <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
-      <description>Simplify full-stack dev with Next.js. Learn how to build fast, scalable apps with ease.</description>
-      <pubDate>Mon, 19 Jan 2026 08:42:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
     </item>
   </channel>
 </rss>
