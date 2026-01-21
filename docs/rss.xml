@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 08:40:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 09:40:24 +0000</lastBuildDate>
+    <item>
+      <title>Respond Faster</title>
+      <link>https://kubaik.github.io/respond-faster/</link>
+      <description>Boost incident response with a solid plan. Learn how to respond faster &amp; minimize downtime.</description>
+      <pubDate>Wed, 21 Jan 2026 09:40:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/respond-faster/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and tricks for advanced techniques.</description>
       <pubDate>Tue, 20 Jan 2026 09:40:05 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Tue, 20 Jan 2026 08:41:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
