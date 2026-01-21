@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 17:04:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 18:54:05 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with our easy guide and secure your apps with ease.</description>
+      <pubDate>Wed, 21 Jan 2026 18:53:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with multi-cloud architecture. Learn more.</description>
       <pubDate>Tue, 20 Jan 2026 17:36:37 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>Federated Learning</title>
-      <link>https://kubaik.github.io/federated-learning/</link>
-      <description>Unlock secure data collaboration with Federated Learning. Learn how to implement FL and boost AI model accuracy.</description>
-      <pubDate>Tue, 20 Jan 2026 16:43:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/federated-learning/</guid>
     </item>
   </channel>
 </rss>
