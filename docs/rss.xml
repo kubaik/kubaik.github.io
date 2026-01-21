@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 21:34:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 22:33:30 +0000</lastBuildDate>
+    <item>
+      <title>API Testing Made Easy</title>
+      <link>https://kubaik.github.io/api-testing-made-easy/</link>
+      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow and ensure seamless integration.</description>
+      <pubDate>Wed, 21 Jan 2026 22:33:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-testing-made-easy/</guid>
+    </item>
     <item>
       <title>SRE: Fixing Tech</title>
       <link>https://kubaik.github.io/sre-fixing-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert-approved React best practices and patterns to boost performance and code quality.</description>
       <pubDate>Tue, 20 Jan 2026 21:28:38 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Patch Now</title>
-      <link>https://kubaik.github.io/patch-now/</link>
-      <description>Protect your systems: learn how to prioritize and patch vulnerabilities now</description>
-      <pubDate>Tue, 20 Jan 2026 20:17:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/patch-now/</guid>
     </item>
   </channel>
 </rss>
