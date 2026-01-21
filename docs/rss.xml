@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 22:33:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 23:32:47 +0000</lastBuildDate>
+    <item>
+      <title>AWS Cloud Blueprint</title>
+      <link>https://kubaik.github.io/aws-cloud-blueprint/</link>
+      <description>Design a scalable AWS cloud architecture with our expert blueprint guide.</description>
+      <pubDate>Wed, 21 Jan 2026 23:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-cloud-blueprint/</guid>
+    </item>
     <item>
       <title>API Testing Made Easy</title>
       <link>https://kubaik.github.io/api-testing-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover edge computing applications &amp; transform data processing at the network&apos;s edge.</description>
       <pubDate>Tue, 20 Jan 2026 22:29:18 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Learn expert-approved React best practices and patterns to boost performance and code quality.</description>
-      <pubDate>Tue, 20 Jan 2026 21:28:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
