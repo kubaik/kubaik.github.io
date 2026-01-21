@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 02:22:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 04:10:24 +0000</lastBuildDate>
+    <item>
+      <title>WCAG 101</title>
+      <link>https://kubaik.github.io/wcag-101/</link>
+      <description>Learn Web Accessibility Standards with WCAG 101. Improve site usability &amp; compliance.</description>
+      <pubDate>Wed, 21 Jan 2026 04:10:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-101/</guid>
+    </item>
     <item>
       <title>Smart Contracts</title>
       <link>https://kubaik.github.io/smart-contracts/</link>
@@ -138,13 +145,6 @@
       <description>Unlock SIEM essentials for robust security monitoring &amp; threat detection.</description>
       <pubDate>Tue, 20 Jan 2026 04:10:39 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>Web3 Revolution</title>
-      <link>https://kubaik.github.io/web3-revolution/</link>
-      <description>Discover the future of internet with Web3 and DApps, empowering a decentralized revolution.</description>
-      <pubDate>Tue, 20 Jan 2026 02:12:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-revolution/</guid>
     </item>
   </channel>
 </rss>
