@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 20:39:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 21:34:29 +0000</lastBuildDate>
+    <item>
+      <title>SRE: Fixing Tech</title>
+      <link>https://kubaik.github.io/sre-fixing-tech/</link>
+      <description>Learn how Site Reliability Engineering (SRE) fixes tech issues, boosts uptime &amp; improves performance.</description>
+      <pubDate>Wed, 21 Jan 2026 21:34:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
+    </item>
     <item>
       <title>TS at Scale</title>
       <link>https://kubaik.github.io/ts-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Protect your systems: learn how to prioritize and patch vulnerabilities now</description>
       <pubDate>Tue, 20 Jan 2026 20:17:18 +0000</pubDate>
       <guid>https://kubaik.github.io/patch-now/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Code Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
-      <description>Supercharge VS Code with top extensions for productivity</description>
-      <pubDate>Tue, 20 Jan 2026 18:54:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
     </item>
   </channel>
 </rss>
