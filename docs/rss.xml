@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 05:35:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 06:49:03 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries and revolutionizing experiences.</description>
+      <pubDate>Wed, 21 Jan 2026 06:48:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Crypto Boom</title>
       <link>https://kubaik.github.io/crypto-boom/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
       <pubDate>Tue, 20 Jan 2026 06:48:40 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>Unlock Web Components</title>
-      <link>https://kubaik.github.io/unlock-web-components/</link>
-      <description>Discover the power of Web Components &amp; Custom Elements. Build reusable UI components with ease.</description>
-      <pubDate>Tue, 20 Jan 2026 05:36:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-web-components/</guid>
     </item>
   </channel>
 </rss>
