@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jan 2026 06:49:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Jan 2026 07:36:37 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert backend architecture patterns &amp; blueprints for scalable software design.</description>
+      <pubDate>Wed, 21 Jan 2026 07:36:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient coding with Go concurrency. Learn how to write scalable programs.</description>
       <pubDate>Tue, 20 Jan 2026 07:35:31 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Code Less, Achieve More</title>
-      <link>https://kubaik.github.io/code-less-achieve-more/</link>
-      <description>Boost productivity with low-code/no-code platforms. Learn how to achieve more with less coding.</description>
-      <pubDate>Tue, 20 Jan 2026 06:48:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
     </item>
   </channel>
 </rss>
