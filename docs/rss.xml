@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 02:23:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 04:13:34 +0000</lastBuildDate>
+    <item>
+      <title>ML Algos Decoded</title>
+      <link>https://kubaik.github.io/ml-algos-decoded/</link>
+      <description>Unlock ML secrets: simplified explanations of machine learning algorithms</description>
+      <pubDate>Thu, 22 Jan 2026 04:13:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-algos-decoded/</guid>
+    </item>
     <item>
       <title>MBaaS: Simplify App Dev</title>
       <link>https://kubaik.github.io/mbaas-simplify-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn about smart contract development &amp; its applications in blockchain technology.</description>
       <pubDate>Wed, 21 Jan 2026 02:22:16 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-contracts/</guid>
-    </item>
-    <item>
-      <title>AR Development</title>
-      <link>https://kubaik.github.io/ar-development/</link>
-      <description>Unlock AR potential with expert development insights and trends.</description>
-      <pubDate>Tue, 20 Jan 2026 23:30:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-development/</guid>
     </item>
   </channel>
 </rss>
