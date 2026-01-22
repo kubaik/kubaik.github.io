@@ -1736,15 +1736,15 @@
     "topic": "Security Compliance (SOC 2, ISO 27001)"
   },
   "application_security_testing_(sast/dast)": {
-    "timestamp": "2026-01-18T11:22:13.090034",
+    "timestamp": "2026-01-22T16:43:16.684333",
     "hashtags": [
-      "CyberSecurity",
       "AppSec",
+      "CyberProtect",
       "DevSecOps",
+      "SecureCode",
       "CloudSecurity",
-      "SecureCoding",
-      "TechRisk",
-      "ZeroTrust"
+      "AIpoweredTesting",
+      "CodeVulnerability"
     ],
     "topic": "Application Security Testing (SAST/DAST)"
   },
