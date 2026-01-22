@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 09:39:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 10:36:34 +0000</lastBuildDate>
+    <item>
+      <title>Responsive Web Design</title>
+      <link>https://kubaik.github.io/responsive-web-design/</link>
+      <description>Learn responsive web design techniques to create mobile-friendly websites that adapt to any screen size.</description>
+      <pubDate>Thu, 22 Jan 2026 10:36:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/responsive-web-design/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Boost incident response with a solid plan. Learn how to respond faster &amp; minimize downtime.</description>
       <pubDate>Wed, 21 Jan 2026 09:40:14 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-faster/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
-      <pubDate>Wed, 21 Jan 2026 08:40:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
