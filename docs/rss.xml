@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 11:29:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 13:05:32 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
+      <pubDate>Thu, 22 Jan 2026 13:05:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding efficiency with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
       <pubDate>Wed, 21 Jan 2026 11:31:01 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
-      <pubDate>Wed, 21 Jan 2026 10:37:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
