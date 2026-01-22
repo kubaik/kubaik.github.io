@@ -61,5 +61,6 @@
   "Mobile Backend as a Service (BaaS)",
   "Machine Learning Algorithms Explained",
   "Vector Databases and Embeddings",
-  "AI Model Monitoring and Maintenance"
+  "AI Model Monitoring and Maintenance",
+  "CQRS and Event Sourcing"
 ]
