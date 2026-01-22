@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 20:36:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 21:31:25 +0000</lastBuildDate>
+    <item>
+      <title>Flutter: Build Fast</title>
+      <link>https://kubaik.github.io/flutter-build-fast/</link>
+      <description>Build fast, natively compiled apps with Flutter. Learn more.</description>
+      <pubDate>Thu, 22 Jan 2026 21:31:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-build-fast/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow and ensure seamless integration.</description>
       <pubDate>Wed, 21 Jan 2026 22:33:22 +0000</pubDate>
       <guid>https://kubaik.github.io/api-testing-made-easy/</guid>
-    </item>
-    <item>
-      <title>SRE: Fixing Tech</title>
-      <link>https://kubaik.github.io/sre-fixing-tech/</link>
-      <description>Learn how Site Reliability Engineering (SRE) fixes tech issues, boosts uptime &amp; improves performance.</description>
-      <pubDate>Wed, 21 Jan 2026 21:34:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
     </item>
   </channel>
 </rss>

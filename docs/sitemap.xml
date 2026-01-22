@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/flutter-build-fast/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/test-smarter/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/xai-uncovered/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-agents/</loc><priority>0.9</priority></url>
@@ -510,7 +511,6 @@
 <url><loc>https://kubaik.github.io/understanding-augmented-reality-ar-development-a-c/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/understanding-feature-engineering-techniques-a-com/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/data-mesh-unlock-scale/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/flutter-build-fast/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/secure-data/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/master-typescript/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ai-agents-build-smart/</loc><priority>0.9</priority></url>
