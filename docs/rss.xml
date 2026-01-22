@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 19:31:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 20:36:43 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Thu, 22 Jan 2026 20:36:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>XAI Uncovered</title>
       <link>https://kubaik.github.io/xai-uncovered/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Site Reliability Engineering (SRE) fixes tech issues, boosts uptime &amp; improves performance.</description>
       <pubDate>Wed, 21 Jan 2026 21:34:20 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-fixing-tech/</guid>
-    </item>
-    <item>
-      <title>TS at Scale</title>
-      <link>https://kubaik.github.io/ts-at-scale/</link>
-      <description>Learn how to use TypeScript for large-scale apps with expert tips and best practices.</description>
-      <pubDate>Wed, 21 Jan 2026 20:39:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ts-at-scale/</guid>
     </item>
   </channel>
 </rss>
