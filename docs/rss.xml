@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 19:29:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 20:34:17 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Learn scalable design patterns to grow your business efficiently</description>
+      <pubDate>Fri, 23 Jan 2026 20:34:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Angular Enterprise</title>
       <link>https://kubaik.github.io/angular-enterprise/</link>
@@ -138,13 +145,6 @@
       <description>Build fast, natively compiled apps with Flutter. Learn more.</description>
       <pubDate>Thu, 22 Jan 2026 21:31:17 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-build-fast/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Thu, 22 Jan 2026 20:36:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
