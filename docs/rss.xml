@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 17:31:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 18:44:00 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate Like Pro</title>
+      <link>https://kubaik.github.io/negotiate-like-pro/</link>
+      <description>Boost your tech salary with expert negotiation tips. Learn to negotiate like a pro and get paid what you&apos;re worth.</description>
+      <pubDate>Fri, 23 Jan 2026 18:43:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
       <pubDate>Thu, 22 Jan 2026 19:31:06 +0000</pubDate>
       <guid>https://kubaik.github.io/xai-uncovered/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Discover the future of AI with our expert guide to AI agent development.</description>
-      <pubDate>Thu, 22 Jan 2026 18:43:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
