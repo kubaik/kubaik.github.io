@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 06:45:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 07:33:11 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down</title>
+      <link>https://kubaik.github.io/lock-it-down/</link>
+      <description>Safeguard your data with encryption &amp; key management expertise. Learn how to protect your assets.</description>
+      <pubDate>Fri, 23 Jan 2026 07:33:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down/</guid>
+    </item>
     <item>
       <title>Migrate Smart</title>
       <link>https://kubaik.github.io/migrate-smart/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn how to implement it effectively.</description>
       <pubDate>Thu, 22 Jan 2026 08:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock CQRS &amp; Event Sourcing secrets. Learn scalable architecture patterns.</description>
-      <pubDate>Thu, 22 Jan 2026 07:34:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
