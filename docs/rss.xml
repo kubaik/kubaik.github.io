@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 07:33:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 08:39:38 +0000</lastBuildDate>
+    <item>
+      <title>Data Done Right</title>
+      <link>https://kubaik.github.io/data-done-right/</link>
+      <description>Unlock insights with expert data warehousing solutions. Learn more.</description>
+      <pubDate>Fri, 23 Jan 2026 08:39:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-done-right/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analytics skills.</description>
       <pubDate>Thu, 22 Jan 2026 09:39:49 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Transfer Learn</title>
-      <link>https://kubaik.github.io/transfer-learn/</link>
-      <description>Unlock efficient AI with Transfer Learning. Learn how to implement it effectively.</description>
-      <pubDate>Thu, 22 Jan 2026 08:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-learn/</guid>
     </item>
   </channel>
 </rss>
