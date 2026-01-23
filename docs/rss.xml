@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 02:12:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 04:08:21 +0000</lastBuildDate>
+    <item>
+      <title>Pen Test Methods</title>
+      <link>https://kubaik.github.io/pen-test-methods/</link>
+      <description>Learn effective pen test methods &amp; methodologies to strengthen your security posture.</description>
+      <pubDate>Fri, 23 Jan 2026 04:08:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/pen-test-methods/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
       <pubDate>Thu, 22 Jan 2026 05:35:36 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>ML Algos Decoded</title>
-      <link>https://kubaik.github.io/ml-algos-decoded/</link>
-      <description>Unlock ML secrets: simplified explanations of machine learning algorithms</description>
-      <pubDate>Thu, 22 Jan 2026 04:13:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-algos-decoded/</guid>
     </item>
   </channel>
 </rss>
