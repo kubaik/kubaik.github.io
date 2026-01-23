@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 20:34:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 21:28:55 +0000</lastBuildDate>
+    <item>
+      <title>WAF: Web Shield</title>
+      <link>https://kubaik.github.io/waf-web-shield/</link>
+      <description>Protect your website with WAF: Web Shield. Learn how a Web Application Firewall secures your online presence.</description>
+      <pubDate>Fri, 23 Jan 2026 21:28:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-web-shield/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Canary Deployments, a safe &amp; incremental release strategy.</description>
       <pubDate>Thu, 22 Jan 2026 22:30:46 +0000</pubDate>
       <guid>https://kubaik.github.io/canary-deploy/</guid>
-    </item>
-    <item>
-      <title>Flutter: Build Fast</title>
-      <link>https://kubaik.github.io/flutter-build-fast/</link>
-      <description>Build fast, natively compiled apps with Flutter. Learn more.</description>
-      <pubDate>Thu, 22 Jan 2026 21:31:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-build-fast/</guid>
     </item>
   </channel>
 </rss>
