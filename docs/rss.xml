@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 09:37:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 10:33:32 +0000</lastBuildDate>
+    <item>
+      <title>Lockdown Data: SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/lockdown-data-soc-2-iso-27001/</link>
+      <description>Boost security compliance with SOC 2 &amp; ISO 27001 insights.</description>
+      <pubDate>Fri, 23 Jan 2026 10:33:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/lockdown-data-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>Master TS Types</title>
       <link>https://kubaik.github.io/master-ts-types/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons</description>
       <pubDate>Thu, 22 Jan 2026 11:29:15 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>Responsive Web Design</title>
-      <link>https://kubaik.github.io/responsive-web-design/</link>
-      <description>Learn responsive web design techniques to create mobile-friendly websites that adapt to any screen size.</description>
-      <pubDate>Thu, 22 Jan 2026 10:36:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/responsive-web-design/</guid>
     </item>
   </channel>
 </rss>
