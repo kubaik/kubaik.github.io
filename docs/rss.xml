@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 18:44:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 19:29:42 +0000</lastBuildDate>
+    <item>
+      <title>Angular Enterprise</title>
+      <link>https://kubaik.github.io/angular-enterprise/</link>
+      <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
+      <pubDate>Fri, 23 Jan 2026 19:29:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-enterprise/</guid>
+    </item>
     <item>
       <title>Negotiate Like Pro</title>
       <link>https://kubaik.github.io/negotiate-like-pro/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Thu, 22 Jan 2026 20:36:35 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>XAI Uncovered</title>
-      <link>https://kubaik.github.io/xai-uncovered/</link>
-      <description>Unlock the power of Explainable AI (XAI) techniques and discover transparent AI solutions.</description>
-      <pubDate>Thu, 22 Jan 2026 19:31:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/xai-uncovered/</guid>
     </item>
   </channel>
 </rss>
