@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Jan 2026 13:02:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 14:33:10 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Snowflake</title>
+      <link>https://kubaik.github.io/unlock-snowflake/</link>
+      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with our expert guide.</description>
+      <pubDate>Fri, 23 Jan 2026 14:33:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
+    </item>
     <item>
       <title>FP Basics</title>
       <link>https://kubaik.github.io/fp-basics/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
       <pubDate>Thu, 22 Jan 2026 15:38:35 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Thu, 22 Jan 2026 14:37:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
