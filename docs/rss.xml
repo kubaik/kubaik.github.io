@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Jan 2026 23:28:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jan 2026 02:12:32 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Discover the basics of quantum computing and its revolutionary potential.</description>
+      <pubDate>Fri, 23 Jan 2026 02:12:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>NFT Tech</title>
       <link>https://kubaik.github.io/nft-tech/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML secrets: simplified explanations of machine learning algorithms</description>
       <pubDate>Thu, 22 Jan 2026 04:13:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-algos-decoded/</guid>
-    </item>
-    <item>
-      <title>MBaaS: Simplify App Dev</title>
-      <link>https://kubaik.github.io/mbaas-simplify-app-dev/</link>
-      <description>Simplify app development with MBaaS, a cloud-based backend solution for mobile apps.</description>
-      <pubDate>Thu, 22 Jan 2026 02:23:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/mbaas-simplify-app-dev/</guid>
     </item>
   </channel>
 </rss>
