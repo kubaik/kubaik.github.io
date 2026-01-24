@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 10:28:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 11:23:50 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Sat, 24 Jan 2026 11:23:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn fundamentals of Functional Programming, including key concepts and principles.</description>
       <pubDate>Fri, 23 Jan 2026 13:02:21 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-basics/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Unlock agile testing with BDD. Learn simple steps to Behavior-Driven Development success.</description>
-      <pubDate>Fri, 23 Jan 2026 11:27:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
