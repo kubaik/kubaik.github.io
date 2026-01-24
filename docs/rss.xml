@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 20:29:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 21:24:42 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Boost database performance with expert query optimization tips.</description>
+      <pubDate>Sat, 24 Jan 2026 21:24:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>Live Web Apps</title>
       <link>https://kubaik.github.io/live-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB tools for efficient database management and optimization.</description>
       <pubDate>Fri, 23 Jan 2026 23:28:41 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Learn modern JavaScript with ES6+ essentials: arrow functions, classes, and more.</description>
-      <pubDate>Fri, 23 Jan 2026 22:26:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
