@@ -98,5 +98,6 @@
   "Web Application Firewall (WAF)",
   "JavaScript ES6+ Features",
   "Database Management Tools",
-  "Infrastructure as Code (Terraform)"
+  "Infrastructure as Code (Terraform)",
+  "CI/CD Pipeline Implementation"
 ]
