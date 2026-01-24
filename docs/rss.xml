@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 02:09:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 04:02:15 +0000</lastBuildDate>
+    <item>
+      <title>Streamline Code</title>
+      <link>https://kubaik.github.io/streamline-code/</link>
+      <description>Simplify development with CI/CD pipeline implementation. Learn how to streamline code for efficiency</description>
+      <pubDate>Sat, 24 Jan 2026 04:02:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/streamline-code/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Cloud</title>
       <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert documentation best practices with Doc Right. Improve clarity, consistency, and productivity.</description>
       <pubDate>Fri, 23 Jan 2026 05:35:12 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Pen Test Methods</title>
-      <link>https://kubaik.github.io/pen-test-methods/</link>
-      <description>Learn effective pen test methods &amp; methodologies to strengthen your security posture.</description>
-      <pubDate>Fri, 23 Jan 2026 04:08:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/pen-test-methods/</guid>
     </item>
   </channel>
 </rss>
