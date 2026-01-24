@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 15:27:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 16:33:21 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your mobile app from threats. Learn expert security tips.</description>
+      <pubDate>Sat, 24 Jan 2026 16:33:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech salary with expert negotiation tips. Learn to negotiate like a pro and get paid what you&apos;re worth.</description>
       <pubDate>Fri, 23 Jan 2026 18:43:50 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
-    </item>
-    <item>
-      <title>Mobile UI/UX Done Right</title>
-      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
-      <description>Elevate your mobile app with expert UI/UX tips and best practices.</description>
-      <pubDate>Fri, 23 Jan 2026 17:30:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
     </item>
   </channel>
 </rss>
