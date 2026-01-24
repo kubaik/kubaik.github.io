@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 12:54:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 13:35:46 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
+      <pubDate>Sat, 24 Jan 2026 13:35:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Blue-Green: Zero Downtime</title>
       <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with our expert guide and tutorials.</description>
       <pubDate>Fri, 23 Jan 2026 15:34:13 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with our expert guide.</description>
-      <pubDate>Fri, 23 Jan 2026 14:33:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
