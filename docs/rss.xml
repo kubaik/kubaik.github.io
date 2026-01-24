@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 18:39:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 19:22:17 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Sat, 24 Jan 2026 19:22:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with WAF: Web Shield. Learn how a Web Application Firewall secures your online presence.</description>
       <pubDate>Fri, 23 Jan 2026 21:28:47 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-web-shield/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Learn scalable design patterns to grow your business efficiently</description>
-      <pubDate>Fri, 23 Jan 2026 20:34:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
