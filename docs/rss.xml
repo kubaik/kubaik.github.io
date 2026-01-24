@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 16:33:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 17:24:22 +0000</lastBuildDate>
+    <item>
+      <title>AI Done Right</title>
+      <link>https://kubaik.github.io/ai-done-right/</link>
+      <description>Unlock AI&apos;s potential with ethics &amp; responsibility. Learn how to do AI right.</description>
+      <pubDate>Sat, 24 Jan 2026 17:24:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-done-right/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
       <pubDate>Fri, 23 Jan 2026 19:29:33 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-enterprise/</guid>
-    </item>
-    <item>
-      <title>Negotiate Like Pro</title>
-      <link>https://kubaik.github.io/negotiate-like-pro/</link>
-      <description>Boost your tech salary with expert negotiation tips. Learn to negotiate like a pro and get paid what you&apos;re worth.</description>
-      <pubDate>Fri, 23 Jan 2026 18:43:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
     </item>
   </channel>
 </rss>
