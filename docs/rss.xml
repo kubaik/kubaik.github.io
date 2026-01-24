@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 21:24:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 22:27:06 +0000</lastBuildDate>
+    <item>
+      <title>Crack Sys Design</title>
+      <link>https://kubaik.github.io/crack-sys-design/</link>
+      <description>Master system design interviews with expert tips and strategies.</description>
+      <pubDate>Sat, 24 Jan 2026 22:26:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-sys-design/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: automate cloud infra with code</description>
       <pubDate>Sat, 24 Jan 2026 02:08:55 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
-    </item>
-    <item>
-      <title>DB Tools</title>
-      <link>https://kubaik.github.io/db-tools/</link>
-      <description>Discover top DB tools for efficient database management and optimization.</description>
-      <pubDate>Fri, 23 Jan 2026 23:28:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-tools/</guid>
     </item>
   </channel>
 </rss>
