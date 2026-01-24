@@ -106,5 +106,6 @@
   "Message Queues and Async Processing",
   "Design Patterns in Practice",
   "Push Notifications Implementation",
-  "Prompt Engineering for LLMs"
+  "Prompt Engineering for LLMs",
+  "Blue-Green Deployment"
 ]

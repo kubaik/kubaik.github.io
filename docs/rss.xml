@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 11:23:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 12:54:52 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green: Zero Downtime</title>
+      <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
+      <description>Learn Blue-Green Deployment for zero downtime releases &amp; seamless app updates.</description>
+      <pubDate>Sat, 24 Jan 2026 12:54:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-zero-downtime/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with our expert guide.</description>
       <pubDate>Fri, 23 Jan 2026 14:33:01 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>FP Basics</title>
-      <link>https://kubaik.github.io/fp-basics/</link>
-      <description>Learn fundamentals of Functional Programming, including key concepts and principles.</description>
-      <pubDate>Fri, 23 Jan 2026 13:02:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-basics/</guid>
     </item>
   </channel>
 </rss>
