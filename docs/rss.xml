@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 06:41:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 07:26:42 +0000</lastBuildDate>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-machine interaction.</description>
+      <pubDate>Sat, 24 Jan 2026 07:26:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with expert data warehousing solutions. Learn more.</description>
       <pubDate>Fri, 23 Jan 2026 08:39:29 +0000</pubDate>
       <guid>https://kubaik.github.io/data-done-right/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Safeguard your data with encryption &amp; key management expertise. Learn how to protect your assets.</description>
-      <pubDate>Fri, 23 Jan 2026 07:33:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
