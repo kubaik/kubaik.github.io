@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 15:27:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 16:34:26 +0000</lastBuildDate>
+    <item>
+      <title>Build Smart Recs</title>
+      <link>https://kubaik.github.io/build-smart-recs/</link>
+      <description>Learn to build smart recommender systems with expert design tips.</description>
+      <pubDate>Sun, 25 Jan 2026 16:34:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-smart-recs/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Sat, 24 Jan 2026 18:38:52 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>AI Done Right</title>
-      <link>https://kubaik.github.io/ai-done-right/</link>
-      <description>Unlock AI&apos;s potential with ethics &amp; responsibility. Learn how to do AI right.</description>
-      <pubDate>Sat, 24 Jan 2026 17:24:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-done-right/</guid>
     </item>
   </channel>
 </rss>
