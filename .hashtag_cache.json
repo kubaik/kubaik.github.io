@@ -1338,16 +1338,15 @@
     "topic": "Network Performance Optimization"
   },
   "google_cloud_platform_(gcp)": {
-    "timestamp": "2026-01-10T20:29:30.085586",
+    "timestamp": "2026-01-25T08:35:47.732840",
     "hashtags": [
       "CloudComputing",
       "GoogleCloud",
-      "AIEngineering",
-      "CloudDevOps",
+      "DevOps",
+      "ArtificialIntelligence",
+      "CloudSecurity",
       "ServerlessTech",
-      "GCP",
-      "CloudNativeApps",
-      "DevSecOps"
+      "CloudNativeApps"
     ],
     "topic": "Google Cloud Platform (GCP)"
   },
