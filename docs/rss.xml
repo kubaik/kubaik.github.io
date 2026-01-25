@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 20:32:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 21:26:22 +0000</lastBuildDate>
+    <item>
+      <title>Split Smart</title>
+      <link>https://kubaik.github.io/split-smart/</link>
+      <description>Boost performance with smart code splitting strategies.</description>
+      <pubDate>Sun, 25 Jan 2026 21:26:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smart/</guid>
+    </item>
     <item>
       <title>SSR Boost</title>
       <link>https://kubaik.github.io/ssr-boost/</link>
@@ -138,13 +145,6 @@
       <description>Unlock microservice management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
       <pubDate>Sat, 24 Jan 2026 23:26:24 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Sat, 24 Jan 2026 22:26:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
