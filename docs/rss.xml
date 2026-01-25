@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 21:26:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 22:28:02 +0000</lastBuildDate>
+    <item>
+      <title>Process Now</title>
+      <link>https://kubaik.github.io/process-now/</link>
+      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
+      <pubDate>Sun, 25 Jan 2026 22:27:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/process-now/</guid>
+    </item>
     <item>
       <title>Split Smart</title>
       <link>https://kubaik.github.io/split-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
       <pubDate>Sun, 25 Jan 2026 02:30:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservice management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
-      <pubDate>Sat, 24 Jan 2026 23:26:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
