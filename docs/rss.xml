@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jan 2026 23:26:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 02:30:15 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
+      <pubDate>Sun, 25 Jan 2026 02:30:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Mesh Up!</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock PWA power: fast, reliable &amp; engaging web apps</description>
       <pubDate>Sat, 24 Jan 2026 05:28:38 +0000</pubDate>
       <guid>https://kubaik.github.io/pwa-power/</guid>
-    </item>
-    <item>
-      <title>Streamline Code</title>
-      <link>https://kubaik.github.io/streamline-code/</link>
-      <description>Simplify development with CI/CD pipeline implementation. Learn how to streamline code for efficiency</description>
-      <pubDate>Sat, 24 Jan 2026 04:02:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/streamline-code/</guid>
     </item>
   </channel>
 </rss>
