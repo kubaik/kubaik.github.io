@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 11:24:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 12:56:58 +0000</lastBuildDate>
+    <item>
+      <title>Dev Done Right</title>
+      <link>https://kubaik.github.io/dev-done-right/</link>
+      <description>Master project management for devs. Boost productivity &amp; deliver results with our expert tips.</description>
+      <pubDate>Sun, 25 Jan 2026 12:56:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-done-right/</guid>
+    </item>
     <item>
       <title>AutoML</title>
       <link>https://kubaik.github.io/automl/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with database replication &amp; sharding strategies</description>
       <pubDate>Sat, 24 Jan 2026 14:26:39 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-fast/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
-      <pubDate>Sat, 24 Jan 2026 13:35:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
