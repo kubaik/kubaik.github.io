@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 14:26:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 15:27:51 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Improve network speed with expert tips and optimization techniques.</description>
+      <pubDate>Sun, 25 Jan 2026 15:27:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with ethics &amp; responsibility. Learn how to do AI right.</description>
       <pubDate>Sat, 24 Jan 2026 17:24:12 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-done-right/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your mobile app from threats. Learn expert security tips.</description>
-      <pubDate>Sat, 24 Jan 2026 16:33:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
