@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 12:56:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 13:37:51 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Memory</title>
+      <link>https://kubaik.github.io/optimize-memory/</link>
+      <description>Boost productivity with expert memory management tips and tricks.</description>
+      <pubDate>Sun, 25 Jan 2026 13:37:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-memory/</guid>
+    </item>
     <item>
       <title>Dev Done Right</title>
       <link>https://kubaik.github.io/dev-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn code review best practices to improve code quality &amp; team collaboration.</description>
       <pubDate>Sat, 24 Jan 2026 15:27:26 +0000</pubDate>
       <guid>https://kubaik.github.io/code-review-done-right/</guid>
-    </item>
-    <item>
-      <title>Scale Fast</title>
-      <link>https://kubaik.github.io/scale-fast/</link>
-      <description>Boost app performance with database replication &amp; sharding strategies</description>
-      <pubDate>Sat, 24 Jan 2026 14:26:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-fast/</guid>
     </item>
   </channel>
 </rss>
