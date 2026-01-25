@@ -124,5 +124,6 @@
   "Delta Lake and Data Lakehouse",
   "Lazy Loading Implementation",
   "Static Site Generation (SSG)",
-  "Google Cloud Platform (GCP)"
+  "Google Cloud Platform (GCP)",
+  "ETL vs ELT Processes"
 ]
