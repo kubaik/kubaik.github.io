@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 04:18:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 05:34:07 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake Unleashed</title>
+      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
+      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn more</description>
+      <pubDate>Sun, 25 Jan 2026 05:33:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-machine interaction.</description>
       <pubDate>Sat, 24 Jan 2026 07:26:33 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-evolved/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
-      <pubDate>Sat, 24 Jan 2026 06:41:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
