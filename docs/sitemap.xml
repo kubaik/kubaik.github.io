@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/optimize-memory/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/dev-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/automl/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/code-clean/</loc><priority>0.9</priority></url>
@@ -346,7 +347,6 @@
 <url><loc>https://kubaik.github.io/visualize-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/fix-before-breach/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jamstack-fast-secure/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/optimize-memory/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/api-test-made-easy/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/kafka-power/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/angular-ent-apps/</loc><priority>0.9</priority></url>
