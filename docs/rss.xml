@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 07:28:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 08:35:56 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP</title>
+      <link>https://kubaik.github.io/unlock-gcp/</link>
+      <description>Unlock GCP: Master Google Cloud Platform &amp; boost productivity</description>
+      <pubDate>Sun, 25 Jan 2026 08:35:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp/</guid>
+    </item>
     <item>
       <title>SSG Simplified</title>
       <link>https://kubaik.github.io/ssg-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Maximize engagement with perfect push notifications. Learn how to implement push done right.</description>
       <pubDate>Sat, 24 Jan 2026 10:28:49 +0000</pubDate>
       <guid>https://kubaik.github.io/push-done-right/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn how to apply design patterns for efficient solutions</description>
-      <pubDate>Sat, 24 Jan 2026 09:27:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
