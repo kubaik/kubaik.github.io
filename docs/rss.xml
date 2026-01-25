@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jan 2026 19:23:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jan 2026 20:32:03 +0000</lastBuildDate>
+    <item>
+      <title>SSR Boost</title>
+      <link>https://kubaik.github.io/ssr-boost/</link>
+      <description>Boost website speed with Server-Side Rendering (SSR). Learn how to improve SEO &amp; user experience.</description>
+      <pubDate>Sun, 25 Jan 2026 20:31:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssr-boost/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and strategies.</description>
       <pubDate>Sat, 24 Jan 2026 22:26:57 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-sys-design/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Sat, 24 Jan 2026 21:24:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
