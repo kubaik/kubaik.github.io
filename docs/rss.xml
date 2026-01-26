@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 19:30:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 20:35:40 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
+      <pubDate>Mon, 26 Jan 2026 20:35:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Rails to Success</title>
       <link>https://kubaik.github.io/rails-to-success/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with smart code splitting strategies.</description>
       <pubDate>Sun, 25 Jan 2026 21:26:13 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smart/</guid>
-    </item>
-    <item>
-      <title>SSR Boost</title>
-      <link>https://kubaik.github.io/ssr-boost/</link>
-      <description>Boost website speed with Server-Side Rendering (SSR). Learn how to improve SEO &amp; user experience.</description>
-      <pubDate>Sun, 25 Jan 2026 20:31:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-boost/</guid>
     </item>
   </channel>
 </rss>
