@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 04:20:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 05:38:04 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack 101</title>
+      <link>https://kubaik.github.io/jamstack-101/</link>
+      <description>Learn Jamstack basics &amp; improve website performance with our beginner&apos;s guide to Jamstack architecture.</description>
+      <pubDate>Mon, 26 Jan 2026 05:37:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-101/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of Static Site Generation (SSG) and simplify your website development process.</description>
       <pubDate>Sun, 25 Jan 2026 07:28:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Load Less</title>
-      <link>https://kubaik.github.io/load-less/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement Load Less for a faster user experience.</description>
-      <pubDate>Sun, 25 Jan 2026 06:41:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/load-less/</guid>
     </item>
   </channel>
 </rss>
