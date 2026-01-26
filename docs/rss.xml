@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 13:03:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 14:36:44 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: expert guide to designing a scalable Internet of Things architecture.</description>
+      <pubDate>Mon, 26 Jan 2026 14:36:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Tune Smarter</title>
       <link>https://kubaik.github.io/tune-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve network speed with expert tips and optimization techniques.</description>
       <pubDate>Sun, 25 Jan 2026 15:27:42 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
-      <pubDate>Sun, 25 Jan 2026 14:26:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
