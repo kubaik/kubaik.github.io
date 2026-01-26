@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 11:27:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 13:03:47 +0000</lastBuildDate>
+    <item>
+      <title>Tune Smarter</title>
+      <link>https://kubaik.github.io/tune-smarter/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Mon, 26 Jan 2026 13:03:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-smarter/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
       <pubDate>Sun, 25 Jan 2026 14:26:27 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Optimize Memory</title>
-      <link>https://kubaik.github.io/optimize-memory/</link>
-      <description>Boost productivity with expert memory management tips and tricks.</description>
-      <pubDate>Sun, 25 Jan 2026 13:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-memory/</guid>
     </item>
   </channel>
 </rss>
