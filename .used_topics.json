@@ -152,5 +152,6 @@
   "Hyperparameter Tuning Methods",
   "Internet of Things (IoT) Architecture",
   "Feature Engineering Techniques",
-  "Serverless Architecture Patterns"
+  "Serverless Architecture Patterns",
+  "Caching Strategies (Redis, Memcached)"
 ]

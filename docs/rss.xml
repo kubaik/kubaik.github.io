@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 16:42:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 17:36:40 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Cache</title>
+      <link>https://kubaik.github.io/boost-speed-cache/</link>
+      <description>Boost app speed with caching strategies using Redis &amp; Memcached.</description>
+      <pubDate>Mon, 26 Jan 2026 17:36:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI-powered time series forecasting. Discover the future, today.</description>
       <pubDate>Sun, 25 Jan 2026 18:38:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-predicts/</guid>
-    </item>
-    <item>
-      <title>Utility-First Design</title>
-      <link>https://kubaik.github.io/utility-first-design/</link>
-      <description>Learn Tailwind CSS utility-first design for faster, more efficient styling</description>
-      <pubDate>Sun, 25 Jan 2026 17:24:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/utility-first-design/</guid>
     </item>
   </channel>
 </rss>
