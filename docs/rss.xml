@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 10:35:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 11:27:56 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven apps.</description>
+      <pubDate>Mon, 26 Jan 2026 11:27:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>Lockdown Containers</title>
       <link>https://kubaik.github.io/lockdown-containers/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips and tricks.</description>
       <pubDate>Sun, 25 Jan 2026 13:37:42 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-memory/</guid>
-    </item>
-    <item>
-      <title>Dev Done Right</title>
-      <link>https://kubaik.github.io/dev-done-right/</link>
-      <description>Master project management for devs. Boost productivity &amp; deliver results with our expert tips.</description>
-      <pubDate>Sun, 25 Jan 2026 12:56:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-done-right/</guid>
     </item>
   </channel>
 </rss>
