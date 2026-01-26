@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Jan 2026 17:36:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Jan 2026 18:47:39 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Mon, 26 Jan 2026 18:47:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of blockchain tech &amp; its applications in our beginner&apos;s guide, Blockchain 101.</description>
       <pubDate>Sun, 25 Jan 2026 19:22:50 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-101/</guid>
-    </item>
-    <item>
-      <title>AI Predicts</title>
-      <link>https://kubaik.github.io/ai-predicts/</link>
-      <description>Unlock accurate predictions with AI-powered time series forecasting. Discover the future, today.</description>
-      <pubDate>Sun, 25 Jan 2026 18:38:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-predicts/</guid>
     </item>
   </channel>
 </rss>
