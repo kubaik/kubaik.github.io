@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 07:35:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 08:42:01 +0000</lastBuildDate>
+    <item>
+      <title>Cyber Safe</title>
+      <link>https://kubaik.github.io/cyber-safe/</link>
+      <description>Learn cybersecurity fundamentals to protect yourself online. Discover tips and best practices for a safer digital life.</description>
+      <pubDate>Tue, 27 Jan 2026 08:41:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-safe/</guid>
+    </item>
     <item>
       <title>Vue Mastery</title>
       <link>https://kubaik.github.io/vue-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Master IoT device management with expert tips and strategies.</description>
       <pubDate>Mon, 26 Jan 2026 09:41:43 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-mastery/</guid>
-    </item>
-    <item>
-      <title>DLNN: AI Power</title>
-      <link>https://kubaik.github.io/dlnn-ai-power/</link>
-      <description>Unlock AI&apos;s potential with Deep Learning Neural Networks (DLNN). Discover the power of DLNN in our latest blog post.</description>
-      <pubDate>Mon, 26 Jan 2026 08:42:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/dlnn-ai-power/</guid>
     </item>
   </channel>
 </rss>
