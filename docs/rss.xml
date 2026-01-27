@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 09:40:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 10:36:41 +0000</lastBuildDate>
+    <item>
+      <title>Balance Made Easy</title>
+      <link>https://kubaik.github.io/balance-made-easy/</link>
+      <description>Simplify load balancing with expert techniques and best practices.</description>
+      <pubDate>Tue, 27 Jan 2026 10:36:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-made-easy/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven apps.</description>
       <pubDate>Mon, 26 Jan 2026 11:27:46 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Lockdown Containers</title>
-      <link>https://kubaik.github.io/lockdown-containers/</link>
-      <description>Secure your containers with expert best practices and lockdown techniques.</description>
-      <pubDate>Mon, 26 Jan 2026 10:35:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/lockdown-containers/</guid>
     </item>
   </channel>
 </rss>
