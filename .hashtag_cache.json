@@ -1746,14 +1746,13 @@
     "topic": "Application Security Testing (SAST/DAST)"
   },
   "php_modern_development": {
-    "timestamp": "2026-01-15T14:39:22.702477",
+    "timestamp": "2026-01-27T13:05:42.787114",
     "hashtags": [
       "PHPDev",
       "ModernWebDev",
       "ServerlessTech",
-      "CloudNative",
+      "CloudNativeApps",
       "DevOpsTools",
-      "PHPFramework",
       "CodeOptimization",
       "WebDevelopment"
     ],
