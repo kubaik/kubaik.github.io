@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 16:39:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 17:35:25 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Rev</title>
+      <link>https://kubaik.github.io/automl-rev/</link>
+      <description>Unlock efficient AI: Explore AutoML &amp; Neural Architecture Search advancements.</description>
+      <pubDate>Tue, 27 Jan 2026 17:35:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-rev/</guid>
+    </item>
     <item>
       <title>Turbocharge WASM</title>
       <link>https://kubaik.github.io/turbocharge-wasm/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Mon, 26 Jan 2026 18:47:30 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost app speed with caching strategies using Redis &amp; Memcached.</description>
-      <pubDate>Mon, 26 Jan 2026 17:36:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
