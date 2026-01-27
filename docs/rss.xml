@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 11:29:29 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 13:05:52 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Tue, 27 Jan 2026 13:05:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Data Lake 101</title>
       <link>https://kubaik.github.io/data-lake-101/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: expert guide to designing a scalable Internet of Things architecture.</description>
       <pubDate>Mon, 26 Jan 2026 14:36:34 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Tune Smarter</title>
-      <link>https://kubaik.github.io/tune-smarter/</link>
-      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
-      <pubDate>Mon, 26 Jan 2026 13:03:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-smarter/</guid>
     </item>
   </channel>
 </rss>
