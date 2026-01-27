@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 14:38:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 15:37:32 +0000</lastBuildDate>
+    <item>
+      <title>EDA: Scale Fast</title>
+      <link>https://kubaik.github.io/eda-scale-fast/</link>
+      <description>Unlock scalability with Event-Driven Architecture (EDA). Learn how to scale fast &amp; efficiently.</description>
+      <pubDate>Tue, 27 Jan 2026 15:37:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-scale-fast/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient scaling with serverless architecture patterns &amp; best practices.</description>
       <pubDate>Mon, 26 Jan 2026 16:42:29 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Unlock model potential with expert feature engineering techniques.</description>
-      <pubDate>Mon, 26 Jan 2026 15:36:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
