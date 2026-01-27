@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 06:47:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 07:35:06 +0000</lastBuildDate>
+    <item>
+      <title>Vue Mastery</title>
+      <link>https://kubaik.github.io/vue-mastery/</link>
+      <description>Master Vue.js component architecture &amp; build scalable apps with expert tips and best practices.</description>
+      <pubDate>Tue, 27 Jan 2026 07:34:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/vue-mastery/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning Neural Networks (DLNN). Discover the power of DLNN in our latest blog post.</description>
       <pubDate>Mon, 26 Jan 2026 08:42:14 +0000</pubDate>
       <guid>https://kubaik.github.io/dlnn-ai-power/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices.</description>
-      <pubDate>Mon, 26 Jan 2026 07:34:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
