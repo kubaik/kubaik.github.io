@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 04:12:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 05:35:04 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Brand</title>
+      <link>https://kubaik.github.io/code-your-brand/</link>
+      <description>Boost your dev career with personal branding tips and tricks.</description>
+      <pubDate>Tue, 27 Jan 2026 05:34:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-brand/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Learn database design &amp; normalization best practices to optimize performance and scalability.</description>
       <pubDate>Mon, 26 Jan 2026 06:49:42 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Jamstack 101</title>
-      <link>https://kubaik.github.io/jamstack-101/</link>
-      <description>Learn Jamstack basics &amp; improve website performance with our beginner&apos;s guide to Jamstack architecture.</description>
-      <pubDate>Mon, 26 Jan 2026 05:37:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-101/</guid>
     </item>
   </channel>
 </rss>
