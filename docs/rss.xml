@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 18:53:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 19:34:05 +0000</lastBuildDate>
+    <item>
+      <title>Designing Distributed</title>
+      <link>https://kubaik.github.io/designing-distributed/</link>
+      <description>Learn Distributed Systems Design principles and best practices for scalable, reliable architectures.</description>
+      <pubDate>Tue, 27 Jan 2026 19:33:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/designing-distributed/</guid>
+    </item>
     <item>
       <title>K8s Mastery</title>
       <link>https://kubaik.github.io/k8s-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
       <pubDate>Mon, 26 Jan 2026 20:35:30 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Rails to Success</title>
-      <link>https://kubaik.github.io/rails-to-success/</link>
-      <description>Learn how to build scalable web apps with Ruby on Rails.</description>
-      <pubDate>Mon, 26 Jan 2026 19:30:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-to-success/</guid>
     </item>
   </channel>
 </rss>
