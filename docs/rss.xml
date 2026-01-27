@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 02:25:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 04:12:14 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Discover how ML anomaly detection identifies unusual patterns in data, enhancing security and insights.</description>
+      <pubDate>Tue, 27 Jan 2026 04:12:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Jamstack basics &amp; improve website performance with our beginner&apos;s guide to Jamstack architecture.</description>
       <pubDate>Mon, 26 Jan 2026 05:37:56 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-101/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
-      <pubDate>Mon, 26 Jan 2026 04:20:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
