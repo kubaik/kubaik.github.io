@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 22:29:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 23:30:08 +0000</lastBuildDate>
+    <item>
+      <title>Remote Work Done Right</title>
+      <link>https://kubaik.github.io/remote-work-done-right/</link>
+      <description>Boost productivity with expert remote work tips and best practices.</description>
+      <pubDate>Tue, 27 Jan 2026 23:29:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-work-done-right/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Optimize AI model training with expert best practices.</description>
       <pubDate>Tue, 27 Jan 2026 02:25:17 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>Write to Inform</title>
-      <link>https://kubaik.github.io/write-to-inform/</link>
-      <description>Master technical writing skills to craft clear, concise content.</description>
-      <pubDate>Mon, 26 Jan 2026 23:30:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-inform/</guid>
     </item>
   </channel>
 </rss>
