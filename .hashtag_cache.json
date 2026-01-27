@@ -1246,16 +1246,15 @@
     "topic": "VS Code Extensions for Productivity"
   },
   "kubernetes_orchestration": {
-    "timestamp": "2026-01-18T16:32:49.699503",
+    "timestamp": "2026-01-27T18:53:07.205688",
     "hashtags": [
       "CloudNative",
-      "DevOpsTools",
-      "Kubernetes",
       "Containerization",
-      "ServerlessTech",
+      "K8s",
+      "DevOps",
       "Microservices",
-      "OrchestrationMatters",
-      "CloudComputing"
+      "Serverless",
+      "Orchestration"
     ],
     "topic": "Kubernetes Orchestration"
   },

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 17:35:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 18:53:16 +0000</lastBuildDate>
+    <item>
+      <title>K8s Mastery</title>
+      <link>https://kubaik.github.io/k8s-mastery/</link>
+      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
+      <pubDate>Tue, 27 Jan 2026 18:53:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-mastery/</guid>
+    </item>
     <item>
       <title>AutoML Rev</title>
       <link>https://kubaik.github.io/automl-rev/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to build scalable web apps with Ruby on Rails.</description>
       <pubDate>Mon, 26 Jan 2026 19:30:10 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-to-success/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Mon, 26 Jan 2026 18:47:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
