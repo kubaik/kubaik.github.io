@@ -740,14 +740,14 @@
     "topic": "Site Reliability Engineering (SRE)"
   },
   "data_engineering_pipelines": {
-    "timestamp": "2026-01-17T09:27:39.432516",
+    "timestamp": "2026-01-27T06:47:24.283515",
     "hashtags": [
       "DataEngineering",
       "CloudComputing",
       "BigDataPipelines",
       "DevOpsTools",
-      "DataIntelligence",
-      "AIpoweredData",
+      "DataIntegrity",
+      "ArtificialIntelligence",
       "MachineLearningEngineering"
     ],
     "topic": "Data Engineering Pipelines"
