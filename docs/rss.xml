@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 08:42:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 09:40:53 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>SQL vs NoSQL: Compare database types &amp; choose the best for your project.</description>
+      <pubDate>Tue, 27 Jan 2026 09:40:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Cyber Safe</title>
       <link>https://kubaik.github.io/cyber-safe/</link>
@@ -138,13 +145,6 @@
       <description>Secure your containers with expert best practices and lockdown techniques.</description>
       <pubDate>Mon, 26 Jan 2026 10:35:09 +0000</pubDate>
       <guid>https://kubaik.github.io/lockdown-containers/</guid>
-    </item>
-    <item>
-      <title>IoT Device Mastery</title>
-      <link>https://kubaik.github.io/iot-device-mastery/</link>
-      <description>Master IoT device management with expert tips and strategies.</description>
-      <pubDate>Mon, 26 Jan 2026 09:41:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-device-mastery/</guid>
     </item>
   </channel>
 </rss>
