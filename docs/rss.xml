@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 05:35:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 06:47:33 +0000</lastBuildDate>
+    <item>
+      <title>Data Flow</title>
+      <link>https://kubaik.github.io/data-flow/</link>
+      <description>Learn how to build efficient data engineering pipelines with our expert guide to data flow and workflow optimization.</description>
+      <pubDate>Tue, 27 Jan 2026 06:47:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-flow/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Master Agile development with expert tips and best practices.</description>
       <pubDate>Mon, 26 Jan 2026 07:34:50 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-done-right/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn database design &amp; normalization best practices to optimize performance and scalability.</description>
-      <pubDate>Mon, 26 Jan 2026 06:49:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
