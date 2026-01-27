@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 20:31:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jan 2026 21:26:08 +0000</lastBuildDate>
+    <item>
+      <title>App Archetypes</title>
+      <link>https://kubaik.github.io/app-archetypes/</link>
+      <description>Discover 5 essential mobile app architecture patterns to build scalable &amp; efficient apps.</description>
+      <pubDate>Tue, 27 Jan 2026 21:25:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-archetypes/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential at the edge with real-time insights &amp; reduced latency.</description>
       <pubDate>Mon, 26 Jan 2026 22:30:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
-    </item>
-    <item>
-      <title>Boost ASO</title>
-      <link>https://kubaik.github.io/boost-aso/</link>
-      <description>Maximize app visibility with expert ASO tips and strategies.</description>
-      <pubDate>Mon, 26 Jan 2026 21:31:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-aso/</guid>
     </item>
   </channel>
 </rss>
