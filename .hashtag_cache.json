@@ -369,15 +369,15 @@
     "topic": "Android Development with Kotlin"
   },
   "api_gateway_patterns": {
-    "timestamp": "2026-01-15T20:33:53.620700",
+    "timestamp": "2026-01-28T08:41:54.153365",
     "hashtags": [
       "APIDesign",
       "CloudNative",
-      "Serverless",
+      "ServerlessArchitecture",
       "Microservices",
       "APIManagement",
-      "DevOps",
-      "TechArchitecture"
+      "SoftwareDevelopment",
+      "CloudComputing"
     ],
     "topic": "API Gateway Patterns"
   },
