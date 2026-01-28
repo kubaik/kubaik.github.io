@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:26:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:37:02 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Accelerated</title>
+      <link>https://kubaik.github.io/automl-accelerated/</link>
+      <description>Unlock efficient AI with AutoML Accelerated. Discover how Neural Architecture Search optimizes machine learning models.</description>
+      <pubDate>Wed, 28 Jan 2026 20:36:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-accelerated/</guid>
+    </item>
     <item>
       <title>Mobile UX Wins</title>
       <link>https://kubaik.github.io/mobile-ux-wins/</link>
@@ -138,13 +145,6 @@
       <description>Boost security with expert DDoS defense strategies &amp; protect your website from cyber threats.</description>
       <pubDate>Wed, 28 Jan 2026 12:44:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-defense/</guid>
-    </item>
-    <item>
-      <title>Refactor Now</title>
-      <link>https://kubaik.github.io/refactor-now/</link>
-      <description>Improve code quality &amp; reduce tech debt with refactoring strategies.</description>
-      <pubDate>Wed, 28 Jan 2026 12:13:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactor-now/</guid>
     </item>
   </channel>
 </rss>
