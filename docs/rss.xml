@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 05:35:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 06:47:56 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Wed, 28 Jan 2026 06:47:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Master Vue.js component architecture &amp; build scalable apps with expert tips and best practices.</description>
       <pubDate>Tue, 27 Jan 2026 07:34:57 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-mastery/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Learn how to build efficient data engineering pipelines with our expert guide to data flow and workflow optimization.</description>
-      <pubDate>Tue, 27 Jan 2026 06:47:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
