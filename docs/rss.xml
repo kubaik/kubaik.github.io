@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:24:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:26:06 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UX Wins</title>
+      <link>https://kubaik.github.io/mobile-ux-wins/</link>
+      <description>Elevate mobile user experience with expert UX tips and best practices.</description>
+      <pubDate>Wed, 28 Jan 2026 20:25:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-ux-wins/</guid>
+    </item>
     <item>
       <title>RL Wins</title>
       <link>https://kubaik.github.io/rl-wins/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality &amp; reduce tech debt with refactoring strategies.</description>
       <pubDate>Wed, 28 Jan 2026 12:13:25 +0000</pubDate>
       <guid>https://kubaik.github.io/refactor-now/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
-      <pubDate>Wed, 28 Jan 2026 12:00:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
