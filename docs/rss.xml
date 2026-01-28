@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:37:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:40:06 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Learn Java Spring Boot development with our expert guide.</description>
+      <pubDate>Wed, 28 Jan 2026 20:39:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
       <pubDate>Wed, 28 Jan 2026 12:59:52 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Boost security with expert DDoS defense strategies &amp; protect your website from cyber threats.</description>
-      <pubDate>Wed, 28 Jan 2026 12:44:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
