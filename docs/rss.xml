@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 13:43:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:44:37 +0000</lastBuildDate>
+    <item>
+      <title>Data in Motion</title>
+      <link>https://kubaik.github.io/data-in-motion/</link>
+      <description>Unlock insights with real-time data processing. Learn how to harness &apos;Data in Motion&apos; for instant decision-making.</description>
+      <pubDate>Wed, 28 Jan 2026 13:44:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-in-motion/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable, secure, and maintainable APIs.</description>
       <pubDate>Tue, 27 Jan 2026 22:29:27 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>App Archetypes</title>
-      <link>https://kubaik.github.io/app-archetypes/</link>
-      <description>Discover 5 essential mobile app architecture patterns to build scalable &amp; efficient apps.</description>
-      <pubDate>Tue, 27 Jan 2026 21:25:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-archetypes/</guid>
     </item>
   </channel>
 </rss>
