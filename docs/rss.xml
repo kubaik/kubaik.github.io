@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Tech Blog</title>
+    <title>the Tech Blog!</title>
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 13:06:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:31:54 +0000</lastBuildDate>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>

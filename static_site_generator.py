@@ -657,7 +657,7 @@ class StaticSiteGenerator:
         </header>
         <main class="container">
             <div class="hero">
-                <h2>About AI Tech Blog</h2>
+                <h2>About Tech Blog</h2>
                 <p>Learn more about our mission and what we do</p>
             </div>
             <article class="page-content">
