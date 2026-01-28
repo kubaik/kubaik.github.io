@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 19:32:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 19:36:26 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Swift for iOS development with expert tips and tutorials.</description>
+      <pubDate>Wed, 28 Jan 2026 19:36:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Mobile App Architectures</title>
       <link>https://kubaik.github.io/mobile-app-architectures/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable data management with Data Mesh Architecture, a decentralized approach to data ownership and integration.</description>
       <pubDate>Wed, 28 Jan 2026 09:41:17 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh/</guid>
-    </item>
-    <item>
-      <title>API Gateway Done Right</title>
-      <link>https://kubaik.github.io/api-gateway-done-right/</link>
-      <description>Learn expert API Gateway patterns for secure, scalable, and reliable API management.</description>
-      <pubDate>Wed, 28 Jan 2026 08:41:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
     </item>
   </channel>
 </rss>
