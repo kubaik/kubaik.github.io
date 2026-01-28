@@ -359,7 +359,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
 def create_sample_config():
     """Create a sample config.yaml file with monetization settings"""
     config = {
-        "site_name": "the Tech Blog!",
+        "site_name": "the Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
         "base_url": "https://kubaik.github.io",
         "base_path": "",
