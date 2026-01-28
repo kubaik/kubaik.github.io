@@ -284,7 +284,7 @@ class StaticSiteGenerator:
                     <a href="{{ base_path }}/about/">About</a>
                     <a href="{{ base_path }}/contact/">Contact</a>
                     <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms of service</a>
+                    <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
                 </nav>
             </div>
         </header>
@@ -353,7 +353,7 @@ class StaticSiteGenerator:
                     <a href="{{ base_path }}/about/">About</a>
                     <a href="{{ base_path }}/contact/">Contact</a>
                     <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms of service</a>
+                    <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
                 </nav>
             </div>
         </header>
@@ -867,7 +867,7 @@ class StaticSiteGenerator:
                     <a href="../about/">About</a>
                     <a href="../contact/">Contact</a>
                     <a href="../privacy-policy/">Privacy Policy</a>
-                    <a href="../terms-of-service/">Terms of service</a>
+                    <a href="../terms-of-service/">Terms of Service</a>
                 </nav>
             </div>
         </header>
@@ -1271,7 +1271,7 @@ class StaticSiteGenerator:
                     <a href="../about/">About</a>
                     <a href="../contact/">Contact</a>
                     <a href="../privacy-policy/">Privacy Policy</a>
-                    <a href="../terms-of-service/">Terms of service</a>
+                    <a href="../terms-of-service/">Terms of Service</a>
                 </nav>
             </div>
         </header>
