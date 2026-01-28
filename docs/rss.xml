@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 16:48:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 17:38:40 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Master React with expert best practices and patterns for efficient coding.</description>
+      <pubDate>Wed, 28 Jan 2026 17:38:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Shield Your Site: WAF</title>
       <link>https://kubaik.github.io/shield-your-site-waf/</link>
@@ -138,13 +145,6 @@
       <description>Develop a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Wed, 28 Jan 2026 05:35:39 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Boost mobile speed with expert optimization tips and techniques.</description>
-      <pubDate>Wed, 28 Jan 2026 04:10:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
