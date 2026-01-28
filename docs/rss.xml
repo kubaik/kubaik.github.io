@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:08:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:12:11 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Image</title>
+      <link>https://kubaik.github.io/code-your-image/</link>
+      <description>Boost your dev career with a strong personal brand. Learn how to code your image and stand out.</description>
+      <pubDate>Wed, 28 Jan 2026 20:12:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-image/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
       <pubDate>Wed, 28 Jan 2026 11:29:30 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies to boost conversions.</description>
-      <pubDate>Wed, 28 Jan 2026 10:37:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
