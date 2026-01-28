@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Jan 2026 23:30:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 02:21:33 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn about Zero Trust Security Architecture &amp; protect your network from threats with a &apos;trust no one&apos; approach.</description>
+      <pubDate>Wed, 28 Jan 2026 02:21:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>Remote Work Done Right</title>
       <link>https://kubaik.github.io/remote-work-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover how ML anomaly detection identifies unusual patterns in data, enhancing security and insights.</description>
       <pubDate>Tue, 27 Jan 2026 04:12:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Optimize AI model training with expert best practices.</description>
-      <pubDate>Tue, 27 Jan 2026 02:25:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
