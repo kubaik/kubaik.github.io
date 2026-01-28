@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:12:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:19:17 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
+      <pubDate>Wed, 28 Jan 2026 20:19:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Code Your Image</title>
       <link>https://kubaik.github.io/code-your-image/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
       <pubDate>Wed, 28 Jan 2026 12:00:32 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
-      <pubDate>Wed, 28 Jan 2026 11:29:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
