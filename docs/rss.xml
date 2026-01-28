@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 14:38:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 15:40:33 +0000</lastBuildDate>
+    <item>
+      <title>EDA Unleashed</title>
+      <link>https://kubaik.github.io/eda-unleashed/</link>
+      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
+      <pubDate>Wed, 28 Jan 2026 15:40:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-unleashed/</guid>
+    </item>
     <item>
       <title>Top Web Frameworks</title>
       <link>https://kubaik.github.io/top-web-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; protect your network from threats with a &apos;trust no one&apos; approach.</description>
       <pubDate>Wed, 28 Jan 2026 02:21:23 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>Remote Work Done Right</title>
-      <link>https://kubaik.github.io/remote-work-done-right/</link>
-      <description>Boost productivity with expert remote work tips and best practices.</description>
-      <pubDate>Tue, 27 Jan 2026 23:29:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-work-done-right/</guid>
     </item>
   </channel>
 </rss>
