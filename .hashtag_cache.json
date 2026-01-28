@@ -1540,12 +1540,12 @@
     "topic": "Open Source Contribution Guide"
   },
   "secrets_management": {
-    "timestamp": "2026-01-21T19:33:27.437244",
+    "timestamp": "2026-01-28T19:21:11.117036",
     "hashtags": [
       "CloudSecurity",
+      "ZeroTrust",
       "DevSecOps",
       "CyberProtection",
-      "ZeroTrust",
       "InfoSec",
       "SecretsManagement",
       "EncryptionMatters"

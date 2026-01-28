@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 18:56:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 19:21:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover the power of secrets management. Unlock security &amp; efficiency</description>
+      <pubDate>Wed, 28 Jan 2026 19:21:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>Crack Sys Design</title>
       <link>https://kubaik.github.io/crack-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert API Gateway patterns for secure, scalable, and reliable API management.</description>
       <pubDate>Wed, 28 Jan 2026 08:41:53 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Unlock top tech leadership skills to drive innovation &amp; success.</description>
-      <pubDate>Wed, 28 Jan 2026 07:33:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
