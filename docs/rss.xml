@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 02:21:33 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 04:10:37 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Boost mobile speed with expert optimization tips and techniques.</description>
+      <pubDate>Wed, 28 Jan 2026 04:10:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Boost your dev career with personal branding tips and tricks.</description>
       <pubDate>Tue, 27 Jan 2026 05:34:54 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Discover how ML anomaly detection identifies unusual patterns in data, enhancing security and insights.</description>
-      <pubDate>Tue, 27 Jan 2026 04:12:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
