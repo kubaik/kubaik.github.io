@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 12:11:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 12:13:35 +0000</lastBuildDate>
+    <item>
+      <title>Refactor Now</title>
+      <link>https://kubaik.github.io/refactor-now/</link>
+      <description>Improve code quality &amp; reduce tech debt with refactoring strategies.</description>
+      <pubDate>Wed, 28 Jan 2026 12:13:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/refactor-now/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalability with Event-Driven Architecture (EDA). Learn how to scale fast &amp; efficiently.</description>
       <pubDate>Tue, 27 Jan 2026 15:37:22 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-scale-fast/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Scrum vs Kanban: Which agile method is best for your team? Learn the key differences and choose the right approach.</description>
-      <pubDate>Tue, 27 Jan 2026 14:37:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
