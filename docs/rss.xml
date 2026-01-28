@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 04:10:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 05:35:48 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Develop a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Wed, 28 Jan 2026 05:35:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to build efficient data engineering pipelines with our expert guide to data flow and workflow optimization.</description>
       <pubDate>Tue, 27 Jan 2026 06:47:24 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Code Your Brand</title>
-      <link>https://kubaik.github.io/code-your-brand/</link>
-      <description>Boost your dev career with personal branding tips and tricks.</description>
-      <pubDate>Tue, 27 Jan 2026 05:34:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-your-brand/</guid>
     </item>
   </channel>
 </rss>
