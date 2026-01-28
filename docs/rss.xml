@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 07:33:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 08:42:03 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Done Right</title>
+      <link>https://kubaik.github.io/api-gateway-done-right/</link>
+      <description>Learn expert API Gateway patterns for secure, scalable, and reliable API management.</description>
+      <pubDate>Wed, 28 Jan 2026 08:41:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>SQL vs NoSQL: Compare database types &amp; choose the best for your project.</description>
       <pubDate>Tue, 27 Jan 2026 09:40:43 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Cyber Safe</title>
-      <link>https://kubaik.github.io/cyber-safe/</link>
-      <description>Learn cybersecurity fundamentals to protect yourself online. Discover tips and best practices for a safer digital life.</description>
-      <pubDate>Tue, 27 Jan 2026 08:41:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/cyber-safe/</guid>
     </item>
   </channel>
 </rss>
