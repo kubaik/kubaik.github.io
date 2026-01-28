@@ -1971,7 +1971,7 @@
     "topic": "Functional Programming Concepts"
   },
   "delta_lake_and_data_lakehouse": {
-    "timestamp": "2026-01-25T05:33:58.358036",
+    "timestamp": "2026-01-28T23:33:26.880204",
     "hashtags": [
       "DataLakehouse",
       "DeltaLake",
@@ -1979,8 +1979,7 @@
       "CloudComputing",
       "ArtificialIntelligence",
       "DataEngineering",
-      "LakehouseArchitecture",
-      "DataAnalytics"
+      "LakehouseArchitecture"
     ],
     "topic": "Delta Lake and Data Lakehouse"
   },
