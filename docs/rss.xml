@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 22:35:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 23:33:35 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake: The Future</title>
+      <link>https://kubaik.github.io/delta-lake-the-future/</link>
+      <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse. Learn more</description>
+      <pubDate>Wed, 28 Jan 2026 23:33:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
+    </item>
     <item>
       <title>Responsive Web Design</title>
       <link>https://kubaik.github.io/responsive-web-design/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with real-time data processing. Learn how to harness &apos;Data in Motion&apos; for instant decision-making.</description>
       <pubDate>Wed, 28 Jan 2026 13:44:27 +0000</pubDate>
       <guid>https://kubaik.github.io/data-in-motion/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Unlock GCP: Master Google Cloud Platform &amp; boost productivity</description>
-      <pubDate>Wed, 28 Jan 2026 13:39:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
