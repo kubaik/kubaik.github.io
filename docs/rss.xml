@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 11:59:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 12:00:41 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
+      <pubDate>Wed, 28 Jan 2026 12:00:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Visualize Smart</title>
       <link>https://kubaik.github.io/visualize-smart/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Which agile method is best for your team? Learn the key differences and choose the right approach.</description>
       <pubDate>Tue, 27 Jan 2026 14:37:52 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Tue, 27 Jan 2026 13:05:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
