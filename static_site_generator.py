@@ -284,7 +284,7 @@ class StaticSiteGenerator:
                     <a href="{{ base_path }}/about/">About</a>
                     <a href="{{ base_path }}/contact/">Contact</a>
                     <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                    <a href="{{ base_path }}/terms-of-service/">Terms</a>
+                    <a href="{{ base_path }}/terms-of-service/">Terms of service</a>
                 </nav>
             </div>
         </header>
