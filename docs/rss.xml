@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 13:00:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:06:05 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Wed, 28 Jan 2026 13:05:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Learn Distributed Systems Design principles and best practices for scalable, reliable architectures.</description>
       <pubDate>Tue, 27 Jan 2026 19:33:55 +0000</pubDate>
       <guid>https://kubaik.github.io/designing-distributed/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
-      <pubDate>Tue, 27 Jan 2026 18:53:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
