@@ -866,6 +866,90 @@ class StaticSiteGenerator:
         {{ global_meta_tags | safe }}
         <link rel="stylesheet" href="../static/style.css">
         <link rel="canonical" href="{{ base_url }}/contact/">
+        <style>
+            .contact-method {
+                background: #f8f9fa;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+                border-left: 4px solid #6366f1;
+            }
+
+            .contact-method h3 {
+                color: #333;
+                margin-bottom: 1rem;
+                font-size: 1.3rem;
+            }
+
+            .contact-method h4 {
+                color: #555;
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            .contact-method ul {
+                margin-left: 1.5rem;
+                line-height: 1.8;
+            }
+
+            .contact-method ul li {
+                margin-bottom: 0.5rem;
+            }
+
+            .contact-email {
+                color: #6366f1;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            .contact-email:hover {
+                text-decoration: underline;
+            }
+
+            .response-time {
+                color: #666;
+                font-style: italic;
+                margin-top: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .faq-section {
+                background: #f0f4ff;
+                border-left-color: #8b5cf6;
+            }
+
+            .faq-item {
+                margin-bottom: 1.5rem;
+            }
+
+            .faq-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .note {
+                color: #666;
+                font-size: 0.9rem;
+                margin-top: 0.5rem;
+            }
+
+            .contact-footer {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 1.5rem;
+                border-radius: 8px;
+                margin-top: 2rem;
+            }
+
+            .contact-footer p {
+                margin-bottom: 0.5rem;
+            }
+
+            .contact-footer p:last-child {
+                margin-bottom: 0;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -886,14 +970,94 @@ class StaticSiteGenerator:
                 <p>Get in touch with the AI Tech Blog team</p>
             </div>
             <article class="page-content">
-                <p>We'd love to hear from you!</p>
+                <p>We'd love to hear from you! Whether you have questions, feedback, or collaboration opportunities, feel free to reach out to our team.</p>
                 
                 <div class="contact-info">
                     <h2>Get in Touch</h2>
+                    
                     <div class="contact-method">
-                        <h3>Email</h3>
+                        <h3>📧 Email</h3>
                         <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
+                        <p class="response-time">We typically respond within 24-48 hours</p>
                     </div>
+                    
+                    <div class="contact-method">
+                        <h3>💬 What We Cover</h3>
+                        <ul>
+                            <li><strong>General Inquiries:</strong> Questions about our content, blog topics, or AI technology</li>
+                            <li><strong>Collaboration:</strong> Partnership opportunities, guest posting, or content contributions</li>
+                            <li><strong>Technical Support:</strong> Issues accessing content or technical questions</li>
+                            <li><strong>Feedback:</strong> Suggestions for improvement or topic requests</li>
+                            <li><strong>Media & Press:</strong> Interview requests or media inquiries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>🤝 Collaboration Opportunities</h3>
+                        <p>We're always interested in connecting with:</p>
+                        <ul>
+                            <li>AI researchers and industry professionals</li>
+                            <li>Technology writers and content creators</li>
+                            <li>Companies working on innovative AI solutions</li>
+                            <li>Academic institutions and educational organizations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>📝 Guest Posting Guidelines</h3>
+                        <p>Interested in contributing to AI Tech Blog? We welcome high-quality guest posts on topics including:</p>
+                        <ul>
+                            <li>Artificial Intelligence and Machine Learning</li>
+                            <li>Natural Language Processing</li>
+                            <li>Computer Vision and Image Recognition</li>
+                            <li>AI Ethics and Responsible AI</li>
+                            <li>Emerging AI Technologies and Trends</li>
+                        </ul>
+                        <p>Please include "Guest Post Submission" in your email subject line along with a brief outline of your proposed topic.</p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>⏰ Office Hours</h3>
+                        <p>Our team monitors inquiries:</p>
+                        <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM (EAT)</p>
+                        <p>Weekend messages will be reviewed on the next business day.</p>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>🌍 Connect With Us</h3>
+                        <p>Stay updated with the latest AI news and insights:</p>
+                        <ul>
+                            <li>Subscribe to our newsletter for weekly AI updates</li>
+                            <li>Follow our latest articles and research summaries</li>
+                            <li>Join our community of AI enthusiasts and professionals</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <h3>📢 Advertising & Sponsorship</h3>
+                        <p>Interested in advertising or sponsorship opportunities? We offer various options to help you reach our engaged audience of AI professionals and enthusiasts. Please email us with "Advertising Inquiry" in the subject line for more information about our rates and packages.</p>
+                    </div>
+                    
+                    <div class="contact-method faq-section">
+                        <h3>❓ Frequently Asked Questions</h3>
+                        <div class="faq-item">
+                            <h4>How often do you publish new content?</h4>
+                            <p>We publish fresh AI-related content regularly, covering the latest developments in artificial intelligence, machine learning, and related technologies.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Can I republish your content?</h4>
+                            <p>Please contact us for permission and guidelines regarding content republishing. We're open to partnerships with proper attribution.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Do you accept sponsored content?</h4>
+                            <p>Yes, we consider sponsored content that aligns with our editorial standards and provides value to our readers. Please reach out for our guidelines and pricing.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-footer">
+                    <p><strong>Before reaching out, please check our FAQ section and existing articles – your question might already be answered!</strong></p>
+                    <p>We appreciate your interest in AI Tech Blog and look forward to hearing from you.</p>
                 </div>
             </article>
         </main>
