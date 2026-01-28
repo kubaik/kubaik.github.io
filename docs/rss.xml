@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 12:50:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 12:53:35 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top Business Intelligence tools &amp; techniques.</description>
+      <pubDate>Wed, 28 Jan 2026 12:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI: Explore AutoML &amp; Neural Architecture Search advancements.</description>
       <pubDate>Tue, 27 Jan 2026 17:35:15 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-rev/</guid>
-    </item>
-    <item>
-      <title>Turbocharge WASM</title>
-      <link>https://kubaik.github.io/turbocharge-wasm/</link>
-      <description>Unlock WebAssembly&apos;s full potential with expert performance optimization tips.</description>
-      <pubDate>Tue, 27 Jan 2026 16:38:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/turbocharge-wasm/</guid>
     </item>
   </channel>
 </rss>
