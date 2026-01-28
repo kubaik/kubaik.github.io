@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 15:40:33 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 16:48:47 +0000</lastBuildDate>
+    <item>
+      <title>Shield Your Site: WAF</title>
+      <link>https://kubaik.github.io/shield-your-site-waf/</link>
+      <description>Protect your website from cyber threats with a Web Application Firewall (WAF). Learn how to shield your site</description>
+      <pubDate>Wed, 28 Jan 2026 16:48:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/shield-your-site-waf/</guid>
+    </item>
     <item>
       <title>EDA Unleashed</title>
       <link>https://kubaik.github.io/eda-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile speed with expert optimization tips and techniques.</description>
       <pubDate>Wed, 28 Jan 2026 04:10:28 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; protect your network from threats with a &apos;trust no one&apos; approach.</description>
-      <pubDate>Wed, 28 Jan 2026 02:21:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
