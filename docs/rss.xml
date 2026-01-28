@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>the Tech Blog!</title>
+    <title>Tech Blog</title>
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 13:39:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:43:04 +0000</lastBuildDate>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
