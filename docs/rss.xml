@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 12:53:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:00:02 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
+      <pubDate>Wed, 28 Jan 2026 12:59:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Master Kubernetes orchestration with expert tips and best practices.</description>
       <pubDate>Tue, 27 Jan 2026 18:53:06 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-mastery/</guid>
-    </item>
-    <item>
-      <title>AutoML Rev</title>
-      <link>https://kubaik.github.io/automl-rev/</link>
-      <description>Unlock efficient AI: Explore AutoML &amp; Neural Architecture Search advancements.</description>
-      <pubDate>Tue, 27 Jan 2026 17:35:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-rev/</guid>
     </item>
   </channel>
 </rss>
