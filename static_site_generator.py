@@ -82,7 +82,7 @@ class StaticSiteGenerator:
         config = self.blog_system.config
         
         context = {
-            'site_name': config.get('site_name', 'AI Blog'),
+            'site_name': config.get('site_name', 'Tech Blog'),
             'site_description': config.get('site_description', 'An AI-powered blog'),
             'base_path': config.get('base_path', ''),
             'base_url': config.get('base_url', ''),
