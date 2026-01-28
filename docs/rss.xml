@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 06:47:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 07:33:46 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Unlock top tech leadership skills to drive innovation &amp; success.</description>
+      <pubDate>Wed, 28 Jan 2026 07:33:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity fundamentals to protect yourself online. Discover tips and best practices for a safer digital life.</description>
       <pubDate>Tue, 27 Jan 2026 08:41:51 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-safe/</guid>
-    </item>
-    <item>
-      <title>Vue Mastery</title>
-      <link>https://kubaik.github.io/vue-mastery/</link>
-      <description>Master Vue.js component architecture &amp; build scalable apps with expert tips and best practices.</description>
-      <pubDate>Tue, 27 Jan 2026 07:34:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/vue-mastery/</guid>
     </item>
   </channel>
 </rss>
