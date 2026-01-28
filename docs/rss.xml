@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 08:42:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 09:41:26 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh</title>
+      <link>https://kubaik.github.io/data-mesh/</link>
+      <description>Unlock scalable data management with Data Mesh Architecture, a decentralized approach to data ownership and integration.</description>
+      <pubDate>Wed, 28 Jan 2026 09:41:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh/</guid>
+    </item>
     <item>
       <title>API Gateway Done Right</title>
       <link>https://kubaik.github.io/api-gateway-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Simplify load balancing with expert techniques and best practices.</description>
       <pubDate>Tue, 27 Jan 2026 10:36:32 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>SQL vs NoSQL: Compare database types &amp; choose the best for your project.</description>
-      <pubDate>Tue, 27 Jan 2026 09:40:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
