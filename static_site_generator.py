@@ -146,7 +146,7 @@ class StaticSiteGenerator:
         
         # Map directory names (with hyphens) to template names (with underscores)
         pages = {
-            'about': ('about', {'topics': config.get('content_topics', [])[:10]}),
+            'about': ('about', {'topics': config.get('content_topics', [])[:]}),
             'contact': ('contact', {}),
             'privacy-policy': ('privacy_policy', {'current_date': datetime.now().strftime('%B %d, %Y')}),
             'terms-of-service': ('terms_of_service', {'current_date': datetime.now().strftime('%B %d, %Y')})
