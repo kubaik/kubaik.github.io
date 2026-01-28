@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:40:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 20:44:20 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Master load balancing techniques for optimal performance &amp; scalability.</description>
+      <pubDate>Wed, 28 Jan 2026 20:44:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Wed, 28 Jan 2026 13:05:56 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
-      <pubDate>Wed, 28 Jan 2026 12:59:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
