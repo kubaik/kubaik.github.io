@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 21:37:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 22:35:08 +0000</lastBuildDate>
+    <item>
+      <title>Responsive Web Design</title>
+      <link>https://kubaik.github.io/responsive-web-design/</link>
+      <description>Learn expert responsive web design techniques for a seamless user experience across devices.</description>
+      <pubDate>Wed, 28 Jan 2026 22:34:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/responsive-web-design/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP: Master Google Cloud Platform &amp; boost productivity</description>
       <pubDate>Wed, 28 Jan 2026 13:39:34 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>Smart Code</title>
-      <link>https://kubaik.github.io/smart-code/</link>
-      <description>Unlock efficient blockchain solutions with smart contract development expertise.</description>
-      <pubDate>Wed, 28 Jan 2026 13:33:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-code/</guid>
     </item>
   </channel>
 </rss>
