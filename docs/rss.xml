@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 13:31:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 13:33:31 +0000</lastBuildDate>
+    <item>
+      <title>Smart Code</title>
+      <link>https://kubaik.github.io/smart-code/</link>
+      <description>Unlock efficient blockchain solutions with smart contract development expertise.</description>
+      <pubDate>Wed, 28 Jan 2026 13:33:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-code/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Improve coding skills with expert debugging techniques and tools.</description>
       <pubDate>Tue, 27 Jan 2026 20:31:31 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-smarter/</guid>
-    </item>
-    <item>
-      <title>Designing Distributed</title>
-      <link>https://kubaik.github.io/designing-distributed/</link>
-      <description>Learn Distributed Systems Design principles and best practices for scalable, reliable architectures.</description>
-      <pubDate>Tue, 27 Jan 2026 19:33:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/designing-distributed/</guid>
     </item>
   </channel>
 </rss>
