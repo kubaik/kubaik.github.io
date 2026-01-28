@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 20:44:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jan 2026 21:37:11 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Wed, 28 Jan 2026 21:37:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Balance Done</title>
       <link>https://kubaik.github.io/balance-done/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient blockchain solutions with smart contract development expertise.</description>
       <pubDate>Wed, 28 Jan 2026 13:33:21 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-code/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Wed, 28 Jan 2026 13:05:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
