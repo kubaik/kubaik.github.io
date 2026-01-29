@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 20:38:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 21:35:28 +0000</lastBuildDate>
+    <item>
+      <title>Scrum vs Kanban</title>
+      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
+      <description>Scrum vs Kanban: Which agile method is best?</description>
+      <pubDate>Thu, 29 Jan 2026 21:35:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
+    </item>
     <item>
       <title>Angular at Scale</title>
       <link>https://kubaik.github.io/angular-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Thu, 29 Jan 2026 05:51:21 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-in/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Optimize with serverless architecture patterns for scalable, cost-effective solutions.</description>
-      <pubDate>Thu, 29 Jan 2026 04:44:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
