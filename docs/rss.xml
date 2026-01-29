@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 05:51:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 06:58:50 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Migrate to the cloud with confidence. Discover expert strategies for a seamless transition.</description>
+      <pubDate>Thu, 29 Jan 2026 06:58:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Tune In</title>
       <link>https://kubaik.github.io/tune-in/</link>
@@ -138,13 +145,6 @@
       <description>Master React with expert best practices and patterns for efficient coding.</description>
       <pubDate>Wed, 28 Jan 2026 17:38:30 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Shield Your Site: WAF</title>
-      <link>https://kubaik.github.io/shield-your-site-waf/</link>
-      <description>Protect your website from cyber threats with a Web Application Firewall (WAF). Learn how to shield your site</description>
-      <pubDate>Wed, 28 Jan 2026 16:48:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/shield-your-site-waf/</guid>
     </item>
   </channel>
 </rss>
