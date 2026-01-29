@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 14:44:21 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 15:43:08 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and tricks for pros.</description>
+      <pubDate>Thu, 29 Jan 2026 15:42:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>TS for Scale</title>
       <link>https://kubaik.github.io/ts-for-scale/</link>
@@ -138,13 +145,6 @@
       <description>Master load balancing techniques for optimal performance &amp; scalability.</description>
       <pubDate>Wed, 28 Jan 2026 20:44:11 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-done/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with our expert guide.</description>
-      <pubDate>Wed, 28 Jan 2026 20:39:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
