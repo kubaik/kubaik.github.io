@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 15:43:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 16:53:09 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
+      <pubDate>Thu, 29 Jan 2026 16:53:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Wed, 28 Jan 2026 21:37:02 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Balance Done</title>
-      <link>https://kubaik.github.io/balance-done/</link>
-      <description>Master load balancing techniques for optimal performance &amp; scalability.</description>
-      <pubDate>Wed, 28 Jan 2026 20:44:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-done/</guid>
     </item>
   </channel>
 </rss>
