@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 12:34:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 13:13:13 +0000</lastBuildDate>
+    <item>
+      <title>Secure APIs</title>
+      <link>https://kubaik.github.io/secure-apis/</link>
+      <description>Learn API security best practices to protect your data and prevent breaches.</description>
+      <pubDate>Thu, 29 Jan 2026 13:13:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-apis/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with AutoML Accelerated. Discover how Neural Architecture Search optimizes machine learning models.</description>
       <pubDate>Wed, 28 Jan 2026 20:36:52 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>Mobile UX Wins</title>
-      <link>https://kubaik.github.io/mobile-ux-wins/</link>
-      <description>Elevate mobile user experience with expert UX tips and best practices.</description>
-      <pubDate>Wed, 28 Jan 2026 20:25:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-ux-wins/</guid>
     </item>
   </channel>
 </rss>
