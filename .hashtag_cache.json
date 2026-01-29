@@ -860,16 +860,15 @@
     "topic": "Mobile App Security"
   },
   "vector_databases_and_embeddings": {
-    "timestamp": "2026-01-22T05:35:36.790935",
+    "timestamp": "2026-01-29T07:48:46.106789",
     "hashtags": [
       "ArtificialIntelligence",
       "MachineLearning",
       "VectorSearch",
-      "EmbeddingEngine",
+      "Embeddings",
+      "NaturalLanguageProcessing",
       "DataScience",
-      "AIEngineering",
-      "NeuralNetworks",
-      "DatabaseTechnology"
+      "AIEngineering"
     ],
     "topic": "Vector Databases and Embeddings"
   },
