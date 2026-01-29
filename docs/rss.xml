@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 08:47:27 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 08:50:00 +0000</lastBuildDate>
+    <item>
+      <title>Write to Inform</title>
+      <link>https://kubaik.github.io/write-to-inform/</link>
+      <description>Improve technical writing skills with our expert guide on clear communication and concise documentation.</description>
+      <pubDate>Thu, 29 Jan 2026 08:49:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-inform/</guid>
+    </item>
     <item>
       <title>VecDBs Unleashed</title>
       <link>https://kubaik.github.io/vecdbs-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and strategies.</description>
       <pubDate>Wed, 28 Jan 2026 18:56:16 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-sys-design/</guid>
-    </item>
-    <item>
-      <title>Negotiate Like Pro</title>
-      <link>https://kubaik.github.io/negotiate-like-pro/</link>
-      <description>Boost your tech salary with expert negotiation tips and strategies in our latest guide.</description>
-      <pubDate>Wed, 28 Jan 2026 18:47:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-like-pro/</guid>
     </item>
   </channel>
 </rss>
