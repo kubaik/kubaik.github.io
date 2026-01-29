@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 04:44:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 05:51:31 +0000</lastBuildDate>
+    <item>
+      <title>Tune In</title>
+      <link>https://kubaik.github.io/tune-in/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Thu, 29 Jan 2026 05:51:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-in/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website from cyber threats with a Web Application Firewall (WAF). Learn how to shield your site</description>
       <pubDate>Wed, 28 Jan 2026 16:48:36 +0000</pubDate>
       <guid>https://kubaik.github.io/shield-your-site-waf/</guid>
-    </item>
-    <item>
-      <title>EDA Unleashed</title>
-      <link>https://kubaik.github.io/eda-unleashed/</link>
-      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
-      <pubDate>Wed, 28 Jan 2026 15:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-unleashed/</guid>
     </item>
   </channel>
 </rss>
