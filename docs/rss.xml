@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 22:35:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 23:33:35 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Unlock real-time data processing with Apache Kafka Streams.</description>
+      <pubDate>Thu, 29 Jan 2026 23:33:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>Contribute: Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Vector DBs &amp; embeddings potential</description>
       <pubDate>Thu, 29 Jan 2026 07:48:45 +0000</pubDate>
       <guid>https://kubaik.github.io/vecdbs-unleashed/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Migrate to the cloud with confidence. Discover expert strategies for a seamless transition.</description>
-      <pubDate>Thu, 29 Jan 2026 06:58:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
