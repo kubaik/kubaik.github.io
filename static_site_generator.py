@@ -327,6 +327,8 @@ class StaticSiteGenerator:
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
             </div>
         </footer>
+        <!-- Enhanced Navigation Script -->
+        <script src="{{ base_path }}/static/navigation.js"></script>
     </body>
     </html>""",
 
@@ -431,6 +433,15 @@ class StaticSiteGenerator:
                 </div>
             </div>
         </footer>
+            <!-- Enhanced Navigation Script -->
+        <script src="{{ base_path }}/static/navigation.js"></script>
+        
+        <!-- Enhanced JavaScript for Load More and Infinite Scroll -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // existing load more script...
+            });
+        </script>
         
         <!-- Enhanced JavaScript for Load More and Infinite Scroll -->
         <script>
