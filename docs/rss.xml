@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2026 23:33:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 02:38:03 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
+      <pubDate>Thu, 29 Jan 2026 02:37:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Delta Lake: The Future</title>
       <link>https://kubaik.github.io/delta-lake-the-future/</link>
@@ -138,13 +145,6 @@
       <description>Discover top web frameworks for modern development, boost productivity &amp; efficiency.</description>
       <pubDate>Wed, 28 Jan 2026 14:38:29 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-frameworks/</guid>
-    </item>
-    <item>
-      <title>Data in Motion</title>
-      <link>https://kubaik.github.io/data-in-motion/</link>
-      <description>Unlock insights with real-time data processing. Learn how to harness &apos;Data in Motion&apos; for instant decision-making.</description>
-      <pubDate>Wed, 28 Jan 2026 13:44:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-in-motion/</guid>
     </item>
   </channel>
 </rss>
