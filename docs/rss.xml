@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 08:50:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 08:52:03 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Streamline tasks with RPA. Learn how automation can boost efficiency.</description>
+      <pubDate>Thu, 29 Jan 2026 08:51:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Write to Inform</title>
       <link>https://kubaik.github.io/write-to-inform/</link>
@@ -138,13 +145,6 @@
       <description>Learn top mobile app architecture patterns for scalable &amp; efficient app design.</description>
       <pubDate>Wed, 28 Jan 2026 19:32:10 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-app-architectures/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Wed, 28 Jan 2026 18:56:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
