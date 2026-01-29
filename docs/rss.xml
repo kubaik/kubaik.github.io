@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 10:02:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 10:09:44 +0000</lastBuildDate>
+    <item>
+      <title>Boost Engagement: Push Notify</title>
+      <link>https://kubaik.github.io/boost-engagement-push-notify/</link>
+      <description>Maximize user engagement with targeted push notifications. Learn how to implement effectively.</description>
+      <pubDate>Thu, 29 Jan 2026 10:09:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-engagement-push-notify/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top BI tools &amp; strategies.</description>
       <pubDate>Wed, 28 Jan 2026 20:02:41 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Improve code quality with Test-Driven Development (TDD) best practices.</description>
-      <pubDate>Wed, 28 Jan 2026 19:49:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
