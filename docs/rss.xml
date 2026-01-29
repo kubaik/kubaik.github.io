@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 10:46:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 11:37:51 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Improve business decisions with accurate data. Learn why clean data matters for success.</description>
+      <pubDate>Thu, 29 Jan 2026 11:37:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>Deploy AI Smarter</title>
       <link>https://kubaik.github.io/deploy-ai-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
       <pubDate>Wed, 28 Jan 2026 20:19:07 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>Code Your Image</title>
-      <link>https://kubaik.github.io/code-your-image/</link>
-      <description>Boost your dev career with a strong personal brand. Learn how to code your image and stand out.</description>
-      <pubDate>Wed, 28 Jan 2026 20:12:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-your-image/</guid>
     </item>
   </channel>
 </rss>
