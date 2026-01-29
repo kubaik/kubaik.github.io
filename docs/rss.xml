@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 13:13:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 14:44:21 +0000</lastBuildDate>
+    <item>
+      <title>TS for Scale</title>
+      <link>https://kubaik.github.io/ts-for-scale/</link>
+      <description>Learn how TypeScript boosts scalability in large apps with &apos;TS for Scale&apos;</description>
+      <pubDate>Thu, 29 Jan 2026 14:44:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-for-scale/</guid>
+    </item>
     <item>
       <title>Secure APIs</title>
       <link>https://kubaik.github.io/secure-apis/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with our expert guide.</description>
       <pubDate>Wed, 28 Jan 2026 20:39:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Unlock efficient AI with AutoML Accelerated. Discover how Neural Architecture Search optimizes machine learning models.</description>
-      <pubDate>Wed, 28 Jan 2026 20:36:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
