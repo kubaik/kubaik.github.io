@@ -1142,6 +1142,8 @@ class StaticSiteGenerator:
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
             </div>
         </footer>
+        <!-- Enhanced Navigation Script -->
+        <script src="../static/navigation.js"></script>
     </body>
     </html>""",
 
@@ -1649,6 +1651,8 @@ class StaticSiteGenerator:
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
             </div>
         </footer>
+         <!-- Enhanced Navigation Script -->
+        <script src="../static/navigation.js"></script>
     </body>
     </html>""",
 
@@ -2308,6 +2312,8 @@ class StaticSiteGenerator:
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
             </div>
         </footer>
+        <!-- Enhanced Navigation Script -->
+        <script src="../static/navigation.js"></script>
     </body>
     </html>""",
 
@@ -2521,6 +2527,8 @@ class StaticSiteGenerator:
                 <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
             </div>
         </footer>
+        <!-- Enhanced Navigation Script -->
+        <script src="../static/navigation.js"></script>
     </body>
     </html>"""
             }
