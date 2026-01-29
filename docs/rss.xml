@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 18:58:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 19:36:30 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide, Data Lake 101.</description>
+      <pubDate>Thu, 29 Jan 2026 19:36:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Thu, 29 Jan 2026 02:37:53 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Delta Lake: The Future</title>
-      <link>https://kubaik.github.io/delta-lake-the-future/</link>
-      <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse. Learn more</description>
-      <pubDate>Wed, 28 Jan 2026 23:33:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
     </item>
   </channel>
 </rss>
