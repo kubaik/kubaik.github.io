@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 16:53:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 17:42:59 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
+      <pubDate>Thu, 29 Jan 2026 17:42:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert responsive web design techniques for a seamless user experience across devices.</description>
       <pubDate>Wed, 28 Jan 2026 22:34:58 +0000</pubDate>
       <guid>https://kubaik.github.io/responsive-web-design/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Wed, 28 Jan 2026 21:37:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
