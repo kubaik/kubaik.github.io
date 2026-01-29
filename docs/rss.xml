@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Jan 2026 09:50:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Jan 2026 09:51:36 +0000</lastBuildDate>
+    <item>
+      <title>Streamline Data</title>
+      <link>https://kubaik.github.io/streamline-data/</link>
+      <description>Simplify data workflows with efficient pipelines. Learn how to streamline data engineering for better insights.</description>
+      <pubDate>Thu, 29 Jan 2026 09:51:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/streamline-data/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Learn Swift for iOS development with expert tips and tutorials.</description>
       <pubDate>Wed, 28 Jan 2026 19:36:18 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Mobile App Architectures</title>
-      <link>https://kubaik.github.io/mobile-app-architectures/</link>
-      <description>Learn top mobile app architecture patterns for scalable &amp; efficient app design.</description>
-      <pubDate>Wed, 28 Jan 2026 19:32:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-app-architectures/</guid>
     </item>
   </channel>
 </rss>
