@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 17:40:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 18:55:01 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft intuitive Recommender Systems with design-driven approaches in our &apos;Design Smart&apos; guide.</description>
+      <pubDate>Fri, 30 Jan 2026 18:54:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Unlock real-time data processing with Apache Kafka Streams.</description>
       <pubDate>Thu, 29 Jan 2026 23:33:25 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Contribute: Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Thu, 29 Jan 2026 22:35:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
