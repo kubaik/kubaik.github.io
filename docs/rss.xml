@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 11:35:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 13:11:19 +0000</lastBuildDate>
+    <item>
+      <title>WCAG Simplified</title>
+      <link>https://kubaik.github.io/wcag-simplified/</link>
+      <description>Master web accessibility with WCAG Simplified. Learn easy steps to make your website inclusive.</description>
+      <pubDate>Fri, 30 Jan 2026 13:11:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-simplified/</guid>
+    </item>
     <item>
       <title>Vue Component Hacks</title>
       <link>https://kubaik.github.io/vue-component-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps once, deploy everywhere with React Native&apos;s cross-platform capabilities.</description>
       <pubDate>Thu, 29 Jan 2026 18:57:52 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
-      <pubDate>Thu, 29 Jan 2026 17:42:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
