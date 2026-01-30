@@ -59,5 +59,6 @@
   "Developer Workflow Automation",
   "Vulnerability Management",
   "Vue.js Component Architecture",
-  "Web Accessibility Standards (WCAG)"
+  "Web Accessibility Standards (WCAG)",
+  "Caching Strategies (Redis, Memcached)"
 ]

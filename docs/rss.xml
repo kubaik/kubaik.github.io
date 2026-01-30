@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 13:11:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 14:41:51 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Cache</title>
+      <link>https://kubaik.github.io/boost-speed-cache/</link>
+      <description>Accelerate your app with caching strategies using Redis and Memcached.</description>
+      <pubDate>Fri, 30 Jan 2026 14:41:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide, Data Lake 101.</description>
       <pubDate>Thu, 29 Jan 2026 19:36:20 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps once, deploy everywhere with React Native&apos;s cross-platform capabilities.</description>
-      <pubDate>Thu, 29 Jan 2026 18:57:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
