@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 09:05:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 09:34:31 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
+      <pubDate>Fri, 30 Jan 2026 09:34:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Learn how TypeScript boosts scalability in large apps with &apos;TS for Scale&apos;</description>
       <pubDate>Thu, 29 Jan 2026 14:44:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-for-scale/</guid>
-    </item>
-    <item>
-      <title>Secure APIs</title>
-      <link>https://kubaik.github.io/secure-apis/</link>
-      <description>Learn API security best practices to protect your data and prevent breaches.</description>
-      <pubDate>Thu, 29 Jan 2026 13:13:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-apis/</guid>
     </item>
   </channel>
 </rss>
