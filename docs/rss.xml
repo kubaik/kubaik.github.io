@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 18:55:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 19:38:26 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Fri, 30 Jan 2026 19:38:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Streamline log data analysis with smart solutions, boost security &amp; efficiency.</description>
       <pubDate>Fri, 30 Jan 2026 02:38:07 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams.</description>
-      <pubDate>Thu, 29 Jan 2026 23:33:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
