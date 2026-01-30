@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 16:50:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 17:40:27 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques. Learn how to code together effectively.</description>
+      <pubDate>Fri, 30 Jan 2026 17:40:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Blockchain Boom</title>
       <link>https://kubaik.github.io/blockchain-boom/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Thu, 29 Jan 2026 22:35:25 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Scrum vs Kanban: Which agile method is best?</description>
-      <pubDate>Thu, 29 Jan 2026 21:35:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
