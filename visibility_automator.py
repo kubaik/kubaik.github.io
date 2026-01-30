@@ -1,384 +1,334 @@
-import requests
-from requests_oauthlib import OAuth1
+"""
+Enhanced Visibility Automator with Multiple Tweet Strategies
+Integrates with EnhancedTweetGenerator for maximum engagement
+"""
 
-import json
-import base64
-import hashlib
-import hmac
-import time
-import secrets
-from datetime import datetime
-from urllib.parse import quote, urlencode
-from typing import List, Dict, Optional
-import logging
 import tweepy
+from typing import Dict
+from enhanced_tweet_generator import EnhancedTweetGenerator
 
-
-class TwitterAPI:
-    """Twitter API v1.1/2 integration with OAuth 1.0a User Context"""
-
-    def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
-        self.auth = OAuth1(
-            consumer_key,
-            consumer_secret,
-            access_token,
-            access_token_secret
-        )
-        self.base_url_v1 = "https://api.twitter.com/1.1/"
-        self.base_url_v2 = "https://api.twitter.com/2/"
-
-        logging.basicConfig(level=logging.INFO)
-        self.logger = logging.getLogger(__name__)
-
-    def test_connection(self) -> Dict:
-        """Check credentials by verifying the account"""
-        url = f"{self.base_url_v1}account/verify_credentials.json"
-        try:
-            response = requests.get(url, auth=self.auth, timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                return {
-                    "success": True,
-                    "user": {
-                        "id": data.get("id_str"),
-                        "name": data.get("name"),
-                        "screen_name": data.get("screen_name")
-                    },
-                    "message": "Twitter API connection successful"
-                }
-            else:
-                return {
-                    "success": False,
-                    "error": response.json(),
-                    "status_code": response.status_code,
-                    "message": "Twitter API connection failed"
-                }
-        except Exception as e:
-            return {"success": False, "error": str(e)}
-
-    def post_tweet(self, text: str) -> Dict:
-        """Post a tweet (v1.1 endpoint is more reliable for OAuth1)"""
-        url = f"{self.base_url_v1}statuses/update.json"
-        payload = {"status": text}
-
-        try:
-            response = requests.post(url, auth=self.twitter_api.auth,
-                                 headers=headers, json=payload, timeout=30)
-
-            if response.status_code in (200, 201):
-                data = response.json()
-                return {
-                    "success": True,
-                    "tweet_id": data.get("id_str"),
-                    "url": f"https://twitter.com/{data['user']['screen_name']}/status/{data['id_str']}",
-                    "text": data.get("text", "")
-                }
-            else:
-                return {
-                    "success": False,
-                    "error": response.json(),
-                    "status_code": response.status_code
-                }
-        except Exception as e:
-            return {"success": False, "error": str(e)}
 
 class VisibilityAutomator:
-    """Enhanced content distribution with proper Twitter integration"""
-    
     def __init__(self, config):
         self.config = config
-        self.social_accounts = config.get('social_accounts', {})
-        self.twitter_config = config.get('twitter_api', {})
-        self.twitter_api = None
-
-        # Initialize Twitter API with OAuth 2.0 Bearer Token
-        if all(k in self.twitter_config for k in
-               ("api_key", "api_secret", "access_token", "access_token_secret")):
-
-            try:
-                self.twitter_api = TwitterAPI(
-                    self.twitter_config["api_key"],
-                    self.twitter_config["api_secret"],
-                    self.twitter_config["access_token"],
-                    self.twitter_config["access_token_secret"]
-            )
-                print("✅ Twitter API initialized with OAuth 1.0a User Context")
-            except Exception as e:
-                print(f"⚠️ Twitter API initialization failed: {e}")
-                self.twitter_api = None
-
-            print("Twitter API initialized with OAuth 1.0a User Context ✅")
-        else:
-            print("⚠️ Missing Twitter OAuth 1.0a credentials in config.yaml")
-        
-        
-        # Set up logging
-        logging.basicConfig(level=logging.INFO)
-        self.logger = logging.getLogger(__name__)
+        self.twitter_client = None
+        self.tweet_generator = EnhancedTweetGenerator()
+        self._init_twitter()
     
-    def test_twitter_connection(self) -> dict:
-        """Test Twitter API connection"""
-        if not self.twitter_api:
-            return {
-                "success": False,
-                "error": "Twitter API not configured - missing OAuth credentials"
-            }
+    def _init_twitter(self):
+        """Initialize Twitter API v2 client"""
+        twitter_config = self.config.get('twitter_api', {})
         
-        return self.twitter_api.test_connection()
-    
-    def generate_social_posts(self, post) -> dict:
-        """Generate optimized social media posts for different platforms"""
-        base_path = self.config.get("base_path", "")
-        post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
+        if not twitter_config:
+            print("⚠️ No Twitter API credentials found in config")
+            return
         
-        # Generate hashtags from tags or keywords
-        hashtags = []
-        if hasattr(post, 'tags') and post.tags:
-            hashtags = ['#' + tag.replace(' ', '').replace('-', '').title() 
-                       for tag in post.tags[:3]]
-        elif hasattr(post, 'seo_keywords') and post.seo_keywords:
-            if isinstance(post.seo_keywords, str):
-                keywords = post.seo_keywords.split(',')[:3]
-            else:
-                keywords = post.seo_keywords[:3]
-            hashtags = ['#' + kw.strip().replace(' ', '').title() for kw in keywords]
-        
-        # Default hashtags if none found
-        if not hashtags:
-            hashtags = ['#TechBlog', '#AI', '#Development']
-        
-        social_posts = {
-            'twitter': self._generate_twitter_post(post, post_url, hashtags),
-            'linkedin': self._generate_linkedin_post(post, post_url, hashtags),
-            'facebook': self._generate_facebook_post(post, post_url),
-            'reddit': {
-                'title': post.title,
-                'content': f"{post.meta_description}\n\nFull article: {post_url}"
-            }
-        }
-        
-        return social_posts
-    
-    def _generate_twitter_post(self, post, post_url: str, hashtags: List[str]) -> str:
-        """Generate Twitter-optimized post with character limit consideration"""
-        max_length = 280
-        url_length = 23  # Twitter's t.co URL length
-        hashtag_text = ' '.join(hashtags[:2])  # Limit hashtags for Twitter
-        
-        # Calculate available space
-        available_space = max_length - url_length - len(hashtag_text) - 3  # 3 for spaces
-        
-        # Create intro text
-        if len(post.title) <= available_space - 20:  # Leave space for description
-            intro = f"📝 {post.title}"
-            remaining = available_space - len(intro) - 4  # 4 for newlines
-            if remaining > 20 and hasattr(post, 'meta_description'):
-                description = post.meta_description[:remaining] + ('...' if len(post.meta_description) > remaining else '')
-                intro += f"\n\n{description}"
-        else:
-            # Title is too long, truncate it
-            title_limit = available_space - 20
-            intro = f"📝 {post.title[:title_limit]}..."
-        
-        tweet = f"{intro}\n\n{post_url} {hashtag_text}".strip()
-        
-        # Ensure we don't exceed character limit
-        if len(tweet) > max_length:
-            excess = len(tweet) - max_length
-            if hasattr(post, 'meta_description') and post.meta_description in tweet:
-                # Trim the description
-                current_desc = post.meta_description
-                new_desc = current_desc[:len(current_desc) - excess - 3] + "..."
-                tweet = tweet.replace(current_desc, new_desc)
-        
-        return tweet
-    
-    def _generate_linkedin_post(self, post, post_url: str, hashtags: List[str]) -> str:
-        """Generate LinkedIn-optimized post"""
-        intro = f"🚀 New blog post: {post.title}\n\n{post.meta_description}"
-        
-        # Add a call to action
-        cta = "\n\n💭 What are your thoughts on this topic?"
-        hashtag_text = '\n\n' + ' '.join(hashtags)
-        
-        return f"{intro}\n\n📖 Read the full article: {post_url}{cta}{hashtag_text}"
-    
-    def _generate_facebook_post(self, post, post_url: str) -> str:
-        """Generate Facebook-optimized post"""
-        return f"📝 {post.title}\n\n{post.meta_description}\n\n🔗 Read more: {post_url}"
-    
-    def post_to_twitter(self, message: str):
-        """Post a tweet using Twitter API v2 /tweets endpoint (Free tier supported)"""
-        if not self.twitter_api:
-            self.logger.warning("Twitter API is not initialized.")
-            return {"success": False, "error": "Twitter API not initialized"}
-
         try:
-            url = "https://api.twitter.com/2/tweets"
-            headers = {"Content-Type": "application/json"}
-            payload = {"text": message}
-
-            # Use OAuth1 for user-context auth
-            response = requests.post(url, auth=self.twitter_api.auth,
-                                    headers=headers, json=payload, timeout=30)
-
-            if response.status_code in (200, 201):
-                data = response.json()
-                tweet_id = data.get("data", {}).get("id")
-                return {
-                    "success": True,
-                    "tweet_id": tweet_id,
-                    "url": f"https://twitter.com/i/web/status/{tweet_id}",
-                    "text": message
-                }
+            self.twitter_client = tweepy.Client(
+                bearer_token=twitter_config.get('bearer_token'),
+                consumer_key=twitter_config.get('api_key'),
+                consumer_secret=twitter_config.get('api_secret'),
+                access_token=twitter_config.get('access_token'),
+                access_token_secret=twitter_config.get('access_token_secret')
+            )
+            print("✅ Twitter API initialized")
+        except Exception as e:
+            print(f"❌ Twitter initialization failed: {e}")
+            self.twitter_client = None
+    
+    def post_to_twitter(self, tweet_text: str = None, post = None, strategy: str = "auto") -> Dict:
+        """
+        Post to Twitter with enhanced engagement strategies
+        
+        Args:
+            tweet_text: Custom tweet text (if provided, ignores post and strategy)
+            post: Blog post object to generate tweet from
+            strategy: Tweet strategy (hook, stat, problem, list, question, thread, auto)
+        
+        Returns:
+            Dict with success status and tweet URL or error
+        """
+        if not self.twitter_client:
+            return {
+                'success': False,
+                'error': 'Twitter client not initialized. Check API credentials.'
+            }
+        
+        try:
+            # Use custom text or generate engaging tweet
+            if tweet_text:
+                final_tweet = tweet_text
+            elif post:
+                final_tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
             else:
                 return {
-                    "success": False,
-                    "status_code": response.status_code,
-                    "error": response.json()
+                    'success': False,
+                    'error': 'Either tweet_text or post must be provided'
                 }
-
+            
+            # Analyze tweet quality before posting
+            analysis = self.tweet_generator.analyze_tweet_quality(final_tweet)
+            print(f"📊 Tweet Quality Score: {analysis['score']}/100 (Grade: {analysis['grade']})")
+            
+            # Post tweet
+            response = self.twitter_client.create_tweet(text=final_tweet)
+            tweet_id = response.data['id']
+            
+            # Get authenticated user info for URL
+            me = self.twitter_client.get_me()
+            username = me.data.username
+            
+            tweet_url = f"https://twitter.com/{username}/status/{tweet_id}"
+            
+            return {
+                'success': True,
+                'tweet_id': tweet_id,
+                'url': tweet_url,
+                'tweet_text': final_tweet,
+                'quality_score': analysis['score'],
+                'strategy': strategy
+            }
+            
         except Exception as e:
-            self.logger.error(f"⚠️ Twitter post failed: {e}")
-            return {"success": False, "error": str(e)}
+            return {
+                'success': False,
+                'error': str(e)
+            }
     
-    def validate_twitter_config(self) -> dict:
-        """Validate Twitter API configuration"""
-        required_keys = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
-        twitter_config = self.twitter_config
-        
-        missing_keys = [key for key in required_keys if not twitter_config.get(key)]
-        if missing_keys:
+    def post_with_best_strategy(self, post) -> Dict:
+        """
+        Generate multiple variations and post the best one
+        """
+        if not self.twitter_client:
             return {
-                'valid': False,
-                'message': f"Missing Twitter OAuth credentials: {', '.join(missing_keys)}"
+                'success': False,
+                'error': 'Twitter client not initialized'
             }
         
-        # Test API connection
-        if self.twitter_api:
-            test_result = self.twitter_api.test_connection()
-            return {
-                'valid': test_result['success'],
-                'message': test_result['message'],
-                'error': test_result.get('error') if not test_result['success'] else None
-            }
+        # Generate variations
+        variations = self.tweet_generator.create_multiple_variations(post, count=5)
+        
+        # Analyze and pick best
+        best_variation = max(variations, 
+                           key=lambda v: self.tweet_generator.analyze_tweet_quality(v['tweet'])['score'])
+        
+        print(f"🎯 Selected strategy: {best_variation['strategy']}")
+        print(f"📊 Quality score: {self.tweet_generator.analyze_tweet_quality(best_variation['tweet'])['score']}")
+        
+        # Post the best one
+        return self.post_to_twitter(tweet_text=best_variation['tweet'], strategy=best_variation['strategy'])
+    
+    def generate_tweet_preview(self, post, strategy: str = "auto") -> Dict:
+        """
+        Generate tweet preview without posting
+        Useful for review before posting
+        """
+        tweet = self.tweet_generator.create_engaging_tweet(post, strategy)
+        analysis = self.tweet_generator.analyze_tweet_quality(tweet)
         
         return {
-            'valid': False,
-            'message': "Twitter API not initialized"
+            'tweet': tweet,
+            'length': len(tweet),
+            'strategy': strategy,
+            'quality_score': analysis['score'],
+            'grade': analysis['grade'],
+            'feedback': analysis['feedback']
         }
-    def post_blog_to_twitter(self, post) -> Dict:
-        """Post a blog to Twitter using _generate_twitter_post"""
-        if not self.twitter_api:
-            return {"success": False, "error": "Twitter not configured"}
-
-        base_path = self.config.get("base_path", "")
-        post_url = f"{self.config['base_url']}{base_path}/{post.slug}/"
-
-        # Generate Twitter-optimized text (title + desc + hashtags, 280-char safe)
-        hashtags = []
-        if hasattr(post, 'tags') and post.tags:
-            hashtags = ['#' + tag.replace(' ', '').replace('-', '').title() for tag in post.tags[:3]]
-        elif hasattr(post, 'seo_keywords') and post.seo_keywords:
-            if isinstance(post.seo_keywords, str):
-                keywords = post.seo_keywords.split(',')[:3]
-            else:
-                keywords = post.seo_keywords[:3]
-            hashtags = ['#' + kw.strip().replace(' ', '').title() for kw in keywords]
-
-        tweet_text = self._generate_twitter_post(post, post_url, hashtags)
-
-        # Send the tweet
-        result = self.twitter_api.post_tweet(tweet_text)
-        if result["success"]:
+    
+    def generate_all_variations(self, post) -> list:
+        """
+        Generate all tweet variations for manual selection
+        """
+        variations = self.tweet_generator.create_multiple_variations(post, count=6)
+        
+        results = []
+        for var in variations:
+            analysis = self.tweet_generator.analyze_tweet_quality(var['tweet'])
+            results.append({
+                'strategy': var['strategy'],
+                'tweet': var['tweet'],
+                'length': var['length'],
+                'quality_score': analysis['score'],
+                'grade': analysis['grade'],
+                'feedback': analysis['feedback']
+            })
+        
+        return sorted(results, key=lambda x: x['quality_score'], reverse=True)
+    
+    def test_twitter_connection(self) -> Dict:
+        """Test Twitter API connection"""
+        if not self.twitter_client:
             return {
-                "success": True,
-                "tweet_id": result.get("tweet_id"),
-                "url": f"https://twitter.com/i/web/status/{result.get('tweet_id')}"
+                'success': False,
+                'error': 'Twitter client not initialized'
             }
-        return result    
+        
+        try:
+            me = self.twitter_client.get_me()
+            return {
+                'success': True,
+                'username': me.data.username,
+                'name': me.data.name,
+                'id': me.data.id
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    def generate_social_posts(self, post) -> Dict:
+        """
+        Generate optimized social media posts for multiple platforms
+        """
+        # Twitter - use enhanced generator
+        twitter_post = self.tweet_generator.create_engaging_tweet(post, strategy="auto")
+        
+        # LinkedIn - more professional
+        linkedin_post = f"""🚀 New Article: {post.title}
 
-    def submit_to_search_engines(self, sitemap_url: str) -> List[dict]:
-            """Submit sitemap to search engines"""
-            search_engines = [
-                f"https://www.google.com/ping?sitemap={quote(sitemap_url)}",
-                f"https://www.bing.com/ping?sitemap={quote(sitemap_url)}"
-            ]
-            
-            results = []
-            for engine in search_engines:
-                try:
-                    response = requests.get(engine, timeout=10)
-                    engine_name = engine.split('//')[1].split('.')[1]
-                    results.append({
-                        'engine': engine_name,
-                        'status': response.status_code,
-                        'success': response.status_code == 200,
-                        'url': engine
-                    })
-                    self.logger.info(f"Submitted to {engine_name}: {response.status_code}")
-                except Exception as e:
-                    engine_name = engine.split('//')[1].split('.')[1]
-                    results.append({
-                        'engine': engine_name,
-                        'error': str(e),
-                        'success': False
-                    })
-                    self.logger.error(f"Failed to submit to {engine_name}: {str(e)}")
-            
-            return results    
-# Test function to verify Twitter integration
-def test_twitter_integration(config):
-    """Test function to verify Twitter posting works"""
-    print("Testing Twitter integration...")
-    
-    visibility = VisibilityAutomator(config)
-    
-    # Test connection first
-    connection_test = visibility.test_twitter_connection()
-    print(f"Connection test: {connection_test}")
-    
-    if not connection_test['success']:
-        print(f"Connection failed: {connection_test.get('error')}")
-        return False
-    
-    # Create a test post object
-    class TestPost:
-        def __init__(self):
-            self.title = "Test Blog Post - Twitter Integration"
-            self.meta_description = "Testing automated Twitter posting from our blog system. This is a test post to verify the integration works correctly."
-            self.slug = "test-twitter-integration" 
-            self.tags = ["test", "twitter", "automation"]
-    
-    test_post = TestPost()
-    
-    # Generate preview without posting
-    social_posts = visibility.generate_social_posts(test_post)
-    print(f"Generated tweet preview: {social_posts['twitter']}")
-    print(f"Tweet length: {len(social_posts['twitter'])} characters")
-    
-    # Ask for confirmation before actually posting
-    response = input("\nDo you want to post this test tweet? (y/N): ")
-    if response.lower() == 'y':
-        result = visibility.post_to_twitter(test_post)
-        print(f"Posting result: {result}")
-        return result['success']
-    else:
-        print("Test cancelled - no tweet posted.")
-        return True  # Test structure works, just didn't post
+{post.meta_description}
 
+In this comprehensive guide, I cover:
+✅ Key concepts and fundamentals
+✅ Best practices from industry leaders
+✅ Real-world implementation examples
+✅ Common pitfalls to avoid
+
+Perfect for developers and tech professionals looking to level up their skills.
+
+Read the full article: https://kubaik.github.io/{post.slug}
+
+{self._format_hashtags_linkedin(post)}
+"""
+        
+        # Reddit - more casual, value-focused
+        reddit_title = f"[Guide] {post.title}"
+        reddit_post = f"""{post.meta_description}
+
+I just published a detailed guide covering everything you need to know about this topic. 
+
+The article includes:
+- Step-by-step explanations
+- Code examples and snippets  
+- Performance benchmarks
+- Best practices
+
+Check it out if you're interested: https://kubaik.github.io/{post.slug}
+
+Happy to answer any questions!
+"""
+        
+        # Facebook - more casual and personal
+        facebook_post = f"""Hey everyone! 👋
+
+Just published a new article on {post.title}.
+
+{post.meta_description}
+
+If you've been curious about this topic or looking to improve your skills, this guide has you covered.
+
+Read it here: https://kubaik.github.io/{post.slug}
+
+Let me know what you think! 💬
+"""
+        
+        return {
+            'twitter': twitter_post,
+            'linkedin': linkedin_post,
+            'reddit_title': reddit_title,
+            'reddit': reddit_post,
+            'facebook': facebook_post
+        }
+    
+    def _format_hashtags_linkedin(self, post) -> str:
+        """Format hashtags for LinkedIn (different style)"""
+        if hasattr(post, 'tags') and post.tags:
+            tags = post.tags[:5]
+            hashtags = []
+            for tag in tags:
+                clean_tag = tag.replace(' ', '').replace('-', '')
+                if clean_tag:
+                    hashtags.append(f"#{clean_tag}")
+            return ' '.join(hashtags)
+        return ""
+
+
+# CLI for testing
 if __name__ == "__main__":
-    # Example usage with your config
     import yaml
+    import sys
     
+    print("=" * 70)
+    print("ENHANCED TWEET GENERATOR - TESTING")
+    print("=" * 70)
+    
+    # Mock post for testing
+    class MockPost:
+        def __init__(self):
+            self.title = "Secure APIs: Best Practices for Protection"
+            self.slug = "secure-apis"
+            self.meta_description = "Learn API security best practices to protect your data and prevent breaches."
+            self.tags = ["coding", "innovation", "CloudNative", "OpenAPI", "5G"]
+            self.twitter_hashtags = "#coding #innovation #CloudNative"
+    
+    post = MockPost()
+    
+    # Load config if available
     try:
         with open("config.yaml", "r") as f:
             config = yaml.safe_load(f)
-        
-        success = test_twitter_integration(config)
-        print(f"Twitter integration test: {'✅ PASSED' if success else '❌ FAILED'}")
-        
-    except FileNotFoundError:
-        print("config.yaml not found. Please make sure it exists in the current directory.")
-    except Exception as e:
-        print(f"Error testing Twitter integration: {e}")
+    except:
+        config = {}
+    
+    visibility = VisibilityAutomator(config)
+    
+    # Generate all variations
+    print("\n🎨 Generating all tweet variations...")
+    print("=" * 70)
+    
+    variations = visibility.generate_all_variations(post)
+    
+    for i, var in enumerate(variations, 1):
+        print(f"\n📱 VARIATION {i}: {var['strategy'].upper()}")
+        print(f"   Score: {var['quality_score']}/100 (Grade: {var['grade']})")
+        print(f"   Length: {var['length']} characters")
+        print("-" * 70)
+        print(var['tweet'])
+        print("-" * 70)
+        print("Feedback:")
+        for feedback in var['feedback']:
+            print(f"   {feedback}")
+    
+    # Show best variation
+    best = variations[0]
+    print("\n" + "=" * 70)
+    print("🏆 RECOMMENDED TWEET (Highest Score)")
+    print("=" * 70)
+    print(f"Strategy: {best['strategy'].upper()}")
+    print(f"Score: {best['quality_score']}/100 (Grade: {best['grade']})")
+    print(f"Length: {best['length']} characters")
+    print("-" * 70)
+    print(best['tweet'])
+    print("=" * 70)
+    
+    # Test connection if credentials available
+    if config.get('twitter_api'):
+        print("\n🔍 Testing Twitter connection...")
+        connection = visibility.test_twitter_connection()
+        if connection['success']:
+            print(f"✅ Connected as @{connection['username']}")
+            
+            response = input("\n❓ Do you want to post the best tweet? (y/N): ")
+            if response.lower() == 'y':
+                result = visibility.post_to_twitter(tweet_text=best['tweet'])
+                if result['success']:
+                    print(f"\n✅ Tweet posted successfully!")
+                    print(f"🔗 URL: {result['url']}")
+                else:
+                    print(f"\n❌ Failed to post: {result['error']}")
+        else:
+            print(f"❌ Connection failed: {connection['error']}")
+    else:
+        print("\n⚠️ No Twitter credentials in config.yaml")
+        print("Add your Twitter API credentials to test posting.")
