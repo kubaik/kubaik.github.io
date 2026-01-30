@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 09:49:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 10:43:14 +0000</lastBuildDate>
+    <item>
+      <title>Fix Before Breach</title>
+      <link>https://kubaik.github.io/fix-before-breach/</link>
+      <description>Stay ahead of threats with proactive vulnerability management. Learn how to fix before breach.</description>
+      <pubDate>Fri, 30 Jan 2026 10:43:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-before-breach/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
       <pubDate>Thu, 29 Jan 2026 16:53:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and tricks for pros.</description>
-      <pubDate>Thu, 29 Jan 2026 15:42:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>

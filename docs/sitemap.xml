@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/fix-before-breach/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/auto-dev-flow/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/micro-vs-mono/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nlp-unlocked/</loc><priority>0.9</priority></url>
@@ -378,7 +379,6 @@
 <url><loc>https://kubaik.github.io/unlock-delta-lake/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jwt-auth-done/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/visualize-right/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/fix-before-breach/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jamstack-fast-secure/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/api-test-made-easy/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/kafka-power/</loc><priority>0.9</priority></url>
