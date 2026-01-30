@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 02:38:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 04:46:16 +0000</lastBuildDate>
+    <item>
+      <title>PWA: Future of Apps</title>
+      <link>https://kubaik.github.io/pwa-future-of-apps/</link>
+      <description>Discover the future of apps with PWAs. Learn how Progressive Web Apps are revolutionizing mobile experiences.</description>
+      <pubDate>Fri, 30 Jan 2026 04:46:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-future-of-apps/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Streamline tasks with RPA. Learn how automation can boost efficiency.</description>
       <pubDate>Thu, 29 Jan 2026 08:51:53 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>Write to Inform</title>
-      <link>https://kubaik.github.io/write-to-inform/</link>
-      <description>Improve technical writing skills with our expert guide on clear communication and concise documentation.</description>
-      <pubDate>Thu, 29 Jan 2026 08:49:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-inform/</guid>
     </item>
   </channel>
 </rss>
