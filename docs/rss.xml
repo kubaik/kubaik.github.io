@@ -5,7 +5,28 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 08:50:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 09:05:41 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP techniques to boost AI capabilities &amp; revolutionize human-computer interaction</description>
+      <pubDate>Fri, 30 Jan 2026 09:05:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
+    <item>
+      <title>Understanding High Availability Systems: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</link>
+      <description>A comprehensive guide to High Availability Systems covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 30 Jan 2026 08:56:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</guid>
+    </item>
+    <item>
+      <title>Understanding Blue-Green Deployment: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-blue-green-deployment-a-complete-gui/</link>
+      <description>A comprehensive guide to Blue-Green Deployment covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 30 Jan 2026 08:53:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-blue-green-deployment-a-complete-gui/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -124,27 +145,6 @@
       <description>Learn API security best practices to protect your data and prevent breaches.</description>
       <pubDate>Thu, 29 Jan 2026 13:13:05 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-apis/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark Big Data Processing. Learn how to spark big data analytics &amp; boost business growth.</description>
-      <pubDate>Thu, 29 Jan 2026 12:34:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve business decisions with accurate data. Learn why clean data matters for success.</description>
-      <pubDate>Thu, 29 Jan 2026 11:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Thu, 29 Jan 2026 10:46:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
