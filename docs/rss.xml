@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 10:43:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 11:35:37 +0000</lastBuildDate>
+    <item>
+      <title>Vue Component Hacks</title>
+      <link>https://kubaik.github.io/vue-component-hacks/</link>
+      <description>Boost Vue.js app performance with expert component hacks and architecture tips.</description>
+      <pubDate>Fri, 30 Jan 2026 11:35:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/vue-component-hacks/</guid>
+    </item>
     <item>
       <title>Fix Before Breach</title>
       <link>https://kubaik.github.io/fix-before-breach/</link>
@@ -138,13 +145,6 @@
       <description>Protect your apps with secure containers. Learn expert security best practices.</description>
       <pubDate>Thu, 29 Jan 2026 17:42:49 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
-      <pubDate>Thu, 29 Jan 2026 16:53:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
