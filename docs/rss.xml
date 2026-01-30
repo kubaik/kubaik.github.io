@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 04:46:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 05:54:42 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Mastery</title>
+      <link>https://kubaik.github.io/iot-device-mastery/</link>
+      <description>Unlock IoT device potential with expert management tips and strategies.</description>
+      <pubDate>Fri, 30 Jan 2026 05:54:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-mastery/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Simplify data workflows with efficient pipelines. Learn how to streamline data engineering for better insights.</description>
       <pubDate>Thu, 29 Jan 2026 09:51:26 +0000</pubDate>
       <guid>https://kubaik.github.io/streamline-data/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Streamline tasks with RPA. Learn how automation can boost efficiency.</description>
-      <pubDate>Thu, 29 Jan 2026 08:51:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
