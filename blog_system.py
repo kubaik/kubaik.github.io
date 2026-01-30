@@ -671,8 +671,8 @@ if __name__ == "__main__":
                 # Ensure tweet is under 280 characters
                 if len(tweet_text) > 280:
                     tweet_text = f"🚀 {blog_post.title}\nRead: https://kubaik.github.io/{blog_post.slug}\n{hashtags}"
-                
-                twitter_result = visibility.post_to_twitter(tweet_text)
+                 
+                twitter_result = visibility.post_with_best_strategy(blog_post)
                 if twitter_result['success']:
                     print(f"🐦 Tweeted successfully URL: {twitter_result['url']}")
                 else:
