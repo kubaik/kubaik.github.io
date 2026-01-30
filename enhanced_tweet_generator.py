@@ -1,6 +1,7 @@
 """
 Enhanced Twitter Post Generator for Maximum Engagement
 Creates compelling, click-worthy tweets that drive traffic to blog posts
+AI-friendly: No personal pronouns (I, my, etc.)
 """
 
 import random
@@ -9,9 +10,9 @@ from typing import Dict, List
 class EnhancedTweetGenerator:
     """Generate engaging tweets optimized for clicks and engagement"""
     
-    # Attention-grabbing opening hooks
+    # Attention-grabbing opening hooks (no personal pronouns)
     HOOKS = [
-        "🚨 This changed everything:",
+        "🚨 This changes everything:",
         "💡 Most developers miss this:",
         "⚡ Quick tip that saves hours:",
         "🔥 Hot take:",
@@ -20,15 +21,15 @@ class EnhancedTweetGenerator:
         "⚠️ Common mistake to avoid:",
         "✨ Game-changer:",
         "🧵 Thread on why this matters:",
-        "💰 This just saved me $$$:",
+        "💰 This saves thousands:",
         "🤯 Mind-blowing fact:",
-        "🎓 What I learned today:",
+        "📚 Essential knowledge:",
         "🔍 Deep dive into:",
         "⏰ Just published:",
-        "🚀 Launch alert:",
+        "🚀 New guide:",
     ]
     
-    # Value propositions
+    # Value propositions (neutral voice)
     VALUE_PROPS = [
         "Learn how to {action} in under {time}",
         "Discover {number} ways to improve {topic}",
@@ -141,18 +142,10 @@ class EnhancedTweetGenerator:
     @staticmethod
     def _problem_tweet(post) -> str:
         """Tweet presenting a problem and teasing the solution"""
-        problems = [
-            "Struggling with {topic}?",
-            "Tired of {problem}?",
-            "Can't figure out {challenge}?",
-            "{Problem} killing your productivity?",
-            "Stuck on {issue}?",
-        ]
-        
         # Extract topic from title
         topic = post.title.split(":")[0] if ":" in post.title else post.title
         
-        tweet = f"Struggling with {topic}?\n\nI just wrote a complete guide that covers:\n"
+        tweet = f"Struggling with {topic}?\n\nThis complete guide covers:\n"
         tweet += f"✅ Best practices\n"
         tweet += f"✅ Common pitfalls\n"
         tweet += f"✅ Real examples\n\n"
@@ -191,19 +184,11 @@ class EnhancedTweetGenerator:
     @staticmethod
     def _question_tweet(post) -> str:
         """Tweet starting with engaging question"""
-        questions = [
-            "Want to level up your {skill}?",
-            "Looking to master {topic}?",
-            "Need a better way to {action}?",
-            "Curious about {topic}?",
-            "Ready to improve your {skill}?",
-        ]
-        
         topic = post.title.split(":")[0] if ":" in post.title else post.title
         question = f"Want to master {topic}?"
         
         tweet = f"{question}\n\n"
-        tweet += f"I just published a comprehensive guide covering:\n\n"
+        tweet += f"New comprehensive guide covering:\n\n"
         tweet += f"✨ Core concepts\n"
         tweet += f"🔧 Practical examples\n"
         tweet += f"⚡ Performance tips\n"
@@ -217,7 +202,7 @@ class EnhancedTweetGenerator:
     def _thread_tweet(post) -> str:
         """Tweet teasing a thread-style deep dive"""
         tweet = f"🧵 THREAD: Everything you need to know about {post.title}\n\n"
-        tweet += f"A complete breakdown with:\n"
+        tweet += f"Complete breakdown with:\n"
         tweet += f"→ Step-by-step guide\n"
         tweet += f"→ Real-world examples\n"
         tweet += f"→ Code snippets\n"
@@ -354,16 +339,16 @@ if __name__ == "__main__":
     # Mock post object for testing
     class MockPost:
         def __init__(self):
-            self.title = "Secure APIs: Best Practices for Protection"
-            self.slug = "secure-apis"
-            self.meta_description = "Learn API security best practices to protect your data and prevent breaches."
-            self.tags = ["coding", "innovation", "CloudNative", "OpenAPI", "5G"]
-            self.twitter_hashtags = "#coding #innovation #CloudNative"
+            self.title = "NLP Unlocked: Techniques for Human-Computer Interaction"
+            self.slug = "nlp-unlocked"
+            self.meta_description = "Unlock NLP secrets: discover techniques for human-computer interaction"
+            self.tags = ["WebDev", "Supabase", "IoT", "VR", "LanguageModels"]
+            self.twitter_hashtags = "#NLP #AI #MachineLearning"
     
     post = MockPost()
     
     print("=" * 70)
-    print("ENHANCED TWEET VARIATIONS")
+    print("ENHANCED TWEET VARIATIONS (AI-Friendly, No Personal Pronouns)")
     print("=" * 70)
     
     # Generate multiple variations
@@ -394,4 +379,6 @@ if __name__ == "__main__":
     6. 📈 Use Twitter Analytics to optimize
     7. 🧵 Consider actual thread tweets for complex topics
     8. 🎨 Add images/GIFs for 2x more engagement
+    
+    ✅ NO "I" OR "MY" LANGUAGE - PERFECT FOR AI-GENERATED CONTENT
     """)
