@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 15:42:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 16:50:34 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain Boom</title>
+      <link>https://kubaik.github.io/blockchain-boom/</link>
+      <description>Discover the future of finance with blockchain &amp; cryptocurrency trends.</description>
+      <pubDate>Fri, 30 Jan 2026 16:50:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-boom/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Which agile method is best?</description>
       <pubDate>Thu, 29 Jan 2026 21:35:18 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Angular at Scale</title>
-      <link>https://kubaik.github.io/angular-at-scale/</link>
-      <description>Build robust Angular enterprise apps with scalability in mind.</description>
-      <pubDate>Thu, 29 Jan 2026 20:38:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-at-scale/</guid>
     </item>
   </channel>
 </rss>
