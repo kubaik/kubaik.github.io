@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 07:00:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 07:49:11 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flood</title>
+      <link>https://kubaik.github.io/limit-the-flood/</link>
+      <description>Learn how rate limiting &amp; throttling protect systems from overload, preventing crashes &amp; ensuring reliability.</description>
+      <pubDate>Fri, 30 Jan 2026 07:49:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flood/</guid>
+    </item>
     <item>
       <title>Work Smart</title>
       <link>https://kubaik.github.io/work-smart/</link>
@@ -138,13 +145,6 @@
       <description>Maximize user engagement with targeted push notifications. Learn how to implement effectively.</description>
       <pubDate>Thu, 29 Jan 2026 10:09:35 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-engagement-push-notify/</guid>
-    </item>
-    <item>
-      <title>Unlock XAI</title>
-      <link>https://kubaik.github.io/unlock-xai/</link>
-      <description>Discover Explainable AI (XAI) techniques to unlock transparency in AI decision-making.</description>
-      <pubDate>Thu, 29 Jan 2026 09:53:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-xai/</guid>
     </item>
   </channel>
 </rss>
