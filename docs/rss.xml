@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 21:34:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 22:33:53 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analysis skills.</description>
+      <pubDate>Fri, 30 Jan 2026 22:33:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>AutoML</title>
       <link>https://kubaik.github.io/automl/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with remote work best practices and expert tips.</description>
       <pubDate>Fri, 30 Jan 2026 06:59:57 +0000</pubDate>
       <guid>https://kubaik.github.io/work-smart/</guid>
-    </item>
-    <item>
-      <title>IoT Device Mastery</title>
-      <link>https://kubaik.github.io/iot-device-mastery/</link>
-      <description>Unlock IoT device potential with expert management tips and strategies.</description>
-      <pubDate>Fri, 30 Jan 2026 05:54:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-device-mastery/</guid>
     </item>
   </channel>
 </rss>
