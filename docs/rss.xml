@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 22:33:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jan 2026 23:33:14 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn design patterns in practice with expert tips and real-world examples.</description>
+      <pubDate>Fri, 30 Jan 2026 23:33:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn how rate limiting &amp; throttling protect systems from overload, preventing crashes &amp; ensuring reliability.</description>
       <pubDate>Fri, 30 Jan 2026 07:49:01 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flood/</guid>
-    </item>
-    <item>
-      <title>Work Smart</title>
-      <link>https://kubaik.github.io/work-smart/</link>
-      <description>Boost productivity with remote work best practices and expert tips.</description>
-      <pubDate>Fri, 30 Jan 2026 06:59:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smart/</guid>
     </item>
   </channel>
 </rss>
