@@ -271,6 +271,7 @@ class StaticSiteGenerator:
         {{ meta_tags | safe }}
         {{ structured_data | safe }}
         <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
     </head>
     <body>
         <!-- Header Ad Slot -->
@@ -344,6 +345,7 @@ class StaticSiteGenerator:
         {{ organization_schema | safe }}
         {{ website_schema | safe }}
         <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
         <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
     </head>
     <body>
