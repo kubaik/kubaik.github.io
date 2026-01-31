@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 15:31:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 16:38:45 +0000</lastBuildDate>
+    <item>
+      <title>Docker Simplified</title>
+      <link>https://kubaik.github.io/docker-simplified/</link>
+      <description>Learn Docker basics &amp; master containerization with our simplified guide.</description>
+      <pubDate>Sat, 31 Jan 2026 16:38:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-simplified/</guid>
+    </item>
     <item>
       <title>Boost Memory</title>
       <link>https://kubaik.github.io/boost-memory/</link>
@@ -138,13 +145,6 @@
       <description>Streamline ML workflows with AutoML. Learn MLOps best practices &amp; automate ML pipelines for efficiency.</description>
       <pubDate>Fri, 30 Jan 2026 21:34:38 +0000</pubDate>
       <guid>https://kubaik.github.io/automl/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn clean code principles for better software development</description>
-      <pubDate>Fri, 30 Jan 2026 20:39:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
