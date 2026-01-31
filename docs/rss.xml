@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 07:29:46 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 07:31:30 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript</description>
+      <pubDate>Sat, 31 Jan 2026 07:31:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility-First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
       <pubDate>Fri, 30 Jan 2026 09:34:22 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>NLP Unlocked</title>
-      <link>https://kubaik.github.io/nlp-unlocked/</link>
-      <description>Unlock NLP techniques to boost AI capabilities &amp; revolutionize human-computer interaction</description>
-      <pubDate>Fri, 30 Jan 2026 09:05:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
     </item>
   </channel>
 </rss>
