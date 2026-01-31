@@ -86,5 +86,6 @@
   "Refactoring Legacy Code",
   "Site Reliability Engineering (SRE)",
   "Memory Management Best Practices",
-  "Docker Containerization Guide"
+  "Docker Containerization Guide",
+  "Database Indexing Strategies"
 ]

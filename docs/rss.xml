@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 16:38:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 17:30:05 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Sat, 31 Jan 2026 17:29:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Docker Simplified</title>
       <link>https://kubaik.github.io/docker-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analysis skills.</description>
       <pubDate>Fri, 30 Jan 2026 22:33:43 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>AutoML</title>
-      <link>https://kubaik.github.io/automl/</link>
-      <description>Streamline ML workflows with AutoML. Learn MLOps best practices &amp; automate ML pipelines for efficiency.</description>
-      <pubDate>Fri, 30 Jan 2026 21:34:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl/</guid>
     </item>
   </channel>
 </rss>
