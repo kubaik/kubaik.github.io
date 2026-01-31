@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 07:35:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 08:39:17 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Create a solid IoT foundation with our expert blueprint, covering architecture and implementation strategies.</description>
+      <pubDate>Sat, 31 Jan 2026 08:39:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Boost App Visibility</title>
       <link>https://kubaik.github.io/boost-app-visibility/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead of threats with proactive vulnerability management. Learn how to fix before breach.</description>
       <pubDate>Fri, 30 Jan 2026 10:43:04 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-before-breach/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline coding with Auto Dev Flow. Learn how to automate your workflow and boost productivity.</description>
-      <pubDate>Fri, 30 Jan 2026 09:48:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
