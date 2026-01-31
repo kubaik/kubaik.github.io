@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 17:30:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 18:42:36 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
+      <pubDate>Sat, 31 Jan 2026 18:42:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn design patterns in practice with expert tips and real-world examples.</description>
       <pubDate>Fri, 30 Jan 2026 23:33:05 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Python for Data</title>
-      <link>https://kubaik.github.io/python-for-data/</link>
-      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analysis skills.</description>
-      <pubDate>Fri, 30 Jan 2026 22:33:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-for-data/</guid>
     </item>
   </channel>
 </rss>

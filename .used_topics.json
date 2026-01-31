@@ -87,5 +87,6 @@
   "Site Reliability Engineering (SRE)",
   "Memory Management Best Practices",
   "Docker Containerization Guide",
-  "Database Indexing Strategies"
+  "Database Indexing Strategies",
+  "Server-Side Rendering (SSR)"
 ]
