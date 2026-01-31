@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jan 2026 23:33:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 02:33:42 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure non-stop operations with high availability systems, minimizing downtime and maximizing productivity.</description>
+      <pubDate>Sat, 31 Jan 2026 02:33:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Canary Deployments, a safe &amp; controlled method to release new code, reducing risk &amp; downtime.</description>
       <pubDate>Fri, 30 Jan 2026 08:50:49 +0000</pubDate>
       <guid>https://kubaik.github.io/canary-deploy/</guid>
-    </item>
-    <item>
-      <title>Limit the Flood</title>
-      <link>https://kubaik.github.io/limit-the-flood/</link>
-      <description>Learn how rate limiting &amp; throttling protect systems from overload, preventing crashes &amp; ensuring reliability.</description>
-      <pubDate>Fri, 30 Jan 2026 07:49:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flood/</guid>
     </item>
   </channel>
 </rss>
