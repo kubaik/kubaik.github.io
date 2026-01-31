@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 04:39:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 05:44:26 +0000</lastBuildDate>
+    <item>
+      <title>Plan for Chaos</title>
+      <link>https://kubaik.github.io/plan-for-chaos/</link>
+      <description>Prepare for the unexpected. Learn how to create an effective incident response plan.</description>
+      <pubDate>Sat, 31 Jan 2026 05:44:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/plan-for-chaos/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Made Easy</title>
       <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to High Availability Systems covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 30 Jan 2026 08:56:43 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</guid>
-    </item>
-    <item>
-      <title>Understanding Blue-Green Deployment: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-blue-green-deployment-a-complete-gui/</link>
-      <description>A comprehensive guide to Blue-Green Deployment covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 30 Jan 2026 08:53:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-blue-green-deployment-a-complete-gui/</guid>
     </item>
   </channel>
 </rss>
