@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 21:29:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 22:30:58 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Done Right</title>
+      <link>https://kubaik.github.io/api-gateway-done-right/</link>
+      <description>Learn expert API Gateway patterns for secure, scalable, and reliable API management.</description>
+      <pubDate>Sat, 31 Jan 2026 22:30:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
+    </item>
     <item>
       <title>Split Smarter</title>
       <link>https://kubaik.github.io/split-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Tailwind CSS utility-first design for faster styling</description>
       <pubDate>Sat, 31 Jan 2026 06:50:44 +0000</pubDate>
       <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
-    </item>
-    <item>
-      <title>Plan for Chaos</title>
-      <link>https://kubaik.github.io/plan-for-chaos/</link>
-      <description>Prepare for the unexpected. Learn how to create an effective incident response plan.</description>
-      <pubDate>Sat, 31 Jan 2026 05:44:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/plan-for-chaos/</guid>
     </item>
   </channel>
 </rss>
