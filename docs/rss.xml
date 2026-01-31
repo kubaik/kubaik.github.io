@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 09:21:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 09:26:59 +0000</lastBuildDate>
+    <item>
+      <title>DB Management</title>
+      <link>https://kubaik.github.io/db-management/</link>
+      <description>Discover top DB management tools to optimize performance and security.</description>
+      <pubDate>Sat, 31 Jan 2026 09:26:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-management/</guid>
+    </item>
     <item>
       <title>Cyber Safe</title>
       <link>https://kubaik.github.io/cyber-safe/</link>
@@ -138,13 +145,6 @@
       <description>Master web accessibility with WCAG Simplified. Learn easy steps to make your website inclusive.</description>
       <pubDate>Fri, 30 Jan 2026 13:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>Vue Component Hacks</title>
-      <link>https://kubaik.github.io/vue-component-hacks/</link>
-      <description>Boost Vue.js app performance with expert component hacks and architecture tips.</description>
-      <pubDate>Fri, 30 Jan 2026 11:35:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/vue-component-hacks/</guid>
     </item>
   </channel>
 </rss>
