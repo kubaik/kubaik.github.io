@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 05:44:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 06:50:53 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS: Utility-First</title>
+      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
+      <description>Learn Tailwind CSS utility-first design for faster styling</description>
+      <pubDate>Sat, 31 Jan 2026 06:50:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
+    </item>
     <item>
       <title>Plan for Chaos</title>
       <link>https://kubaik.github.io/plan-for-chaos/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques to boost AI capabilities &amp; revolutionize human-computer interaction</description>
       <pubDate>Fri, 30 Jan 2026 09:05:32 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-unlocked/</guid>
-    </item>
-    <item>
-      <title>Understanding High Availability Systems: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</link>
-      <description>A comprehensive guide to High Availability Systems covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 30 Jan 2026 08:56:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</guid>
     </item>
   </channel>
 </rss>
