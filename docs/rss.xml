@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 19:27:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 20:34:12 +0000</lastBuildDate>
+    <item>
+      <title>AI at the Edge</title>
+      <link>https://kubaik.github.io/ai-at-the-edge/</link>
+      <description>Unlock AI&apos;s potential at the edge with our latest insights on Edge Computing and AI innovation.</description>
+      <pubDate>Sat, 31 Jan 2026 20:34:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Simplify full-stack dev with Next.js. Learn how to build seamless apps with ease.</description>
       <pubDate>Sat, 31 Jan 2026 04:39:32 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure non-stop operations with high availability systems, minimizing downtime and maximizing productivity.</description>
-      <pubDate>Sat, 31 Jan 2026 02:33:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
