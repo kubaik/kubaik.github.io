@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 07:31:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 07:35:04 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Visibility</title>
+      <link>https://kubaik.github.io/boost-app-visibility/</link>
+      <description>Maximize app visibility with expert ASO tips and tricks.</description>
+      <pubDate>Sat, 31 Jan 2026 07:34:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Streamline coding with Auto Dev Flow. Learn how to automate your workflow and boost productivity.</description>
       <pubDate>Fri, 30 Jan 2026 09:48:55 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Compare microservices &amp; monolithic architecture</description>
-      <pubDate>Fri, 30 Jan 2026 09:34:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
