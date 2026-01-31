@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 09:20:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 09:21:54 +0000</lastBuildDate>
+    <item>
+      <title>Cyber Safe</title>
+      <link>https://kubaik.github.io/cyber-safe/</link>
+      <description>Learn cybersecurity fundamentals to protect yourself online.</description>
+      <pubDate>Sat, 31 Jan 2026 09:21:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-safe/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Boost Vue.js app performance with expert component hacks and architecture tips.</description>
       <pubDate>Fri, 30 Jan 2026 11:35:28 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-component-hacks/</guid>
-    </item>
-    <item>
-      <title>Fix Before Breach</title>
-      <link>https://kubaik.github.io/fix-before-breach/</link>
-      <description>Stay ahead of threats with proactive vulnerability management. Learn how to fix before breach.</description>
-      <pubDate>Fri, 30 Jan 2026 10:43:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-before-breach/</guid>
     </item>
   </channel>
 </rss>
