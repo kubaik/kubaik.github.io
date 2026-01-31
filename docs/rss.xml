@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 13:02:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Jan 2026 14:31:34 +0000</lastBuildDate>
+    <item>
+      <title>SRE Simplified</title>
+      <link>https://kubaik.github.io/sre-simplified/</link>
+      <description>Unlock efficient ops with SRE Simplified. Learn site reliability engineering best practices.</description>
+      <pubDate>Sat, 31 Jan 2026 14:31:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-simplified/</guid>
+    </item>
     <item>
       <title>Revive Old Code</title>
       <link>https://kubaik.github.io/revive-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Fri, 30 Jan 2026 19:38:16 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intuitive Recommender Systems with design-driven approaches in our &apos;Design Smart&apos; guide.</description>
-      <pubDate>Fri, 30 Jan 2026 18:54:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
