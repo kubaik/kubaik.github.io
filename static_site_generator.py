@@ -296,7 +296,7 @@ class StaticSiteGenerator:
                         <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
                         {% if post.tags %}
                         <div class="tags">
-                            {% for tag in post.tags %}
+                            {% for tag in post.tags[:6] %}
                             <span class="tag">{{ tag }}</span>
                             {% endfor %}
                         </div>
