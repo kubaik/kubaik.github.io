@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 10:09:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 10:11:13 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing: The Future</title>
+      <link>https://kubaik.github.io/edge-computing-the-future/</link>
+      <description>Unlock the power of edge computing &amp; discover its future applications</description>
+      <pubDate>Sun, 01 Feb 2026 10:11:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-the-future/</guid>
+    </item>
     <item>
       <title>Boost UI Speed</title>
       <link>https://kubaik.github.io/boost-ui-speed/</link>
@@ -138,13 +145,6 @@
       <description>Improve focus &amp; retain info with proven memory management tips.</description>
       <pubDate>Sat, 31 Jan 2026 15:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>SRE Simplified</title>
-      <link>https://kubaik.github.io/sre-simplified/</link>
-      <description>Unlock efficient ops with SRE Simplified. Learn site reliability engineering best practices.</description>
-      <pubDate>Sat, 31 Jan 2026 14:31:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-simplified/</guid>
     </item>
   </channel>
 </rss>
