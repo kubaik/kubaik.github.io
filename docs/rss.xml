@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 23:30:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 03:15:12 +0000</lastBuildDate>
+    <item>
+      <title>Terraform Simplified</title>
+      <link>https://kubaik.github.io/terraform-simplified/</link>
+      <description>Learn Terraform basics &amp; simplify infrastructure management with our easy-to-follow guide.</description>
+      <pubDate>Sun, 01 Feb 2026 03:15:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-simplified/</guid>
+    </item>
     <item>
       <title>Block Attacks</title>
       <link>https://kubaik.github.io/block-attacks/</link>
@@ -138,13 +145,6 @@
       <description>Maximize app visibility with expert ASO tips and tricks.</description>
       <pubDate>Sat, 31 Jan 2026 07:34:55 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-visibility/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript</description>
-      <pubDate>Sat, 31 Jan 2026 07:31:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
