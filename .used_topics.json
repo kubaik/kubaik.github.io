@@ -100,5 +100,6 @@
   "Application Security Testing (SAST/DAST)",
   "Blue-Green Deployment",
   "Algorithm Complexity Analysis",
-  "Service Mesh Architecture"
+  "Service Mesh Architecture",
+  "Snowflake Cloud Data Platform"
 ]

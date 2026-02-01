@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 09:38:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 09:43:03 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Snowflake</title>
+      <link>https://kubaik.github.io/unlock-snowflake/</link>
+      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock data-driven insights with our expert guide.</description>
+      <pubDate>Sun, 01 Feb 2026 09:42:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
+    </item>
     <item>
       <title>Mesh Up!</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert tutorials &amp; guides.</description>
       <pubDate>Sat, 31 Jan 2026 11:27:20 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert tips and tricks for web performance optimization.</description>
-      <pubDate>Sat, 31 Jan 2026 10:32:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
