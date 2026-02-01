@@ -97,5 +97,6 @@
   "Infrastructure as Code (Terraform)",
   "Time Series Forecasting with AI",
   "Data Governance Frameworks",
-  "Application Security Testing (SAST/DAST)"
+  "Application Security Testing (SAST/DAST)",
+  "Blue-Green Deployment"
 ]
