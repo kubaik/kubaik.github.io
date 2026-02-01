@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 19:12:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 19:14:12 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Discover Quantum Computing basics &amp; unlock the future of tech</description>
+      <pubDate>Sun, 01 Feb 2026 19:14:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>Customize Web</title>
       <link>https://kubaik.github.io/customize-web/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Learn Terraform basics &amp; simplify infrastructure management with our easy-to-follow guide.</description>
       <pubDate>Sun, 01 Feb 2026 03:15:02 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-simplified/</guid>
-    </item>
-    <item>
-      <title>Block Attacks</title>
-      <link>https://kubaik.github.io/block-attacks/</link>
-      <description>Protect your site from cyber threats with effective DDoS protection strategies.</description>
-      <pubDate>Sat, 31 Jan 2026 23:30:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/block-attacks/</guid>
     </item>
   </channel>
 </rss>
