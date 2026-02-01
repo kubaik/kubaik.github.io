@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 19:14:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 19:31:04 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
+      <pubDate>Sun, 01 Feb 2026 19:30:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Unlock accurate predictions with AI-driven time series forecasting. Learn how.</description>
       <pubDate>Sun, 01 Feb 2026 05:24:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Terraform Simplified</title>
-      <link>https://kubaik.github.io/terraform-simplified/</link>
-      <description>Learn Terraform basics &amp; simplify infrastructure management with our easy-to-follow guide.</description>
-      <pubDate>Sun, 01 Feb 2026 03:15:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-simplified/</guid>
     </item>
   </channel>
 </rss>
