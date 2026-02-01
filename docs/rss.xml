@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 20:35:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 21:30:51 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Simplified</title>
+      <link>https://kubaik.github.io/jwt-auth-simplified/</link>
+      <description>Simplify JWT auth implementation with our expert guide.</description>
+      <pubDate>Sun, 01 Feb 2026 21:30:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-simplified/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Boost app security with SAST/DAST testing. Learn how to identify vulnerabilities &amp; protect your code.</description>
       <pubDate>Sun, 01 Feb 2026 07:43:10 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
-      <pubDate>Sun, 01 Feb 2026 06:59:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
