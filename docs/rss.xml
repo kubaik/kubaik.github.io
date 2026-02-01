@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 13:05:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 14:34:00 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Streamline API testing with Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
+      <pubDate>Sun, 01 Feb 2026 14:33:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Build Your Tech Brand</title>
       <link>https://kubaik.github.io/build-your-tech-brand/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of AI with agent development. Learn how to build intelligent agents that think and act like humans.</description>
       <pubDate>Sat, 31 Jan 2026 19:27:10 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents/</guid>
-    </item>
-    <item>
-      <title>Unlock SSR</title>
-      <link>https://kubaik.github.io/unlock-ssr/</link>
-      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
-      <pubDate>Sat, 31 Jan 2026 18:42:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssr/</guid>
     </item>
   </channel>
 </rss>
