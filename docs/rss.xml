@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 06:59:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 07:43:19 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code: SAST/DAST</title>
+      <link>https://kubaik.github.io/secure-code-sastdast/</link>
+      <description>Boost app security with SAST/DAST testing. Learn how to identify vulnerabilities &amp; protect your code.</description>
+      <pubDate>Sun, 01 Feb 2026 07:43:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB management tools to optimize performance and security.</description>
       <pubDate>Sat, 31 Jan 2026 09:26:51 +0000</pubDate>
       <guid>https://kubaik.github.io/db-management/</guid>
-    </item>
-    <item>
-      <title>Cyber Safe</title>
-      <link>https://kubaik.github.io/cyber-safe/</link>
-      <description>Learn cybersecurity fundamentals to protect yourself online.</description>
-      <pubDate>Sat, 31 Jan 2026 09:21:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/cyber-safe/</guid>
     </item>
   </channel>
 </rss>
