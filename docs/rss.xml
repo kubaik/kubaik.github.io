@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 15:33:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 16:39:06 +0000</lastBuildDate>
+    <item>
+      <title>Train Smart</title>
+      <link>https://kubaik.github.io/train-smart/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Sun, 01 Feb 2026 16:38:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smart/</guid>
+    </item>
     <item>
       <title>No-Code Rev&quot;
 or 
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Boost app performance with smart code splitting strategies</description>
       <pubDate>Sat, 31 Jan 2026 21:29:18 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smarter/</guid>
-    </item>
-    <item>
-      <title>AI at the Edge</title>
-      <link>https://kubaik.github.io/ai-at-the-edge/</link>
-      <description>Unlock AI&apos;s potential at the edge with our latest insights on Edge Computing and AI innovation.</description>
-      <pubDate>Sat, 31 Jan 2026 20:34:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
     </item>
   </channel>
 </rss>
