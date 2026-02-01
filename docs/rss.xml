@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 03:15:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 05:24:50 +0000</lastBuildDate>
+    <item>
+      <title>AI Forecasts</title>
+      <link>https://kubaik.github.io/ai-forecasts/</link>
+      <description>Unlock accurate predictions with AI-driven time series forecasting. Learn how.</description>
+      <pubDate>Sun, 01 Feb 2026 05:24:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-forecasts/</guid>
+    </item>
     <item>
       <title>Terraform Simplified</title>
       <link>https://kubaik.github.io/terraform-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Create a solid IoT foundation with our expert blueprint, covering architecture and implementation strategies.</description>
       <pubDate>Sat, 31 Jan 2026 08:39:07 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Boost App Visibility</title>
-      <link>https://kubaik.github.io/boost-app-visibility/</link>
-      <description>Maximize app visibility with expert ASO tips and tricks.</description>
-      <pubDate>Sat, 31 Jan 2026 07:34:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
     </item>
   </channel>
 </rss>
