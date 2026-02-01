@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 16:39:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 17:31:41 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
+      <pubDate>Sun, 01 Feb 2026 17:31:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Train Smart</title>
       <link>https://kubaik.github.io/train-smart/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Learn expert API Gateway patterns for secure, scalable, and reliable API management.</description>
       <pubDate>Sat, 31 Jan 2026 22:30:49 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Boost app performance with smart code splitting strategies</description>
-      <pubDate>Sat, 31 Jan 2026 21:29:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
