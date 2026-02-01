@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 07:43:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 08:07:00 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green Wins</title>
+      <link>https://kubaik.github.io/blue-green-wins/</link>
+      <description>Learn about Blue-Green Deployment &amp; its benefits for seamless software releases</description>
+      <pubDate>Sun, 01 Feb 2026 08:06:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-wins/</guid>
+    </item>
     <item>
       <title>Secure Code: SAST/DAST</title>
       <link>https://kubaik.github.io/secure-code-sastdast/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with AR Unleashed, exploring innovative Augmented Reality development trends.</description>
       <pubDate>Sat, 31 Jan 2026 09:30:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-unleashed/</guid>
-    </item>
-    <item>
-      <title>DB Management</title>
-      <link>https://kubaik.github.io/db-management/</link>
-      <description>Discover top DB management tools to optimize performance and security.</description>
-      <pubDate>Sat, 31 Jan 2026 09:26:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-management/</guid>
     </item>
   </channel>
 </rss>
