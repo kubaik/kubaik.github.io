@@ -183,9 +183,29 @@ class EnhancedTweetGenerator:
     
     @staticmethod
     def _question_tweet(post) -> str:
-        """Tweet starting with engaging question"""
+        """Tweet starting with engaging hook (varied openings)"""
         topic = post.title.split(":")[0] if ":" in post.title else post.title
-        question = f"Want to master {topic}?"
+        
+        # Diverse hook variations - prevents repetition!
+        hook_variations = [
+            f"🔥 {topic} just got easier",
+            f"⚡ Stop making these {topic} mistakes",
+            f"💡 What nobody tells you about {topic}",
+            f"🚀 Level up your {topic} game",
+            f"🎯 The one thing about {topic} that matters",
+            f"📊 {topic} in 2026: What changed?",
+            f"⭐ {topic} secrets nobody shares",
+            f"🔓 Unlock {topic} mastery",
+            f"💪 {topic}: From beginner to pro",
+            f"🌟 Why {topic} matters more than ever",
+            f"⚠️ Common {topic} pitfalls to avoid",
+            f"✨ {topic} made simple",
+            f"🎓 Everything about {topic}",
+            f"💎 {topic} best practices revealed",
+            f"🧠 {topic} explained (finally)",
+        ]
+        
+        question = random.choice(hook_variations)
         
         tweet = f"{question}\n\n"
         tweet += f"New comprehensive guide covering:\n\n"
