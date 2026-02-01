@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 11:28:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 13:05:10 +0000</lastBuildDate>
+    <item>
+      <title>Build Your Tech Brand</title>
+      <link>https://kubaik.github.io/build-your-tech-brand/</link>
+      <description>Establish your tech presence with a strong portfolio. Learn how to build and showcase your skills.</description>
+      <pubDate>Sun, 01 Feb 2026 13:05:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-your-tech-brand/</guid>
+    </item>
     <item>
       <title>Cloud Freedom</title>
       <link>https://kubaik.github.io/cloud-freedom/</link>
@@ -138,13 +145,6 @@
       <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
       <pubDate>Sat, 31 Jan 2026 18:42:27 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssr/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Sat, 31 Jan 2026 17:29:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
