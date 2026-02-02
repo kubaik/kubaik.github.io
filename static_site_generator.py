@@ -271,7 +271,6 @@ class StaticSiteGenerator:
         {{ meta_tags | safe }}
         {{ structured_data | safe }}
         <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
     </head>
     <body>
         <!-- Header Ad Slot -->
