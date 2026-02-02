@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 12:26:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 12:28:31 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
+      <pubDate>Mon, 02 Feb 2026 12:28:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
       <pubDate>Sun, 01 Feb 2026 17:31:31 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Train Smart</title>
-      <link>https://kubaik.github.io/train-smart/</link>
-      <description>Boost AI model performance with expert training tips and best practices.</description>
-      <pubDate>Sun, 01 Feb 2026 16:38:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smart/</guid>
     </item>
   </channel>
 </rss>
