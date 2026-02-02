@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 02:48:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 05:04:10 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development &amp; build scalable apps with ease.</description>
+      <pubDate>Mon, 02 Feb 2026 05:04:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Grid &amp; Flexbox</title>
       <link>https://kubaik.github.io/grid-flexbox/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock data-driven insights with our expert guide.</description>
       <pubDate>Sun, 01 Feb 2026 09:42:53 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservice management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
-      <pubDate>Sun, 01 Feb 2026 09:38:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
