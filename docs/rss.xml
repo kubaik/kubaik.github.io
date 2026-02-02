@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 12:12:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 12:14:29 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from threats. Learn expert tips on mobile app security.</description>
+      <pubDate>Mon, 02 Feb 2026 12:14:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Scale Smarter</title>
       <link>https://kubaik.github.io/scale-smarter/</link>
@@ -138,17 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Sun, 01 Feb 2026 16:38:56 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smart/</guid>
-    </item>
-    <item>
-      <title>No-Code Rev&quot;
-or 
-&quot;Code Less&quot; 
-However, a more informative title under 60 characters could be:
-&quot;Low-Code Made Easy</title>
-      <link>https://kubaik.github.io/no-code-rev-or-code-less-however-a-more-informativ/</link>
-      <description>Simplify development with low-code/no-code platforms</description>
-      <pubDate>Sun, 01 Feb 2026 15:32:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-rev-or-code-less-however-a-more-informativ/</guid>
     </item>
   </channel>
 </rss>
