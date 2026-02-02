@@ -130,5 +130,6 @@
   "A/B Testing and Experimentation",
   "Scalability Patterns",
   "Mobile App Security",
-  "Data Visualization Best Practices"
+  "Data Visualization Best Practices",
+  "Message Queues and Async Processing"
 ]
