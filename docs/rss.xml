@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 09:59:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 10:58:54 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Mon, 02 Feb 2026 10:58:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Boost Speed with SSG</title>
       <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
@@ -135,13 +142,6 @@ However, a more informative title under 60 characters could be:
       <description>Simplify development with low-code/no-code platforms</description>
       <pubDate>Sun, 01 Feb 2026 15:32:51 +0000</pubDate>
       <guid>https://kubaik.github.io/no-code-rev-or-code-less-however-a-more-informativ/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Streamline API testing with Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
-      <pubDate>Sun, 01 Feb 2026 14:33:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>Build Your Tech Brand</title>
