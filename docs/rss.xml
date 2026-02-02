@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 09:44:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 09:59:41 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed with SSG</title>
+      <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
+      <description>Accelerate your website with Static Site Generation (SSG) and boost speed.</description>
+      <pubDate>Mon, 02 Feb 2026 09:59:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
+    </item>
     <item>
       <title>CQRS Unlocked</title>
       <link>https://kubaik.github.io/cqrs-unlocked/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Establish your tech presence with a strong portfolio. Learn how to build and showcase your skills.</description>
       <pubDate>Sun, 01 Feb 2026 13:05:00 +0000</pubDate>
       <guid>https://kubaik.github.io/build-your-tech-brand/</guid>
-    </item>
-    <item>
-      <title>Cloud Freedom</title>
-      <link>https://kubaik.github.io/cloud-freedom/</link>
-      <description>Break free with multi-cloud architecture. Learn how to maximize flexibility and scalability in the cloud.</description>
-      <pubDate>Sun, 01 Feb 2026 11:28:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-freedom/</guid>
     </item>
   </channel>
 </rss>
