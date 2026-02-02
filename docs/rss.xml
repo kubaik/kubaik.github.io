@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 14:50:51 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 15:43:07 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock model potential with expert feature engineering techniques.</description>
+      <pubDate>Mon, 02 Feb 2026 15:42:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
       <pubDate>Sun, 01 Feb 2026 19:30:54 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Discover Quantum Computing basics &amp; unlock the future of tech</description>
-      <pubDate>Sun, 01 Feb 2026 19:14:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
