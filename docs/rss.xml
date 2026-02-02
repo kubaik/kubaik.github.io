@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 08:39:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 08:41:20 +0000</lastBuildDate>
+    <item>
+      <title>MBaaS: Simplify Mobile Apps</title>
+      <link>https://kubaik.github.io/mbaas-simplify-mobile-apps/</link>
+      <description>Simplify mobile app development with MBaaS, streamlining backend operations.</description>
+      <pubDate>Mon, 02 Feb 2026 08:41:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/mbaas-simplify-mobile-apps/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Improve user experience with fast UI. Learn frontend performance tuning tips.</description>
       <pubDate>Sun, 01 Feb 2026 10:03:35 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-ui-speed/</guid>
-    </item>
-    <item>
-      <title>Deep Learning Unleashed</title>
-      <link>https://kubaik.github.io/deep-learning-unleashed/</link>
-      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks. Discover the power of DL.</description>
-      <pubDate>Sun, 01 Feb 2026 09:47:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-unleashed/</guid>
     </item>
   </channel>
 </rss>
