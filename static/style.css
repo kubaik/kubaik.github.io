@@ -1,3 +1,27 @@
+
+/* FORCE POST HEADER STYLES */
+header.post-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 4rem 2rem 3rem 2rem !important;
+    margin: -2rem -2rem 3rem -2rem !important;
+}
+
+header.post-header .tags {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 2rem !important;
+    gap: 0.75rem !important;
+}
+
+header.post-header .tag {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    padding: 0.6rem 1.25rem !important;
+    border-radius: 50px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+}
 * {
     margin: 0;
     padding: 0;
