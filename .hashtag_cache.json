@@ -1571,15 +1571,15 @@
     "topic": "Web Application Firewall (WAF)"
   },
   "agile_development_methodologies": {
-    "timestamp": "2026-01-26T07:34:51.189003",
+    "timestamp": "2026-02-02T07:12:07.066333",
     "hashtags": [
-      "AgileDevelopment",
+      "AgileDev",
       "DevOps",
       "TechMethodologies",
-      "SoftwareEngineering",
-      "DigitalTransformation",
-      "CloudComputing",
-      "ScrumMaster"
+      "ScrumMaster",
+      "CloudNative",
+      "SoftwareDevelopment",
+      "DigitalTransformation"
     ],
     "topic": "Agile Development Methodologies"
   },

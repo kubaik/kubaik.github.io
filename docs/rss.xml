@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 05:04:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 07:12:16 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert insights and best practices.</description>
+      <pubDate>Mon, 02 Feb 2026 07:12:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks. Discover the power of DL.</description>
       <pubDate>Sun, 01 Feb 2026 09:47:32 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-unleashed/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock data-driven insights with our expert guide.</description>
-      <pubDate>Sun, 01 Feb 2026 09:42:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
