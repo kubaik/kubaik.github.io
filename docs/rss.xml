@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 18:36:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 23:36:15 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Boost database performance with expert query optimization tips.</description>
+      <pubDate>Mon, 02 Feb 2026 23:36:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable infrastructure with AWS Cloud Architecture solutions.</description>
       <pubDate>Sun, 01 Feb 2026 23:32:59 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-power/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>SQL vs NoSQL: Choose the right database for your needs.</description>
-      <pubDate>Sun, 01 Feb 2026 22:33:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
