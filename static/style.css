@@ -1137,7 +1137,8 @@ main {
 
 
 /* Tags (for other places like post cards) */
-.tags {
+.post-card .tags,
+.recent-posts .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
