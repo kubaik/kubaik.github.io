@@ -589,7 +589,8 @@ main {
 
 /* Date meta */
 .post-header .post-meta {
-    justify-content: center;
+    display: flex;
+    justify-content: center;  /* Now just centers the time */
     margin-top: 1.5rem;
     color: rgba(255, 255, 255, 0.95);
     font-size: 1rem;
