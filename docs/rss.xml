@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 23:33:09 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 02:48:40 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Mon, 02 Feb 2026 02:48:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Cloud Power</title>
       <link>https://kubaik.github.io/cloud-power/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Unlock microservice management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
       <pubDate>Sun, 01 Feb 2026 09:38:37 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>Crack Complexity</title>
-      <link>https://kubaik.github.io/crack-complexity/</link>
-      <description>Master algorithm complexity analysis with expert insights.</description>
-      <pubDate>Sun, 01 Feb 2026 08:41:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-complexity/</guid>
     </item>
   </channel>
 </rss>
