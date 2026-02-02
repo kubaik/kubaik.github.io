@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 18:34:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 18:36:05 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Mon, 02 Feb 2026 18:35:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Rails Power</title>
       <link>https://kubaik.github.io/rails-power/</link>
@@ -138,13 +145,6 @@
       <description>SQL vs NoSQL: Choose the right database for your needs.</description>
       <pubDate>Sun, 01 Feb 2026 22:33:21 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Simplified</title>
-      <link>https://kubaik.github.io/jwt-auth-simplified/</link>
-      <description>Simplify JWT auth implementation with our expert guide.</description>
-      <pubDate>Sun, 01 Feb 2026 21:30:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-simplified/</guid>
     </item>
   </channel>
 </rss>
