@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Feb 2026 10:58:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Feb 2026 11:42:31 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smarter</title>
+      <link>https://kubaik.github.io/scale-smarter/</link>
+      <description>Boost efficiency with proven scalability patterns. Learn to scale smarter, not harder.</description>
+      <pubDate>Mon, 02 Feb 2026 11:42:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smarter/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -142,13 +149,6 @@ However, a more informative title under 60 characters could be:
       <description>Simplify development with low-code/no-code platforms</description>
       <pubDate>Sun, 01 Feb 2026 15:32:51 +0000</pubDate>
       <guid>https://kubaik.github.io/no-code-rev-or-code-less-however-a-more-informativ/</guid>
-    </item>
-    <item>
-      <title>Build Your Tech Brand</title>
-      <link>https://kubaik.github.io/build-your-tech-brand/</link>
-      <description>Establish your tech presence with a strong portfolio. Learn how to build and showcase your skills.</description>
-      <pubDate>Sun, 01 Feb 2026 13:05:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-tech-brand/</guid>
     </item>
   </channel>
 </rss>
