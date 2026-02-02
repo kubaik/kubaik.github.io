@@ -290,18 +290,18 @@ class StaticSiteGenerator:
         </header>
         <main class="container">
             <article class="blog-post">
-                <header class="post-header">
+               <header class="post-header">
                     <h1>{{ post.title }}</h1>
                     <div class="post-meta">
                         <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
-                        {% if post.tags %}
-                        <div class="tags">
-                            {% for tag in post.tags[:6] %}
-                            <span class="tag">{{ tag }}</span>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
                     </div>
+                    {% if post.tags %}
+                    <div class="tags">
+                        {% for tag in post.tags[:6] %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </header>
                 <div class="post-content">
                     {{ post.content_html | safe }}
