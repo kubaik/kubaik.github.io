@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 18:36:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 19:04:58 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
+      <pubDate>Tue, 03 Feb 2026 19:04:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with expert review tips and best practices.</description>
       <pubDate>Tue, 03 Feb 2026 11:22:11 +0000</pubDate>
       <guid>https://kubaik.github.io/code-review-done-right/</guid>
-    </item>
-    <item>
-      <title>NFT Tech: Beyond Art</title>
-      <link>https://kubaik.github.io/nft-tech-beyond-art/</link>
-      <description>Explore NFTs beyond art, discover innovative tech &amp; use cases transforming industries.</description>
-      <pubDate>Tue, 03 Feb 2026 11:11:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-beyond-art/</guid>
     </item>
   </channel>
 </rss>
