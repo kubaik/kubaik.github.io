@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 14:52:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 15:57:36 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Master GitOps workflow implementation with expert tips and best practices.</description>
+      <pubDate>Tue, 03 Feb 2026 15:57:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>Rust: Safe Memory</title>
       <link>https://kubaik.github.io/rust-safe-memory/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect fundamentals for secure authentication &amp; authorization.</description>
       <pubDate>Tue, 03 Feb 2026 08:50:24 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>Transfer Learn</title>
-      <link>https://kubaik.github.io/transfer-learn/</link>
-      <description>Unlock efficient AI with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
-      <pubDate>Tue, 03 Feb 2026 07:12:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-learn/</guid>
     </item>
   </channel>
 </rss>
