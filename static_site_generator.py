@@ -1308,7 +1308,7 @@ class StaticSiteGenerator:
 
                 <div id="introduction" class="privacy-section">
                     <h3>1. Introduction</h3>
-                    <p><strong>AI Tech Blog</strong> ("we," "our," "us," or the "Site") is committed to protecting your privacy and ensuring transparency in how we handle your personal information. This Privacy Policy explains our practices regarding the collection, use, storage, and protection of your data when you visit or interact with our website.</p>
+                    <p><strong>Tech Blog</strong> ("we," "our," "us," or the "Site") is committed to protecting your privacy and ensuring transparency in how we handle your personal information. This Privacy Policy explains our practices regarding the collection, use, storage, and protection of your data when you visit or interact with our website.</p>
                     <p>By accessing or using our Site, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy. If you do not agree with our practices, please do not use our Site.</p>
                 </div>
 
@@ -1786,7 +1786,7 @@ class StaticSiteGenerator:
             </div>
             <article class="page-content">
                 <div class="important-notice">
-                    <p><strong>Important:</strong> These Terms of Service constitute a legally binding agreement between you and AI Tech Blog. By accessing or using our Site, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use our Site.</p>
+                    <p><strong>Important:</strong> These Terms of Service constitute a legally binding agreement between you and Tech Blog. By accessing or using our Site, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use our Site.</p>
                 </div>
 
                 <div class="toc">
@@ -1817,10 +1817,10 @@ class StaticSiteGenerator:
 
                 <div id="acceptance" class="terms-section">
                     <h3>1. Acceptance of Terms</h3>
-                    <p>By accessing, browsing, or using AI Tech Blog (the "Site," "Service," "we," "our," or "us"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service (the "Terms") and our Privacy Policy.</p>
+                    <p>By accessing, browsing, or using Tech Blog (the "Site," "Service," "we," "our," or "us"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service (the "Terms") and our Privacy Policy.</p>
                     
                     <h4>1.1 Agreement Formation</h4>
-                    <p>These Terms form a binding legal agreement between you (the "User," "you," or "your") and AI Tech Blog. Your use of the Site constitutes acceptance of these Terms.</p>
+                    <p>These Terms form a binding legal agreement between you (the "User," "you," or "your") and Tech Blog. Your use of the Site constitutes acceptance of these Terms.</p>
                     
                     <h4>1.2 Modifications</h4>
                     <p>We reserve the right to modify these Terms at any time. Continued use of the Site after changes constitutes acceptance of the modified Terms.</p>
@@ -1830,13 +1830,13 @@ class StaticSiteGenerator:
                     <h3>2. Definitions</h3>
                     <p>For the purposes of these Terms:</p>
                     <ul>
-                        <li><strong>"Site"</strong> refers to AI Tech Blog, including all web pages, content, features, and services available at our domain.</li>
+                        <li><strong>"Site"</strong> refers to Tech Blog, including all web pages, content, features, and services available at our domain.</li>
                         <li><strong>"User" or "you"</strong> refers to any individual or entity accessing or using the Site.</li>
                         <li><strong>"Content"</strong> refers to all text, images, videos, audio, code, data, and other materials on the Site.</li>
                         <li><strong>"AI-Generated Content"</strong> refers to articles, posts, and materials created using artificial intelligence technology.</li>
                         <li><strong>"User Content"</strong> refers to any content submitted, posted, or transmitted by Users.</li>
                         <li><strong>"Services"</strong> refers to all features, functionality, and services provided through the Site.</li>
-                        <li><strong>"Third-Party"</strong> refers to any person or entity other than you or AI Tech Blog.</li>
+                        <li><strong>"Third-Party"</strong> refers to any person or entity other than you or Tech Blog.</li>
                     </ul>
                 </div>
 
@@ -1895,7 +1895,7 @@ class StaticSiteGenerator:
                     <h3>5. AI-Generated Content Disclaimer</h3>
                     
                     <div class="warning-box">
-                        <p><strong>Critical Notice:</strong> The majority of articles, posts, and recommendations published on AI Tech Blog are automatically generated using artificial intelligence technology.</p>
+                        <p><strong>Critical Notice:</strong> The majority of articles, posts, and recommendations published on Tech Blog are automatically generated using artificial intelligence technology.</p>
                     </div>
                     
                     <h4>5.1 Nature of AI Content</h4>
@@ -1970,7 +1970,7 @@ class StaticSiteGenerator:
                     <h3>7. Intellectual Property Rights</h3>
                     
                     <h4>7.1 Ownership</h4>
-                    <p>All Content on the Site, including but not limited to text, graphics, logos, images, videos, audio, software, and code, is the property of AI Tech Blog or its content suppliers and is protected by:</p>
+                    <p>All Content on the Site, including but not limited to text, graphics, logos, images, videos, audio, software, and code, is the property of Tech Blog or its content suppliers and is protected by:</p>
                     <ul>
                         <li>Copyright laws</li>
                         <li>Trademark laws</li>
@@ -1980,10 +1980,10 @@ class StaticSiteGenerator:
                     </ul>
                     
                     <h4>7.2 Trademarks</h4>
-                    <p>"AI Tech Blog" and related marks, logos, and designs are trademarks or registered trademarks. You may not use these marks without our prior written permission.</p>
+                    <p>"Tech Blog" and related marks, logos, and designs are trademarks or registered trademarks. You may not use these marks without our prior written permission.</p>
                     
                     <h4>7.3 Copyright Notice</h4>
-                    <p>© 2026 AI Tech Blog. All rights reserved. Unauthorized reproduction, distribution, or transmission of Content may result in severe civil and criminal penalties.</p>
+                    <p>© 2026 Tech Blog. All rights reserved. Unauthorized reproduction, distribution, or transmission of Content may result in severe civil and criminal penalties.</p>
                     
                     <h4>7.4 Fair Use</h4>
                     <p>Limited quotation of our content for purposes of commentary, criticism, news reporting, teaching, scholarship, or research may be permitted under fair use doctrine. Always provide proper attribution and link back to the original article.</p>
@@ -2095,7 +2095,7 @@ class StaticSiteGenerator:
                     <h3>11. Limitation of Liability</h3>
                     
                     <div class="warning-box">
-                        <p><strong>IMPORTANT LIMITATION:</strong> TO THE MAXIMUM EXTENT PERMITTED BY LAW, AI TECH BLOG SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM YOUR USE OF THE SITE.</p>
+                        <p><strong>IMPORTANT LIMITATION:</strong> TO THE MAXIMUM EXTENT PERMITTED BY LAW, TECH BLOG SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM YOUR USE OF THE SITE.</p>
                     </div>
                     
                     <h4>11.1 Exclusion of Damages</h4>
@@ -2124,7 +2124,7 @@ class StaticSiteGenerator:
                     <h3>12. Indemnification</h3>
                     
                     <h4>12.1 Your Indemnification Obligations</h4>
-                    <p>You agree to indemnify, defend, and hold harmless AI Tech Blog, its affiliates, officers, directors, employees, agents, and licensors from and against any claims, liabilities, damages, losses, costs, or expenses (including reasonable attorneys' fees) arising from or related to:</p>
+                    <p>You agree to indemnify, defend, and hold harmless Tech Blog, its affiliates, officers, directors, employees, agents, and licensors from and against any claims, liabilities, damages, losses, costs, or expenses (including reasonable attorneys' fees) arising from or related to:</p>
                     <ul>
                         <li>Your use or misuse of the Site</li>
                         <li>Your violation of these Terms</li>
@@ -2255,7 +2255,7 @@ class StaticSiteGenerator:
                     <h3>19. Miscellaneous Provisions</h3>
                     
                     <h4>19.1 Entire Agreement</h4>
-                    <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and AI Tech Blog regarding the use of the Site.</p>
+                    <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and Tech Blog regarding the use of the Site.</p>
                     
                     <h4>19.2 Severability</h4>
                     <p>If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
@@ -2421,7 +2421,7 @@ class StaticSiteGenerator:
         <main class="container">
             <div class="hero">
                 <h2>Contact Us</h2>
-                <p>Get in touch with the AI Tech Blog team</p>
+                <p>Get in touch with the Tech Blog team</p>
             </div>
             <article class="page-content">
                 <p>We'd love to hear from you! Whether you have questions, feedback, or collaboration opportunities, feel free to reach out to our team.</p>
@@ -2459,7 +2459,7 @@ class StaticSiteGenerator:
                     
                     <div class="contact-method">
                         <h3>📝 Guest Posting Guidelines</h3>
-                        <p>Interested in contributing to AI Tech Blog? We welcome high-quality guest posts on topics including:</p>
+                        <p>Interested in contributing to Tech Blog? We welcome high-quality guest posts on topics including:</p>
                         <ul>
                             <li>Artificial Intelligence and Machine Learning</li>
                             <li>Natural Language Processing</li>
@@ -2511,7 +2511,7 @@ class StaticSiteGenerator:
                 
                 <div class="contact-footer">
                     <p><strong>Before reaching out, please check our FAQ section and existing articles – your question might already be answered!</strong></p>
-                    <p>We appreciate your interest in AI Tech Blog and look forward to hearing from you.</p>
+                    <p>We appreciate your interest in Tech Blog and look forward to hearing from you.</p>
                 </div>
             </article>
         </main>
