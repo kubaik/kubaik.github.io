@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 11:37:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 11:40:52 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
+      <pubDate>Tue, 03 Feb 2026 11:40:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>AI with Integrity</title>
       <link>https://kubaik.github.io/ai-with-integrity/</link>
@@ -138,13 +145,6 @@
       <description>Build fast, natively compiled apps with Flutter. Learn expert dev tips and tricks.</description>
       <pubDate>Mon, 02 Feb 2026 16:51:54 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Unlock model potential with expert feature engineering techniques.</description>
-      <pubDate>Mon, 02 Feb 2026 15:42:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
