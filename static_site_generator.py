@@ -324,7 +324,7 @@ class StaticSiteGenerator:
         
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
             </div>
         </footer>
         <!-- Enhanced Navigation Script -->
