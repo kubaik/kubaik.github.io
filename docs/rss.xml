@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 12:32:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 12:33:29 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn expert tips on designing scalable distributed systems with our &apos;Design Smart&apos; guide.</description>
+      <pubDate>Tue, 03 Feb 2026 12:33:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Boost WebAssembly speed with expert optimization tips.</description>
       <pubDate>Tue, 03 Feb 2026 06:34:40 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>Boost Network Speed</title>
-      <link>https://kubaik.github.io/boost-network-speed/</link>
-      <description>Improve network speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Tue, 03 Feb 2026 06:12:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-network-speed/</guid>
     </item>
   </channel>
 </rss>
