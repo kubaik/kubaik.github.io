@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 22:37:54 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 23:35:38 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Improve app speed &amp; performance with expert tips and tools.</description>
+      <pubDate>Tue, 03 Feb 2026 23:35:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your business with expert security compliance solutions for SOC 2 and ISO 27001.</description>
       <pubDate>Tue, 03 Feb 2026 11:45:42 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-biz/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
-      <pubDate>Tue, 03 Feb 2026 11:40:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
