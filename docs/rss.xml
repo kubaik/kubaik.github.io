@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 13:13:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 13:16:53 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve clarity with Doc Right. Learn expert documentation best practices.</description>
+      <pubDate>Tue, 03 Feb 2026 13:16:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>GraphQL Unlocked</title>
       <link>https://kubaik.github.io/graphql-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard data with encryption &amp; key management expertise. Learn how to lock it down.</description>
       <pubDate>Tue, 03 Feb 2026 06:52:06 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>K8s Simplified</title>
-      <link>https://kubaik.github.io/k8s-simplified/</link>
-      <description>Simplify Kubernetes orchestration with our expert guide to K8s deployment and management.</description>
-      <pubDate>Tue, 03 Feb 2026 06:43:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-simplified/</guid>
     </item>
   </channel>
 </rss>
