@@ -1287,9 +1287,7 @@ class StaticSiteGenerator:
                 <p>How we protect and handle your information</p>
             </div>
             <article class="page-content">
-                <p><strong>Effective Date:</strong> January 28, 2026</p>
                 <p><strong>Last Updated:</strong> January 28, 2026</p>
-
                 <div class="toc">
                     <h3>Table of Contents</h3>
                     <ul>
