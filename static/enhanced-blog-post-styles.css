@@ -8,7 +8,7 @@
    ============================================ */
 
 .post-header {
-    margin: -2rem -2rem 3rem -2rem;
+    margin: 0 -2rem 3rem -2rem;
     padding: 4rem 2rem 3rem 2rem;
     text-align: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -510,7 +510,7 @@
 
 @media (max-width: 768px) {
     .post-header {
-        margin: -2rem -1rem 2rem -1rem;
+        margin:  0 -1rem 2rem -1rem;
         padding: 3rem 1.5rem 2rem;
     }
     
@@ -562,7 +562,7 @@
 
 @media (max-width: 480px) {
     .post-header {
-        margin: -1rem -1rem 1.5rem -1rem;
+        margin: 0 -1rem 1.5rem -1rem;
         padding: 2.5rem 1rem 1.5rem;
     }
     
