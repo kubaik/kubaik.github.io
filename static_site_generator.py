@@ -1788,8 +1788,7 @@ class StaticSiteGenerator:
                 <p>Please read these terms carefully before using our site</p>
             </div>
             <article class="page-content">
-                <p><strong>Effective Date:</strong> January 28, 2026</p>
-                <p><strong>Last Updated:</strong> January 28, 2026</p>
+                <p><strong>Last Updated:</strong> January 31, 2026</p>
 
                 <div class="important-notice">
                     <p><strong>Important:</strong> These Terms of Service constitute a legally binding agreement between you and AI Tech Blog. By accessing or using our Site, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use our Site.</p>
