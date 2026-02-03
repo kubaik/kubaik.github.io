@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 09:53:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 10:51:42 +0000</lastBuildDate>
+    <item>
+      <title>FP Fundamentals</title>
+      <link>https://kubaik.github.io/fp-fundamentals/</link>
+      <description>Learn core Functional Programming concepts &amp; principles.</description>
+      <pubDate>Tue, 03 Feb 2026 10:51:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
+    </item>
     <item>
       <title>Cloud Secure</title>
       <link>https://kubaik.github.io/cloud-secure/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
       <pubDate>Mon, 02 Feb 2026 12:28:21 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from threats. Learn expert tips on mobile app security.</description>
-      <pubDate>Mon, 02 Feb 2026 12:14:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
