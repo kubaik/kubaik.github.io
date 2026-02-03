@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 11:36:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 11:37:55 +0000</lastBuildDate>
+    <item>
+      <title>AI with Integrity</title>
+      <link>https://kubaik.github.io/ai-with-integrity/</link>
+      <description>Explore AI ethics &amp; responsible AI practices for a trustworthy future.</description>
+      <pubDate>Tue, 03 Feb 2026 11:37:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-with-integrity/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock model potential with expert feature engineering techniques.</description>
       <pubDate>Mon, 02 Feb 2026 15:42:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost productivity with expert strategies.</description>
-      <pubDate>Mon, 02 Feb 2026 14:50:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
