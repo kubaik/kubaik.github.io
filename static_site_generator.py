@@ -259,7 +259,7 @@ class StaticSiteGenerator:
 
     def _load_templates(self) -> Dict[str, Template]:
             template_strings = {
-                "post": """<!DOCTYPE html>
+                                "post": """<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
