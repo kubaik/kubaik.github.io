@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 11:55:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 12:08:23 +0000</lastBuildDate>
+    <item>
+      <title>Crack Tech Interviews</title>
+      <link>https://kubaik.github.io/crack-tech-interviews/</link>
+      <description>Ace tech interviews with expert tips &amp; prep guide.</description>
+      <pubDate>Tue, 03 Feb 2026 12:08:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of real-time web apps and transform user experiences.</description>
       <pubDate>Tue, 03 Feb 2026 02:44:54 +0000</pubDate>
       <guid>https://kubaik.github.io/live-web-apps/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Mon, 02 Feb 2026 23:36:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
