@@ -1318,8 +1318,6 @@ class StaticSiteGenerator:
                     <h4>2.1 Information You Provide Directly</h4>
                     <ul>
                         <li><strong>Contact Information:</strong> When you contact us via email or contact forms, we collect your name, email address, and any other information you choose to provide in your message.</li>
-                        <li><strong>Newsletter Subscriptions:</strong> If you subscribe to our newsletter, we collect your email address and subscription preferences.</li>
-                        <li><strong>Comments and Feedback:</strong> Any comments, suggestions, or feedback you provide through our Site.</li>
                     </ul>
 
                     <h4>2.2 Information Collected Automatically</h4>
