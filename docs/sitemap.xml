@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/5g-revolution/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/bdd-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/solid-code/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/blockchain-101/</loc><priority>0.9</priority></url>
@@ -245,7 +246,6 @@
 <url><loc>https://kubaik.github.io/sre-fixing-tech/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ts-at-scale/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jwt-auth-made-easy/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/5g-revolution/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/build-fast-with-net-core/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/respond-faster/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/crypto-boom/</loc><priority>0.9</priority></url>
