@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 11:47:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 11:50:10 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns with our comprehensive guide.</description>
+      <pubDate>Tue, 03 Feb 2026 11:50:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Secure Your Biz</title>
       <link>https://kubaik.github.io/secure-your-biz/</link>
@@ -138,13 +145,6 @@
       <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
       <pubDate>Mon, 02 Feb 2026 18:35:55 +0000</pubDate>
       <guid>https://kubaik.github.io/php-evolved/</guid>
-    </item>
-    <item>
-      <title>Rails Power</title>
-      <link>https://kubaik.github.io/rails-power/</link>
-      <description>Unlock efficient web development with Ruby on Rails. Learn expert tips and tricks.</description>
-      <pubDate>Mon, 02 Feb 2026 17:45:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-power/</guid>
     </item>
   </channel>
 </rss>
