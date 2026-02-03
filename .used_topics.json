@@ -165,5 +165,6 @@
   "GraphQL API Development",
   "Documentation Best Practices",
   "C# .NET Core Applications",
-  "Rust Memory Safety"
+  "Rust Memory Safety",
+  "GitOps Workflow Implementation"
 ]
