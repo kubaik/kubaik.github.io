@@ -2443,7 +2443,7 @@ class StaticSiteGenerator:
                     <div class="contact-method">
                         <h3>📧 Email</h3>
                         <p><a href="mailto:aiblogauto@gmail.com" class="contact-email">aiblogauto@gmail.com</a></p>
-                        <p class="response-time">We typically respond within 24-48 hours</p>
+                        <p class="response-time">We typically respond within 5 working days</p>
                     </div>
                     
                     <div class="contact-method">
