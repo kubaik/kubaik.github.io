@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 13:17:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 13:19:59 +0000</lastBuildDate>
+    <item>
+      <title>Build with .NET Core</title>
+      <link>https://kubaik.github.io/build-with-net-core/</link>
+      <description>Learn to build scalable apps with C# and .NET Core. Discover framework benefits and get started.</description>
+      <pubDate>Tue, 03 Feb 2026 13:19:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-with-net-core/</guid>
+    </item>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve clarity with Doc Right. Learn expert documentation best practices.</description>
+      <pubDate>Tue, 03 Feb 2026 13:16:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>GraphQL Unlocked</title>
       <link>https://kubaik.github.io/graphql-unlocked/</link>
@@ -131,13 +145,6 @@
       <description>Explore innovative computer vision apps &amp; tech trends</description>
       <pubDate>Tue, 03 Feb 2026 07:03:46 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Safeguard data with encryption &amp; key management expertise. Learn how to lock it down.</description>
-      <pubDate>Tue, 03 Feb 2026 06:52:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
