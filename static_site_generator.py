@@ -290,7 +290,7 @@ class StaticSiteGenerator:
         </header>
         <main class="container">
             <article class="blog-post">
-               <header class="post-header">
+                <header class="post-header">
                     <h1>{{ post.title }}</h1>
                     <div class="post-meta">
                         <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
