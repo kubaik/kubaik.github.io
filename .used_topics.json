@@ -141,5 +141,6 @@
   "Real-Time Web Applications",
   "Native iOS Development with Swift",
   "Go Programming Concurrency",
-  "Network Performance Optimization"
+  "Network Performance Optimization",
+  "WebAssembly Performance Optimization"
 ]
