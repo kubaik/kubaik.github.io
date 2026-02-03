@@ -5,7 +5,28 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 09:36:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 10:51:42 +0000</lastBuildDate>
+    <item>
+      <title>FP Fundamentals</title>
+      <link>https://kubaik.github.io/fp-fundamentals/</link>
+      <description>Learn core Functional Programming concepts &amp; principles.</description>
+      <pubDate>Tue, 03 Feb 2026 10:51:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
+    </item>
+    <item>
+      <title>Cloud Secure</title>
+      <link>https://kubaik.github.io/cloud-secure/</link>
+      <description>Protect your cloud data with expert security tips and best practices.</description>
+      <pubDate>Tue, 03 Feb 2026 09:53:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-secure/</guid>
+    </item>
+    <item>
+      <title>OAuth 2.0 &amp; OIDC</title>
+      <link>https://kubaik.github.io/oauth-20-oidc/</link>
+      <description>Learn OAuth 2.0 &amp; OpenID Connect fundamentals for secure authentication &amp; authorization.</description>
+      <pubDate>Tue, 03 Feb 2026 08:50:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
+    </item>
     <item>
       <title>Transfer Learn</title>
       <link>https://kubaik.github.io/transfer-learn/</link>
@@ -124,20 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
       <pubDate>Mon, 02 Feb 2026 12:28:21 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from threats. Learn expert tips on mobile app security.</description>
-      <pubDate>Mon, 02 Feb 2026 12:14:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Boost efficiency with proven scalability patterns. Learn to scale smarter, not harder.</description>
-      <pubDate>Mon, 02 Feb 2026 11:42:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
