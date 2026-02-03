@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 06:52:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 07:03:56 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Explore innovative computer vision apps &amp; tech trends</description>
+      <pubDate>Tue, 03 Feb 2026 07:03:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Accelerate your website with Static Site Generation (SSG) and boost speed.</description>
       <pubDate>Mon, 02 Feb 2026 09:59:32 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn patterns &amp; principles.</description>
-      <pubDate>Mon, 02 Feb 2026 09:43:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
