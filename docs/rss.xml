@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 18:17:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 18:20:12 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain 101</title>
+      <link>https://kubaik.github.io/blockchain-101/</link>
+      <description>Unlock blockchain basics: learn how it works, benefits &amp; more in our beginner&apos;s guide.</description>
+      <pubDate>Tue, 03 Feb 2026 18:20:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-101/</guid>
+    </item>
     <item>
       <title>Unlock Data Mesh</title>
       <link>https://kubaik.github.io/unlock-data-mesh/</link>
@@ -138,13 +145,6 @@
       <description>Learn core Functional Programming concepts &amp; principles.</description>
       <pubDate>Tue, 03 Feb 2026 10:51:32 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-fundamentals/</guid>
-    </item>
-    <item>
-      <title>Cloud Secure</title>
-      <link>https://kubaik.github.io/cloud-secure/</link>
-      <description>Protect your cloud data with expert security tips and best practices.</description>
-      <pubDate>Tue, 03 Feb 2026 09:53:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-secure/</guid>
     </item>
   </channel>
 </rss>
