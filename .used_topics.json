@@ -166,5 +166,6 @@
   "Documentation Best Practices",
   "C# .NET Core Applications",
   "Rust Memory Safety",
-  "GitOps Workflow Implementation"
+  "GitOps Workflow Implementation",
+  "Data Mesh Architecture"
 ]
