@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 15:57:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 17:04:24 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Data Mesh</title>
+      <link>https://kubaik.github.io/unlock-data-mesh/</link>
+      <description>Discover Data Mesh Architecture &amp; unlock decentralized data management</description>
+      <pubDate>Tue, 03 Feb 2026 17:04:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-data-mesh/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your cloud data with expert security tips and best practices.</description>
       <pubDate>Tue, 03 Feb 2026 09:53:28 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-secure/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect fundamentals for secure authentication &amp; authorization.</description>
-      <pubDate>Tue, 03 Feb 2026 08:50:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
