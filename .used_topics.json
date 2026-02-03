@@ -142,5 +142,6 @@
   "Native iOS Development with Swift",
   "Go Programming Concurrency",
   "Network Performance Optimization",
-  "WebAssembly Performance Optimization"
+  "WebAssembly Performance Optimization",
+  "Kubernetes Orchestration"
 ]
