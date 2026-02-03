@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 20:47:17 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 21:42:20 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn database design &amp; normalization best practices</description>
+      <pubDate>Tue, 03 Feb 2026 21:42:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -75,13 +82,6 @@
       <description>Unlock the power of GraphQL API development and transform your data fetching capabilities.</description>
       <pubDate>Tue, 03 Feb 2026 13:13:01 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-unlocked/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn expert tips on designing scalable distributed systems with our &apos;Design Smart&apos; guide.</description>
-      <pubDate>Tue, 03 Feb 2026 12:33:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
     <item>
       <title>ETL vs ELT</title>
