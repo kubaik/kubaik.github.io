@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 12:19:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 12:21:35 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twin: Future Now</title>
+      <link>https://kubaik.github.io/digital-twin-future-now/</link>
+      <description>Discover the future of innovation with Digital Twin Technology, revolutionizing industries today.</description>
+      <pubDate>Tue, 03 Feb 2026 12:21:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
+    </item>
     <item>
       <title>Boost with Azure</title>
       <link>https://kubaik.github.io/boost-with-azure/</link>
@@ -138,13 +145,6 @@
       <description>Learn Go concurrency basics &amp; best practices for efficient parallel programming.</description>
       <pubDate>Tue, 03 Feb 2026 05:56:53 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Tue, 03 Feb 2026 04:52:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
