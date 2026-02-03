@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 11:19:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 11:22:21 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Tue, 03 Feb 2026 11:22:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>NFT Tech: Beyond Art</title>
       <link>https://kubaik.github.io/nft-tech-beyond-art/</link>
@@ -138,13 +145,6 @@
       <description>Master tech debt management &amp; boost productivity with expert strategies.</description>
       <pubDate>Mon, 02 Feb 2026 14:50:40 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>Async Done Right</title>
-      <link>https://kubaik.github.io/async-done-right/</link>
-      <description>Master async processing with message queues. Learn how to boost performance and scalability.</description>
-      <pubDate>Mon, 02 Feb 2026 13:16:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-done-right/</guid>
     </item>
   </channel>
 </rss>
