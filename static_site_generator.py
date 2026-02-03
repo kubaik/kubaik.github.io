@@ -425,7 +425,7 @@ class StaticSiteGenerator:
         
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
                 <div class="social-links">
                     {% for platform, url in social_links.items() %}
                     <a href="{{ url }}" target="_blank" rel="noopener">{{ platform|title }}</a>
@@ -1143,7 +1143,7 @@ class StaticSiteGenerator:
         </main>
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
             </div>
         </footer>
         <!-- Enhanced Navigation Script -->
@@ -1652,7 +1652,7 @@ class StaticSiteGenerator:
 
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
             </div>
         </footer>
          <!-- Enhanced Navigation Script -->
@@ -2313,7 +2313,7 @@ class StaticSiteGenerator:
         </main>
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
             </div>
         </footer>
         <!-- Enhanced Navigation Script -->
@@ -2528,7 +2528,7 @@ class StaticSiteGenerator:
         </main>
         <footer>
             <div class="container">
-                <p>&copy; {{ current_year }} {{ site_name }}. Powered by AI.</p>
+                <p>&copy; {{ current_year }} {{ site_name }}.</p>
             </div>
         </footer>
         <!-- Enhanced Navigation Script -->
