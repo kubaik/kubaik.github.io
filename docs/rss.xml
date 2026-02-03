@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 02:45:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 04:53:08 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Tue, 03 Feb 2026 04:52:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Live Web Apps</title>
       <link>https://kubaik.github.io/live-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Learn Kotlin for backend development &amp; build scalable apps with ease.</description>
       <pubDate>Mon, 02 Feb 2026 05:04:00 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Mon, 02 Feb 2026 02:48:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
