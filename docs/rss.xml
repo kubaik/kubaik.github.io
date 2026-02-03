@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 21:42:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 22:37:54 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
+      <pubDate>Tue, 03 Feb 2026 22:37:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
       <pubDate>Tue, 03 Feb 2026 11:40:43 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>AI with Integrity</title>
-      <link>https://kubaik.github.io/ai-with-integrity/</link>
-      <description>Explore AI ethics &amp; responsible AI practices for a trustworthy future.</description>
-      <pubDate>Tue, 03 Feb 2026 11:37:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-with-integrity/</guid>
     </item>
   </channel>
 </rss>
