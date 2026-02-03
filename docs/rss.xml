@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 12:11:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 12:13:12 +0000</lastBuildDate>
+    <item>
+      <title>Boost with Azure</title>
+      <link>https://kubaik.github.io/boost-with-azure/</link>
+      <description>Unlock cloud potential with Azure. Discover scalable solutions and transform your business.</description>
+      <pubDate>Tue, 03 Feb 2026 12:13:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-with-azure/</guid>
+    </item>
     <item>
       <title>Crack Tech Interviews</title>
       <link>https://kubaik.github.io/crack-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
       <pubDate>Tue, 03 Feb 2026 04:52:58 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Live Web Apps</title>
-      <link>https://kubaik.github.io/live-web-apps/</link>
-      <description>Discover the power of real-time web apps and transform user experiences.</description>
-      <pubDate>Tue, 03 Feb 2026 02:44:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/live-web-apps/</guid>
     </item>
   </channel>
 </rss>
