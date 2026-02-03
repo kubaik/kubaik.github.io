@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 13:19:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 14:52:56 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust&apos;s ownership model ensures memory safety, preventing bugs and crashes.</description>
+      <pubDate>Tue, 03 Feb 2026 14:52:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Build with .NET Core</title>
       <link>https://kubaik.github.io/build-with-net-core/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
       <pubDate>Tue, 03 Feb 2026 07:12:08 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore innovative computer vision apps &amp; tech trends</description>
-      <pubDate>Tue, 03 Feb 2026 07:03:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>

@@ -164,5 +164,6 @@
   "Distributed Systems Design",
   "GraphQL API Development",
   "Documentation Best Practices",
-  "C# .NET Core Applications"
+  "C# .NET Core Applications",
+  "Rust Memory Safety"
 ]
