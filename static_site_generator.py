@@ -259,7 +259,7 @@ class StaticSiteGenerator:
 
     def _load_templates(self) -> Dict[str, Template]:
             template_strings = {
-                                                "post": """<!DOCTYPE html>
+                                                                "post": """<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -271,6 +271,7 @@ class StaticSiteGenerator:
         {{ meta_tags | safe }}
         {{ structured_data | safe }}
         <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
     </head>
     <body>
         <!-- Header Ad Slot -->
