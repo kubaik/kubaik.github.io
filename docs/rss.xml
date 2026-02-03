@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 10:51:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Feb 2026 11:11:19 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech: Beyond Art</title>
+      <link>https://kubaik.github.io/nft-tech-beyond-art/</link>
+      <description>Explore NFTs beyond art, discover innovative tech &amp; use cases transforming industries.</description>
+      <pubDate>Tue, 03 Feb 2026 11:11:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech-beyond-art/</guid>
+    </item>
     <item>
       <title>FP Fundamentals</title>
       <link>https://kubaik.github.io/fp-fundamentals/</link>
@@ -138,13 +145,6 @@
       <description>Master async processing with message queues. Learn how to boost performance and scalability.</description>
       <pubDate>Mon, 02 Feb 2026 13:16:05 +0000</pubDate>
       <guid>https://kubaik.github.io/async-done-right/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Boost insights with data visualization best practices. Learn how to visualize smart and make data-driven decisions.</description>
-      <pubDate>Mon, 02 Feb 2026 12:28:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
