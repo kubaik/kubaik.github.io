@@ -2008,15 +2008,15 @@
     "topic": "Incident Response Planning"
   },
   "restful_api_design_principles": {
-    "timestamp": "2026-01-27T22:29:27.894512",
+    "timestamp": "2026-02-04T20:42:48.701012",
     "hashtags": [
       "APIDesign",
       "CloudNative",
+      "Microservices",
       "DevOps",
       "APIFirst",
-      "Microservices",
-      "Serverless",
-      "SoftwareArchitecture"
+      "TechArchitecture",
+      "SoftwareEngineering"
     ],
     "topic": "RESTful API Design Principles"
   },
