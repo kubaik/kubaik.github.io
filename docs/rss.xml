@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 21:40:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 22:36:58 +0000</lastBuildDate>
+    <item>
+      <title>Utility-First CSS</title>
+      <link>https://kubaik.github.io/utility-first-css/</link>
+      <description>Learn Utility-First CSS with Tailwind CSS for faster styling</description>
+      <pubDate>Wed, 04 Feb 2026 22:36:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/utility-first-css/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -141,13 +148,6 @@
       <description>Improve app speed &amp; performance with expert tips and tools.</description>
       <pubDate>Tue, 03 Feb 2026 23:35:28 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
-      <pubDate>Tue, 03 Feb 2026 22:37:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
