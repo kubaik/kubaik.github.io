@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 07:02:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 08:54:04 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Boost coding efficiency with expert debugging techniques.</description>
+      <pubDate>Wed, 04 Feb 2026 08:53:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>VS Code Boosters</title>
       <link>https://kubaik.github.io/vs-code-boosters/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of innovation with Digital Twin Technology, revolutionizing industries today.</description>
       <pubDate>Tue, 03 Feb 2026 12:21:25 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
-    </item>
-    <item>
-      <title>Boost with Azure</title>
-      <link>https://kubaik.github.io/boost-with-azure/</link>
-      <description>Unlock cloud potential with Azure. Discover scalable solutions and transform your business.</description>
-      <pubDate>Tue, 03 Feb 2026 12:13:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-with-azure/</guid>
     </item>
   </channel>
 </rss>
