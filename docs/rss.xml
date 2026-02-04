@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 09:28:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 09:55:21 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Essentials</title>
+      <link>https://kubaik.github.io/siem-essentials/</link>
+      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
+      <pubDate>Wed, 04 Feb 2026 09:55:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-essentials/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of GraphQL API development and transform your data fetching capabilities.</description>
       <pubDate>Tue, 03 Feb 2026 13:13:01 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-unlocked/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
-      <pubDate>Tue, 03 Feb 2026 12:26:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
