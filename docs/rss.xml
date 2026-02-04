@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Feb 2026 23:35:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 02:39:30 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
+      <pubDate>Wed, 04 Feb 2026 02:39:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns with our comprehensive guide.</description>
       <pubDate>Tue, 03 Feb 2026 11:50:01 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Secure Your Biz</title>
-      <link>https://kubaik.github.io/secure-your-biz/</link>
-      <description>Protect your business with expert security compliance solutions for SOC 2 and ISO 27001.</description>
-      <pubDate>Tue, 03 Feb 2026 11:45:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-biz/</guid>
     </item>
   </channel>
 </rss>
