@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 19:47:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 20:42:56 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable, secure, and maintainable APIs.</description>
+      <pubDate>Wed, 04 Feb 2026 20:42:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Profile &amp; Boost</title>
       <link>https://kubaik.github.io/profile-boost/</link>
@@ -141,13 +148,6 @@
       <description>Learn database design &amp; normalization best practices</description>
       <pubDate>Tue, 03 Feb 2026 21:42:10 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Unlock the future with 5G tech. Discover its impact &amp; possibilities.</description>
-      <pubDate>Tue, 03 Feb 2026 20:47:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>
