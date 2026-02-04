@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 09:27:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 09:28:41 +0000</lastBuildDate>
+    <item>
+      <title>Test to Secure</title>
+      <link>https://kubaik.github.io/test-to-secure/</link>
+      <description>Learn expert penetration testing methodologies to secure your systems and data.</description>
+      <pubDate>Wed, 04 Feb 2026 09:28:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-to-secure/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
       <pubDate>Tue, 03 Feb 2026 12:26:41 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Digital Twin: Future Now</title>
-      <link>https://kubaik.github.io/digital-twin-future-now/</link>
-      <description>Discover the future of innovation with Digital Twin Technology, revolutionizing industries today.</description>
-      <pubDate>Tue, 03 Feb 2026 12:21:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
     </item>
   </channel>
 </rss>
