@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 11:39:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 13:16:08 +0000</lastBuildDate>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Discover the future of AI: Multi-Modal Systems</description>
+      <pubDate>Wed, 04 Feb 2026 13:15:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
+    </item>
     <item>
       <title>AI Model Care</title>
       <link>https://kubaik.github.io/ai-model-care/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust&apos;s ownership model ensures memory safety, preventing bugs and crashes.</description>
       <pubDate>Tue, 03 Feb 2026 14:52:46 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>Build with .NET Core</title>
-      <link>https://kubaik.github.io/build-with-net-core/</link>
-      <description>Learn to build scalable apps with C# and .NET Core. Discover framework benefits and get started.</description>
-      <pubDate>Tue, 03 Feb 2026 13:19:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-with-net-core/</guid>
     </item>
   </channel>
 </rss>
