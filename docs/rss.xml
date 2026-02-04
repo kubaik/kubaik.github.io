@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 17:55:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 19:00:35 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Unlocked</title>
+      <link>https://kubaik.github.io/web3-unlocked/</link>
+      <description>Discover the future of the internet with Web3 &amp; DApps. Learn more.</description>
+      <pubDate>Wed, 04 Feb 2026 19:00:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-unlocked/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -141,13 +148,6 @@
       <description>Unlock agile testing with BDD Simplified. Learn Behavior-Driven Development basics.</description>
       <pubDate>Tue, 03 Feb 2026 19:04:48 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Tue, 03 Feb 2026 18:36:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
