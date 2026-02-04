@@ -14,7 +14,9 @@ print()
 
 # Files to update
 files_to_update = [
+    './docs/static/style.css',
     './static/style.css',
+    './docs/static/enhanced-blog-post-styles.css',
     './static/enhanced-blog-post-styles.css'
 ]
 
