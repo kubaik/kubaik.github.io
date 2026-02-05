@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 09:55:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 10:51:44 +0000</lastBuildDate>
+    <item>
+      <title>Crack Sys Design</title>
+      <link>https://kubaik.github.io/crack-sys-design/</link>
+      <description>Master system design interviews with expert tips and strategies.</description>
+      <pubDate>Thu, 05 Feb 2026 10:51:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-sys-design/</guid>
+    </item>
     <item>
       <title>Serverless Made Easy</title>
       <link>https://kubaik.github.io/serverless-made-easy/</link>
@@ -141,13 +148,6 @@
       <description>Unlock data insights with expert warehousing solutions, transforming data into actionable intelligence.</description>
       <pubDate>Wed, 04 Feb 2026 10:50:17 +0000</pubDate>
       <guid>https://kubaik.github.io/data-done-right/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
-      <pubDate>Wed, 04 Feb 2026 09:55:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
