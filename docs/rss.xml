@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Feb 2026 23:35:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 02:41:42 +0000</lastBuildDate>
+    <item>
+      <title>App Architecture</title>
+      <link>https://kubaik.github.io/app-architecture/</link>
+      <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
+      <pubDate>Thu, 05 Feb 2026 02:41:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-architecture/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -141,13 +148,6 @@
       <description>Simplify your workflow with CI/CD pipeline implementation. Learn how to streamline development &amp; delivery.</description>
       <pubDate>Wed, 04 Feb 2026 04:46:00 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-simplified/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
-      <pubDate>Wed, 04 Feb 2026 02:39:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
