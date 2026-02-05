@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 15:50:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 16:59:09 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; design scalable systems with our Backend Blueprint guide.</description>
+      <pubDate>Thu, 05 Feb 2026 16:58:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>MBaaS: Simplify Mobile</title>
       <link>https://kubaik.github.io/mbaas-simplify-mobile/</link>
@@ -138,16 +145,6 @@
       <description>Boost productivity with effective time management strategies tailored for engineers.</description>
       <pubDate>Wed, 04 Feb 2026 16:58:54 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-your-time/</guid>
-    </item>
-    <item>
-      <title>Scale with Ease&quot; 
-
-(or alternative) 
-&quot;Replicate &amp; Shard</title>
-      <link>https://kubaik.github.io/scale-with-ease-or-alternative-replicate-shard/</link>
-      <description>Boost performance with database replication &amp; sharding techniques.</description>
-      <pubDate>Wed, 04 Feb 2026 15:52:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-ease-or-alternative-replicate-shard/</guid>
     </item>
   </channel>
 </rss>
