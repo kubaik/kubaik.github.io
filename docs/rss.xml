@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 08:55:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 09:55:14 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Made Easy</title>
+      <link>https://kubaik.github.io/serverless-made-easy/</link>
+      <description>Simplify app development with serverless architecture patterns &amp; expert guidance.</description>
+      <pubDate>Thu, 05 Feb 2026 09:55:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-made-easy/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -141,13 +148,6 @@
       <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
       <pubDate>Wed, 04 Feb 2026 09:55:11 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>Test to Secure</title>
-      <link>https://kubaik.github.io/test-to-secure/</link>
-      <description>Learn expert penetration testing methodologies to secure your systems and data.</description>
-      <pubDate>Wed, 04 Feb 2026 09:28:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-to-secure/</guid>
     </item>
   </channel>
 </rss>
