@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 20:42:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 21:37:44 +0000</lastBuildDate>
+    <item>
+      <title>Crack Tech Interviews</title>
+      <link>https://kubaik.github.io/crack-tech-interviews/</link>
+      <description>Land your dream tech job with our expert interview prep guide.</description>
+      <pubDate>Thu, 05 Feb 2026 21:37:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
+    </item>
     <item>
       <title>Boost Network Speed</title>
       <link>https://kubaik.github.io/boost-network-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Zero Trust Security Architecture can protect your network from cyber threats with our expert guide.</description>
       <pubDate>Wed, 04 Feb 2026 21:40:28 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable, secure, and maintainable APIs.</description>
-      <pubDate>Wed, 04 Feb 2026 20:42:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
