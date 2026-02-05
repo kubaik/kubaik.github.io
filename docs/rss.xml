@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 19:00:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 19:46:10 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Unlock faster load times with expert frontend performance tuning tips.</description>
+      <pubDate>Thu, 05 Feb 2026 19:46:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Profile &amp; Optimize</title>
       <link>https://kubaik.github.io/profile-optimize/</link>
@@ -138,13 +145,6 @@
       <description>Unlock peak performance with profiling and benchmarking techniques.</description>
       <pubDate>Wed, 04 Feb 2026 19:47:41 +0000</pubDate>
       <guid>https://kubaik.github.io/profile-boost/</guid>
-    </item>
-    <item>
-      <title>Web3 Unlocked</title>
-      <link>https://kubaik.github.io/web3-unlocked/</link>
-      <description>Discover the future of the internet with Web3 &amp; DApps. Learn more.</description>
-      <pubDate>Wed, 04 Feb 2026 19:00:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-unlocked/</guid>
     </item>
   </channel>
 </rss>
