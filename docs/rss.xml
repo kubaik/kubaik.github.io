@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 06:01:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 07:53:22 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn expert strategies for designing scalable distributed systems</description>
+      <pubDate>Thu, 05 Feb 2026 07:53:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -141,13 +148,6 @@
       <description>Boost coding efficiency with expert debugging techniques.</description>
       <pubDate>Wed, 04 Feb 2026 08:53:55 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-smarter/</guid>
-    </item>
-    <item>
-      <title>VS Code Boosters</title>
-      <link>https://kubaik.github.io/vs-code-boosters/</link>
-      <description>Boost coding productivity with top VS Code extensions.</description>
-      <pubDate>Wed, 04 Feb 2026 07:02:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/vs-code-boosters/</guid>
     </item>
   </channel>
 </rss>
