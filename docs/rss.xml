@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 13:18:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 14:52:16 +0000</lastBuildDate>
+    <item>
+      <title>Tune Smarter</title>
+      <link>https://kubaik.github.io/tune-smarter/</link>
+      <description>Optimize models with top hyperparameter tuning methods. Learn how to &apos;Tune Smarter&apos; and boost performance.</description>
+      <pubDate>Thu, 05 Feb 2026 14:52:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-smarter/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -141,13 +148,6 @@
       <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
       <pubDate>Wed, 04 Feb 2026 14:49:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-algos-demystified/</guid>
-    </item>
-    <item>
-      <title>AI Evolved</title>
-      <link>https://kubaik.github.io/ai-evolved/</link>
-      <description>Discover the future of AI: Multi-Modal Systems</description>
-      <pubDate>Wed, 04 Feb 2026 13:15:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
