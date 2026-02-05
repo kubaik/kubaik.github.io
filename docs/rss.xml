@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 22:36:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 23:31:30 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake Blueprint</title>
+      <link>https://kubaik.github.io/data-lake-blueprint/</link>
+      <description>Build a scalable Data Lake with our expert blueprint, optimizing architecture for insights.</description>
+      <pubDate>Thu, 05 Feb 2026 23:31:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
+    </item>
     <item>
       <title>FP Essentials</title>
       <link>https://kubaik.github.io/fp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Wed, 04 Feb 2026 23:35:35 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Utility-First CSS</title>
-      <link>https://kubaik.github.io/utility-first-css/</link>
-      <description>Learn Utility-First CSS with Tailwind CSS for faster styling</description>
-      <pubDate>Wed, 04 Feb 2026 22:36:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/utility-first-css/</guid>
     </item>
   </channel>
 </rss>
