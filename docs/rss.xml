@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 04:54:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Feb 2026 06:01:46 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for seamless workflow implementation.</description>
+      <pubDate>Thu, 05 Feb 2026 06:01:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>Limit &amp; Throttle</title>
       <link>https://kubaik.github.io/limit-throttle/</link>
@@ -141,13 +148,6 @@
       <description>Boost coding productivity with top VS Code extensions.</description>
       <pubDate>Wed, 04 Feb 2026 07:02:44 +0000</pubDate>
       <guid>https://kubaik.github.io/vs-code-boosters/</guid>
-    </item>
-    <item>
-      <title>Lazy Load Now</title>
-      <link>https://kubaik.github.io/lazy-load-now/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement now.</description>
-      <pubDate>Wed, 04 Feb 2026 05:55:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-now/</guid>
     </item>
   </channel>
 </rss>
