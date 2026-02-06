@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 09:53:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 10:51:04 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; secure APIs</description>
+      <pubDate>Fri, 06 Feb 2026 10:50:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>Secure Code: SAST/DAST</title>
       <link>https://kubaik.github.io/secure-code-sastdast/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and strategies.</description>
       <pubDate>Thu, 05 Feb 2026 10:51:34 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-sys-design/</guid>
-    </item>
-    <item>
-      <title>Serverless Made Easy</title>
-      <link>https://kubaik.github.io/serverless-made-easy/</link>
-      <description>Simplify app development with serverless architecture patterns &amp; expert guidance.</description>
-      <pubDate>Thu, 05 Feb 2026 09:55:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-made-easy/</guid>
     </item>
   </channel>
 </rss>
