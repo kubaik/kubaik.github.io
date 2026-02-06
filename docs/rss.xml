@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 08:54:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 09:53:41 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code: SAST/DAST</title>
+      <link>https://kubaik.github.io/secure-code-sastdast/</link>
+      <description>Protect your app with SAST/DAST. Learn how to secure your code with Application Security Testing.</description>
+      <pubDate>Fri, 06 Feb 2026 09:53:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
+    </item>
     <item>
       <title>Edge Computing: Unlock Speed</title>
       <link>https://kubaik.github.io/edge-computing-unlock-speed/</link>
@@ -138,13 +145,6 @@
       <description>Simplify app development with serverless architecture patterns &amp; expert guidance.</description>
       <pubDate>Thu, 05 Feb 2026 09:55:05 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-made-easy/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Slash cloud bills with expert optimization tips &amp; strategies.</description>
-      <pubDate>Thu, 05 Feb 2026 08:55:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
