@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 15:50:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 16:56:22 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Fri, 06 Feb 2026 16:56:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; design scalable systems with our Backend Blueprint guide.</description>
       <pubDate>Thu, 05 Feb 2026 16:58:59 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>MBaaS: Simplify Mobile</title>
-      <link>https://kubaik.github.io/mbaas-simplify-mobile/</link>
-      <description>Streamline mobile app development with MBaaS, a scalable backend solution.</description>
-      <pubDate>Thu, 05 Feb 2026 15:49:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/mbaas-simplify-mobile/</guid>
     </item>
   </channel>
 </rss>
