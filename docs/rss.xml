@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 05:59:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 07:08:47 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
+      <pubDate>Fri, 06 Feb 2026 07:08:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert strategies for designing scalable distributed systems</description>
       <pubDate>Thu, 05 Feb 2026 07:53:12 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for seamless workflow implementation.</description>
-      <pubDate>Thu, 05 Feb 2026 06:01:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
