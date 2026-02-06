@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 13:15:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 14:47:52 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load Now</title>
+      <link>https://kubaik.github.io/lazy-load-now/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
+      <pubDate>Fri, 06 Feb 2026 14:47:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load-now/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Optimize models with top hyperparameter tuning methods. Learn how to &apos;Tune Smarter&apos; and boost performance.</description>
       <pubDate>Thu, 05 Feb 2026 14:52:06 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-smarter/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Scrum vs Kanban: Compare agile methods</description>
-      <pubDate>Thu, 05 Feb 2026 13:18:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>

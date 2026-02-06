@@ -28,5 +28,6 @@
   "Application Security Testing (SAST/DAST)",
   "RESTful API Design Principles",
   "WebAssembly Performance Optimization",
-  "Kotlin for Backend Development"
+  "Kotlin for Backend Development",
+  "Lazy Loading Implementation"
 ]
