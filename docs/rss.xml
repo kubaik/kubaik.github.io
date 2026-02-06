@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 10:51:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 11:40:19 +0000</lastBuildDate>
+    <item>
+      <title>Boost Wasm Speed</title>
+      <link>https://kubaik.github.io/boost-wasm-speed/</link>
+      <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
+      <pubDate>Fri, 06 Feb 2026 11:40:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust&apos;s safe-by-design approach ensures memory safety and prevents common errors.</description>
       <pubDate>Thu, 05 Feb 2026 11:40:47 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-by-design/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Thu, 05 Feb 2026 10:51:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
