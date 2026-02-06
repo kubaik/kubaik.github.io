@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 04:52:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 05:59:17 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques.</description>
+      <pubDate>Fri, 06 Feb 2026 05:59:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Streamline devops with GitOps. Learn best practices for seamless workflow implementation.</description>
       <pubDate>Thu, 05 Feb 2026 06:01:37 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Limit &amp; Throttle</title>
-      <link>https://kubaik.github.io/limit-throttle/</link>
-      <description>Learn about rate limiting &amp; throttling: control traffic, prevent abuse, and optimize performance.</description>
-      <pubDate>Thu, 05 Feb 2026 04:54:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-throttle/</guid>
     </item>
   </channel>
 </rss>
