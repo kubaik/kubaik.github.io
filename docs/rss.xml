@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 20:42:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 21:38:48 +0000</lastBuildDate>
+    <item>
+      <title>FL Done Right</title>
+      <link>https://kubaik.github.io/fl-done-right/</link>
+      <description>Learn expert tips for successful Federated Learning implementation</description>
+      <pubDate>Fri, 06 Feb 2026 21:38:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/fl-done-right/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Improve network speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Thu, 05 Feb 2026 20:42:04 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Unlock faster load times with expert frontend performance tuning tips.</description>
-      <pubDate>Thu, 05 Feb 2026 19:46:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
