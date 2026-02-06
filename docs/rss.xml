@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 07:08:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 08:54:33 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing: Unlock Speed</title>
+      <link>https://kubaik.github.io/edge-computing-unlock-speed/</link>
+      <description>Unlock faster processing with Edge Computing. Discover its applications and benefits.</description>
+      <pubDate>Fri, 06 Feb 2026 08:54:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-unlock-speed/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Slash cloud bills with expert optimization tips &amp; strategies.</description>
       <pubDate>Thu, 05 Feb 2026 08:55:35 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn expert strategies for designing scalable distributed systems</description>
-      <pubDate>Thu, 05 Feb 2026 07:53:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
