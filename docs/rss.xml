@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 16:56:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 17:50:18 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Learn the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
+      <pubDate>Fri, 06 Feb 2026 17:50:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with SOLID design principles. Learn to write maintainable, scalable, and testable code.</description>
       <pubDate>Thu, 05 Feb 2026 17:56:48 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert Backend Architecture Patterns &amp; design scalable systems with our Backend Blueprint guide.</description>
-      <pubDate>Thu, 05 Feb 2026 16:58:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
