@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Feb 2026 23:31:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 02:42:04 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Done Right</title>
+      <link>https://kubaik.github.io/graphql-done-right/</link>
+      <description>Master GraphQL API development with expert tips and best practices.</description>
+      <pubDate>Fri, 06 Feb 2026 02:41:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-done-right/</guid>
+    </item>
     <item>
       <title>Data Lake Blueprint</title>
       <link>https://kubaik.github.io/data-lake-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
       <pubDate>Thu, 05 Feb 2026 02:41:33 +0000</pubDate>
       <guid>https://kubaik.github.io/app-architecture/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Wed, 04 Feb 2026 23:35:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
