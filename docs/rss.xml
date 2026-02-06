@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 22:33:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 23:33:52 +0000</lastBuildDate>
+    <item>
+      <title>Test to Secure</title>
+      <link>https://kubaik.github.io/test-to-secure/</link>
+      <description>Learn penetration testing methodologies to secure your systems with our expert guide.</description>
+      <pubDate>Fri, 06 Feb 2026 23:33:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-to-secure/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Learn core Functional Programming concepts &amp; transform your coding skills with FP Essentials.</description>
       <pubDate>Thu, 05 Feb 2026 22:36:20 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-essentials/</guid>
-    </item>
-    <item>
-      <title>Crack Tech Interviews</title>
-      <link>https://kubaik.github.io/crack-tech-interviews/</link>
-      <description>Land your dream tech job with our expert interview prep guide.</description>
-      <pubDate>Thu, 05 Feb 2026 21:37:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
     </item>
   </channel>
 </rss>
