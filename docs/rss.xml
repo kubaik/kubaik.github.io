@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 14:47:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 15:50:02 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Boost React skills with expert best practices &amp; patterns for efficient coding.</description>
+      <pubDate>Fri, 06 Feb 2026 15:49:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>Lazy Load Now</title>
       <link>https://kubaik.github.io/lazy-load-now/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with MBaaS, a scalable backend solution.</description>
       <pubDate>Thu, 05 Feb 2026 15:49:53 +0000</pubDate>
       <guid>https://kubaik.github.io/mbaas-simplify-mobile/</guid>
-    </item>
-    <item>
-      <title>Tune Smarter</title>
-      <link>https://kubaik.github.io/tune-smarter/</link>
-      <description>Optimize models with top hyperparameter tuning methods. Learn how to &apos;Tune Smarter&apos; and boost performance.</description>
-      <pubDate>Thu, 05 Feb 2026 14:52:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-smarter/</guid>
     </item>
   </channel>
 </rss>
