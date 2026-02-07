@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 14:33:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 15:33:04 +0000</lastBuildDate>
+    <item>
+      <title>K8s Mastery</title>
+      <link>https://kubaik.github.io/k8s-mastery/</link>
+      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
+      <pubDate>Sat, 07 Feb 2026 15:32:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-mastery/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Boost React skills with expert best practices &amp; patterns for efficient coding.</description>
       <pubDate>Fri, 06 Feb 2026 15:49:52 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Lazy Load Now</title>
-      <link>https://kubaik.github.io/lazy-load-now/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
-      <pubDate>Fri, 06 Feb 2026 14:47:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-now/</guid>
     </item>
   </channel>
 </rss>
