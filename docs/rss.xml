@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 10:34:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 11:28:52 +0000</lastBuildDate>
+    <item>
+      <title>RL Strategies</title>
+      <link>https://kubaik.github.io/rl-strategies/</link>
+      <description>Unlock optimal decisions with Reinforcement Learning Strategies. Discover key techniques and methods.</description>
+      <pubDate>Sat, 07 Feb 2026 11:28:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-strategies/</guid>
+    </item>
     <item>
       <title>Docker Simplified</title>
       <link>https://kubaik.github.io/docker-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
       <pubDate>Fri, 06 Feb 2026 11:40:09 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable &amp; secure APIs</description>
-      <pubDate>Fri, 06 Feb 2026 10:50:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
