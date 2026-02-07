@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 17:33:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 18:46:28 +0000</lastBuildDate>
+    <item>
+      <title>Boost Security: WAF</title>
+      <link>https://kubaik.github.io/boost-security-waf/</link>
+      <description>Safeguard your website with a Web Application Firewall (WAF). Learn how to boost security &amp; prevent attacks.</description>
+      <pubDate>Sat, 07 Feb 2026 18:46:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-security-waf/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Create a robust incident response plan to minimize damage and ensure business continuity.</description>
       <pubDate>Fri, 06 Feb 2026 19:01:06 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-smart/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Learn the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
-      <pubDate>Fri, 06 Feb 2026 17:50:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
