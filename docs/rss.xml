@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 06:54:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 07:37:25 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
+      <pubDate>Sat, 07 Feb 2026 07:37:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
       <pubDate>Fri, 06 Feb 2026 07:08:36 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques.</description>
-      <pubDate>Fri, 06 Feb 2026 05:59:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
