@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Feb 2026 23:33:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 02:37:07 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Boost mobile speed with expert tips and tricks.</description>
+      <pubDate>Sat, 07 Feb 2026 02:36:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Build a scalable Data Lake with our expert blueprint, optimizing architecture for insights.</description>
       <pubDate>Thu, 05 Feb 2026 23:31:21 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
-    </item>
-    <item>
-      <title>FP Essentials</title>
-      <link>https://kubaik.github.io/fp-essentials/</link>
-      <description>Learn core Functional Programming concepts &amp; transform your coding skills with FP Essentials.</description>
-      <pubDate>Thu, 05 Feb 2026 22:36:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-essentials/</guid>
     </item>
   </channel>
 </rss>
