@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 05:49:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 06:54:05 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
+      <pubDate>Sat, 07 Feb 2026 06:53:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Optimize DB Queries</title>
       <link>https://kubaik.github.io/optimize-db-queries/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with image optimization techniques.</description>
       <pubDate>Fri, 06 Feb 2026 05:59:07 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-images/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Unlock efficient coding with Svelte JS &amp; modern JavaScript.</description>
-      <pubDate>Fri, 06 Feb 2026 04:52:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
