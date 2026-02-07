@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 07:37:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 08:41:20 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Unlock the power of Generative AI &amp; Large Language Models</description>
+      <pubDate>Sat, 07 Feb 2026 08:41:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster processing with Edge Computing. Discover its applications and benefits.</description>
       <pubDate>Fri, 06 Feb 2026 08:54:23 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing-unlock-speed/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Fri, 06 Feb 2026 07:08:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
