@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 15:33:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 16:40:08 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Revs Up</title>
+      <link>https://kubaik.github.io/automl-revs-up/</link>
+      <description>Accelerate AI with AutoML &amp; Neural Architecture Search. Learn how to rev up your models.</description>
+      <pubDate>Sat, 07 Feb 2026 16:39:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-revs-up/</guid>
+    </item>
     <item>
       <title>K8s Mastery</title>
       <link>https://kubaik.github.io/k8s-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Fri, 06 Feb 2026 16:56:12 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Boost React skills with expert best practices &amp; patterns for efficient coding.</description>
-      <pubDate>Fri, 06 Feb 2026 15:49:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
