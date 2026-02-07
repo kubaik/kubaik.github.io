@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 20:36:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 21:33:42 +0000</lastBuildDate>
+    <item>
+      <title>Boost Tech Pay</title>
+      <link>https://kubaik.github.io/boost-tech-pay/</link>
+      <description>Maximize your tech salary with expert negotiation tips and strategies.</description>
+      <pubDate>Sat, 07 Feb 2026 21:33:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-tech-pay/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Fri, 06 Feb 2026 22:33:31 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>FL Done Right</title>
-      <link>https://kubaik.github.io/fl-done-right/</link>
-      <description>Learn expert tips for successful Federated Learning implementation</description>
-      <pubDate>Fri, 06 Feb 2026 21:38:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/fl-done-right/</guid>
     </item>
   </channel>
 </rss>
