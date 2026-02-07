@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 21:33:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 22:34:29 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Unlocked</title>
+      <link>https://kubaik.github.io/web3-unlocked/</link>
+      <description>Discover the future of the internet with Web3 and DApps.</description>
+      <pubDate>Sat, 07 Feb 2026 22:34:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-unlocked/</guid>
+    </item>
     <item>
       <title>Boost Tech Pay</title>
       <link>https://kubaik.github.io/boost-tech-pay/</link>
@@ -138,13 +145,6 @@
       <description>Learn penetration testing methodologies to secure your systems with our expert guide.</description>
       <pubDate>Fri, 06 Feb 2026 23:33:42 +0000</pubDate>
       <guid>https://kubaik.github.io/test-to-secure/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Fri, 06 Feb 2026 22:33:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
