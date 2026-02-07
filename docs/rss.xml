@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 04:43:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 05:49:49 +0000</lastBuildDate>
+    <item>
+      <title>Optimize DB Queries</title>
+      <link>https://kubaik.github.io/optimize-db-queries/</link>
+      <description>Boost performance with expert DB query optimization tips.</description>
+      <pubDate>Sat, 07 Feb 2026 05:49:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-db-queries/</guid>
+    </item>
     <item>
       <title>Async Done Right</title>
       <link>https://kubaik.github.io/async-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient coding with Svelte JS &amp; modern JavaScript.</description>
       <pubDate>Fri, 06 Feb 2026 04:52:45 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>GraphQL Done Right</title>
-      <link>https://kubaik.github.io/graphql-done-right/</link>
-      <description>Master GraphQL API development with expert tips and best practices.</description>
-      <pubDate>Fri, 06 Feb 2026 02:41:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-done-right/</guid>
     </item>
   </channel>
 </rss>
