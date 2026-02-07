@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 13:04:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 14:33:57 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Learn about high availability systems &amp; ensure 24/7 uptime for your business with our expert insights.</description>
+      <pubDate>Sat, 07 Feb 2026 14:33:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Secure Your API</title>
       <link>https://kubaik.github.io/secure-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement it now.</description>
       <pubDate>Fri, 06 Feb 2026 14:47:42 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-now/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Discover Kotlin&apos;s potential for backend development and boost your server-side skills.</description>
-      <pubDate>Fri, 06 Feb 2026 13:15:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
