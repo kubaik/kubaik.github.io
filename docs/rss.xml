@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 08:41:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 09:38:39 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring &amp; observability insights.</description>
+      <pubDate>Sat, 07 Feb 2026 09:38:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app with SAST/DAST. Learn how to secure your code with Application Security Testing.</description>
       <pubDate>Fri, 06 Feb 2026 09:53:31 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
-    <item>
-      <title>Edge Computing: Unlock Speed</title>
-      <link>https://kubaik.github.io/edge-computing-unlock-speed/</link>
-      <description>Unlock faster processing with Edge Computing. Discover its applications and benefits.</description>
-      <pubDate>Fri, 06 Feb 2026 08:54:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing-unlock-speed/</guid>
     </item>
   </channel>
 </rss>
