@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 09:38:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 10:34:59 +0000</lastBuildDate>
+    <item>
+      <title>Docker Simplified</title>
+      <link>https://kubaik.github.io/docker-simplified/</link>
+      <description>Learn Docker basics &amp; containerization with our simplified guide.</description>
+      <pubDate>Sat, 07 Feb 2026 10:34:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-simplified/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable &amp; secure APIs</description>
       <pubDate>Fri, 06 Feb 2026 10:50:54 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Protect your app with SAST/DAST. Learn how to secure your code with Application Security Testing.</description>
-      <pubDate>Fri, 06 Feb 2026 09:53:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
