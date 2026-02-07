@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 11:28:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 13:04:20 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your API</title>
+      <link>https://kubaik.github.io/secure-your-api/</link>
+      <description>Protect your API from threats with expert security tips and best practices.</description>
+      <pubDate>Sat, 07 Feb 2026 13:04:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-api/</guid>
+    </item>
     <item>
       <title>RL Strategies</title>
       <link>https://kubaik.github.io/rl-strategies/</link>
@@ -138,13 +145,6 @@
       <description>Discover Kotlin&apos;s potential for backend development and boost your server-side skills.</description>
       <pubDate>Fri, 06 Feb 2026 13:15:37 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
-    </item>
-    <item>
-      <title>Boost Wasm Speed</title>
-      <link>https://kubaik.github.io/boost-wasm-speed/</link>
-      <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
-      <pubDate>Fri, 06 Feb 2026 11:40:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
     </item>
   </channel>
 </rss>
