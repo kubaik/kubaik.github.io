@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 02:37:07 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 04:43:43 +0000</lastBuildDate>
+    <item>
+      <title>Async Done Right</title>
+      <link>https://kubaik.github.io/async-done-right/</link>
+      <description>Learn async processing best practices with message queues for scalable &amp; efficient systems.</description>
+      <pubDate>Sat, 07 Feb 2026 04:43:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-done-right/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Master GraphQL API development with expert tips and best practices.</description>
       <pubDate>Fri, 06 Feb 2026 02:41:54 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-done-right/</guid>
-    </item>
-    <item>
-      <title>Data Lake Blueprint</title>
-      <link>https://kubaik.github.io/data-lake-blueprint/</link>
-      <description>Build a scalable Data Lake with our expert blueprint, optimizing architecture for insights.</description>
-      <pubDate>Thu, 05 Feb 2026 23:31:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-blueprint/</guid>
     </item>
   </channel>
 </rss>
