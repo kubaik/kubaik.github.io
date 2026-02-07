@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2026 16:40:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Feb 2026 17:33:20 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
+      <pubDate>Sat, 07 Feb 2026 17:33:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>AutoML Revs Up</title>
       <link>https://kubaik.github.io/automl-revs-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn the difference between ETL &amp; ELT processes &amp; which is best for your data integration needs.</description>
       <pubDate>Fri, 06 Feb 2026 17:50:08 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Boost AI model performance with expert training tips and best practices.</description>
-      <pubDate>Fri, 06 Feb 2026 16:56:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
