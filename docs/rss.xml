@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 15:33:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 16:40:12 +0000</lastBuildDate>
+    <item>
+      <title>Code Clean</title>
+      <link>https://kubaik.github.io/code-clean/</link>
+      <description>Learn clean code principles for efficient coding</description>
+      <pubDate>Sun, 08 Feb 2026 16:40:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-clean/</guid>
+    </item>
     <item>
       <title>Boost Models</title>
       <link>https://kubaik.github.io/boost-models/</link>
@@ -138,13 +145,6 @@
       <description>Accelerate AI with AutoML &amp; Neural Architecture Search. Learn how to rev up your models.</description>
       <pubDate>Sat, 07 Feb 2026 16:39:58 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-revs-up/</guid>
-    </item>
-    <item>
-      <title>K8s Mastery</title>
-      <link>https://kubaik.github.io/k8s-mastery/</link>
-      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
-      <pubDate>Sat, 07 Feb 2026 15:32:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/k8s-mastery/</guid>
     </item>
   </channel>
 </rss>
