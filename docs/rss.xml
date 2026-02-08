@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 11:30:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 13:05:15 +0000</lastBuildDate>
+    <item>
+      <title>Rails Revved</title>
+      <link>https://kubaik.github.io/rails-revved/</link>
+      <description>Boost your web app with Ruby on Rails. Learn expert tips and tricks.</description>
+      <pubDate>Sun, 08 Feb 2026 13:05:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-revved/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your API from threats with expert security tips and best practices.</description>
       <pubDate>Sat, 07 Feb 2026 13:04:10 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-api/</guid>
-    </item>
-    <item>
-      <title>RL Strategies</title>
-      <link>https://kubaik.github.io/rl-strategies/</link>
-      <description>Unlock optimal decisions with Reinforcement Learning Strategies. Discover key techniques and methods.</description>
-      <pubDate>Sat, 07 Feb 2026 11:28:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-strategies/</guid>
     </item>
   </channel>
 </rss>
