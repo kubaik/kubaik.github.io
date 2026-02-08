@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 21:35:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 22:35:35 +0000</lastBuildDate>
+    <item>
+      <title>AR Rise</title>
+      <link>https://kubaik.github.io/ar-rise/</link>
+      <description>Unlock the future with AR Rise, your guide to innovative Augmented Reality development.</description>
+      <pubDate>Sun, 08 Feb 2026 22:35:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-rise/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of the internet with Web3 and DApps.</description>
       <pubDate>Sat, 07 Feb 2026 22:34:19 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-unlocked/</guid>
-    </item>
-    <item>
-      <title>Boost Tech Pay</title>
-      <link>https://kubaik.github.io/boost-tech-pay/</link>
-      <description>Maximize your tech salary with expert negotiation tips and strategies.</description>
-      <pubDate>Sat, 07 Feb 2026 21:33:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-tech-pay/</guid>
     </item>
   </channel>
 </rss>
