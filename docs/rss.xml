@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 07:45:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 08:41:46 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
+      <pubDate>Sun, 08 Feb 2026 08:41:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Generative AI &amp; Large Language Models</description>
       <pubDate>Sat, 07 Feb 2026 08:41:10 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
-      <pubDate>Sat, 07 Feb 2026 07:37:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
