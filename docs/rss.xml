@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 14:36:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 15:33:59 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock data potential with expert feature engineering techniques.</description>
+      <pubDate>Sun, 08 Feb 2026 15:33:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>API Test: Postman vs Insomnia</title>
       <link>https://kubaik.github.io/api-test-postman-vs-insomnia/</link>
@@ -138,13 +145,6 @@
       <description>Master Kubernetes orchestration with expert tips and best practices.</description>
       <pubDate>Sat, 07 Feb 2026 15:32:54 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-mastery/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Learn about high availability systems &amp; ensure 24/7 uptime for your business with our expert insights.</description>
-      <pubDate>Sat, 07 Feb 2026 14:33:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
