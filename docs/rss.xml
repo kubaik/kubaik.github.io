@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 22:35:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 23:38:42 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Explore the pros &amp; cons of microservices &amp; monolithic architecture in software development.</description>
+      <pubDate>Sun, 08 Feb 2026 23:38:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>AR Rise</title>
       <link>https://kubaik.github.io/ar-rise/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials</description>
       <pubDate>Sat, 07 Feb 2026 23:37:42 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Web3 Unlocked</title>
-      <link>https://kubaik.github.io/web3-unlocked/</link>
-      <description>Discover the future of the internet with Web3 and DApps.</description>
-      <pubDate>Sat, 07 Feb 2026 22:34:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-unlocked/</guid>
     </item>
   </channel>
 </rss>

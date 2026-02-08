@@ -1412,15 +1412,15 @@
     "topic": "Cryptocurrency and Blockchain"
   },
   "microservices_vs_monolithic_architecture": {
-    "timestamp": "2026-01-30T09:34:22.388840",
+    "timestamp": "2026-02-08T23:38:33.209298",
     "hashtags": [
       "CloudNative",
-      "DevOps",
       "Microservices",
       "Serverless",
-      "MonolithicArch",
+      "DevOps",
       "SoftwareArchitecture",
-      "CloudComputing"
+      "CloudComputing",
+      "TechDebates"
     ],
     "topic": "Microservices vs Monolithic Architecture"
   },
