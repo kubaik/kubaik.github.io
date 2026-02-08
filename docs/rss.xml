@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 18:48:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 19:32:40 +0000</lastBuildDate>
+    <item>
+      <title>Revamp Old Code</title>
+      <link>https://kubaik.github.io/revamp-old-code/</link>
+      <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
+      <pubDate>Sun, 08 Feb 2026 19:32:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/revamp-old-code/</guid>
+    </item>
     <item>
       <title>Design On</title>
       <link>https://kubaik.github.io/design-on/</link>
@@ -138,13 +145,6 @@
       <description>Unlock fast &amp; secure websites with Static Site Generation (SSG) basics.</description>
       <pubDate>Sat, 07 Feb 2026 19:31:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost Security: WAF</title>
-      <link>https://kubaik.github.io/boost-security-waf/</link>
-      <description>Safeguard your website with a Web Application Firewall (WAF). Learn how to boost security &amp; prevent attacks.</description>
-      <pubDate>Sat, 07 Feb 2026 18:46:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-security-waf/</guid>
     </item>
   </channel>
 </rss>
