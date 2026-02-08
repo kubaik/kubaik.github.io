@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 16:40:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 17:34:05 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: Learn how to design a scalable Internet of Things architecture.</description>
+      <pubDate>Sun, 08 Feb 2026 17:33:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
       <pubDate>Sat, 07 Feb 2026 17:33:10 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>AutoML Revs Up</title>
-      <link>https://kubaik.github.io/automl-revs-up/</link>
-      <description>Accelerate AI with AutoML &amp; Neural Architecture Search. Learn how to rev up your models.</description>
-      <pubDate>Sat, 07 Feb 2026 16:39:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-revs-up/</guid>
     </item>
   </channel>
 </rss>
