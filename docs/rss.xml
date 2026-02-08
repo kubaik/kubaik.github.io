@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 05:26:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 07:00:02 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Sun, 08 Feb 2026 06:59:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Deploy Smarter</title>
       <link>https://kubaik.github.io/deploy-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
       <pubDate>Sat, 07 Feb 2026 06:53:55 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Optimize DB Queries</title>
-      <link>https://kubaik.github.io/optimize-db-queries/</link>
-      <description>Boost performance with expert DB query optimization tips.</description>
-      <pubDate>Sat, 07 Feb 2026 05:49:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-db-queries/</guid>
     </item>
   </channel>
 </rss>
