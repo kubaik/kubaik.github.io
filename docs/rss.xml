@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 08:41:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 09:38:23 +0000</lastBuildDate>
+    <item>
+      <title>Boost Memory</title>
+      <link>https://kubaik.github.io/boost-memory/</link>
+      <description>Improve focus &amp; retention with proven memory management tips.</description>
+      <pubDate>Sun, 08 Feb 2026 09:38:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-memory/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring &amp; observability insights.</description>
       <pubDate>Sat, 07 Feb 2026 09:38:30 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Unlock the power of Generative AI &amp; Large Language Models</description>
-      <pubDate>Sat, 07 Feb 2026 08:41:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
