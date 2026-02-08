@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 17:34:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 18:48:59 +0000</lastBuildDate>
+    <item>
+      <title>Design On</title>
+      <link>https://kubaik.github.io/design-on/</link>
+      <description>Boost user experience with responsive web design techniques.</description>
+      <pubDate>Sun, 08 Feb 2026 18:48:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-on/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your website with a Web Application Firewall (WAF). Learn how to boost security &amp; prevent attacks.</description>
       <pubDate>Sat, 07 Feb 2026 18:46:18 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-security-waf/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame technical debt.</description>
-      <pubDate>Sat, 07 Feb 2026 17:33:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
