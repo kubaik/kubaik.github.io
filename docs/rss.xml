@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 05:07:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 07:15:25 +0000</lastBuildDate>
+    <item>
+      <title>.NET Core Mastery</title>
+      <link>https://kubaik.github.io/net-core-mastery/</link>
+      <description>Unlock expert-level .NET Core skills with C# tutorials and insights.</description>
+      <pubDate>Mon, 09 Feb 2026 07:15:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/net-core-mastery/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
       <pubDate>Sun, 08 Feb 2026 06:59:52 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-defense/</guid>
-    </item>
-    <item>
-      <title>Deploy Smarter</title>
-      <link>https://kubaik.github.io/deploy-smarter/</link>
-      <description>Learn Blue-Green Deployment strategies for zero-downtime releases</description>
-      <pubDate>Sun, 08 Feb 2026 05:26:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-smarter/</guid>
     </item>
   </channel>
 </rss>
