@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 11:01:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 11:54:23 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn database design &amp; normalization best practices</description>
+      <pubDate>Mon, 09 Feb 2026 11:54:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Deploy AI Smarter</title>
       <link>https://kubaik.github.io/deploy-ai-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve focus &amp; retention with proven memory management tips.</description>
       <pubDate>Sun, 08 Feb 2026 09:38:13 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>NLP Unlocked</title>
-      <link>https://kubaik.github.io/nlp-unlocked/</link>
-      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
-      <pubDate>Sun, 08 Feb 2026 08:41:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
     </item>
   </channel>
 </rss>
