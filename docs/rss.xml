@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 09:03:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 11:01:02 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Unlock efficient AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Mon, 09 Feb 2026 11:00:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>Recover Fast</title>
       <link>https://kubaik.github.io/recover-fast/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
       <pubDate>Sun, 08 Feb 2026 08:41:36 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-unlocked/</guid>
-    </item>
-    <item>
-      <title>WCAG Simplified</title>
-      <link>https://kubaik.github.io/wcag-simplified/</link>
-      <description>Learn WCAG simplified: Easy-to-follow guide to web accessibility standards</description>
-      <pubDate>Sun, 08 Feb 2026 07:45:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-simplified/</guid>
     </item>
   </channel>
 </rss>
