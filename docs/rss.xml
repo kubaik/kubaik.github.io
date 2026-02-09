@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 07:15:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 09:03:01 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
+      <pubDate>Mon, 09 Feb 2026 09:02:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>.NET Core Mastery</title>
       <link>https://kubaik.github.io/net-core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG simplified: Easy-to-follow guide to web accessibility standards</description>
       <pubDate>Sun, 08 Feb 2026 07:45:21 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Sun, 08 Feb 2026 06:59:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
