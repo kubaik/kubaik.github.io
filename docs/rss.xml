@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 14:59:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 16:05:57 +0000</lastBuildDate>
+    <item>
+      <title>Multi-Modal AI</title>
+      <link>https://kubaik.github.io/multi-modal-ai/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, combining text, image &amp; audio for enhanced intelligence.</description>
+      <pubDate>Mon, 09 Feb 2026 16:05:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-modal-ai/</guid>
+    </item>
     <item>
       <title>Transfer Smarter</title>
       <link>https://kubaik.github.io/transfer-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost your web app with Ruby on Rails. Learn expert tips and tricks.</description>
       <pubDate>Sun, 08 Feb 2026 13:05:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-revved/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn effective design patterns in practice, transforming your projects with simplicity and elegance.</description>
-      <pubDate>Sun, 08 Feb 2026 11:30:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
