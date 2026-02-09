@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 17:55:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 19:26:13 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Boost productivity with top VS Code extensions.</description>
+      <pubDate>Mon, 09 Feb 2026 19:26:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data potential with expert feature engineering techniques.</description>
       <pubDate>Sun, 08 Feb 2026 15:33:49 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>API Test: Postman vs Insomnia</title>
-      <link>https://kubaik.github.io/api-test-postman-vs-insomnia/</link>
-      <description>Compare Postman &amp; Insomnia for API testing. Discover the best tool for your needs.</description>
-      <pubDate>Sun, 08 Feb 2026 14:36:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-test-postman-vs-insomnia/</guid>
     </item>
   </channel>
 </rss>
