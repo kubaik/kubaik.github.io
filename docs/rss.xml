@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 19:26:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 20:51:49 +0000</lastBuildDate>
+    <item>
+      <title>SSR Unlocked</title>
+      <link>https://kubaik.github.io/ssr-unlocked/</link>
+      <description>Unlock faster loads &amp; better SEO with Server-Side Rendering (SSR)</description>
+      <pubDate>Mon, 09 Feb 2026 20:51:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssr-unlocked/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Learn clean code principles for efficient coding</description>
       <pubDate>Sun, 08 Feb 2026 16:40:02 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Unlock data potential with expert feature engineering techniques.</description>
-      <pubDate>Sun, 08 Feb 2026 15:33:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
