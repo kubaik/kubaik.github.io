@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 02:49:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 05:07:19 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Master debugging techniques to fix errors faster and smarter.</description>
+      <pubDate>Mon, 09 Feb 2026 05:07:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment strategies for zero-downtime releases</description>
       <pubDate>Sun, 08 Feb 2026 05:26:41 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-smarter/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock cloud potential with multi-cloud architecture. Learn more.</description>
-      <pubDate>Sun, 08 Feb 2026 03:20:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
