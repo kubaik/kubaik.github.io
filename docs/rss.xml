@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 20:51:49 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 21:48:44 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with expert cloud security best practices and tips.</description>
+      <pubDate>Mon, 09 Feb 2026 21:48:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>SSR Unlocked</title>
       <link>https://kubaik.github.io/ssr-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: Learn how to design a scalable Internet of Things architecture.</description>
       <pubDate>Sun, 08 Feb 2026 17:33:55 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn clean code principles for efficient coding</description>
-      <pubDate>Sun, 08 Feb 2026 16:40:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
