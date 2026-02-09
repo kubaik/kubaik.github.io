@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 22:45:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 23:46:11 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain Boom</title>
+      <link>https://kubaik.github.io/blockchain-boom/</link>
+      <description>Unlock the future of finance with blockchain &amp; cryptocurrency insights.</description>
+      <pubDate>Mon, 09 Feb 2026 23:46:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-boom/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
       <pubDate>Sun, 08 Feb 2026 19:32:30 +0000</pubDate>
       <guid>https://kubaik.github.io/revamp-old-code/</guid>
-    </item>
-    <item>
-      <title>Design On</title>
-      <link>https://kubaik.github.io/design-on/</link>
-      <description>Boost user experience with responsive web design techniques.</description>
-      <pubDate>Sun, 08 Feb 2026 18:48:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-on/</guid>
     </item>
   </channel>
 </rss>
