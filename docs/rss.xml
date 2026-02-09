@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 11:54:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 13:25:20 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Mon, 09 Feb 2026 13:25:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Snowflake&apos;s full potential with expert insights and tips on the Cloud Data Platform.</description>
       <pubDate>Sun, 08 Feb 2026 10:35:57 +0000</pubDate>
       <guid>https://kubaik.github.io/snowflake-unlocked/</guid>
-    </item>
-    <item>
-      <title>Boost Memory</title>
-      <link>https://kubaik.github.io/boost-memory/</link>
-      <description>Improve focus &amp; retention with proven memory management tips.</description>
-      <pubDate>Sun, 08 Feb 2026 09:38:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-memory/</guid>
     </item>
   </channel>
 </rss>
