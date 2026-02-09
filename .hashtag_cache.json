@@ -1477,15 +1477,15 @@
     "topic": "Caching Strategies (Redis, Memcached)"
   },
   "disaster_recovery_planning": {
-    "timestamp": "2026-01-30T19:38:16.486548",
+    "timestamp": "2026-02-09T09:02:51.835370",
     "hashtags": [
       "DisasterRecovery",
-      "CloudBackup",
-      "CyberResilience",
       "BusinessContinuity",
-      "DataProtection",
-      "DigitalTransformation",
-      "ITDisasterPlanning"
+      "CloudResilience",
+      "CyberSecurity",
+      "DigitalProtection",
+      "ITDisasterPlanning",
+      "TechResilience"
     ],
     "topic": "Disaster Recovery Planning"
   },
