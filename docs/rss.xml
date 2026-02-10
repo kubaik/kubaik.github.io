@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 02:58:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 05:11:18 +0000</lastBuildDate>
+    <item>
+      <title>AI Pulse Check</title>
+      <link>https://kubaik.github.io/ai-pulse-check/</link>
+      <description>Stay ahead with AI model monitoring &amp; maintenance. Learn how to optimize performance &amp; prevent drift.</description>
+      <pubDate>Tue, 10 Feb 2026 05:11:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
+    </item>
     <item>
       <title>IoT Device Management</title>
       <link>https://kubaik.github.io/iot-device-management/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
       <pubDate>Sun, 08 Feb 2026 21:35:05 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Boost efficiency with DevOps best practices and culture tips.</description>
-      <pubDate>Sun, 08 Feb 2026 20:36:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
