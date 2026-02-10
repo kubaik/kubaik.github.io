@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 15:10:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 17:17:47 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Done Right</title>
+      <link>https://kubaik.github.io/api-gateway-done-right/</link>
+      <description>Learn expert API Gateway patterns for secure, scalable, and reliable integrations.</description>
+      <pubDate>Tue, 10 Feb 2026 17:17:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
+    </item>
     <item>
       <title>Engineer Your Time</title>
       <link>https://kubaik.github.io/engineer-your-time/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Mon, 09 Feb 2026 09:02:51 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>.NET Core Mastery</title>
-      <link>https://kubaik.github.io/net-core-mastery/</link>
-      <description>Unlock expert-level .NET Core skills with C# tutorials and insights.</description>
-      <pubDate>Mon, 09 Feb 2026 07:15:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/net-core-mastery/</guid>
     </item>
   </channel>
 </rss>
