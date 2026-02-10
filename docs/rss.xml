@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 22:51:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 23:45:54 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Tue, 10 Feb 2026 23:45:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Process Now</title>
       <link>https://kubaik.github.io/process-now/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with Transfer Learning. Learn how to implement it effectively.</description>
       <pubDate>Mon, 09 Feb 2026 14:59:38 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-smarter/</guid>
-    </item>
-    <item>
-      <title>Auto Dev Flow</title>
-      <link>https://kubaik.github.io/auto-dev-flow/</link>
-      <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
-      <pubDate>Mon, 09 Feb 2026 13:25:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
     </item>
   </channel>
 </rss>
