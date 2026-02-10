@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 09:05:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 11:01:12 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Master Git with expert tips and tricks. Boost productivity and workflow.</description>
+      <pubDate>Tue, 10 Feb 2026 11:01:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover Explainable AI techniques to unlock transparent &amp; trustworthy AI models.</description>
       <pubDate>Mon, 09 Feb 2026 02:49:33 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-xai/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Explore the pros &amp; cons of microservices &amp; monolithic architecture in software development.</description>
-      <pubDate>Sun, 08 Feb 2026 23:38:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
