@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 13:40:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 15:10:02 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Optimize your schedule with expert time management tips tailored for engineers.</description>
+      <pubDate>Tue, 10 Feb 2026 15:09:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert-level .NET Core skills with C# tutorials and insights.</description>
       <pubDate>Mon, 09 Feb 2026 07:15:16 +0000</pubDate>
       <guid>https://kubaik.github.io/net-core-mastery/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Master debugging techniques to fix errors faster and smarter.</description>
-      <pubDate>Mon, 09 Feb 2026 05:07:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
