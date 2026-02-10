@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 21:52:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 22:51:05 +0000</lastBuildDate>
+    <item>
+      <title>Process Now</title>
+      <link>https://kubaik.github.io/process-now/</link>
+      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
+      <pubDate>Tue, 10 Feb 2026 22:50:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/process-now/</guid>
+    </item>
     <item>
       <title>SIEM Simplified</title>
       <link>https://kubaik.github.io/siem-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Mon, 09 Feb 2026 13:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn database design &amp; normalization best practices</description>
-      <pubDate>Mon, 09 Feb 2026 11:54:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
