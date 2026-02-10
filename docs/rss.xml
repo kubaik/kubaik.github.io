@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Feb 2026 23:46:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 02:58:08 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Management</title>
+      <link>https://kubaik.github.io/iot-device-management/</link>
+      <description>Learn how to securely manage IoT devices and optimize performance with expert tips and strategies.</description>
+      <pubDate>Tue, 10 Feb 2026 02:57:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-management/</guid>
+    </item>
     <item>
       <title>Blockchain Boom</title>
       <link>https://kubaik.github.io/blockchain-boom/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with DevOps best practices and culture tips.</description>
       <pubDate>Sun, 08 Feb 2026 20:36:30 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Revamp Old Code</title>
-      <link>https://kubaik.github.io/revamp-old-code/</link>
-      <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
-      <pubDate>Sun, 08 Feb 2026 19:32:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/revamp-old-code/</guid>
     </item>
   </channel>
 </rss>
