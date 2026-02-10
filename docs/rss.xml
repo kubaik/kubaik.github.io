@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 19:16:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Feb 2026 20:54:27 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover how to secure sensitive data with expert secrets management techniques.</description>
+      <pubDate>Tue, 10 Feb 2026 20:54:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn database design &amp; normalization best practices</description>
       <pubDate>Mon, 09 Feb 2026 11:54:13 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Unlock efficient AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Mon, 09 Feb 2026 11:00:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
