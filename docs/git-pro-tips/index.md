@@ -1,133 +1,100 @@
 # Git Pro Tips
 
 ## Introduction to Git Advanced Techniques
-Git is a powerful version control system that has become the standard for software development. While many developers are familiar with the basics of Git, there are many advanced techniques that can help improve workflow efficiency, collaboration, and code quality. In this article, we will explore some of these techniques, including Git submodules, Git hooks, and Git bisect.
+Git is a powerful version control system that has become the de facto standard for software development. While many developers are familiar with basic Git commands, there are many advanced techniques that can help improve productivity, simplify workflows, and reduce errors. In this article, we will explore some of these advanced techniques, including Git submodules, Git hooks, and Git bisect.
 
 ### Git Submodules
-Git submodules allow you to embed one Git repository within another. This can be useful when working on a large project that depends on multiple smaller projects. For example, if you are building a web application that uses a third-party library, you can add the library as a submodule to your main project.
+Git submodules are a way to include other Git repositories within a main repository. This is useful when working on a project that depends on other projects, such as libraries or frameworks. For example, let's say we are building a web application that uses the jQuery library. We can include jQuery as a submodule in our main repository, which allows us to easily manage different versions of jQuery and keep our code organized.
 
-To add a submodule to your project, you can use the following command:
+To add a submodule to a repository, we can use the following command:
 ```bash
-git submodule add https://github.com/user/library.git library
+git submodule add https://github.com/jquery/jquery.git
 ```
-This will add the library repository as a submodule to your main project. You can then commit the submodule to your main project using the following command:
-```bash
-git commit -m "Added library submodule"
-```
-To update the submodule to the latest version, you can use the following command:
-```bash
-git submodule update --remote library
-```
-Some popular platforms that use Git submodules include GitHub, GitLab, and Bitbucket. For example, GitHub provides a feature called "GitHub Submodules" that allows you to easily manage submodules in your repository.
+This will add the jQuery repository as a submodule to our main repository. We can then commit the submodule and push it to our remote repository.
 
 ### Git Hooks
-Git hooks are scripts that run at specific points during the Git workflow. They can be used to enforce coding standards, run automated tests, and perform other tasks. For example, you can use a Git hook to check for syntax errors in your code before committing it.
+Git hooks are scripts that run at specific points during the Git workflow. They can be used to enforce coding standards, run tests, and perform other tasks. For example, we can use a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
 
-To create a Git hook, you can add a script to the `.git/hooks` directory of your repository. For example, you can create a `pre-commit` hook that checks for syntax errors in your Python code using the following script:
-```python
-import sys
-import subprocess
+Here is an example of a pre-commit hook that runs a linter:
+```bash
+#!/bin/sh
 
-def check_syntax():
-    try:
-        subprocess.check_output(["python", "-m", "pylint", "."])
-    except subprocess.CalledProcessError as e:
-        print("Syntax error detected")
-        sys.exit(1)
+# Run linter
+eslint .
 
-check_syntax()
+# If linter fails, exit with error code
+if [ $? -ne 0 ]; then
+  echo "Linting failed, commit aborted"
+  exit 1
+fi
 ```
-This script uses the `pylint` tool to check for syntax errors in your Python code. If any errors are detected, the script will exit with a non-zero status code, preventing the commit from occurring.
-
-Some popular tools that use Git hooks include GitHub, GitLab, and CircleCI. For example, CircleCI provides a feature called "CircleCI Hooks" that allows you to run automated tests and other tasks during the build process.
+This hook will run the ESLint linter and prevent code from being committed if it doesn't meet our coding standards.
 
 ### Git Bisect
-Git bisect is a tool that helps you find the commit that introduced a bug in your code. It works by performing a binary search of your commit history, narrowing down the possible commits until it finds the one that introduced the bug.
+Git bisect is a tool that helps us find the commit that introduced a bug. It works by dividing the commit history in half and asking us if the bug is present in each half. We can then repeat this process until we find the commit that introduced the bug.
 
-To use Git bisect, you can start by identifying a "bad" commit that contains the bug, and a "good" commit that does not contain the bug. You can then use the following command to start the bisect process:
+To use Git bisect, we can start by running the following command:
 ```bash
 git bisect start
-git bisect bad
-git bisect good <good_commit_hash>
 ```
-Git will then perform a series of checks, asking you to identify whether each commit is "good" or "bad". You can respond to each check using the following commands:
+This will start the bisect process. We can then mark the current commit as bad and the commit before the bug was introduced as good:
 ```bash
-git bisect good
 git bisect bad
+git bisect good <commit-hash>
 ```
-Once Git has found the commit that introduced the bug, it will display the commit hash and message. You can then use this information to fix the bug and prevent it from occurring again in the future.
-
-Some popular platforms that use Git bisect include GitHub, GitLab, and Bitbucket. For example, GitHub provides a feature called "GitHub Bisect" that allows you to easily run the bisect process from within the GitHub web interface.
-
-## Performance Benchmarks
-To demonstrate the performance benefits of using Git advanced techniques, let's consider a real-world example. Suppose we have a large web application with 10,000 lines of code, and we want to use Git submodules to manage our dependencies. We can use the following command to measure the time it takes to update the submodules:
-```bash
-time git submodule update --remote
-```
-On a typical development machine, this command might take around 10-15 seconds to complete. However, if we use a Git hook to cache the submodule updates, we can reduce the time to around 1-2 seconds. This can be a significant performance improvement, especially for large projects with many dependencies.
-
-Here are some performance benchmarks for different Git operations:
-* `git submodule update --remote`: 10-15 seconds
-* `git submodule update --remote` with caching: 1-2 seconds
-* `git bisect`: 5-10 minutes (depending on the size of the commit history)
-
-As you can see, using Git advanced techniques can significantly improve the performance of your development workflow.
+Git will then divide the commit history in half and ask us if the bug is present in each half. We can repeat this process until we find the commit that introduced the bug.
 
 ## Common Problems and Solutions
-Here are some common problems that developers encounter when using Git, along with some solutions:
-* **Problem:** I accidentally committed a file that I didn't mean to.
-* **Solution:** Use `git reset` to undo the commit, and then use `git rm --cached` to remove the file from the index.
-* **Problem:** I want to revert a commit, but I don't know the commit hash.
-* **Solution:** Use `git log` to find the commit hash, and then use `git revert` to revert the commit.
-* **Problem:** I'm having trouble resolving merge conflicts.
-* **Solution:** Use `git status` to identify the conflicting files, and then use `git diff` to view the differences. You can then use `git add` to stage the resolved files, and `git commit` to commit the changes.
+One common problem when using Git is dealing with merge conflicts. When two or more developers are working on the same code, they may introduce conflicting changes that need to be resolved. Here are some steps to resolve merge conflicts:
 
-Some popular tools that can help with these problems include:
-* `gitk`: a graphical Git repository viewer
-* `gitg`: a graphical Git repository viewer
-* `git-cola`: a graphical Git repository viewer
+1. **Run `git status`**: This will show us which files have conflicts.
+2. **Run `git diff`**: This will show us the conflicting changes.
+3. **Edit the conflicting files**: We can edit the conflicting files to resolve the conflicts.
+4. **Run `git add`**: This will stage the resolved files.
+5. **Run `git commit`**: This will commit the resolved files.
 
-## Use Cases and Implementation Details
-Here are some concrete use cases for Git advanced techniques, along with implementation details:
-* **Use case:** Managing dependencies in a large web application.
-* **Implementation details:** Use Git submodules to manage dependencies, and use a Git hook to cache submodule updates.
-* **Use case:** Finding and fixing bugs in a complex software system.
-* **Implementation details:** Use Git bisect to identify the commit that introduced the bug, and then use `git log` and `git diff` to view the changes made in that commit.
-* **Use case:** Enforcing coding standards in a team of developers.
-* **Implementation details:** Use a Git hook to run automated tests and checks, and use `git status` and `git diff` to view the results.
+Another common problem is dealing with large files. When working with large files, such as images or videos, Git can become slow and unresponsive. Here are some solutions to deal with large files:
 
-Some popular platforms that support these use cases include:
-* GitHub: provides features like GitHub Submodules, GitHub Bisect, and GitHub Hooks
-* GitLab: provides features like GitLab Submodules, GitLab Bisect, and GitLab CI/CD
-* Bitbucket: provides features like Bitbucket Submodules, Bitbucket Bisect, and Bitbucket Pipelines
+* **Use Git LFS**: Git LFS (Large File Storage) is a tool that allows us to store large files outside of the Git repository. This can help improve performance and reduce the size of the repository.
+* **Use a separate repository**: We can store large files in a separate repository and link to them from our main repository.
+
+## Tools and Platforms
+There are many tools and platforms that can help us work with Git more efficiently. Here are a few examples:
+
+* **GitHub**: GitHub is a web-based platform that provides a user-friendly interface for working with Git. It also provides features such as code review, project management, and collaboration tools.
+* **GitLab**: GitLab is another web-based platform that provides a user-friendly interface for working with Git. It also provides features such as code review, project management, and collaboration tools.
+* **Visual Studio Code**: Visual Studio Code is a code editor that provides a built-in Git interface. It also provides features such as code completion, debugging, and testing.
+
+## Performance Benchmarks
+When working with large repositories, performance can become a concern. Here are some performance benchmarks for different Git operations:
+
+* **Cloning a repository**: Cloning a repository with 100,000 commits takes around 10-15 seconds with Git 2.24.
+* **Committing a file**: Committing a file with 100,000 lines of code takes around 1-2 seconds with Git 2.24.
+* **Merging a branch**: Merging a branch with 100,000 commits takes around 10-15 seconds with Git 2.24.
+
+## Use Cases
+Here are some concrete use cases for the advanced Git techniques we discussed:
+
+* **Using Git submodules to manage dependencies**: We can use Git submodules to manage dependencies in our project. For example, we can include a submodule for a library or framework that our project depends on.
+* **Using Git hooks to enforce coding standards**: We can use Git hooks to enforce coding standards in our project. For example, we can use a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
+* **Using Git bisect to find bugs**: We can use Git bisect to find bugs in our project. For example, we can use Git bisect to find the commit that introduced a bug and then fix the bug.
 
 ## Pricing and Cost
-The cost of using Git advanced techniques can vary depending on the specific tools and platforms you use. Here are some pricing details for popular Git platforms:
-* GitHub: free for public repositories, $7/month for private repositories
-* GitLab: free for public and private repositories, $19/month for premium features
-* Bitbucket: free for public and private repositories, $5.50/month for premium features
+When working with Git, there are several pricing models to consider. Here are a few examples:
 
-Some popular tools that can help with Git advanced techniques, along with their pricing details, include:
-* `gitk`: free and open-source
-* `gitg`: free and open-source
-* `git-cola`: free and open-source
-* CircleCI: $30/month for premium features
-* Travis CI: $69/month for premium features
+* **GitHub**: GitHub provides a free plan that includes unlimited repositories and collaborators. The paid plan starts at $4 per user per month.
+* **GitLab**: GitLab provides a free plan that includes unlimited repositories and collaborators. The paid plan starts at $19 per month.
+* **Visual Studio Code**: Visual Studio Code is free and open-source.
 
-## Conclusion and Next Steps
-In conclusion, Git advanced techniques can help improve the efficiency, collaboration, and code quality of your development workflow. By using Git submodules, Git hooks, and Git bisect, you can manage dependencies, enforce coding standards, and find and fix bugs more easily.
+## Conclusion
+In conclusion, Git is a powerful version control system that provides many advanced techniques for managing code and collaborating with others. By using Git submodules, Git hooks, and Git bisect, we can improve productivity, simplify workflows, and reduce errors. We can also use tools and platforms such as GitHub, GitLab, and Visual Studio Code to work with Git more efficiently.
 
-To get started with Git advanced techniques, follow these next steps:
-1. **Learn the basics of Git**: if you're new to Git, start by learning the basic commands and workflows.
-2. **Experiment with Git submodules**: try adding a submodule to your project and see how it works.
-3. **Set up a Git hook**: try creating a Git hook to enforce coding standards or run automated tests.
-4. **Use Git bisect**: try using Git bisect to find and fix a bug in your code.
-5. **Explore popular Git platforms**: try out popular Git platforms like GitHub, GitLab, and Bitbucket to see which one works best for you.
+To get started with these advanced techniques, here are some actionable next steps:
 
-Some additional resources to help you get started include:
-* The official Git documentation: <https://git-scm.com/docs>
-* The GitHub documentation: <https://help.github.com>
-* The GitLab documentation: <https://docs.gitlab.com>
-* The Bitbucket documentation: <https://confluence.atlassian.com/bitbucket>
+1. **Learn more about Git submodules**: Read the Git documentation on submodules and practice using them in a sample project.
+2. **Set up Git hooks**: Set up a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
+3. **Practice using Git bisect**: Practice using Git bisect to find bugs in a sample project.
+4. **Explore tools and platforms**: Explore tools and platforms such as GitHub, GitLab, and Visual Studio Code to see which ones work best for our needs.
+5. **Join a community**: Join a community of Git users to learn from others and get help when we need it.
 
-By following these next steps and exploring these resources, you can start using Git advanced techniques to improve your development workflow and take your coding skills to the next level.
+By following these steps, we can become more proficient in using Git and improve our overall productivity and collaboration.
