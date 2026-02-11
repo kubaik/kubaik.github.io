@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Feb 2026 21:39:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Feb 2026 22:37:42 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Visibility</title>
+      <link>https://kubaik.github.io/boost-app-visibility/</link>
+      <description>Maximize app downloads with expert ASO tips and strategies.</description>
+      <pubDate>Wed, 11 Feb 2026 22:37:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS dev with Swift. Master Apple&apos;s programming language.</description>
       <pubDate>Tue, 10 Feb 2026 13:40:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Master Git with expert tips and tricks. Boost productivity and workflow.</description>
-      <pubDate>Tue, 10 Feb 2026 11:01:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
