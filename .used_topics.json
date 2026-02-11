@@ -113,5 +113,6 @@
   "JWT Authentication Implementation",
   "MLOps and ML Pipeline Automation",
   "Database Replication and Sharding",
-  "Infrastructure as Code (Terraform)"
+  "Infrastructure as Code (Terraform)",
+  "Service Mesh Architecture"
 ]
