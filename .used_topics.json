@@ -114,5 +114,6 @@
   "MLOps and ML Pipeline Automation",
   "Database Replication and Sharding",
   "Infrastructure as Code (Terraform)",
-  "Service Mesh Architecture"
+  "Service Mesh Architecture",
+  "Go Programming Concurrency"
 ]
