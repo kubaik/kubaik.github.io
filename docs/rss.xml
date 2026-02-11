@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Feb 2026 02:55:34 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Feb 2026 05:08:50 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning Unleashed</title>
+      <link>https://kubaik.github.io/deep-learning-unleashed/</link>
+      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks.</description>
+      <pubDate>Wed, 11 Feb 2026 05:08:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning-unleashed/</guid>
+    </item>
     <item>
       <title>AI Predicts Future</title>
       <link>https://kubaik.github.io/ai-predicts-future/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure&apos;s full potential with expert insights and tutorials.</description>
       <pubDate>Mon, 09 Feb 2026 17:55:14 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>Multi-Modal AI</title>
-      <link>https://kubaik.github.io/multi-modal-ai/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, combining text, image &amp; audio for enhanced intelligence.</description>
-      <pubDate>Mon, 09 Feb 2026 16:05:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-modal-ai/</guid>
     </item>
   </channel>
 </rss>
