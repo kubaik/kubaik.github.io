@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Feb 2026 07:12:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Feb 2026 08:59:07 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Wed, 11 Feb 2026 08:58:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Visualize Smarter</title>
       <link>https://kubaik.github.io/visualize-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster loads &amp; better SEO with Server-Side Rendering (SSR)</description>
       <pubDate>Mon, 09 Feb 2026 20:51:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ssr-unlocked/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Boost productivity with top VS Code extensions.</description>
-      <pubDate>Mon, 09 Feb 2026 19:26:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
