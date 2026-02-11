@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Feb 2026 23:45:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Feb 2026 02:55:34 +0000</lastBuildDate>
+    <item>
+      <title>AI Predicts Future</title>
+      <link>https://kubaik.github.io/ai-predicts-future/</link>
+      <description>Unlock future insights with AI-powered time series forecasting. Discover how machine learning predicts what&apos;s next.</description>
+      <pubDate>Wed, 11 Feb 2026 02:55:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-predicts-future/</guid>
+    </item>
     <item>
       <title>Grid &amp; Flexbox</title>
       <link>https://kubaik.github.io/grid-flexbox/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, combining text, image &amp; audio for enhanced intelligence.</description>
       <pubDate>Mon, 09 Feb 2026 16:05:47 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-modal-ai/</guid>
-    </item>
-    <item>
-      <title>Transfer Smarter</title>
-      <link>https://kubaik.github.io/transfer-smarter/</link>
-      <description>Boost AI model performance with Transfer Learning. Learn how to implement it effectively.</description>
-      <pubDate>Mon, 09 Feb 2026 14:59:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-smarter/</guid>
     </item>
   </channel>
 </rss>
