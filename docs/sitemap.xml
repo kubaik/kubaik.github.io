@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/mlops-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jwt-auth-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/react-native-build-once/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/php-evolved/</loc><priority>0.9</priority></url>
@@ -539,7 +540,6 @@
 <url><loc>https://kubaik.github.io/unlock-web3/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/secure-data-encrypt/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/queue-up/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/mlops-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/app-architect/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nlp-insights/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/normalize-your-db/</loc><priority>0.9</priority></url>

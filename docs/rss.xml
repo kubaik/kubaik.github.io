@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Feb 2026 11:51:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Feb 2026 13:26:55 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Done Right</title>
+      <link>https://kubaik.github.io/mlops-done-right/</link>
+      <description>Streamline ML workflows with MLOps best practices &amp; automation techniques.</description>
+      <pubDate>Wed, 11 Feb 2026 13:26:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-done-right/</guid>
+    </item>
     <item>
       <title>JWT Auth Done Right</title>
       <link>https://kubaik.github.io/jwt-auth-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of finance with blockchain &amp; cryptocurrency insights.</description>
       <pubDate>Mon, 09 Feb 2026 23:46:01 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-boom/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable apps.</description>
-      <pubDate>Mon, 09 Feb 2026 22:45:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
