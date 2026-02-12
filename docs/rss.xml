@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 05:05:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 07:12:23 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
+      <pubDate>Thu, 12 Feb 2026 07:12:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>Data Mesh 101</title>
       <link>https://kubaik.github.io/data-mesh-101/</link>
@@ -138,13 +145,6 @@
       <description>Simplify security monitoring with SIEM. Learn how to streamline threat detection &amp; response.</description>
       <pubDate>Tue, 10 Feb 2026 21:52:18 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-simplified/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Develop essential tech leadership skills to drive innovation &amp; success.</description>
-      <pubDate>Tue, 10 Feb 2026 19:16:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
