@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 20:43:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 21:41:22 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
+      <pubDate>Thu, 12 Feb 2026 21:41:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to scale your database with replication and sharding techniques.</description>
       <pubDate>Wed, 11 Feb 2026 15:01:36 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>MLOps Done Right</title>
-      <link>https://kubaik.github.io/mlops-done-right/</link>
-      <description>Streamline ML workflows with MLOps best practices &amp; automation techniques.</description>
-      <pubDate>Wed, 11 Feb 2026 13:26:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/mlops-done-right/</guid>
     </item>
   </channel>
 </rss>
