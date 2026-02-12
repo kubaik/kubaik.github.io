@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 16:00:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 17:12:45 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP</title>
+      <link>https://kubaik.github.io/unlock-gcp/</link>
+      <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
+      <pubDate>Thu, 12 Feb 2026 17:12:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp/</guid>
+    </item>
     <item>
       <title>TS Power Types</title>
       <link>https://kubaik.github.io/ts-power-types/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps faster with React Native. Learn how to create cross-platform apps with one codebase.</description>
       <pubDate>Wed, 11 Feb 2026 10:03:53 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Wed, 11 Feb 2026 08:58:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
