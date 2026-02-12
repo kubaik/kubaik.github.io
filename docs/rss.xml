@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 13:25:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 14:55:41 +0000</lastBuildDate>
+    <item>
+      <title>Write Smarter</title>
+      <link>https://kubaik.github.io/write-smarter/</link>
+      <description>Boost your technical writing skills with expert tips and strategies.</description>
+      <pubDate>Thu, 12 Feb 2026 14:55:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-smarter/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost insights with data visualization best practices. Learn how to visualize smarter and make informed decisions.</description>
       <pubDate>Wed, 11 Feb 2026 07:12:33 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smarter/</guid>
-    </item>
-    <item>
-      <title>Deep Learning Unleashed</title>
-      <link>https://kubaik.github.io/deep-learning-unleashed/</link>
-      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks.</description>
-      <pubDate>Wed, 11 Feb 2026 05:08:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-unleashed/</guid>
     </item>
   </channel>
 </rss>
