@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 10:00:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 11:01:44 +0000</lastBuildDate>
+    <item>
+      <title>Streamline Data</title>
+      <link>https://kubaik.github.io/streamline-data/</link>
+      <description>Simplify data workflows with efficient pipelines. Learn how to streamline data engineering for better insights.</description>
+      <pubDate>Thu, 12 Feb 2026 11:01:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/streamline-data/</guid>
+    </item>
     <item>
       <title>Dev PM</title>
       <link>https://kubaik.github.io/dev-pm/</link>
@@ -138,13 +145,6 @@
       <description>Unlock future insights with AI-powered time series forecasting. Discover how machine learning predicts what&apos;s next.</description>
       <pubDate>Wed, 11 Feb 2026 02:55:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-predicts-future/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Tue, 10 Feb 2026 23:45:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
