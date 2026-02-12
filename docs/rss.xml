@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 02:51:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Feb 2026 05:05:06 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh 101</title>
+      <link>https://kubaik.github.io/data-mesh-101/</link>
+      <description>Unlock scalable data analytics with Data Mesh Architecture. Learn the basics in our introductory guide.</description>
+      <pubDate>Thu, 12 Feb 2026 05:04:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-101/</guid>
+    </item>
     <item>
       <title>Build with Web Components</title>
       <link>https://kubaik.github.io/build-with-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Develop essential tech leadership skills to drive innovation &amp; success.</description>
       <pubDate>Tue, 10 Feb 2026 19:16:25 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>API Gateway Done Right</title>
-      <link>https://kubaik.github.io/api-gateway-done-right/</link>
-      <description>Learn expert API Gateway patterns for secure, scalable, and reliable integrations.</description>
-      <pubDate>Tue, 10 Feb 2026 17:17:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
     </item>
   </channel>
 </rss>
