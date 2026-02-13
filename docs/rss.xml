@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 19:50:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 20:48:54 +0000</lastBuildDate>
+    <item>
+      <title>RPA: Automate</title>
+      <link>https://kubaik.github.io/rpa-automate/</link>
+      <description>Streamline tasks with RPA. Learn how automation boosts efficiency</description>
+      <pubDate>Fri, 13 Feb 2026 20:48:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-automate/</guid>
+    </item>
     <item>
       <title>Block 101</title>
       <link>https://kubaik.github.io/block-101/</link>
@@ -138,13 +145,6 @@
       <description>Establish your tech presence with a strong portfolio. Learn how to build your brand</description>
       <pubDate>Thu, 12 Feb 2026 20:43:09 +0000</pubDate>
       <guid>https://kubaik.github.io/build-your-brand/</guid>
-    </item>
-    <item>
-      <title>Code to Cash</title>
-      <link>https://kubaik.github.io/code-to-cash/</link>
-      <description>Unlock blockchain potential with smart contract development. Learn how to code to cash with our expert guide.</description>
-      <pubDate>Thu, 12 Feb 2026 19:12:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-to-cash/</guid>
     </item>
   </channel>
 </rss>
