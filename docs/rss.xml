@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 17:45:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 19:01:05 +0000</lastBuildDate>
+    <item>
+      <title>DB Made Easy</title>
+      <link>https://kubaik.github.io/db-made-easy/</link>
+      <description>Simplify database management with expert tools and tips.</description>
+      <pubDate>Fri, 13 Feb 2026 19:00:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-made-easy/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
       <pubDate>Thu, 12 Feb 2026 17:12:35 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>TS Power Types</title>
-      <link>https://kubaik.github.io/ts-power-types/</link>
-      <description>Unlock TypeScript&apos;s full potential with advanced power types.</description>
-      <pubDate>Thu, 12 Feb 2026 16:00:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ts-power-types/</guid>
     </item>
   </channel>
 </rss>
