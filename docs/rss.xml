@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 09:55:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 10:50:41 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Fri, 13 Feb 2026 10:50:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>Ethical AI</title>
       <link>https://kubaik.github.io/ethical-ai/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
       <pubDate>Thu, 12 Feb 2026 07:12:12 +0000</pubDate>
       <guid>https://kubaik.github.io/live-web-apps/</guid>
-    </item>
-    <item>
-      <title>Data Mesh 101</title>
-      <link>https://kubaik.github.io/data-mesh-101/</link>
-      <description>Unlock scalable data analytics with Data Mesh Architecture. Learn the basics in our introductory guide.</description>
-      <pubDate>Thu, 12 Feb 2026 05:04:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-101/</guid>
     </item>
   </channel>
 </rss>
