@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 10:50:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 11:37:59 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Optimize code with smart splitting strategies. Improve load times &amp; user experience.</description>
+      <pubDate>Fri, 13 Feb 2026 11:37:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with Apache Spark Big Data Processing. Learn more.</description>
       <pubDate>Thu, 12 Feb 2026 08:57:23 +0000</pubDate>
       <guid>https://kubaik.github.io/spark-big-data/</guid>
-    </item>
-    <item>
-      <title>Live Web Apps</title>
-      <link>https://kubaik.github.io/live-web-apps/</link>
-      <description>Discover the power of real-time web apps, enhancing user experience with instant updates and interactions.</description>
-      <pubDate>Thu, 12 Feb 2026 07:12:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/live-web-apps/</guid>
     </item>
   </channel>
 </rss>
