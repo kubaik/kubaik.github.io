@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 14:50:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 15:52:04 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Learn Scalability Patterns to grow efficiently</description>
+      <pubDate>Fri, 13 Feb 2026 15:51:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost engagement with perfect push notifications. Learn implementation best practices.</description>
       <pubDate>Thu, 12 Feb 2026 13:25:18 +0000</pubDate>
       <guid>https://kubaik.github.io/push-done-right/</guid>
-    </item>
-    <item>
-      <title>Streamline Data</title>
-      <link>https://kubaik.github.io/streamline-data/</link>
-      <description>Simplify data workflows with efficient pipelines. Learn how to streamline data engineering for better insights.</description>
-      <pubDate>Thu, 12 Feb 2026 11:01:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/streamline-data/</guid>
     </item>
   </channel>
 </rss>
