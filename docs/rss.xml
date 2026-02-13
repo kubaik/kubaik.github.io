@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 13:16:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 14:50:34 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Fri, 13 Feb 2026 14:50:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Simplify data workflows with efficient pipelines. Learn how to streamline data engineering for better insights.</description>
       <pubDate>Thu, 12 Feb 2026 11:01:34 +0000</pubDate>
       <guid>https://kubaik.github.io/streamline-data/</guid>
-    </item>
-    <item>
-      <title>Dev PM</title>
-      <link>https://kubaik.github.io/dev-pm/</link>
-      <description>Master project management for devs. Learn agile methods &amp; best practices.</description>
-      <pubDate>Thu, 12 Feb 2026 10:00:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-pm/</guid>
     </item>
   </channel>
 </rss>
