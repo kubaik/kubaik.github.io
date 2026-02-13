@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 22:40:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 23:38:26 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
+      <pubDate>Fri, 13 Feb 2026 23:38:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture &amp; best practices for building scalable apps.</description>
       <pubDate>Thu, 12 Feb 2026 23:37:13 +0000</pubDate>
       <guid>https://kubaik.github.io/vuejs-components/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Safeguard data with encryption &amp; key management expertise. Learn how to protect your digital assets.</description>
-      <pubDate>Thu, 12 Feb 2026 22:39:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
