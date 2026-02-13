@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 20:48:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 21:43:34 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Reputation</title>
+      <link>https://kubaik.github.io/code-your-reputation/</link>
+      <description>Boost your career with personal branding tips for developers. Learn to code your reputation and stand out.</description>
+      <pubDate>Fri, 13 Feb 2026 21:43:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-reputation/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
       <pubDate>Thu, 12 Feb 2026 21:41:12 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>Build Your Brand</title>
-      <link>https://kubaik.github.io/build-your-brand/</link>
-      <description>Establish your tech presence with a strong portfolio. Learn how to build your brand</description>
-      <pubDate>Thu, 12 Feb 2026 20:43:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-brand/</guid>
     </item>
   </channel>
 </rss>
