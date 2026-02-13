@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 07:55:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 08:54:20 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD Done Right</title>
+      <link>https://kubaik.github.io/cicd-done-right/</link>
+      <description>Optimize your CI/CD pipeline for efficiency &amp; reliability. Learn expert tips &amp; best practices.</description>
+      <pubDate>Fri, 13 Feb 2026 08:54:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-done-right/</guid>
+    </item>
     <item>
       <title>Next.js: Full Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build reusable UI with Web Components &amp; Custom Elements.</description>
       <pubDate>Thu, 12 Feb 2026 02:51:10 +0000</pubDate>
       <guid>https://kubaik.github.io/build-with-web-components/</guid>
-    </item>
-    <item>
-      <title>Balance Made Easy</title>
-      <link>https://kubaik.github.io/balance-made-easy/</link>
-      <description>Simplify load balancing with expert techniques and tips for a seamless user experience.</description>
-      <pubDate>Wed, 11 Feb 2026 23:40:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-made-easy/</guid>
     </item>
   </channel>
 </rss>
