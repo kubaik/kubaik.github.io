@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 19:01:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 19:50:47 +0000</lastBuildDate>
+    <item>
+      <title>Block 101</title>
+      <link>https://kubaik.github.io/block-101/</link>
+      <description>Unlock blockchain basics: learn how it works, its benefits, and more in our beginner&apos;s guide.</description>
+      <pubDate>Fri, 13 Feb 2026 19:50:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-101/</guid>
+    </item>
     <item>
       <title>DB Made Easy</title>
       <link>https://kubaik.github.io/db-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Unlock blockchain potential with smart contract development. Learn how to code to cash with our expert guide.</description>
       <pubDate>Thu, 12 Feb 2026 19:12:48 +0000</pubDate>
       <guid>https://kubaik.github.io/code-to-cash/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Discover the power of Google Cloud Platform with Unlock GCP.</description>
-      <pubDate>Thu, 12 Feb 2026 17:12:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
