@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 16:57:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 17:45:44 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
+      <pubDate>Fri, 13 Feb 2026 17:45:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Unlock TypeScript&apos;s full potential with advanced power types.</description>
       <pubDate>Thu, 12 Feb 2026 16:00:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-power-types/</guid>
-    </item>
-    <item>
-      <title>Write Smarter</title>
-      <link>https://kubaik.github.io/write-smarter/</link>
-      <description>Boost your technical writing skills with expert tips and strategies.</description>
-      <pubDate>Thu, 12 Feb 2026 14:55:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-smarter/</guid>
     </item>
   </channel>
 </rss>
