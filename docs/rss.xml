@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 21:43:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 22:40:58 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Unlock Quantum Computing basics &amp; discover the future of tech in our introductory guide, Quantum 101.</description>
+      <pubDate>Fri, 13 Feb 2026 22:40:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>Code Your Reputation</title>
       <link>https://kubaik.github.io/code-your-reputation/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard data with encryption &amp; key management expertise. Learn how to protect your digital assets.</description>
       <pubDate>Thu, 12 Feb 2026 22:39:02 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>Code Less, Achieve More</title>
-      <link>https://kubaik.github.io/code-less-achieve-more/</link>
-      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
-      <pubDate>Thu, 12 Feb 2026 21:41:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
     </item>
   </channel>
 </rss>
