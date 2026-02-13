@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Feb 2026 23:37:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Feb 2026 02:51:59 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Built Right</title>
+      <link>https://kubaik.github.io/cloud-built-right/</link>
+      <description>Maximize AWS potential with expert cloud architecture guidance</description>
+      <pubDate>Fri, 13 Feb 2026 02:51:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-built-right/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Master Go concurrency: learn parallelism, goroutines &amp; channels for efficient coding.</description>
       <pubDate>Wed, 11 Feb 2026 20:48:01 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservices management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
-      <pubDate>Wed, 11 Feb 2026 19:13:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
