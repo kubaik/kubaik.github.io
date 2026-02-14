@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 15:33:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 16:39:31 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Simplify</title>
+      <link>https://kubaik.github.io/log-on-simplify/</link>
+      <description>Simplify log management with our expert solutions. Streamline analysis &amp; boost security.</description>
+      <pubDate>Sat, 14 Feb 2026 16:39:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-simplify/</guid>
+    </item>
     <item>
       <title>Lock Down: Cyber Basics</title>
       <link>https://kubaik.github.io/lock-down-cyber-basics/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
       <pubDate>Fri, 13 Feb 2026 17:45:35 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with our expert guide.</description>
-      <pubDate>Fri, 13 Feb 2026 16:57:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
