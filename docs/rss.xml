@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 06:56:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 07:39:36 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our beginner&apos;s guide to Behavior-Driven Development.</description>
+      <pubDate>Sat, 14 Feb 2026 07:39:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>VecDBs</title>
       <link>https://kubaik.github.io/vecdbs/</link>
@@ -138,13 +145,6 @@
       <description>Optimize your CI/CD pipeline for efficiency &amp; reliability. Learn expert tips &amp; best practices.</description>
       <pubDate>Fri, 13 Feb 2026 08:54:09 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-done-right/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full Stack</title>
-      <link>https://kubaik.github.io/nextjs-full-stack/</link>
-      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps.</description>
-      <pubDate>Fri, 13 Feb 2026 07:54:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
     </item>
   </channel>
 </rss>
