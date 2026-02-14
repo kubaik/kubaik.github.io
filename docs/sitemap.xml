@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/bdd-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/vecdbs/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/boost-biz-iq/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ml-demystified/</loc><priority>0.9</priority></url>
@@ -172,7 +173,6 @@
 <url><loc>https://kubaik.github.io/vs-code-boosters/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/cicd-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/5g-revolution/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/bdd-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/blockchain-101/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/unlock-data-mesh/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/rust-safe-memory/</loc><priority>0.9</priority></url>
