@@ -159,5 +159,6 @@
   "Vector Databases and Embeddings",
   "Behavior-Driven Development (BDD)",
   "Cloud Migration Strategies",
-  "Data Warehousing Solutions"
+  "Data Warehousing Solutions",
+  "Caching Strategies (Redis, Memcached)"
 ]
