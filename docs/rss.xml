@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 07:39:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 08:41:36 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Smart</title>
+      <link>https://kubaik.github.io/cloud-smart/</link>
+      <description>Unlock efficient cloud migration with expert strategies and best practices.</description>
+      <pubDate>Sat, 14 Feb 2026 08:41:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-smart/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Explore the future of AI with ethics at its core. Learn about responsible AI development and its impact.</description>
       <pubDate>Fri, 13 Feb 2026 09:55:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ethical-ai/</guid>
-    </item>
-    <item>
-      <title>CI/CD Done Right</title>
-      <link>https://kubaik.github.io/cicd-done-right/</link>
-      <description>Optimize your CI/CD pipeline for efficiency &amp; reliability. Learn expert tips &amp; best practices.</description>
-      <pubDate>Fri, 13 Feb 2026 08:54:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-done-right/</guid>
     </item>
   </channel>
 </rss>
