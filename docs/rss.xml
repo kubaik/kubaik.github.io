@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 10:35:07 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 11:29:23 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Sat, 14 Feb 2026 11:29:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Boost Speed: Cache!</title>
       <link>https://kubaik.github.io/boost-speed-cache/</link>
@@ -138,13 +145,6 @@
       <description>Improve app speed &amp; performance with expert tips and tools.</description>
       <pubDate>Fri, 13 Feb 2026 13:16:43 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Optimize code with smart splitting strategies. Improve load times &amp; user experience.</description>
-      <pubDate>Fri, 13 Feb 2026 11:37:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
