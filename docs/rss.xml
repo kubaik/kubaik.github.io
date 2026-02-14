@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 05:52:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 06:56:31 +0000</lastBuildDate>
+    <item>
+      <title>VecDBs</title>
+      <link>https://kubaik.github.io/vecdbs/</link>
+      <description>Unlock efficient similarity searches with Vector Databases &amp; Embeddings.</description>
+      <pubDate>Sat, 14 Feb 2026 06:56:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/vecdbs/</guid>
+    </item>
     <item>
       <title>Boost Biz IQ</title>
       <link>https://kubaik.github.io/boost-biz-iq/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps.</description>
       <pubDate>Fri, 13 Feb 2026 07:54:54 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable architectures with CQRS &amp; Event Sourcing. Learn how to simplify complexity.</description>
-      <pubDate>Fri, 13 Feb 2026 06:08:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
