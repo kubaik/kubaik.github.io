@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 11:29:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 13:04:42 +0000</lastBuildDate>
+    <item>
+      <title>Flutter App Dev</title>
+      <link>https://kubaik.github.io/flutter-app-dev/</link>
+      <description>Build fast, natively compiled apps with Flutter. Learn expert dev techniques.</description>
+      <pubDate>Sat, 14 Feb 2026 13:04:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Fri, 13 Feb 2026 14:50:24 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Improve app speed &amp; performance with expert tips and tools.</description>
-      <pubDate>Fri, 13 Feb 2026 13:16:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
