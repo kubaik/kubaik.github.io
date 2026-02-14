@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 19:31:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 20:35:31 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Learn Python for data science &amp; unlock insights with our expert guide.</description>
+      <pubDate>Sat, 14 Feb 2026 20:35:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Boost your career with personal branding tips for developers. Learn to code your reputation and stand out.</description>
       <pubDate>Fri, 13 Feb 2026 21:43:23 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-reputation/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Streamline tasks with RPA. Learn how automation boosts efficiency</description>
-      <pubDate>Fri, 13 Feb 2026 20:48:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
