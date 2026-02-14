@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 13:04:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 14:34:41 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution: faster speeds, new possibilities.</description>
+      <pubDate>Sat, 14 Feb 2026 14:34:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>Flutter App Dev</title>
       <link>https://kubaik.github.io/flutter-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn Scalability Patterns to grow efficiently</description>
       <pubDate>Fri, 13 Feb 2026 15:51:53 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Fri, 13 Feb 2026 14:50:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
