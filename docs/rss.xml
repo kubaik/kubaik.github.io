@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 22:32:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 23:32:47 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents</title>
+      <link>https://kubaik.github.io/ai-agents/</link>
+      <description>Discover the future of AI: Learn about AI agent development and its applications.</description>
+      <pubDate>Sat, 14 Feb 2026 23:32:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
       <pubDate>Sat, 14 Feb 2026 02:39:10 +0000</pubDate>
       <guid>https://kubaik.github.io/code-together/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
-      <pubDate>Fri, 13 Feb 2026 23:38:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
