@@ -715,15 +715,15 @@
     "topic": "Cybersecurity Fundamentals"
   },
   "database_indexing_strategies": {
-    "timestamp": "2026-01-31T17:29:56.443999",
+    "timestamp": "2026-02-14T17:32:17.502984",
     "hashtags": [
       "DatabaseOptimization",
+      "CloudComputing",
       "DataEngineering",
       "IndexingStrategies",
-      "CloudComputing",
-      "BigDataManagement",
-      "DatabasePerformance",
-      "QueryOptimization"
+      "QueryPerformance",
+      "DevOpsTools",
+      "DataIntelligence"
     ],
     "topic": "Database Indexing Strategies"
   },

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 16:39:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 17:32:27 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Sat, 14 Feb 2026 17:32:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Log On: Simplify</title>
       <link>https://kubaik.github.io/log-on-simplify/</link>
@@ -138,13 +145,6 @@
       <description>Simplify database management with expert tools and tips.</description>
       <pubDate>Fri, 13 Feb 2026 19:00:55 +0000</pubDate>
       <guid>https://kubaik.github.io/db-made-easy/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Improve code quality with Test-Driven Development (TDD). Learn how to code smarter, not harder.</description>
-      <pubDate>Fri, 13 Feb 2026 17:45:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
