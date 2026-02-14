@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 18:46:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 19:31:03 +0000</lastBuildDate>
+    <item>
+      <title>Vuln Free</title>
+      <link>https://kubaik.github.io/vuln-free/</link>
+      <description>Stay ahead of threats with proactive vulnerability management strategies.</description>
+      <pubDate>Sat, 14 Feb 2026 19:30:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuln-free/</guid>
+    </item>
     <item>
       <title>Top Web Frameworks</title>
       <link>https://kubaik.github.io/top-web-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Streamline tasks with RPA. Learn how automation boosts efficiency</description>
       <pubDate>Fri, 13 Feb 2026 20:48:43 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>Block 101</title>
-      <link>https://kubaik.github.io/block-101/</link>
-      <description>Unlock blockchain basics: learn how it works, its benefits, and more in our beginner&apos;s guide.</description>
-      <pubDate>Fri, 13 Feb 2026 19:50:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/block-101/</guid>
     </item>
   </channel>
 </rss>
