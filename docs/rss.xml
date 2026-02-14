@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 14:34:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Feb 2026 15:33:17 +0000</lastBuildDate>
+    <item>
+      <title>Lock Down: Cyber Basics</title>
+      <link>https://kubaik.github.io/lock-down-cyber-basics/</link>
+      <description>Learn cybersecurity basics to protect yourself online with our expert guide.</description>
+      <pubDate>Sat, 14 Feb 2026 15:33:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-down-cyber-basics/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Learn Java Spring Boot development with our expert guide.</description>
       <pubDate>Fri, 13 Feb 2026 16:57:04 +0000</pubDate>
       <guid>https://kubaik.github.io/boot-up-with-java/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Learn Scalability Patterns to grow efficiently</description>
-      <pubDate>Fri, 13 Feb 2026 15:51:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
