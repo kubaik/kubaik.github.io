@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 13:06:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 14:35:16 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Improve decisions with accurate data. Learn why clean data matters for business success.</description>
+      <pubDate>Sun, 15 Feb 2026 14:35:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>Angular Enters</title>
       <link>https://kubaik.github.io/angular-enters/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution: faster speeds, new possibilities.</description>
       <pubDate>Sat, 14 Feb 2026 14:34:32 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>Flutter App Dev</title>
-      <link>https://kubaik.github.io/flutter-app-dev/</link>
-      <description>Build fast, natively compiled apps with Flutter. Learn expert dev techniques.</description>
-      <pubDate>Sat, 14 Feb 2026 13:04:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
     </item>
   </channel>
 </rss>
