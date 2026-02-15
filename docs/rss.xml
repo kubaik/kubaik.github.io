@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Feb 2026 23:32:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 02:52:47 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn about Zero Trust Security Architecture &amp; how to protect your network with a &apos;never trust, always verify&apos; approach.</description>
+      <pubDate>Sun, 15 Feb 2026 02:52:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
       <pubDate>Sat, 14 Feb 2026 04:47:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-demystified/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
-      <pubDate>Sat, 14 Feb 2026 02:39:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
