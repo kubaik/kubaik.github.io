@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 22:32:44 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 23:34:51 +0000</lastBuildDate>
+    <item>
+      <title>SRE Simplified</title>
+      <link>https://kubaik.github.io/sre-simplified/</link>
+      <description>Unlock reliable systems with SRE best practices &amp; expert insights.</description>
+      <pubDate>Sun, 15 Feb 2026 23:34:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-simplified/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of AI: Learn about AI agent development and its applications.</description>
       <pubDate>Sat, 14 Feb 2026 23:32:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert Web Performance Optimization tips and tricks.</description>
-      <pubDate>Sat, 14 Feb 2026 22:32:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
