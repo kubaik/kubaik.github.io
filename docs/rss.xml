@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 10:35:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 11:29:30 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Explore tutorials, tips, and best practices.</description>
+      <pubDate>Sun, 15 Feb 2026 11:29:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>AI Meets Edge</title>
       <link>https://kubaik.github.io/ai-meets-edge/</link>
@@ -138,13 +145,6 @@
       <description>Master Agile development with expert tips and best practices.</description>
       <pubDate>Sat, 14 Feb 2026 11:29:12 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache!</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost site speed with caching! Learn Redis &amp; Memcached strategies</description>
-      <pubDate>Sat, 14 Feb 2026 10:34:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
