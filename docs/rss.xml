@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 11:29:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 13:06:29 +0000</lastBuildDate>
+    <item>
+      <title>Angular Enters</title>
+      <link>https://kubaik.github.io/angular-enters/</link>
+      <description>Unlock scalable Angular enterprise apps with expert insights.</description>
+      <pubDate>Sun, 15 Feb 2026 13:06:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-enters/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Build fast, natively compiled apps with Flutter. Learn expert dev techniques.</description>
       <pubDate>Sat, 14 Feb 2026 13:04:32 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with expert tips and best practices.</description>
-      <pubDate>Sat, 14 Feb 2026 11:29:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
