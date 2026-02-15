@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 19:32:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 20:36:04 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Delta Lake</title>
+      <link>https://kubaik.github.io/unlock-delta-lake/</link>
+      <description>Unlock Delta Lake: Discover the power of Data Lakehouse &amp; transform your data management</description>
+      <pubDate>Sun, 15 Feb 2026 20:35:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-delta-lake/</guid>
+    </item>
     <item>
       <title>EDA Explained</title>
       <link>https://kubaik.github.io/eda-explained/</link>
@@ -138,13 +145,6 @@
       <description>Learn Python for data science &amp; unlock insights with our expert guide.</description>
       <pubDate>Sat, 14 Feb 2026 20:35:20 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Vuln Free</title>
-      <link>https://kubaik.github.io/vuln-free/</link>
-      <description>Stay ahead of threats with proactive vulnerability management strategies.</description>
-      <pubDate>Sat, 14 Feb 2026 19:30:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-free/</guid>
     </item>
   </channel>
 </rss>
