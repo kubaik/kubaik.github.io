@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 07:41:44 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 08:42:07 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; lives.</description>
+      <pubDate>Sun, 15 Feb 2026 08:41:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Secure Your Biz</title>
       <link>https://kubaik.github.io/secure-your-biz/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient cloud migration with expert strategies and best practices.</description>
       <pubDate>Sat, 14 Feb 2026 08:41:25 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-smart/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Learn BDD basics &amp; simplify your testing process with our beginner&apos;s guide to Behavior-Driven Development.</description>
-      <pubDate>Sat, 14 Feb 2026 07:39:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
