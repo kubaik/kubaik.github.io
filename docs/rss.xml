@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 06:05:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 07:41:44 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your Biz</title>
+      <link>https://kubaik.github.io/secure-your-biz/</link>
+      <description>Safeguard your business with expert security compliance solutions for SOC 2 and ISO 27001.</description>
+      <pubDate>Sun, 15 Feb 2026 07:41:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-biz/</guid>
+    </item>
     <item>
       <title>Boost CLI Productivity</title>
       <link>https://kubaik.github.io/boost-cli-productivity/</link>
@@ -138,13 +145,6 @@
       <description>Learn BDD basics &amp; simplify your testing process with our beginner&apos;s guide to Behavior-Driven Development.</description>
       <pubDate>Sat, 14 Feb 2026 07:39:26 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>VecDBs</title>
-      <link>https://kubaik.github.io/vecdbs/</link>
-      <description>Unlock efficient similarity searches with Vector Databases &amp; Embeddings.</description>
-      <pubDate>Sat, 14 Feb 2026 06:56:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/vecdbs/</guid>
     </item>
   </channel>
 </rss>
