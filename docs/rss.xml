@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 09:40:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 10:35:09 +0000</lastBuildDate>
+    <item>
+      <title>AI Meets Edge</title>
+      <link>https://kubaik.github.io/ai-meets-edge/</link>
+      <description>Unlock Edge Computing potential with AI. Discover how AI enhances real-time processing &amp; decision-making.</description>
+      <pubDate>Sun, 15 Feb 2026 10:34:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
+    </item>
     <item>
       <title>Crack the Code</title>
       <link>https://kubaik.github.io/crack-the-code/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with caching! Learn Redis &amp; Memcached strategies</description>
       <pubDate>Sat, 14 Feb 2026 10:34:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-cache/</guid>
-    </item>
-    <item>
-      <title>Data Done Right</title>
-      <link>https://kubaik.github.io/data-done-right/</link>
-      <description>Unlock data insights with expert warehousing solutions. Learn more.</description>
-      <pubDate>Sat, 14 Feb 2026 09:38:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-done-right/</guid>
     </item>
   </channel>
 </rss>
