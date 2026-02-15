@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 02:52:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 05:00:36 +0000</lastBuildDate>
+    <item>
+      <title>TS for Scale</title>
+      <link>https://kubaik.github.io/ts-for-scale/</link>
+      <description>Boost app performance with TypeScript. Learn how TS scales for large applications.</description>
+      <pubDate>Sun, 15 Feb 2026 05:00:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-for-scale/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data-driven insights with top Business Intelligence Tools. Boost your business IQ now!</description>
       <pubDate>Sat, 14 Feb 2026 05:51:50 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-biz-iq/</guid>
-    </item>
-    <item>
-      <title>ML Demystified</title>
-      <link>https://kubaik.github.io/ml-demystified/</link>
-      <description>Unlock ML secrets: simple explanations of complex algorithms.</description>
-      <pubDate>Sat, 14 Feb 2026 04:47:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-demystified/</guid>
     </item>
   </channel>
 </rss>
