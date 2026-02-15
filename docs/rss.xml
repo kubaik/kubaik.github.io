@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 15:32:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 16:40:22 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twin</title>
+      <link>https://kubaik.github.io/digital-twin/</link>
+      <description>Discover Digital Twin tech: Virtual replicas for smarter operations &amp; innovation</description>
+      <pubDate>Sun, 15 Feb 2026 16:40:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twin/</guid>
+    </item>
     <item>
       <title>Vision Tech</title>
       <link>https://kubaik.github.io/vision-tech/</link>
@@ -138,13 +145,6 @@
       <description>Simplify log management with our expert solutions. Streamline analysis &amp; boost security.</description>
       <pubDate>Sat, 14 Feb 2026 16:39:20 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-simplify/</guid>
-    </item>
-    <item>
-      <title>Lock Down: Cyber Basics</title>
-      <link>https://kubaik.github.io/lock-down-cyber-basics/</link>
-      <description>Learn cybersecurity basics to protect yourself online with our expert guide.</description>
-      <pubDate>Sat, 14 Feb 2026 15:33:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-down-cyber-basics/</guid>
     </item>
   </channel>
 </rss>
