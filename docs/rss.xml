@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 16:40:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 17:32:49 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Learn to craft intuitive Recommender Systems with expert design tips and strategies.</description>
+      <pubDate>Sun, 15 Feb 2026 17:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>Digital Twin</title>
       <link>https://kubaik.github.io/digital-twin/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with expert database indexing strategies.</description>
       <pubDate>Sat, 14 Feb 2026 17:32:17 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Log On: Simplify</title>
-      <link>https://kubaik.github.io/log-on-simplify/</link>
-      <description>Simplify log management with our expert solutions. Streamline analysis &amp; boost security.</description>
-      <pubDate>Sat, 14 Feb 2026 16:39:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-simplify/</guid>
     </item>
   </channel>
 </rss>
