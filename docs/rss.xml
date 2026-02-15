@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 17:32:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 18:48:09 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD on-the-go automation</description>
+      <pubDate>Sun, 15 Feb 2026 18:48:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover top web frameworks for modern development, boosting speed and efficiency.</description>
       <pubDate>Sat, 14 Feb 2026 18:45:54 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-frameworks/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Sat, 14 Feb 2026 17:32:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
