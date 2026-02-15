@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Feb 2026 05:00:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2026 06:05:17 +0000</lastBuildDate>
+    <item>
+      <title>Boost CLI Productivity</title>
+      <link>https://kubaik.github.io/boost-cli-productivity/</link>
+      <description>Boost CLI productivity with expert tips and tricks.</description>
+      <pubDate>Sun, 15 Feb 2026 06:05:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
+    </item>
     <item>
       <title>TS for Scale</title>
       <link>https://kubaik.github.io/ts-for-scale/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector Databases &amp; Embeddings.</description>
       <pubDate>Sat, 14 Feb 2026 06:56:21 +0000</pubDate>
       <guid>https://kubaik.github.io/vecdbs/</guid>
-    </item>
-    <item>
-      <title>Boost Biz IQ</title>
-      <link>https://kubaik.github.io/boost-biz-iq/</link>
-      <description>Unlock data-driven insights with top Business Intelligence Tools. Boost your business IQ now!</description>
-      <pubDate>Sat, 14 Feb 2026 05:51:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-biz-iq/</guid>
     </item>
   </channel>
 </rss>
