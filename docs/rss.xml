@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Feb 2026 14:51:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Feb 2026 15:49:55 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Mon, 16 Feb 2026 15:49:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Blue-Green: Zero Downtime</title>
       <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
@@ -33,13 +40,6 @@
       <description>Learn Flutter app development &amp; build natively compiled apps.</description>
       <pubDate>Mon, 16 Feb 2026 10:05:02 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize backend testing with smart strategies and best practices.</description>
-      <pubDate>Mon, 16 Feb 2026 08:58:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>ETL vs ELT</title>
