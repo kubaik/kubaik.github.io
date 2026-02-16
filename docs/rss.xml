@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Feb 2026 15:49:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Feb 2026 16:55:34 +0000</lastBuildDate>
+    <item>
+      <title>Crack Tech Interviews</title>
+      <link>https://kubaik.github.io/crack-tech-interviews/</link>
+      <description>Land your dream tech job with our expert interview prep guide.</description>
+      <pubDate>Mon, 16 Feb 2026 16:55:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Explore tutorials, tips, and best practices.</description>
       <pubDate>Sun, 15 Feb 2026 11:29:19 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>AI Meets Edge</title>
-      <link>https://kubaik.github.io/ai-meets-edge/</link>
-      <description>Unlock Edge Computing potential with AI. Discover how AI enhances real-time processing &amp; decision-making.</description>
-      <pubDate>Sun, 15 Feb 2026 10:34:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-meets-edge/</guid>
     </item>
   </channel>
 </rss>
