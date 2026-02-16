@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Feb 2026 18:55:28 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Feb 2026 19:36:59 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with expert cloud security tips and best practices.</description>
+      <pubDate>Mon, 16 Feb 2026 19:36:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech: Virtual replicas for smarter operations &amp; innovation</description>
       <pubDate>Sun, 15 Feb 2026 16:40:12 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve decisions with accurate data. Learn why clean data matters for business success.</description>
-      <pubDate>Sun, 15 Feb 2026 14:35:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
