@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Feb 2026 08:58:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Feb 2026 10:05:13 +0000</lastBuildDate>
+    <item>
+      <title>Flutter App Dev</title>
+      <link>https://kubaik.github.io/flutter-app-dev/</link>
+      <description>Learn Flutter app development &amp; build natively compiled apps.</description>
+      <pubDate>Mon, 16 Feb 2026 10:05:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your business with expert security compliance solutions for SOC 2 and ISO 27001.</description>
       <pubDate>Sun, 15 Feb 2026 07:41:34 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-biz/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Sun, 15 Feb 2026 06:05:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
