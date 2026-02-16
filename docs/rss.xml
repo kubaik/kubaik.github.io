@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Feb 2026 11:45:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Feb 2026 13:19:56 +0000</lastBuildDate>
+    <item>
+      <title>Top Web Frameworks</title>
+      <link>https://kubaik.github.io/top-web-frameworks/</link>
+      <description>Discover top web frameworks for modern development, boost productivity &amp; efficiency.</description>
+      <pubDate>Mon, 16 Feb 2026 13:19:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/top-web-frameworks/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient coding with algorithm complexity analysis insights.</description>
       <pubDate>Sun, 15 Feb 2026 09:39:58 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-the-code/</guid>
-    </item>
-    <item>
-      <title>VR Beyond Gaming</title>
-      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
-      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; lives.</description>
-      <pubDate>Sun, 15 Feb 2026 08:41:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
     </item>
   </channel>
 </rss>
