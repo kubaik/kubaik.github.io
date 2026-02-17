@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 02:44:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 04:59:24 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
+      <pubDate>Tue, 17 Feb 2026 04:59:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>EDA Unleashed</title>
       <link>https://kubaik.github.io/eda-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
       <pubDate>Sun, 15 Feb 2026 22:32:34 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build robust &amp; scalable apps with expert guides and tutorials.</description>
-      <pubDate>Sun, 15 Feb 2026 21:32:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
