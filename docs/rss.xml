@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 09:59:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 10:59:53 +0000</lastBuildDate>
+    <item>
+      <title>Boot Up with Java</title>
+      <link>https://kubaik.github.io/boot-up-with-java/</link>
+      <description>Discover the power of Java Spring Boot. Learn to build &amp; deploy apps quickly.</description>
+      <pubDate>Tue, 17 Feb 2026 10:59:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
+    </item>
     <item>
       <title>Kotlin Android</title>
       <link>https://kubaik.github.io/kotlin-android/</link>
@@ -138,13 +145,6 @@
       <description>Learn Flutter app development &amp; build natively compiled apps.</description>
       <pubDate>Mon, 16 Feb 2026 10:05:02 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes.</description>
-      <pubDate>Mon, 16 Feb 2026 07:14:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
