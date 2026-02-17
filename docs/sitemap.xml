@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/vector-dbs/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/graphql-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/swift-ios-dev/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/boot-up-with-java/</loc><priority>0.9</priority></url>
@@ -325,7 +326,6 @@
 <url><loc>https://kubaik.github.io/pen-test-methods/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/flutter-build-fast/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/xai-uncovered/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/vector-dbs/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ml-algos-decoded/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/mbaas-simplify-app-dev/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/aws-cloud-blueprint/</loc><priority>0.9</priority></url>
