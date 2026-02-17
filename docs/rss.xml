@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 17:11:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 19:07:02 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Unlock modern JS: Discover essential ES6+ features &amp; boost coding skills.</description>
+      <pubDate>Tue, 17 Feb 2026 19:06:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>Serverless Simplified</title>
       <link>https://kubaik.github.io/serverless-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Maximize your network speed with expert tips and tricks.</description>
       <pubDate>Mon, 16 Feb 2026 17:43:28 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Crack Tech Interviews</title>
-      <link>https://kubaik.github.io/crack-tech-interviews/</link>
-      <description>Land your dream tech job with our expert interview prep guide.</description>
-      <pubDate>Mon, 16 Feb 2026 16:55:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
     </item>
   </channel>
 </rss>
