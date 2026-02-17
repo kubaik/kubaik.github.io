@@ -27,5 +27,6 @@
   "Vector Databases and Embeddings",
   "Code Review Best Practices",
   "Serverless Architecture Patterns",
-  "JavaScript ES6+ Features"
+  "JavaScript ES6+ Features",
+  "Rust Memory Safety"
 ]
