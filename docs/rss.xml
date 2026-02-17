@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 22:39:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 23:37:04 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS, a lightweight JavaScript framework for modern web development.</description>
+      <pubDate>Tue, 17 Feb 2026 23:36:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity fundamentals with Cyber Basics. Protect yourself online.</description>
       <pubDate>Mon, 16 Feb 2026 21:36:58 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-basics/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: expert guide to Internet of Things architecture</description>
-      <pubDate>Mon, 16 Feb 2026 20:39:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
