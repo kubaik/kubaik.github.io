@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 08:57:06 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 09:59:26 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android</title>
+      <link>https://kubaik.github.io/kotlin-android/</link>
+      <description>Learn Android dev with Kotlin. Build apps faster &amp; more efficiently.</description>
+      <pubDate>Tue, 17 Feb 2026 09:59:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Discover the difference between ETL &amp; ELT processes.</description>
       <pubDate>Mon, 16 Feb 2026 07:14:17 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Explore AI-powered Computer Vision tech &amp; its innovative applications.</description>
-      <pubDate>Mon, 16 Feb 2026 05:06:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
