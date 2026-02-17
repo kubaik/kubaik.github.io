@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 11:49:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 13:19:59 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Done Right</title>
+      <link>https://kubaik.github.io/graphql-done-right/</link>
+      <description>Master GraphQL API development with best practices and expert tips.</description>
+      <pubDate>Tue, 17 Feb 2026 13:19:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-done-right/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover top web frameworks for modern development, boost productivity &amp; efficiency.</description>
       <pubDate>Mon, 16 Feb 2026 13:19:46 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-frameworks/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn Clean Code Principles for better software development</description>
-      <pubDate>Mon, 16 Feb 2026 11:45:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
