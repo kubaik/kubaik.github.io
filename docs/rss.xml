@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 10:59:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 11:49:27 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Tue, 17 Feb 2026 11:49:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>Learn Clean Code Principles for better software development</description>
       <pubDate>Mon, 16 Feb 2026 11:45:03 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>Flutter App Dev</title>
-      <link>https://kubaik.github.io/flutter-app-dev/</link>
-      <description>Learn Flutter app development &amp; build natively compiled apps.</description>
-      <pubDate>Mon, 16 Feb 2026 10:05:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
     </item>
   </channel>
 </rss>
