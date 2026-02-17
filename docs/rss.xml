@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Feb 2026 21:42:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Feb 2026 22:39:58 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn effective design patterns in practice, boosting usability and user experience.</description>
+      <pubDate>Tue, 17 Feb 2026 22:39:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>AI Done Right</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: expert guide to Internet of Things architecture</description>
       <pubDate>Mon, 16 Feb 2026 20:39:40 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Secure Cloud</title>
-      <link>https://kubaik.github.io/secure-cloud/</link>
-      <description>Protect your data with expert cloud security tips and best practices.</description>
-      <pubDate>Mon, 16 Feb 2026 19:36:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-cloud/</guid>
     </item>
   </channel>
 </rss>
