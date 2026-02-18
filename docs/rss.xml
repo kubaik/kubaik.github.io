@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 20:50:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 21:41:31 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure zero downtime with high availability systems. Learn more about &apos;always on&apos; solutions.</description>
+      <pubDate>Wed, 18 Feb 2026 21:41:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Responsive Web Design</title>
       <link>https://kubaik.github.io/responsive-web-design/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JS: Discover essential ES6+ features &amp; boost coding skills.</description>
       <pubDate>Tue, 17 Feb 2026 19:06:52 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Serverless Simplified</title>
-      <link>https://kubaik.github.io/serverless-simplified/</link>
-      <description>Learn Serverless Architecture Patterns made easy with expert guides and examples.</description>
-      <pubDate>Tue, 17 Feb 2026 17:10:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-simplified/</guid>
     </item>
   </channel>
 </rss>
