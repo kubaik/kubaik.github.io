@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 05:00:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 06:10:54 +0000</lastBuildDate>
+    <item>
+      <title>Detect Anomalies</title>
+      <link>https://kubaik.github.io/detect-anomalies/</link>
+      <description>Identify unusual patterns with machine learning anomaly detection techniques.</description>
+      <pubDate>Wed, 18 Feb 2026 06:10:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/detect-anomalies/</guid>
+    </item>
     <item>
       <title>Data Flow</title>
       <link>https://kubaik.github.io/data-flow/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
       <pubDate>Tue, 17 Feb 2026 02:44:31 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-unleashed/</guid>
-    </item>
-    <item>
-      <title>VR Now</title>
-      <link>https://kubaik.github.io/vr-now/</link>
-      <description>Explore the latest VR applications and discover a new world of immersive experiences</description>
-      <pubDate>Mon, 16 Feb 2026 23:36:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-now/</guid>
     </item>
   </channel>
 </rss>
