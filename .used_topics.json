@@ -46,5 +46,6 @@
   "CQRS and Event Sourcing",
   "Caching Strategies (Redis, Memcached)",
   "Responsive Web Design Techniques",
-  "High Availability Systems"
+  "High Availability Systems",
+  "Feature Engineering Techniques"
 ]
