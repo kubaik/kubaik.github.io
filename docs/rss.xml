@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 10:58:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 11:49:19 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Wed, 18 Feb 2026 11:49:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>Build with Web Components</title>
       <link>https://kubaik.github.io/build-with-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Build apps faster &amp; more efficiently.</description>
       <pubDate>Tue, 17 Feb 2026 09:59:16 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
-      <pubDate>Tue, 17 Feb 2026 08:56:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
