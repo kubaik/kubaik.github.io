@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 06:10:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 07:56:01 +0000</lastBuildDate>
+    <item>
+      <title>SRE: Fixing Errors</title>
+      <link>https://kubaik.github.io/sre-fixing-errors/</link>
+      <description>Learn SRE best practices to fix errors &amp; improve system reliability.</description>
+      <pubDate>Wed, 18 Feb 2026 07:55:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-fixing-errors/</guid>
+    </item>
     <item>
       <title>Detect Anomalies</title>
       <link>https://kubaik.github.io/detect-anomalies/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
       <pubDate>Tue, 17 Feb 2026 04:59:13 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>EDA Unleashed</title>
-      <link>https://kubaik.github.io/eda-unleashed/</link>
-      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to unleash its full potential.</description>
-      <pubDate>Tue, 17 Feb 2026 02:44:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/eda-unleashed/</guid>
     </item>
   </channel>
 </rss>
