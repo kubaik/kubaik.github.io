@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 09:58:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 10:58:15 +0000</lastBuildDate>
+    <item>
+      <title>Build with Web Components</title>
+      <link>https://kubaik.github.io/build-with-web-components/</link>
+      <description>Learn to build reusable UI with Web Components &amp; Custom Elements.</description>
+      <pubDate>Wed, 18 Feb 2026 10:58:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-with-web-components/</guid>
+    </item>
     <item>
       <title>AR Dev 101</title>
       <link>https://kubaik.github.io/ar-dev-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
       <pubDate>Tue, 17 Feb 2026 08:56:55 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Code Less</title>
-      <link>https://kubaik.github.io/code-less/</link>
-      <description>Boost productivity with low-code/no-code platforms, reducing development time and costs.</description>
-      <pubDate>Tue, 17 Feb 2026 07:54:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less/</guid>
     </item>
   </channel>
 </rss>
