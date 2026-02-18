@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 14:53:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 15:59:35 +0000</lastBuildDate>
+    <item>
+      <title>Push Done Right</title>
+      <link>https://kubaik.github.io/push-done-right/</link>
+      <description>Boost engagement with perfect push notifications. Learn implementation best practices.</description>
+      <pubDate>Wed, 18 Feb 2026 15:59:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-done-right/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Master GraphQL API development with best practices and expert tips.</description>
       <pubDate>Tue, 17 Feb 2026 13:19:49 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-done-right/</guid>
-    </item>
-    <item>
-      <title>Swift iOS Dev</title>
-      <link>https://kubaik.github.io/swift-ios-dev/</link>
-      <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
-      <pubDate>Tue, 17 Feb 2026 11:49:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
     </item>
   </channel>
 </rss>
