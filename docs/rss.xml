@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 22:41:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 23:37:42 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Boost your career with effective technical writing skills. Learn to write with clarity and purpose.</description>
+      <pubDate>Wed, 18 Feb 2026 23:37:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>Boost Models</title>
       <link>https://kubaik.github.io/boost-models/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to develop AI with ethics in mind, promoting responsible innovation.</description>
       <pubDate>Tue, 17 Feb 2026 21:42:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-done-right/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Code</title>
-      <link>https://kubaik.github.io/rust-safe-code/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership system.</description>
-      <pubDate>Tue, 17 Feb 2026 20:47:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-code/</guid>
     </item>
   </channel>
 </rss>
