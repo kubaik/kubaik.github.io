@@ -35,5 +35,6 @@
   "Backend Architecture Patterns",
   "Data Engineering Pipelines",
   "Anomaly Detection Using Machine Learning",
-  "Site Reliability Engineering (SRE)"
+  "Site Reliability Engineering (SRE)",
+  "Kubernetes Orchestration"
 ]
