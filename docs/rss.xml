@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 15:59:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 17:15:47 +0000</lastBuildDate>
+    <item>
+      <title>CQRS Unlocked</title>
+      <link>https://kubaik.github.io/cqrs-unlocked/</link>
+      <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn patterns &amp; benefits.</description>
+      <pubDate>Wed, 18 Feb 2026 17:15:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
       <pubDate>Tue, 17 Feb 2026 14:54:29 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>GraphQL Done Right</title>
-      <link>https://kubaik.github.io/graphql-done-right/</link>
-      <description>Master GraphQL API development with best practices and expert tips.</description>
-      <pubDate>Tue, 17 Feb 2026 13:19:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-done-right/</guid>
     </item>
   </channel>
 </rss>
