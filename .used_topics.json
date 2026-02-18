@@ -44,5 +44,6 @@
   "Technical Debt Management",
   "Push Notifications Implementation",
   "CQRS and Event Sourcing",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Responsive Web Design Techniques"
 ]
