@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 02:46:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 04:59:31 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
+      <pubDate>Thu, 19 Feb 2026 04:59:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Discover Svelte JS, a lightweight JavaScript framework for modern web development.</description>
       <pubDate>Tue, 17 Feb 2026 23:36:54 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn effective design patterns in practice, boosting usability and user experience.</description>
-      <pubDate>Tue, 17 Feb 2026 22:39:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
