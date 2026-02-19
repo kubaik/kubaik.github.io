@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 17:05:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 19:01:06 +0000</lastBuildDate>
+    <item>
+      <title>Async Done Right</title>
+      <link>https://kubaik.github.io/async-done-right/</link>
+      <description>Master async processing with message queues for scalable &amp; reliable systems.</description>
+      <pubDate>Thu, 19 Feb 2026 19:00:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-done-right/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost engagement with perfect push notifications. Learn implementation best practices.</description>
       <pubDate>Wed, 18 Feb 2026 15:59:25 +0000</pubDate>
       <guid>https://kubaik.github.io/push-done-right/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Conquer tech debt with strategies for management &amp; reduction.</description>
-      <pubDate>Wed, 18 Feb 2026 14:53:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
