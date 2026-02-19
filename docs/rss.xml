@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 19:45:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 20:40:32 +0000</lastBuildDate>
+    <item>
+      <title>Boost Memory</title>
+      <link>https://kubaik.github.io/boost-memory/</link>
+      <description>Improve focus &amp; productivity with expert memory management tips.</description>
+      <pubDate>Thu, 19 Feb 2026 20:40:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-memory/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart caching strategies using Redis and Memcached.</description>
       <pubDate>Wed, 18 Feb 2026 19:05:27 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-smarter/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn patterns &amp; benefits.</description>
-      <pubDate>Wed, 18 Feb 2026 17:15:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
