@@ -63,5 +63,6 @@
   "Recommender Systems Design",
   "Message Queues and Async Processing",
   "Application Performance Monitoring",
-  "Memory Management Best Practices"
+  "Memory Management Best Practices",
+  "Service Mesh Architecture"
 ]
