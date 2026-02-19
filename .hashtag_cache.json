@@ -2398,13 +2398,13 @@
     "topic": "Canary Deployments"
   },
   "behavior-driven_development_(bdd)": {
-    "timestamp": "2026-02-14T07:39:26.950795",
+    "timestamp": "2026-02-19T07:53:57.499707",
     "hashtags": [
       "SoftwareTesting",
       "DevOps",
-      "AgileDevelopment",
-      "TestDriven",
       "BehaviorDriven",
+      "TestAutomation",
+      "AgileDevelopment",
       "QualityAssurance",
       "CloudNative"
     ],
