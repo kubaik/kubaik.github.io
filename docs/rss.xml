@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 07:54:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 08:55:34 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Learn to build scalable web apps with Ruby on Rails.</description>
+      <pubDate>Thu, 19 Feb 2026 08:55:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>BDD Done Right</title>
       <link>https://kubaik.github.io/bdd-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Identify unusual patterns with machine learning anomaly detection techniques.</description>
       <pubDate>Wed, 18 Feb 2026 06:10:45 +0000</pubDate>
       <guid>https://kubaik.github.io/detect-anomalies/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Streamline data workflows with efficient engineering pipelines.</description>
-      <pubDate>Wed, 18 Feb 2026 05:00:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
