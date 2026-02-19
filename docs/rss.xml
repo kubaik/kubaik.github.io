@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 23:37:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 02:46:59 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD automation on-the-go</description>
+      <pubDate>Thu, 19 Feb 2026 02:46:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Write to Thrive</title>
       <link>https://kubaik.github.io/write-to-thrive/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective design patterns in practice, boosting usability and user experience.</description>
       <pubDate>Tue, 17 Feb 2026 22:39:47 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>AI Done Right</title>
-      <link>https://kubaik.github.io/ai-done-right/</link>
-      <description>Learn how to develop AI with ethics in mind, promoting responsible innovation.</description>
-      <pubDate>Tue, 17 Feb 2026 21:42:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-done-right/</guid>
     </item>
   </channel>
 </rss>
