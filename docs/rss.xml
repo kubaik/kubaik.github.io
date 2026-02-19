@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 09:57:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 10:56:59 +0000</lastBuildDate>
+    <item>
+      <title>Work Smarter</title>
+      <link>https://kubaik.github.io/work-smarter/</link>
+      <description>Boost productivity with remote work best practices and expert tips.</description>
+      <pubDate>Thu, 19 Feb 2026 10:56:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/work-smarter/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Unlock container management with Kubernetes Orchestration. Learn more.</description>
       <pubDate>Wed, 18 Feb 2026 08:56:19 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-unleashed/</guid>
-    </item>
-    <item>
-      <title>SRE: Fixing Errors</title>
-      <link>https://kubaik.github.io/sre-fixing-errors/</link>
-      <description>Learn SRE best practices to fix errors &amp; improve system reliability.</description>
-      <pubDate>Wed, 18 Feb 2026 07:55:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-fixing-errors/</guid>
     </item>
   </channel>
 </rss>
