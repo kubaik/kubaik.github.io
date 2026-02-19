@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 15:57:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 17:05:01 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft intuitive Recommender Systems with Design Smart, your guide to personalized user experiences.</description>
+      <pubDate>Thu, 19 Feb 2026 17:04:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Ace Sys Design</title>
       <link>https://kubaik.github.io/ace-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Conquer tech debt with strategies for management &amp; reduction.</description>
       <pubDate>Wed, 18 Feb 2026 14:53:30 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-tech-debt/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Wed, 18 Feb 2026 13:21:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
