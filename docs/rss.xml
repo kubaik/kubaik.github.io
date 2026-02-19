@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 04:59:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Feb 2026 06:09:19 +0000</lastBuildDate>
+    <item>
+      <title>DLNN: AI Power</title>
+      <link>https://kubaik.github.io/dlnn-ai-power/</link>
+      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks (DLNN)</description>
+      <pubDate>Thu, 19 Feb 2026 06:09:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/dlnn-ai-power/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert backend architecture patterns &amp; boost app performance with our Backend Blueprint guide.</description>
       <pubDate>Wed, 18 Feb 2026 02:47:29 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Discover Svelte JS, a lightweight JavaScript framework for modern web development.</description>
-      <pubDate>Tue, 17 Feb 2026 23:36:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
