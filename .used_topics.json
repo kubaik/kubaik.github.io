@@ -73,5 +73,6 @@
   "Database Design and Normalization",
   "Database Query Optimization",
   "Mobile Backend as a Service (BaaS)",
-  "Functional Programming Concepts"
+  "Functional Programming Concepts",
+  "OAuth 2.0 and OpenID Connect"
 ]
