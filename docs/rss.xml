@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 08:52:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 09:51:52 +0000</lastBuildDate>
+    <item>
+      <title>Streamline Mobile Apps</title>
+      <link>https://kubaik.github.io/streamline-mobile-apps/</link>
+      <description>Simplify app development with Mobile Backend as a Service (BaaS). Learn how to streamline your mobile apps.</description>
+      <pubDate>Fri, 20 Feb 2026 09:51:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/streamline-mobile-apps/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build scalable web apps with Ruby on Rails.</description>
       <pubDate>Thu, 19 Feb 2026 08:55:24 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-web-apps/</guid>
-    </item>
-    <item>
-      <title>BDD Done Right</title>
-      <link>https://kubaik.github.io/bdd-done-right/</link>
-      <description>Learn best practices for Behavior-Driven Development (BDD)</description>
-      <pubDate>Thu, 19 Feb 2026 07:53:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-done-right/</guid>
     </item>
   </channel>
 </rss>
