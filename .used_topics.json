@@ -70,5 +70,6 @@
   "API Security Best Practices",
   "AWS Cloud Architecture",
   "Web Application Firewall (WAF)",
-  "Database Design and Normalization"
+  "Database Design and Normalization",
+  "Database Query Optimization"
 ]
