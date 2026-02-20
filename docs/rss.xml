@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 05:59:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 07:10:35 +0000</lastBuildDate>
+    <item>
+      <title>Norm Your Data</title>
+      <link>https://kubaik.github.io/norm-your-data/</link>
+      <description>Learn database normalization techniques to optimize performance and reduce data redundancy.</description>
+      <pubDate>Fri, 20 Feb 2026 07:10:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/norm-your-data/</guid>
+    </item>
     <item>
       <title>Shield Your Site: WAF</title>
       <link>https://kubaik.github.io/shield-your-site-waf/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks (DLNN)</description>
       <pubDate>Thu, 19 Feb 2026 06:09:09 +0000</pubDate>
       <guid>https://kubaik.github.io/dlnn-ai-power/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
-      <pubDate>Thu, 19 Feb 2026 04:59:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
