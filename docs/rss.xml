@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 02:41:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 04:52:57 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Mastery</title>
+      <link>https://kubaik.github.io/cloud-mastery/</link>
+      <description>Unlock expert-level AWS Cloud Architecture skills with our Cloud Mastery guide.</description>
+      <pubDate>Fri, 20 Feb 2026 04:52:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-mastery/</guid>
+    </item>
     <item>
       <title>Secure Your API</title>
       <link>https://kubaik.github.io/secure-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go</description>
       <pubDate>Thu, 19 Feb 2026 02:46:48 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Write to Thrive</title>
-      <link>https://kubaik.github.io/write-to-thrive/</link>
-      <description>Boost your career with effective technical writing skills. Learn to write with clarity and purpose.</description>
-      <pubDate>Wed, 18 Feb 2026 23:37:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-thrive/</guid>
     </item>
   </channel>
 </rss>
