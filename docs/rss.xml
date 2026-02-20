@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 22:35:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 23:36:04 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Pipelines</title>
+      <link>https://kubaik.github.io/automl-pipelines/</link>
+      <description>Streamline ML workflows with AutoML pipelines. Learn MLOps automation best practices.</description>
+      <pubDate>Fri, 20 Feb 2026 23:35:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-pipelines/</guid>
+    </item>
     <item>
       <title>Turbocharge WASM</title>
       <link>https://kubaik.github.io/turbocharge-wasm/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of finance with crypto &amp; blockchain insights.</description>
       <pubDate>Thu, 19 Feb 2026 23:37:36 +0000</pubDate>
       <guid>https://kubaik.github.io/crypto-boom/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Thu, 19 Feb 2026 22:39:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
