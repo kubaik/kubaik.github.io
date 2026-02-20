@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 09:51:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 10:46:34 +0000</lastBuildDate>
+    <item>
+      <title>FP Basics</title>
+      <link>https://kubaik.github.io/fp-basics/</link>
+      <description>Learn the fundamentals of functional programming concepts and principles.</description>
+      <pubDate>Fri, 20 Feb 2026 10:46:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-basics/</guid>
+    </item>
     <item>
       <title>Streamline Mobile Apps</title>
       <link>https://kubaik.github.io/streamline-mobile-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn Python for data science and boost your analysis skills.</description>
       <pubDate>Thu, 19 Feb 2026 09:57:49 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Learn to build scalable web apps with Ruby on Rails.</description>
-      <pubDate>Thu, 19 Feb 2026 08:55:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
