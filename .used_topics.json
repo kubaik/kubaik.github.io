@@ -81,5 +81,6 @@
   "Apache Kafka for Streaming",
   "SQL vs NoSQL Databases",
   "Data Lake Architecture",
-  "React Best Practices and Patterns"
+  "React Best Practices and Patterns",
+  "Code Splitting Strategies"
 ]
