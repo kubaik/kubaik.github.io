@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 21:33:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 22:35:31 +0000</lastBuildDate>
+    <item>
+      <title>Turbocharge WASM</title>
+      <link>https://kubaik.github.io/turbocharge-wasm/</link>
+      <description>Boost WebAssembly performance with expert tips and tricks.</description>
+      <pubDate>Fri, 20 Feb 2026 22:35:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/turbocharge-wasm/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Streamline AI model deployment with expert strategies and best practices.</description>
       <pubDate>Thu, 19 Feb 2026 22:39:53 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
-    </item>
-    <item>
-      <title>Mesh Up!</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Unlock microservice management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
-      <pubDate>Thu, 19 Feb 2026 21:40:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
