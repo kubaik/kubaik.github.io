@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 19:41:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 20:41:23 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Boost app performance with code splitting strategies. Learn how to split smarter.</description>
+      <pubDate>Fri, 20 Feb 2026 20:41:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Improve focus &amp; productivity with expert memory management tips.</description>
       <pubDate>Thu, 19 Feb 2026 20:40:21 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Optimize app performance with expert tips and tools.</description>
-      <pubDate>Thu, 19 Feb 2026 19:45:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
