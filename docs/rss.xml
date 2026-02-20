@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 16:51:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 17:44:02 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
+      <pubDate>Fri, 20 Feb 2026 17:43:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Learn to craft intuitive Recommender Systems with Design Smart, your guide to personalized user experiences.</description>
       <pubDate>Thu, 19 Feb 2026 17:04:51 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Ace Sys Design</title>
-      <link>https://kubaik.github.io/ace-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Thu, 19 Feb 2026 15:57:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ace-sys-design/</guid>
     </item>
   </channel>
 </rss>
