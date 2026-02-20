@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 17:44:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 18:58:48 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
+      <pubDate>Fri, 20 Feb 2026 18:58:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Master async processing with message queues for scalable &amp; reliable systems.</description>
       <pubDate>Thu, 19 Feb 2026 19:00:56 +0000</pubDate>
       <guid>https://kubaik.github.io/async-done-right/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn to craft intuitive Recommender Systems with Design Smart, your guide to personalized user experiences.</description>
-      <pubDate>Thu, 19 Feb 2026 17:04:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
