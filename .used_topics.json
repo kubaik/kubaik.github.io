@@ -79,5 +79,6 @@
   "GitOps Workflow Implementation",
   "Monitoring and Observability",
   "Apache Kafka for Streaming",
-  "SQL vs NoSQL Databases"
+  "SQL vs NoSQL Databases",
+  "Data Lake Architecture"
 ]
