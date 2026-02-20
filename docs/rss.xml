@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 11:38:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 13:14:24 +0000</lastBuildDate>
+    <item>
+      <title>Boost Site Speed</title>
+      <link>https://kubaik.github.io/boost-site-speed/</link>
+      <description>Improve user experience with our expert web performance optimization tips to boost site speed.</description>
+      <pubDate>Fri, 20 Feb 2026 13:14:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-site-speed/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Learn Test-Driven Development (TDD) to write cleaner, more efficient code.</description>
       <pubDate>Thu, 19 Feb 2026 11:45:42 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Work Smarter</title>
-      <link>https://kubaik.github.io/work-smarter/</link>
-      <description>Boost productivity with remote work best practices and expert tips.</description>
-      <pubDate>Thu, 19 Feb 2026 10:56:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smarter/</guid>
     </item>
   </channel>
 </rss>
