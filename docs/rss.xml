@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 23:36:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 02:35:05 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Sat, 21 Feb 2026 02:34:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>AutoML Pipelines</title>
       <link>https://kubaik.github.io/automl-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Protect your API from threats. Learn expert security best practices to safeguard your data.</description>
       <pubDate>Fri, 20 Feb 2026 02:41:35 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-api/</guid>
-    </item>
-    <item>
-      <title>Crypto Boom</title>
-      <link>https://kubaik.github.io/crypto-boom/</link>
-      <description>Unlock the future of finance with crypto &amp; blockchain insights.</description>
-      <pubDate>Thu, 19 Feb 2026 23:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/crypto-boom/</guid>
     </item>
   </channel>
 </rss>
