@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 07:38:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 08:40:18 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient ML with Transfer Learning. Learn how to implement &amp; boost model accuracy.</description>
+      <pubDate>Sat, 21 Feb 2026 08:40:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Simplify app development with Mobile Backend as a Service (BaaS). Learn how to streamline your mobile apps.</description>
       <pubDate>Fri, 20 Feb 2026 09:51:41 +0000</pubDate>
       <guid>https://kubaik.github.io/streamline-mobile-apps/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Fri, 20 Feb 2026 08:52:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
