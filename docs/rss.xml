@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 10:34:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 11:29:22 +0000</lastBuildDate>
+    <item>
+      <title>TS Power Types</title>
+      <link>https://kubaik.github.io/ts-power-types/</link>
+      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
+      <pubDate>Sat, 21 Feb 2026 11:29:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-power-types/</guid>
+    </item>
     <item>
       <title>BI Tools: Boost Insights</title>
       <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
@@ -138,13 +145,6 @@
       <description>Improve user experience with our expert web performance optimization tips to boost site speed.</description>
       <pubDate>Fri, 20 Feb 2026 13:14:13 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-site-speed/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
-      <pubDate>Fri, 20 Feb 2026 11:38:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
