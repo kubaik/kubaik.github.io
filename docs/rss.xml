@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 18:46:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 19:31:53 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development &amp; boost your skills.</description>
+      <pubDate>Sat, 21 Feb 2026 19:31:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>NLP Basics</title>
       <link>https://kubaik.github.io/nlp-basics/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert-approved React best practices &amp; patterns for efficient coding.</description>
       <pubDate>Fri, 20 Feb 2026 19:41:07 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
-      <pubDate>Fri, 20 Feb 2026 18:58:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
