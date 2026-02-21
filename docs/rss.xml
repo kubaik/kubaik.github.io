@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 11:29:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 13:03:42 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Supercharge VS Code with top extensions for productivity</description>
+      <pubDate>Sat, 21 Feb 2026 13:03:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>TS Power Types</title>
       <link>https://kubaik.github.io/ts-power-types/</link>
@@ -138,13 +145,6 @@
       <description>Streamline DevOps with GitOps. Learn expert workflow implementation tips.</description>
       <pubDate>Fri, 20 Feb 2026 14:48:21 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Site Speed</title>
-      <link>https://kubaik.github.io/boost-site-speed/</link>
-      <description>Improve user experience with our expert web performance optimization tips to boost site speed.</description>
-      <pubDate>Fri, 20 Feb 2026 13:14:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-site-speed/</guid>
     </item>
   </channel>
 </rss>
