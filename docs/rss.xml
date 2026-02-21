@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 06:54:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 07:38:18 +0000</lastBuildDate>
+    <item>
+      <title>Code Your Brand</title>
+      <link>https://kubaik.github.io/code-your-brand/</link>
+      <description>Elevate your dev career with personal branding tips &amp; strategies in &apos;Code Your Brand&apos;</description>
+      <pubDate>Sat, 21 Feb 2026 07:38:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-your-brand/</guid>
+    </item>
     <item>
       <title>SSG Simplified</title>
       <link>https://kubaik.github.io/ssg-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips.</description>
       <pubDate>Fri, 20 Feb 2026 08:52:09 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Norm Your Data</title>
-      <link>https://kubaik.github.io/norm-your-data/</link>
-      <description>Learn database normalization techniques to optimize performance and reduce data redundancy.</description>
-      <pubDate>Fri, 20 Feb 2026 07:10:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/norm-your-data/</guid>
     </item>
   </channel>
 </rss>
