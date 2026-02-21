@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 02:35:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 04:42:44 +0000</lastBuildDate>
+    <item>
+      <title>Terraform: Code Your Infrastructure</title>
+      <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
+      <description>Learn Terraform: automate infrastructure deployment with code.</description>
+      <pubDate>Sat, 21 Feb 2026 04:42:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert-level AWS Cloud Architecture skills with our Cloud Mastery guide.</description>
       <pubDate>Fri, 20 Feb 2026 04:52:46 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-mastery/</guid>
-    </item>
-    <item>
-      <title>Secure Your API</title>
-      <link>https://kubaik.github.io/secure-your-api/</link>
-      <description>Protect your API from threats. Learn expert security best practices to safeguard your data.</description>
-      <pubDate>Fri, 20 Feb 2026 02:41:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-api/</guid>
     </item>
   </channel>
 </rss>
