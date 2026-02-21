@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 21:31:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 22:32:42 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
+      <pubDate>Sat, 21 Feb 2026 22:32:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>Edge Now</title>
       <link>https://kubaik.github.io/edge-now/</link>
@@ -138,13 +145,6 @@
       <description>Boost WebAssembly performance with expert tips and tricks.</description>
       <pubDate>Fri, 20 Feb 2026 22:35:21 +0000</pubDate>
       <guid>https://kubaik.github.io/turbocharge-wasm/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques. Learn how to code together effectively.</description>
-      <pubDate>Fri, 20 Feb 2026 21:32:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
