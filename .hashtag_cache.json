@@ -1018,14 +1018,14 @@
     "topic": "Tech Leadership Skills"
   },
   "refactoring_legacy_code": {
-    "timestamp": "2026-02-08T19:32:30.449870",
+    "timestamp": "2026-02-21T17:31:33.135020",
     "hashtags": [
       "CodeRefactoring",
-      "LegacyCodeModernization",
-      "TechDebtSolutions",
+      "LegacyCode",
       "CleanCodeMatters",
-      "SoftwareRenovation",
+      "TechDebt",
       "CodeOptimization",
+      "SoftwareRenovation",
       "DevOpsEngineering"
     ],
     "topic": "Refactoring Legacy Code"
