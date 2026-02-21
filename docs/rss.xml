@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 14:33:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 15:33:23 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Secrets</title>
+      <link>https://kubaik.github.io/api-gateway-secrets/</link>
+      <description>Unlock API Gateway patterns &amp; best practices for secure, scalable integrations.</description>
+      <pubDate>Sat, 21 Feb 2026 15:33:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-secrets/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven architectures.</description>
       <pubDate>Fri, 20 Feb 2026 16:51:25 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
-      <pubDate>Fri, 20 Feb 2026 15:43:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
