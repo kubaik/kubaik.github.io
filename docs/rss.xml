@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 09:38:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 10:34:49 +0000</lastBuildDate>
+    <item>
+      <title>BI Tools: Boost Insights</title>
+      <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
+      <description>Unlock data-driven decisions with top BI tools. Boost insights and transform your business.</description>
+      <pubDate>Sat, 21 Feb 2026 10:34:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-tools-boost-insights/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect basics, benefits &amp; differences.</description>
       <pubDate>Fri, 20 Feb 2026 11:38:32 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>FP Basics</title>
-      <link>https://kubaik.github.io/fp-basics/</link>
-      <description>Learn the fundamentals of functional programming concepts and principles.</description>
-      <pubDate>Fri, 20 Feb 2026 10:46:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-basics/</guid>
     </item>
   </channel>
 </rss>
