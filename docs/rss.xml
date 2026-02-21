@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 17:31:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 18:46:47 +0000</lastBuildDate>
+    <item>
+      <title>NLP Basics</title>
+      <link>https://kubaik.github.io/nlp-basics/</link>
+      <description>Unlock NLP basics: discover techniques for machine learning &amp; language understanding.</description>
+      <pubDate>Sat, 21 Feb 2026 18:46:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-basics/</guid>
+    </item>
     <item>
       <title>Revive Old Code</title>
       <link>https://kubaik.github.io/revive-old-code/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
       <pubDate>Fri, 20 Feb 2026 18:58:38 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Fri, 20 Feb 2026 17:43:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
