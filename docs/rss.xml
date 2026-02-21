@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Feb 2026 04:42:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Feb 2026 05:49:20 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock the power of Multi-Cloud Architecture with Cloud Evolved. Learn how to thrive in a hybrid cloud world.</description>
+      <pubDate>Sat, 21 Feb 2026 05:49:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Infrastructure</title>
       <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard your site with WAF. Learn how to shield against cyber threats &amp; protect your online presence.</description>
       <pubDate>Fri, 20 Feb 2026 05:59:41 +0000</pubDate>
       <guid>https://kubaik.github.io/shield-your-site-waf/</guid>
-    </item>
-    <item>
-      <title>Cloud Mastery</title>
-      <link>https://kubaik.github.io/cloud-mastery/</link>
-      <description>Unlock expert-level AWS Cloud Architecture skills with our Cloud Mastery guide.</description>
-      <pubDate>Fri, 20 Feb 2026 04:52:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-mastery/</guid>
     </item>
   </channel>
 </rss>
