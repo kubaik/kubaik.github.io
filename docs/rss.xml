@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 21:31:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 22:33:05 +0000</lastBuildDate>
+    <item>
+      <title>Docker Simplified</title>
+      <link>https://kubaik.github.io/docker-simplified/</link>
+      <description>Learn Docker basics &amp; master containerization with our simplified guide.</description>
+      <pubDate>Sun, 22 Feb 2026 22:32:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-simplified/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Learn scalability patterns to grow your business efficiently</description>
       <pubDate>Sat, 21 Feb 2026 23:31:58 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
-      <pubDate>Sat, 21 Feb 2026 22:32:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
