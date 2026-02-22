@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 05:57:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 07:00:38 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Accelerated</title>
+      <link>https://kubaik.github.io/automl-accelerated/</link>
+      <description>Unlock AI potential with AutoML Accelerated. Discover how Neural Architecture Search revolutionizes machine learning.</description>
+      <pubDate>Sun, 22 Feb 2026 07:00:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-accelerated/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of Static Site Generation (SSG) and simplify your website development process.</description>
       <pubDate>Sat, 21 Feb 2026 06:54:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ssg-simplified/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock the power of Multi-Cloud Architecture with Cloud Evolved. Learn how to thrive in a hybrid cloud world.</description>
-      <pubDate>Sat, 21 Feb 2026 05:49:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
