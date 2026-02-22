@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 07:00:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 07:44:57 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
+      <pubDate>Sun, 22 Feb 2026 07:44:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Elevate your dev career with personal branding tips &amp; strategies in &apos;Code Your Brand&apos;</description>
       <pubDate>Sat, 21 Feb 2026 07:38:08 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>SSG Simplified</title>
-      <link>https://kubaik.github.io/ssg-simplified/</link>
-      <description>Learn the basics of Static Site Generation (SSG) and simplify your website development process.</description>
-      <pubDate>Sat, 21 Feb 2026 06:54:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssg-simplified/</guid>
     </item>
   </channel>
 </rss>
