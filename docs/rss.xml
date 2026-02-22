@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 02:48:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 04:55:48 +0000</lastBuildDate>
+    <item>
+      <title>Design Decoded</title>
+      <link>https://kubaik.github.io/design-decoded/</link>
+      <description>Unlock scalable systems with Distributed Systems Design insights and expert tips.</description>
+      <pubDate>Sun, 22 Feb 2026 04:55:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-decoded/</guid>
+    </item>
     <item>
       <title>Balance Made Easy</title>
       <link>https://kubaik.github.io/balance-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: automate infrastructure deployment with code.</description>
       <pubDate>Sat, 21 Feb 2026 04:42:34 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Sat, 21 Feb 2026 02:34:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
