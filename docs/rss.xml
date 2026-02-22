@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 20:35:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 21:31:58 +0000</lastBuildDate>
+    <item>
+      <title>Vuln Free</title>
+      <link>https://kubaik.github.io/vuln-free/</link>
+      <description>Stay ahead of threats with Vuln Free, expert insights on vulnerability management &amp; cyber security best practices.</description>
+      <pubDate>Sun, 22 Feb 2026 21:31:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuln-free/</guid>
+    </item>
     <item>
       <title>Azure Cloud: Simplified</title>
       <link>https://kubaik.github.io/azure-cloud-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock DevOps success with expert best practices and cultural tips.</description>
       <pubDate>Sat, 21 Feb 2026 22:32:33 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Edge Now</title>
-      <link>https://kubaik.github.io/edge-now/</link>
-      <description>Unlock Edge Computing&apos;s power &amp; explore its game-changing applications</description>
-      <pubDate>Sat, 21 Feb 2026 21:31:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-now/</guid>
     </item>
   </channel>
 </rss>

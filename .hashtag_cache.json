@@ -2509,15 +2509,15 @@
     "topic": "Edge Computing Applications"
   },
   "vulnerability_management": {
-    "timestamp": "2026-02-14T19:30:53.154531",
+    "timestamp": "2026-02-22T21:31:46.643740",
     "hashtags": [
-      "VulnerabilityManagement",
-      "CyberSecurityMatters",
+      "CyberRisk",
+      "VulnManagement",
       "ThreatIntelligence",
-      "ZeroDayExploits",
-      "CloudSecurityRisks",
+      "CloudSecurity",
       "DevSecOps",
-      "PatchManagement"
+      "ZeroTrust",
+      "CyberResilience"
     ],
     "topic": "Vulnerability Management"
   },
