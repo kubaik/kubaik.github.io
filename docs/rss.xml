@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 07:44:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 08:41:34 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution: faster speeds, new tech, and a connected future.</description>
+      <pubDate>Sun, 22 Feb 2026 08:41:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>Unlock SSR</title>
       <link>https://kubaik.github.io/unlock-ssr/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient ML with Transfer Learning. Learn how to implement &amp; boost model accuracy.</description>
       <pubDate>Sat, 21 Feb 2026 08:40:07 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>Code Your Brand</title>
-      <link>https://kubaik.github.io/code-your-brand/</link>
-      <description>Elevate your dev career with personal branding tips &amp; strategies in &apos;Code Your Brand&apos;</description>
-      <pubDate>Sat, 21 Feb 2026 07:38:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-your-brand/</guid>
     </item>
   </channel>
 </rss>
