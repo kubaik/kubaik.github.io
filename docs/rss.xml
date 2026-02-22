@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 17:32:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 18:46:59 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake Unleashed</title>
+      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
+      <description>Unlock data insights with Delta Lake &amp; Data Lakehouse. Learn how to unleash its full potential.</description>
+      <pubDate>Sun, 22 Feb 2026 18:46:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
+    </item>
     <item>
       <title>Smart Fusion: AI Meets Multi-Modal</title>
       <link>https://kubaik.github.io/smart-fusion-ai-meets-multi-modal/</link>
@@ -138,13 +145,6 @@
       <description>Learn Kotlin for backend development &amp; boost your skills.</description>
       <pubDate>Sat, 21 Feb 2026 19:31:43 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
-    </item>
-    <item>
-      <title>NLP Basics</title>
-      <link>https://kubaik.github.io/nlp-basics/</link>
-      <description>Unlock NLP basics: discover techniques for machine learning &amp; language understanding.</description>
-      <pubDate>Sat, 21 Feb 2026 18:46:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-basics/</guid>
     </item>
   </channel>
 </rss>
