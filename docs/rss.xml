@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 18:46:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 19:31:58 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
+      <pubDate>Sun, 22 Feb 2026 19:31:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Delta Lake Unleashed</title>
       <link>https://kubaik.github.io/delta-lake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of mobile with PWAs. Learn how Progressive Web Apps are revolutionizing user experience.</description>
       <pubDate>Sat, 21 Feb 2026 20:33:50 +0000</pubDate>
       <guid>https://kubaik.github.io/pwa-future-of-mobile/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development &amp; boost your skills.</description>
-      <pubDate>Sat, 21 Feb 2026 19:31:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
