@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 16:40:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 17:32:37 +0000</lastBuildDate>
+    <item>
+      <title>Smart Fusion: AI Meets Multi-Modal</title>
+      <link>https://kubaik.github.io/smart-fusion-ai-meets-multi-modal/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, fusing speech, vision &amp; more for revolutionary insights.</description>
+      <pubDate>Sun, 22 Feb 2026 17:32:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-fusion-ai-meets-multi-modal/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP basics: discover techniques for machine learning &amp; language understanding.</description>
       <pubDate>Sat, 21 Feb 2026 18:46:36 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-basics/</guid>
-    </item>
-    <item>
-      <title>Revive Old Code</title>
-      <link>https://kubaik.github.io/revive-old-code/</link>
-      <description>Breathe new life into outdated code with expert refactoring tips.</description>
-      <pubDate>Sat, 21 Feb 2026 17:31:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/revive-old-code/</guid>
     </item>
   </channel>
 </rss>
