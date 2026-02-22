@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 10:34:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 11:28:57 +0000</lastBuildDate>
+    <item>
+      <title>Scale Up: Replicate &amp; Shard</title>
+      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
+      <description>Boost database performance with replication &amp; sharding techniques.</description>
+      <pubDate>Sun, 22 Feb 2026 11:28:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
       <pubDate>Sat, 21 Feb 2026 11:29:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-power-types/</guid>
-    </item>
-    <item>
-      <title>BI Tools: Boost Insights</title>
-      <link>https://kubaik.github.io/bi-tools-boost-insights/</link>
-      <description>Unlock data-driven decisions with top BI tools. Boost insights and transform your business.</description>
-      <pubDate>Sat, 21 Feb 2026 10:34:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-tools-boost-insights/</guid>
     </item>
   </channel>
 </rss>
