@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 08:41:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 09:39:20 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
+      <pubDate>Sun, 22 Feb 2026 09:39:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of AI: learn about AI agent development and its applications.</description>
       <pubDate>Sat, 21 Feb 2026 09:37:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents/</guid>
-    </item>
-    <item>
-      <title>Transfer Learn</title>
-      <link>https://kubaik.github.io/transfer-learn/</link>
-      <description>Unlock efficient ML with Transfer Learning. Learn how to implement &amp; boost model accuracy.</description>
-      <pubDate>Sat, 21 Feb 2026 08:40:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-learn/</guid>
     </item>
   </channel>
 </rss>
