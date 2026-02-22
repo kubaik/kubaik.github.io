@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Feb 2026 15:33:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 16:40:06 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Unlock XAI: Discover Explainable AI techniques for transparent &amp; trustworthy machine learning models.</description>
+      <pubDate>Sun, 22 Feb 2026 16:39:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>Fast Insights</title>
       <link>https://kubaik.github.io/fast-insights/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code with expert refactoring tips.</description>
       <pubDate>Sat, 21 Feb 2026 17:31:32 +0000</pubDate>
       <guid>https://kubaik.github.io/revive-old-code/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Optimize database performance with expert indexing strategies.</description>
-      <pubDate>Sat, 21 Feb 2026 16:38:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
