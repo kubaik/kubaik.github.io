@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 05:05:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 07:15:41 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehousing</title>
+      <link>https://kubaik.github.io/data-warehousing/</link>
+      <description>Unlock insights with data warehousing solutions, expert guide to informed decision-making.</description>
+      <pubDate>Mon, 23 Feb 2026 07:15:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing/</guid>
+    </item>
     <item>
       <title>Angular At Scale</title>
       <link>https://kubaik.github.io/angular-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI potential with AutoML Accelerated. Discover how Neural Architecture Search revolutionizes machine learning.</description>
       <pubDate>Sun, 22 Feb 2026 07:00:28 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>Jamstack: Fast &amp; Secure</title>
-      <link>https://kubaik.github.io/jamstack-fast-secure/</link>
-      <description>Learn how Jamstack architecture boosts site speed &amp; security for a better user experience.</description>
-      <pubDate>Sun, 22 Feb 2026 05:57:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
     </item>
   </channel>
 </rss>
