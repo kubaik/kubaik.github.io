@@ -2615,15 +2615,15 @@
     "topic": "Distributed Systems Design"
   },
   "data_warehousing_solutions": {
-    "timestamp": "2026-02-14T09:38:45.382759",
+    "timestamp": "2026-02-23T07:15:31.608990",
     "hashtags": [
       "DataWarehousing",
-      "CloudComputing",
-      "BigDataAnalytics",
+      "CloudAnalytics",
+      "BigDataSolutions",
       "ArtificialIntelligence",
-      "DataManagement",
+      "DataIntegration",
       "DigitalTransformation",
-      "CloudStorageSolutions"
+      "DataArchitecture"
     ],
     "topic": "Data Warehousing Solutions"
   },
