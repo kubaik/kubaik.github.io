@@ -134,5 +134,6 @@
   "Microservices vs Monolithic Architecture",
   "Security Monitoring and SIEM",
   "Data Visualization Best Practices",
-  "Incident Response Planning"
+  "Incident Response Planning",
+  "Application Security Testing (SAST/DAST)"
 ]
