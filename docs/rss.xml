@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 07:15:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 08:59:23 +0000</lastBuildDate>
+    <item>
+      <title>AI Pulse Check</title>
+      <link>https://kubaik.github.io/ai-pulse-check/</link>
+      <description>Ensure AI model performance with monitoring &amp; maintenance strategies.</description>
+      <pubDate>Mon, 23 Feb 2026 08:59:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
+    </item>
     <item>
       <title>Data Warehousing</title>
       <link>https://kubaik.github.io/data-warehousing/</link>
@@ -138,13 +145,6 @@
       <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
       <pubDate>Sun, 22 Feb 2026 07:44:48 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssr/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Unlock AI potential with AutoML Accelerated. Discover how Neural Architecture Search revolutionizes machine learning.</description>
-      <pubDate>Sun, 22 Feb 2026 07:00:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
