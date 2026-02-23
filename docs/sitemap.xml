@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/contribute-open-source/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/tune-up/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/cli-hacks/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/rpa-automate/</loc><priority>0.9</priority></url>
@@ -253,7 +254,6 @@
 <url><loc>https://kubaik.github.io/serverless-made-easy/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/limit-throttle/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/app-architecture/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/contribute-open-source/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/utility-first-css/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/scale-with-ease-or-alternative-replicate-shard/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/ml-algos-demystified/</loc><priority>0.9</priority></url>
