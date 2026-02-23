@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 08:59:23 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 10:07:05 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS: Utility-First</title>
+      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
+      <description>Learn Tailwind CSS utility-first design for efficient, customizable styling</description>
+      <pubDate>Mon, 23 Feb 2026 10:06:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
+    </item>
     <item>
       <title>AI Pulse Check</title>
       <link>https://kubaik.github.io/ai-pulse-check/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution: faster speeds, new tech, and a connected future.</description>
       <pubDate>Sun, 22 Feb 2026 08:41:24 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>Unlock SSR</title>
-      <link>https://kubaik.github.io/unlock-ssr/</link>
-      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
-      <pubDate>Sun, 22 Feb 2026 07:44:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssr/</guid>
     </item>
   </channel>
 </rss>
