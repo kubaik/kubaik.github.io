@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 14:56:14 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 15:54:53 +0000</lastBuildDate>
+    <item>
+      <title>React Fast</title>
+      <link>https://kubaik.github.io/react-fast/</link>
+      <description>Create an effective incident response plan with React Fast. Learn how to respond quickly &amp; minimize damage.</description>
+      <pubDate>Mon, 23 Feb 2026 15:54:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-fast/</guid>
+    </item>
     <item>
       <title>Visualize Smarter</title>
       <link>https://kubaik.github.io/visualize-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Optimize performance with profiling &amp; benchmarking techniques. Learn how to boost efficiency.</description>
       <pubDate>Sun, 22 Feb 2026 13:05:03 +0000</pubDate>
       <guid>https://kubaik.github.io/profile-boost/</guid>
-    </item>
-    <item>
-      <title>Scale Up: Replicate &amp; Shard</title>
-      <link>https://kubaik.github.io/scale-up-replicate-shard/</link>
-      <description>Boost database performance with replication &amp; sharding techniques.</description>
-      <pubDate>Sun, 22 Feb 2026 11:28:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-up-replicate-shard/</guid>
     </item>
   </channel>
 </rss>
