@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 11:44:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 13:21:28 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Simplified</title>
+      <link>https://kubaik.github.io/siem-simplified/</link>
+      <description>Simplify security monitoring with SIEM. Learn how to streamline threat detection &amp; response.</description>
+      <pubDate>Mon, 23 Feb 2026 13:21:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-simplified/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding efficiency with expert debugging techniques.</description>
       <pubDate>Sun, 22 Feb 2026 10:34:04 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-smarter/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with image optimization techniques. Learn how to compress &amp; optimize images for better SEO &amp; user experience.</description>
-      <pubDate>Sun, 22 Feb 2026 09:39:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
