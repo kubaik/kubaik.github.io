@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 10:02:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 11:46:07 +0000</lastBuildDate>
+    <item>
+      <title>Build Tech Portfolio</title>
+      <link>https://kubaik.github.io/build-tech-portfolio/</link>
+      <description>Learn to build a strong tech portfolio, showcase skills &amp; boost career prospects.</description>
+      <pubDate>Tue, 24 Feb 2026 11:45:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-tech-portfolio/</guid>
+    </item>
     <item>
       <title>Boost C# .NET Core</title>
       <link>https://kubaik.github.io/boost-c-net-core/</link>
@@ -138,13 +145,6 @@
       <description>Unlock insights with data warehousing solutions, expert guide to informed decision-making.</description>
       <pubDate>Mon, 23 Feb 2026 07:15:31 +0000</pubDate>
       <guid>https://kubaik.github.io/data-warehousing/</guid>
-    </item>
-    <item>
-      <title>Angular At Scale</title>
-      <link>https://kubaik.github.io/angular-at-scale/</link>
-      <description>Learn to build scalable Angular enterprise apps with expert tips and best practices.</description>
-      <pubDate>Mon, 23 Feb 2026 05:04:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-at-scale/</guid>
     </item>
   </channel>
 </rss>
