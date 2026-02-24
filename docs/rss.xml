@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 11:46:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 13:22:52 +0000</lastBuildDate>
+    <item>
+      <title>ML Algors</title>
+      <link>https://kubaik.github.io/ml-algors/</link>
+      <description>Discover top ML algorithms &amp; how they work</description>
+      <pubDate>Tue, 24 Feb 2026 13:22:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-algors/</guid>
+    </item>
     <item>
       <title>Build Tech Portfolio</title>
       <link>https://kubaik.github.io/build-tech-portfolio/</link>
@@ -138,13 +145,6 @@
       <description>Ensure AI model performance with monitoring &amp; maintenance strategies.</description>
       <pubDate>Mon, 23 Feb 2026 08:59:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pulse-check/</guid>
-    </item>
-    <item>
-      <title>Data Warehousing</title>
-      <link>https://kubaik.github.io/data-warehousing/</link>
-      <description>Unlock insights with data warehousing solutions, expert guide to informed decision-making.</description>
-      <pubDate>Mon, 23 Feb 2026 07:15:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-warehousing/</guid>
     </item>
   </channel>
 </rss>
