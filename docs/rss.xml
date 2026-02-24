@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 04:58:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 06:07:17 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Discover winning Reinforcement Learning strategies to optimize performance and drive success.</description>
+      <pubDate>Tue, 24 Feb 2026 06:07:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Crack Complexity</title>
       <link>https://kubaik.github.io/crack-complexity/</link>
@@ -138,13 +145,6 @@
       <description>Learn Docker basics &amp; master containerization with our simplified guide.</description>
       <pubDate>Sun, 22 Feb 2026 22:32:54 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-simplified/</guid>
-    </item>
-    <item>
-      <title>Vuln Free</title>
-      <link>https://kubaik.github.io/vuln-free/</link>
-      <description>Stay ahead of threats with Vuln Free, expert insights on vulnerability management &amp; cyber security best practices.</description>
-      <pubDate>Sun, 22 Feb 2026 21:31:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/vuln-free/</guid>
     </item>
   </channel>
 </rss>
