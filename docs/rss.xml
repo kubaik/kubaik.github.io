@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 22:41:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 23:39:59 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn expert mobile app security tips and best practices.</description>
+      <pubDate>Tue, 24 Feb 2026 23:39:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with RPA. Automate repetitive tasks &amp; boost productivity.</description>
       <pubDate>Mon, 23 Feb 2026 20:54:07 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>AI Training Done Right</title>
-      <link>https://kubaik.github.io/ai-training-done-right/</link>
-      <description>Optimize AI model performance with expert training tips and best practices.</description>
-      <pubDate>Mon, 23 Feb 2026 19:14:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-training-done-right/</guid>
     </item>
   </channel>
 </rss>
