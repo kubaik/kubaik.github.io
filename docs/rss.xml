@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 19:51:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 20:46:01 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Data Mesh</title>
+      <link>https://kubaik.github.io/unlock-data-mesh/</link>
+      <description>Unlock scalable data insights with Data Mesh Architecture. Learn how to implement a decentralized data strategy.</description>
+      <pubDate>Tue, 24 Feb 2026 20:45:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-data-mesh/</guid>
+    </item>
     <item>
       <title>Boost App Visibility</title>
       <link>https://kubaik.github.io/boost-app-visibility/</link>
@@ -138,13 +145,6 @@
       <description>Create an effective incident response plan with React Fast. Learn how to respond quickly &amp; minimize damage.</description>
       <pubDate>Mon, 23 Feb 2026 15:54:42 +0000</pubDate>
       <guid>https://kubaik.github.io/react-fast/</guid>
-    </item>
-    <item>
-      <title>Visualize Smarter</title>
-      <link>https://kubaik.github.io/visualize-smarter/</link>
-      <description>Boost insights with data visualization best practices. Learn to visualize smarter and make data-driven decisions.</description>
-      <pubDate>Mon, 23 Feb 2026 14:56:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smarter/</guid>
     </item>
   </channel>
 </rss>
