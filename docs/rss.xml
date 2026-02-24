@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Feb 2026 23:39:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 02:45:36 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
+      <pubDate>Tue, 24 Feb 2026 02:45:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Azure Cloud&apos;s full potential with our simplified guide to its services and benefits.</description>
       <pubDate>Sun, 22 Feb 2026 20:35:25 +0000</pubDate>
       <guid>https://kubaik.github.io/azure-cloud-simplified/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
-      <pubDate>Sun, 22 Feb 2026 19:31:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
