@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 07:55:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 08:58:55 +0000</lastBuildDate>
+    <item>
+      <title>WCAG Made Easy</title>
+      <link>https://kubaik.github.io/wcag-made-easy/</link>
+      <description>Simplify web accessibility with WCAG Made Easy, your guide to inclusive digital design.</description>
+      <pubDate>Tue, 24 Feb 2026 08:58:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-made-easy/</guid>
+    </item>
     <item>
       <title>Migrate Smart</title>
       <link>https://kubaik.github.io/migrate-smart/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Mon, 23 Feb 2026 02:48:08 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Sun, 22 Feb 2026 23:33:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
