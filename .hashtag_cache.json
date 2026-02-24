@@ -1069,15 +1069,15 @@
     "topic": "Server-Side Rendering (SSR)"
   },
   "c#_.net_core_applications": {
-    "timestamp": "2026-02-09T07:15:16.855841",
+    "timestamp": "2026-02-24T10:02:47.518499",
     "hashtags": [
-      "DotNet",
-      "CNine",
-      "CoreApplications",
-      "NetCoreDev",
       "CloudNative",
+      "DotNet",
+      "CSharp",
       "Microservices",
-      "DevOpsTools"
+      "AzureDev",
+      "DevOps",
+      "NetCore"
     ],
     "topic": "C# .NET Core Applications"
   },

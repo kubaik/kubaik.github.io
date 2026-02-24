@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 08:58:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Feb 2026 10:02:57 +0000</lastBuildDate>
+    <item>
+      <title>Boost C# .NET Core</title>
+      <link>https://kubaik.github.io/boost-c-net-core/</link>
+      <description>Optimize C# .NET Core apps for peak performance.</description>
+      <pubDate>Tue, 24 Feb 2026 10:02:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-c-net-core/</guid>
+    </item>
     <item>
       <title>WCAG Made Easy</title>
       <link>https://kubaik.github.io/wcag-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build scalable Angular enterprise apps with expert tips and best practices.</description>
       <pubDate>Mon, 23 Feb 2026 05:04:57 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-at-scale/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Mon, 23 Feb 2026 02:48:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
