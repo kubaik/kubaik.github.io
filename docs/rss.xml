@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 20:43:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 21:41:42 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flow</title>
+      <link>https://kubaik.github.io/limit-the-flow/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent abuse and optimize system performance.</description>
+      <pubDate>Wed, 25 Feb 2026 21:41:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flow/</guid>
+    </item>
     <item>
       <title>Federated Learning</title>
       <link>https://kubaik.github.io/federated-learning/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Canary Deployments, a safe &amp; controlled way to roll out new features &amp; updates to your users.</description>
       <pubDate>Tue, 24 Feb 2026 18:01:35 +0000</pubDate>
       <guid>https://kubaik.github.io/canary-deploy/</guid>
-    </item>
-    <item>
-      <title>DB Masters</title>
-      <link>https://kubaik.github.io/db-masters/</link>
-      <description>Expert database management tools &amp; tips at DB Masters.</description>
-      <pubDate>Tue, 24 Feb 2026 16:08:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-masters/</guid>
     </item>
   </channel>
 </rss>
