@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 14:57:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 16:13:46 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Learn how to control &amp; manage IoT devices securely &amp; efficiently.</description>
+      <pubDate>Wed, 25 Feb 2026 16:13:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Lock It Down: SOC 2 &amp; ISO</title>
       <link>https://kubaik.github.io/lock-it-down-soc-2-iso/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build a strong tech portfolio, showcase skills &amp; boost career prospects.</description>
       <pubDate>Tue, 24 Feb 2026 11:45:56 +0000</pubDate>
       <guid>https://kubaik.github.io/build-tech-portfolio/</guid>
-    </item>
-    <item>
-      <title>Boost C# .NET Core</title>
-      <link>https://kubaik.github.io/boost-c-net-core/</link>
-      <description>Optimize C# .NET Core apps for peak performance.</description>
-      <pubDate>Tue, 24 Feb 2026 10:02:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-c-net-core/</guid>
     </item>
   </channel>
 </rss>
