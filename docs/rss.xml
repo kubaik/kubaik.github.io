@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 09:01:24 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 10:57:08 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with expert tips and tricks.</description>
+      <pubDate>Wed, 25 Feb 2026 10:56:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover winning Reinforcement Learning strategies to optimize performance and drive success.</description>
       <pubDate>Tue, 24 Feb 2026 06:07:06 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>Crack Complexity</title>
-      <link>https://kubaik.github.io/crack-complexity/</link>
-      <description>Master algorithm complexity analysis &amp; simplify code with expert insights.</description>
-      <pubDate>Tue, 24 Feb 2026 04:58:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-complexity/</guid>
     </item>
   </channel>
 </rss>
