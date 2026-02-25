@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 04:59:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 06:11:09 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full-Stack Done</title>
+      <link>https://kubaik.github.io/nextjs-full-stack-done/</link>
+      <description>Unlock full-stack dev with Next.js. Learn how to build scalable apps with ease.</description>
+      <pubDate>Wed, 25 Feb 2026 06:10:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack-done/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover how to contribute to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Mon, 23 Feb 2026 23:39:30 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Tune Up</title>
-      <link>https://kubaik.github.io/tune-up/</link>
-      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
-      <pubDate>Mon, 23 Feb 2026 22:51:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-up/</guid>
     </item>
   </channel>
 </rss>
