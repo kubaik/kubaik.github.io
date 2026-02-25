@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 06:11:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 07:57:16 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Wed, 25 Feb 2026 07:57:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Done</title>
       <link>https://kubaik.github.io/nextjs-full-stack-done/</link>
@@ -138,13 +145,6 @@
       <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
       <pubDate>Tue, 24 Feb 2026 02:45:25 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Discover how to contribute to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Mon, 23 Feb 2026 23:39:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
