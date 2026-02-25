@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 11:46:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 13:22:17 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity.</description>
+      <pubDate>Wed, 25 Feb 2026 13:22:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>Unlock GCP</title>
       <link>https://kubaik.github.io/unlock-gcp/</link>
@@ -138,13 +145,6 @@
       <description>Simplify web accessibility with WCAG Made Easy, your guide to inclusive digital design.</description>
       <pubDate>Tue, 24 Feb 2026 08:58:46 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-made-easy/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Migrate to the cloud with ease. Learn expert strategies for a seamless transition.</description>
-      <pubDate>Tue, 24 Feb 2026 07:55:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
