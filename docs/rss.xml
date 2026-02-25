@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 02:46:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 04:59:36 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UI/UX Done Right</title>
+      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
+      <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
+      <pubDate>Wed, 25 Feb 2026 04:59:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
+    </item>
     <item>
       <title>Code the Future</title>
       <link>https://kubaik.github.io/code-the-future/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Mon, 23 Feb 2026 22:51:13 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-up/</guid>
-    </item>
-    <item>
-      <title>CLI Hacks</title>
-      <link>https://kubaik.github.io/cli-hacks/</link>
-      <description>Boost productivity with expert CLI hacks and tips to streamline your workflow.</description>
-      <pubDate>Mon, 23 Feb 2026 21:54:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/cli-hacks/</guid>
     </item>
   </channel>
 </rss>
