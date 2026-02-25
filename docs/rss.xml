@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Feb 2026 23:39:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 02:46:09 +0000</lastBuildDate>
+    <item>
+      <title>Code the Future</title>
+      <link>https://kubaik.github.io/code-the-future/</link>
+      <description>Unlock the potential of blockchain with smart contract development.</description>
+      <pubDate>Wed, 25 Feb 2026 02:45:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-the-future/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert CLI hacks and tips to streamline your workflow.</description>
       <pubDate>Mon, 23 Feb 2026 21:54:08 +0000</pubDate>
       <guid>https://kubaik.github.io/cli-hacks/</guid>
-    </item>
-    <item>
-      <title>RPA: Automate</title>
-      <link>https://kubaik.github.io/rpa-automate/</link>
-      <description>Unlock efficiency with RPA. Automate repetitive tasks &amp; boost productivity.</description>
-      <pubDate>Mon, 23 Feb 2026 20:54:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-automate/</guid>
     </item>
   </channel>
 </rss>
