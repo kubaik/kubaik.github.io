@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 07:57:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Feb 2026 09:01:24 +0000</lastBuildDate>
+    <item>
+      <title>API Test Made Easy</title>
+      <link>https://kubaik.github.io/api-test-made-easy/</link>
+      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
+      <pubDate>Wed, 25 Feb 2026 09:01:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Master algorithm complexity analysis &amp; simplify code with expert insights.</description>
       <pubDate>Tue, 24 Feb 2026 04:58:18 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-complexity/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize frontend performance with expert tuning tips to boost speed and enhance user experience.</description>
-      <pubDate>Tue, 24 Feb 2026 02:45:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
