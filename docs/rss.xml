@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 17:12:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 19:01:57 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover the power of secrets management &amp; unlock secure access to sensitive data</description>
+      <pubDate>Thu, 26 Feb 2026 19:01:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Boost security with SOC 2 &amp; ISO 27001 compliance. Learn how to lock down your data</description>
       <pubDate>Wed, 25 Feb 2026 14:57:45 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down-soc-2-iso/</guid>
-    </item>
-    <item>
-      <title>Recover Fast</title>
-      <link>https://kubaik.github.io/recover-fast/</link>
-      <description>Create a disaster recovery plan to minimize downtime and ensure business continuity.</description>
-      <pubDate>Wed, 25 Feb 2026 13:22:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/recover-fast/</guid>
     </item>
   </channel>
 </rss>
