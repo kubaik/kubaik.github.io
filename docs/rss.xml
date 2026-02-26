@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 22:41:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 23:37:52 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Boost business insights with clean data. Learn why data quality matters.</description>
+      <pubDate>Thu, 26 Feb 2026 23:37:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>Engineer Time Hacks</title>
       <link>https://kubaik.github.io/engineer-time-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of blockchain tech &amp; its applications in our intro guide.</description>
       <pubDate>Wed, 25 Feb 2026 19:52:03 +0000</pubDate>
       <guid>https://kubaik.github.io/blockchain-101/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Unlock quantum basics: learn fundamentals of quantum computing &amp; its revolutionary tech</description>
-      <pubDate>Wed, 25 Feb 2026 18:05:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
