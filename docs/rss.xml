@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 10:01:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 11:44:36 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with React Native, one codebase for all.</description>
+      <pubDate>Thu, 26 Feb 2026 11:44:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>NFT Tech Unlocked</title>
       <link>https://kubaik.github.io/nft-tech-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Wed, 25 Feb 2026 07:57:06 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full-Stack Done</title>
-      <link>https://kubaik.github.io/nextjs-full-stack-done/</link>
-      <description>Unlock full-stack dev with Next.js. Learn how to build scalable apps with ease.</description>
-      <pubDate>Wed, 25 Feb 2026 06:10:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack-done/</guid>
     </item>
   </channel>
 </rss>
