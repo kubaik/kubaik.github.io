@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 04:57:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 06:04:34 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and tricks for advanced techniques.</description>
+      <pubDate>Thu, 26 Feb 2026 06:04:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Load Smart</title>
       <link>https://kubaik.github.io/load-smart/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from cyber threats. Learn expert mobile app security tips and best practices.</description>
       <pubDate>Tue, 24 Feb 2026 23:39:48 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Go Concurrency</title>
-      <link>https://kubaik.github.io/go-concurrency/</link>
-      <description>Learn Go concurrency basics and best practices for efficient parallel programming.</description>
-      <pubDate>Tue, 24 Feb 2026 22:41:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/go-concurrency/</guid>
     </item>
   </channel>
 </rss>
