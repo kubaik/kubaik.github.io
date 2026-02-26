@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 16:00:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 17:12:52 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Thu, 26 Feb 2026 17:12:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime and ensure business continuity.</description>
       <pubDate>Wed, 25 Feb 2026 13:22:06 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP</title>
-      <link>https://kubaik.github.io/unlock-gcp/</link>
-      <description>Unlock GCP: Discover Google Cloud&apos;s full potential &amp; transform your business with expert guides &amp; tutorials.</description>
-      <pubDate>Wed, 25 Feb 2026 11:46:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp/</guid>
     </item>
   </channel>
 </rss>
