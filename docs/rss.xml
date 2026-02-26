@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 11:44:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 13:23:23 +0000</lastBuildDate>
+    <item>
+      <title>AI at the Edge</title>
+      <link>https://kubaik.github.io/ai-at-the-edge/</link>
+      <description>Unlock AI&apos;s potential at the edge with faster, more efficient processing.</description>
+      <pubDate>Thu, 26 Feb 2026 13:23:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
+    </item>
     <item>
       <title>React Native: Build Once</title>
       <link>https://kubaik.github.io/react-native-build-once/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn how to streamline your workflow</description>
       <pubDate>Wed, 25 Feb 2026 09:01:14 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-made-easy/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Wed, 25 Feb 2026 07:57:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
