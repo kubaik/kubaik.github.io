@@ -1,100 +1,96 @@
 # Git Pro Tips
 
 ## Introduction to Git Advanced Techniques
-Git is a powerful version control system that has become the de facto standard for software development. While many developers are familiar with basic Git commands, there are many advanced techniques that can help improve productivity, simplify workflows, and reduce errors. In this article, we will explore some of these advanced techniques, including Git submodules, Git hooks, and Git bisect.
+Git is a powerful version control system that has become the standard for software development. While many developers are familiar with the basics of Git, there are many advanced techniques that can help improve productivity, collaboration, and code quality. In this article, we will explore some of these techniques, including Git submodules, Git cherry-picking, and Git bisecting.
 
 ### Git Submodules
-Git submodules are a way to include other Git repositories within a main repository. This is useful when working on a project that depends on other projects, such as libraries or frameworks. For example, let's say we are building a web application that uses the jQuery library. We can include jQuery as a submodule in our main repository, which allows us to easily manage different versions of jQuery and keep our code organized.
-
-To add a submodule to a repository, we can use the following command:
+Git submodules are a way to include other Git repositories within a main repository. This can be useful for including third-party libraries or dependencies in a project. For example, let's say we have a project called `myproject` that depends on a library called `mylibrary`. We can add `mylibrary` as a submodule to `myproject` using the following command:
 ```bash
-git submodule add https://github.com/jquery/jquery.git
+git submodule add https://github.com/user/mylibrary.git
 ```
-This will add the jQuery repository as a submodule to our main repository. We can then commit the submodule and push it to our remote repository.
-
-### Git Hooks
-Git hooks are scripts that run at specific points during the Git workflow. They can be used to enforce coding standards, run tests, and perform other tasks. For example, we can use a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
-
-Here is an example of a pre-commit hook that runs a linter:
+This will create a new directory called `mylibrary` within `myproject`, and initialize a new Git repository within that directory. We can then commit the submodule to the main repository using:
 ```bash
-#!/bin/sh
-
-# Run linter
-eslint .
-
-# If linter fails, exit with error code
-if [ $? -ne 0 ]; then
-  echo "Linting failed, commit aborted"
-  exit 1
-fi
+git commit -m "Added mylibrary submodule"
 ```
-This hook will run the ESLint linter and prevent code from being committed if it doesn't meet our coding standards.
+To update the submodule to the latest version, we can use:
+```bash
+git submodule update --remote
+```
+This will fetch the latest changes from the submodule repository and update the local copy.
 
-### Git Bisect
-Git bisect is a tool that helps us find the commit that introduced a bug. It works by dividing the commit history in half and asking us if the bug is present in each half. We can then repeat this process until we find the commit that introduced the bug.
+Some popular tools that support Git submodules include:
 
-To use Git bisect, we can start by running the following command:
+* GitHub: GitHub provides native support for Git submodules, making it easy to manage and update submodules within a repository.
+* GitLab: GitLab also provides support for Git submodules, and offers additional features such as submodule management and updating.
+* Bitbucket: Bitbucket supports Git submodules, and provides a range of tools and features for managing and collaborating on code.
+
+### Git Cherry-Picking
+Git cherry-picking is a technique for applying a specific commit from one branch to another. This can be useful for backporting fixes or features from one branch to another. For example, let's say we have a branch called `feature/new-feature` that contains a commit with a bug fix, and we want to apply that fix to the `master` branch. We can use the following command:
+```bash
+git cherry-pick <commit-hash>
+```
+Replace `<commit-hash>` with the actual hash of the commit we want to apply. This will create a new commit on the `master` branch that contains the changes from the original commit.
+
+Some common use cases for Git cherry-picking include:
+
+1. **Backporting fixes**: Cherry-picking can be used to backport fixes from a newer branch to an older branch.
+2. **Applying patches**: Cherry-picking can be used to apply patches or fixes from one branch to another.
+3. **Merging changes**: Cherry-picking can be used to merge changes from one branch to another, without merging the entire branch.
+
+Some popular platforms that support Git cherry-picking include:
+
+* GitHub: GitHub provides a range of tools and features for cherry-picking, including a web-based interface for applying commits.
+* GitLab: GitLab provides support for cherry-picking, and offers additional features such as automatic conflict resolution.
+* Bitbucket: Bitbucket supports cherry-picking, and provides a range of tools and features for managing and collaborating on code.
+
+### Git Bisecting
+Git bisecting is a technique for finding the commit that introduced a bug or issue. This can be useful for identifying the root cause of a problem, and for debugging complex issues. For example, let's say we have a branch called `master` that contains a bug, and we want to find the commit that introduced the bug. We can use the following command:
 ```bash
 git bisect start
-```
-This will start the bisect process. We can then mark the current commit as bad and the commit before the bug was introduced as good:
-```bash
 git bisect bad
-git bisect good <commit-hash>
+git bisect good <good-commit-hash>
 ```
-Git will then divide the commit history in half and ask us if the bug is present in each half. We can repeat this process until we find the commit that introduced the bug.
+Replace `<good-commit-hash>` with the hash of a commit that is known to be good (i.e. does not contain the bug). This will start a bisecting process, where Git will repeatedly divide the commit history in half and ask us to test each half. We can then use `git bisect bad` or `git bisect good` to mark each half as bad or good, until we find the commit that introduced the bug.
+
+Some common metrics for evaluating the effectiveness of Git bisecting include:
+
+* **Number of commits**: The number of commits that need to be tested in order to find the bug.
+* **Time to resolution**: The time it takes to find the bug and resolve the issue.
+* **Success rate**: The percentage of times that Git bisecting is able to successfully identify the commit that introduced the bug.
+
+Some popular tools that support Git bisecting include:
+
+* GitKraken: GitKraken is a Git client that provides a range of tools and features for bisecting, including a graphical interface for visualizing the commit history.
+* Sourcetree: Sourcetree is a Git client that provides support for bisecting, and offers additional features such as automatic conflict resolution.
+* Tower: Tower is a Git client that provides a range of tools and features for bisecting, including a web-based interface for applying commits.
 
 ## Common Problems and Solutions
-One common problem when using Git is dealing with merge conflicts. When two or more developers are working on the same code, they may introduce conflicting changes that need to be resolved. Here are some steps to resolve merge conflicts:
+Here are some common problems that developers may encounter when using Git, along with specific solutions:
 
-1. **Run `git status`**: This will show us which files have conflicts.
-2. **Run `git diff`**: This will show us the conflicting changes.
-3. **Edit the conflicting files**: We can edit the conflicting files to resolve the conflicts.
-4. **Run `git add`**: This will stage the resolved files.
-5. **Run `git commit`**: This will commit the resolved files.
+* **Merge conflicts**: When two or more developers make changes to the same file, Git may encounter conflicts when trying to merge the changes. Solution: Use `git status` to identify the conflicting files, and then use `git merge --abort` to abort the merge and start again.
+* **Lost commits**: When a commit is lost or deleted, it can be difficult to recover. Solution: Use `git reflog` to view a log of all commits, including deleted ones, and then use `git cherry-pick` to re-apply the lost commit.
+* **Slow performance**: When Git performance is slow, it can be frustrating and time-consuming. Solution: Use `git gc` to run a garbage collection on the repository, and then use `git prune` to remove any unnecessary files.
 
-Another common problem is dealing with large files. When working with large files, such as images or videos, Git can become slow and unresponsive. Here are some solutions to deal with large files:
+Some popular services that provide support for Git include:
 
-* **Use Git LFS**: Git LFS (Large File Storage) is a tool that allows us to store large files outside of the Git repository. This can help improve performance and reduce the size of the repository.
-* **Use a separate repository**: We can store large files in a separate repository and link to them from our main repository.
+* GitHub: GitHub provides a range of tools and features for managing and collaborating on code, including support for Git submodules, cherry-picking, and bisecting.
+* GitLab: GitLab provides a range of tools and features for managing and collaborating on code, including support for Git submodules, cherry-picking, and bisecting.
+* Bitbucket: Bitbucket provides a range of tools and features for managing and collaborating on code, including support for Git submodules, cherry-picking, and bisecting.
 
-## Tools and Platforms
-There are many tools and platforms that can help us work with Git more efficiently. Here are a few examples:
+The pricing for these services varies, but here are some approximate costs:
 
-* **GitHub**: GitHub is a web-based platform that provides a user-friendly interface for working with Git. It also provides features such as code review, project management, and collaboration tools.
-* **GitLab**: GitLab is another web-based platform that provides a user-friendly interface for working with Git. It also provides features such as code review, project management, and collaboration tools.
-* **Visual Studio Code**: Visual Studio Code is a code editor that provides a built-in Git interface. It also provides features such as code completion, debugging, and testing.
+* GitHub: $7/month (basic plan), $19/month (premium plan)
+* GitLab: $19/month (premium plan), $99/month (enterprise plan)
+* Bitbucket: $5.50/month (basic plan), $10.50/month (premium plan)
 
-## Performance Benchmarks
-When working with large repositories, performance can become a concern. Here are some performance benchmarks for different Git operations:
+## Conclusion and Next Steps
+In conclusion, Git is a powerful version control system that provides a range of advanced techniques for improving productivity, collaboration, and code quality. By using Git submodules, cherry-picking, and bisecting, developers can streamline their workflow, reduce errors, and improve overall efficiency.
 
-* **Cloning a repository**: Cloning a repository with 100,000 commits takes around 10-15 seconds with Git 2.24.
-* **Committing a file**: Committing a file with 100,000 lines of code takes around 1-2 seconds with Git 2.24.
-* **Merging a branch**: Merging a branch with 100,000 commits takes around 10-15 seconds with Git 2.24.
+To get started with these techniques, we recommend the following next steps:
 
-## Use Cases
-Here are some concrete use cases for the advanced Git techniques we discussed:
+1. **Familiarize yourself with Git submodules**: Learn how to add, update, and manage submodules in your repository.
+2. **Practice cherry-picking**: Try applying commits from one branch to another, and learn how to resolve conflicts and merge changes.
+3. **Use Git bisecting**: Try using Git bisecting to find the commit that introduced a bug or issue, and learn how to evaluate the effectiveness of the technique.
+4. **Explore additional tools and services**: Look into tools like GitKraken, Sourcetree, and Tower, and services like GitHub, GitLab, and Bitbucket, to see how they can support your Git workflow.
 
-* **Using Git submodules to manage dependencies**: We can use Git submodules to manage dependencies in our project. For example, we can include a submodule for a library or framework that our project depends on.
-* **Using Git hooks to enforce coding standards**: We can use Git hooks to enforce coding standards in our project. For example, we can use a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
-* **Using Git bisect to find bugs**: We can use Git bisect to find bugs in our project. For example, we can use Git bisect to find the commit that introduced a bug and then fix the bug.
-
-## Pricing and Cost
-When working with Git, there are several pricing models to consider. Here are a few examples:
-
-* **GitHub**: GitHub provides a free plan that includes unlimited repositories and collaborators. The paid plan starts at $4 per user per month.
-* **GitLab**: GitLab provides a free plan that includes unlimited repositories and collaborators. The paid plan starts at $19 per month.
-* **Visual Studio Code**: Visual Studio Code is free and open-source.
-
-## Conclusion
-In conclusion, Git is a powerful version control system that provides many advanced techniques for managing code and collaborating with others. By using Git submodules, Git hooks, and Git bisect, we can improve productivity, simplify workflows, and reduce errors. We can also use tools and platforms such as GitHub, GitLab, and Visual Studio Code to work with Git more efficiently.
-
-To get started with these advanced techniques, here are some actionable next steps:
-
-1. **Learn more about Git submodules**: Read the Git documentation on submodules and practice using them in a sample project.
-2. **Set up Git hooks**: Set up a pre-commit hook to run a linter and prevent code from being committed if it doesn't meet our coding standards.
-3. **Practice using Git bisect**: Practice using Git bisect to find bugs in a sample project.
-4. **Explore tools and platforms**: Explore tools and platforms such as GitHub, GitLab, and Visual Studio Code to see which ones work best for our needs.
-5. **Join a community**: Join a community of Git users to learn from others and get help when we need it.
-
-By following these steps, we can become more proficient in using Git and improve our overall productivity and collaboration.
+By following these steps and mastering these advanced Git techniques, developers can take their skills to the next level and achieve greater success in their projects.
