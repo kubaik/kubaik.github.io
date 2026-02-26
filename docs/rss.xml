@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 14:55:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 16:00:11 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Develop essential tech leadership skills with Lead Tech. Learn to innovate &amp; succeed.</description>
+      <pubDate>Thu, 26 Feb 2026 16:00:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>Web3: DApp Revolution</title>
       <link>https://kubaik.github.io/web3-dapp-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP: Discover Google Cloud&apos;s full potential &amp; transform your business with expert guides &amp; tutorials.</description>
       <pubDate>Wed, 25 Feb 2026 11:46:21 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Made Easy</title>
-      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
-      <description>Simplify JWT auth implementation with expert tips and tricks.</description>
-      <pubDate>Wed, 25 Feb 2026 10:56:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
     </item>
   </channel>
 </rss>
