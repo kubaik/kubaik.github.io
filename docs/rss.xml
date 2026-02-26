@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 07:55:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 08:58:27 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Discover the power of live web apps, enabling real-time interactions and instant updates.</description>
+      <pubDate>Thu, 26 Feb 2026 08:58:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>Vue Component Architecture</title>
       <link>https://kubaik.github.io/vue-component-architecture/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile app success with expert UI/UX tips and best practices.</description>
       <pubDate>Wed, 25 Feb 2026 04:59:25 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
-    </item>
-    <item>
-      <title>Code the Future</title>
-      <link>https://kubaik.github.io/code-the-future/</link>
-      <description>Unlock the potential of blockchain with smart contract development.</description>
-      <pubDate>Wed, 25 Feb 2026 02:45:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-the-future/</guid>
     </item>
   </channel>
 </rss>
