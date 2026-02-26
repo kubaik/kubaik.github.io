@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Feb 2026 02:41:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 04:57:10 +0000</lastBuildDate>
+    <item>
+      <title>Load Smart</title>
+      <link>https://kubaik.github.io/load-smart/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement Load Smart techniques for a seamless user experience.</description>
+      <pubDate>Thu, 26 Feb 2026 04:56:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-smart/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Learn Go concurrency basics and best practices for efficient parallel programming.</description>
       <pubDate>Tue, 24 Feb 2026 22:41:02 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>CI/CD Done Right</title>
-      <link>https://kubaik.github.io/cicd-done-right/</link>
-      <description>Optimize your workflow with expert CI/CD pipeline implementation tips.</description>
-      <pubDate>Tue, 24 Feb 2026 21:42:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-done-right/</guid>
     </item>
   </channel>
 </rss>
