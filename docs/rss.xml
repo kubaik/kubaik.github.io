@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 07:07:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 08:52:36 +0000</lastBuildDate>
+    <item>
+      <title>Secure APIs</title>
+      <link>https://kubaik.github.io/secure-apis/</link>
+      <description>Protect your data with API security best practices. Learn how to secure your APIs today.</description>
+      <pubDate>Fri, 27 Feb 2026 08:52:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-apis/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Compare &amp; choose the best Agile method</description>
       <pubDate>Thu, 26 Feb 2026 02:41:33 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>App Architecture</title>
-      <link>https://kubaik.github.io/app-architecture/</link>
-      <description>Learn expert mobile app architecture patterns for scalable &amp; efficient app design.</description>
-      <pubDate>Wed, 25 Feb 2026 23:36:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-architecture/</guid>
     </item>
   </channel>
 </rss>
