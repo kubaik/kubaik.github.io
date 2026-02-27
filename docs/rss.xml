@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 05:58:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 07:07:09 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS dev with Swift. Discover tips, tutorials &amp; best practices.</description>
+      <pubDate>Fri, 27 Feb 2026 07:06:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>Unlock Snowflake</title>
       <link>https://kubaik.github.io/unlock-snowflake/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert mobile app architecture patterns for scalable &amp; efficient app design.</description>
       <pubDate>Wed, 25 Feb 2026 23:36:08 +0000</pubDate>
       <guid>https://kubaik.github.io/app-architecture/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Protect your apps with secure containers. Learn expert security best practices.</description>
-      <pubDate>Wed, 25 Feb 2026 22:41:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
