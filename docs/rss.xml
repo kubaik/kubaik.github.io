@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 04:51:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 05:58:16 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Snowflake</title>
+      <link>https://kubaik.github.io/unlock-snowflake/</link>
+      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with expert insights &amp; tips.</description>
+      <pubDate>Fri, 27 Feb 2026 05:58:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Protect your apps with secure containers. Learn expert security best practices.</description>
       <pubDate>Wed, 25 Feb 2026 22:41:17 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>Limit the Flow</title>
-      <link>https://kubaik.github.io/limit-the-flow/</link>
-      <description>Learn rate limiting &amp; throttling techniques to prevent abuse and optimize system performance.</description>
-      <pubDate>Wed, 25 Feb 2026 21:41:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flow/</guid>
     </item>
   </channel>
 </rss>
