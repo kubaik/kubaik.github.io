@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 11:38:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 13:14:33 +0000</lastBuildDate>
+    <item>
+      <title>Responsive Made Easy</title>
+      <link>https://kubaik.github.io/responsive-made-easy/</link>
+      <description>Master responsive web design with easy techniques and tips.</description>
+      <pubDate>Fri, 27 Feb 2026 13:14:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/responsive-made-easy/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of live web apps, enabling real-time interactions and instant updates.</description>
       <pubDate>Thu, 26 Feb 2026 08:58:17 +0000</pubDate>
       <guid>https://kubaik.github.io/live-web-apps/</guid>
-    </item>
-    <item>
-      <title>Vue Component Architecture</title>
-      <link>https://kubaik.github.io/vue-component-architecture/</link>
-      <description>Learn Vue.js component architecture best practices for scalable applications.</description>
-      <pubDate>Thu, 26 Feb 2026 07:55:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/vue-component-architecture/</guid>
     </item>
   </channel>
 </rss>
