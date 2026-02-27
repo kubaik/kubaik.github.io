@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 10:48:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 11:38:44 +0000</lastBuildDate>
+    <item>
+      <title>Debug Smarter</title>
+      <link>https://kubaik.github.io/debug-smarter/</link>
+      <description>Master debugging techniques to fix errors faster</description>
+      <pubDate>Fri, 27 Feb 2026 11:38:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-smarter/</guid>
+    </item>
     <item>
       <title>RPA: Automate Smarter</title>
       <link>https://kubaik.github.io/rpa-automate-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture best practices for scalable applications.</description>
       <pubDate>Thu, 26 Feb 2026 07:55:30 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-component-architecture/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and tricks for advanced techniques.</description>
-      <pubDate>Thu, 26 Feb 2026 06:04:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
