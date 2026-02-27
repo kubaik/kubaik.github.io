@@ -7,5 +7,6 @@
   "CI/CD Pipeline Implementation",
   "Vue.js Component Architecture",
   "AI Model Deployment Strategies",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Blue-Green Deployment"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 17:42:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 18:55:59 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green Deploy</title>
+      <link>https://kubaik.github.io/blue-green-deploy/</link>
+      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
+      <pubDate>Fri, 27 Feb 2026 18:55:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-deploy/</guid>
+    </item>
     <item>
       <title>Boost Speed: Redis vs Memcached</title>
       <link>https://kubaik.github.io/boost-speed-redis-vs-memcached/</link>
@@ -138,13 +145,6 @@
       <description>Develop essential tech leadership skills with Lead Tech. Learn to innovate &amp; succeed.</description>
       <pubDate>Thu, 26 Feb 2026 16:00:00 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>Web3: DApp Revolution</title>
-      <link>https://kubaik.github.io/web3-dapp-revolution/</link>
-      <description>Discover the future of internet with Web3 &amp; DApps, enabling decentralized innovation.</description>
-      <pubDate>Thu, 26 Feb 2026 14:55:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-dapp-revolution/</guid>
     </item>
   </channel>
 </rss>
