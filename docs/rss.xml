@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 20:36:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 21:36:04 +0000</lastBuildDate>
+    <item>
+      <title>Scaling with TypeScript</title>
+      <link>https://kubaik.github.io/scaling-with-typescript/</link>
+      <description>Learn how TypeScript boosts large-scale app development with scalability and maintainability.</description>
+      <pubDate>Fri, 27 Feb 2026 21:35:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
+    </item>
     <item>
       <title>Live Web Apps</title>
       <link>https://kubaik.github.io/live-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with Digital Twin Technology &amp; double your asset&apos;s value. Learn how.</description>
       <pubDate>Thu, 26 Feb 2026 21:39:31 +0000</pubDate>
       <guid>https://kubaik.github.io/double-your-asset/</guid>
-    </item>
-    <item>
-      <title>Lockdown Data</title>
-      <link>https://kubaik.github.io/lockdown-data/</link>
-      <description>Unlock encryption insights: Explore Lockdown Data for expert key management tips and secure your digital future.</description>
-      <pubDate>Thu, 26 Feb 2026 20:47:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/lockdown-data/</guid>
     </item>
   </channel>
 </rss>
