@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 14:47:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 15:44:09 +0000</lastBuildDate>
+    <item>
+      <title>Vue Mastery</title>
+      <link>https://kubaik.github.io/vue-mastery/</link>
+      <description>Unlock Vue.js component architecture secrets for scalable apps</description>
+      <pubDate>Fri, 27 Feb 2026 15:43:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/vue-mastery/</guid>
+    </item>
     <item>
       <title>CI/CD Done Right</title>
       <link>https://kubaik.github.io/cicd-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with React Native, one codebase for all.</description>
       <pubDate>Thu, 26 Feb 2026 11:44:25 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>NFT Tech Unlocked</title>
-      <link>https://kubaik.github.io/nft-tech-unlocked/</link>
-      <description>Unlock NFT potential: Explore tech, use cases &amp; future applications</description>
-      <pubDate>Thu, 26 Feb 2026 10:01:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-unlocked/</guid>
     </item>
   </channel>
 </rss>
