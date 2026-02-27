@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 19:38:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Feb 2026 20:36:28 +0000</lastBuildDate>
+    <item>
+      <title>Live Web Apps</title>
+      <link>https://kubaik.github.io/live-web-apps/</link>
+      <description>Discover the power of live web apps, enabling real-time collaboration and engagement.</description>
+      <pubDate>Fri, 27 Feb 2026 20:36:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/live-web-apps/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock encryption insights: Explore Lockdown Data for expert key management tips and secure your digital future.</description>
       <pubDate>Thu, 26 Feb 2026 20:47:22 +0000</pubDate>
       <guid>https://kubaik.github.io/lockdown-data/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Thu, 26 Feb 2026 17:12:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
