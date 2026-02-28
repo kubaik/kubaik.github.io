@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 23:31:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 02:29:27 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech</title>
+      <link>https://kubaik.github.io/nft-tech/</link>
+      <description>Discover NFT tech &amp; its uses, from art to gaming, and explore the future of digital ownership.</description>
+      <pubDate>Sat, 28 Feb 2026 02:29:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech/</guid>
+    </item>
     <item>
       <title>AI Predicts</title>
       <link>https://kubaik.github.io/ai-predicts/</link>
@@ -138,13 +145,6 @@
       <description>Learn how TypeScript boosts scalability in large-scale apps, improving code maintainability &amp; efficiency.</description>
       <pubDate>Fri, 27 Feb 2026 02:39:49 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Boost business insights with clean data. Learn why data quality matters.</description>
-      <pubDate>Thu, 26 Feb 2026 23:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
