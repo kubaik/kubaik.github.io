@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 16:35:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 17:27:16 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Improve workflow with expert documentation tips and best practices in &apos;Doc Right&apos; blog post.</description>
+      <pubDate>Sat, 28 Feb 2026 17:27:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Learn Native iOS dev with Swift. Build powerful apps with expert guides and tutorials.</description>
       <pubDate>Fri, 27 Feb 2026 19:38:46 +0000</pubDate>
       <guid>https://kubaik.github.io/swift-ios-dev/</guid>
-    </item>
-    <item>
-      <title>Blue-Green Deploy</title>
-      <link>https://kubaik.github.io/blue-green-deploy/</link>
-      <description>Learn Blue-Green Deployment: zero-downtime releases &amp; effortless rollbacks</description>
-      <pubDate>Fri, 27 Feb 2026 18:55:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/blue-green-deploy/</guid>
     </item>
   </channel>
 </rss>
