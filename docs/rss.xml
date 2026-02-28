@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 02:29:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 04:20:21 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection techniques.</description>
+      <pubDate>Sat, 28 Feb 2026 04:20:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>NFT Tech</title>
       <link>https://kubaik.github.io/nft-tech/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient log management with smart solutions, boosting security &amp; productivity.</description>
       <pubDate>Fri, 27 Feb 2026 04:51:06 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
-    </item>
-    <item>
-      <title>Scale with TypeScript</title>
-      <link>https://kubaik.github.io/scale-with-typescript/</link>
-      <description>Learn how TypeScript boosts scalability in large-scale apps, improving code maintainability &amp; efficiency.</description>
-      <pubDate>Fri, 27 Feb 2026 02:39:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
     </item>
   </channel>
 </rss>
