@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 11:26:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 13:00:13 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Simplify workflow management with GitOps best practices and expert implementation tips.</description>
+      <pubDate>Sat, 28 Feb 2026 13:00:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Optimize your workflow with expert CI/CD pipeline implementation tips.</description>
       <pubDate>Fri, 27 Feb 2026 14:46:53 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-done-right/</guid>
-    </item>
-    <item>
-      <title>Responsive Made Easy</title>
-      <link>https://kubaik.github.io/responsive-made-easy/</link>
-      <description>Master responsive web design with easy techniques and tips.</description>
-      <pubDate>Fri, 27 Feb 2026 13:14:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/responsive-made-easy/</guid>
     </item>
   </channel>
 </rss>
