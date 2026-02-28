@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 05:38:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 06:50:26 +0000</lastBuildDate>
+    <item>
+      <title>Smart Contract Dev</title>
+      <link>https://kubaik.github.io/smart-contract-dev/</link>
+      <description>Learn smart contract dev best practices &amp; build secure blockchain apps</description>
+      <pubDate>Sat, 28 Feb 2026 06:50:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/smart-contract-dev/</guid>
+    </item>
     <item>
       <title>Delta Lake Unleashed</title>
       <link>https://kubaik.github.io/delta-lake-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS dev with Swift. Discover tips, tutorials &amp; best practices.</description>
       <pubDate>Fri, 27 Feb 2026 07:06:59 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with expert insights &amp; tips.</description>
-      <pubDate>Fri, 27 Feb 2026 05:58:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
