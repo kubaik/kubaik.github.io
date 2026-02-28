@@ -1888,16 +1888,15 @@
     "topic": "Robotics Process Automation (RPA)"
   },
   "mlops_and_ml_pipeline_automation": {
-    "timestamp": "2026-02-20T23:35:54.733262",
+    "timestamp": "2026-02-28T14:29:51.967430",
     "hashtags": [
       "MLOps",
-      "MachineLearningAutomation",
+      "MachineLearningEngineering",
       "AIAutomation",
       "DevOpsForAI",
       "AutoML",
-      "AIEngineering",
-      "DataPipelineAutomation",
-      "MachineLearningEngineering"
+      "DataPipeline",
+      "CloudNativeAI"
     ],
     "topic": "MLOps and ML Pipeline Automation"
   },
