@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/llm-hacks/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/dw-simplified/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/secure-code/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/optimize-images/</loc><priority>0.9</priority></url>
@@ -58,7 +59,6 @@
 <url><loc>https://kubaik.github.io/unlock-gcp/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/jwt-auth-made-easy/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/api-test-made-easy/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/llm-hacks/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nextjs-full-stack-done/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/mobile-uiux-done-right/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/code-the-future/</loc><priority>0.9</priority></url>
