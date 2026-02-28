@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 13:00:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 13:43:23 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques &amp; best practices in our &apos;Code Together&apos; guide.</description>
+      <pubDate>Sat, 28 Feb 2026 13:43:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Vue.js component architecture secrets for scalable apps</description>
       <pubDate>Fri, 27 Feb 2026 15:43:58 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-mastery/</guid>
-    </item>
-    <item>
-      <title>CI/CD Done Right</title>
-      <link>https://kubaik.github.io/cicd-done-right/</link>
-      <description>Optimize your workflow with expert CI/CD pipeline implementation tips.</description>
-      <pubDate>Fri, 27 Feb 2026 14:46:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-done-right/</guid>
     </item>
   </channel>
 </rss>
