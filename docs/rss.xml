@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 08:38:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 09:33:42 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code</title>
+      <link>https://kubaik.github.io/secure-code/</link>
+      <description>Learn how SAST &amp; DAST secure your code with expert app security testing tips.</description>
+      <pubDate>Sat, 28 Feb 2026 09:33:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with RPA. Automate tasks, boost productivity &amp; transform your business.</description>
       <pubDate>Fri, 27 Feb 2026 10:48:44 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate-smarter/</guid>
-    </item>
-    <item>
-      <title>Tame Debt</title>
-      <link>https://kubaik.github.io/tame-debt/</link>
-      <description>Master technical debt management with expert strategies to prioritize, refactor &amp; optimize code for a healthier tech ecosystem.</description>
-      <pubDate>Fri, 27 Feb 2026 09:52:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-debt/</guid>
     </item>
   </channel>
 </rss>
