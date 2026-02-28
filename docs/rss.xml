@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 19:26:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 20:34:31 +0000</lastBuildDate>
+    <item>
+      <title>Boost WA Speed</title>
+      <link>https://kubaik.github.io/boost-wa-speed/</link>
+      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
+      <pubDate>Sat, 28 Feb 2026 20:34:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
+    </item>
     <item>
       <title>Agile Done Right</title>
       <link>https://kubaik.github.io/agile-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Ensure AI model performance with monitoring &amp; maintenance strategies.</description>
       <pubDate>Fri, 27 Feb 2026 22:32:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-model-health/</guid>
-    </item>
-    <item>
-      <title>Scaling with TypeScript</title>
-      <link>https://kubaik.github.io/scaling-with-typescript/</link>
-      <description>Learn how TypeScript boosts large-scale app development with scalability and maintainability.</description>
-      <pubDate>Fri, 27 Feb 2026 21:35:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
     </item>
   </channel>
 </rss>
