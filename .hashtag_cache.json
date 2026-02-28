@@ -263,15 +263,15 @@
     "topic": "Internet of Things (IoT)"
   },
   "ai_for_edge_computing": {
-    "timestamp": "2026-02-26T13:23:13.941607",
+    "timestamp": "2026-02-28T22:30:39.439413",
     "hashtags": [
       "EdgeAI",
       "ArtificialIntelligence",
-      "CloudlessComputing",
-      "AIoT",
+      "CloudComputing",
+      "IoTSecurity",
+      "DevOps",
       "RealTimeAnalytics",
-      "DeviceIntelligence",
-      "FasterInnovation"
+      "MachineLearningEngineering"
     ],
     "topic": "AI for Edge Computing"
   },
