@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 06:50:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 07:34:16 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
+      <pubDate>Sat, 28 Feb 2026 07:34:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>Smart Contract Dev</title>
       <link>https://kubaik.github.io/smart-contract-dev/</link>
@@ -138,13 +145,6 @@
       <description>Protect your data with API security best practices. Learn how to secure your APIs today.</description>
       <pubDate>Fri, 27 Feb 2026 08:52:27 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-apis/</guid>
-    </item>
-    <item>
-      <title>iOS Dev with Swift</title>
-      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
-      <description>Learn iOS dev with Swift. Discover tips, tutorials &amp; best practices.</description>
-      <pubDate>Fri, 27 Feb 2026 07:06:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
     </item>
   </channel>
 </rss>
