@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 18:42:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 19:26:57 +0000</lastBuildDate>
+    <item>
+      <title>Agile Done Right</title>
+      <link>https://kubaik.github.io/agile-done-right/</link>
+      <description>Master Agile development with expert tips and best practices.</description>
+      <pubDate>Sat, 28 Feb 2026 19:26:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/agile-done-right/</guid>
+    </item>
     <item>
       <title>CYBER 101</title>
       <link>https://kubaik.github.io/cyber-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn how TypeScript boosts large-scale app development with scalability and maintainability.</description>
       <pubDate>Fri, 27 Feb 2026 21:35:53 +0000</pubDate>
       <guid>https://kubaik.github.io/scaling-with-typescript/</guid>
-    </item>
-    <item>
-      <title>Live Web Apps</title>
-      <link>https://kubaik.github.io/live-web-apps/</link>
-      <description>Discover the power of live web apps, enabling real-time collaboration and engagement.</description>
-      <pubDate>Fri, 27 Feb 2026 20:36:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/live-web-apps/</guid>
     </item>
   </channel>
 </rss>
