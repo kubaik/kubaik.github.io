@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 14:30:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 15:30:36 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft effective recommender systems with Design Smart, expert guide to personalized user experiences.</description>
+      <pubDate>Sat, 28 Feb 2026 15:30:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>AutoML: Streamline MLOps</title>
       <link>https://kubaik.github.io/automl-streamline-mlops/</link>
@@ -138,13 +145,6 @@
       <description>Compare Redis &amp; Memcached for optimal caching strategies</description>
       <pubDate>Fri, 27 Feb 2026 17:41:57 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-redis-vs-memcached/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Boost AI efficiency with smart deployment strategies.</description>
-      <pubDate>Fri, 27 Feb 2026 16:50:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
