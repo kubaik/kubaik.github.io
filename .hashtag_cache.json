@@ -1969,10 +1969,10 @@
     "topic": "Functional Programming Concepts"
   },
   "delta_lake_and_data_lakehouse": {
-    "timestamp": "2026-02-22T18:46:49.683193",
+    "timestamp": "2026-02-28T05:38:03.403825",
     "hashtags": [
-      "DeltaLake",
       "DataLakehouse",
+      "DeltaLake",
       "CloudComputing",
       "BigDataAnalytics",
       "ArtificialIntelligence",

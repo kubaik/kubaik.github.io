@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 04:20:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Feb 2026 05:38:13 +0000</lastBuildDate>
+    <item>
+      <title>Delta Lake Unleashed</title>
+      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
+      <description>Unlock data potential with Delta Lake &amp; Data Lakehouse. Learn how to simplify data management &amp; analytics.</description>
+      <pubDate>Sat, 28 Feb 2026 05:38:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of Snowflake Cloud Data Platform &amp; unlock its full potential with expert insights &amp; tips.</description>
       <pubDate>Fri, 27 Feb 2026 05:58:05 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>Log On: Smart Solutions</title>
-      <link>https://kubaik.github.io/log-on-smart-solutions/</link>
-      <description>Unlock efficient log management with smart solutions, boosting security &amp; productivity.</description>
-      <pubDate>Fri, 27 Feb 2026 04:51:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
     </item>
   </channel>
 </rss>
