@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 07:01:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 07:41:50 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
+      <pubDate>Sun, 01 Mar 2026 07:41:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Boost CLI Productivity</title>
       <link>https://kubaik.github.io/boost-cli-productivity/</link>
@@ -138,13 +145,6 @@
       <description>Learn how SAST &amp; DAST secure your code with expert app security testing tips.</description>
       <pubDate>Sat, 28 Feb 2026 09:33:31 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code/</guid>
-    </item>
-    <item>
-      <title>Optimize Images</title>
-      <link>https://kubaik.github.io/optimize-images/</link>
-      <description>Boost site speed with expert image optimization techniques.</description>
-      <pubDate>Sat, 28 Feb 2026 08:38:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-images/</guid>
     </item>
   </channel>
 </rss>
