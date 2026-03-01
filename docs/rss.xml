@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 20:35:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 21:30:57 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn Python for data science &amp; boost your analytics skills.</description>
+      <pubDate>Sun, 01 Mar 2026 21:30:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Master React with expert best practices and patterns for scalable, efficient apps.</description>
       <pubDate>Sat, 28 Feb 2026 21:28:47 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
-      <pubDate>Sat, 28 Feb 2026 20:34:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
