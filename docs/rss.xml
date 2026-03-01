@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 08:40:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 09:37:53 +0000</lastBuildDate>
+    <item>
+      <title>Go Concurrency</title>
+      <link>https://kubaik.github.io/go-concurrency/</link>
+      <description>Master Go concurrency for efficient coding. Learn parallelism &amp; async programming in Go.</description>
+      <pubDate>Sun, 01 Mar 2026 09:37:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-concurrency/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Sat, 28 Feb 2026 11:26:27 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>DW Simplified</title>
-      <link>https://kubaik.github.io/dw-simplified/</link>
-      <description>Simplify data management with our expert DW solutions, boosting insights and efficiency.</description>
-      <pubDate>Sat, 28 Feb 2026 10:31:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/dw-simplified/</guid>
     </item>
   </channel>
 </rss>
