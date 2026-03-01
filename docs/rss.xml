@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 05:00:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 06:00:56 +0000</lastBuildDate>
+    <item>
+      <title>Unlock GCP Power</title>
+      <link>https://kubaik.github.io/unlock-gcp-power/</link>
+      <description>Maximize Google Cloud Platform&apos;s potential with expert tips and insights.</description>
+      <pubDate>Sun, 01 Mar 2026 06:00:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
+    </item>
     <item>
       <title>Core Mastery</title>
       <link>https://kubaik.github.io/core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
       <pubDate>Sat, 28 Feb 2026 07:34:05 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>Smart Contract Dev</title>
-      <link>https://kubaik.github.io/smart-contract-dev/</link>
-      <description>Learn smart contract dev best practices &amp; build secure blockchain apps</description>
-      <pubDate>Sat, 28 Feb 2026 06:50:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/smart-contract-dev/</guid>
     </item>
   </channel>
 </rss>
