@@ -41,5 +41,6 @@
   "Command Line Productivity Tips",
   "Svelte and Modern JavaScript",
   "Open Source Contribution Guide",
-  "Go Programming Concurrency"
+  "Go Programming Concurrency",
+  "Canary Deployments"
 ]
