@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 15:31:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 16:38:20 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents Rise</title>
+      <link>https://kubaik.github.io/ai-agents-rise/</link>
+      <description>Discover the future of AI: Learn about the latest advancements in AI agent development and their impact on industries.</description>
+      <pubDate>Sun, 01 Mar 2026 16:38:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-rise/</guid>
+    </item>
     <item>
       <title>Pen Test 101</title>
       <link>https://kubaik.github.io/pen-test-101/</link>
@@ -138,13 +145,6 @@
       <description>Improve workflow with expert documentation tips and best practices in &apos;Doc Right&apos; blog post.</description>
       <pubDate>Sat, 28 Feb 2026 17:27:05 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Learn container security best practices to protect your apps and data.</description>
-      <pubDate>Sat, 28 Feb 2026 16:35:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
