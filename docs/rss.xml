@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Feb 2026 23:29:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 02:55:20 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Sun, 01 Mar 2026 02:55:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data potential with Delta Lake &amp; Data Lakehouse. Learn how to simplify data management &amp; analytics.</description>
       <pubDate>Sat, 28 Feb 2026 05:38:03 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection techniques.</description>
-      <pubDate>Sat, 28 Feb 2026 04:20:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
