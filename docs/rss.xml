@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 09:37:53 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 10:33:41 +0000</lastBuildDate>
+    <item>
+      <title>Canary Deploy</title>
+      <link>https://kubaik.github.io/canary-deploy/</link>
+      <description>Learn about Canary Deployments, a safe &amp; controlled way to roll out new code changes to users.</description>
+      <pubDate>Sun, 01 Mar 2026 10:33:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/canary-deploy/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Simplify workflow management with GitOps best practices and expert implementation tips.</description>
       <pubDate>Sat, 28 Feb 2026 13:00:02 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Sat, 28 Feb 2026 11:26:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
