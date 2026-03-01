@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 02:55:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 05:00:41 +0000</lastBuildDate>
+    <item>
+      <title>Core Mastery</title>
+      <link>https://kubaik.github.io/core-mastery/</link>
+      <description>Unlock C# .NET Core mastery with expert insights and tutorials.</description>
+      <pubDate>Sun, 01 Mar 2026 05:00:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/core-mastery/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn smart contract dev best practices &amp; build secure blockchain apps</description>
       <pubDate>Sat, 28 Feb 2026 06:50:16 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-contract-dev/</guid>
-    </item>
-    <item>
-      <title>Delta Lake Unleashed</title>
-      <link>https://kubaik.github.io/delta-lake-unleashed/</link>
-      <description>Unlock data potential with Delta Lake &amp; Data Lakehouse. Learn how to simplify data management &amp; analytics.</description>
-      <pubDate>Sat, 28 Feb 2026 05:38:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
     </item>
   </channel>
 </rss>
