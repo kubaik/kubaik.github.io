@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 20:44:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 21:40:55 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models transforming tech</description>
+      <pubDate>Mon, 02 Mar 2026 21:40:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn Python for data science &amp; boost your analytics skills.</description>
       <pubDate>Sun, 01 Mar 2026 21:30:47 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Web Dev Evolved</title>
-      <link>https://kubaik.github.io/web-dev-evolved/</link>
-      <description>Discover the latest web dev trends and frameworks transforming the industry.</description>
-      <pubDate>Sun, 01 Mar 2026 20:35:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
     </item>
   </channel>
 </rss>
