@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 04:54:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 05:58:34 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Data</title>
+      <link>https://kubaik.github.io/unlock-data/</link>
+      <description>Boost model performance with expert feature engineering techniques.</description>
+      <pubDate>Mon, 02 Mar 2026 05:58:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-data/</guid>
+    </item>
     <item>
       <title>Secure Your Cloud</title>
       <link>https://kubaik.github.io/secure-your-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Maximize Google Cloud Platform&apos;s potential with expert tips and insights.</description>
       <pubDate>Sun, 01 Mar 2026 06:00:45 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
-    </item>
-    <item>
-      <title>Core Mastery</title>
-      <link>https://kubaik.github.io/core-mastery/</link>
-      <description>Unlock C# .NET Core mastery with expert insights and tutorials.</description>
-      <pubDate>Sun, 01 Mar 2026 05:00:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-mastery/</guid>
     </item>
   </channel>
 </rss>
