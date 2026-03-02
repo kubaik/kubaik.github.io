@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 19:44:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 20:44:47 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Mon, 02 Mar 2026 20:44:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Cloud Mastery: AWS</title>
       <link>https://kubaik.github.io/cloud-mastery-aws/</link>
@@ -138,13 +145,6 @@
       <description>Discover the latest web dev trends and frameworks transforming the industry.</description>
       <pubDate>Sun, 01 Mar 2026 20:35:35 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert optimization tips and strategies.</description>
-      <pubDate>Sun, 01 Mar 2026 18:43:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
