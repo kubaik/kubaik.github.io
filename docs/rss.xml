@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Mar 2026 23:31:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 02:42:55 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven systems.</description>
+      <pubDate>Mon, 02 Mar 2026 02:42:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Sun, 01 Mar 2026 02:55:09 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS defense strategies to protect your website from cyber threats.</description>
-      <pubDate>Sat, 28 Feb 2026 23:29:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>

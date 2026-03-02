@@ -1919,15 +1919,15 @@
     "topic": "AI Model Training Best Practices"
   },
   "apache_kafka_for_streaming": {
-    "timestamp": "2026-02-20T16:51:25.825399",
+    "timestamp": "2026-03-02T02:42:45.498223",
     "hashtags": [
-      "KafkaStreaming",
-      "RealTimeData",
-      "CloudNative",
-      "EventDriven",
-      "BigDataTech",
-      "StreamingAnalytics",
-      "DataInMotion"
+      "StreamingData",
+      "KafkaForDev",
+      "RealTimeAnalytics",
+      "EventDrivenArch",
+      "CloudNativeApps",
+      "DataIntegration",
+      "BigDataProcessing"
     ],
     "topic": "Apache Kafka for Streaming"
   },
