@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 07:11:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 08:55:37 +0000</lastBuildDate>
+    <item>
+      <title>Boost Network Speed</title>
+      <link>https://kubaik.github.io/boost-network-speed/</link>
+      <description>Maximize your network&apos;s potential with expert tips to boost speed and performance.</description>
+      <pubDate>Mon, 02 Mar 2026 08:55:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-network-speed/</guid>
+    </item>
     <item>
       <title>Process Now</title>
       <link>https://kubaik.github.io/process-now/</link>
@@ -138,13 +145,6 @@
       <description>Learn Svelte JS &amp; modern JavaScript for efficient web development</description>
       <pubDate>Sun, 01 Mar 2026 07:41:39 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Maximize CLI efficiency with expert tips and tricks.</description>
-      <pubDate>Sun, 01 Mar 2026 07:01:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
