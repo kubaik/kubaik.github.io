@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 05:58:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Mar 2026 07:11:47 +0000</lastBuildDate>
+    <item>
+      <title>Process Now</title>
+      <link>https://kubaik.github.io/process-now/</link>
+      <description>Unlock instant insights with real-time data processing. Learn how to &apos;Process Now&apos; and transform your business.</description>
+      <pubDate>Mon, 02 Mar 2026 07:11:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/process-now/</guid>
+    </item>
     <item>
       <title>Unlock Data</title>
       <link>https://kubaik.github.io/unlock-data/</link>
@@ -138,13 +145,6 @@
       <description>Maximize CLI efficiency with expert tips and tricks.</description>
       <pubDate>Sun, 01 Mar 2026 07:01:01 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Unlock GCP Power</title>
-      <link>https://kubaik.github.io/unlock-gcp-power/</link>
-      <description>Maximize Google Cloud Platform&apos;s potential with expert tips and insights.</description>
-      <pubDate>Sun, 01 Mar 2026 06:00:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
     </item>
   </channel>
 </rss>
