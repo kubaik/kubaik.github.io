@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 13:13:54 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 14:52:58 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flood</title>
+      <link>https://kubaik.github.io/limit-the-flood/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent overload and ensure smooth system performance.</description>
+      <pubDate>Tue, 03 Mar 2026 14:52:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flood/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Create a disaster recovery plan to minimize downtime &amp; ensure business continuity. Learn how to recover fast.</description>
       <pubDate>Mon, 02 Mar 2026 14:51:23 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Unlock IoT potential with our expert blueprint, guiding you through IoT architecture and implementation.</description>
-      <pubDate>Mon, 02 Mar 2026 13:15:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
