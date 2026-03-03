@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 22:37:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 23:34:46 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast Sites</title>
+      <link>https://kubaik.github.io/jamstack-fast-sites/</link>
+      <description>Boost site speed with Jamstack Architecture. Learn how to build fast, secure, and scalable websites.</description>
+      <pubDate>Tue, 03 Mar 2026 23:34:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
+    </item>
     <item>
       <title>Unlock SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; revolutionizing experiences.</description>
       <pubDate>Mon, 02 Mar 2026 22:35:05 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
-    </item>
-    <item>
-      <title>AI Revolution</title>
-      <link>https://kubaik.github.io/ai-revolution/</link>
-      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models transforming tech</description>
-      <pubDate>Mon, 02 Mar 2026 21:40:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-revolution/</guid>
     </item>
   </channel>
 </rss>
