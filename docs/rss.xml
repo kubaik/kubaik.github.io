@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 10:51:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 11:39:40 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development &amp; boost your skills.</description>
+      <pubDate>Tue, 03 Mar 2026 11:39:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Learn SRE fundamentals &amp; improve system reliability with our beginner&apos;s guide to Site Reliability Engineering.</description>
       <pubDate>Mon, 02 Mar 2026 11:36:34 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-101/</guid>
-    </item>
-    <item>
-      <title>Crush Tech Interviews</title>
-      <link>https://kubaik.github.io/crush-tech-interviews/</link>
-      <description>Boost your tech career with our expert interview prep guide. Learn to crush tech interviews &amp; land your dream job.</description>
-      <pubDate>Mon, 02 Mar 2026 10:56:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/crush-tech-interviews/</guid>
     </item>
   </channel>
 </rss>
