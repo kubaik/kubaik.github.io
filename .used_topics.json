@@ -84,5 +84,6 @@
   "Kotlin for Backend Development",
   "Code Review Best Practices",
   "Rate Limiting and Throttling",
-  "Application Performance Monitoring"
+  "Application Performance Monitoring",
+  "Database Replication and Sharding"
 ]

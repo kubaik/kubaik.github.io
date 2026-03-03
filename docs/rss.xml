@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 15:54:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 16:58:36 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Boost performance with database replication &amp; sharding strategies.</description>
+      <pubDate>Tue, 03 Mar 2026 16:58:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG simplified: Easy guide to web accessibility standards</description>
       <pubDate>Mon, 02 Mar 2026 16:58:34 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and tricks for advanced Git techniques.</description>
-      <pubDate>Mon, 02 Mar 2026 15:49:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
