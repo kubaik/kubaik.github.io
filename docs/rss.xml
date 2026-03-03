@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2026 23:34:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 02:45:51 +0000</lastBuildDate>
+    <item>
+      <title>Work Smarter</title>
+      <link>https://kubaik.github.io/work-smarter/</link>
+      <description>Boost productivity with remote work best practices &amp; tips to work smarter, not harder.</description>
+      <pubDate>Tue, 03 Mar 2026 02:45:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/work-smarter/</guid>
+    </item>
     <item>
       <title>Design Decentralized</title>
       <link>https://kubaik.github.io/design-decentralized/</link>
@@ -138,13 +145,6 @@
       <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven systems.</description>
       <pubDate>Mon, 02 Mar 2026 02:42:45 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Learn scalable design patterns to grow your business efficiently</description>
-      <pubDate>Sun, 01 Mar 2026 23:31:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
