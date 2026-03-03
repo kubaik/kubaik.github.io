@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 19:02:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 20:40:33 +0000</lastBuildDate>
+    <item>
+      <title>AI Ethics</title>
+      <link>https://kubaik.github.io/ai-ethics/</link>
+      <description>Explore AI ethics &amp; responsible AI practices for a fairer future.</description>
+      <pubDate>Tue, 03 Mar 2026 20:40:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ethics/</guid>
+    </item>
     <item>
       <title>Pipe Up!</title>
       <link>https://kubaik.github.io/pipe-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AWS Cloud Architecture secrets with expert insights and best practices.</description>
       <pubDate>Mon, 02 Mar 2026 19:44:22 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-mastery-aws/</guid>
-    </item>
-    <item>
-      <title>Build with Custom Elements</title>
-      <link>https://kubaik.github.io/build-with-custom-elements/</link>
-      <description>Learn to build reusable UI components with Web Components and Custom Elements.</description>
-      <pubDate>Mon, 02 Mar 2026 19:02:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-with-custom-elements/</guid>
     </item>
   </channel>
 </rss>
