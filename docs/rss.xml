@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 21:40:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 22:37:58 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
+      <description>Simplify security compliance with expert guides on SOC 2 &amp; ISO 27001 certification.</description>
+      <pubDate>Tue, 03 Mar 2026 22:37:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>Fed Learning</title>
       <link>https://kubaik.github.io/fed-learning/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models transforming tech</description>
       <pubDate>Mon, 02 Mar 2026 21:40:44 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Mon, 02 Mar 2026 20:44:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
