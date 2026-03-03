@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 16:58:36 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 17:53:36 +0000</lastBuildDate>
+    <item>
+      <title>Crypto Boom</title>
+      <link>https://kubaik.github.io/crypto-boom/</link>
+      <description>Discover the future of finance with our Crypto Boom guide to cryptocurrency and blockchain technology.</description>
+      <pubDate>Tue, 03 Mar 2026 17:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/crypto-boom/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover top DB tools for efficient database management &amp; optimization.</description>
       <pubDate>Mon, 02 Mar 2026 17:54:16 +0000</pubDate>
       <guid>https://kubaik.github.io/db-tools/</guid>
-    </item>
-    <item>
-      <title>WCAG Simplified</title>
-      <link>https://kubaik.github.io/wcag-simplified/</link>
-      <description>Learn WCAG simplified: Easy guide to web accessibility standards</description>
-      <pubDate>Mon, 02 Mar 2026 16:58:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-simplified/</guid>
     </item>
   </channel>
 </rss>
