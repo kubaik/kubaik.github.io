@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 09:53:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 10:51:30 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn expert mobile app security tips and best practices.</description>
+      <pubDate>Tue, 03 Mar 2026 10:51:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Balance Done</title>
       <link>https://kubaik.github.io/balance-done/</link>
@@ -138,13 +145,6 @@
       <description>Boost your tech career with our expert interview prep guide. Learn to crush tech interviews &amp; land your dream job.</description>
       <pubDate>Mon, 02 Mar 2026 10:56:34 +0000</pubDate>
       <guid>https://kubaik.github.io/crush-tech-interviews/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with expert tips and tutorials.</description>
-      <pubDate>Mon, 02 Mar 2026 09:59:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
