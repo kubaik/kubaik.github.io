@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 11:39:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 13:13:54 +0000</lastBuildDate>
+    <item>
+      <title>Code Review Done Right</title>
+      <link>https://kubaik.github.io/code-review-done-right/</link>
+      <description>Improve code quality with expert review tips and best practices.</description>
+      <pubDate>Tue, 03 Mar 2026 13:13:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-review-done-right/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Unlock IoT potential with our expert blueprint, guiding you through IoT architecture and implementation.</description>
       <pubDate>Mon, 02 Mar 2026 13:15:35 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>SRE 101</title>
-      <link>https://kubaik.github.io/sre-101/</link>
-      <description>Learn SRE fundamentals &amp; improve system reliability with our beginner&apos;s guide to Site Reliability Engineering.</description>
-      <pubDate>Mon, 02 Mar 2026 11:36:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-101/</guid>
     </item>
   </channel>
 </rss>
