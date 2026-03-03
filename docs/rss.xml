@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Mar 2026 02:45:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2026 04:53:29 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway Done Right</title>
+      <link>https://kubaik.github.io/api-gateway-done-right/</link>
+      <description>Learn API Gateway best practices and patterns for secure, scalable, and reliable API management.</description>
+      <pubDate>Tue, 03 Mar 2026 04:53:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-done-right/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Protect your cloud with expert security tips and best practices.</description>
       <pubDate>Mon, 02 Mar 2026 04:54:44 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-cloud/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Learn Apache Kafka Streams for real-time data processing &amp; event-driven systems.</description>
-      <pubDate>Mon, 02 Mar 2026 02:42:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
