@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 13:12:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 14:43:29 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Unlock faster websites with Static Site Generation (SSG). Learn how.</description>
+      <pubDate>Wed, 04 Mar 2026 14:43:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>Auto Dev Flow</title>
       <link>https://kubaik.github.io/auto-dev-flow/</link>
@@ -138,13 +145,6 @@
       <description>Learn rate limiting &amp; throttling techniques to prevent overload and ensure smooth system performance.</description>
       <pubDate>Tue, 03 Mar 2026 14:52:47 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flood/</guid>
-    </item>
-    <item>
-      <title>Code Review Done Right</title>
-      <link>https://kubaik.github.io/code-review-done-right/</link>
-      <description>Improve code quality with expert review tips and best practices.</description>
-      <pubDate>Tue, 03 Mar 2026 13:13:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-review-done-right/</guid>
     </item>
   </channel>
 </rss>
