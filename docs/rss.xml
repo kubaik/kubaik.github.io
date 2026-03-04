@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 07:46:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 08:51:04 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate More</title>
+      <link>https://kubaik.github.io/negotiate-more/</link>
+      <description>Boost your tech salary with expert negotiation tips and strategies.</description>
+      <pubDate>Wed, 04 Mar 2026 08:50:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-more/</guid>
+    </item>
     <item>
       <title>JWT Auth Made Easy</title>
       <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps faster with React Native. Learn how to create cross-platform apps with one codebase.</description>
       <pubDate>Tue, 03 Mar 2026 08:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Secure your data with expert encryption and key management strategies.</description>
-      <pubDate>Tue, 03 Mar 2026 07:03:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
