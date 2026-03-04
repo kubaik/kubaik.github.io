@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 19:48:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 20:39:30 +0000</lastBuildDate>
+    <item>
+      <title>Code Clean</title>
+      <link>https://kubaik.github.io/code-clean/</link>
+      <description>Learn Clean Code Principles for better software development</description>
+      <pubDate>Wed, 04 Mar 2026 20:39:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-clean/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility-First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Unlock secure AI with Federated Learning. Learn implementation strategies and benefits.</description>
       <pubDate>Tue, 03 Mar 2026 21:40:30 +0000</pubDate>
       <guid>https://kubaik.github.io/fed-learning/</guid>
-    </item>
-    <item>
-      <title>AI Ethics</title>
-      <link>https://kubaik.github.io/ai-ethics/</link>
-      <description>Explore AI ethics &amp; responsible AI practices for a fairer future.</description>
-      <pubDate>Tue, 03 Mar 2026 20:40:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ethics/</guid>
     </item>
   </channel>
 </rss>
