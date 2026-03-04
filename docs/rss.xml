@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 21:42:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 22:39:42 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Boost your career with technical writing skills. Learn to communicate complex ideas with clarity.</description>
+      <pubDate>Wed, 04 Mar 2026 22:39:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>Terraform: Code Your Cloud</title>
       <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with Jamstack Architecture. Learn how to build fast, secure, and scalable websites.</description>
       <pubDate>Tue, 03 Mar 2026 23:34:35 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-sites/</guid>
-    </item>
-    <item>
-      <title>Unlock SOC 2 &amp; ISO 27001</title>
-      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
-      <description>Simplify security compliance with expert guides on SOC 2 &amp; ISO 27001 certification.</description>
-      <pubDate>Tue, 03 Mar 2026 22:37:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
     </item>
   </channel>
 </rss>
