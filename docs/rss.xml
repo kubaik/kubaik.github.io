@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 15:52:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 16:56:41 +0000</lastBuildDate>
+    <item>
+      <title>Optimize SQL</title>
+      <link>https://kubaik.github.io/optimize-sql/</link>
+      <description>Boost database performance with expert SQL optimization tips and techniques.</description>
+      <pubDate>Wed, 04 Mar 2026 16:56:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-sql/</guid>
+    </item>
     <item>
       <title>Data Mesh: Scale Insights</title>
       <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with database replication &amp; sharding strategies.</description>
       <pubDate>Tue, 03 Mar 2026 16:58:26 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>Boost App Speed</title>
-      <link>https://kubaik.github.io/boost-app-speed/</link>
-      <description>Optimize app speed with APM tools &amp; expert tips.</description>
-      <pubDate>Tue, 03 Mar 2026 15:54:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-speed/</guid>
     </item>
   </channel>
 </rss>
