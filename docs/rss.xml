@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 19:01:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 19:48:16 +0000</lastBuildDate>
+    <item>
+      <title>Tailwind CSS: Utility-First</title>
+      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
+      <description>Learn Tailwind CSS utility-first design for faster, more efficient styling.</description>
+      <pubDate>Wed, 04 Mar 2026 19:48:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
+    </item>
     <item>
       <title>Refactor Now</title>
       <link>https://kubaik.github.io/refactor-now/</link>
@@ -138,13 +145,6 @@
       <description>Explore AI ethics &amp; responsible AI practices for a fairer future.</description>
       <pubDate>Tue, 03 Mar 2026 20:40:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ethics/</guid>
-    </item>
-    <item>
-      <title>Pipe Up!</title>
-      <link>https://kubaik.github.io/pipe-up/</link>
-      <description>Streamline data workflows with efficient pipelines. Learn more about Data Engineering Pipelines.</description>
-      <pubDate>Tue, 03 Mar 2026 19:02:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/pipe-up/</guid>
     </item>
   </channel>
 </rss>
