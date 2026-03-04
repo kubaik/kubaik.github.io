@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 20:39:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 21:42:12 +0000</lastBuildDate>
+    <item>
+      <title>Terraform: Code Your Cloud</title>
+      <link>https://kubaik.github.io/terraform-code-your-cloud/</link>
+      <description>Learn Terraform: automate cloud infrastructure with code</description>
+      <pubDate>Wed, 04 Mar 2026 21:42:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Simplify security compliance with expert guides on SOC 2 &amp; ISO 27001 certification.</description>
       <pubDate>Tue, 03 Mar 2026 22:37:47 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>Fed Learning</title>
-      <link>https://kubaik.github.io/fed-learning/</link>
-      <description>Unlock secure AI with Federated Learning. Learn implementation strategies and benefits.</description>
-      <pubDate>Tue, 03 Mar 2026 21:40:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/fed-learning/</guid>
     </item>
   </channel>
 </rss>
