@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Mar 2026 06:59:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Mar 2026 07:46:41 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Made Easy</title>
+      <link>https://kubaik.github.io/jwt-auth-made-easy/</link>
+      <description>Simplify JWT auth implementation with our easy-to-follow guide.</description>
+      <pubDate>Wed, 04 Mar 2026 07:46:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-made-easy/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Secure your data with expert encryption and key management strategies.</description>
       <pubDate>Tue, 03 Mar 2026 07:03:11 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>GraphQL Done Right</title>
-      <link>https://kubaik.github.io/graphql-done-right/</link>
-      <description>Master GraphQL API development with best practices and expert insights.</description>
-      <pubDate>Tue, 03 Mar 2026 05:56:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-done-right/</guid>
     </item>
   </channel>
 </rss>
