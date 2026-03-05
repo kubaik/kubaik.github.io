@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 22:39:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 23:55:56 +0000</lastBuildDate>
+    <item>
+      <title>Profile &amp; Boost</title>
+      <link>https://kubaik.github.io/profile-boost/</link>
+      <description>Unlock peak performance with profiling &amp; benchmarking techniques to optimize your code.</description>
+      <pubDate>Thu, 05 Mar 2026 23:55:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/profile-boost/</guid>
+    </item>
     <item>
       <title>NLP Insights</title>
       <link>https://kubaik.github.io/nlp-insights/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: automate cloud infrastructure with code</description>
       <pubDate>Wed, 04 Mar 2026 21:42:02 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-cloud/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn Clean Code Principles for better software development</description>
-      <pubDate>Wed, 04 Mar 2026 20:39:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
