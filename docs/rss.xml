@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 21:43:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 22:39:54 +0000</lastBuildDate>
+    <item>
+      <title>NLP Insights</title>
+      <link>https://kubaik.github.io/nlp-insights/</link>
+      <description>Unlock NLP insights: Explore latest techniques &amp; innovations in Natural Language Processing.</description>
+      <pubDate>Thu, 05 Mar 2026 22:39:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-insights/</guid>
+    </item>
     <item>
       <title>Respond Fast</title>
       <link>https://kubaik.github.io/respond-fast/</link>
@@ -138,13 +145,6 @@
       <description>Learn Clean Code Principles for better software development</description>
       <pubDate>Wed, 04 Mar 2026 20:39:19 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>Tailwind CSS: Utility-First</title>
-      <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
-      <description>Learn Tailwind CSS utility-first design for faster, more efficient styling.</description>
-      <pubDate>Wed, 04 Mar 2026 19:48:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/tailwind-css-utility-first/</guid>
     </item>
   </channel>
 </rss>
