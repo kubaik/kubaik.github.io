@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 15:56:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 18:12:28 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the power of 5G technology &amp; its impact on our future.</description>
+      <pubDate>Thu, 05 Mar 2026 18:12:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert SQL optimization tips and techniques.</description>
       <pubDate>Wed, 04 Mar 2026 16:56:30 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-sql/</guid>
-    </item>
-    <item>
-      <title>Data Mesh: Scale Insights</title>
-      <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
-      <description>Unlock scalable insights with Data Mesh Architecture. Learn how to drive business growth with decentralized data management.</description>
-      <pubDate>Wed, 04 Mar 2026 15:52:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
     </item>
   </channel>
 </rss>
