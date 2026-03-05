@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 18:12:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 19:56:54 +0000</lastBuildDate>
+    <item>
+      <title>Vector DBs Simplified</title>
+      <link>https://kubaik.github.io/vector-dbs-simplified/</link>
+      <description>Unlock vector databases &amp; embeddings. Discover simplified solutions for complex data.</description>
+      <pubDate>Thu, 05 Mar 2026 19:56:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/vector-dbs-simplified/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox with Grid+Flex. Learn layouts, examples &amp; best practices.</description>
       <pubDate>Wed, 04 Mar 2026 17:48:27 +0000</pubDate>
       <guid>https://kubaik.github.io/gridflex/</guid>
-    </item>
-    <item>
-      <title>Optimize SQL</title>
-      <link>https://kubaik.github.io/optimize-sql/</link>
-      <description>Boost database performance with expert SQL optimization tips and techniques.</description>
-      <pubDate>Wed, 04 Mar 2026 16:56:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-sql/</guid>
     </item>
   </channel>
 </rss>
