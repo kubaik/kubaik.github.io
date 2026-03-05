@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 04:51:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 05:55:06 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Boost business insights with clean data. Learn why data quality matters.</description>
+      <pubDate>Thu, 05 Mar 2026 05:54:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>No-Code Rev: Build Fast</title>
       <link>https://kubaik.github.io/no-code-rev-build-fast/</link>
@@ -138,13 +145,6 @@
       <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
       <pubDate>Wed, 04 Mar 2026 06:59:15 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Docker Simplified</title>
-      <link>https://kubaik.github.io/docker-simplified/</link>
-      <description>Master Docker containerization with our simplified guide, covering basics to advanced techniques.</description>
-      <pubDate>Wed, 04 Mar 2026 05:52:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-simplified/</guid>
     </item>
   </channel>
 </rss>
