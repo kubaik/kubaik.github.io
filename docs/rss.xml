@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2026 02:41:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2026 04:51:10 +0000</lastBuildDate>
+    <item>
+      <title>No-Code Rev: Build Fast</title>
+      <link>https://kubaik.github.io/no-code-rev-build-fast/</link>
+      <description>Boost dev speed with low-code/no-code platforms. Learn how to build fast &amp; efficient solutions.</description>
+      <pubDate>Thu, 05 Mar 2026 04:51:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/no-code-rev-build-fast/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Master Docker containerization with our simplified guide, covering basics to advanced techniques.</description>
       <pubDate>Wed, 04 Mar 2026 05:52:02 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-simplified/</guid>
-    </item>
-    <item>
-      <title>Transfer Learn</title>
-      <link>https://kubaik.github.io/transfer-learn/</link>
-      <description>Unlock efficient AI with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
-      <pubDate>Wed, 04 Mar 2026 04:46:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/transfer-learn/</guid>
     </item>
   </channel>
 </rss>
