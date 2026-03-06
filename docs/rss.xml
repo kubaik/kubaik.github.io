@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 22:37:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 23:35:00 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Maximize productivity with expert time management tips for engineers.</description>
+      <pubDate>Fri, 06 Mar 2026 23:34:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP insights: Explore latest techniques &amp; innovations in Natural Language Processing.</description>
       <pubDate>Thu, 05 Mar 2026 22:39:43 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-insights/</guid>
-    </item>
-    <item>
-      <title>Respond Fast</title>
-      <link>https://kubaik.github.io/respond-fast/</link>
-      <description>Act swiftly in a crisis with a solid incident response plan. Learn how to respond fast and minimize damage.</description>
-      <pubDate>Thu, 05 Mar 2026 21:43:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/respond-fast/</guid>
     </item>
   </channel>
 </rss>
