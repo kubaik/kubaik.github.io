@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 10:45:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 11:36:36 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done Right</title>
+      <link>https://kubaik.github.io/serverless-done-right/</link>
+      <description>Optimize with serverless architecture patterns &amp; best practices for scalable, cost-effective applications.</description>
+      <pubDate>Fri, 06 Mar 2026 11:36:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done-right/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Master project management for devs. Learn expert tips and best practices.</description>
       <pubDate>Thu, 05 Mar 2026 09:54:35 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-done-right/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Unlock RL wins with expert strategies for reinforcement learning success.</description>
-      <pubDate>Thu, 05 Mar 2026 08:54:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
