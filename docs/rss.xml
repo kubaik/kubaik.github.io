@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 09:50:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 10:45:22 +0000</lastBuildDate>
+    <item>
+      <title>ES6+ Essentials</title>
+      <link>https://kubaik.github.io/es6-essentials/</link>
+      <description>Learn essential JavaScript ES6+ features for modern coding</description>
+      <pubDate>Fri, 06 Mar 2026 10:45:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/es6-essentials/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Unlock RL wins with expert strategies for reinforcement learning success.</description>
       <pubDate>Thu, 05 Mar 2026 08:54:30 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Unlock top tech leadership skills &amp; boost your team&apos;s success</description>
-      <pubDate>Thu, 05 Mar 2026 07:02:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
