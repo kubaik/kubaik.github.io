@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 21:37:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 22:37:02 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure zero downtime with high availability systems. Learn more.</description>
+      <pubDate>Fri, 06 Mar 2026 22:36:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Digital Twin: Virtual Clone</title>
       <link>https://kubaik.github.io/digital-twin-virtual-clone/</link>
@@ -138,13 +145,6 @@
       <description>Act swiftly in a crisis with a solid incident response plan. Learn how to respond fast and minimize damage.</description>
       <pubDate>Thu, 05 Mar 2026 21:43:21 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-fast/</guid>
-    </item>
-    <item>
-      <title>AR Dev 101</title>
-      <link>https://kubaik.github.io/ar-dev-101/</link>
-      <description>Discover AR dev basics &amp; start building immersive experiences.</description>
-      <pubDate>Thu, 05 Mar 2026 20:49:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-dev-101/</guid>
     </item>
   </channel>
 </rss>
