@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 04:48:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 05:52:37 +0000</lastBuildDate>
+    <item>
+      <title>PWA: Future of Mobile</title>
+      <link>https://kubaik.github.io/pwa-future-of-mobile/</link>
+      <description>Discover the future of mobile with PWAs. Learn how Progressive Web Apps are revolutionizing user experience.</description>
+      <pubDate>Fri, 06 Mar 2026 05:52:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-future-of-mobile/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Thu, 05 Mar 2026 02:41:08 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Edge Unleashed</title>
-      <link>https://kubaik.github.io/edge-unleashed/</link>
-      <description>Unlock Edge Computing&apos;s full potential &amp; discover its game-changing applications.</description>
-      <pubDate>Wed, 04 Mar 2026 23:37:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-unleashed/</guid>
     </item>
   </channel>
 </rss>
