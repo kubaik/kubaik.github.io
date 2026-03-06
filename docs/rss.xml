@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 11:36:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 13:12:07 +0000</lastBuildDate>
+    <item>
+      <title>ML Demystified</title>
+      <link>https://kubaik.github.io/ml-demystified/</link>
+      <description>Unlock the power of Machine Learning. Simple explanations of complex algorithms.</description>
+      <pubDate>Fri, 06 Mar 2026 13:11:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-demystified/</guid>
+    </item>
     <item>
       <title>Serverless Done Right</title>
       <link>https://kubaik.github.io/serverless-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart cloud migration strategies. Learn how to make a seamless transition to the cloud.</description>
       <pubDate>Thu, 05 Mar 2026 10:51:18 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-smart/</guid>
-    </item>
-    <item>
-      <title>Dev Done Right</title>
-      <link>https://kubaik.github.io/dev-done-right/</link>
-      <description>Master project management for devs. Learn expert tips and best practices.</description>
-      <pubDate>Thu, 05 Mar 2026 09:54:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-done-right/</guid>
     </item>
   </channel>
 </rss>
