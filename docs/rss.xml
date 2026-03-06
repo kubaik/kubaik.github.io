@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 02:39:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 04:48:24 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Fri, 06 Mar 2026 04:48:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Zero Trust: Secure All</title>
       <link>https://kubaik.github.io/zero-trust-secure-all/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s full potential &amp; discover its game-changing applications.</description>
       <pubDate>Wed, 04 Mar 2026 23:37:35 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-unleashed/</guid>
-    </item>
-    <item>
-      <title>Write to Thrive</title>
-      <link>https://kubaik.github.io/write-to-thrive/</link>
-      <description>Boost your career with technical writing skills. Learn to communicate complex ideas with clarity.</description>
-      <pubDate>Wed, 04 Mar 2026 22:39:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-thrive/</guid>
     </item>
   </channel>
 </rss>
