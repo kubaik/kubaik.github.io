@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 16:53:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 17:42:01 +0000</lastBuildDate>
+    <item>
+      <title>Angular at Scale</title>
+      <link>https://kubaik.github.io/angular-at-scale/</link>
+      <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
+      <pubDate>Fri, 06 Mar 2026 17:41:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/angular-at-scale/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with a Web Application Firewall (WAF). Learn how a WAF shields your site from threats.</description>
       <pubDate>Thu, 05 Mar 2026 14:54:23 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-web-shield/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing. Learn how to simplify complex systems.</description>
-      <pubDate>Thu, 05 Mar 2026 13:16:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
