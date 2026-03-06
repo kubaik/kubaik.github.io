@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2026 19:40:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Mar 2026 20:40:40 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD on-the-go automation</description>
+      <pubDate>Fri, 06 Mar 2026 20:40:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Crack Sys Design</title>
       <link>https://kubaik.github.io/crack-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Unlock vector databases &amp; embeddings. Discover simplified solutions for complex data.</description>
       <pubDate>Thu, 05 Mar 2026 19:56:43 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs-simplified/</guid>
-    </item>
-    <item>
-      <title>5G Revolution</title>
-      <link>https://kubaik.github.io/5g-revolution/</link>
-      <description>Discover the power of 5G technology &amp; its impact on our future.</description>
-      <pubDate>Thu, 05 Mar 2026 18:12:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/5g-revolution/</guid>
     </item>
   </channel>
 </rss>
