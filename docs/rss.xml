@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 19:28:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 20:34:12 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full Stack</title>
+      <link>https://kubaik.github.io/nextjs-full-stack/</link>
+      <description>Unlock full-stack dev with Next.js. Learn how to build scalable apps with ease.</description>
+      <pubDate>Sat, 07 Mar 2026 20:34:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
+    </item>
     <item>
       <title>Rust: Safe Memory</title>
       <link>https://kubaik.github.io/rust-safe-memory/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech, a virtual clone of physical assets, revolutionizing industries with real-time insights.</description>
       <pubDate>Fri, 06 Mar 2026 21:37:03 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin-virtual-clone/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD on-the-go automation</description>
-      <pubDate>Fri, 06 Mar 2026 20:40:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
