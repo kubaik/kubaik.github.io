@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 21:29:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 22:31:22 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Learn the pros &amp; cons of microservices vs monolithic architecture</description>
+      <pubDate>Sat, 07 Mar 2026 22:31:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Maximize productivity with expert time management tips for engineers.</description>
       <pubDate>Fri, 06 Mar 2026 23:34:49 +0000</pubDate>
       <guid>https://kubaik.github.io/engineer-your-time/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure zero downtime with high availability systems. Learn more.</description>
-      <pubDate>Fri, 06 Mar 2026 22:36:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
