@@ -834,15 +834,15 @@
     "topic": "Scalability Patterns"
   },
   "backend_architecture_patterns": {
-    "timestamp": "2026-02-18T02:47:29.696810",
+    "timestamp": "2026-03-07T02:31:55.146844",
     "hashtags": [
       "CloudNative",
-      "ServerlessArchitecture",
+      "ServerlessDesign",
       "Microservices",
-      "DevOps",
-      "BackendDevelopment",
+      "DevOpsTools",
+      "BackendEngineering",
       "SoftwareArchitecture",
-      "CloudEngineering"
+      "CloudComputing"
     ],
     "topic": "Backend Architecture Patterns"
   },
