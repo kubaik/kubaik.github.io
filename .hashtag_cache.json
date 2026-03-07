@@ -2263,15 +2263,15 @@
     "topic": "Rate Limiting and Throttling"
   },
   "oauth_2.0_and_openid_connect": {
-    "timestamp": "2026-02-20T11:38:32.969580",
+    "timestamp": "2026-03-07T09:36:37.514660",
     "hashtags": [
-      "AuthenticationTech",
       "IdentityAccess",
       "CloudSecurity",
+      "AuthProtocols",
+      "OpenSourceTech",
       "DevSecOps",
-      "OpenSource",
-      "APIsecurity",
-      "CybersecurityNews"
+      "Cybersecurity",
+      "APIAuthentication"
     ],
     "topic": "OAuth 2.0 and OpenID Connect"
   },

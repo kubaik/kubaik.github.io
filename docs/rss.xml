@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 08:40:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 09:36:48 +0000</lastBuildDate>
+    <item>
+      <title>OAuth 2.0 &amp; OIDC</title>
+      <link>https://kubaik.github.io/oauth-20-oidc/</link>
+      <description>Learn OAuth 2.0 &amp; OpenID Connect basics</description>
+      <pubDate>Sat, 07 Mar 2026 09:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
+    </item>
     <item>
       <title>Flutter App Dev</title>
       <link>https://kubaik.github.io/flutter-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn essential JavaScript ES6+ features for modern coding</description>
       <pubDate>Fri, 06 Mar 2026 10:45:11 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Log On: Smart Solutions</title>
-      <link>https://kubaik.github.io/log-on-smart-solutions/</link>
-      <description>Streamline log data analysis with smart solutions, boost security &amp; efficiency</description>
-      <pubDate>Fri, 06 Mar 2026 09:50:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-smart-solutions/</guid>
     </item>
   </channel>
 </rss>
