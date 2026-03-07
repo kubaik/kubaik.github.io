@@ -162,5 +162,6 @@
   "RESTful API Design Principles",
   "AutoML and Neural Architecture Search",
   "Security Monitoring and SIEM",
-  "Design Patterns in Practice"
+  "Design Patterns in Practice",
+  "Rust Memory Safety"
 ]

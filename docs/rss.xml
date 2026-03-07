@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 18:43:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 19:28:35 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
+      <pubDate>Sat, 07 Mar 2026 19:28:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Design Done Right</title>
       <link>https://kubaik.github.io/design-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD on-the-go automation</description>
       <pubDate>Fri, 06 Mar 2026 20:40:31 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and tricks.</description>
-      <pubDate>Fri, 06 Mar 2026 19:40:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
