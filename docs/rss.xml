@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 09:36:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 10:32:04 +0000</lastBuildDate>
+    <item>
+      <title>Web3: Power of DApps</title>
+      <link>https://kubaik.github.io/web3-power-of-dapps/</link>
+      <description>Unlock Web3&apos;s potential with DApps, decentralized apps revolutionizing the internet.</description>
+      <pubDate>Sat, 07 Mar 2026 10:31:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-power-of-dapps/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with serverless architecture patterns &amp; best practices for scalable, cost-effective applications.</description>
       <pubDate>Fri, 06 Mar 2026 11:36:25 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Learn essential JavaScript ES6+ features for modern coding</description>
-      <pubDate>Fri, 06 Mar 2026 10:45:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
