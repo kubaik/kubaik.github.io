@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 16:37:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 17:29:03 +0000</lastBuildDate>
+    <item>
+      <title>Boost Security</title>
+      <link>https://kubaik.github.io/boost-security/</link>
+      <description>Strengthen your defense with our expert Security Monitoring and SIEM solutions.</description>
+      <pubDate>Sat, 07 Mar 2026 17:28:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-security/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
       <pubDate>Fri, 06 Mar 2026 18:57:55 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-dev/</guid>
-    </item>
-    <item>
-      <title>Angular at Scale</title>
-      <link>https://kubaik.github.io/angular-at-scale/</link>
-      <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
-      <pubDate>Fri, 06 Mar 2026 17:41:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-at-scale/</guid>
     </item>
   </channel>
 </rss>
