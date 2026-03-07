@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 02:32:05 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 04:26:44 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Sat, 07 Mar 2026 04:26:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn about Zero Trust Security Architecture &amp; protect your network with a &apos;never trust, always verify&apos; approach.</description>
       <pubDate>Fri, 06 Mar 2026 02:39:14 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>Profile &amp; Boost</title>
-      <link>https://kubaik.github.io/profile-boost/</link>
-      <description>Unlock peak performance with profiling &amp; benchmarking techniques to optimize your code.</description>
-      <pubDate>Thu, 05 Mar 2026 23:55:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/profile-boost/</guid>
     </item>
   </channel>
 </rss>
