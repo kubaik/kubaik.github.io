@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 15:31:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 16:37:05 +0000</lastBuildDate>
+    <item>
+      <title>AutoML Accelerated</title>
+      <link>https://kubaik.github.io/automl-accelerated/</link>
+      <description>Unlock AI potential with AutoML Accelerated. Discover Neural Architecture Search and automate machine learning.</description>
+      <pubDate>Sat, 07 Mar 2026 16:36:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/automl-accelerated/</guid>
+    </item>
     <item>
       <title>API Done Right</title>
       <link>https://kubaik.github.io/api-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to build scalable Angular enterprise apps with expert tips and best practices.</description>
       <pubDate>Fri, 06 Mar 2026 17:41:50 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-at-scale/</guid>
-    </item>
-    <item>
-      <title>Blockchain 101</title>
-      <link>https://kubaik.github.io/blockchain-101/</link>
-      <description>Unlock the basics of blockchain technology and discover its power in our beginner&apos;s guide, Blockchain 101.</description>
-      <pubDate>Fri, 06 Mar 2026 16:53:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-101/</guid>
     </item>
   </channel>
 </rss>
