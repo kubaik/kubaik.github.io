@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 20:34:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 21:29:06 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Master BDD basics &amp; best practices for agile teams.</description>
+      <pubDate>Sat, 07 Mar 2026 21:28:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Next.js: Full Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Ensure zero downtime with high availability systems. Learn more.</description>
       <pubDate>Fri, 06 Mar 2026 22:36:51 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Digital Twin: Virtual Clone</title>
-      <link>https://kubaik.github.io/digital-twin-virtual-clone/</link>
-      <description>Discover Digital Twin tech, a virtual clone of physical assets, revolutionizing industries with real-time insights.</description>
-      <pubDate>Fri, 06 Mar 2026 21:37:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twin-virtual-clone/</guid>
     </item>
   </channel>
 </rss>
