@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 10:32:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2026 11:27:35 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Discover latest Computer Vision tech &amp; its innovative applications</description>
+      <pubDate>Sat, 07 Mar 2026 11:27:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Web3: Power of DApps</title>
       <link>https://kubaik.github.io/web3-power-of-dapps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Machine Learning. Simple explanations of complex algorithms.</description>
       <pubDate>Fri, 06 Mar 2026 13:11:56 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-demystified/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Optimize with serverless architecture patterns &amp; best practices for scalable, cost-effective applications.</description>
-      <pubDate>Fri, 06 Mar 2026 11:36:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
