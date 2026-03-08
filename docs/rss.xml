@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2026 23:30:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 02:45:09 +0000</lastBuildDate>
+    <item>
+      <title>Queue Up! Async Processing</title>
+      <link>https://kubaik.github.io/queue-up-async-processing/</link>
+      <description>Learn async processing with message queues, boost app performance &amp; scalability.</description>
+      <pubDate>Sun, 08 Mar 2026 02:45:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/queue-up-async-processing/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
       <pubDate>Sat, 07 Mar 2026 04:26:33 +0000</pubDate>
       <guid>https://kubaik.github.io/php-evolved/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn proven backend architecture patterns and best practices.</description>
-      <pubDate>Sat, 07 Mar 2026 02:31:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>

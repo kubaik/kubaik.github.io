@@ -167,5 +167,6 @@
   "Next.js for Full-Stack Development",
   "Behavior-Driven Development (BDD)",
   "Microservices vs Monolithic Architecture",
-  "Vulnerability Management"
+  "Vulnerability Management",
+  "Message Queues and Async Processing"
 ]
