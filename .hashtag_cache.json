@@ -1086,14 +1086,14 @@
     "topic": "C# .NET Core Applications"
   },
   "multi-cloud_architecture": {
-    "timestamp": "2026-02-21T05:49:10.411313",
+    "timestamp": "2026-03-08T14:32:12.557714",
     "hashtags": [
       "CloudComputing",
       "MultiCloud",
+      "DevOps",
       "HybridCloud",
       "CloudNative",
-      "DevOps",
-      "CloudSecurity",
+      "Microservices",
       "ServerlessArchitecture"
     ],
     "topic": "Multi-Cloud Architecture"

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 13:03:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 14:32:23 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock cloud potential with multi-cloud architecture, boosting flexibility &amp; scalability.</description>
+      <pubDate>Sun, 08 Mar 2026 14:32:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>AI Evolved</title>
       <link>https://kubaik.github.io/ai-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable, secure, and maintainable APIs.</description>
       <pubDate>Sat, 07 Mar 2026 15:30:58 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>BaaS Simplified</title>
-      <link>https://kubaik.github.io/baas-simplified/</link>
-      <description>Unlock mobile app potential with BaaS. Learn how to simplify backend development.</description>
-      <pubDate>Sat, 07 Mar 2026 14:31:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/baas-simplified/</guid>
     </item>
   </channel>
 </rss>
