@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 18:45:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 19:30:25 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up!</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Unlock microservices management with Service Mesh Architecture. Learn how to simplify &amp; secure your apps.</description>
+      <pubDate>Sun, 08 Mar 2026 19:30:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full-stack dev with Next.js. Learn how to build scalable apps with ease.</description>
       <pubDate>Sat, 07 Mar 2026 20:34:00 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Memory</title>
-      <link>https://kubaik.github.io/rust-safe-memory/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
-      <pubDate>Sat, 07 Mar 2026 19:28:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
     </item>
   </channel>
 </rss>
