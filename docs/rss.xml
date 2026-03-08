@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 17:30:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 18:45:14 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: learn key differences &amp; choose the best fit for your data needs.</description>
+      <pubDate>Sun, 08 Mar 2026 18:45:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Rust ensures memory safety with its unique ownership system and borrow checker.</description>
       <pubDate>Sat, 07 Mar 2026 19:28:24 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn effective design patterns in practice, boosting usability and user experience.</description>
-      <pubDate>Sat, 07 Mar 2026 18:43:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
