@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 10:33:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 11:28:47 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Unlock the basics of quantum computing in our introductory guide, Quantum 101.</description>
+      <pubDate>Sun, 08 Mar 2026 11:28:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>SSR Unlocked</title>
       <link>https://kubaik.github.io/ssr-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient DevOps with expert best practices &amp; cultural tips.</description>
       <pubDate>Sat, 07 Mar 2026 13:01:48 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Discover latest Computer Vision tech &amp; its innovative applications</description>
-      <pubDate>Sat, 07 Mar 2026 11:27:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
