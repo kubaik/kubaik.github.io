@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 07:36:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 08:40:21 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning: AI Evolved</title>
+      <link>https://kubaik.github.io/deep-learning-ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks, revolutionizing tech</description>
+      <pubDate>Sun, 08 Mar 2026 08:40:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning-ai-evolved/</guid>
+    </item>
     <item>
       <title>Unlock Snowflake</title>
       <link>https://kubaik.github.io/unlock-snowflake/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect basics</description>
       <pubDate>Sat, 07 Mar 2026 09:36:37 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>Flutter App Dev</title>
-      <link>https://kubaik.github.io/flutter-app-dev/</link>
-      <description>Learn Flutter app dev &amp; build natively compiled apps.</description>
-      <pubDate>Sat, 07 Mar 2026 08:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
     </item>
   </channel>
 </rss>
