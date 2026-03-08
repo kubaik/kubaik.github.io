@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 20:35:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 21:31:39 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn more.</description>
+      <pubDate>Sun, 08 Mar 2026 21:31:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Learn the pros &amp; cons of microservices vs monolithic architecture</description>
       <pubDate>Sat, 07 Mar 2026 22:31:11 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Master BDD basics &amp; best practices for agile teams.</description>
-      <pubDate>Sat, 07 Mar 2026 21:28:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
