@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 16:38:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 17:30:25 +0000</lastBuildDate>
+    <item>
+      <title>Push Done Right</title>
+      <link>https://kubaik.github.io/push-done-right/</link>
+      <description>Boost engagement with push notifications done right. Learn expert implementation tips.</description>
+      <pubDate>Sun, 08 Mar 2026 17:30:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-done-right/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective design patterns in practice, boosting usability and user experience.</description>
       <pubDate>Sat, 07 Mar 2026 18:43:48 +0000</pubDate>
       <guid>https://kubaik.github.io/design-done-right/</guid>
-    </item>
-    <item>
-      <title>Boost Security</title>
-      <link>https://kubaik.github.io/boost-security/</link>
-      <description>Strengthen your defense with our expert Security Monitoring and SIEM solutions.</description>
-      <pubDate>Sat, 07 Mar 2026 17:28:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-security/</guid>
     </item>
   </channel>
 </rss>
