@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 04:49:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 05:50:50 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with smart data visualization. Learn best practices to create impactful charts and graphs.</description>
+      <pubDate>Sun, 08 Mar 2026 05:50:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Build Your Brand</title>
       <link>https://kubaik.github.io/build-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Establish a strong online presence with personal branding tips for developers.</description>
       <pubDate>Sat, 07 Mar 2026 06:53:01 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Compare ETL vs ELT: Learn the differences and choose the best data integration process for your business.</description>
-      <pubDate>Sat, 07 Mar 2026 05:42:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
