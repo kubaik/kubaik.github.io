@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 21:31:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 22:32:27 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Securely manage IoT devices with ease. Learn expert control strategies.</description>
+      <pubDate>Sun, 08 Mar 2026 22:32:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Rails Web Apps</title>
       <link>https://kubaik.github.io/rails-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead of threats with effective vulnerability management strategies.</description>
       <pubDate>Sat, 07 Mar 2026 23:30:25 +0000</pubDate>
       <guid>https://kubaik.github.io/vuln-free/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Learn the pros &amp; cons of microservices vs monolithic architecture</description>
-      <pubDate>Sat, 07 Mar 2026 22:31:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
