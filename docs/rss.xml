@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 02:45:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 04:49:17 +0000</lastBuildDate>
+    <item>
+      <title>Build Your Brand</title>
+      <link>https://kubaik.github.io/build-your-brand/</link>
+      <description>Establish your tech presence with a strong portfolio. Learn how to build your brand and showcase skills.</description>
+      <pubDate>Sun, 08 Mar 2026 04:49:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-your-brand/</guid>
+    </item>
     <item>
       <title>Queue Up! Async Processing</title>
       <link>https://kubaik.github.io/queue-up-async-processing/</link>
@@ -138,13 +145,6 @@
       <description>Compare ETL vs ELT: Learn the differences and choose the best data integration process for your business.</description>
       <pubDate>Sat, 07 Mar 2026 05:42:34 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Sat, 07 Mar 2026 04:26:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
