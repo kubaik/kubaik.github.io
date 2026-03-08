@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Mar 2026 09:37:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2026 10:33:25 +0000</lastBuildDate>
+    <item>
+      <title>SSR Unlocked</title>
+      <link>https://kubaik.github.io/ssr-unlocked/</link>
+      <description>Unlock faster page loads with Server-Side Rendering (SSR). Learn how to boost SEO &amp; user experience.</description>
+      <pubDate>Sun, 08 Mar 2026 10:33:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssr-unlocked/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Code Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Discover latest Computer Vision tech &amp; its innovative applications</description>
       <pubDate>Sat, 07 Mar 2026 11:27:24 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Web3: Power of DApps</title>
-      <link>https://kubaik.github.io/web3-power-of-dapps/</link>
-      <description>Unlock Web3&apos;s potential with DApps, decentralized apps revolutionizing the internet.</description>
-      <pubDate>Sat, 07 Mar 2026 10:31:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-power-of-dapps/</guid>
     </item>
   </channel>
 </rss>
