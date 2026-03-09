@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 07:54:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 08:55:32 +0000</lastBuildDate>
+    <item>
+      <title>App Archetypes</title>
+      <link>https://kubaik.github.io/app-archetypes/</link>
+      <description>Discover mobile app architecture patterns &amp; boost performance with our guide to App Archetypes.</description>
+      <pubDate>Mon, 09 Mar 2026 08:55:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-archetypes/</guid>
+    </item>
     <item>
       <title>BI Tools: Boost Insight</title>
       <link>https://kubaik.github.io/bi-tools-boost-insight/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks, revolutionizing tech</description>
       <pubDate>Sun, 08 Mar 2026 08:40:12 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-ai-evolved/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Unlock Snowflake&apos;s full potential &amp; transform your data landscape with expert insights &amp; tips.</description>
-      <pubDate>Sun, 08 Mar 2026 07:36:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
