@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 13:20:26 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 14:59:40 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
+      <pubDate>Mon, 09 Mar 2026 14:59:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>TL Boost</title>
       <link>https://kubaik.github.io/tl-boost/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with multi-cloud architecture, boosting flexibility &amp; scalability.</description>
       <pubDate>Sun, 08 Mar 2026 14:32:12 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>AI Evolved</title>
-      <link>https://kubaik.github.io/ai-evolved/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing tech</description>
-      <pubDate>Sun, 08 Mar 2026 13:03:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
