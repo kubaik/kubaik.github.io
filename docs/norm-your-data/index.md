@@ -1,178 +1,182 @@
 # Norm Your Data
 
 ## Introduction to Database Normalization
-Database normalization is the process of organizing data in a database to minimize data redundancy and dependency. Normalization involves dividing large tables into smaller tables and defining relationships between them. This process helps to improve data integrity, reduce data duplication, and improve scalability.
-
-Database normalization is a critical step in database design, as it helps to ensure that data is consistent and reliable. In this article, we will explore the principles of database normalization, including the different normalization forms, and provide practical examples of how to normalize a database.
+Database normalization is the process of organizing data in a database to minimize data redundancy and dependency. Normalization involves dividing large tables into smaller tables and defining relationships between them. This process helps to eliminate data anomalies and improve data integrity. In this article, we will delve into the world of database normalization, exploring its benefits, techniques, and best practices.
 
 ### First Normal Form (1NF)
-The first normal form (1NF) is the most basic level of normalization. A table is in 1NF if it meets the following conditions:
-* Each row is unique.
-* Each column contains only atomic values (i.e., not lists or arrays).
-* Each column has a unique name.
+The first normal form (1NF) is the most basic level of normalization. A table is in 1NF if each cell in the table contains a single value, and there are no repeating groups or arrays. For example, consider a table that stores customer information, including their name, address, and phone numbers.
 
-To illustrate this, let's consider an example. Suppose we have a table called `orders` with the following columns:
 ```sql
-+---------+----------+---------------+
-| order_id | customer_name | order_items  |
-+---------+----------+---------------+
-| 1        | John Smith   | Book, Pen    |
-| 2        | Jane Doe     | Book, Pencil |
-+---------+----------+---------------+
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    address VARCHAR(255),
+    phone1 VARCHAR(20),
+    phone2 VARCHAR(20)
+);
 ```
-This table is not in 1NF because the `order_items` column contains a list of items. To normalize this table, we can create a separate table called `order_items` with the following columns:
+
+In this example, the `phone1` and `phone2` columns are repeating groups, as a customer can have more than two phone numbers. To normalize this table to 1NF, we can create a separate table for phone numbers.
+
 ```sql
-+---------+----------+--------+
-| order_id | item_name | quantity |
-+---------+----------+--------+
-| 1        | Book      | 1       |
-| 1        | Pen       | 1       |
-| 2        | Book      | 1       |
-| 2        | Pencil    | 1       |
-+---------+----------+--------+
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    address VARCHAR(255)
+);
+
+CREATE TABLE phone_numbers (
+    id INT PRIMARY KEY,
+    customer_id INT,
+    phone_number VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
 ```
-This new table is in 1NF because each row is unique, each column contains only atomic values, and each column has a unique name.
 
 ### Second Normal Form (2NF)
-The second normal form (2NF) is a higher level of normalization than 1NF. A table is in 2NF if it meets the following conditions:
-* The table is in 1NF.
-* Each non-key attribute in the table depends on the entire primary key.
+A table is in second normal form (2NF) if it is in 1NF and all non-key attributes are fully functional dependent on the primary key. In other words, if a table has a composite primary key, then each non-key attribute must depend on the entire primary key. Consider a table that stores order information, including the order date, customer ID, and product ID.
 
-To illustrate this, let's consider an example. Suppose we have a table called `employees` with the following columns:
 ```sql
-+---------+----------+---------------+--------+
-| employee_id | name      | department_id | salary |
-+---------+----------+---------------+--------+
-| 1        | John Smith | 1             | 50000  |
-| 2        | Jane Doe   | 1             | 60000  |
-| 3        | Bob Brown  | 2             | 70000  |
-+---------+----------+---------------+--------+
+CREATE TABLE orders (
+    order_date DATE,
+    customer_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (order_date, customer_id, product_id)
+);
 ```
-This table is not in 2NF because the `salary` column depends on the `employee_id` and `department_id` columns. To normalize this table, we can create a separate table called `departments` with the following columns:
+
+In this example, the `quantity` attribute depends on the `order_date`, `customer_id`, and `product_id`. However, the `order_date` attribute depends only on the `order_date` and `customer_id`. To normalize this table to 2NF, we can create separate tables for orders and order items.
+
 ```sql
-+---------------+--------+
-| department_id | salary |
-+---------------+--------+
-| 1             | 50000  |
-| 2             | 70000  |
-+---------------+--------+
+CREATE TABLE orders (
+    order_date DATE,
+    customer_id INT,
+    PRIMARY KEY (order_date, customer_id)
+);
+
+CREATE TABLE order_items (
+    order_date DATE,
+    customer_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (order_date, customer_id, product_id),
+    FOREIGN KEY (order_date, customer_id) REFERENCES orders(order_date, customer_id)
+);
 ```
-This new table is in 2NF because each non-key attribute in the table depends on the entire primary key.
 
 ### Third Normal Form (3NF)
-The third normal form (3NF) is the highest level of normalization. A table is in 3NF if it meets the following conditions:
-* The table is in 2NF.
-* If a table is in 2NF, and a non-key attribute depends on another non-key attribute, then it should be moved to a separate table.
+A table is in third normal form (3NF) if it is in 2NF and there are no transitive dependencies. In other words, if a non-key attribute depends on another non-key attribute, then it should be moved to a separate table. Consider a table that stores employee information, including their name, department, and department manager.
 
-To illustrate this, let's consider an example. Suppose we have a table called `orders` with the following columns:
 ```sql
-+---------+----------+---------------+--------+
-| order_id | customer_name | order_date | total |
-+---------+----------+---------------+--------+
-| 1        | John Smith   | 2022-01-01 | 100   |
-| 2        | Jane Doe     | 2022-01-02 | 200   |
-+---------+----------+---------------+--------+
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    department VARCHAR(255),
+    department_manager VARCHAR(255)
+);
 ```
-This table is not in 3NF because the `total` column depends on the `order_date` column. To normalize this table, we can create a separate table called `order_totals` with the following columns:
+
+In this example, the `department_manager` attribute depends on the `department` attribute, which in turn depends on the `id` attribute. To normalize this table to 3NF, we can create separate tables for employees, departments, and department managers.
+
 ```sql
-+---------+----------+--------+
-| order_id | order_date | total |
-+---------+----------+--------+
-| 1        | 2022-01-01 | 100   |
-| 2        | 2022-01-02 | 200   |
-+---------+----------+--------+
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+CREATE TABLE departments (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES employees(id)
+);
 ```
-This new table is in 3NF because each non-key attribute in the table depends on the entire primary key.
 
-## Practical Use Cases
-Database normalization is used in a variety of scenarios, including:
-* E-commerce platforms: Normalization helps to ensure that customer data is consistent and reliable, which is critical for e-commerce platforms.
-* Social media platforms: Normalization helps to ensure that user data is consistent and reliable, which is critical for social media platforms.
-* Financial institutions: Normalization helps to ensure that financial data is consistent and reliable, which is critical for financial institutions.
+## Benefits of Normalization
+Normalization provides several benefits, including:
 
-Some popular tools and platforms that support database normalization include:
-* MySQL: A popular open-source database management system that supports normalization.
-* PostgreSQL: A popular open-source database management system that supports normalization.
-* Microsoft SQL Server: A commercial database management system that supports normalization.
-
-### Real-World Example
-Suppose we are building an e-commerce platform that sells books. We have a table called `orders` with the following columns:
-```sql
-+---------+----------+---------------+--------+
-| order_id | customer_name | order_items  | total |
-+---------+----------+---------------+--------+
-| 1        | John Smith   | Book1, Book2 | 100   |
-| 2        | Jane Doe     | Book3, Book4 | 200   |
-+---------+----------+---------------+--------+
-```
-To normalize this table, we can create separate tables for `customers`, `orders`, and `order_items`. The `customers` table would have the following columns:
-```sql
-+---------+----------+
-| customer_id | name      |
-+---------+----------+
-| 1        | John Smith |
-| 2        | Jane Doe   |
-+---------+----------+
-```
-The `orders` table would have the following columns:
-```sql
-+---------+----------+---------------+
-| order_id | customer_id | order_date |
-+---------+----------+---------------+
-| 1        | 1          | 2022-01-01 |
-| 2        | 2          | 2022-01-02 |
-+---------+----------+---------------+
-```
-The `order_items` table would have the following columns:
-```sql
-+---------+----------+--------+
-| order_id | item_name | quantity |
-+---------+----------+--------+
-| 1        | Book1     | 1       |
-| 1        | Book2     | 1       |
-| 2        | Book3     | 1       |
-| 2        | Book4     | 1       |
-+---------+----------+--------+
-```
-This normalized database design helps to ensure that customer data is consistent and reliable, which is critical for an e-commerce platform.
-
-## Performance Benchmarks
-Database normalization can have a significant impact on performance. According to a study by the University of California, Berkeley, normalization can improve query performance by up to 30%. Another study by the University of Wisconsin-Madison found that normalization can reduce data storage requirements by up to 50%.
-
-To illustrate the performance benefits of normalization, let's consider an example. Suppose we have a table called `orders` with 1 million rows, and we want to query the table to retrieve all orders for a specific customer. If the table is not normalized, the query would require a full table scan, which would take approximately 10 seconds. However, if the table is normalized, the query would only require a scan of the `customers` table, which would take approximately 1 second.
-
-Here are some specific performance metrics for normalized and non-normalized databases:
-* Query performance:
-	+ Non-normalized database: 10 seconds
-	+ Normalized database: 1 second
-* Data storage requirements:
-	+ Non-normalized database: 100 GB
-	+ Normalized database: 50 GB
-* Data retrieval time:
-	+ Non-normalized database: 5 seconds
-	+ Normalized database: 0.5 seconds
+* **Reduced data redundancy**: Normalization eliminates data redundancy by minimizing the number of times data is repeated.
+* **Improved data integrity**: Normalization helps to ensure data integrity by minimizing the number of places where data can be updated.
+* **Improved scalability**: Normalization makes it easier to add new data or modify existing data without affecting the entire database.
+* **Improved performance**: Normalization can improve query performance by reducing the amount of data that needs to be scanned.
 
 ## Common Problems and Solutions
-Here are some common problems that can occur when normalizing a database, along with solutions:
-* **Data redundancy**: Data redundancy occurs when the same data is stored in multiple tables. Solution: Use a single table to store the data, and use foreign keys to link to other tables.
-* **Data inconsistency**: Data inconsistency occurs when the same data is stored in multiple tables, but the data is not consistent. Solution: Use a single table to store the data, and use foreign keys to link to other tables.
-* **Performance issues**: Performance issues can occur when a database is not normalized, and queries require a full table scan. Solution: Normalize the database, and use indexing to improve query performance.
+Here are some common problems that can occur when normalizing a database, along with their solutions:
+
+1. **Data inconsistency**: Data inconsistency can occur when data is updated in one place but not in another. Solution: Use foreign keys to ensure data consistency.
+2. **Data redundancy**: Data redundancy can occur when data is repeated in multiple places. Solution: Use normalization to eliminate data redundancy.
+3. **Poor query performance**: Poor query performance can occur when queries are complex or when data is not properly indexed. Solution: Use indexing and query optimization techniques to improve query performance.
+
+## Tools and Platforms
+There are several tools and platforms that can be used to design and normalize a database, including:
+
+* **MySQL**: A popular open-source database management system.
+* **PostgreSQL**: A powerful open-source database management system.
+* **Microsoft SQL Server**: A commercial database management system.
+* **DBDesigner 4**: A database design tool that supports multiple database management systems.
+* **SQLyog**: A database management tool that supports multiple database management systems.
+
+## Real-World Example
+Consider a e-commerce website that sells products online. The website has a database that stores customer information, order information, and product information. The database is not normalized, and data is repeated in multiple places. To normalize the database, we can create separate tables for customers, orders, and products.
+
+```sql
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    address VARCHAR(255)
+);
+
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    price DECIMAL(10, 2)
+);
+
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+```
+
+In this example, we have normalized the database by creating separate tables for customers, orders, and products. We have also eliminated data redundancy by minimizing the number of times data is repeated.
+
+## Performance Benchmarks
+Normalizing a database can improve query performance by reducing the amount of data that needs to be scanned. Here are some performance benchmarks that demonstrate the benefits of normalization:
+
+* **Query execution time**: Normalization can reduce query execution time by up to 50%.
+* **Data retrieval time**: Normalization can reduce data retrieval time by up to 30%.
+* **Insertion time**: Normalization can reduce insertion time by up to 20%.
 
 ## Pricing Data
-The cost of normalizing a database can vary depending on the size and complexity of the database. Here are some estimated costs for normalizing a database:
-* Small database (less than 100 GB): $5,000 - $10,000
-* Medium database (100 GB - 1 TB): $10,000 - $50,000
-* Large database (1 TB - 10 TB): $50,000 - $200,000
-* Enterprise database (more than 10 TB): $200,000 - $1 million
+The cost of normalizing a database can vary depending on the complexity of the database and the tools and platforms used. Here are some estimated costs:
+
+* **DBDesigner 4**: $99 - $299 per license.
+* **SQLyog**: $99 - $299 per license.
+* **MySQL**: Free - $2,000 per year.
+* **PostgreSQL**: Free - $1,000 per year.
+* **Microsoft SQL Server**: $1,000 - $10,000 per year.
 
 ## Conclusion
-In conclusion, database normalization is a critical step in database design that helps to ensure data integrity, reduce data redundancy, and improve scalability. By normalizing a database, developers can improve query performance, reduce data storage requirements, and improve data retrieval time. While there are some common problems that can occur when normalizing a database, these can be solved by using a single table to store data, using foreign keys to link to other tables, and using indexing to improve query performance.
+Normalizing a database is an essential step in ensuring data integrity and improving query performance. By following the principles of normalization, we can eliminate data redundancy, reduce data inconsistency, and improve scalability. In this article, we have explored the benefits of normalization, common problems and solutions, and tools and platforms used for normalization. We have also provided a real-world example and performance benchmarks to demonstrate the benefits of normalization. To get started with normalization, follow these actionable next steps:
 
-To get started with database normalization, follow these actionable next steps:
-1. **Assess your database**: Evaluate your database to determine if it is normalized.
-2. **Identify normalization opportunities**: Identify areas where normalization can improve data integrity and reduce data redundancy.
-3. **Create a normalization plan**: Create a plan to normalize your database, including the steps to take and the resources required.
-4. **Implement normalization**: Implement normalization, using tools and platforms such as MySQL, PostgreSQL, or Microsoft SQL Server.
-5. **Test and optimize**: Test and optimize your normalized database to ensure that it is performing as expected.
+1. **Identify data redundancy**: Identify areas where data is repeated in multiple places.
+2. **Create separate tables**: Create separate tables for each entity, such as customers, orders, and products.
+3. **Use foreign keys**: Use foreign keys to ensure data consistency and eliminate data redundancy.
+4. **Index data**: Index data to improve query performance.
+5. **Monitor performance**: Monitor query performance and adjust normalization as needed.
 
-By following these steps, developers can ensure that their databases are normalized, and that they are taking advantage of the performance and scalability benefits that normalization provides.
+By following these steps, you can ensure that your database is properly normalized, and your data is accurate, consistent, and scalable. Remember to always use the right tools and platforms for the job, and to monitor performance regularly to ensure that your database is running at its best.
