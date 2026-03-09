@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 08:55:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 10:01:06 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Unlock smart design with AI-driven recommender systems</description>
+      <pubDate>Mon, 09 Mar 2026 10:00:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>App Archetypes</title>
       <link>https://kubaik.github.io/app-archetypes/</link>
@@ -138,13 +145,6 @@
       <description>Supercharge VS Code with top extensions for productivity</description>
       <pubDate>Sun, 08 Mar 2026 09:37:09 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
-    </item>
-    <item>
-      <title>Deep Learning: AI Evolved</title>
-      <link>https://kubaik.github.io/deep-learning-ai-evolved/</link>
-      <description>Unlock AI&apos;s full potential with Deep Learning Neural Networks, revolutionizing tech</description>
-      <pubDate>Sun, 08 Mar 2026 08:40:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-ai-evolved/</guid>
     </item>
   </channel>
 </rss>
