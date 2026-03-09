@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 16:08:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 17:52:28 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolution</title>
+      <link>https://kubaik.github.io/cloud-evolution/</link>
+      <description>Unlock the power of Multi-Cloud Architecture. Learn how to navigate the cloud evolution.</description>
+      <pubDate>Mon, 09 Mar 2026 17:52:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolution/</guid>
+    </item>
     <item>
       <title>PWA Power</title>
       <link>https://kubaik.github.io/pwa-power/</link>
@@ -138,13 +145,6 @@
       <description>Improve website speed with expert frontend performance tuning tips.</description>
       <pubDate>Sun, 08 Mar 2026 16:38:27 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock big data insights with Apache Spark. Learn how to process &amp; analyze large-scale data sets with ease.</description>
-      <pubDate>Sun, 08 Mar 2026 15:31:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
