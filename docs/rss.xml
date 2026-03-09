@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 10:59:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 11:42:42 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Discover the ultimate IoT blueprint: architecture, design, and implementation strategies.</description>
+      <pubDate>Mon, 09 Mar 2026 11:42:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the basics of quantum computing in our introductory guide, Quantum 101.</description>
       <pubDate>Sun, 08 Mar 2026 11:28:36 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>SSR Unlocked</title>
-      <link>https://kubaik.github.io/ssr-unlocked/</link>
-      <description>Unlock faster page loads with Server-Side Rendering (SSR). Learn how to boost SEO &amp; user experience.</description>
-      <pubDate>Sun, 08 Mar 2026 10:33:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/ssr-unlocked/</guid>
     </item>
   </channel>
 </rss>
