@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 11:42:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2026 13:20:26 +0000</lastBuildDate>
+    <item>
+      <title>TL Boost</title>
+      <link>https://kubaik.github.io/tl-boost/</link>
+      <description>Supercharge models with TL Boost, a guide to implementing transfer learning for enhanced performance.</description>
+      <pubDate>Mon, 09 Mar 2026 13:20:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/tl-boost/</guid>
+    </item>
     <item>
       <title>IoT Blueprint</title>
       <link>https://kubaik.github.io/iot-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing tech</description>
       <pubDate>Sun, 08 Mar 2026 13:03:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-evolved/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Unlock the basics of quantum computing in our introductory guide, Quantum 101.</description>
-      <pubDate>Sun, 08 Mar 2026 11:28:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
