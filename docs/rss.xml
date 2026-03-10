@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Mar 2026 23:35:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 02:37:33 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Simplify</title>
+      <link>https://kubaik.github.io/log-on-simplify/</link>
+      <description>Simplify log management with our expert solutions. Streamline monitoring &amp; analysis.</description>
+      <pubDate>Tue, 10 Mar 2026 02:37:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-simplify/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Securely manage IoT devices with ease. Learn expert control strategies.</description>
       <pubDate>Sun, 08 Mar 2026 22:32:16 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-control/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Build scalable web apps with Ruby on Rails. Learn more.</description>
-      <pubDate>Sun, 08 Mar 2026 21:31:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
