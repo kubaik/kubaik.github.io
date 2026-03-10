@@ -1721,16 +1721,15 @@
     "topic": "Git Advanced Techniques"
   },
   "security_compliance_(soc_2,_iso_27001)": {
-    "timestamp": "2026-03-03T22:37:47.720611",
+    "timestamp": "2026-03-10T16:08:19.759979",
     "hashtags": [
       "CyberSecurity",
       "ComplianceMatters",
-      "SOC2",
+      "SOC2Audit",
       "InfoSec",
       "CloudSecurity",
-      "RegulatoryTech",
       "DataProtection",
-      "TechGovernance"
+      "RegTech"
     ],
     "topic": "Security Compliance (SOC 2, ISO 27001)"
   },
