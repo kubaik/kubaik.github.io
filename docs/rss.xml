@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 10:51:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 11:39:15 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; revolutionizing experiences.</description>
+      <pubDate>Tue, 10 Mar 2026 11:39:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Unlock smart design with AI-driven recommender systems</description>
       <pubDate>Mon, 09 Mar 2026 10:00:55 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>App Archetypes</title>
-      <link>https://kubaik.github.io/app-archetypes/</link>
-      <description>Discover mobile app architecture patterns &amp; boost performance with our guide to App Archetypes.</description>
-      <pubDate>Mon, 09 Mar 2026 08:55:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-archetypes/</guid>
     </item>
   </channel>
 </rss>
