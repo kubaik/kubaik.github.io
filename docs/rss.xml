@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 04:47:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 05:53:11 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Tue, 10 Mar 2026 05:53:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Secure Code</title>
       <link>https://kubaik.github.io/secure-code/</link>
@@ -138,13 +145,6 @@
       <description>Learn database normalization techniques to optimize performance and reduce data redundancy.</description>
       <pubDate>Mon, 09 Mar 2026 02:46:49 +0000</pubDate>
       <guid>https://kubaik.github.io/norm-your-data/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Boost app performance with code splitting strategies. Learn how to split smarter.</description>
-      <pubDate>Sun, 08 Mar 2026 23:31:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
