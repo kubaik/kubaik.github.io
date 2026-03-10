@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 11:39:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 13:18:02 +0000</lastBuildDate>
+    <item>
+      <title>Flutter Fast</title>
+      <link>https://kubaik.github.io/flutter-fast/</link>
+      <description>Accelerate mobile app dev with Flutter Fast. Learn expert tips and tricks.</description>
+      <pubDate>Tue, 10 Mar 2026 13:17:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/flutter-fast/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Improve productivity with Doc Right&apos;s expert documentation best practices and tips.</description>
       <pubDate>Mon, 09 Mar 2026 10:59:08 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Unlock smart design with AI-driven recommender systems</description>
-      <pubDate>Mon, 09 Mar 2026 10:00:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
