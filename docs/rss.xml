@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 13:18:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 14:58:07 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL Unlocked</title>
+      <link>https://kubaik.github.io/graphql-unlocked/</link>
+      <description>Unlock the power of GraphQL API development. Learn expert techniques and best practices.</description>
+      <pubDate>Tue, 10 Mar 2026 14:57:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-unlocked/</guid>
+    </item>
     <item>
       <title>Flutter Fast</title>
       <link>https://kubaik.github.io/flutter-fast/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint: architecture, design, and implementation strategies.</description>
       <pubDate>Mon, 09 Mar 2026 11:42:33 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>Doc Right</title>
-      <link>https://kubaik.github.io/doc-right/</link>
-      <description>Improve productivity with Doc Right&apos;s expert documentation best practices and tips.</description>
-      <pubDate>Mon, 09 Mar 2026 10:59:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/doc-right/</guid>
     </item>
   </channel>
 </rss>
