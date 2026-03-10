@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 14:58:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 16:08:30 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
+      <description>Simplify security compliance with expert guides to SOC 2 &amp; ISO 27001 certification.</description>
+      <pubDate>Tue, 10 Mar 2026 16:08:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>GraphQL Unlocked</title>
       <link>https://kubaik.github.io/graphql-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Supercharge models with TL Boost, a guide to implementing transfer learning for enhanced performance.</description>
       <pubDate>Mon, 09 Mar 2026 13:20:17 +0000</pubDate>
       <guid>https://kubaik.github.io/tl-boost/</guid>
-    </item>
-    <item>
-      <title>IoT Blueprint</title>
-      <link>https://kubaik.github.io/iot-blueprint/</link>
-      <description>Discover the ultimate IoT blueprint: architecture, design, and implementation strategies.</description>
-      <pubDate>Mon, 09 Mar 2026 11:42:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-blueprint/</guid>
     </item>
   </channel>
 </rss>
