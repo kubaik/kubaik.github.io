@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 21:36:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 22:36:14 +0000</lastBuildDate>
+    <item>
+      <title>Boost App Speed</title>
+      <link>https://kubaik.github.io/boost-app-speed/</link>
+      <description>Improve app speed &amp; user experience with expert tips on Application Performance Monitoring.</description>
+      <pubDate>Tue, 10 Mar 2026 22:36:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-app-speed/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Event-Driven Architecture (EDA) &amp; transform your business with real-time insights &amp; scalability.</description>
       <pubDate>Mon, 09 Mar 2026 21:39:55 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-unleashed/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Prep</title>
-      <link>https://kubaik.github.io/tech-interview-prep/</link>
-      <description>Boost your tech career with our expert interview prep guide.</description>
-      <pubDate>Mon, 09 Mar 2026 20:42:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
     </item>
   </channel>
 </rss>
