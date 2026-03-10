@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 09:54:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 10:51:37 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
+      <pubDate>Tue, 10 Mar 2026 10:51:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>IoT Device Control</title>
       <link>https://kubaik.github.io/iot-device-control/</link>
@@ -138,13 +145,6 @@
       <description>Discover mobile app architecture patterns &amp; boost performance with our guide to App Archetypes.</description>
       <pubDate>Mon, 09 Mar 2026 08:55:21 +0000</pubDate>
       <guid>https://kubaik.github.io/app-archetypes/</guid>
-    </item>
-    <item>
-      <title>BI Tools: Boost Insight</title>
-      <link>https://kubaik.github.io/bi-tools-boost-insight/</link>
-      <description>Unlock data insights with top BI tools. Boost business intelligence and drive growth.</description>
-      <pubDate>Mon, 09 Mar 2026 07:54:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-tools-boost-insight/</guid>
     </item>
   </channel>
 </rss>
