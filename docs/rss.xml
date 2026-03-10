@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 16:08:30 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 17:52:56 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Tue, 10 Mar 2026 17:52:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>Unlock SOC 2 &amp; ISO 27001</title>
       <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
       <pubDate>Mon, 09 Mar 2026 14:59:30 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-essentials/</guid>
-    </item>
-    <item>
-      <title>TL Boost</title>
-      <link>https://kubaik.github.io/tl-boost/</link>
-      <description>Supercharge models with TL Boost, a guide to implementing transfer learning for enhanced performance.</description>
-      <pubDate>Mon, 09 Mar 2026 13:20:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/tl-boost/</guid>
     </item>
   </channel>
 </rss>
