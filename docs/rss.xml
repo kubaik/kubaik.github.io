@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 05:53:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 07:01:18 +0000</lastBuildDate>
+    <item>
+      <title>WAF: Shield Your Site</title>
+      <link>https://kubaik.github.io/waf-shield-your-site/</link>
+      <description>Protect your site from threats with a Web Application Firewall (WAF). Learn how to shield your site from cyber attacks.</description>
+      <pubDate>Tue, 10 Mar 2026 07:01:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-shield-your-site/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
       <pubDate>Mon, 09 Mar 2026 04:58:47 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>Norm Your Data</title>
-      <link>https://kubaik.github.io/norm-your-data/</link>
-      <description>Learn database normalization techniques to optimize performance and reduce data redundancy.</description>
-      <pubDate>Mon, 09 Mar 2026 02:46:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/norm-your-data/</guid>
     </item>
   </channel>
 </rss>
