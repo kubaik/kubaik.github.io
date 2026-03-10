@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 17:52:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 19:02:03 +0000</lastBuildDate>
+    <item>
+      <title>VecDBs</title>
+      <link>https://kubaik.github.io/vecdbs/</link>
+      <description>Unlock efficient data search with VecDBs &amp; embeddings. Learn how vector databases revolutionize query performance.</description>
+      <pubDate>Tue, 10 Mar 2026 19:01:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/vecdbs/</guid>
+    </item>
     <item>
       <title>Contribute Open Source</title>
       <link>https://kubaik.github.io/contribute-open-source/</link>
@@ -138,13 +145,6 @@
       <description>Unlock PWA power: fast, reliable, and engaging web apps</description>
       <pubDate>Mon, 09 Mar 2026 16:07:52 +0000</pubDate>
       <guid>https://kubaik.github.io/pwa-power/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top Business Intelligence tools and strategies.</description>
-      <pubDate>Mon, 09 Mar 2026 14:59:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
