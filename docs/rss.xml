@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Mar 2026 23:34:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 02:36:41 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin: Backend Boost</title>
+      <link>https://kubaik.github.io/kotlin-backend-boost/</link>
+      <description>Unlock efficient backend development with Kotlin. Learn how it boosts productivity.</description>
+      <pubDate>Wed, 11 Mar 2026 02:36:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-backend-boost/</guid>
+    </item>
     <item>
       <title>AI Done Right</title>
       <link>https://kubaik.github.io/ai-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Master modern JavaScript with ES6+ essentials: learn arrow functions, destructuring, and more.</description>
       <pubDate>Mon, 09 Mar 2026 23:35:45 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
-      <pubDate>Mon, 09 Mar 2026 22:37:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
