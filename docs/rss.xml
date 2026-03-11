@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 04:49:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 05:55:46 +0000</lastBuildDate>
+    <item>
+      <title>Boost Site Speed</title>
+      <link>https://kubaik.github.io/boost-site-speed/</link>
+      <description>Improve user experience with faster load times. Learn how to boost site speed and enhance web performance.</description>
+      <pubDate>Wed, 11 Mar 2026 05:55:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-site-speed/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost app security with SAST &amp; DAST testing, learn how to write secure code</description>
       <pubDate>Tue, 10 Mar 2026 04:47:33 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-code/</guid>
-    </item>
-    <item>
-      <title>Log On: Simplify</title>
-      <link>https://kubaik.github.io/log-on-simplify/</link>
-      <description>Simplify log management with our expert solutions. Streamline monitoring &amp; analysis.</description>
-      <pubDate>Tue, 10 Mar 2026 02:37:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-simplify/</guid>
     </item>
   </channel>
 </rss>
