@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 14:55:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 15:56:42 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Wed, 11 Mar 2026 15:56:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of GraphQL API development. Learn expert techniques and best practices.</description>
       <pubDate>Tue, 10 Mar 2026 14:57:55 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-unlocked/</guid>
-    </item>
-    <item>
-      <title>Flutter Fast</title>
-      <link>https://kubaik.github.io/flutter-fast/</link>
-      <description>Accelerate mobile app dev with Flutter Fast. Learn expert tips and tricks.</description>
-      <pubDate>Tue, 10 Mar 2026 13:17:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-fast/</guid>
     </item>
   </channel>
 </rss>
