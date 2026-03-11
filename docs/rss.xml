@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 22:34:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 23:34:26 +0000</lastBuildDate>
+    <item>
+      <title>Boost Wasm Speed</title>
+      <link>https://kubaik.github.io/boost-wasm-speed/</link>
+      <description>Unlock faster WebAssembly performance with expert optimization tips.</description>
+      <pubDate>Wed, 11 Mar 2026 23:34:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wasm-speed/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
       <pubDate>Tue, 10 Mar 2026 21:35:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-defense/</guid>
-    </item>
-    <item>
-      <title>Agile Done Right</title>
-      <link>https://kubaik.github.io/agile-done-right/</link>
-      <description>Master Agile development with proven methodologies and best practices.</description>
-      <pubDate>Tue, 10 Mar 2026 20:41:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-done-right/</guid>
     </item>
   </channel>
 </rss>
