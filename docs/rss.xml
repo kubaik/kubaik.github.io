@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 15:56:42 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 17:02:56 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up: Profile &amp; Benchmark</title>
+      <link>https://kubaik.github.io/speed-up-profile-benchmark/</link>
+      <description>Optimize performance with profiling &amp; benchmarking techniques.</description>
+      <pubDate>Wed, 11 Mar 2026 17:02:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up-profile-benchmark/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Simplify security compliance with expert guides to SOC 2 &amp; ISO 27001 certification.</description>
       <pubDate>Tue, 10 Mar 2026 16:08:19 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>GraphQL Unlocked</title>
-      <link>https://kubaik.github.io/graphql-unlocked/</link>
-      <description>Unlock the power of GraphQL API development. Learn expert techniques and best practices.</description>
-      <pubDate>Tue, 10 Mar 2026 14:57:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-unlocked/</guid>
     </item>
   </channel>
 </rss>
