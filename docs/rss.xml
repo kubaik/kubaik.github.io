@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 08:54:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 09:53:13 +0000</lastBuildDate>
+    <item>
+      <title>Balance Made Easy</title>
+      <link>https://kubaik.github.io/balance-made-easy/</link>
+      <description>Simplify load balancing with expert techniques and best practices.</description>
+      <pubDate>Wed, 11 Mar 2026 09:53:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-made-easy/</guid>
+    </item>
     <item>
       <title>Real-Time Web</title>
       <link>https://kubaik.github.io/real-time-web/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and tricks for advanced techniques.</description>
       <pubDate>Tue, 10 Mar 2026 08:54:56 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>WAF: Shield Your Site</title>
-      <link>https://kubaik.github.io/waf-shield-your-site/</link>
-      <description>Protect your site from threats with a Web Application Firewall (WAF). Learn how to shield your site from cyber attacks.</description>
-      <pubDate>Tue, 10 Mar 2026 07:01:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-shield-your-site/</guid>
     </item>
   </channel>
 </rss>
