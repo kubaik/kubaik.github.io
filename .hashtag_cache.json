@@ -661,15 +661,15 @@
     "topic": "Internet of Things (IoT) Architecture"
   },
   "ai_model_deployment_strategies": {
-    "timestamp": "2026-02-27T16:50:14.318216",
+    "timestamp": "2026-03-11T21:40:22.583991",
     "hashtags": [
-      "AIEngineering",
-      "MachineLearningOps",
       "AIDeployment",
+      "MachineLearningEngineering",
+      "AIStrategy",
+      "ModelOps",
       "CloudComputing",
       "DevOpsAI",
-      "ModelServe",
-      "AIInnovation"
+      "TechInnovation"
     ],
     "topic": "AI Model Deployment Strategies"
   },
