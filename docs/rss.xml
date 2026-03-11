@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 07:04:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 08:54:20 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Web</title>
+      <link>https://kubaik.github.io/real-time-web/</link>
+      <description>Explore the power of real-time web apps &amp; discover how they&apos;re changing the way we interact online.</description>
+      <pubDate>Wed, 11 Mar 2026 08:54:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-web/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Protect your site from threats with a Web Application Firewall (WAF). Learn how to shield your site from cyber attacks.</description>
       <pubDate>Tue, 10 Mar 2026 07:01:07 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-shield-your-site/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Tue, 10 Mar 2026 05:53:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
