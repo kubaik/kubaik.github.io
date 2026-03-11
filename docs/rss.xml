@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 13:17:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 14:55:10 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Unlock the power of Generative AI &amp; Large Language Models, transforming tech forever.</description>
+      <pubDate>Wed, 11 Mar 2026 14:54:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>Mobile UI/UX Done Right</title>
       <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Accelerate mobile app dev with Flutter Fast. Learn expert tips and tricks.</description>
       <pubDate>Tue, 10 Mar 2026 13:17:51 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-fast/</guid>
-    </item>
-    <item>
-      <title>VR Beyond Gaming</title>
-      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
-      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; revolutionizing experiences.</description>
-      <pubDate>Tue, 10 Mar 2026 11:39:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
     </item>
   </channel>
 </rss>
