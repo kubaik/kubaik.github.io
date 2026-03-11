@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 02:36:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 04:49:20 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality &amp; reduces bugs.</description>
+      <pubDate>Wed, 11 Mar 2026 04:49:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>Kotlin: Backend Boost</title>
       <link>https://kubaik.github.io/kotlin-backend-boost/</link>
@@ -138,13 +145,6 @@
       <description>Simplify log management with our expert solutions. Streamline monitoring &amp; analysis.</description>
       <pubDate>Tue, 10 Mar 2026 02:37:22 +0000</pubDate>
       <guid>https://kubaik.github.io/log-on-simplify/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Master modern JavaScript with ES6+ essentials: learn arrow functions, destructuring, and more.</description>
-      <pubDate>Mon, 09 Mar 2026 23:35:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
