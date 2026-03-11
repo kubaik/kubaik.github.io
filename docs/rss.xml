@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 17:02:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 19:03:58 +0000</lastBuildDate>
+    <item>
+      <title>MBaaS Simplified</title>
+      <link>https://kubaik.github.io/mbaas-simplified/</link>
+      <description>Streamline mobile app development with MBaaS, a simplified backend solution.</description>
+      <pubDate>Wed, 11 Mar 2026 19:03:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/mbaas-simplified/</guid>
+    </item>
     <item>
       <title>Speed Up: Profile &amp; Benchmark</title>
       <link>https://kubaik.github.io/speed-up-profile-benchmark/</link>
@@ -138,13 +145,6 @@
       <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
       <pubDate>Tue, 10 Mar 2026 17:52:45 +0000</pubDate>
       <guid>https://kubaik.github.io/contribute-open-source/</guid>
-    </item>
-    <item>
-      <title>Unlock SOC 2 &amp; ISO 27001</title>
-      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
-      <description>Simplify security compliance with expert guides to SOC 2 &amp; ISO 27001 certification.</description>
-      <pubDate>Tue, 10 Mar 2026 16:08:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
     </item>
   </channel>
 </rss>
