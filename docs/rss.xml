@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 02:42:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 04:53:40 +0000</lastBuildDate>
+    <item>
+      <title>AI Forecasts</title>
+      <link>https://kubaik.github.io/ai-forecasts/</link>
+      <description>Unlock accurate predictions with AI-driven time series forecasting techniques.</description>
+      <pubDate>Thu, 12 Mar 2026 04:53:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-forecasts/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve app speed &amp; user experience with expert tips on Application Performance Monitoring.</description>
       <pubDate>Tue, 10 Mar 2026 22:36:05 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>DDoS Defense</title>
-      <link>https://kubaik.github.io/ddos-defense/</link>
-      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
-      <pubDate>Tue, 10 Mar 2026 21:35:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ddos-defense/</guid>
     </item>
   </channel>
 </rss>
