@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 05:57:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 07:08:57 +0000</lastBuildDate>
+    <item>
+      <title>Plan to Survive</title>
+      <link>https://kubaik.github.io/plan-to-survive/</link>
+      <description>Create a plan to survive cyber attacks &amp; disasters. Learn incident response planning strategies to protect your business.</description>
+      <pubDate>Thu, 12 Mar 2026 07:08:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/plan-to-survive/</guid>
+    </item>
     <item>
       <title>See It All</title>
       <link>https://kubaik.github.io/see-it-all/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient backend development with Kotlin. Learn how it boosts productivity.</description>
       <pubDate>Wed, 11 Mar 2026 02:36:30 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-backend-boost/</guid>
-    </item>
-    <item>
-      <title>AI Done Right</title>
-      <link>https://kubaik.github.io/ai-done-right/</link>
-      <description>Learn how to implement AI ethically &amp; responsibly with expert insights.</description>
-      <pubDate>Tue, 10 Mar 2026 23:34:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-done-right/</guid>
     </item>
   </channel>
 </rss>
