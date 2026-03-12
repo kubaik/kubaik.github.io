@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 11:37:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 13:17:49 +0000</lastBuildDate>
+    <item>
+      <title>Spot Outliers</title>
+      <link>https://kubaik.github.io/spot-outliers/</link>
+      <description>Detect unusual patterns with machine learning. Learn anomaly detection techniques.</description>
+      <pubDate>Thu, 12 Mar 2026 13:17:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/spot-outliers/</guid>
+    </item>
     <item>
       <title>Top Web Frameworks</title>
       <link>https://kubaik.github.io/top-web-frameworks/</link>
@@ -138,13 +145,6 @@
       <description>Simplify load balancing with expert techniques and best practices.</description>
       <pubDate>Wed, 11 Mar 2026 09:53:02 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>Real-Time Web</title>
-      <link>https://kubaik.github.io/real-time-web/</link>
-      <description>Explore the power of real-time web apps &amp; discover how they&apos;re changing the way we interact online.</description>
-      <pubDate>Wed, 11 Mar 2026 08:54:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-web/</guid>
     </item>
   </channel>
 </rss>
