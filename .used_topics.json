@@ -50,5 +50,6 @@
   "Time Series Forecasting with AI",
   "Monitoring and Observability",
   "Incident Response Planning",
-  "Rust Memory Safety"
+  "Rust Memory Safety",
+  "Lazy Loading Implementation"
 ]

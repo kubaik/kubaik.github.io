@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 08:54:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 09:54:23 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load: Boost Speed</title>
+      <link>https://kubaik.github.io/lazy-load-boost-speed/</link>
+      <description>Boost website speed with lazy loading. Learn how to implement for faster load times.</description>
+      <pubDate>Thu, 12 Mar 2026 09:54:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
+    </item>
     <item>
       <title>Rust: Safe Memory</title>
       <link>https://kubaik.github.io/rust-safe-memory/</link>
@@ -138,13 +145,6 @@
       <description>Improve user experience with faster load times. Learn how to boost site speed and enhance web performance.</description>
       <pubDate>Wed, 11 Mar 2026 05:55:37 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-site-speed/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality &amp; reduces bugs.</description>
-      <pubDate>Wed, 11 Mar 2026 04:49:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
