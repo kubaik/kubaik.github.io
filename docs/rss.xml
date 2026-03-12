@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 09:54:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 10:50:48 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Unlock technical writing skills to boost career success</description>
+      <pubDate>Thu, 12 Mar 2026 10:50:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>Lazy Load: Boost Speed</title>
       <link>https://kubaik.github.io/lazy-load-boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS dev with Swift. Build powerful apps with ease.</description>
       <pubDate>Wed, 11 Mar 2026 07:04:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>Boost Site Speed</title>
-      <link>https://kubaik.github.io/boost-site-speed/</link>
-      <description>Improve user experience with faster load times. Learn how to boost site speed and enhance web performance.</description>
-      <pubDate>Wed, 11 Mar 2026 05:55:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-site-speed/</guid>
     </item>
   </channel>
 </rss>
