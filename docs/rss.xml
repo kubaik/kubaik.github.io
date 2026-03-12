@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 23:34:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 02:42:53 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
+      <pubDate>Thu, 12 Mar 2026 02:42:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Boost Wasm Speed</title>
       <link>https://kubaik.github.io/boost-wasm-speed/</link>
@@ -47,13 +54,6 @@
       <description>Optimize performance with profiling &amp; benchmarking techniques.</description>
       <pubDate>Wed, 11 Mar 2026 17:02:45 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up-profile-benchmark/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
-      <pubDate>Wed, 11 Mar 2026 15:56:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
     <item>
       <title>AI Revolution</title>
