@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 17:56:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 19:03:44 +0000</lastBuildDate>
+    <item>
+      <title>Deploy Fast</title>
+      <link>https://kubaik.github.io/deploy-fast/</link>
+      <description>Streamline development with CI/CD pipelines. Learn how to deploy fast</description>
+      <pubDate>Thu, 12 Mar 2026 19:03:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-fast/</guid>
+    </item>
     <item>
       <title>Tune Up</title>
       <link>https://kubaik.github.io/tune-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Generative AI &amp; Large Language Models, transforming tech forever.</description>
       <pubDate>Wed, 11 Mar 2026 14:54:59 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>Mobile UI/UX Done Right</title>
-      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
-      <description>Boost mobile user engagement with expert UI/UX tips and best practices.</description>
-      <pubDate>Wed, 11 Mar 2026 13:17:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
     </item>
   </channel>
 </rss>
