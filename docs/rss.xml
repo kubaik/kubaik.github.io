@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Mar 2026 07:08:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2026 08:54:33 +0000</lastBuildDate>
+    <item>
+      <title>Rust: Safe Memory</title>
+      <link>https://kubaik.github.io/rust-safe-memory/</link>
+      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
+      <pubDate>Thu, 12 Mar 2026 08:54:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
+    </item>
     <item>
       <title>Plan to Survive</title>
       <link>https://kubaik.github.io/plan-to-survive/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality &amp; reduces bugs.</description>
       <pubDate>Wed, 11 Mar 2026 04:49:09 +0000</pubDate>
       <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
-    </item>
-    <item>
-      <title>Kotlin: Backend Boost</title>
-      <link>https://kubaik.github.io/kotlin-backend-boost/</link>
-      <description>Unlock efficient backend development with Kotlin. Learn how it boosts productivity.</description>
-      <pubDate>Wed, 11 Mar 2026 02:36:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-backend-boost/</guid>
     </item>
   </channel>
 </rss>

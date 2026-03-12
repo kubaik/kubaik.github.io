@@ -49,5 +49,6 @@
   "API Testing Tools (Postman, Insomnia)",
   "Time Series Forecasting with AI",
   "Monitoring and Observability",
-  "Incident Response Planning"
+  "Incident Response Planning",
+  "Rust Memory Safety"
 ]
