@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 10:47:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 11:37:48 +0000</lastBuildDate>
+    <item>
+      <title>OAuth 2.0 &amp; OIDC</title>
+      <link>https://kubaik.github.io/oauth-20-oidc/</link>
+      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, differences, and use cases.</description>
+      <pubDate>Fri, 13 Mar 2026 11:37:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
+    </item>
     <item>
       <title>NET Core Mastery</title>
       <link>https://kubaik.github.io/net-core-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with lazy loading. Learn how to implement for faster load times.</description>
       <pubDate>Thu, 12 Mar 2026 09:54:12 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Memory</title>
-      <link>https://kubaik.github.io/rust-safe-memory/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership model and borrow checker.</description>
-      <pubDate>Thu, 12 Mar 2026 08:54:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
     </item>
   </channel>
 </rss>
