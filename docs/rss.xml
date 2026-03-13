@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 14:52:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 15:52:06 +0000</lastBuildDate>
+    <item>
+      <title>AI at the Edge</title>
+      <link>https://kubaik.github.io/ai-at-the-edge/</link>
+      <description>Unlock AI&apos;s potential at the edge with our expert insights on edge computing applications.</description>
+      <pubDate>Fri, 13 Mar 2026 15:51:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-at-the-edge/</guid>
+    </item>
     <item>
       <title>Digital Twins</title>
       <link>https://kubaik.github.io/digital-twins/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with machine learning. Learn anomaly detection techniques.</description>
       <pubDate>Thu, 12 Mar 2026 13:17:38 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-outliers/</guid>
-    </item>
-    <item>
-      <title>Top Web Frameworks</title>
-      <link>https://kubaik.github.io/top-web-frameworks/</link>
-      <description>Discover top web frameworks for modern development, boosting efficiency and scalability.</description>
-      <pubDate>Thu, 12 Mar 2026 11:36:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/top-web-frameworks/</guid>
     </item>
   </channel>
 </rss>
