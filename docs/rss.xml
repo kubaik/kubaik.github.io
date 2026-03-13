@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 21:40:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 22:35:23 +0000</lastBuildDate>
+    <item>
+      <title>Web3 Unlocked</title>
+      <link>https://kubaik.github.io/web3-unlocked/</link>
+      <description>Discover Web3 &amp; unlock decentralized apps, transforming the internet&apos;s future.</description>
+      <pubDate>Fri, 13 Mar 2026 22:35:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-unlocked/</guid>
+    </item>
     <item>
       <title>Rails to Success</title>
       <link>https://kubaik.github.io/rails-to-success/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture &amp; build reusable UI elements with our expert guide.</description>
       <pubDate>Thu, 12 Mar 2026 22:34:22 +0000</pubDate>
       <guid>https://kubaik.github.io/vue-components/</guid>
-    </item>
-    <item>
-      <title>Docker 101</title>
-      <link>https://kubaik.github.io/docker-101/</link>
-      <description>Learn Docker basics with our beginner&apos;s guide to containerization.</description>
-      <pubDate>Thu, 12 Mar 2026 21:40:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/docker-101/</guid>
     </item>
   </channel>
 </rss>
