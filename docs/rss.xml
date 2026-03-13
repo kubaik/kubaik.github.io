@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 08:52:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 09:50:04 +0000</lastBuildDate>
+    <item>
+      <title>Design Done Right</title>
+      <link>https://kubaik.github.io/design-done-right/</link>
+      <description>Learn how design patterns boost efficiency &amp; usability in practice.</description>
+      <pubDate>Fri, 13 Mar 2026 09:49:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-done-right/</guid>
+    </item>
     <item>
       <title>Limit the Load</title>
       <link>https://kubaik.github.io/limit-the-load/</link>
@@ -138,13 +145,6 @@
       <description>Create a plan to survive cyber attacks &amp; disasters. Learn incident response planning strategies to protect your business.</description>
       <pubDate>Thu, 12 Mar 2026 07:08:46 +0000</pubDate>
       <guid>https://kubaik.github.io/plan-to-survive/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Gain full visibility into your systems with monitoring and observability best practices.</description>
-      <pubDate>Thu, 12 Mar 2026 05:57:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
