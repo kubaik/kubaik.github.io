@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 22:35:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 23:36:30 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain Boom</title>
+      <link>https://kubaik.github.io/blockchain-boom/</link>
+      <description>Discover the future of finance with blockchain &amp; cryptocurrency insights.</description>
+      <pubDate>Fri, 13 Mar 2026 23:36:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-boom/</guid>
+    </item>
     <item>
       <title>Web3 Unlocked</title>
       <link>https://kubaik.github.io/web3-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Unlock seamless Federated Learning implementation with expert tips and best practices.</description>
       <pubDate>Thu, 12 Mar 2026 23:35:47 +0000</pubDate>
       <guid>https://kubaik.github.io/fl-done-right/</guid>
-    </item>
-    <item>
-      <title>Vue Components</title>
-      <link>https://kubaik.github.io/vue-components/</link>
-      <description>Learn Vue.js component architecture &amp; build reusable UI elements with our expert guide.</description>
-      <pubDate>Thu, 12 Mar 2026 22:34:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/vue-components/</guid>
     </item>
   </channel>
 </rss>
