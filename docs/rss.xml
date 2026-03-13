@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 16:51:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 17:41:31 +0000</lastBuildDate>
+    <item>
+      <title>Master Memory</title>
+      <link>https://kubaik.github.io/master-memory/</link>
+      <description>Boost productivity with expert memory management tips and tricks.</description>
+      <pubDate>Fri, 13 Mar 2026 17:41:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/master-memory/</guid>
+    </item>
     <item>
       <title>Scale with Ease</title>
       <link>https://kubaik.github.io/scale-with-ease/</link>
@@ -138,13 +145,6 @@
       <description>Establish a strong online presence with personal branding tips for developers.</description>
       <pubDate>Thu, 12 Mar 2026 16:07:53 +0000</pubDate>
       <guid>https://kubaik.github.io/code-your-brand/</guid>
-    </item>
-    <item>
-      <title>Web Components Unlocked</title>
-      <link>https://kubaik.github.io/web-components-unlocked/</link>
-      <description>Unlock the power of Web Components &amp; Custom Elements. Learn how to build reusable UI components.</description>
-      <pubDate>Thu, 12 Mar 2026 14:57:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-components-unlocked/</guid>
     </item>
   </channel>
 </rss>
