@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 13:15:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 14:52:02 +0000</lastBuildDate>
+    <item>
+      <title>Digital Twins</title>
+      <link>https://kubaik.github.io/digital-twins/</link>
+      <description>Unlock the power of Digital Twins: virtual replicas of physical assets for optimized performance &amp; innovation.</description>
+      <pubDate>Fri, 13 Mar 2026 14:51:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/digital-twins/</guid>
+    </item>
     <item>
       <title>Serverless Done</title>
       <link>https://kubaik.github.io/serverless-done/</link>
@@ -138,13 +145,6 @@
       <description>Discover top web frameworks for modern development, boosting efficiency and scalability.</description>
       <pubDate>Thu, 12 Mar 2026 11:36:59 +0000</pubDate>
       <guid>https://kubaik.github.io/top-web-frameworks/</guid>
-    </item>
-    <item>
-      <title>Write to Thrive</title>
-      <link>https://kubaik.github.io/write-to-thrive/</link>
-      <description>Unlock technical writing skills to boost career success</description>
-      <pubDate>Thu, 12 Mar 2026 10:50:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-thrive/</guid>
     </item>
   </channel>
 </rss>
