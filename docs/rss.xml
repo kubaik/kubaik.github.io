@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 15:52:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 16:51:19 +0000</lastBuildDate>
+    <item>
+      <title>Scale with Ease</title>
+      <link>https://kubaik.github.io/scale-with-ease/</link>
+      <description>Learn how database replication &amp; sharding simplify scaling</description>
+      <pubDate>Fri, 13 Mar 2026 16:51:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-ease/</guid>
+    </item>
     <item>
       <title>AI at the Edge</title>
       <link>https://kubaik.github.io/ai-at-the-edge/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Web Components &amp; Custom Elements. Learn how to build reusable UI components.</description>
       <pubDate>Thu, 12 Mar 2026 14:57:55 +0000</pubDate>
       <guid>https://kubaik.github.io/web-components-unlocked/</guid>
-    </item>
-    <item>
-      <title>Spot Outliers</title>
-      <link>https://kubaik.github.io/spot-outliers/</link>
-      <description>Detect unusual patterns with machine learning. Learn anomaly detection techniques.</description>
-      <pubDate>Thu, 12 Mar 2026 13:17:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/spot-outliers/</guid>
     </item>
   </channel>
 </rss>
