@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 11:37:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 13:15:36 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Done</title>
+      <link>https://kubaik.github.io/serverless-done/</link>
+      <description>Learn expert Serverless Architecture Patterns for scalable apps</description>
+      <pubDate>Fri, 13 Mar 2026 13:15:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-done/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Unlock technical writing skills to boost career success</description>
       <pubDate>Thu, 12 Mar 2026 10:50:37 +0000</pubDate>
       <guid>https://kubaik.github.io/write-to-thrive/</guid>
-    </item>
-    <item>
-      <title>Lazy Load: Boost Speed</title>
-      <link>https://kubaik.github.io/lazy-load-boost-speed/</link>
-      <description>Boost website speed with lazy loading. Learn how to implement for faster load times.</description>
-      <pubDate>Thu, 12 Mar 2026 09:54:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-boost-speed/</guid>
     </item>
   </channel>
 </rss>
