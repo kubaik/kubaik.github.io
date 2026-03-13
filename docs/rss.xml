@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 05:56:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 07:04:56 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
+      <pubDate>Fri, 13 Mar 2026 07:04:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI-driven time series forecasting techniques.</description>
       <pubDate>Thu, 12 Mar 2026 04:53:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Streamline API testing with top tools like Postman &amp; Insomnia. Learn how to test smarter, not harder.</description>
-      <pubDate>Thu, 12 Mar 2026 02:42:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
