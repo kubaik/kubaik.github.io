@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 20:44:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 21:40:59 +0000</lastBuildDate>
+    <item>
+      <title>Rails to Success</title>
+      <link>https://kubaik.github.io/rails-to-success/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks in our &apos;Rails to Success&apos; guide.</description>
+      <pubDate>Fri, 13 Mar 2026 21:40:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-to-success/</guid>
+    </item>
     <item>
       <title>Delta Lake: The Future</title>
       <link>https://kubaik.github.io/delta-lake-the-future/</link>
@@ -138,13 +145,6 @@
       <description>Learn Docker basics with our beginner&apos;s guide to containerization.</description>
       <pubDate>Thu, 12 Mar 2026 21:40:49 +0000</pubDate>
       <guid>https://kubaik.github.io/docker-101/</guid>
-    </item>
-    <item>
-      <title>Terraform 101</title>
-      <link>https://kubaik.github.io/terraform-101/</link>
-      <description>Learn Terraform basics &amp; manage infrastructure as code with ease.</description>
-      <pubDate>Thu, 12 Mar 2026 20:44:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-101/</guid>
     </item>
   </channel>
 </rss>
