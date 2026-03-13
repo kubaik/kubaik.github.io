@@ -77,5 +77,6 @@
   "Database Replication and Sharding",
   "Memory Management Best Practices",
   "Edge Computing Applications",
-  "Java Spring Boot Development"
+  "Java Spring Boot Development",
+  "Delta Lake and Data Lakehouse"
 ]
