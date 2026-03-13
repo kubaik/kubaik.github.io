@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Mar 2026 07:04:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Mar 2026 08:52:19 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Load</title>
+      <link>https://kubaik.github.io/limit-the-load/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure smooth system performance.</description>
+      <pubDate>Fri, 13 Mar 2026 08:52:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-load/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Gain full visibility into your systems with monitoring and observability best practices.</description>
       <pubDate>Thu, 12 Mar 2026 05:57:41 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>AI Forecasts</title>
-      <link>https://kubaik.github.io/ai-forecasts/</link>
-      <description>Unlock accurate predictions with AI-driven time series forecasting techniques.</description>
-      <pubDate>Thu, 12 Mar 2026 04:53:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasts/</guid>
     </item>
   </channel>
 </rss>
