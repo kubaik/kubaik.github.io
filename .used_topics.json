@@ -100,5 +100,6 @@
   "Secrets Management",
   "Quantum Computing Basics",
   "Database Management Tools",
-  "Microservices vs Monolithic Architecture"
+  "Microservices vs Monolithic Architecture",
+  "Caching Strategies (Redis, Memcached)"
 ]

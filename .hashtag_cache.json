@@ -1472,14 +1472,14 @@
     "topic": "Web Accessibility Standards (WCAG)"
   },
   "caching_strategies_(redis,_memcached)": {
-    "timestamp": "2026-02-27T17:41:57.658671",
+    "timestamp": "2026-03-14T23:35:45.146436",
     "hashtags": [
       "CloudOptimization",
-      "DevOpsTools",
-      "RedisSolutions",
-      "TechPerformance",
+      "Redis",
+      "Memcached",
       "CacheManagement",
-      "SoftwareScaling",
+      "PerformanceEngineering",
+      "DevOpsTools",
       "ServerlessArchitecture",
       "DatabaseOptimization"
     ],
