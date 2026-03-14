@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 16:40:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 17:34:50 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Done</title>
+      <link>https://kubaik.github.io/jwt-auth-done/</link>
+      <description>Learn JWT authentication implementation in our latest guide.</description>
+      <pubDate>Sat, 14 Mar 2026 17:34:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Edge Computing&apos;s power &amp; discover its game-changing applications.</description>
       <pubDate>Fri, 13 Mar 2026 18:53:58 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>Master Memory</title>
-      <link>https://kubaik.github.io/master-memory/</link>
-      <description>Boost productivity with expert memory management tips and tricks.</description>
-      <pubDate>Fri, 13 Mar 2026 17:41:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/master-memory/</guid>
     </item>
   </channel>
 </rss>
