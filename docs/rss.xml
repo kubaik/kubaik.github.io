@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 21:33:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 22:34:34 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons for optimal app design</description>
+      <pubDate>Sat, 14 Mar 2026 22:34:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>DB Management Made Easy</title>
       <link>https://kubaik.github.io/db-management-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover Web3 &amp; unlock decentralized apps, transforming the internet&apos;s future.</description>
       <pubDate>Fri, 13 Mar 2026 22:35:13 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-unlocked/</guid>
-    </item>
-    <item>
-      <title>Rails to Success</title>
-      <link>https://kubaik.github.io/rails-to-success/</link>
-      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks in our &apos;Rails to Success&apos; guide.</description>
-      <pubDate>Fri, 13 Mar 2026 21:40:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-to-success/</guid>
     </item>
   </channel>
 </rss>
