@@ -96,5 +96,6 @@
   "DevOps Best Practices and Culture",
   "React Best Practices and Patterns",
   "JWT Authentication Implementation",
-  "API Gateway Patterns"
+  "API Gateway Patterns",
+  "Secrets Management"
 ]
