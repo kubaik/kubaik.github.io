@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 09:41:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 10:37:23 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Improve website speed with expert frontend performance tuning tips.</description>
+      <pubDate>Sat, 14 Mar 2026 10:37:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Unlock XAI</title>
       <link>https://kubaik.github.io/unlock-xai/</link>
@@ -138,13 +145,6 @@
       <description>Learn OAuth 2.0 &amp; OpenID Connect basics, differences, and use cases.</description>
       <pubDate>Fri, 13 Mar 2026 11:37:37 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>NET Core Mastery</title>
-      <link>https://kubaik.github.io/net-core-mastery/</link>
-      <description>Unlock expert-level C# .NET Core skills &amp; build robust applications</description>
-      <pubDate>Fri, 13 Mar 2026 10:47:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/net-core-mastery/</guid>
     </item>
   </channel>
 </rss>
