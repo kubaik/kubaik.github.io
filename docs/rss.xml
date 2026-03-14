@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 11:31:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 13:08:08 +0000</lastBuildDate>
+    <item>
+      <title>RPA Simplified</title>
+      <link>https://kubaik.github.io/rpa-simplified/</link>
+      <description>Unlock efficiency with RPA Simplified. Learn how robotics process automation streamlines tasks.</description>
+      <pubDate>Sat, 14 Mar 2026 13:07:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-simplified/</guid>
+    </item>
     <item>
       <title>Encrypt Right</title>
       <link>https://kubaik.github.io/encrypt-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of Digital Twins: virtual replicas of physical assets for optimized performance &amp; innovation.</description>
       <pubDate>Fri, 13 Mar 2026 14:51:52 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twins/</guid>
-    </item>
-    <item>
-      <title>Serverless Done</title>
-      <link>https://kubaik.github.io/serverless-done/</link>
-      <description>Learn expert Serverless Architecture Patterns for scalable apps</description>
-      <pubDate>Fri, 13 Mar 2026 13:15:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done/</guid>
     </item>
   </channel>
 </rss>
