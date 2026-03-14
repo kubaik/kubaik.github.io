@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 20:37:28 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 21:33:36 +0000</lastBuildDate>
+    <item>
+      <title>DB Management Made Easy</title>
+      <link>https://kubaik.github.io/db-management-made-easy/</link>
+      <description>Simplify database management with top tools and expert tips.</description>
+      <pubDate>Sat, 14 Mar 2026 21:33:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/db-management-made-easy/</guid>
+    </item>
     <item>
       <title>Quantum 101</title>
       <link>https://kubaik.github.io/quantum-101/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable web apps with Ruby on Rails. Learn expert tips and tricks in our &apos;Rails to Success&apos; guide.</description>
       <pubDate>Fri, 13 Mar 2026 21:40:48 +0000</pubDate>
       <guid>https://kubaik.github.io/rails-to-success/</guid>
-    </item>
-    <item>
-      <title>Delta Lake: The Future</title>
-      <link>https://kubaik.github.io/delta-lake-the-future/</link>
-      <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse, revolutionizing analytics &amp; AI.</description>
-      <pubDate>Fri, 13 Mar 2026 20:43:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
     </item>
   </channel>
 </rss>
