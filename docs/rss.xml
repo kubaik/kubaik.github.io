@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 17:34:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 18:50:54 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway: 5 Key Patterns</title>
+      <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
+      <description>Learn 5 key API Gateway patterns to secure &amp; optimize your APIs.</description>
+      <pubDate>Sat, 14 Mar 2026 18:50:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
+    </item>
     <item>
       <title>JWT Auth Done</title>
       <link>https://kubaik.github.io/jwt-auth-done/</link>
@@ -138,13 +145,6 @@
       <description>Master Java Spring Boot development with easy tutorials and expert tips.</description>
       <pubDate>Fri, 13 Mar 2026 19:36:45 +0000</pubDate>
       <guid>https://kubaik.github.io/spring-boot-made-easy/</guid>
-    </item>
-    <item>
-      <title>Edge Computing</title>
-      <link>https://kubaik.github.io/edge-computing/</link>
-      <description>Unlock Edge Computing&apos;s power &amp; discover its game-changing applications.</description>
-      <pubDate>Fri, 13 Mar 2026 18:53:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing/</guid>
     </item>
   </channel>
 </rss>
