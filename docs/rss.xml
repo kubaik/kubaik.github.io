@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 08:45:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 09:41:41 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover Explainable AI (XAI) techniques to unlock transparency in AI decision-making.</description>
+      <pubDate>Sat, 14 Mar 2026 09:41:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Unlock expert-level C# .NET Core skills &amp; build robust applications</description>
       <pubDate>Fri, 13 Mar 2026 10:47:06 +0000</pubDate>
       <guid>https://kubaik.github.io/net-core-mastery/</guid>
-    </item>
-    <item>
-      <title>Design Done Right</title>
-      <link>https://kubaik.github.io/design-done-right/</link>
-      <description>Learn how design patterns boost efficiency &amp; usability in practice.</description>
-      <pubDate>Fri, 13 Mar 2026 09:49:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-done-right/</guid>
     </item>
   </channel>
 </rss>
