@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 10:37:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 11:31:36 +0000</lastBuildDate>
+    <item>
+      <title>Encrypt Right</title>
+      <link>https://kubaik.github.io/encrypt-right/</link>
+      <description>Secure your data with expert encryption &amp; key management tips from &apos;Encrypt Right&apos;</description>
+      <pubDate>Sat, 14 Mar 2026 11:31:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/encrypt-right/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Serverless Architecture Patterns for scalable apps</description>
       <pubDate>Fri, 13 Mar 2026 13:15:25 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect basics, differences, and use cases.</description>
-      <pubDate>Fri, 13 Mar 2026 11:37:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
