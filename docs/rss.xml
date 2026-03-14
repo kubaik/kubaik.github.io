@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 06:58:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 07:42:19 +0000</lastBuildDate>
+    <item>
+      <title>Boost CLI Productivity</title>
+      <link>https://kubaik.github.io/boost-cli-productivity/</link>
+      <description>Boost CLI productivity with expert tips and tricks.</description>
+      <pubDate>Sat, 14 Mar 2026 07:42:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
+    </item>
     <item>
       <title>NLP Essentials</title>
       <link>https://kubaik.github.io/nlp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Learn rate limiting &amp; throttling techniques to prevent overload &amp; ensure smooth system performance.</description>
       <pubDate>Fri, 13 Mar 2026 08:52:08 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-load/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
-      <pubDate>Fri, 13 Mar 2026 07:04:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
