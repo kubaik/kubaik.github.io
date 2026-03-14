@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 02:39:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 04:49:00 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up</title>
+      <link>https://kubaik.github.io/mesh-up/</link>
+      <description>Discover Service Mesh Architecture with &apos;Mesh Up&apos;. Learn its benefits, use cases &amp; implementation strategies.</description>
+      <pubDate>Sat, 14 Mar 2026 04:48:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Unlock SIEM essentials for robust security monitoring &amp; threat detection.</description>
       <pubDate>Fri, 13 Mar 2026 04:50:48 +0000</pubDate>
       <guid>https://kubaik.github.io/siem-essentials/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Learn scalable design patterns to boost growth and efficiency.</description>
-      <pubDate>Fri, 13 Mar 2026 02:40:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
