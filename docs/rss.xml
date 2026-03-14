@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 15:35:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 16:40:30 +0000</lastBuildDate>
+    <item>
+      <title>React Done Right</title>
+      <link>https://kubaik.github.io/react-done-right/</link>
+      <description>Master React best practices and patterns for efficient coding.</description>
+      <pubDate>Sat, 14 Mar 2026 16:40:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-done-right/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips and tricks.</description>
       <pubDate>Fri, 13 Mar 2026 17:41:19 +0000</pubDate>
       <guid>https://kubaik.github.io/master-memory/</guid>
-    </item>
-    <item>
-      <title>Scale with Ease</title>
-      <link>https://kubaik.github.io/scale-with-ease/</link>
-      <description>Learn how database replication &amp; sharding simplify scaling</description>
-      <pubDate>Fri, 13 Mar 2026 16:51:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-with-ease/</guid>
     </item>
   </channel>
 </rss>
