@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 18:50:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 19:34:12 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Secrets</title>
+      <link>https://kubaik.github.io/unlock-secrets/</link>
+      <description>Discover the power of secrets management. Learn how to unlock &amp; protect sensitive data with expert tips &amp; best practices.</description>
+      <pubDate>Sat, 14 Mar 2026 19:34:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-secrets/</guid>
+    </item>
     <item>
       <title>API Gateway: 5 Key Patterns</title>
       <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse, revolutionizing analytics &amp; AI.</description>
       <pubDate>Fri, 13 Mar 2026 20:43:56 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
-    </item>
-    <item>
-      <title>Spring Boot Made Easy</title>
-      <link>https://kubaik.github.io/spring-boot-made-easy/</link>
-      <description>Master Java Spring Boot development with easy tutorials and expert tips.</description>
-      <pubDate>Fri, 13 Mar 2026 19:36:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/spring-boot-made-easy/</guid>
     </item>
   </channel>
 </rss>
