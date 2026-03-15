@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 19:35:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 20:38:29 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
+      <pubDate>Sun, 15 Mar 2026 20:38:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Push Done Right</title>
       <link>https://kubaik.github.io/push-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn 5 key API Gateway patterns to secure &amp; optimize your APIs.</description>
       <pubDate>Sat, 14 Mar 2026 18:50:43 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Done</title>
-      <link>https://kubaik.github.io/jwt-auth-done/</link>
-      <description>Learn JWT authentication implementation in our latest guide.</description>
-      <pubDate>Sat, 14 Mar 2026 17:34:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
     </item>
   </channel>
 </rss>
