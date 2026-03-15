@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 22:36:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 23:36:50 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable streaming apps.</description>
+      <pubDate>Sun, 15 Mar 2026 23:36:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>TS Power Types</title>
       <link>https://kubaik.github.io/ts-power-types/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons for optimal app design</description>
       <pubDate>Sat, 14 Mar 2026 22:34:23 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>DB Management Made Easy</title>
-      <link>https://kubaik.github.io/db-management-made-easy/</link>
-      <description>Simplify database management with top tools and expert tips.</description>
-      <pubDate>Sat, 14 Mar 2026 21:33:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-management-made-easy/</guid>
     </item>
   </channel>
 </rss>
