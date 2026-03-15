@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 21:35:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 22:36:25 +0000</lastBuildDate>
+    <item>
+      <title>TS Power Types</title>
+      <link>https://kubaik.github.io/ts-power-types/</link>
+      <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
+      <pubDate>Sun, 15 Mar 2026 22:36:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ts-power-types/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Simplify database management with top tools and expert tips.</description>
       <pubDate>Sat, 14 Mar 2026 21:33:25 +0000</pubDate>
       <guid>https://kubaik.github.io/db-management-made-easy/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Unlock the basics of quantum computing with Quantum 101. Discover the fundamentals and get started.</description>
-      <pubDate>Sat, 14 Mar 2026 20:37:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
