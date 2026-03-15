@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 08:48:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 09:42:17 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Sun, 15 Mar 2026 09:42:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks.</description>
       <pubDate>Sat, 14 Mar 2026 07:42:08 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>NLP Essentials</title>
-      <link>https://kubaik.github.io/nlp-essentials/</link>
-      <description>Unlock NLP techniques for better text analysis &amp; AI understanding.</description>
-      <pubDate>Sat, 14 Mar 2026 06:58:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-essentials/</guid>
     </item>
   </channel>
 </rss>
