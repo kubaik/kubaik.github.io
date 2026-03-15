@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2026 23:35:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 03:17:23 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript at Scale</title>
+      <link>https://kubaik.github.io/typescript-at-scale/</link>
+      <description>Learn how to use TypeScript for large-scale apps and improve code maintainability and scalability.</description>
+      <pubDate>Sun, 15 Mar 2026 03:17:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-at-scale/</guid>
+    </item>
     <item>
       <title>Cache Smarter</title>
       <link>https://kubaik.github.io/cache-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient coding with Go concurrency. Learn parallelism &amp; async programming in Go.</description>
       <pubDate>Sat, 14 Mar 2026 02:39:11 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>Blockchain Boom</title>
-      <link>https://kubaik.github.io/blockchain-boom/</link>
-      <description>Discover the future of finance with blockchain &amp; cryptocurrency insights.</description>
-      <pubDate>Fri, 13 Mar 2026 23:36:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/blockchain-boom/</guid>
     </item>
   </channel>
 </rss>
