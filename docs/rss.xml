@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 10:38:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 11:33:10 +0000</lastBuildDate>
+    <item>
+      <title>Blockchain 101</title>
+      <link>https://kubaik.github.io/blockchain-101/</link>
+      <description>Learn the basics of blockchain tech &amp; its applications in our introductory guide, Blockchain 101.</description>
+      <pubDate>Sun, 15 Mar 2026 11:32:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/blockchain-101/</guid>
+    </item>
     <item>
       <title>ML Made Easy</title>
       <link>https://kubaik.github.io/ml-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover Explainable AI (XAI) techniques to unlock transparency in AI decision-making.</description>
       <pubDate>Sat, 14 Mar 2026 09:41:29 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-xai/</guid>
-    </item>
-    <item>
-      <title>Secure Containers</title>
-      <link>https://kubaik.github.io/secure-containers/</link>
-      <description>Learn container security best practices to protect your apps and data.</description>
-      <pubDate>Sat, 14 Mar 2026 08:45:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-containers/</guid>
     </item>
   </channel>
 </rss>
