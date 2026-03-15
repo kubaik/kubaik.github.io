@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 17:36:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 18:51:29 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Data Insights</title>
+      <link>https://kubaik.github.io/unlock-data-insights/</link>
+      <description>Unlock data insights with our expert data warehousing solutions. Discover, analyze, and act on your data.</description>
+      <pubDate>Sun, 15 Mar 2026 18:51:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-data-insights/</guid>
+    </item>
     <item>
       <title>NFT Tech Unleashed</title>
       <link>https://kubaik.github.io/nft-tech-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Master React best practices and patterns for efficient coding.</description>
       <pubDate>Sat, 14 Mar 2026 16:40:20 +0000</pubDate>
       <guid>https://kubaik.github.io/react-done-right/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right</title>
-      <link>https://kubaik.github.io/devops-done-right/</link>
-      <description>Boost efficiency with DevOps best practices &amp; culture tips.</description>
-      <pubDate>Sat, 14 Mar 2026 15:35:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right/</guid>
     </item>
   </channel>
 </rss>
