@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 09:42:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 10:38:59 +0000</lastBuildDate>
+    <item>
+      <title>ML Made Easy</title>
+      <link>https://kubaik.github.io/ml-made-easy/</link>
+      <description>Unlock Machine Learning secrets with easy-to-understand explanations of ML algorithms.</description>
+      <pubDate>Sun, 15 Mar 2026 10:38:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-made-easy/</guid>
+    </item>
     <item>
       <title>Grid &amp; Flexbox</title>
       <link>https://kubaik.github.io/grid-flexbox/</link>
@@ -138,13 +145,6 @@
       <description>Learn container security best practices to protect your apps and data.</description>
       <pubDate>Sat, 14 Mar 2026 08:45:01 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-containers/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Sat, 14 Mar 2026 07:42:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
