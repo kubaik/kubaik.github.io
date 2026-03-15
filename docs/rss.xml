@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 18:51:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 19:35:13 +0000</lastBuildDate>
+    <item>
+      <title>Push Done Right</title>
+      <link>https://kubaik.github.io/push-done-right/</link>
+      <description>Boost engagement with perfect push notifications. Learn expert implementation tips.</description>
+      <pubDate>Sun, 15 Mar 2026 19:35:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-done-right/</guid>
+    </item>
     <item>
       <title>Unlock Data Insights</title>
       <link>https://kubaik.github.io/unlock-data-insights/</link>
@@ -138,13 +145,6 @@
       <description>Learn JWT authentication implementation in our latest guide.</description>
       <pubDate>Sat, 14 Mar 2026 17:34:40 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-done/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Master React best practices and patterns for efficient coding.</description>
-      <pubDate>Sat, 14 Mar 2026 16:40:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
