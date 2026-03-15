@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 07:08:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 08:48:11 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Azure</title>
+      <link>https://kubaik.github.io/unlock-azure/</link>
+      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
+      <pubDate>Sun, 15 Mar 2026 08:47:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-azure/</guid>
+    </item>
     <item>
       <title>GitOps Done Right</title>
       <link>https://kubaik.github.io/gitops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques for better text analysis &amp; AI understanding.</description>
       <pubDate>Sat, 14 Mar 2026 06:58:46 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-essentials/</guid>
-    </item>
-    <item>
-      <title>AI Evolved</title>
-      <link>https://kubaik.github.io/ai-evolved/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-computer interaction.</description>
-      <pubDate>Sat, 14 Mar 2026 05:53:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
