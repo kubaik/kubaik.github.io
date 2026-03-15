@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 15:36:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 16:40:58 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
+      <pubDate>Sun, 15 Mar 2026 16:40:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Dev PM</title>
       <link>https://kubaik.github.io/dev-pm/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP: Discover Google Cloud Platform&apos;s full potential &amp; transform your business with expert insights.</description>
       <pubDate>Sat, 14 Mar 2026 14:36:19 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>RPA Simplified</title>
-      <link>https://kubaik.github.io/rpa-simplified/</link>
-      <description>Unlock efficiency with RPA Simplified. Learn how robotics process automation streamlines tasks.</description>
-      <pubDate>Sat, 14 Mar 2026 13:07:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/rpa-simplified/</guid>
     </item>
   </channel>
 </rss>
