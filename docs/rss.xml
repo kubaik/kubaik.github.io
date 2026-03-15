@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 11:33:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 13:08:41 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure by Design</title>
+      <link>https://kubaik.github.io/zero-trust-secure-by-design/</link>
+      <description>Learn how Zero Trust Security Architecture protects networks with a &apos;secure by design&apos; approach.</description>
+      <pubDate>Sun, 15 Mar 2026 13:08:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-by-design/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Improve website speed with expert frontend performance tuning tips.</description>
       <pubDate>Sat, 14 Mar 2026 10:37:11 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Unlock XAI</title>
-      <link>https://kubaik.github.io/unlock-xai/</link>
-      <description>Discover Explainable AI (XAI) techniques to unlock transparency in AI decision-making.</description>
-      <pubDate>Sat, 14 Mar 2026 09:41:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-xai/</guid>
     </item>
   </channel>
 </rss>
