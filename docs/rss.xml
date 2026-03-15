@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 05:40:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 07:08:49 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
+      <pubDate>Sun, 15 Mar 2026 07:08:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-computer interaction.</description>
       <pubDate>Sat, 14 Mar 2026 05:53:06 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-evolved/</guid>
-    </item>
-    <item>
-      <title>Mesh Up</title>
-      <link>https://kubaik.github.io/mesh-up/</link>
-      <description>Discover Service Mesh Architecture with &apos;Mesh Up&apos;. Learn its benefits, use cases &amp; implementation strategies.</description>
-      <pubDate>Sat, 14 Mar 2026 04:48:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up/</guid>
     </item>
   </channel>
 </rss>
