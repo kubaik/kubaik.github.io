@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 07:41:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 09:06:38 +0000</lastBuildDate>
+    <item>
+      <title>AI Pulse Check</title>
+      <link>https://kubaik.github.io/ai-pulse-check/</link>
+      <description>Stay ahead with AI model monitoring &amp; maintenance. Learn how to optimize performance &amp; prevent errors.</description>
+      <pubDate>Mon, 16 Mar 2026 09:06:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
+    </item>
     <item>
       <title>Turbocharge CSS</title>
       <link>https://kubaik.github.io/turbocharge-css/</link>
@@ -138,13 +145,6 @@
       <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
       <pubDate>Sun, 15 Mar 2026 07:08:37 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Sun, 15 Mar 2026 05:39:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
