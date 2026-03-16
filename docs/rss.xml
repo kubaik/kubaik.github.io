@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 05:53:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 07:41:39 +0000</lastBuildDate>
+    <item>
+      <title>Turbocharge CSS</title>
+      <link>https://kubaik.github.io/turbocharge-css/</link>
+      <description>Boost your CSS with Tailwind&apos;s utility-first approach.</description>
+      <pubDate>Mon, 16 Mar 2026 07:41:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/turbocharge-css/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Sun, 15 Mar 2026 05:39:57 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>TypeScript at Scale</title>
-      <link>https://kubaik.github.io/typescript-at-scale/</link>
-      <description>Learn how to use TypeScript for large-scale apps and improve code maintainability and scalability.</description>
-      <pubDate>Sun, 15 Mar 2026 03:17:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-at-scale/</guid>
     </item>
   </channel>
 </rss>
