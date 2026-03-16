@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 22:42:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 23:37:45 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Mon, 16 Mar 2026 23:37:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NFT potential: Explore tech &amp; use cases</description>
       <pubDate>Sun, 15 Mar 2026 17:36:07 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-unleashed/</guid>
-    </item>
-    <item>
-      <title>Spark Big Data</title>
-      <link>https://kubaik.github.io/spark-big-data/</link>
-      <description>Unlock insights with Apache Spark. Learn big data processing &amp; analytics.</description>
-      <pubDate>Sun, 15 Mar 2026 16:40:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/spark-big-data/</guid>
     </item>
   </channel>
 </rss>
