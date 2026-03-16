@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 13:43:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 15:09:00 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Smart</title>
+      <link>https://kubaik.github.io/migrate-smart/</link>
+      <description>Simplify cloud migration with expert strategies and best practices.</description>
+      <pubDate>Mon, 16 Mar 2026 15:08:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-smart/</guid>
+    </item>
     <item>
       <title>Train Smarter</title>
       <link>https://kubaik.github.io/train-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Machine Learning secrets with easy-to-understand explanations of ML algorithms.</description>
       <pubDate>Sun, 15 Mar 2026 10:38:48 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-made-easy/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Sun, 15 Mar 2026 09:42:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
