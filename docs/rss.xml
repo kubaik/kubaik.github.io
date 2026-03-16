@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Mar 2026 23:36:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 03:19:43 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
+      <pubDate>Mon, 16 Mar 2026 03:19:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>Kafka Streams</title>
       <link>https://kubaik.github.io/kafka-streams/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart caching strategies using Redis and Memcached.</description>
       <pubDate>Sat, 14 Mar 2026 23:35:44 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-smarter/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons for optimal app design</description>
-      <pubDate>Sat, 14 Mar 2026 22:34:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
