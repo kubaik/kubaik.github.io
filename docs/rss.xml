@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 09:06:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 11:01:54 +0000</lastBuildDate>
+    <item>
+      <title>Jamstack: Fast &amp; Secure</title>
+      <link>https://kubaik.github.io/jamstack-fast-secure/</link>
+      <description>Learn about Jamstack architecture, a fast and secure way to build websites and apps, improving performance and user experience.</description>
+      <pubDate>Mon, 16 Mar 2026 11:01:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
+    </item>
     <item>
       <title>AI Pulse Check</title>
       <link>https://kubaik.github.io/ai-pulse-check/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
       <pubDate>Sun, 15 Mar 2026 08:47:59 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
-      <pubDate>Sun, 15 Mar 2026 07:08:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
