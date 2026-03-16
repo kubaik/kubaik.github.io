@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 11:01:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 13:43:06 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Mon, 16 Mar 2026 13:42:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>Jamstack: Fast &amp; Secure</title>
       <link>https://kubaik.github.io/jamstack-fast-secure/</link>
@@ -138,13 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Sun, 15 Mar 2026 09:42:06 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
-      <pubDate>Sun, 15 Mar 2026 08:47:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
