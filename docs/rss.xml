@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 03:19:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 05:53:04 +0000</lastBuildDate>
+    <item>
+      <title>Scrum vs Kanban</title>
+      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
+      <description>Scrum vs Kanban: Which agile method is best for your team? Learn the differences and choose the right approach.</description>
+      <pubDate>Mon, 16 Mar 2026 05:52:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
+    </item>
     <item>
       <title>Data Lake 101</title>
       <link>https://kubaik.github.io/data-lake-101/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to use TypeScript for large-scale apps and improve code maintainability and scalability.</description>
       <pubDate>Sun, 15 Mar 2026 03:17:12 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-at-scale/</guid>
-    </item>
-    <item>
-      <title>Cache Smarter</title>
-      <link>https://kubaik.github.io/cache-smarter/</link>
-      <description>Boost app performance with smart caching strategies using Redis and Memcached.</description>
-      <pubDate>Sat, 14 Mar 2026 23:35:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/cache-smarter/</guid>
     </item>
   </channel>
 </rss>
