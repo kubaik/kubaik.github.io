@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 20:48:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 21:49:22 +0000</lastBuildDate>
+    <item>
+      <title>App Arch: 3 Key Patterns</title>
+      <link>https://kubaik.github.io/app-arch-3-key-patterns/</link>
+      <description>Learn 3 key mobile app architecture patterns to build scalable &amp; efficient apps.</description>
+      <pubDate>Mon, 16 Mar 2026 21:49:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-arch-3-key-patterns/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Master dev project management: tips, tools &amp; best practices for success</description>
       <pubDate>Sun, 15 Mar 2026 15:36:14 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-pm/</guid>
-    </item>
-    <item>
-      <title>CQRS Unlocked</title>
-      <link>https://kubaik.github.io/cqrs-unlocked/</link>
-      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing. Learn how to simplify complexity</description>
-      <pubDate>Sun, 15 Mar 2026 14:37:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
   </channel>
 </rss>
