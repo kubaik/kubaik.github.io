@@ -633,15 +633,14 @@
     "topic": "Data Governance Frameworks"
   },
   "etl_vs_elt_processes": {
-    "timestamp": "2026-03-07T05:42:34.502290",
+    "timestamp": "2026-03-17T20:50:01.118410",
     "hashtags": [
-      "DataIntegration",
+      "DataIntegrations",
       "CloudComputing",
       "BigDataAnalytics",
       "DataWarehousing",
-      "ETLProcesses",
-      "ELTSystems",
-      "DataPipelineManagement",
+      "ETLvsELT",
+      "DataEngineering",
       "ArtificialIntelligence"
     ],
     "topic": "ETL vs ELT Processes"
