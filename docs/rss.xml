@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Mar 2026 23:37:45 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 02:43:17 +0000</lastBuildDate>
+    <item>
+      <title>Protect Now</title>
+      <link>https://kubaik.github.io/protect-now/</link>
+      <description>Safeguard your systems with proactive vulnerability management. Learn how to protect now.</description>
+      <pubDate>Tue, 17 Mar 2026 02:43:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/protect-now/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with our expert data warehousing solutions. Discover, analyze, and act on your data.</description>
       <pubDate>Sun, 15 Mar 2026 18:51:18 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-data-insights/</guid>
-    </item>
-    <item>
-      <title>NFT Tech Unleashed</title>
-      <link>https://kubaik.github.io/nft-tech-unleashed/</link>
-      <description>Unlock NFT potential: Explore tech &amp; use cases</description>
-      <pubDate>Sun, 15 Mar 2026 17:36:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-unleashed/</guid>
     </item>
   </channel>
 </rss>
