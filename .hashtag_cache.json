@@ -2613,15 +2613,15 @@
     "topic": "Machine Learning Algorithms Explained"
   },
   "distributed_systems_design": {
-    "timestamp": "2026-03-02T23:34:37.141911",
+    "timestamp": "2026-03-17T11:50:39.362202",
     "hashtags": [
-      "CloudNative",
-      "DistributedArchitecture",
+      "CloudComputing",
+      "DistributedSystems",
       "Microservices",
-      "ServerlessComputing",
-      "ScalableSystems",
-      "SystemDesignPatterns",
-      "DevOpsEngineering"
+      "ServerlessArchitecture",
+      "DevOps",
+      "ScalableDesign",
+      "SystemArchitecture"
     ],
     "topic": "Distributed Systems Design"
   },
