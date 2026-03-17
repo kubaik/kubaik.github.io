@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 11:50:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 13:27:58 +0000</lastBuildDate>
+    <item>
+      <title>Time Mastery</title>
+      <link>https://kubaik.github.io/time-mastery/</link>
+      <description>Boost productivity with effective time management strategies for engineers.</description>
+      <pubDate>Tue, 17 Mar 2026 13:27:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/time-mastery/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
       <pubDate>Mon, 16 Mar 2026 03:19:31 +0000</pubDate>
       <guid>https://kubaik.github.io/data-lake-101/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Unlock real-time data processing with Apache Kafka Streams. Learn how to build scalable streaming apps.</description>
-      <pubDate>Sun, 15 Mar 2026 23:36:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
