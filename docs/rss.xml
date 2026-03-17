@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 06:07:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 07:58:21 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full-Stack Simplified</title>
+      <link>https://kubaik.github.io/nextjs-full-stack-simplified/</link>
+      <description>Simplify full-stack dev with Next.js. Learn how to build scalable apps effortlessly.</description>
+      <pubDate>Tue, 17 Mar 2026 07:58:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack-simplified/</guid>
+    </item>
     <item>
       <title>Crack Code Complexity</title>
       <link>https://kubaik.github.io/crack-code-complexity/</link>
@@ -138,13 +145,6 @@
       <description>Learn penetration testing methodologies to secure your systems with our expert guide.</description>
       <pubDate>Sun, 15 Mar 2026 21:35:27 +0000</pubDate>
       <guid>https://kubaik.github.io/test-to-secure/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
-      <pubDate>Sun, 15 Mar 2026 20:38:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
