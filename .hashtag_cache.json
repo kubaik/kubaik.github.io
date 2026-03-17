@@ -2522,14 +2522,14 @@
     "topic": "Edge Computing Applications"
   },
   "vulnerability_management": {
-    "timestamp": "2026-03-07T23:30:25.589375",
+    "timestamp": "2026-03-17T02:43:06.795966",
     "hashtags": [
       "CyberSecurity",
-      "VulnerabilityManagement",
+      "VulnerabilityScan",
       "ThreatIntelligence",
-      "ZeroTrust",
       "CloudSecurity",
-      "DevSecOps",
+      "ZeroTrust",
+      "BugBounty",
       "CyberResilience"
     ],
     "topic": "Vulnerability Management"
