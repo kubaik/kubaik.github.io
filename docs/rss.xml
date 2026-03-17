@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 13:27:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 15:04:54 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD automation on-the-go</description>
+      <pubDate>Tue, 17 Mar 2026 15:04:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Time Mastery</title>
       <link>https://kubaik.github.io/time-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Scrum vs Kanban: Which agile method is best for your team? Learn the differences and choose the right approach.</description>
       <pubDate>Mon, 16 Mar 2026 05:52:54 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake basics &amp; architecture in our introductory guide.</description>
-      <pubDate>Mon, 16 Mar 2026 03:19:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
