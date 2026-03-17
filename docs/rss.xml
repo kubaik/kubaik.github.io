@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 20:50:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 21:47:44 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning 101</title>
+      <link>https://kubaik.github.io/deep-learning-101/</link>
+      <description>Unlock Deep Learning basics &amp; explore Neural Networks fundamentals in our beginner&apos;s guide.</description>
+      <pubDate>Tue, 17 Mar 2026 21:47:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning-101/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Mon, 16 Mar 2026 13:42:55 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smarter/</guid>
-    </item>
-    <item>
-      <title>Jamstack: Fast &amp; Secure</title>
-      <link>https://kubaik.github.io/jamstack-fast-secure/</link>
-      <description>Learn about Jamstack architecture, a fast and secure way to build websites and apps, improving performance and user experience.</description>
-      <pubDate>Mon, 16 Mar 2026 11:01:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
     </item>
   </channel>
 </rss>
