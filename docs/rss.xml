@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 04:58:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 06:07:56 +0000</lastBuildDate>
+    <item>
+      <title>Crack Code Complexity</title>
+      <link>https://kubaik.github.io/crack-code-complexity/</link>
+      <description>Master algorithm complexity analysis &amp; simplify code with expert tips.</description>
+      <pubDate>Tue, 17 Mar 2026 06:07:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
+    </item>
     <item>
       <title>Smart Contract Dev</title>
       <link>https://kubaik.github.io/smart-contract-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
       <pubDate>Sun, 15 Mar 2026 20:38:17 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Boost engagement with perfect push notifications. Learn expert implementation tips.</description>
-      <pubDate>Sun, 15 Mar 2026 19:35:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
