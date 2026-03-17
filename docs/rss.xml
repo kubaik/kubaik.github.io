@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 07:58:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 09:03:32 +0000</lastBuildDate>
+    <item>
+      <title>Stream Smarter</title>
+      <link>https://kubaik.github.io/stream-smarter/</link>
+      <description>Unlock real-time insights with smart data processing techniques.</description>
+      <pubDate>Tue, 17 Mar 2026 09:03:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/stream-smarter/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Simplified</title>
       <link>https://kubaik.github.io/nextjs-full-stack-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock TypeScript&apos;s full potential with advanced types.</description>
       <pubDate>Sun, 15 Mar 2026 22:36:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ts-power-types/</guid>
-    </item>
-    <item>
-      <title>Test to Secure</title>
-      <link>https://kubaik.github.io/test-to-secure/</link>
-      <description>Learn penetration testing methodologies to secure your systems with our expert guide.</description>
-      <pubDate>Sun, 15 Mar 2026 21:35:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-to-secure/</guid>
     </item>
   </channel>
 </rss>
