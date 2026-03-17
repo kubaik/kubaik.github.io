@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Mar 2026 15:04:54 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Mar 2026 17:12:32 +0000</lastBuildDate>
+    <item>
+      <title>SRE Simplified</title>
+      <link>https://kubaik.github.io/sre-simplified/</link>
+      <description>Learn the basics of Site Reliability Engineering (SRE) &amp; improve system reliability.</description>
+      <pubDate>Tue, 17 Mar 2026 17:12:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-simplified/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Boost your CSS with Tailwind&apos;s utility-first approach.</description>
       <pubDate>Mon, 16 Mar 2026 07:41:28 +0000</pubDate>
       <guid>https://kubaik.github.io/turbocharge-css/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Scrum vs Kanban: Which agile method is best for your team? Learn the differences and choose the right approach.</description>
-      <pubDate>Mon, 16 Mar 2026 05:52:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
