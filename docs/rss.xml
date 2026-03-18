@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 19:16:03 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 20:48:30 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Wed, 18 Mar 2026 20:48:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Build Your Tech Brand</title>
       <link>https://kubaik.github.io/build-your-tech-brand/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert tips on designing scalable distributed systems with our &apos;Design Smarter&apos; guide.</description>
       <pubDate>Tue, 17 Mar 2026 11:50:39 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>AR Revolved</title>
-      <link>https://kubaik.github.io/ar-revolved/</link>
-      <description>Unlock AR potential: Explore latest trends &amp; innovations in AR development.</description>
-      <pubDate>Tue, 17 Mar 2026 10:58:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-revolved/</guid>
     </item>
   </channel>
 </rss>
