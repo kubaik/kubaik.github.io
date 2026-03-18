@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 05:03:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 07:12:36 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Optimize app performance with code splitting strategies.</description>
+      <pubDate>Wed, 18 Mar 2026 07:12:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>FP Fundamentals</title>
       <link>https://kubaik.github.io/fp-fundamentals/</link>
@@ -138,13 +145,6 @@
       <description>Unlock faster network speeds with expert optimization tips.</description>
       <pubDate>Mon, 16 Mar 2026 22:41:56 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>App Arch: 3 Key Patterns</title>
-      <link>https://kubaik.github.io/app-arch-3-key-patterns/</link>
-      <description>Learn 3 key mobile app architecture patterns to build scalable &amp; efficient apps.</description>
-      <pubDate>Mon, 16 Mar 2026 21:49:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/app-arch-3-key-patterns/</guid>
     </item>
   </channel>
 </rss>
