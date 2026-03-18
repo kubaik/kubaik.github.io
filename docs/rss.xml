@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 20:48:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 21:42:13 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Done Right</title>
+      <link>https://kubaik.github.io/mlops-done-right/</link>
+      <description>Streamline ML workflow with MLOps best practices &amp; automation techniques.</description>
+      <pubDate>Wed, 18 Mar 2026 21:42:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-done-right/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with effective time management strategies for engineers.</description>
       <pubDate>Tue, 17 Mar 2026 13:27:47 +0000</pubDate>
       <guid>https://kubaik.github.io/time-mastery/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Learn expert tips on designing scalable distributed systems with our &apos;Design Smarter&apos; guide.</description>
-      <pubDate>Tue, 17 Mar 2026 11:50:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
