@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 22:40:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 23:37:17 +0000</lastBuildDate>
+    <item>
+      <title>Code Less, Achieve More</title>
+      <link>https://kubaik.github.io/code-less-achieve-more/</link>
+      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
+      <pubDate>Wed, 18 Mar 2026 23:37:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
+    </item>
     <item>
       <title>Code Together</title>
       <link>https://kubaik.github.io/code-together/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of Site Reliability Engineering (SRE) &amp; improve system reliability.</description>
       <pubDate>Tue, 17 Mar 2026 17:12:21 +0000</pubDate>
       <guid>https://kubaik.github.io/sre-simplified/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD automation on-the-go</description>
-      <pubDate>Tue, 17 Mar 2026 15:04:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
