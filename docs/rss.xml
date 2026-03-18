@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 13:42:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 15:12:46 +0000</lastBuildDate>
+    <item>
+      <title>Revive Old Code</title>
+      <link>https://kubaik.github.io/revive-old-code/</link>
+      <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
+      <pubDate>Wed, 18 Mar 2026 15:12:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/revive-old-code/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Simplify full-stack dev with Next.js. Learn how to build scalable apps effortlessly.</description>
       <pubDate>Tue, 17 Mar 2026 07:58:10 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack-simplified/</guid>
-    </item>
-    <item>
-      <title>Crack Code Complexity</title>
-      <link>https://kubaik.github.io/crack-code-complexity/</link>
-      <description>Master algorithm complexity analysis &amp; simplify code with expert tips.</description>
-      <pubDate>Tue, 17 Mar 2026 06:07:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
     </item>
   </channel>
 </rss>
