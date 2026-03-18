@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 02:49:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 05:03:35 +0000</lastBuildDate>
+    <item>
+      <title>FP Fundamentals</title>
+      <link>https://kubaik.github.io/fp-fundamentals/</link>
+      <description>Learn core Functional Programming concepts &amp; principles.</description>
+      <pubDate>Wed, 18 Mar 2026 05:03:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn 3 key mobile app architecture patterns to build scalable &amp; efficient apps.</description>
       <pubDate>Mon, 16 Mar 2026 21:49:11 +0000</pubDate>
       <guid>https://kubaik.github.io/app-arch-3-key-patterns/</guid>
-    </item>
-    <item>
-      <title>Boost ASO</title>
-      <link>https://kubaik.github.io/boost-aso/</link>
-      <description>Improve app visibility with expert App Store Optimization (ASO) tips and strategies.</description>
-      <pubDate>Mon, 16 Mar 2026 19:14:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-aso/</guid>
     </item>
   </channel>
 </rss>
