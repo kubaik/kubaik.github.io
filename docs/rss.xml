@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 07:12:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 08:59:47 +0000</lastBuildDate>
+    <item>
+      <title>Tame Debt</title>
+      <link>https://kubaik.github.io/tame-debt/</link>
+      <description>Control technical debt, boost efficiency. Learn strategies to tame debt.</description>
+      <pubDate>Wed, 18 Mar 2026 08:59:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-debt/</guid>
+    </item>
     <item>
       <title>Split Smarter</title>
       <link>https://kubaik.github.io/split-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Mon, 16 Mar 2026 23:37:34 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Unlock faster network speeds with expert optimization tips.</description>
-      <pubDate>Mon, 16 Mar 2026 22:41:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
