@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 21:42:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 22:40:07 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
+      <pubDate>Wed, 18 Mar 2026 22:39:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>MLOps Done Right</title>
       <link>https://kubaik.github.io/mlops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go</description>
       <pubDate>Tue, 17 Mar 2026 15:04:43 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Time Mastery</title>
-      <link>https://kubaik.github.io/time-mastery/</link>
-      <description>Boost productivity with effective time management strategies for engineers.</description>
-      <pubDate>Tue, 17 Mar 2026 13:27:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/time-mastery/</guid>
     </item>
   </channel>
 </rss>
