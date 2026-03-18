@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Mar 2026 10:06:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2026 11:52:49 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: learn pros, cons &amp; which is right for you.</description>
+      <pubDate>Wed, 18 Mar 2026 11:52:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Python for Data</title>
       <link>https://kubaik.github.io/python-for-data/</link>
@@ -138,13 +145,6 @@
       <description>Learn Smart Contract Dev: Build, deploy &amp; secure blockchain contracts with expert guides and tutorials.</description>
       <pubDate>Tue, 17 Mar 2026 04:58:32 +0000</pubDate>
       <guid>https://kubaik.github.io/smart-contract-dev/</guid>
-    </item>
-    <item>
-      <title>Protect Now</title>
-      <link>https://kubaik.github.io/protect-now/</link>
-      <description>Safeguard your systems with proactive vulnerability management. Learn how to protect now.</description>
-      <pubDate>Tue, 17 Mar 2026 02:43:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/protect-now/</guid>
     </item>
   </channel>
 </rss>
