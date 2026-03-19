@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 16:01:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 17:55:50 +0000</lastBuildDate>
+    <item>
+      <title>Speed Up Mobile</title>
+      <link>https://kubaik.github.io/speed-up-mobile/</link>
+      <description>Boost mobile speed &amp; performance. Get expert tips to optimize your mobile experience.</description>
+      <pubDate>Thu, 19 Mar 2026 17:55:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/speed-up-mobile/</guid>
+    </item>
     <item>
       <title>Clean Code</title>
       <link>https://kubaik.github.io/clean-code/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI potential with AutoML Accelerated. Discover how Neural Architecture Search boosts efficiency.</description>
       <pubDate>Wed, 18 Mar 2026 13:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: learn pros, cons &amp; which is right for you.</description>
-      <pubDate>Wed, 18 Mar 2026 11:52:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
     </item>
   </channel>
 </rss>
