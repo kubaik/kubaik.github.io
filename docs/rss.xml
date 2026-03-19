@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 08:54:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 09:55:12 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
+      <pubDate>Thu, 19 Mar 2026 09:55:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
       <pubDate>Wed, 18 Mar 2026 02:49:17 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
-      <pubDate>Tue, 17 Mar 2026 23:39:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
