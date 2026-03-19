@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 22:37:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 23:37:25 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Minimize downtime with expert disaster recovery planning tips and strategies to get back up and running quickly.</description>
+      <pubDate>Thu, 19 Mar 2026 23:37:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>RL Wins</title>
       <link>https://kubaik.github.io/rl-wins/</link>
@@ -138,13 +145,6 @@
       <description>Streamline ML workflow with MLOps best practices &amp; automation techniques.</description>
       <pubDate>Wed, 18 Mar 2026 21:42:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mlops-done-right/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
-      <pubDate>Wed, 18 Mar 2026 20:48:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
