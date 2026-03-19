@@ -1348,16 +1348,15 @@
     "topic": "Google Cloud Platform (GCP)"
   },
   "database_query_optimization": {
-    "timestamp": "2026-03-04T16:56:30.648132",
+    "timestamp": "2026-03-19T14:56:11.737765",
     "hashtags": [
       "DatabaseOptimization",
       "QueryPerformance",
       "DataEngineering",
-      "SQLTuning",
-      "CloudDatabase",
+      "CloudComputing",
       "AIforDB",
-      "DevOpsTools",
-      "DataIntelligence"
+      "BigDataManagement",
+      "DevOpsTools"
     ],
     "topic": "Database Query Optimization"
   },

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 13:22:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 14:56:22 +0000</lastBuildDate>
+    <item>
+      <title>Query Faster</title>
+      <link>https://kubaik.github.io/query-faster/</link>
+      <description>Boost database speed with expert query optimization tips.</description>
+      <pubDate>Thu, 19 Mar 2026 14:56:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/query-faster/</guid>
+    </item>
     <item>
       <title>Cloud Simplified</title>
       <link>https://kubaik.github.io/cloud-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analysis skills.</description>
       <pubDate>Wed, 18 Mar 2026 10:06:25 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-data/</guid>
-    </item>
-    <item>
-      <title>Tame Debt</title>
-      <link>https://kubaik.github.io/tame-debt/</link>
-      <description>Control technical debt, boost efficiency. Learn strategies to tame debt.</description>
-      <pubDate>Wed, 18 Mar 2026 08:59:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-debt/</guid>
     </item>
   </channel>
 </rss>
