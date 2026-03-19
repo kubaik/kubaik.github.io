@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 19:08:51 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 20:49:50 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
+      <pubDate>Thu, 19 Mar 2026 20:49:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflow with automation. Boost productivity &amp; efficiency.</description>
       <pubDate>Wed, 18 Mar 2026 17:10:54 +0000</pubDate>
       <guid>https://kubaik.github.io/auto-dev-flow/</guid>
-    </item>
-    <item>
-      <title>Revive Old Code</title>
-      <link>https://kubaik.github.io/revive-old-code/</link>
-      <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
-      <pubDate>Wed, 18 Mar 2026 15:12:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/revive-old-code/</guid>
     </item>
   </channel>
 </rss>
