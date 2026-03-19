@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 05:01:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 06:08:34 +0000</lastBuildDate>
+    <item>
+      <title>K8s Mastery</title>
+      <link>https://kubaik.github.io/k8s-mastery/</link>
+      <description>Master Kubernetes orchestration with expert tips and best practices.</description>
+      <pubDate>Thu, 19 Mar 2026 06:08:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-mastery/</guid>
+    </item>
     <item>
       <title>Optimize Images</title>
       <link>https://kubaik.github.io/optimize-images/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Deep Learning basics &amp; explore Neural Networks fundamentals in our beginner&apos;s guide.</description>
       <pubDate>Tue, 17 Mar 2026 21:47:33 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning-101/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Discover the difference between ETL &amp; ELT processes.</description>
-      <pubDate>Tue, 17 Mar 2026 20:50:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
