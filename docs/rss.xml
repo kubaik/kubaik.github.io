@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 07:52:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 08:54:11 +0000</lastBuildDate>
+    <item>
+      <title>Lead Tech</title>
+      <link>https://kubaik.github.io/lead-tech/</link>
+      <description>Unlock top tech leadership skills to drive innovation &amp; success.</description>
+      <pubDate>Thu, 19 Mar 2026 08:54:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/lead-tech/</guid>
+    </item>
     <item>
       <title>PHP Revamped</title>
       <link>https://kubaik.github.io/php-revamped/</link>
@@ -138,13 +145,6 @@
       <description>Learn RESTful API design principles for scalable &amp; secure APIs.</description>
       <pubDate>Tue, 17 Mar 2026 23:39:51 +0000</pubDate>
       <guid>https://kubaik.github.io/api-done-right/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Learn about data engineering pipelines &amp; optimize your data flow for efficient insights</description>
-      <pubDate>Tue, 17 Mar 2026 22:41:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
