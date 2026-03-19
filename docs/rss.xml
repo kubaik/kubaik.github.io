@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 17:55:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 19:08:51 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn database design &amp; normalization best practices to optimize performance &amp; scalability.</description>
+      <pubDate>Thu, 19 Mar 2026 19:08:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Speed Up Mobile</title>
       <link>https://kubaik.github.io/speed-up-mobile/</link>
@@ -138,13 +145,6 @@
       <description>Breathe new life into outdated code. Learn refactoring techniques to modernize legacy systems.</description>
       <pubDate>Wed, 18 Mar 2026 15:12:35 +0000</pubDate>
       <guid>https://kubaik.github.io/revive-old-code/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Unlock AI potential with AutoML Accelerated. Discover how Neural Architecture Search boosts efficiency.</description>
-      <pubDate>Wed, 18 Mar 2026 13:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
