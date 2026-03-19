@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 02:50:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 05:01:14 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Images</title>
+      <link>https://kubaik.github.io/optimize-images/</link>
+      <description>Boost site speed with image optimization techniques.</description>
+      <pubDate>Thu, 19 Mar 2026 05:01:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-images/</guid>
+    </item>
     <item>
       <title>Cloud Security Essentials</title>
       <link>https://kubaik.github.io/cloud-security-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover the difference between ETL &amp; ELT processes.</description>
       <pubDate>Tue, 17 Mar 2026 20:50:00 +0000</pubDate>
       <guid>https://kubaik.github.io/etl-vs-elt/</guid>
-    </item>
-    <item>
-      <title>Code Review Done Right</title>
-      <link>https://kubaik.github.io/code-review-done-right/</link>
-      <description>Improve code quality with expert review tips and best practices.</description>
-      <pubDate>Tue, 17 Mar 2026 19:13:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-review-done-right/</guid>
     </item>
   </channel>
 </rss>
