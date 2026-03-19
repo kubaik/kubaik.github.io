@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 11:42:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 13:22:30 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Simplified</title>
+      <link>https://kubaik.github.io/cloud-simplified/</link>
+      <description>Simplify cloud complexity with expert AWS architecture insights &amp; solutions.</description>
+      <pubDate>Thu, 19 Mar 2026 13:22:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-simplified/</guid>
+    </item>
     <item>
       <title>CYBER 101</title>
       <link>https://kubaik.github.io/cyber-101/</link>
@@ -138,13 +145,6 @@
       <description>Control technical debt, boost efficiency. Learn strategies to tame debt.</description>
       <pubDate>Wed, 18 Mar 2026 08:59:36 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-debt/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Optimize app performance with code splitting strategies.</description>
-      <pubDate>Wed, 18 Mar 2026 07:12:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
