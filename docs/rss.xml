@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 10:52:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 11:42:10 +0000</lastBuildDate>
+    <item>
+      <title>CYBER 101</title>
+      <link>https://kubaik.github.io/cyber-101/</link>
+      <description>Learn cybersecurity basics &amp; protect yourself online with CYBER 101.</description>
+      <pubDate>Thu, 19 Mar 2026 11:41:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/cyber-101/</guid>
+    </item>
     <item>
       <title>Boost Tech Pay</title>
       <link>https://kubaik.github.io/boost-tech-pay/</link>
@@ -138,13 +145,6 @@
       <description>Optimize app performance with code splitting strategies.</description>
       <pubDate>Wed, 18 Mar 2026 07:12:26 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smarter/</guid>
-    </item>
-    <item>
-      <title>FP Fundamentals</title>
-      <link>https://kubaik.github.io/fp-fundamentals/</link>
-      <description>Learn core Functional Programming concepts &amp; principles.</description>
-      <pubDate>Wed, 18 Mar 2026 05:03:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
     </item>
   </channel>
 </rss>
