@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 06:08:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 07:52:44 +0000</lastBuildDate>
+    <item>
+      <title>PHP Revamped</title>
+      <link>https://kubaik.github.io/php-revamped/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Thu, 19 Mar 2026 07:52:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-revamped/</guid>
+    </item>
     <item>
       <title>K8s Mastery</title>
       <link>https://kubaik.github.io/k8s-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data engineering pipelines &amp; optimize your data flow for efficient insights</description>
       <pubDate>Tue, 17 Mar 2026 22:41:38 +0000</pubDate>
       <guid>https://kubaik.github.io/data-flow/</guid>
-    </item>
-    <item>
-      <title>Deep Learning 101</title>
-      <link>https://kubaik.github.io/deep-learning-101/</link>
-      <description>Unlock Deep Learning basics &amp; explore Neural Networks fundamentals in our beginner&apos;s guide.</description>
-      <pubDate>Tue, 17 Mar 2026 21:47:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning-101/</guid>
     </item>
   </channel>
 </rss>
