@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2026 21:42:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2026 22:37:07 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with Reinforcement Learning strategies. Discover expert techniques.</description>
+      <pubDate>Thu, 19 Mar 2026 22:36:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Crush Sys Design</title>
       <link>https://kubaik.github.io/crush-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Boost conversions with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
       <pubDate>Wed, 18 Mar 2026 20:48:18 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Build Your Tech Brand</title>
-      <link>https://kubaik.github.io/build-your-tech-brand/</link>
-      <description>Establish your tech presence with a strong portfolio. Learn how to build a standout tech brand.</description>
-      <pubDate>Wed, 18 Mar 2026 19:15:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-your-tech-brand/</guid>
     </item>
   </channel>
 </rss>
