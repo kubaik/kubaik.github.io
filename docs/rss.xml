@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 04:53:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 05:58:17 +0000</lastBuildDate>
+    <item>
+      <title>Boost Models</title>
+      <link>https://kubaik.github.io/boost-models/</link>
+      <description>Unlock powerful models with expert feature engineering techniques.</description>
+      <pubDate>Fri, 20 Mar 2026 05:58:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-models/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Learn cloud security essentials &amp; best practices to protect your data and applications in the cloud.</description>
       <pubDate>Thu, 19 Mar 2026 02:50:43 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-security-essentials/</guid>
-    </item>
-    <item>
-      <title>Code Less, Achieve More</title>
-      <link>https://kubaik.github.io/code-less-achieve-more/</link>
-      <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
-      <pubDate>Wed, 18 Mar 2026 23:37:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
     </item>
   </channel>
 </rss>
