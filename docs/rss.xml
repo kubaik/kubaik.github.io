@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 17:41:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 19:00:23 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; best practices</description>
+      <pubDate>Fri, 20 Mar 2026 19:00:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Cut Cloud Costs</title>
       <link>https://kubaik.github.io/cut-cloud-costs/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile speed &amp; performance. Get expert tips to optimize your mobile experience.</description>
       <pubDate>Thu, 19 Mar 2026 17:55:39 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up-mobile/</guid>
-    </item>
-    <item>
-      <title>Clean Code</title>
-      <link>https://kubaik.github.io/clean-code/</link>
-      <description>Learn Clean Code principles for better software development</description>
-      <pubDate>Thu, 19 Mar 2026 16:01:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-code/</guid>
     </item>
   </channel>
 </rss>
