@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 10:49:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 11:38:21 +0000</lastBuildDate>
+    <item>
+      <title>Boost Code: Top VS Extensions</title>
+      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
+      <description>Boost coding productivity with top VS Code extensions.</description>
+      <pubDate>Fri, 20 Mar 2026 11:38:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
       <pubDate>Thu, 19 Mar 2026 09:55:01 +0000</pubDate>
       <guid>https://kubaik.github.io/react-native-build-once/</guid>
-    </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Unlock top tech leadership skills to drive innovation &amp; success.</description>
-      <pubDate>Thu, 19 Mar 2026 08:54:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
     </item>
   </channel>
 </rss>
