@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 16:54:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 17:41:08 +0000</lastBuildDate>
+    <item>
+      <title>Cut Cloud Costs</title>
+      <link>https://kubaik.github.io/cut-cloud-costs/</link>
+      <description>Reduce cloud spend with expert tips and strategies for optimal cloud cost optimization.</description>
+      <pubDate>Fri, 20 Mar 2026 17:40:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
+    </item>
     <item>
       <title>Boost Speed with SSG</title>
       <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
@@ -138,13 +145,6 @@
       <description>Learn Clean Code principles for better software development</description>
       <pubDate>Thu, 19 Mar 2026 16:01:31 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-code/</guid>
-    </item>
-    <item>
-      <title>Query Faster</title>
-      <link>https://kubaik.github.io/query-faster/</link>
-      <description>Boost database speed with expert query optimization tips.</description>
-      <pubDate>Thu, 19 Mar 2026 14:56:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/query-faster/</guid>
     </item>
   </channel>
 </rss>
