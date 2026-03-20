@@ -183,5 +183,6 @@
   "High Availability Systems",
   "Feature Engineering Techniques",
   "Canary Deployments",
-  "Message Queues and Async Processing"
+  "Message Queues and Async Processing",
+  "Debugging Techniques"
 ]
