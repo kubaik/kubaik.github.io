@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/clean-data-matters/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/debug-smarter/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/queue-up-async-processing/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/canary-deploy/</loc><priority>0.9</priority></url>
@@ -224,7 +225,6 @@
 <url><loc>https://kubaik.github.io/waf-web-shield/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/cloud-smart/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/dev-done-right/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/clean-data-matters/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/no-code-rev-build-fast/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/edge-unleashed/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/terraform-code-your-cloud/</loc><priority>0.9</priority></url>
