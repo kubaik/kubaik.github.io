@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 15:52:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 16:54:39 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed with SSG</title>
+      <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
+      <description>Unlock faster load times with Static Site Generation (SSG). Learn how to boost speed and improve user experience.</description>
+      <pubDate>Fri, 20 Mar 2026 16:54:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
+    </item>
     <item>
       <title>Blue-Green Done</title>
       <link>https://kubaik.github.io/blue-green-done/</link>
@@ -138,13 +145,6 @@
       <description>Boost database speed with expert query optimization tips.</description>
       <pubDate>Thu, 19 Mar 2026 14:56:11 +0000</pubDate>
       <guid>https://kubaik.github.io/query-faster/</guid>
-    </item>
-    <item>
-      <title>Cloud Simplified</title>
-      <link>https://kubaik.github.io/cloud-simplified/</link>
-      <description>Simplify cloud complexity with expert AWS architecture insights &amp; solutions.</description>
-      <pubDate>Thu, 19 Mar 2026 13:22:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-simplified/</guid>
     </item>
   </channel>
 </rss>
