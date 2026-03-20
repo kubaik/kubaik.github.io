@@ -182,5 +182,6 @@
   "Angular Enterprise Applications",
   "High Availability Systems",
   "Feature Engineering Techniques",
-  "Canary Deployments"
+  "Canary Deployments",
+  "Message Queues and Async Processing"
 ]
