@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 11:38:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 13:15:33 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh 101</title>
+      <link>https://kubaik.github.io/data-mesh-101/</link>
+      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn the basics in our Data Mesh 101 guide.</description>
+      <pubDate>Fri, 20 Mar 2026 13:15:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-101/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Maximize your tech salary with expert negotiation tips and strategies.</description>
       <pubDate>Thu, 19 Mar 2026 10:52:03 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-tech-pay/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with one codebase using React Native.</description>
-      <pubDate>Thu, 19 Mar 2026 09:55:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
