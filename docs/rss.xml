@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 02:41:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 04:53:52 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure zero downtime with high availability systems. Learn how to keep your business always on.</description>
+      <pubDate>Fri, 20 Mar 2026 04:53:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Angular Ent Apps</title>
       <link>https://kubaik.github.io/angular-ent-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms. Build faster, achieve more.</description>
       <pubDate>Wed, 18 Mar 2026 23:37:03 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-achieve-more/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
-      <pubDate>Wed, 18 Mar 2026 22:39:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
