@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 19:43:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 20:41:34 +0000</lastBuildDate>
+    <item>
+      <title>Docker Simplified</title>
+      <link>https://kubaik.github.io/docker-simplified/</link>
+      <description>Learn Docker basics &amp; simplify containerization with our easy guide.</description>
+      <pubDate>Fri, 20 Mar 2026 20:41:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/docker-simplified/</guid>
+    </item>
     <item>
       <title>DevOps Done Right</title>
       <link>https://kubaik.github.io/devops-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
       <pubDate>Thu, 19 Mar 2026 20:49:39 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssr/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn database design &amp; normalization best practices to optimize performance &amp; scalability.</description>
-      <pubDate>Thu, 19 Mar 2026 19:08:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>

@@ -552,13 +552,13 @@
     "topic": "Monitoring and Observability"
   },
   "docker_containerization_guide": {
-    "timestamp": "2026-03-12T21:40:50.011991",
+    "timestamp": "2026-03-20T20:41:22.780364",
     "hashtags": [
       "CloudNative",
       "DevOpsTools",
       "Containerization",
       "Kubernetes",
-      "Serverless",
+      "ServerlessTech",
       "Microservices",
       "DevSecOps"
     ],
