@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 21:38:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 22:37:11 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing: Next Gen</title>
+      <link>https://kubaik.github.io/edge-computing-next-gen/</link>
+      <description>Unlock the power of Edge Computing. Discover next-gen applications and innovations transforming industries.</description>
+      <pubDate>Fri, 20 Mar 2026 22:37:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing-next-gen/</guid>
+    </item>
     <item>
       <title>Design Smarter</title>
       <link>https://kubaik.github.io/design-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with Reinforcement Learning strategies. Discover expert techniques.</description>
       <pubDate>Thu, 19 Mar 2026 22:36:56 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>Crush Sys Design</title>
-      <link>https://kubaik.github.io/crush-sys-design/</link>
-      <description>Master system design interviews with expert tips and strategies.</description>
-      <pubDate>Thu, 19 Mar 2026 21:42:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/crush-sys-design/</guid>
     </item>
   </channel>
 </rss>
