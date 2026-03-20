@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 22:37:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 23:36:43 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Build mobile apps for iOS &amp; Android with React Native, one codebase, endless possibilities.</description>
+      <pubDate>Fri, 20 Mar 2026 23:36:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Edge Computing: Next Gen</title>
       <link>https://kubaik.github.io/edge-computing-next-gen/</link>
@@ -138,13 +145,6 @@
       <description>Minimize downtime with expert disaster recovery planning tips and strategies to get back up and running quickly.</description>
       <pubDate>Thu, 19 Mar 2026 23:37:12 +0000</pubDate>
       <guid>https://kubaik.github.io/recover-fast/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost performance with Reinforcement Learning strategies. Discover expert techniques.</description>
-      <pubDate>Thu, 19 Mar 2026 22:36:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
