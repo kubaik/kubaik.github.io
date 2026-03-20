@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Mar 2026 09:53:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 10:49:12 +0000</lastBuildDate>
+    <item>
+      <title>Clean Data Matters</title>
+      <link>https://kubaik.github.io/clean-data-matters/</link>
+      <description>Improve business decisions with accurate data. Learn why clean data matters.</description>
+      <pubDate>Fri, 20 Mar 2026 10:49:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/clean-data-matters/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock top tech leadership skills to drive innovation &amp; success.</description>
       <pubDate>Thu, 19 Mar 2026 08:54:00 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>PHP Revamped</title>
-      <link>https://kubaik.github.io/php-revamped/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Thu, 19 Mar 2026 07:52:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-revamped/</guid>
     </item>
   </channel>
 </rss>
