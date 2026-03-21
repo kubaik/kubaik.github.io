@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 22:33:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 23:33:10 +0000</lastBuildDate>
+    <item>
+      <title>ETL vs ELT</title>
+      <link>https://kubaik.github.io/etl-vs-elt/</link>
+      <description>Learn the difference between ETL &amp; ELT processes.</description>
+      <pubDate>Sat, 21 Mar 2026 23:32:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
+    </item>
     <item>
       <title>Work Smarter</title>
       <link>https://kubaik.github.io/work-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with async made easy. Learn message queues &amp; async processing.</description>
       <pubDate>Sat, 21 Mar 2026 02:35:04 +0000</pubDate>
       <guid>https://kubaik.github.io/async-made-easy/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Build mobile apps for iOS &amp; Android with React Native, one codebase, endless possibilities.</description>
-      <pubDate>Fri, 20 Mar 2026 23:36:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
