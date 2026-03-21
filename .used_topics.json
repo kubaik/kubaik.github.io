@@ -8,5 +8,6 @@
   "Incident Response Planning",
   "RESTful API Design Principles",
   "OAuth 2.0 and OpenID Connect",
-  "Rate Limiting and Throttling"
+  "Rate Limiting and Throttling",
+  "Profiling and Benchmarking"
 ]
