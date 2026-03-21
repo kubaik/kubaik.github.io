@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 13:04:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 14:34:31 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
+      <pubDate>Sat, 21 Mar 2026 14:34:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>TDD: Code Smarter</title>
       <link>https://kubaik.github.io/tdd-code-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment, a strategy for zero-downtime releases and seamless app updates.</description>
       <pubDate>Fri, 20 Mar 2026 15:51:59 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-done/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Unlock Snowflake&apos;s full potential &amp; discover a faster, scalable data platform</description>
-      <pubDate>Fri, 20 Mar 2026 14:52:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
