@@ -7,5 +7,6 @@
   "Message Queues and Async Processing",
   "Incident Response Planning",
   "RESTful API Design Principles",
-  "OAuth 2.0 and OpenID Connect"
+  "OAuth 2.0 and OpenID Connect",
+  "Rate Limiting and Throttling"
 ]
