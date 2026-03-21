@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 17:32:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 18:47:33 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning</title>
+      <link>https://kubaik.github.io/deep-learning/</link>
+      <description>Unlock AI&apos;s potential with Deep Learning Neural Networks. Discover the power of DL.</description>
+      <pubDate>Sat, 21 Mar 2026 18:47:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning/</guid>
+    </item>
     <item>
       <title>CryptoBoom</title>
       <link>https://kubaik.github.io/cryptoboom/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with DevOps best practices and culture tips.</description>
       <pubDate>Fri, 20 Mar 2026 19:43:40 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert Backend Architecture Patterns &amp; best practices</description>
-      <pubDate>Fri, 20 Mar 2026 19:00:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
