@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 10:35:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 11:30:20 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
+      <pubDate>Sat, 21 Mar 2026 11:30:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Deploy Smarter</title>
       <link>https://kubaik.github.io/deploy-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn the basics in our Data Mesh 101 guide.</description>
       <pubDate>Fri, 20 Mar 2026 13:15:22 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh-101/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-extensions/</link>
-      <description>Boost coding productivity with top VS Code extensions.</description>
-      <pubDate>Fri, 20 Mar 2026 11:38:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
     </item>
   </channel>
 </rss>
