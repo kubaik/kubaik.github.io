@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 04:43:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 05:48:53 +0000</lastBuildDate>
+    <item>
+      <title>REST Done Right</title>
+      <link>https://kubaik.github.io/rest-done-right/</link>
+      <description>Learn RESTful API design principles for scalable &amp; maintainable systems</description>
+      <pubDate>Sat, 21 Mar 2026 05:48:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/rest-done-right/</guid>
+    </item>
     <item>
       <title>Respond Fast</title>
       <link>https://kubaik.github.io/respond-fast/</link>
@@ -138,13 +145,6 @@
       <description>Unlock powerful models with expert feature engineering techniques.</description>
       <pubDate>Fri, 20 Mar 2026 05:58:05 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure zero downtime with high availability systems. Learn how to keep your business always on.</description>
-      <pubDate>Fri, 20 Mar 2026 04:53:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
