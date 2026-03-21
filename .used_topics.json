@@ -10,5 +10,6 @@
   "OAuth 2.0 and OpenID Connect",
   "Rate Limiting and Throttling",
   "Profiling and Benchmarking",
-  "Agile Development Methodologies"
+  "Agile Development Methodologies",
+  "Blue-Green Deployment"
 ]

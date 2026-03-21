@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 09:39:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 10:35:54 +0000</lastBuildDate>
+    <item>
+      <title>Deploy Smarter</title>
+      <link>https://kubaik.github.io/deploy-smarter/</link>
+      <description>Learn Blue-Green Deployment strategy for zero-downtime releases</description>
+      <pubDate>Sat, 21 Mar 2026 10:35:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-smarter/</guid>
+    </item>
     <item>
       <title>Agile Dev: Faster Results</title>
       <link>https://kubaik.github.io/agile-dev-faster-results/</link>
@@ -138,13 +145,6 @@
       <description>Boost coding productivity with top VS Code extensions.</description>
       <pubDate>Fri, 20 Mar 2026 11:38:10 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-code-top-vs-extensions/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve business decisions with accurate data. Learn why clean data matters.</description>
-      <pubDate>Fri, 20 Mar 2026 10:49:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
