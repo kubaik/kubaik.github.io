@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 16:39:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 17:32:36 +0000</lastBuildDate>
+    <item>
+      <title>CryptoBoom</title>
+      <link>https://kubaik.github.io/cryptoboom/</link>
+      <description>Discover the future of finance with CryptoBoom. Learn about cryptocurrency and blockchain technology.</description>
+      <pubDate>Sat, 21 Mar 2026 17:32:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/cryptoboom/</guid>
+    </item>
     <item>
       <title>Design Smart</title>
       <link>https://kubaik.github.io/design-smart/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; best practices</description>
       <pubDate>Fri, 20 Mar 2026 19:00:12 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud spend with expert tips and strategies for optimal cloud cost optimization.</description>
-      <pubDate>Fri, 20 Mar 2026 17:40:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
