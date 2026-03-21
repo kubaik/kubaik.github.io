@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 15:33:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 16:39:20 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn to craft smart recommender systems that drive user engagement.</description>
+      <pubDate>Sat, 21 Mar 2026 16:39:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Master TypeScript</title>
       <link>https://kubaik.github.io/master-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Reduce cloud spend with expert tips and strategies for optimal cloud cost optimization.</description>
       <pubDate>Fri, 20 Mar 2026 17:40:57 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
-    </item>
-    <item>
-      <title>Boost Speed with SSG</title>
-      <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
-      <description>Unlock faster load times with Static Site Generation (SSG). Learn how to boost speed and improve user experience.</description>
-      <pubDate>Fri, 20 Mar 2026 16:54:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
     </item>
   </channel>
 </rss>
