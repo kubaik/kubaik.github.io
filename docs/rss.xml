@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 06:56:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 07:38:46 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flow</title>
+      <link>https://kubaik.github.io/limit-the-flow/</link>
+      <description>Learn rate limiting &amp; throttling techniques to control traffic &amp; prevent overload.</description>
+      <pubDate>Sat, 21 Mar 2026 07:38:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flow/</guid>
+    </item>
     <item>
       <title>OAuth 2.0 &amp; OIDC</title>
       <link>https://kubaik.github.io/oauth-20-oidc/</link>
@@ -138,13 +145,6 @@
       <description>Learn how message queues enable efficient async processing, improving app performance and scalability.</description>
       <pubDate>Fri, 20 Mar 2026 08:52:34 +0000</pubDate>
       <guid>https://kubaik.github.io/queue-up-async-processing/</guid>
-    </item>
-    <item>
-      <title>Canary Deploy</title>
-      <link>https://kubaik.github.io/canary-deploy/</link>
-      <description>Learn about Canary Deployments, a safe &amp; gradual rollout strategy for new software releases.</description>
-      <pubDate>Fri, 20 Mar 2026 07:08:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-deploy/</guid>
     </item>
   </channel>
 </rss>
