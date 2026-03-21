@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 11:30:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2026 13:04:52 +0000</lastBuildDate>
+    <item>
+      <title>TDD: Code Smarter</title>
+      <link>https://kubaik.github.io/tdd-code-smarter/</link>
+      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality.</description>
+      <pubDate>Sat, 21 Mar 2026 13:04:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Snowflake&apos;s full potential &amp; discover a faster, scalable data platform</description>
       <pubDate>Fri, 20 Mar 2026 14:52:01 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>Data Mesh 101</title>
-      <link>https://kubaik.github.io/data-mesh-101/</link>
-      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn the basics in our Data Mesh 101 guide.</description>
-      <pubDate>Fri, 20 Mar 2026 13:15:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-101/</guid>
     </item>
   </channel>
 </rss>
