@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 09:40:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 10:36:20 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SSR</title>
+      <link>https://kubaik.github.io/unlock-ssr/</link>
+      <description>Boost SEO &amp; speed with Server-Side Rendering. Learn how to unlock SSR and elevate your website&apos;s performance.</description>
+      <pubDate>Sun, 22 Mar 2026 10:36:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-ssr/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment strategy for zero-downtime releases</description>
       <pubDate>Sat, 21 Mar 2026 10:35:42 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-smarter/</guid>
-    </item>
-    <item>
-      <title>Agile Dev: Faster Results</title>
-      <link>https://kubaik.github.io/agile-dev-faster-results/</link>
-      <description>Boost dev speed with Agile methods. Learn how to deliver faster results.</description>
-      <pubDate>Sat, 21 Mar 2026 09:39:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-dev-faster-results/</guid>
     </item>
   </channel>
 </rss>
