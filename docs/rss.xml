@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 06:01:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 07:41:54 +0000</lastBuildDate>
+    <item>
+      <title>Dev Done Right</title>
+      <link>https://kubaik.github.io/dev-done-right/</link>
+      <description>Master project management for devs. Boost productivity &amp; deliver results with expert tips and best practices.</description>
+      <pubDate>Sun, 22 Mar 2026 07:41:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-done-right/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn rate limiting &amp; throttling techniques to control traffic &amp; prevent overload.</description>
       <pubDate>Sat, 21 Mar 2026 07:38:34 +0000</pubDate>
       <guid>https://kubaik.github.io/limit-the-flow/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Unlock secure authentication with OAuth 2.0 &amp; OpenID Connect. Learn the basics &amp; benefits.</description>
-      <pubDate>Sat, 21 Mar 2026 06:56:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
