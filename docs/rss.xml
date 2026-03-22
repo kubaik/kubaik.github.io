@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 13:07:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 14:35:51 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Boost</title>
+      <link>https://kubaik.github.io/cloud-boost/</link>
+      <description>Unlock scalable growth with AWS Cloud Architecture solutions in our Cloud Boost guide.</description>
+      <pubDate>Sun, 22 Mar 2026 14:35:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-boost/</guid>
+    </item>
     <item>
       <title>Digital Twin</title>
       <link>https://kubaik.github.io/digital-twin/</link>
@@ -138,13 +145,6 @@
       <description>Boost efficiency with smart backend testing strategies. Learn how to test smarter, not harder.</description>
       <pubDate>Sat, 21 Mar 2026 14:34:20 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>TDD: Code Smarter</title>
-      <link>https://kubaik.github.io/tdd-code-smarter/</link>
-      <description>Boost coding efficiency with TDD. Learn how Test-Driven Development improves code quality.</description>
-      <pubDate>Sat, 21 Mar 2026 13:04:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/tdd-code-smarter/</guid>
     </item>
   </channel>
 </rss>
