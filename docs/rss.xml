@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 17:32:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 18:48:58 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
+      <pubDate>Sun, 22 Mar 2026 18:48:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Crack Tech Interviews</title>
       <link>https://kubaik.github.io/crack-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s potential with Deep Learning Neural Networks. Discover the power of DL.</description>
       <pubDate>Sat, 21 Mar 2026 18:47:22 +0000</pubDate>
       <guid>https://kubaik.github.io/deep-learning/</guid>
-    </item>
-    <item>
-      <title>CryptoBoom</title>
-      <link>https://kubaik.github.io/cryptoboom/</link>
-      <description>Discover the future of finance with CryptoBoom. Learn about cryptocurrency and blockchain technology.</description>
-      <pubDate>Sat, 21 Mar 2026 17:32:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/cryptoboom/</guid>
     </item>
   </channel>
 </rss>
