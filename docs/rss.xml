@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Mar 2026 23:33:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 02:51:47 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Memory</title>
+      <link>https://kubaik.github.io/optimize-memory/</link>
+      <description>Boost productivity with expert memory management tips and best practices.</description>
+      <pubDate>Sun, 22 Mar 2026 02:51:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-memory/</guid>
+    </item>
     <item>
       <title>ETL vs ELT</title>
       <link>https://kubaik.github.io/etl-vs-elt/</link>
@@ -138,13 +145,6 @@
       <description>Act swiftly in a crisis with a solid incident response plan. Learn how to respond fast and minimize damage.</description>
       <pubDate>Sat, 21 Mar 2026 04:43:07 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-fast/</guid>
-    </item>
-    <item>
-      <title>Async Made Easy</title>
-      <link>https://kubaik.github.io/async-made-easy/</link>
-      <description>Boost app performance with async made easy. Learn message queues &amp; async processing.</description>
-      <pubDate>Sat, 21 Mar 2026 02:35:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-made-easy/</guid>
     </item>
   </channel>
 </rss>
