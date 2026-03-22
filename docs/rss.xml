@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 07:41:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 08:44:07 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Master Behavior-Driven Development with simple examples and expert tips.</description>
+      <pubDate>Sun, 22 Mar 2026 08:43:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Dev Done Right</title>
       <link>https://kubaik.github.io/dev-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Boost app speed with expert profiling and benchmarking tips.</description>
       <pubDate>Sat, 21 Mar 2026 08:42:31 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Limit the Flow</title>
-      <link>https://kubaik.github.io/limit-the-flow/</link>
-      <description>Learn rate limiting &amp; throttling techniques to control traffic &amp; prevent overload.</description>
-      <pubDate>Sat, 21 Mar 2026 07:38:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/limit-the-flow/</guid>
     </item>
   </channel>
 </rss>
