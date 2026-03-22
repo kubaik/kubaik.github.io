@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 04:59:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 06:01:47 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Sun, 22 Mar 2026 06:01:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>React Done Right</title>
       <link>https://kubaik.github.io/react-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock secure authentication with OAuth 2.0 &amp; OpenID Connect. Learn the basics &amp; benefits.</description>
       <pubDate>Sat, 21 Mar 2026 06:56:00 +0000</pubDate>
       <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
-    </item>
-    <item>
-      <title>REST Done Right</title>
-      <link>https://kubaik.github.io/rest-done-right/</link>
-      <description>Learn RESTful API design principles for scalable &amp; maintainable systems</description>
-      <pubDate>Sat, 21 Mar 2026 05:48:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/rest-done-right/</guid>
     </item>
   </channel>
 </rss>
