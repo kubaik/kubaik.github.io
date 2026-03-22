@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 19:33:57 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 20:37:10 +0000</lastBuildDate>
+    <item>
+      <title>Doc Right</title>
+      <link>https://kubaik.github.io/doc-right/</link>
+      <description>Learn documentation best practices with Doc Right. Improve clarity, accuracy, and efficiency in your docs.</description>
+      <pubDate>Sun, 22 Mar 2026 20:36:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/doc-right/</guid>
+    </item>
     <item>
       <title>Build with Web Components</title>
       <link>https://kubaik.github.io/build-with-web-components/</link>
@@ -138,13 +145,6 @@
       <description>Streamline dev workflows with expert CI/CD pipeline tips</description>
       <pubDate>Sat, 21 Mar 2026 20:36:00 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-done-right/</guid>
-    </item>
-    <item>
-      <title>NFT Tech: Beyond Art</title>
-      <link>https://kubaik.github.io/nft-tech-beyond-art/</link>
-      <description>Explore NFT tech beyond art: discover innovative use cases &amp; applications.</description>
-      <pubDate>Sat, 21 Mar 2026 19:31:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-beyond-art/</guid>
     </item>
   </channel>
 </rss>
