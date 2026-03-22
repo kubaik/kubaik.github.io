@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Mar 2026 08:44:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2026 09:40:43 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; boost app performance with our comprehensive guide.</description>
+      <pubDate>Sun, 22 Mar 2026 09:40:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>BDD Simplified</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Boost dev speed with Agile methods. Learn how to deliver faster results.</description>
       <pubDate>Sat, 21 Mar 2026 09:39:41 +0000</pubDate>
       <guid>https://kubaik.github.io/agile-dev-faster-results/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Boost app speed with expert profiling and benchmarking tips.</description>
-      <pubDate>Sat, 21 Mar 2026 08:42:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
