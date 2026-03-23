@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 07:22:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 09:07:04 +0000</lastBuildDate>
+    <item>
+      <title>Rails Web Apps</title>
+      <link>https://kubaik.github.io/rails-web-apps/</link>
+      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
+      <pubDate>Mon, 23 Mar 2026 09:06:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/rails-web-apps/</guid>
+    </item>
     <item>
       <title>Flutter App Dev</title>
       <link>https://kubaik.github.io/flutter-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
       <pubDate>Sun, 22 Mar 2026 06:01:37 +0000</pubDate>
       <guid>https://kubaik.github.io/php-evolved/</guid>
-    </item>
-    <item>
-      <title>React Done Right</title>
-      <link>https://kubaik.github.io/react-done-right/</link>
-      <description>Master React with proven best practices and patterns for efficient development.</description>
-      <pubDate>Sun, 22 Mar 2026 04:58:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-done-right/</guid>
     </item>
   </channel>
 </rss>
