@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 17:01:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 19:04:53 +0000</lastBuildDate>
+    <item>
+      <title>Crack Sys Design</title>
+      <link>https://kubaik.github.io/crack-sys-design/</link>
+      <description>Master system design interviews with expert tips and tricks.</description>
+      <pubDate>Mon, 23 Mar 2026 19:04:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/crack-sys-design/</guid>
+    </item>
     <item>
       <title>AI Agents</title>
       <link>https://kubaik.github.io/ai-agents/</link>
@@ -138,13 +145,6 @@
       <description>Discover Digital Twin tech: virtual replicas for optimized performance &amp; innovation</description>
       <pubDate>Sun, 22 Mar 2026 13:06:49 +0000</pubDate>
       <guid>https://kubaik.github.io/digital-twin/</guid>
-    </item>
-    <item>
-      <title>Core C# Mastery</title>
-      <link>https://kubaik.github.io/core-c-mastery/</link>
-      <description>Master C# .NET Core development with expert tips and tutorials.</description>
-      <pubDate>Sun, 22 Mar 2026 11:30:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-c-mastery/</guid>
     </item>
   </channel>
 </rss>
