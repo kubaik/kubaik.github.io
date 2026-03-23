@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 21:45:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 22:40:37 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and tricks for advanced version control.</description>
+      <pubDate>Mon, 23 Mar 2026 22:40:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Boost CLI Productivity</title>
       <link>https://kubaik.github.io/boost-cli-productivity/</link>
@@ -138,13 +145,6 @@
       <description>Improve insights with clean data. Learn why data quality matters &amp; how to achieve it.</description>
       <pubDate>Sun, 22 Mar 2026 16:39:32 +0000</pubDate>
       <guid>https://kubaik.github.io/clean-data-matters/</guid>
-    </item>
-    <item>
-      <title>Vector DBs</title>
-      <link>https://kubaik.github.io/vector-dbs/</link>
-      <description>Unlock Vector DBs &amp; embeddings for AI-powered search &amp; more.</description>
-      <pubDate>Sun, 22 Mar 2026 15:33:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs/</guid>
     </item>
   </channel>
 </rss>
