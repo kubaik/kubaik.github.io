@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 09:07:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 11:00:05 +0000</lastBuildDate>
+    <item>
+      <title>RPA Revolved</title>
+      <link>https://kubaik.github.io/rpa-revolved/</link>
+      <description>Unlock efficiency with RPA. Discover automation secrets</description>
+      <pubDate>Mon, 23 Mar 2026 10:59:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/rpa-revolved/</guid>
+    </item>
     <item>
       <title>Rails Web Apps</title>
       <link>https://kubaik.github.io/rails-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Master project management for devs. Boost productivity &amp; deliver results with expert tips and best practices.</description>
       <pubDate>Sun, 22 Mar 2026 07:41:43 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-done-right/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Sun, 22 Mar 2026 06:01:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
