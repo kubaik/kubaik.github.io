@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 22:40:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 23:40:33 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin for Backend</title>
+      <link>https://kubaik.github.io/kotlin-for-backend/</link>
+      <description>Learn Kotlin for backend development &amp; boost your skills.</description>
+      <pubDate>Mon, 23 Mar 2026 23:40:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>Ace tech interviews with our expert guide. Learn tips, tricks, and strategies.</description>
       <pubDate>Sun, 22 Mar 2026 17:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Improve insights with clean data. Learn why data quality matters &amp; how to achieve it.</description>
-      <pubDate>Sun, 22 Mar 2026 16:39:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
