@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 15:04:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 17:01:38 +0000</lastBuildDate>
+    <item>
+      <title>AI Agents</title>
+      <link>https://kubaik.github.io/ai-agents/</link>
+      <description>Unlock AI potential with expert agent development insights.</description>
+      <pubDate>Mon, 23 Mar 2026 17:01:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Master C# .NET Core development with expert tips and tutorials.</description>
       <pubDate>Sun, 22 Mar 2026 11:30:59 +0000</pubDate>
       <guid>https://kubaik.github.io/core-c-mastery/</guid>
-    </item>
-    <item>
-      <title>Unlock SSR</title>
-      <link>https://kubaik.github.io/unlock-ssr/</link>
-      <description>Boost SEO &amp; speed with Server-Side Rendering. Learn how to unlock SSR and elevate your website&apos;s performance.</description>
-      <pubDate>Sun, 22 Mar 2026 10:36:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-ssr/</guid>
     </item>
   </channel>
 </rss>
