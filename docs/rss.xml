@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 20:45:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 21:45:19 +0000</lastBuildDate>
+    <item>
+      <title>Boost CLI Productivity</title>
+      <link>https://kubaik.github.io/boost-cli-productivity/</link>
+      <description>Boost CLI productivity with expert tips and tricks.</description>
+      <pubDate>Mon, 23 Mar 2026 21:45:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
+    </item>
     <item>
       <title>Code Less, Create More</title>
       <link>https://kubaik.github.io/code-less-create-more/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Vector DBs &amp; embeddings for AI-powered search &amp; more.</description>
       <pubDate>Sun, 22 Mar 2026 15:33:58 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>Cloud Boost</title>
-      <link>https://kubaik.github.io/cloud-boost/</link>
-      <description>Unlock scalable growth with AWS Cloud Architecture solutions in our Cloud Boost guide.</description>
-      <pubDate>Sun, 22 Mar 2026 14:35:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-boost/</guid>
     </item>
   </channel>
 </rss>
