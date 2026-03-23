@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 11:52:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2026 13:24:23 +0000</lastBuildDate>
+    <item>
+      <title>Secure Code: SAST/DAST</title>
+      <link>https://kubaik.github.io/secure-code-sastdast/</link>
+      <description>Boost app security with SAST &amp; DAST testing. Learn how to protect your code.</description>
+      <pubDate>Mon, 23 Mar 2026 13:24:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
+    </item>
     <item>
       <title>Code Your Brand</title>
       <link>https://kubaik.github.io/code-your-brand/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; boost app performance with our comprehensive guide.</description>
       <pubDate>Sun, 22 Mar 2026 09:40:32 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>BDD Simplified</title>
-      <link>https://kubaik.github.io/bdd-simplified/</link>
-      <description>Master Behavior-Driven Development with simple examples and expert tips.</description>
-      <pubDate>Sun, 22 Mar 2026 08:43:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-simplified/</guid>
     </item>
   </channel>
 </rss>
