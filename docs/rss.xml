@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 10:58:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 11:52:10 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
+      <pubDate>Tue, 24 Mar 2026 11:51:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>VR Beyond Gaming</title>
       <link>https://kubaik.github.io/vr-beyond-gaming/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Quantum Computing basics &amp; discover the future of tech in our introductory guide.</description>
       <pubDate>Mon, 23 Mar 2026 05:10:04 +0000</pubDate>
       <guid>https://kubaik.github.io/quantum-101/</guid>
-    </item>
-    <item>
-      <title>Func Prog 101</title>
-      <link>https://kubaik.github.io/func-prog-101/</link>
-      <description>Learn the basics of functional programming concepts and principles in this introductory guide.</description>
-      <pubDate>Mon, 23 Mar 2026 02:51:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/func-prog-101/</guid>
     </item>
   </channel>
 </rss>
