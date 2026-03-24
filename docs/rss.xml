@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 09:04:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 10:58:34 +0000</lastBuildDate>
+    <item>
+      <title>VR Beyond Gaming</title>
+      <link>https://kubaik.github.io/vr-beyond-gaming/</link>
+      <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; lives.</description>
+      <pubDate>Tue, 24 Mar 2026 10:58:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn the basics of functional programming concepts and principles in this introductory guide.</description>
       <pubDate>Mon, 23 Mar 2026 02:51:48 +0000</pubDate>
       <guid>https://kubaik.github.io/func-prog-101/</guid>
-    </item>
-    <item>
-      <title>Engineer Time Hacks</title>
-      <link>https://kubaik.github.io/engineer-time-hacks/</link>
-      <description>Boost productivity with time-saving tips tailored for engineers.</description>
-      <pubDate>Sun, 22 Mar 2026 23:35:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-time-hacks/</guid>
     </item>
   </channel>
 </rss>
