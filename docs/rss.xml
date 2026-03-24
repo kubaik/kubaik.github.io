@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Mar 2026 23:40:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 02:43:24 +0000</lastBuildDate>
+    <item>
+      <title>Always On</title>
+      <link>https://kubaik.github.io/always-on/</link>
+      <description>Ensure zero downtime with high availability systems. Learn more.</description>
+      <pubDate>Tue, 24 Mar 2026 02:43:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on/</guid>
+    </item>
     <item>
       <title>Kotlin for Backend</title>
       <link>https://kubaik.github.io/kotlin-for-backend/</link>
@@ -138,13 +145,6 @@
       <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
       <pubDate>Sun, 22 Mar 2026 18:48:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>Crack Tech Interviews</title>
-      <link>https://kubaik.github.io/crack-tech-interviews/</link>
-      <description>Ace tech interviews with our expert guide. Learn tips, tricks, and strategies.</description>
-      <pubDate>Sun, 22 Mar 2026 17:32:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
     </item>
   </channel>
 </rss>
