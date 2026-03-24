@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 15:07:51 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 17:08:23 +0000</lastBuildDate>
+    <item>
+      <title>Code Together</title>
+      <link>https://kubaik.github.io/code-together/</link>
+      <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
+      <pubDate>Tue, 24 Mar 2026 17:08:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-together/</guid>
+    </item>
     <item>
       <title>Micro vs Mono</title>
       <link>https://kubaik.github.io/micro-vs-mono/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with RPA. Discover automation secrets</description>
       <pubDate>Mon, 23 Mar 2026 10:59:53 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-revolved/</guid>
-    </item>
-    <item>
-      <title>Rails Web Apps</title>
-      <link>https://kubaik.github.io/rails-web-apps/</link>
-      <description>Build scalable web apps with Ruby on Rails. Learn expert tips and best practices.</description>
-      <pubDate>Mon, 23 Mar 2026 09:06:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/rails-web-apps/</guid>
     </item>
   </channel>
 </rss>
