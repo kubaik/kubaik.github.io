@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 02:43:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 05:00:34 +0000</lastBuildDate>
+    <item>
+      <title>EDA: Scale Fast</title>
+      <link>https://kubaik.github.io/eda-scale-fast/</link>
+      <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to scale fast.</description>
+      <pubDate>Tue, 24 Mar 2026 05:00:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-scale-fast/</guid>
+    </item>
     <item>
       <title>Always On</title>
       <link>https://kubaik.github.io/always-on/</link>
@@ -138,13 +145,6 @@
       <description>Learn to build reusable UI with Web Components &amp; Custom Elements.</description>
       <pubDate>Sun, 22 Mar 2026 19:33:48 +0000</pubDate>
       <guid>https://kubaik.github.io/build-with-web-components/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection. Learn how machine learning identifies outliers.</description>
-      <pubDate>Sun, 22 Mar 2026 18:48:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
     </item>
   </channel>
 </rss>
