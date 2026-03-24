@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 21:45:56 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2026 22:40:00 +0000</lastBuildDate>
+    <item>
+      <title>Revive Old Code</title>
+      <link>https://kubaik.github.io/revive-old-code/</link>
+      <description>Breathe new life into outdated code. Learn how to refactor legacy code for better performance.</description>
+      <pubDate>Tue, 24 Mar 2026 22:39:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/revive-old-code/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with database replication &amp; sharding strategies.</description>
       <pubDate>Mon, 23 Mar 2026 15:03:48 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-smart/</guid>
-    </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Boost app security with SAST &amp; DAST testing. Learn how to protect your code.</description>
-      <pubDate>Mon, 23 Mar 2026 13:24:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
     </item>
   </channel>
 </rss>
