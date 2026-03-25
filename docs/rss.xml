@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 06:11:47 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 07:58:25 +0000</lastBuildDate>
+    <item>
+      <title>Real-Time Web</title>
+      <link>https://kubaik.github.io/real-time-web/</link>
+      <description>Discover the power of real-time web apps and transform user experience.</description>
+      <pubDate>Wed, 25 Mar 2026 07:58:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/real-time-web/</guid>
+    </item>
     <item>
       <title>MBaaS: Simplify App Dev</title>
       <link>https://kubaik.github.io/mbaas-simplify-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and tricks for advanced version control.</description>
       <pubDate>Mon, 23 Mar 2026 22:40:24 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Boost CLI Productivity</title>
-      <link>https://kubaik.github.io/boost-cli-productivity/</link>
-      <description>Boost CLI productivity with expert tips and tricks.</description>
-      <pubDate>Mon, 23 Mar 2026 21:45:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
     </item>
   </channel>
 </rss>
