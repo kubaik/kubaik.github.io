@@ -474,16 +474,15 @@
     "topic": "Flutter Mobile Development"
   },
   "mobile_backend_as_a_service_(baas)": {
-    "timestamp": "2026-03-11T19:03:48.942667",
+    "timestamp": "2026-03-25T06:11:36.446682",
     "hashtags": [
       "MobileBaaS",
       "CloudNative",
       "ServerlessTech",
       "BackendDevelopment",
       "MobileAppDev",
-      "LowCode",
-      "DevOpsTools",
-      "CloudComputing"
+      "CloudComputing",
+      "MobileFirst"
     ],
     "topic": "Mobile Backend as a Service (BaaS)"
   },

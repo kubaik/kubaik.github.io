@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 05:01:11 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 06:11:47 +0000</lastBuildDate>
+    <item>
+      <title>MBaaS: Simplify App Dev</title>
+      <link>https://kubaik.github.io/mbaas-simplify-app-dev/</link>
+      <description>Simplify app development with MBaaS, streamlining backend tasks for a seamless mobile experience.</description>
+      <pubDate>Wed, 25 Mar 2026 06:11:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/mbaas-simplify-app-dev/</guid>
+    </item>
     <item>
       <title>Data Mesh: Scale Insights</title>
       <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
@@ -138,13 +145,6 @@
       <description>Boost CLI productivity with expert tips and tricks.</description>
       <pubDate>Mon, 23 Mar 2026 21:45:08 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-cli-productivity/</guid>
-    </item>
-    <item>
-      <title>Code Less, Create More</title>
-      <link>https://kubaik.github.io/code-less-create-more/</link>
-      <description>Unlock efficiency with low-code/no-code platforms. Build faster, create more.</description>
-      <pubDate>Mon, 23 Mar 2026 20:45:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-less-create-more/</guid>
     </item>
   </channel>
 </rss>
