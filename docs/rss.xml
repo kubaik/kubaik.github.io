@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 10:57:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 11:49:42 +0000</lastBuildDate>
+    <item>
+      <title>See It All</title>
+      <link>https://kubaik.github.io/see-it-all/</link>
+      <description>Unlock full visibility into your systems with monitoring and observability insights.</description>
+      <pubDate>Wed, 25 Mar 2026 11:49:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/see-it-all/</guid>
+    </item>
     <item>
       <title>Write to Thrive</title>
       <link>https://kubaik.github.io/write-to-thrive/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable systems with Event-Driven Architecture (EDA). Learn how to scale fast.</description>
       <pubDate>Tue, 24 Mar 2026 05:00:23 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-scale-fast/</guid>
-    </item>
-    <item>
-      <title>Always On</title>
-      <link>https://kubaik.github.io/always-on/</link>
-      <description>Ensure zero downtime with high availability systems. Learn more.</description>
-      <pubDate>Tue, 24 Mar 2026 02:43:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on/</guid>
     </item>
   </channel>
 </rss>
