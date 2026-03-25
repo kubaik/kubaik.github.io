@@ -81,5 +81,6 @@
   "Monitoring and Observability",
   "Data Lake Architecture",
   "Android Development with Kotlin",
-  "Mobile UI/UX Best Practices"
+  "Mobile UI/UX Best Practices",
+  "Canary Deployments"
 ]
