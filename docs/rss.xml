@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 15:08:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 17:12:32 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UI/UX Done Right</title>
+      <link>https://kubaik.github.io/mobile-uiux-done-right/</link>
+      <description>Boost mobile app engagement with expert UI/UX tips and best practices.</description>
+      <pubDate>Wed, 25 Mar 2026 17:12:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-uiux-done-right/</guid>
+    </item>
     <item>
       <title>Kotlin Dev</title>
       <link>https://kubaik.github.io/kotlin-dev/</link>
@@ -138,13 +145,6 @@
       <description>Explore VR&apos;s vast potential beyond gaming, transforming industries &amp; lives.</description>
       <pubDate>Tue, 24 Mar 2026 10:58:23 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-beyond-gaming/</guid>
-    </item>
-    <item>
-      <title>DB Tools</title>
-      <link>https://kubaik.github.io/db-tools/</link>
-      <description>Discover top DB tools for efficient database management and optimization.</description>
-      <pubDate>Tue, 24 Mar 2026 07:58:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/db-tools/</guid>
     </item>
   </channel>
 </rss>
