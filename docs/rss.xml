@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 20:49:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 21:49:21 +0000</lastBuildDate>
+    <item>
+      <title>Tech Salary Secrets</title>
+      <link>https://kubaik.github.io/tech-salary-secrets/</link>
+      <description>Unlock top tech salaries with expert negotiation tips and tricks.</description>
+      <pubDate>Wed, 25 Mar 2026 21:49:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salary-secrets/</guid>
+    </item>
     <item>
       <title>Boost Mobile Speed</title>
       <link>https://kubaik.github.io/boost-mobile-speed/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Explore the pros &amp; cons of microservices &amp; monolithic architecture.</description>
       <pubDate>Tue, 24 Mar 2026 15:07:40 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>Vision Tech</title>
-      <link>https://kubaik.github.io/vision-tech/</link>
-      <description>Discover innovative Computer Vision Applications in our Vision Tech blog post.</description>
-      <pubDate>Tue, 24 Mar 2026 13:27:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/vision-tech/</guid>
     </item>
   </channel>
 </rss>
