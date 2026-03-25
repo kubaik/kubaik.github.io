@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2026 23:39:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 02:48:33 +0000</lastBuildDate>
+    <item>
+      <title>Code Clean</title>
+      <link>https://kubaik.github.io/code-clean/</link>
+      <description>Learn Clean Code Principles for efficient coding, readability &amp; maintainability.</description>
+      <pubDate>Wed, 25 Mar 2026 02:48:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-clean/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and tricks.</description>
       <pubDate>Mon, 23 Mar 2026 19:04:42 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-sys-design/</guid>
-    </item>
-    <item>
-      <title>AI Agents</title>
-      <link>https://kubaik.github.io/ai-agents/</link>
-      <description>Unlock AI potential with expert agent development insights.</description>
-      <pubDate>Mon, 23 Mar 2026 17:01:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents/</guid>
     </item>
   </channel>
 </rss>
