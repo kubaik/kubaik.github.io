@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 07:58:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 09:03:29 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unlocked</title>
+      <link>https://kubaik.github.io/nlp-unlocked/</link>
+      <description>Unlock NLP techniques to decode human language &amp; revolutionize AI interactions.</description>
+      <pubDate>Wed, 25 Mar 2026 09:03:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
+    </item>
     <item>
       <title>Real-Time Web</title>
       <link>https://kubaik.github.io/real-time-web/</link>
@@ -138,13 +145,6 @@
       <description>Learn Kotlin for backend development &amp; boost your skills.</description>
       <pubDate>Mon, 23 Mar 2026 23:40:22 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
-    </item>
-    <item>
-      <title>Git Pro Tips</title>
-      <link>https://kubaik.github.io/git-pro-tips/</link>
-      <description>Boost Git skills with expert tips and tricks for advanced version control.</description>
-      <pubDate>Mon, 23 Mar 2026 22:40:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/git-pro-tips/</guid>
     </item>
   </channel>
 </rss>
