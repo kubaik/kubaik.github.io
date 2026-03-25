@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 02:48:33 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 05:01:11 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh: Scale Insights</title>
+      <link>https://kubaik.github.io/data-mesh-scale-insights/</link>
+      <description>Unlock scalable insights with Data Mesh Architecture. Learn how to boost data-driven decisions.</description>
+      <pubDate>Wed, 25 Mar 2026 05:01:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
+    </item>
     <item>
       <title>Code Clean</title>
       <link>https://kubaik.github.io/code-clean/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with low-code/no-code platforms. Build faster, create more.</description>
       <pubDate>Mon, 23 Mar 2026 20:45:03 +0000</pubDate>
       <guid>https://kubaik.github.io/code-less-create-more/</guid>
-    </item>
-    <item>
-      <title>Crack Sys Design</title>
-      <link>https://kubaik.github.io/crack-sys-design/</link>
-      <description>Master system design interviews with expert tips and tricks.</description>
-      <pubDate>Mon, 23 Mar 2026 19:04:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-sys-design/</guid>
     </item>
   </channel>
 </rss>
