@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 19:05:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 20:49:49 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
+      <pubDate>Wed, 25 Mar 2026 20:49:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Discover innovative Computer Vision Applications in our Vision Tech blog post.</description>
       <pubDate>Tue, 24 Mar 2026 13:27:55 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>RL Wins</title>
-      <link>https://kubaik.github.io/rl-wins/</link>
-      <description>Boost performance with RL wins. Discover top reinforcement learning strategies.</description>
-      <pubDate>Tue, 24 Mar 2026 11:51:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/rl-wins/</guid>
     </item>
   </channel>
 </rss>
