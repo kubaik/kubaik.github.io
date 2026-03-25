@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 09:03:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 10:57:02 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Boost your career with effective technical writing skills. Learn to communicate clearly and achieve success.</description>
+      <pubDate>Wed, 25 Mar 2026 10:56:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>NLP Unlocked</title>
       <link>https://kubaik.github.io/nlp-unlocked/</link>
@@ -138,13 +145,6 @@
       <description>Ensure zero downtime with high availability systems. Learn more.</description>
       <pubDate>Tue, 24 Mar 2026 02:43:12 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Kotlin for Backend</title>
-      <link>https://kubaik.github.io/kotlin-for-backend/</link>
-      <description>Learn Kotlin for backend development &amp; boost your skills.</description>
-      <pubDate>Mon, 23 Mar 2026 23:40:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-for-backend/</guid>
     </item>
   </channel>
 </rss>
