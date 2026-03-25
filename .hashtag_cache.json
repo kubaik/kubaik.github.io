@@ -539,15 +539,15 @@
     "topic": "JWT Authentication Implementation"
   },
   "monitoring_and_observability": {
-    "timestamp": "2026-03-12T05:57:41.964209",
+    "timestamp": "2026-03-25T11:49:31.161280",
     "hashtags": [
-      "CloudMonitoring",
-      "DevOpsTools",
       "ObservabilityMatters",
-      "TechInsights",
-      "AIforIT",
-      "DigitalTransformation",
-      "ServerlessArchitecture"
+      "CloudNativeMonitoring",
+      "DevOpsTools",
+      "TechObservability",
+      "MonitoringAsCode",
+      "ServerlessInsights",
+      "AIforOps"
     ],
     "topic": "Monitoring and Observability"
   },
