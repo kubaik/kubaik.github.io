@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2026 23:42:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 02:55:17 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution &amp; its impact on our future.</description>
+      <pubDate>Thu, 26 Mar 2026 02:55:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>CQRS Unleashed</title>
       <link>https://kubaik.github.io/cqrs-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Optimize frontend performance with expert tuning tips.</description>
       <pubDate>Tue, 24 Mar 2026 19:14:21 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Code Together</title>
-      <link>https://kubaik.github.io/code-together/</link>
-      <description>Boost coding skills with pair programming techniques &amp; best practices.</description>
-      <pubDate>Tue, 24 Mar 2026 17:08:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-together/</guid>
     </item>
   </channel>
 </rss>
