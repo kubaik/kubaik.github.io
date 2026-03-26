@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 02:55:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 05:13:26 +0000</lastBuildDate>
+    <item>
+      <title>SRE: Fail Less</title>
+      <link>https://kubaik.github.io/sre-fail-less/</link>
+      <description>Learn Site Reliability Engineering (SRE) best practices to minimize failures and maximize system uptime.</description>
+      <pubDate>Thu, 26 Mar 2026 05:13:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-fail-less/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of internet with Web3 and DApps, enabling decentralized innovation.</description>
       <pubDate>Tue, 24 Mar 2026 20:51:33 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-the-dapp-era/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize frontend performance with expert tuning tips.</description>
-      <pubDate>Tue, 24 Mar 2026 19:14:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
