@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 19:18:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 20:42:53 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for seamless workflow implementation.</description>
+      <pubDate>Thu, 26 Mar 2026 20:42:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>SSG Simplified</title>
       <link>https://kubaik.github.io/ssg-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Boost your career with effective technical writing skills. Learn to communicate clearly and achieve success.</description>
       <pubDate>Wed, 25 Mar 2026 10:56:51 +0000</pubDate>
       <guid>https://kubaik.github.io/write-to-thrive/</guid>
-    </item>
-    <item>
-      <title>NLP Unlocked</title>
-      <link>https://kubaik.github.io/nlp-unlocked/</link>
-      <description>Unlock NLP techniques to decode human language &amp; revolutionize AI interactions.</description>
-      <pubDate>Wed, 25 Mar 2026 09:03:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-unlocked/</guid>
     </item>
   </channel>
 </rss>
