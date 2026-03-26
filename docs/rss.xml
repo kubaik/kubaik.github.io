@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 11:00:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 11:57:39 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full Stack</title>
+      <link>https://kubaik.github.io/nextjs-full-stack/</link>
+      <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
+      <pubDate>Thu, 26 Mar 2026 11:57:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn Clean Code Principles for efficient coding, readability &amp; maintainability.</description>
       <pubDate>Wed, 25 Mar 2026 02:48:21 +0000</pubDate>
       <guid>https://kubaik.github.io/code-clean/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Safeguard data with encryption &amp; key management. Learn how to lock it down.</description>
-      <pubDate>Tue, 24 Mar 2026 23:39:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
