@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 05:13:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 07:20:17 +0000</lastBuildDate>
+    <item>
+      <title>IoT Blueprint</title>
+      <link>https://kubaik.github.io/iot-blueprint/</link>
+      <description>Unlock IoT potential with our expert blueprint, guiding you through optimal architecture and implementation.</description>
+      <pubDate>Thu, 26 Mar 2026 07:20:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-blueprint/</guid>
+    </item>
     <item>
       <title>SRE: Fail Less</title>
       <link>https://kubaik.github.io/sre-fail-less/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern web dev with cutting-edge frameworks</description>
       <pubDate>Tue, 24 Mar 2026 21:45:45 +0000</pubDate>
       <guid>https://kubaik.github.io/web-dev-evolved/</guid>
-    </item>
-    <item>
-      <title>Web3: The DApp Era</title>
-      <link>https://kubaik.github.io/web3-the-dapp-era/</link>
-      <description>Discover the future of internet with Web3 and DApps, enabling decentralized innovation.</description>
-      <pubDate>Tue, 24 Mar 2026 20:51:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-the-dapp-era/</guid>
     </item>
   </channel>
 </rss>
