@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 11:57:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 13:50:33 +0000</lastBuildDate>
+    <item>
+      <title>Boost AI: Transfer Learn</title>
+      <link>https://kubaik.github.io/boost-ai-transfer-learn/</link>
+      <description>Unlock AI potential with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
+      <pubDate>Thu, 26 Mar 2026 13:50:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-ai-transfer-learn/</guid>
+    </item>
     <item>
       <title>Next.js: Full Stack</title>
       <link>https://kubaik.github.io/nextjs-full-stack/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable insights with Data Mesh Architecture. Learn how to boost data-driven decisions.</description>
       <pubDate>Wed, 25 Mar 2026 05:01:00 +0000</pubDate>
       <guid>https://kubaik.github.io/data-mesh-scale-insights/</guid>
-    </item>
-    <item>
-      <title>Code Clean</title>
-      <link>https://kubaik.github.io/code-clean/</link>
-      <description>Learn Clean Code Principles for efficient coding, readability &amp; maintainability.</description>
-      <pubDate>Wed, 25 Mar 2026 02:48:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-clean/</guid>
     </item>
   </channel>
 </rss>
