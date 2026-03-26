@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 09:06:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 11:00:52 +0000</lastBuildDate>
+    <item>
+      <title>WCAG Simplified</title>
+      <link>https://kubaik.github.io/wcag-simplified/</link>
+      <description>Simplify web accessibility with our WCAG guide, making online content inclusive for all users.</description>
+      <pubDate>Thu, 26 Mar 2026 11:00:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-simplified/</guid>
+    </item>
     <item>
       <title>SIEM Essentials</title>
       <link>https://kubaik.github.io/siem-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Safeguard data with encryption &amp; key management. Learn how to lock it down.</description>
       <pubDate>Tue, 24 Mar 2026 23:39:21 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-it-down/</guid>
-    </item>
-    <item>
-      <title>Revive Old Code</title>
-      <link>https://kubaik.github.io/revive-old-code/</link>
-      <description>Breathe new life into outdated code. Learn how to refactor legacy code for better performance.</description>
-      <pubDate>Tue, 24 Mar 2026 22:39:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/revive-old-code/</guid>
     </item>
   </channel>
 </rss>
