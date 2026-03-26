@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Mar 2026 17:12:27 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Mar 2026 19:18:35 +0000</lastBuildDate>
+    <item>
+      <title>SSG Simplified</title>
+      <link>https://kubaik.github.io/ssg-simplified/</link>
+      <description>Learn the basics of Static Site Generation (SSG) and improve website performance.</description>
+      <pubDate>Thu, 26 Mar 2026 19:18:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ssg-simplified/</guid>
+    </item>
     <item>
       <title>Vuln Free</title>
       <link>https://kubaik.github.io/vuln-free/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP techniques to decode human language &amp; revolutionize AI interactions.</description>
       <pubDate>Wed, 25 Mar 2026 09:03:18 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-unlocked/</guid>
-    </item>
-    <item>
-      <title>Real-Time Web</title>
-      <link>https://kubaik.github.io/real-time-web/</link>
-      <description>Discover the power of real-time web apps and transform user experience.</description>
-      <pubDate>Wed, 25 Mar 2026 07:58:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/real-time-web/</guid>
     </item>
   </channel>
 </rss>
