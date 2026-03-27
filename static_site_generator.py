@@ -323,9 +323,7 @@ class StaticSiteGenerator:
                         {% endfor %}
                     </div>
                     {% endif %}
-                    <div class="post-meta">
-                      <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
-                    </div>
+                   
                 </header>
                 <div class="post-content">
                     {{ post.content_html | safe }}
