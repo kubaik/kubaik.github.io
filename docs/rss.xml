@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 14:08:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 14:58:49 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn about Zero Trust Security Architecture &amp; protect your network with a &apos;never trust, always verify&apos; approach.</description>
+      <pubDate>Fri, 27 Mar 2026 14:58:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>DDoS Defense</title>
       <link>https://kubaik.github.io/ddos-defense/</link>
@@ -138,13 +145,6 @@
       <description>Unlock full-stack potential with Next.js. Learn how to build scalable apps with ease.</description>
       <pubDate>Thu, 26 Mar 2026 11:57:28 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack/</guid>
-    </item>
-    <item>
-      <title>WCAG Simplified</title>
-      <link>https://kubaik.github.io/wcag-simplified/</link>
-      <description>Simplify web accessibility with our WCAG guide, making online content inclusive for all users.</description>
-      <pubDate>Thu, 26 Mar 2026 11:00:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-simplified/</guid>
     </item>
   </channel>
 </rss>
