@@ -581,7 +581,7 @@ class StaticSiteGenerator:
                         loadMoreButton.style.display = 'block';
                         const remainingPosts = allPosts.length - (currentPage * postsPerPage);
                         const buttonText = loadMoreButton.querySelector('.button-text');
-                        buttonText.textContent = 'Load More Posts (' + remainingPosts + ' remaining)';
+                        buttonText.textContent = 'Load More Posts ';
                     } else {
                         loadMoreButton.style.display = 'none';
                     }

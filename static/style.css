@@ -343,9 +343,8 @@ nav a:last-child::after {
 
 .post-meta {
     display: flex;
-    justify-content: center;  /* Center the date */
+    justify-content: space-between;
     align-items: center;
-    margin-top: 1rem;  /* Add space above the date */
     color: #6c757d;
     font-size: 0.9rem;
 }
