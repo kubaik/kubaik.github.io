@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 18:43:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 18:46:07 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Master Native iOS Development with Swift. Learn expert tips and best practices.</description>
+      <pubDate>Fri, 27 Mar 2026 18:45:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>Secure Containers</title>
       <link>https://kubaik.github.io/secure-containers/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with expert Web Performance Optimization tips.</description>
       <pubDate>Fri, 27 Mar 2026 07:19:19 +0000</pubDate>
       <guid>https://kubaik.github.io/speed-up/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Learn about data engineering pipelines &amp; optimize your data flow for efficient insights.</description>
-      <pubDate>Fri, 27 Mar 2026 05:16:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
