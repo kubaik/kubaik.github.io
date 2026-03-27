@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 18:56:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 18:58:36 +0000</lastBuildDate>
+    <item>
+      <title>Patterns in Action</title>
+      <link>https://kubaik.github.io/patterns-in-action/</link>
+      <description>Learn how design patterns boost efficiency &amp; scalability in real-world applications.</description>
+      <pubDate>Fri, 27 Mar 2026 18:58:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/patterns-in-action/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Fri, 27 Mar 2026 09:02:33 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert Web Performance Optimization tips.</description>
-      <pubDate>Fri, 27 Mar 2026 07:19:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
