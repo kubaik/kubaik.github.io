@@ -635,11 +635,13 @@ main {
     text-align: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 8px;
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.25);
 }
+
+
 
 /* Animated gradient shimmer */
 .post-header::before {
