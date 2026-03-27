@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 07:19:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 09:02:44 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Fri, 27 Mar 2026 09:02:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Maximize app visibility with expert ASO tips and strategies.</description>
       <pubDate>Wed, 25 Mar 2026 22:45:37 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-aso/</guid>
-    </item>
-    <item>
-      <title>Boost Mobile Speed</title>
-      <link>https://kubaik.github.io/boost-mobile-speed/</link>
-      <description>Improve mobile speed &amp; performance with expert tips and tricks.</description>
-      <pubDate>Wed, 25 Mar 2026 20:49:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
     </item>
   </channel>
 </rss>
