@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 14:06:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 14:08:14 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Fri, 27 Mar 2026 14:08:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Train Smart</title>
       <link>https://kubaik.github.io/train-smart/</link>
@@ -138,13 +145,6 @@
       <description>Simplify web accessibility with our WCAG guide, making online content inclusive for all users.</description>
       <pubDate>Thu, 26 Mar 2026 11:00:41 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>SIEM Essentials</title>
-      <link>https://kubaik.github.io/siem-essentials/</link>
-      <description>Unlock SIEM essentials for effective security monitoring &amp; threat detection.</description>
-      <pubDate>Thu, 26 Mar 2026 09:06:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-essentials/</guid>
     </item>
   </channel>
 </rss>
