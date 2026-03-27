@@ -16,6 +16,7 @@ article.blog-post > header {
     box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
 }
 
+
 /* Force white color on title */
 header.post-header h1,
 .post-header h1,
