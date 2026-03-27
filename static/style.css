@@ -12,7 +12,7 @@ article.blog-post > header {
     text-align: center !important;
     padding: 4rem 2rem 3rem 2rem !important;
     margin: 0 -2rem 3rem -2rem !important;
-    border-radius: 8px;    
+    border-radius: 8px !important;    
     box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
 }
 
@@ -74,6 +74,7 @@ header.post-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     color: white !important;
     text-align: center !important;
+    border-radius: 8px !important; 
 }
 /* ============================================
    BLOG POST HEADER - CRITICAL STYLES
