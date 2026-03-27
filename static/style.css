@@ -1264,7 +1264,7 @@ main {
     justify-content: center;  /* Center tags */
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 3rem;  /* Space above tags */
+    margin-top: 1rem;  /* Space above tags */
 }
 .tag {
     background: linear-gradient(135deg, #667eea, #764ba2);
