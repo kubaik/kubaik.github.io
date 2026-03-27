@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 18:11:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 18:13:13 +0000</lastBuildDate>
+    <item>
+      <title>Split Smarter</title>
+      <link>https://kubaik.github.io/split-smarter/</link>
+      <description>Boost app performance with smart code splitting strategies.</description>
+      <pubDate>Fri, 27 Mar 2026 18:13:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-smarter/</guid>
+    </item>
     <item>
       <title>Blockchain 101</title>
       <link>https://kubaik.github.io/blockchain-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock data potential with Delta Lake &amp; Data Lakehouse. Learn more</description>
       <pubDate>Fri, 27 Mar 2026 02:57:25 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-unleashed/</guid>
-    </item>
-    <item>
-      <title>Unlock XAI</title>
-      <link>https://kubaik.github.io/unlock-xai/</link>
-      <description>Discover XAI techniques to unlock transparent AI decision-making.</description>
-      <pubDate>Thu, 26 Mar 2026 23:39:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-xai/</guid>
     </item>
   </channel>
 </rss>
