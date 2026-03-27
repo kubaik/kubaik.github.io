@@ -81,12 +81,19 @@ class StaticSiteGenerator:
         """Generate the homepage with post listings"""
         config = self.blog_system.config
         
+        # Format dates for display
+        posts_data = []
+        for p in posts:
+            post_dict = p.to_dict()
+            post_dict['display_date'] = self._format_display_date(p.created_at)
+            posts_data.append(post_dict)
+
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
             'site_description': config.get('site_description', 'An AI-powered blog'),
             'base_path': config.get('base_path', ''),
             'base_url': config.get('base_url', ''),
-            'posts': [p.to_dict() for p in posts],
+            'posts': posts_data,
             'posts_per_page': 10,
             'current_year': datetime.now().year,
             'social_links': config.get('social_accounts', {}),
@@ -103,6 +110,21 @@ class StaticSiteGenerator:
             f.write(html)
         
         print(f"Generated homepage with {len(posts)} posts")
+    
+    def _format_display_date(self, iso_date: str) -> str:
+        """Convert ISO date to display format like '2 Mar 2026'"""
+        try:
+            dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
+            # Try Unix/Linux format first (%-d removes leading zero)
+            return dt.strftime('%-d %b %Y')
+        except:
+            try:
+                # Fallback for Windows (uses %d and strips leading zero)
+                dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
+                return dt.strftime('%d %b %Y').lstrip('0')
+            except:
+                # Final fallback
+                return iso_date.split('T')[0]
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         """Generate individual post pages"""
@@ -117,6 +139,7 @@ class StaticSiteGenerator:
             
             post_dict = post.to_dict()
             post_dict['content_html'] = content_html
+            post_dict['display_date'] = self._format_display_date(post.created_at)
             
             ad_slots = post.monetization_data if post.monetization_data else {}
             
@@ -294,7 +317,7 @@ class StaticSiteGenerator:
                 <header class="post-header">
                     <h1>{{ post.title }}</h1>
                     <div class="post-meta">
-                        <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
+                      <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
                     </div>
                     {% if post.tags %}
                     <div class="tags">
@@ -375,7 +398,7 @@ class StaticSiteGenerator:
                         <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3>
                         <p class="post-excerpt">{{ post.meta_description }}</p>
                         <div class="post-meta">
-                            <time datetime="{{ post.created_at }}">{{ post.created_at.split('T')[0] }}</time>
+                            <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
                             {% if post.tags %}
                             <div class="tags">
                                 {% for tag in post.tags[:3] %}
@@ -587,7 +610,20 @@ class StaticSiteGenerator:
                         loadMoreButton.style.opacity = '1';
                     }
                 }
-                
+
+                function formatDisplayDate(isoDate) {
+                    try {
+                        const date = new Date(isoDate);
+                        const day = date.getDate();
+                        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        const month = monthNames[date.getMonth()];
+                        const year = date.getFullYear();
+                        return `${day} ${month} ${year}`;
+                    } catch (error) {
+                        return isoDate.split('T')[0];
+                    }
+                }
                 function createPostElement(post) {
                     const article = document.createElement('article');
                     article.className = 'post-card';
@@ -607,8 +643,8 @@ class StaticSiteGenerator:
                     
                     const time = document.createElement('time');
                     time.dateTime = post.created_at;
-                    time.textContent = post.created_at.split('T')[0];
-                    
+                    time.textContent = formatDisplayDate(post.created_at);
+   
                     meta.appendChild(time);
                     
                     if (post.tags && post.tags.length > 0) {
