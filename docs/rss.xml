@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 17:34:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 17:36:09 +0000</lastBuildDate>
+    <item>
+      <title>K8s Made Easy</title>
+      <link>https://kubaik.github.io/k8s-made-easy/</link>
+      <description>Simplify Kubernetes orchestration with expert tips and tricks in &apos;K8s Made Easy&apos;</description>
+      <pubDate>Fri, 27 Mar 2026 17:35:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-made-easy/</guid>
+    </item>
     <item>
       <title>Understanding Cloud Security Best Practices: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-cloud-security-best-practices-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>Reduce cloud spend with expert tips and strategies for cloud cost optimization.</description>
       <pubDate>Thu, 26 Mar 2026 21:38:34 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for seamless workflow implementation.</description>
-      <pubDate>Thu, 26 Mar 2026 20:42:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
