@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 09:52:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 09:54:58 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Exploring Generative AI &amp; Large Language Models</description>
+      <pubDate>Fri, 27 Mar 2026 09:54:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Unlock scalable architecture with CQRS &amp; Event Sourcing</description>
       <pubDate>Wed, 25 Mar 2026 23:42:23 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unleashed/</guid>
-    </item>
-    <item>
-      <title>Boost ASO</title>
-      <link>https://kubaik.github.io/boost-aso/</link>
-      <description>Maximize app visibility with expert ASO tips and strategies.</description>
-      <pubDate>Wed, 25 Mar 2026 22:45:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-aso/</guid>
     </item>
   </channel>
 </rss>
