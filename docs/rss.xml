@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 11:48:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 13:22:29 +0000</lastBuildDate>
+    <item>
+      <title>Push Done Right</title>
+      <link>https://kubaik.github.io/push-done-right/</link>
+      <description>Maximize engagement with perfect push notifications. Learn implementation best practices.</description>
+      <pubDate>Fri, 27 Mar 2026 13:22:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/push-done-right/</guid>
+    </item>
     <item>
       <title>Tailwind CSS: Utility-First</title>
       <link>https://kubaik.github.io/tailwind-css-utility-first/</link>
@@ -138,13 +145,6 @@
       <description>Unlock IoT potential with our expert blueprint, guiding you through optimal architecture and implementation.</description>
       <pubDate>Thu, 26 Mar 2026 07:20:05 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>SRE: Fail Less</title>
-      <link>https://kubaik.github.io/sre-fail-less/</link>
-      <description>Learn Site Reliability Engineering (SRE) best practices to minimize failures and maximize system uptime.</description>
-      <pubDate>Thu, 26 Mar 2026 05:13:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-fail-less/</guid>
     </item>
   </channel>
 </rss>
