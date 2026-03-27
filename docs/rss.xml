@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 20:49:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 21:43:29 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark Big Data Processing. Learn how to spark big data analytics</description>
+      <pubDate>Fri, 27 Mar 2026 21:43:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Smart Contract Dev</title>
       <link>https://kubaik.github.io/smart-contract-dev/</link>
@@ -138,13 +145,6 @@
       <description>Boost AI model performance with expert training tips and best practices.</description>
       <pubDate>Fri, 27 Mar 2026 13:30:38 +0000</pubDate>
       <guid>https://kubaik.github.io/train-smart/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Maximize engagement with perfect push notifications. Learn implementation best practices.</description>
-      <pubDate>Fri, 27 Mar 2026 13:22:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
