@@ -343,12 +343,13 @@ nav a:last-child::after {
 
 .post-meta {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;  /* Center the date */
     align-items: center;
-    gap: 1rem;
+    margin-top: 1rem;  /* Add space above the date */
     color: #6c757d;
     font-size: 0.9rem;
 }
+ 
 
 /* Enhanced Load More Section */
 .load-more-container {
@@ -1260,10 +1261,11 @@ main {
 .post-card .tags,
 .post-grid .tags {
     display: flex;
+    justify-content: center;  /* Center tags */
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-top: 1rem;  /* Space above tags */
 }
-
 .tag {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;

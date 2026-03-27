@@ -316,9 +316,6 @@ class StaticSiteGenerator:
             <article class="blog-post">
                 <header class="post-header">
                     <h1>{{ post.title }}</h1>
-                    <div class="post-meta">
-                      <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
-                    </div>
                     {% if post.tags %}
                     <div class="tags">
                         {% for tag in post.tags[:6] %}
@@ -326,6 +323,9 @@ class StaticSiteGenerator:
                         {% endfor %}
                     </div>
                     {% endif %}
+                    <div class="post-meta">
+                      <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
+                    </div>
                 </header>
                 <div class="post-content">
                     {{ post.content_html | safe }}
@@ -397,8 +397,6 @@ class StaticSiteGenerator:
                     <article class="post-card" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
                         <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3>
                         <p class="post-excerpt">{{ post.meta_description }}</p>
-                        <div class="post-meta">
-                            <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
                             {% if post.tags %}
                             <div class="tags">
                                 {% for tag in post.tags[:3] %}
@@ -406,6 +404,8 @@ class StaticSiteGenerator:
                                 {% endfor %}
                             </div>
                             {% endif %}
+                        <div class="post-meta">
+                            <time datetime="{{ post.created_at }}">{{ post.display_date }}</time>
                         </div>
                     </article>
                     {% endfor %}
@@ -637,16 +637,8 @@ class StaticSiteGenerator:
                     const excerpt = document.createElement('p');
                     excerpt.className = 'post-excerpt';
                     excerpt.textContent = post.meta_description;
-                    
-                    const meta = document.createElement('div');
-                    meta.className = 'post-meta';
-                    
-                    const time = document.createElement('time');
-                    time.dateTime = post.created_at;
-                    time.textContent = formatDisplayDate(post.created_at);
-   
-                    meta.appendChild(time);
-                    
+
+                     // Create tags first (if they exist)
                     if (post.tags && post.tags.length > 0) {
                         const tags = document.createElement('div');
                         tags.className = 'tags';
@@ -658,11 +650,23 @@ class StaticSiteGenerator:
                             tags.appendChild(tagSpan);
                         });
                         
-                        meta.appendChild(tags);
+                        article.appendChild(title);
+                        article.appendChild(excerpt);
+                        article.appendChild(tags);
+                    } else {
+                        article.appendChild(title);
+                        article.appendChild(excerpt);
                     }
+
+                   // Create date meta (always centered below tags)
+                    const meta = document.createElement('div');
+                    meta.className = 'post-meta';
                     
-                    article.appendChild(title);
-                    article.appendChild(excerpt);
+                    const time = document.createElement('time');
+                    time.dateTime = post.created_at;
+                    time.textContent = formatDisplayDate(post.created_at);
+                    
+                    meta.appendChild(time);
                     article.appendChild(meta);
                     
                     return article;
