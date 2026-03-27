@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 09:54:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 10:56:26 +0000</lastBuildDate>
+    <item>
+      <title>Boost Web Security: WAF</title>
+      <link>https://kubaik.github.io/boost-web-security-waf/</link>
+      <description>Safeguard your site with WAF. Learn how to boost web security and protect against threats.</description>
+      <pubDate>Fri, 27 Mar 2026 10:56:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-web-security-waf/</guid>
+    </item>
     <item>
       <title>AI Revolution</title>
       <link>https://kubaik.github.io/ai-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Discover the 5G revolution &amp; its impact on our future.</description>
       <pubDate>Thu, 26 Mar 2026 02:55:05 +0000</pubDate>
       <guid>https://kubaik.github.io/5g-revolution/</guid>
-    </item>
-    <item>
-      <title>CQRS Unleashed</title>
-      <link>https://kubaik.github.io/cqrs-unleashed/</link>
-      <description>Unlock scalable architecture with CQRS &amp; Event Sourcing</description>
-      <pubDate>Wed, 25 Mar 2026 23:42:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/cqrs-unleashed/</guid>
     </item>
   </channel>
 </rss>
