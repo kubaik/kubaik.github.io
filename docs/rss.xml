@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 16:37:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2026 16:39:25 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Fri, 27 Mar 2026 16:39:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>Secure Your Biz</title>
       <link>https://kubaik.github.io/secure-your-biz/</link>
@@ -138,13 +145,6 @@
       <description>Unlock accurate predictions with AI-powered time series forecasting.</description>
       <pubDate>Thu, 26 Mar 2026 15:14:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-forecasts/</guid>
-    </item>
-    <item>
-      <title>Boost AI: Transfer Learn</title>
-      <link>https://kubaik.github.io/boost-ai-transfer-learn/</link>
-      <description>Unlock AI potential with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
-      <pubDate>Thu, 26 Mar 2026 13:50:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-ai-transfer-learn/</guid>
     </item>
   </channel>
 </rss>
