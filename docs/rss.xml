@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 07:46:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 07:49:33 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Sat, 28 Mar 2026 07:49:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>GraphQL API</title>
       <link>https://kubaik.github.io/graphql-api/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with data: Learn A/B testing &amp; experimentation strategies to boost conversions.</description>
       <pubDate>Fri, 27 Mar 2026 17:07:01 +0000</pubDate>
       <guid>https://kubaik.github.io/test-smarter/</guid>
-    </item>
-    <item>
-      <title>Serverless Done Right</title>
-      <link>https://kubaik.github.io/serverless-done-right/</link>
-      <description>Optimize with Serverless Architecture Patterns, expert insights for scalable apps.</description>
-      <pubDate>Fri, 27 Mar 2026 17:04:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-done-right/</guid>
     </item>
   </channel>
 </rss>
