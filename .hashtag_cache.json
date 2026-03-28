@@ -1531,14 +1531,14 @@
     "topic": "Open Source Contribution Guide"
   },
   "secrets_management": {
-    "timestamp": "2026-03-14T19:34:01.438531",
+    "timestamp": "2026-03-28T11:34:59.174475",
     "hashtags": [
       "CloudSecurity",
       "DevSecOps",
       "ZeroTrust",
       "CyberProtection",
       "InfoSec",
-      "SecretsManagement",
+      "SecretsAsAService",
       "EncryptionMatters"
     ],
     "topic": "Secrets Management"
