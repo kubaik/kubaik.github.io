@@ -147,5 +147,6 @@
   "Database Indexing Strategies",
   "Progressive Web Apps (PWA)",
   "AI Model Deployment Strategies",
-  "SOLID Design Principles"
+  "SOLID Design Principles",
+  "Caching Strategies (Redis, Memcached)"
 ]
