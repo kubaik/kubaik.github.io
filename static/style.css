@@ -1327,26 +1327,128 @@ footer {
     margin-bottom: 0.5rem;
 }
 
-/* Search Functionality */
+/* ============================================
+   SEARCH FUNCTIONALITY STYLES
+   ============================================ */
+ 
 .search-container {
-    margin-bottom: 2rem;
-    text-align: center;
+    margin: 2rem 0;
+    max-width: 600px;
 }
-
-#search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 1rem;
-    border: 2px solid #e9ecef;
-    border-radius: 50px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
+ 
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-
-#search-input:focus {
+ 
+.search-wrapper:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+ 
+.search-icon {
+    color: #6c757d;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+ 
+.search-input {
+    flex: 1;
+    border: none;
     outline: none;
-    border-color: #667eea;
+    font-size: 1rem;
+    color: #333;
+    background: transparent;
 }
+ 
+.search-input::placeholder {
+    color: #999;
+}
+ 
+.clear-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+}
+ 
+.clear-search:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+ 
+.search-results-count {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+ 
+/* Hide posts that don't match search */
+.post-card.hidden-by-search {
+    display: none !important;
+}
+ 
+/* Highlight matching text */
+.search-highlight {
+    background: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+ 
+/* No results message */
+.no-results-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+ 
+.no-results-message svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+}
+ 
+.no-results-message h3 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+ 
+.no-results-message p {
+    color: #6c757d;
+}
+ 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        max-width: 100%;
+    }
+    
+    .search-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .search-input::placeholder {
+        font-size: 14px;
+    }
+}
+ 
 
 /* Animation Classes */
 .fade-in {
