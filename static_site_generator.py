@@ -356,43 +356,41 @@ class StaticSiteGenerator:
             max-width: 480px;
         }
         .search-wrapper {
-            position: relative;
             display: flex;
             align-items: center;
-        }
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-        }
-        .search-input {
-            width: 100%;
-            padding: 8px 36px 8px 38px;
             border: 2px solid #e0e0e0;
             border-radius: 50px;
-            font-size: 0.95rem;
-            outline: none;
+            padding: 0 10px;
+            background: #fff;
             transition: border-color 0.2s;
-            box-sizing: border-box;
         }
-        .search-input:focus {
+        .search-wrapper:focus-within {
             border-color: #6366f1;
         }
+        .search-icon {
+            color: #9ca3af;
+            pointer-events: none;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            background: transparent;
+            box-sizing: border-box;
+        }
         .clear-search {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
             background: none;
             border: none;
             cursor: pointer;
             color: #9ca3af;
             padding: 2px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
         }
@@ -457,7 +455,7 @@ class StaticSiteGenerator:
                     type="text"
                     id="search-input"
                     class="search-input"
-                    placeholder="Search posts by title, description, or tags..."
+                    placeholder="Search posts ......"
                     autocomplete="off"
                 >
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
