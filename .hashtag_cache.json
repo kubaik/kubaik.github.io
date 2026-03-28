@@ -528,15 +528,15 @@
     "topic": "Time Management for Engineers"
   },
   "jwt_authentication_implementation": {
-    "timestamp": "2026-03-14T17:34:41.355504",
+    "timestamp": "2026-03-28T13:10:28.793248",
     "hashtags": [
       "JsonWebTokens",
       "TechSecurity",
       "AuthImplementation",
-      "CybersecSolutions",
-      "DevOpsTools",
-      "CloudSecurity",
-      "WebAuthN"
+      "DevSecOps",
+      "CloudSecuritySolutions",
+      "CybersecurityTech",
+      "APIAuthentication"
     ],
     "topic": "JWT Authentication Implementation"
   },
