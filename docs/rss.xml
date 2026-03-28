@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 14:36:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 14:38:38 +0000</lastBuildDate>
+    <item>
+      <title>PWA: Future of Apps</title>
+      <link>https://kubaik.github.io/pwa-future-of-apps/</link>
+      <description>Discover the future of apps with PWAs. Learn how Progressive Web Apps are revolutionizing mobile experiences.</description>
+      <pubDate>Sat, 28 Mar 2026 14:38:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwa-future-of-apps/</guid>
+    </item>
     <item>
       <title>Index Smarter</title>
       <link>https://kubaik.github.io/index-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Streamline cloud migration with expert strategies and best practices.</description>
       <pubDate>Fri, 27 Mar 2026 19:24:10 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-smart/</guid>
-    </item>
-    <item>
-      <title>ML Algos 101</title>
-      <link>https://kubaik.github.io/ml-algos-101/</link>
-      <description>Learn Machine Learning basics with ML Algos 101. Discover key concepts &amp; algorithms.</description>
-      <pubDate>Fri, 27 Mar 2026 19:05:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-algos-101/</guid>
     </item>
   </channel>
 </rss>
