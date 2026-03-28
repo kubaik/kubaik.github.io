@@ -80,8 +80,8 @@
     <link rel="alternate" type="application/rss+xml" title="Tech Blog" href="/rss.xml">
     <style>
         .search-container {
-            margin: 2rem auto;
-            max-width: 640px;
+            margin: 1rem 0;
+            max-width: 480px;
         }
         .search-wrapper {
             position: relative;
@@ -90,16 +90,20 @@
         }
         .search-icon {
             position: absolute;
-            left: 14px;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #9ca3af;
             pointer-events: none;
+            display: flex;
+            align-items: center;
         }
         .search-input {
             width: 100%;
-            padding: 12px 44px 12px 44px;
+            padding: 8px 36px 8px 38px;
             border: 2px solid #e0e0e0;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.2s;
             box-sizing: border-box;
@@ -109,21 +113,23 @@
         }
         .clear-search {
             position: absolute;
-            right: 12px;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none;
             border: none;
             cursor: pointer;
             color: #9ca3af;
-            padding: 4px;
+            padding: 2px;
             display: flex;
             align-items: center;
         }
         .clear-search:hover { color: #333; }
         .search-results-count {
-            text-align: center;
-            margin-top: 0.5rem;
+            text-align: left;
+            margin-top: 0.4rem;
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             min-height: 1.2em;
         }
         .search-highlight {
