@@ -12,7 +12,7 @@ article.blog-post > header {
     text-align: center !important;
     padding: 4rem 2rem 3rem 2rem !important;
     margin: 0 -2rem 3rem -2rem !important;
-    border-radius: 8px!important;
+    border-radius: 25px!important;
     box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
 }
 
@@ -60,6 +60,8 @@ article.blog-post > header .post-meta {
     justify-content: center !important;
     color: white !important;
     margin-top: 1.5rem !important;
+    border-radius: 25px!important;
+
 }
 
 header.post-header .post-meta time,
