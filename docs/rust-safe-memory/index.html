@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Rust: Safe Memory - Tech Blog</title>
-        <meta name="description" content="Learn how Rust ensures memory safety with its unique ownership model and borrow checker.">
-        <meta name="keywords" content="memory management in Rust, Rust programming language, developer, Rust language fundamentals, Rust memory management best practices., Rust secure coding, DataScience, ownership in Rust, MachineLearning, coding, JavaScript, AI2024, Rust borrow checker, SysProg, memory safety features">
-            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust: Safe Memory - Tech Blog</title>
+    <meta name="description" content="Learn how Rust ensures memory safety with its unique ownership model and borrow checker.">
+    <meta name="keywords" content="memory management in Rust, Rust programming language, developer, Rust language fundamentals, Rust memory management best practices., Rust secure coding, DataScience, ownership in Rust, MachineLearning, coding, JavaScript, AI2024, Rust borrow checker, SysProg, memory safety features">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
@@ -20,7 +20,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
             crossorigin="anonymous"></script>
 
-        
+    
     <!-- SEO Meta Tags -->
     <meta name="description" content="Learn how Rust ensures memory safety with its unique ownership model and borrow checker.">
     <meta property="og:title" content="Rust: Safe Memory">
@@ -46,7 +46,7 @@
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://kubaik.github.io/rust-safe-memory/">
     <meta name="keywords" content="memory management in Rust, Rust programming language, developer, Rust language fundamentals, Rust memory management best practices., Rust secure coding, DataScience, ownership in Rust, MachineLearning, coding, JavaScript, AI2024, Rust borrow checker, SysProg, memory safety features">
-        <script type="application/ld+json">
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -95,12 +95,11 @@
   ]
 }
 </script>
-        <link rel="stylesheet" href="/static/style.css">
-        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
-    </head>
-    <body>
-        <!-- Header Ad Slot -->
-        <div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+</head>
+<body>
+    <div class="ad-header" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4477679588953789"
@@ -111,46 +110,45 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-        
-        <header>
-            <div class="container">
-                <h1><a href="/">Tech Blog</a></h1>
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/about/">About</a>
-                    <a href="/contact/">Contact</a>
-                    <a href="/privacy-policy/">Privacy Policy</a>
-                    <a href="/terms-of-service/">Terms of Service</a>
-                </nav>
-            </div>
-        </header>
-        <main class="container">
-            <article class="blog-post">
-                <header class="post-header">
-                    <h1>Rust: Safe Memory</h1>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <h1>Rust: Safe Memory</h1>
+                
+                <div class="tags">
                     
-                    <div class="tags">
-                        
-                        <span class="tag">memory management in Rust</span>
-                        
-                        <span class="tag">DataScience</span>
-                        
-                        <span class="tag">RustLang</span>
-                        
-                        <span class="tag">MachineLearning</span>
-                        
-                        <span class="tag">Rust programming language</span>
-                        
-                        <span class="tag">coding</span>
-                        
-                    </div>
+                    <span class="tag">memory management in Rust</span>
                     
-                   <div class="post-meta">
-                      <time datetime="2026-03-12T08:54:22.685823">12 Mar 2026</time>
-                    </div>
-                </header>
-                <div class="post-content">
-                    <h2 id="introduction-to-memory-safety-in-rust">Introduction to Memory Safety in Rust</h2>
+                    <span class="tag">DataScience</span>
+                    
+                    <span class="tag">RustLang</span>
+                    
+                    <span class="tag">MachineLearning</span>
+                    
+                    <span class="tag">Rust programming language</span>
+                    
+                    <span class="tag">coding</span>
+                    
+                </div>
+                
+                <div class="post-meta">
+                    <time datetime="2026-03-12T08:54:22.685823">12 Mar 2026</time>
+                </div>
+            </header>
+            <div class="post-content">
+                <h2 id="introduction-to-memory-safety-in-rust">Introduction to Memory Safety in Rust</h2>
 <p>Rust is a systems programming language that prioritizes memory safety without sacrificing performance. Its ownership model and borrow checker ensure that memory is accessed safely and efficiently. In this article, we'll delve into the details of Rust's memory safety features and explore how they can be applied in real-world applications.</p>
 <h3 id="ownership-model">Ownership Model</h3>
 <p>The ownership model in Rust is based on the concept of ownership and borrowing. Each value in Rust has an owner that is responsible for deallocating the value when it is no longer needed. This approach eliminates the need for a garbage collector, making Rust more efficient than languages like Java or C#.</p>
@@ -251,9 +249,7 @@
 <li><strong>Join the Rust community</strong>: Join online communities like the Rust subreddit or Rust Discord to connect with other developers and learn from their experiences.</li>
 </ol>
 <p>By following these steps and using Rust's memory safety features, you can build secure and reliable applications that are free from memory safety issues.</p>
-                    
-                    <!-- Middle Ad Slot -->
-                    <div class="ad-middle" style="text-align: center; margin: 20px 0;">
+                <div class="ad-middle" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:300px;height:250px"
          data-ad-client="ca-pub-4477679588953789"
@@ -264,15 +260,11 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-                </div>
-                
-                <!-- Affiliate Disclaimer -->
-                
-            </article>
-        </main>
-        
-        <!-- Footer Ad Slot -->
-        <div class="ad-footer" style="text-align: center; margin: 20px 0;">
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer" style="text-align: center; margin: 20px 0;">
     <ins class="adsbygoogle"
          style="display:inline-block;width:468px;height:60px"
          data-ad-client="ca-pub-4477679588953789"
@@ -283,13 +275,11 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-        
-        <footer>
-            <div class="container">
-                <p>&copy; 2026 Tech Blog.</p>
-            </div>
-        </footer>
-        <!-- Enhanced Navigation Script -->
-        <script src="/static/navigation.js"></script>
-    </body>
-    </html>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+</body>
+</html>
