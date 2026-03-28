@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 14:38:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 14:41:04 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Streamline AI model deployment with expert strategies and best practices.</description>
+      <pubDate>Sat, 28 Mar 2026 14:40:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP: Master Google Cloud Platform &amp; boost productivity</description>
       <pubDate>Fri, 27 Mar 2026 19:32:05 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp/</guid>
-    </item>
-    <item>
-      <title>Migrate Smart</title>
-      <link>https://kubaik.github.io/migrate-smart/</link>
-      <description>Streamline cloud migration with expert strategies and best practices.</description>
-      <pubDate>Fri, 27 Mar 2026 19:24:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-smart/</guid>
     </item>
   </channel>
 </rss>
