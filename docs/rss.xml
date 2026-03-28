@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 07:51:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 08:51:48 +0000</lastBuildDate>
+    <item>
+      <title>Auto Dev Flow</title>
+      <link>https://kubaik.github.io/auto-dev-flow/</link>
+      <description>Simplify dev workflow with automation. Boost productivity &amp; efficiency.</description>
+      <pubDate>Sat, 28 Mar 2026 08:51:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/auto-dev-flow/</guid>
+    </item>
     <item>
       <title>Build &amp; Thrive</title>
       <link>https://kubaik.github.io/build-thrive/</link>
@@ -138,13 +145,6 @@
       <description>Simplify Kubernetes orchestration with expert tips and tricks in &apos;K8s Made Easy&apos;</description>
       <pubDate>Fri, 27 Mar 2026 17:35:58 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-made-easy/</guid>
-    </item>
-    <item>
-      <title>Understanding Cloud Security Best Practices: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-cloud-security-best-practices-a-comp/</link>
-      <description>A comprehensive guide to Cloud Security Best Practices covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 27 Mar 2026 17:33:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-cloud-security-best-practices-a-comp/</guid>
     </item>
   </channel>
 </rss>
