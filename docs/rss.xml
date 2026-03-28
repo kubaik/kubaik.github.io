@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 17:37:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 18:53:13 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Learn Svelte JS &amp; modern JavaScript for efficient web development.</description>
+      <pubDate>Sat, 28 Mar 2026 18:53:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Lead Tech</title>
       <link>https://kubaik.github.io/lead-tech/</link>
@@ -138,13 +145,6 @@
       <description>Boost database performance with expert query optimization tips.</description>
       <pubDate>Sat, 28 Mar 2026 05:00:03 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Python for Data</title>
-      <link>https://kubaik.github.io/python-for-data/</link>
-      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analytics skills.</description>
-      <pubDate>Sat, 28 Mar 2026 02:47:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/python-for-data/</guid>
     </item>
   </channel>
 </rss>
