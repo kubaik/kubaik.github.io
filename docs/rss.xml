@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2026 23:40:19 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 02:47:24 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Unlock data insights with Python. Learn how to apply Python for data science and boost your analytics skills.</description>
+      <pubDate>Sat, 28 Mar 2026 02:47:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Protect your business with expert security compliance solutions for SOC 2 and ISO 27001.</description>
       <pubDate>Fri, 27 Mar 2026 16:01:15 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-biz/</guid>
-    </item>
-    <item>
-      <title>Zero Trust: Secure All</title>
-      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
-      <description>Learn about Zero Trust Security Architecture &amp; protect your network with a &apos;never trust, always verify&apos; approach.</description>
-      <pubDate>Fri, 27 Mar 2026 14:58:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
     </item>
   </channel>
 </rss>
