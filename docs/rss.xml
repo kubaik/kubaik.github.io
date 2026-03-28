@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 18:53:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 19:36:15 +0000</lastBuildDate>
+    <item>
+      <title>Recover Fast</title>
+      <link>https://kubaik.github.io/recover-fast/</link>
+      <description>Minimize downtime with effective disaster recovery planning. Learn how to recover fast.</description>
+      <pubDate>Sat, 28 Mar 2026 19:36:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/recover-fast/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Learn GraphQL API development best practices and build scalable APIs with ease.</description>
       <pubDate>Sat, 28 Mar 2026 06:06:45 +0000</pubDate>
       <guid>https://kubaik.github.io/graphql-api/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Boost database performance with expert query optimization tips.</description>
-      <pubDate>Sat, 28 Mar 2026 05:00:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
