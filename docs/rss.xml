@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 05:00:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 06:06:57 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL API</title>
+      <link>https://kubaik.github.io/graphql-api/</link>
+      <description>Learn GraphQL API development best practices and build scalable APIs with ease.</description>
+      <pubDate>Sat, 28 Mar 2026 06:06:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-api/</guid>
+    </item>
     <item>
       <title>Optimize Queries</title>
       <link>https://kubaik.github.io/optimize-queries/</link>
@@ -138,13 +145,6 @@
       <description>Optimize with Serverless Architecture Patterns, expert insights for scalable apps.</description>
       <pubDate>Fri, 27 Mar 2026 17:04:22 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-done-right/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Start contributing to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Fri, 27 Mar 2026 16:39:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
