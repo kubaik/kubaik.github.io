@@ -97,6 +97,30 @@
                 <h2>Welcome to Tech Blog</h2>
                 <p>Cutting-edge insights into technology, AI, and development</p>
             </div>
+           <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" 
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+                              stroke-linejoin="round"/>
+                    </svg>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="Search posts by title, description, or tags..."
+                        autocomplete="off"
+                    >
+                    <button id="clear-search" class="clear-search" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" 
+                                  stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="search-results-count" class="search-results-count"></div>
+            </div>
 
             <section class="recent-posts">
                 <h2>Latest Posts</h2>
@@ -330,6 +354,173 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const loadMoreButton = document.getElementById('load-more');
+                // ============================================
+                // SEARCH FUNCTIONALITY
+                // ============================================
+                const searchInput = document.getElementById('search-input');
+                const clearSearchBtn = document.getElementById('clear-search');
+                const searchResultsCount = document.getElementById('search-results-count');
+                let searchActive = false;
+                
+                if (searchInput) {
+                    // Search as user types
+                    searchInput.addEventListener('input', function(e) {
+                        const query = e.target.value.trim().toLowerCase();
+                        
+                        if (query.length > 0) {
+                            searchActive = true;
+                            clearSearchBtn.style.display = 'block';
+                            performSearch(query);
+                        } else {
+                            searchActive = false;
+                            clearSearchBtn.style.display = 'none';
+                            clearSearch();
+                        }
+                    });
+                    
+                    // Clear search button
+                    clearSearchBtn.addEventListener('click', function() {
+                        searchInput.value = '';
+                        searchActive = false;
+                        clearSearchBtn.style.display = 'none';
+                        clearSearch();
+                        searchInput.focus();
+                    });
+                    
+                    // ESC key to clear search
+                    searchInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            searchInput.value = '';
+                            searchActive = false;
+                            clearSearchBtn.style.display = 'none';
+                            clearSearch();
+                        }
+                    });
+                }
+                
+                function performSearch(query) {
+                    const postCards = document.querySelectorAll('.post-card');
+                    let visibleCount = 0;
+                    
+                    postCards.forEach(card => {
+                        // Get post data
+                        const title = card.querySelector('h3 a')?.textContent.toLowerCase() || '';
+                        const excerpt = card.querySelector('.post-excerpt')?.textContent.toLowerCase() || '';
+                        const tags = Array.from(card.querySelectorAll('.tag'))
+                            .map(tag => tag.textContent.toLowerCase());
+                        
+                        // Check if query matches
+                        const matchesTitle = title.includes(query);
+                        const matchesExcerpt = excerpt.includes(query);
+                        const matchesTags = tags.some(tag => tag.includes(query));
+                        
+                        if (matchesTitle || matchesExcerpt || matchesTags) {
+                            card.classList.remove('hidden-by-search');
+                            highlightMatch(card, query);
+                            visibleCount++;
+                        } else {
+                            card.classList.add('hidden-by-search');
+                        }
+                    });
+                    
+                    // Update results count
+                    updateResultsCount(visibleCount, query);
+                    
+                    // Show "no results" message if needed
+                    if (visibleCount === 0) {
+                        showNoResults();
+                    } else {
+                        hideNoResults();
+                    }
+                }
+                
+                function highlightMatch(card, query) {
+                    // Remove existing highlights
+                    card.querySelectorAll('.search-highlight').forEach(el => {
+                        el.outerHTML = el.textContent;
+                    });
+                    
+                    // Highlight in title
+                    const titleLink = card.querySelector('h3 a');
+                    if (titleLink) {
+                        const titleText = titleLink.textContent;
+                        const highlightedTitle = highlightText(titleText, query);
+                        titleLink.innerHTML = highlightedTitle;
+                    }
+                    
+                    // Highlight in excerpt
+                    const excerpt = card.querySelector('.post-excerpt');
+                    if (excerpt) {
+                        const excerptText = excerpt.textContent;
+                        const highlightedExcerpt = highlightText(excerptText, query);
+                        excerpt.innerHTML = highlightedExcerpt;
+                    }
+                }
+                
+                function highlightText(text, query) {
+                    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+                    return text.replace(regex, '<span class="search-highlight">$1</span>');
+                }
+                
+                function escapeRegex(string) {
+                    return string.replace(/[.*+?^${}()|[\]\]/g, '\$&');
+                }
+                
+                function clearSearch() {
+                    // Show all posts
+                    document.querySelectorAll('.post-card').forEach(card => {
+                        card.classList.remove('hidden-by-search');
+                    });
+                    
+                    // Remove highlights
+                    document.querySelectorAll('.search-highlight').forEach(el => {
+                        el.outerHTML = el.textContent;
+                    });
+                    
+                    // Clear results count
+                    searchResultsCount.textContent = '';
+                    
+                    // Hide no results message
+                    hideNoResults();
+                }
+                
+                function updateResultsCount(count, query) {
+                    if (count === 0) {
+                        searchResultsCount.textContent = `No results found for "${query}"`;
+                    } else if (count === 1) {
+                        searchResultsCount.textContent = `1 post found`;
+                    } else {
+                        searchResultsCount.textContent = `${count} posts found`;
+                    }
+                }
+                
+                function showNoResults() {
+                    // Remove existing no-results message
+                    hideNoResults();
+                    
+                    const noResultsHTML = `
+                        <div class="no-results-message" id="no-results">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                            <h3>No posts found</h3>
+                            <p>Try different keywords or browse all posts below</p>
+                        </div>
+                    `;
+                    
+                    const postsContainer = document.getElementById('posts-container');
+                    postsContainer.insertAdjacentHTML('afterend', noResultsHTML);
+                }
+                
+                function hideNoResults() {
+                    const noResults = document.getElementById('no-results');
+                    if (noResults) {
+                        noResults.remove();
+                    }
+                }
                 const loadingSpinner = document.getElementById('loading-spinner');
                 const postsContainer = document.getElementById('posts-container');
                 const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
