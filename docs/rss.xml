@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 20:40:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 21:37:16 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
+      <pubDate>Sat, 28 Mar 2026 21:37:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>Log On: Smart Solutions</title>
       <link>https://kubaik.github.io/log-on-smart-solutions/</link>
@@ -138,13 +145,6 @@
       <description>Launch a thriving tech career with a strong portfolio. Learn how to build &amp; showcase your skills.</description>
       <pubDate>Sat, 28 Mar 2026 07:51:38 +0000</pubDate>
       <guid>https://kubaik.github.io/build-thrive/</guid>
-    </item>
-    <item>
-      <title>Grid &amp; Flexbox</title>
-      <link>https://kubaik.github.io/grid-flexbox/</link>
-      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
-      <pubDate>Sat, 28 Mar 2026 07:49:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/grid-flexbox/</guid>
     </item>
   </channel>
 </rss>
