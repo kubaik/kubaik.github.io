@@ -80,54 +80,50 @@
     <link rel="alternate" type="application/rss+xml" title="Tech Blog" href="/rss.xml">
     <style>
         .search-container {
-            margin: 1rem 0;
-            max-width: 480px;
+            margin: 2rem auto;
+            max-width: 640px;
         }
         .search-wrapper {
+            position: relative;
             display: flex;
             align-items: center;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 0 10px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
-        .search-wrapper:focus-within {
-            border-color: #6366f1;
         }
         .search-icon {
+            position: absolute;
+            left: 14px;
             color: #9ca3af;
             pointer-events: none;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
         }
         .search-input {
-            flex: 1;
-            padding: 8px 0;
-            border: none;
+            width: 100%;
+            padding: 12px 44px 12px 44px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
             outline: none;
-            font-size: 0.95rem;
-            background: transparent;
+            transition: border-color 0.2s;
             box-sizing: border-box;
         }
+        .search-input:focus {
+            border-color: #6366f1;
+        }
         .clear-search {
+            position: absolute;
+            right: 12px;
             background: none;
             border: none;
             cursor: pointer;
             color: #9ca3af;
-            padding: 2px;
-            flex-shrink: 0;
+            padding: 4px;
             display: flex;
             align-items: center;
         }
         .clear-search:hover { color: #333; }
         .search-results-count {
-            text-align: left;
-            margin-top: 0.4rem;
+            text-align: center;
+            margin-top: 0.5rem;
             color: #666;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             min-height: 1.2em;
         }
         .search-highlight {
@@ -183,7 +179,7 @@
                     type="text"
                     id="search-input"
                     class="search-input"
-                    placeholder="Search posts ......"
+                    placeholder="Search posts by title, description, or tags..."
                     autocomplete="off"
                 >
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
