@@ -339,7 +339,6 @@ class StaticSiteGenerator:
 
             "index": """<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -353,8 +352,8 @@ class StaticSiteGenerator:
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
     <style>
         .search-container {
-            margin: 0;
-            max-width: 400px;
+            margin: 1rem 0;
+            max-width: 480px;
         }
         .search-wrapper {
             display: flex;
@@ -380,7 +379,7 @@ class StaticSiteGenerator:
         }
         .search-input {
             flex: 1;
-            padding: 4px 0;
+            padding: 8px 0;
             border: none !important;
             outline: none !important;
             box-shadow: none !important;
@@ -528,7 +527,7 @@ class StaticSiteGenerator:
 
             <div class="scroll-options">
                 <label class="toggle-switch">
-                    <input type="checkbox" id="infinite-scroll-toggle" >
+                    <input type="checkbox" id="infinite-scroll-toggle">
                     <span class="slider"></span>
                     Enable Infinite Scroll
                 </label>
@@ -557,75 +556,84 @@ class StaticSiteGenerator:
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
+        // ─── SHARED STATE (declared first so search + load-more can both access) ──
+        const searchInput         = document.getElementById('search-input');
+        const clearSearchBtn      = document.getElementById('clear-search');
+        const resultsCount        = document.getElementById('search-results-count');
+        const loadMoreButton      = document.getElementById('load-more');
+        const loadingSpinner      = document.getElementById('loading-spinner');
+        const postsContainer      = document.getElementById('posts-container');
+        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
+        const backToTopButton     = document.getElementById('back-to-top');
+
+        let currentPage           = 1;
+        const postsPerPage        = {{ posts_per_page }};
+        let allPosts              = [];
+        let isLoading             = false;
+        let searchActive          = false;
+        let infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
+
+        if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
+
+        // Fetch all posts JSON up front — both search and load-more depend on it
+        fetch('{{ base_path }}/posts.json')
+            .then(r => r.json())
+            .then(posts => {
+                allPosts = posts;
+                updateLoadMoreButton();
+                // Re-run search if user typed before JSON loaded
+                const pending = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                if (pending) performSearch(pending);
+            })
+            .catch(err => console.error('Error loading posts.json:', err));
+
         // ─── SEARCH ──────────────────────────────────────────────────────────
-        const searchInput       = document.getElementById('search-input');
-        const clearSearchBtn    = document.getElementById('clear-search');
-        const resultsCount      = document.getElementById('search-results-count');
-
-        // Cache original text into data attributes once on load so we never
-        // read stale / already-highlighted innerHTML during subsequent searches.
-        function cacheCardText() {
-            document.querySelectorAll('.post-card').forEach(card => {
-                const link    = card.querySelector('h3 a');
-                const excerpt = card.querySelector('.post-excerpt');
-                if (link    && !link.dataset.orig)    link.dataset.orig    = link.textContent;
-                if (excerpt && !excerpt.dataset.orig) excerpt.dataset.orig = excerpt.textContent;
-            });
-        }
-        cacheCardText();
-
-        function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\\\]/g, '\\\\$&'); }
+        function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
         function highlight(text, query) {
             return text.replace(new RegExp('(' + escapeRe(query) + ')', 'gi'),
                                 '<span class="search-highlight">$1</span>');
         }
 
-        function restoreCard(card) {
-            const link    = card.querySelector('h3 a');
-            const excerpt = card.querySelector('.post-excerpt');
-            if (link    && link.dataset.orig)    link.textContent    = link.dataset.orig;
-            if (excerpt && excerpt.dataset.orig) excerpt.textContent = excerpt.dataset.orig;
-        }
-
         function performSearch(query) {
-            let visible = 0;
-            document.querySelectorAll('.post-card').forEach(card => {
-                const link    = card.querySelector('h3 a');
-                const excerpt = card.querySelector('.post-excerpt');
-                const title   = (link?.dataset.orig    || '').toLowerCase();
-                const desc    = (excerpt?.dataset.orig || '').toLowerCase();
-                const tags    = Array.from(card.querySelectorAll('.tag'))
-                                     .map(t => t.textContent.toLowerCase());
+            if (allPosts.length === 0) return; // wait for JSON to load
+            searchActive = true;
 
-                const match = title.includes(query) || desc.includes(query)
-                              || tags.some(t => t.includes(query));
-
-                if (match) {
-                    card.classList.remove('hidden-by-search');
-                    if (link    && link.dataset.orig)    link.innerHTML    = highlight(link.dataset.orig,    query);
-                    if (excerpt && excerpt.dataset.orig) excerpt.innerHTML = highlight(excerpt.dataset.orig, query);
-                    visible++;
-                } else {
-                    card.classList.add('hidden-by-search');
-                    restoreCard(card);
-                }
+            const matched = allPosts.filter(post => {
+                const title = (post.title || '').toLowerCase();
+                const desc  = (post.meta_description || '').toLowerCase();
+                const tags  = (post.tags || []).map(t => t.toLowerCase());
+                return title.includes(query) || desc.includes(query)
+                       || tags.some(t => t.includes(query));
             });
 
-            // results count
-            resultsCount.textContent = visible === 0 ? `No results for "${query}"`
-                                     : visible === 1 ? '1 post found'
-                                     : `${visible} posts found`;
+            postsContainer.innerHTML = '';
+            matched.forEach(post => {
+                const el      = createPostElement(post);
+                const link    = el.querySelector('h3 a');
+                const excerpt = el.querySelector('.post-excerpt');
+                if (link)    link.innerHTML    = highlight(link.textContent,    query);
+                if (excerpt) excerpt.innerHTML = highlight(excerpt.textContent, query);
+                postsContainer.appendChild(el);
+            });
 
-            // no-results message
+            // Hide load-more while searching
+            const lmc = document.getElementById('load-more-container');
+            if (lmc) lmc.style.display = 'none';
+
+            const n = matched.length;
+            resultsCount.textContent = n === 0 ? `No results for "${query}"`
+                                     : n === 1 ? '1 post found'
+                                     : `${n} posts found`;
+
             let noRes = document.getElementById('no-results');
-            if (visible === 0) {
+            if (n === 0) {
                 if (!noRes) {
                     noRes = document.createElement('div');
-                    noRes.id = 'no-results';
+                    noRes.id        = 'no-results';
                     noRes.className = 'no-results-message';
                     noRes.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><h3>No posts found</h3><p>Try different keywords or clear the search.</p>';
-                    document.getElementById('posts-container').after(noRes);
+                    postsContainer.after(noRes);
                 }
             } else if (noRes) {
                 noRes.remove();
@@ -633,13 +641,16 @@ class StaticSiteGenerator:
         }
 
         function clearSearch() {
-            document.querySelectorAll('.post-card').forEach(card => {
-                card.classList.remove('hidden-by-search');
-                restoreCard(card);
-            });
+            searchActive = false;
+            postsContainer.innerHTML = '';
+            allPosts.slice(0, postsPerPage).forEach(post =>
+                postsContainer.appendChild(createPostElement(post))
+            );
+            currentPage = 1;
             resultsCount.textContent = '';
             const noRes = document.getElementById('no-results');
             if (noRes) noRes.remove();
+            updateLoadMoreButton();
         }
 
         if (searchInput) {
@@ -664,29 +675,6 @@ class StaticSiteGenerator:
                 }
             });
         }
-
-        // ─── LOAD MORE / INFINITE SCROLL ────────────────────────────────────
-        const loadMoreButton      = document.getElementById('load-more');
-        const loadingSpinner      = document.getElementById('loading-spinner');
-        const postsContainer      = document.getElementById('posts-container');
-        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
-        const backToTopButton     = document.getElementById('back-to-top');
-
-        let currentPage          = 1;
-        const postsPerPage       = {{ posts_per_page }};
-        let allPosts             = [];
-        let isLoading            = false;
-        let infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
-
-        if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
-
-        fetch('{{ base_path }}/posts.json')
-            .then(r => r.json())
-            .then(posts => {
-                allPosts = posts;
-                updateLoadMoreButton();
-            })
-            .catch(err => console.error('Error loading posts.json:', err));
 
         if (loadMoreButton) {
             loadMoreButton.addEventListener('click', function (e) {
@@ -817,7 +805,7 @@ class StaticSiteGenerator:
             const time = document.createElement('time');
             time.dateTime   = post.created_at;
             time.textContent = formatDisplayDate(post.created_at);
-            
+            meta.appendChild(time);
             article.appendChild(meta);
 
             return article;
