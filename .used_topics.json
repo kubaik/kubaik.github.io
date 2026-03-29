@@ -180,5 +180,6 @@
   "Azure Cloud Services",
   "AutoML and Neural Architecture Search",
   "API Testing Tools (Postman, Insomnia)",
-  "Scalability Patterns"
+  "Scalability Patterns",
+  "Lazy Loading Implementation"
 ]
