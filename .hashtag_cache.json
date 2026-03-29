@@ -304,15 +304,15 @@
     "topic": "Mobile Performance Optimization"
   },
   "responsive_web_design_techniques": {
-    "timestamp": "2026-03-16T20:48:09.757355",
+    "timestamp": "2026-03-29T10:25:05.810008",
     "hashtags": [
       "WebDesign",
       "ResponsiveTech",
       "MobileFirst",
-      "UXDesign",
+      "UIUX",
+      "AccessiblityMatters",
       "FrontEndDev",
-      "WebDevelopment",
-      "AccessibilityMatters"
+      "WebDevelopment2025"
     ],
     "topic": "Responsive Web Design Techniques"
   },
@@ -2324,15 +2324,16 @@
     "topic": "React Best Practices and Patterns"
   },
   "sql_vs_nosql_databases": {
-    "timestamp": "2026-03-18T11:52:39.125897",
+    "timestamp": "2026-03-29T10:42:39.053765",
     "hashtags": [
       "DatabaseWars",
+      "CloudNative",
+      "DataEngineering",
+      "NoSQLRevolution",
+      "SQLMasters",
+      "DatabaseDesign",
       "TechDebates",
-      "DataStorage",
-      "NoSQLMovement",
-      "SQLForever",
-      "CloudDatabases",
-      "DatabaseManagement"
+      "DataInnovation"
     ],
     "topic": "SQL vs NoSQL Databases"
   },
