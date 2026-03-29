@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 17:31:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 17:34:03 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Master load balancing techniques for optimized app performance.</description>
+      <pubDate>Sun, 29 Mar 2026 17:33:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>App Architecture</title>
       <link>https://kubaik.github.io/app-architecture/</link>
@@ -138,13 +145,6 @@
       <description>Explore the importance of AI ethics &amp; responsible AI development for a safer future.</description>
       <pubDate>Sun, 29 Mar 2026 09:03:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ethics-matter/</guid>
-    </item>
-    <item>
-      <title>Design Distributed</title>
-      <link>https://kubaik.github.io/design-distributed/</link>
-      <description>Learn Distributed Systems Design principles and best practices.</description>
-      <pubDate>Sun, 29 Mar 2026 08:51:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-distributed/</guid>
     </item>
   </channel>
 </rss>
