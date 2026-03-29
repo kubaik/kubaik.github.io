@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 09:12:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 09:14:50 +0000</lastBuildDate>
+    <item>
+      <title>Tune Up</title>
+      <link>https://kubaik.github.io/tune-up/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Sun, 29 Mar 2026 09:14:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-up/</guid>
+    </item>
     <item>
       <title>AI Ethics Matter</title>
       <link>https://kubaik.github.io/ai-ethics-matter/</link>
@@ -138,13 +145,6 @@
       <description>Learn SOLID design principles for cleaner, scalable code.</description>
       <pubDate>Sat, 28 Mar 2026 14:48:38 +0000</pubDate>
       <guid>https://kubaik.github.io/solid-code/</guid>
-    </item>
-    <item>
-      <title>Deploy AI Smarter</title>
-      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
-      <description>Streamline AI model deployment with expert strategies and best practices.</description>
-      <pubDate>Sat, 28 Mar 2026 14:40:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
     </item>
   </channel>
 </rss>
