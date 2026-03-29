@@ -668,7 +668,7 @@ class StaticSiteGenerator:
         const loadMoreButton      = document.getElementById('load-more');
         const loadingSpinner      = document.getElementById('loading-spinner');
         const postsContainer      = document.getElementById('posts-container');
-        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle').true;
+        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
         const backToTopButton     = document.getElementById('back-to-top');
 
         let currentPage          = 1;
