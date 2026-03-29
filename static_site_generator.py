@@ -301,7 +301,7 @@ class StaticSiteGenerator:
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
     <style>
-        .search-container { margin: 0 0 1.5rem 0; max-width: 420px; }
+        .search-container { margin: 0; max-width: 420px; }
         .search-wrapper {
             display: flex; align-items: center;
             border: 2px solid #e0e0e0; border-radius: 50px;
