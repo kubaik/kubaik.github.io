@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 09:17:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 09:24:04 +0000</lastBuildDate>
+    <item>
+      <title>MLOps Simplified</title>
+      <link>https://kubaik.github.io/mlops-simplified/</link>
+      <description>Simplify ML workflow automation with MLOps. Learn how to streamline ML pipelines.</description>
+      <pubDate>Sun, 29 Mar 2026 09:23:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/mlops-simplified/</guid>
+    </item>
+    <item>
+      <title>Tune Up</title>
+      <link>https://kubaik.github.io/tune-up/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Sun, 29 Mar 2026 09:14:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-up/</guid>
+    </item>
     <item>
       <title>AI Ethics Matter</title>
       <link>https://kubaik.github.io/ai-ethics-matter/</link>
@@ -131,13 +145,6 @@
       <description>Boost website speed with caching strategies using Redis &amp; Memcached.</description>
       <pubDate>Sat, 28 Mar 2026 14:57:10 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-cache/</guid>
-    </item>
-    <item>
-      <title>SOLID Code</title>
-      <link>https://kubaik.github.io/solid-code/</link>
-      <description>Learn SOLID design principles for cleaner, scalable code.</description>
-      <pubDate>Sat, 28 Mar 2026 14:48:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/solid-code/</guid>
     </item>
   </channel>
 </rss>
