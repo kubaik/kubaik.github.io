@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 20:39:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 20:42:10 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load Done</title>
+      <link>https://kubaik.github.io/lazy-load-done/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement it effectively.</description>
+      <pubDate>Sun, 29 Mar 2026 20:41:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load-done/</guid>
+    </item>
     <item>
       <title>AR Dev 101</title>
       <link>https://kubaik.github.io/ar-dev-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud potential with Azure. Discover scalable solutions &amp; transform your business.</description>
       <pubDate>Sun, 29 Mar 2026 12:51:19 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-power-azure/</guid>
-    </item>
-    <item>
-      <title>Boost WA Speed</title>
-      <link>https://kubaik.github.io/boost-wa-speed/</link>
-      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
-      <pubDate>Sun, 29 Mar 2026 12:35:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
     </item>
   </channel>
 </rss>
