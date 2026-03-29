@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 10:09:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 10:11:11 +0000</lastBuildDate>
+    <item>
+      <title>Scrum vs Kanban</title>
+      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
+      <description>Compare Scrum &amp; Kanban: choose the best Agile method</description>
+      <pubDate>Sun, 29 Mar 2026 10:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
+    </item>
     <item>
       <title>FedLearn: AI</title>
       <link>https://kubaik.github.io/fedlearn-ai/</link>
@@ -138,13 +145,6 @@
       <description>Unlock modern JavaScript with ES6+ essentials, including arrow functions, classes, and more.</description>
       <pubDate>Sat, 28 Mar 2026 16:43:01 +0000</pubDate>
       <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
-    <item>
-      <title>Kafka Streams</title>
-      <link>https://kubaik.github.io/kafka-streams/</link>
-      <description>Learn Apache Kafka Streams for real-time data processing &amp; analysis.</description>
-      <pubDate>Sat, 28 Mar 2026 15:38:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/kafka-streams/</guid>
     </item>
   </channel>
 </rss>
