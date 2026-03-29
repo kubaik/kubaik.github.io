@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 21:40:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 22:39:51 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Boost AI model performance with expert training tips and best practices.</description>
+      <pubDate>Sun, 29 Mar 2026 22:39:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>Boost Performance</title>
       <link>https://kubaik.github.io/boost-performance/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement Load Smart techniques for a faster user experience.</description>
       <pubDate>Sun, 29 Mar 2026 15:40:00 +0000</pubDate>
       <guid>https://kubaik.github.io/load-smart/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Learn scalability patterns to grow efficiently</description>
-      <pubDate>Sun, 29 Mar 2026 14:40:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
