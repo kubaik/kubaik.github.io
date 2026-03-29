@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 14:40:49 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 15:40:12 +0000</lastBuildDate>
+    <item>
+      <title>Load Smart</title>
+      <link>https://kubaik.github.io/load-smart/</link>
+      <description>Boost site speed with lazy loading. Learn how to implement Load Smart techniques for a faster user experience.</description>
+      <pubDate>Sun, 29 Mar 2026 15:40:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/load-smart/</guid>
+    </item>
     <item>
       <title>Scale Smarter</title>
       <link>https://kubaik.github.io/scale-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture &amp; build scalable apps with reusable code.</description>
       <pubDate>Sun, 29 Mar 2026 08:32:08 +0000</pubDate>
       <guid>https://kubaik.github.io/vuejs-component-architecture/</guid>
-    </item>
-    <item>
-      <title>AI Evolved</title>
-      <link>https://kubaik.github.io/ai-evolved/</link>
-      <description>Unlock AI&apos;s full potential with multi-modal systems, revolutionizing human-computer interaction.</description>
-      <pubDate>Sun, 29 Mar 2026 08:17:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
