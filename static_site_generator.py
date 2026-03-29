@@ -354,7 +354,7 @@ class StaticSiteGenerator:
     <style>
         .search-container {
             margin: 1rem 0;
-            max-width: 480px;
+            max-width: 400px;
         }
         .search-wrapper {
             display: flex;
