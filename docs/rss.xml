@@ -132,19 +132,5 @@
       <pubDate>Sat, 28 Mar 2026 18:53:02 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
-    <item>
-      <title>Lead Tech</title>
-      <link>https://kubaik.github.io/lead-tech/</link>
-      <description>Unlock top tech leadership skills to drive innovation and success.</description>
-      <pubDate>Sat, 28 Mar 2026 17:37:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials, including arrow functions, classes, and more.</description>
-      <pubDate>Sat, 28 Mar 2026 16:43:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
-    </item>
   </channel>
 </rss>
