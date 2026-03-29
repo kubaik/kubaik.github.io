@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 19:21:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 19:23:46 +0000</lastBuildDate>
+    <item>
+      <title>Boost ASO</title>
+      <link>https://kubaik.github.io/boost-aso/</link>
+      <description>Maximize app visibility with expert ASO tips and strategies.</description>
+      <pubDate>Sun, 29 Mar 2026 19:23:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-aso/</guid>
+    </item>
     <item>
       <title>Double Your Assets</title>
       <link>https://kubaik.github.io/double-your-assets/</link>
@@ -138,13 +145,6 @@
       <description>Boost large-scale app development with TypeScript. Learn how to scale up with confidence.</description>
       <pubDate>Sun, 29 Mar 2026 12:19:56 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-scale-up/</guid>
-    </item>
-    <item>
-      <title>Visualize Right</title>
-      <link>https://kubaik.github.io/visualize-right/</link>
-      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Right&apos;</description>
-      <pubDate>Sun, 29 Mar 2026 11:59:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-right/</guid>
     </item>
   </channel>
 </rss>
