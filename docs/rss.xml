@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 12:20:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 12:35:14 +0000</lastBuildDate>
+    <item>
+      <title>Boost WA Speed</title>
+      <link>https://kubaik.github.io/boost-wa-speed/</link>
+      <description>Optimize WebAssembly performance with expert tips and tricks.</description>
+      <pubDate>Sun, 29 Mar 2026 12:35:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-wa-speed/</guid>
+    </item>
     <item>
       <title>TypeScript: Scale Up</title>
       <link>https://kubaik.github.io/typescript-scale-up/</link>
@@ -138,13 +145,6 @@
       <description>Learn cybersecurity fundamentals to protect yourself online with our expert guide.</description>
       <pubDate>Sat, 28 Mar 2026 23:38:25 +0000</pubDate>
       <guid>https://kubaik.github.io/cyber-safe/</guid>
-    </item>
-    <item>
-      <title>Edge AI: Smarter Computing</title>
-      <link>https://kubaik.github.io/edge-ai-smarter-computing/</link>
-      <description>Unlock smarter computing with Edge AI, boosting efficiency &amp; speed.</description>
-      <pubDate>Sat, 28 Mar 2026 22:37:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-ai-smarter-computing/</guid>
     </item>
   </channel>
 </rss>
