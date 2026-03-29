@@ -339,6 +339,7 @@ class StaticSiteGenerator:
 
             "index": """<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -353,7 +354,7 @@ class StaticSiteGenerator:
     <style>
         .search-container {
             margin: 1rem 0;
-            max-width: 200px;
+            max-width: 480px;
         }
         .search-wrapper {
             display: flex;
