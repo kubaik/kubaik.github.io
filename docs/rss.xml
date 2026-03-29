@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 12:16:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 12:20:08 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript: Scale Up</title>
+      <link>https://kubaik.github.io/typescript-scale-up/</link>
+      <description>Boost large-scale app development with TypeScript. Learn how to scale up with confidence.</description>
+      <pubDate>Sun, 29 Mar 2026 12:19:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-scale-up/</guid>
+    </item>
     <item>
       <title>Visualize Right</title>
       <link>https://kubaik.github.io/visualize-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock smarter computing with Edge AI, boosting efficiency &amp; speed.</description>
       <pubDate>Sat, 28 Mar 2026 22:37:18 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-ai-smarter-computing/</guid>
-    </item>
-    <item>
-      <title>Secure Your App</title>
-      <link>https://kubaik.github.io/secure-your-app/</link>
-      <description>Protect your app from cyber threats. Learn expert tips on mobile app security.</description>
-      <pubDate>Sat, 28 Mar 2026 21:37:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-your-app/</guid>
     </item>
   </channel>
 </rss>
