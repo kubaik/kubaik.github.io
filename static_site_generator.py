@@ -527,7 +527,7 @@ class StaticSiteGenerator:
 
             <div class="scroll-options">
                 <label class="toggle-switch">
-                    <input type="checkbox" id="infinite-scroll-toggle">
+                    <input type="checkbox" id="infinite-scroll-toggle" checked>
                     <span class="slider"></span>
                     Enable Infinite Scroll
                 </label>
