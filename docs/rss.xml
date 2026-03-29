@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 18:52:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 18:54:41 +0000</lastBuildDate>
+    <item>
+      <title>BI Tools</title>
+      <link>https://kubaik.github.io/bi-tools/</link>
+      <description>Discover top BI tools to boost business insights and decision-making.</description>
+      <pubDate>Sun, 29 Mar 2026 18:54:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-tools/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>Compare SQL &amp; NoSQL databases: pros, cons, and use cases.</description>
       <pubDate>Sun, 29 Mar 2026 10:42:38 +0000</pubDate>
       <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Elevate your online presence with responsive web design techniques and expert tips.</description>
-      <pubDate>Sun, 29 Mar 2026 10:25:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
