@@ -168,6 +168,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T18:08:40.098762">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -184,6 +187,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T17:59:11.458486">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -200,6 +206,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T17:38:54.890692">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -216,6 +225,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T17:33:52.242303">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -232,6 +244,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T17:11:20.347543">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -248,6 +263,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T16:43:59.652303">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -264,6 +282,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T15:40:00.786558">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -280,6 +301,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T14:40:38.331345">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -296,6 +320,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T13:31:27.571746">29 Mar 2026</time>
+                    </div>
                 </article>
                 
                 <article class="post-card">
@@ -312,6 +339,9 @@
                         
                     </div>
                     
+                    <div class="post-meta">
+                        <time datetime="2026-03-29T13:12:22.051836">29 Mar 2026</time>
+                    </div>
                 </article>
                 
             </div>
@@ -363,42 +393,73 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         // ── ALL SHARED STATE UP FRONT ─────────────────────────────────────────
-        // Declared here so both search and load-more can reference them safely.
-        const searchInput          = document.getElementById('search-input');
-        const clearSearchBtn       = document.getElementById('clear-search');
-        const resultsCount         = document.getElementById('search-results-count');
-        const postsContainer       = document.getElementById('posts-container');
-        const loadMoreButton       = document.getElementById('load-more');
-        const loadingSpinner       = document.getElementById('loading-spinner');
-        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
-        const backToTopButton      = document.getElementById('back-to-top');
+        var searchInput          = document.getElementById('search-input');
+        var clearSearchBtn       = document.getElementById('clear-search');
+        var resultsCount         = document.getElementById('search-results-count');
+        var postsContainer       = document.getElementById('posts-container');
+        var loadMoreButton       = document.getElementById('load-more');
+        var loadingSpinner       = document.getElementById('loading-spinner');
+        var infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
+        var backToTopButton      = document.getElementById('back-to-top');
 
-        const postsPerPage         = 10;
-        let   allPosts             = [];   // populated by fetch below
-        let   currentPage          = 1;
-        let   isLoading            = false;
-        let   searchActive         = false;
-        let   infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
+        var postsPerPage          = 10;
+        var allPosts              = [];
+        var currentPage           = 1;
+        var isLoading             = false;
+        var searchActive          = false;
+        var infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
 
         if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
 
+        // ── SEED FROM DOM ─────────────────────────────────────────────────────
+        // FIX: Reads the server-rendered post cards to populate allPosts as a
+        // reliable fallback when posts.json cannot be fetched (e.g. base_path
+        // mismatch on GitHub Pages project sites). This ensures search and
+        // load-more always have data to work with even on fetch failure.
+        function seedFromDOM() {
+            if (!postsContainer) return;
+            allPosts = Array.from(postsContainer.querySelectorAll('article.post-card')).map(function(el) {
+                var anchor = el.querySelector('h3 a');
+                var href   = anchor ? (anchor.getAttribute('href') || '') : '';
+                var slug   = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
+                return {
+                    slug:             slug,
+                    title:            anchor ? anchor.textContent.trim() : '',
+                    meta_description: el.querySelector('.post-excerpt') ? el.querySelector('.post-excerpt').textContent.trim() : '',
+                    tags:             Array.from(el.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); }),
+                    created_at:       el.querySelector('time') ? (el.querySelector('time').getAttribute('datetime') || '') : ''
+                };
+            });
+        }
+
         // ── FETCH ALL POSTS JSON ──────────────────────────────────────────────
-        // Both search (full-corpus) and load-more depend on this array.
-        fetch('/posts.json')
-            .then(r => r.json())
-            .then(posts => {
+        // FIX: Changed from '/posts.json' to 'posts.json'.
+        // posts.json is always a sibling of index.html in docs/, so a bare
+        // relative URL resolves correctly regardless of base_path or the
+        // GitHub Pages hosting prefix (user page vs project page).
+        // Previously '/posts.json' would render as e.g.
+        // '/my-repo/posts.json' which is a 404 when docs/ is the site root.
+        fetch('posts.json')
+            .then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(function(posts) {
                 allPosts = posts;
                 updateLoadMoreButton();
-                // Re-run search if user typed before the fetch completed
                 if (searchInput && searchInput.value.trim()) {
                     performSearch(searchInput.value.trim().toLowerCase());
                 }
             })
-            .catch(err => console.error('posts.json fetch failed:', err));
+            .catch(function(err) {
+                console.warn('posts.json fetch failed, falling back to DOM seed:', err);
+                seedFromDOM();
+                updateLoadMoreButton();
+            });
 
         // ── HELPERS ──────────────────────────────────────────────────────────
         function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\]\]/g, '\$&');
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         function highlight(text, query) {
@@ -410,25 +471,25 @@
 
         function formatDisplayDate(iso) {
             try {
-                const d = new Date(iso);
+                var d = new Date(iso);
                 return d.getDate() + ' ' +
                     ['January','February','March','April','May','June',
                      'July','August','September','October','November','December'][d.getMonth()] +
                     ' ' + d.getFullYear();
-            } catch { return iso.split('T')[0]; }
+            } catch(e) { return iso.split('T')[0]; }
         }
 
         function createPostElement(post) {
-            const article  = document.createElement('article');
+            var article = document.createElement('article');
             article.className = 'post-card';
 
-            const h3   = document.createElement('h3');
-            const link = document.createElement('a');
+            var h3   = document.createElement('h3');
+            var link = document.createElement('a');
             link.href        = '/' + post.slug + '/';
             link.textContent = post.title;
             h3.appendChild(link);
 
-            const excerpt = document.createElement('p');
+            var excerpt = document.createElement('p');
             excerpt.className   = 'post-excerpt';
             excerpt.textContent = post.meta_description;
 
@@ -436,10 +497,10 @@
             article.appendChild(excerpt);
 
             if (post.tags && post.tags.length > 0) {
-                const tagsDiv = document.createElement('div');
+                var tagsDiv = document.createElement('div');
                 tagsDiv.className = 'tags';
-                post.tags.slice(0, 3).forEach(t => {
-                    const span = document.createElement('span');
+                post.tags.slice(0, 3).forEach(function(t) {
+                    var span = document.createElement('span');
                     span.className   = 'tag';
                     span.textContent = t;
                     tagsDiv.appendChild(span);
@@ -447,9 +508,9 @@
                 article.appendChild(tagsDiv);
             }
 
-            const meta = document.createElement('div');
+            var meta = document.createElement('div');
             meta.className = 'post-meta';
-            const time = document.createElement('time');
+            var time = document.createElement('time');
             time.dateTime    = post.created_at;
             time.textContent = formatDisplayDate(post.created_at);
             meta.appendChild(time);
@@ -459,44 +520,38 @@
         }
 
         // ── SEARCH ───────────────────────────────────────────────────────────
-        // Searches ALL posts from allPosts JSON — not just the ones in the DOM.
-        // Replaces the container contents with matching results and hides
-        // load-more/infinite-scroll controls while a search is active.
-
         function performSearch(query) {
-            if (!allPosts.length) return; // wait for fetch
+            if (!allPosts.length) return;
             searchActive = true;
 
-            const matched = allPosts.filter(post => {
-                const t = (post.title           || '').toLowerCase();
-                const d = (post.meta_description|| '').toLowerCase();
-                const g = (post.tags            || []).map(x => x.toLowerCase());
-                return t.includes(query) || d.includes(query) || g.some(x => x.includes(query));
+            var matched = allPosts.filter(function(post) {
+                var t = (post.title            || '').toLowerCase();
+                var d = (post.meta_description || '').toLowerCase();
+                var g = (post.tags             || []).map(function(x) { return x.toLowerCase(); });
+                return t.indexOf(query) !== -1 ||
+                       d.indexOf(query) !== -1 ||
+                       g.some(function(x) { return x.indexOf(query) !== -1; });
             });
 
-            // Render only matched posts
             postsContainer.innerHTML = '';
-            matched.forEach(post => {
-                const el      = createPostElement(post);
-                const link    = el.querySelector('h3 a');
-                const excerpt = el.querySelector('.post-excerpt');
+            matched.forEach(function(post) {
+                var el      = createPostElement(post);
+                var link    = el.querySelector('h3 a');
+                var excerpt = el.querySelector('.post-excerpt');
                 if (link)    link.innerHTML    = highlight(link.textContent,    query);
                 if (excerpt) excerpt.innerHTML = highlight(excerpt.textContent, query);
                 postsContainer.appendChild(el);
             });
 
-            // Hide pagination while searching
-            const lmc = document.getElementById('load-more-container');
+            var lmc = document.getElementById('load-more-container');
             if (lmc) lmc.style.display = 'none';
 
-            // Results count
-            const n = matched.length;
+            var n = matched.length;
             resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
                                      : n === 1 ? '1 post found'
                                      : n + ' posts found';
 
-            // No-results block
-            let noRes = document.getElementById('no-results');
+            var noRes = document.getElementById('no-results');
             if (n === 0) {
                 if (!noRes) {
                     noRes = document.createElement('div');
@@ -517,25 +572,20 @@
 
         function clearSearch() {
             searchActive = false;
-
-            // Re-render first page from allPosts
             postsContainer.innerHTML = '';
-            allPosts.slice(0, postsPerPage).forEach(post =>
-                postsContainer.appendChild(createPostElement(post))
-            );
+            allPosts.slice(0, postsPerPage).forEach(function(post) {
+                postsContainer.appendChild(createPostElement(post));
+            });
             currentPage = 1;
-
             resultsCount.textContent = '';
-            const noRes = document.getElementById('no-results');
+            var noRes = document.getElementById('no-results');
             if (noRes) noRes.remove();
-
-            // Restore load-more / infinite scroll
             updateLoadMoreButton();
         }
 
         if (searchInput) {
             searchInput.addEventListener('input', function () {
-                const q = this.value.trim().toLowerCase();
+                var q = this.value.trim().toLowerCase();
                 clearSearchBtn.style.display = q ? 'flex' : 'none';
                 if (q) { performSearch(q); } else { clearSearch(); }
             });
@@ -557,7 +607,6 @@
         }
 
         // ── LOAD MORE / INFINITE SCROLL ───────────────────────────────────────
-
         if (loadMoreButton) {
             loadMoreButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -590,8 +639,9 @@
         });
 
         if (backToTopButton) {
-            backToTopButton.addEventListener('click', () =>
-                window.scrollTo({ top: 0, behavior: 'smooth' }));
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         }
 
         function loadMorePosts() {
@@ -600,15 +650,15 @@
             if (loadingSpinner) loadingSpinner.style.display = 'block';
             if (loadMoreButton) { loadMoreButton.disabled = true; loadMoreButton.style.opacity = '0.6'; }
 
-            setTimeout(() => {
+            setTimeout(function() {
                 currentPage++;
-                const start = (currentPage - 1) * postsPerPage;
-                allPosts.slice(start, start + postsPerPage).forEach((post, i) => {
-                    const el = createPostElement(post);
+                var start = (currentPage - 1) * postsPerPage;
+                allPosts.slice(start, start + postsPerPage).forEach(function(post, i) {
+                    var el = createPostElement(post);
                     el.style.opacity   = '0';
                     el.style.transform = 'translateY(20px)';
                     postsContainer.appendChild(el);
-                    setTimeout(() => {
+                    setTimeout(function() {
                         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                         el.style.opacity    = '1';
                         el.style.transform  = 'translateY(0)';
@@ -624,9 +674,9 @@
         function hasMorePosts() { return currentPage * postsPerPage < allPosts.length; }
 
         function updateLoadMoreButton() {
-            if (searchActive) return; // leave hidden while searching
-            const show      = hasMorePosts() && !infiniteScrollEnabled;
-            const container = document.getElementById('load-more-container');
+            if (searchActive) return;
+            var show      = hasMorePosts() && !infiniteScrollEnabled;
+            var container = document.getElementById('load-more-container');
             if (loadMoreButton) loadMoreButton.style.display = show ? 'block' : 'none';
             if (container)      container.style.display      = show ? 'block' : 'none';
         }
