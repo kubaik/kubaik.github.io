@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 09:24:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 09:46:54 +0000</lastBuildDate>
+    <item>
+      <title>FedLearn: AI</title>
+      <link>https://kubaik.github.io/fedlearn-ai/</link>
+      <description>Unlock AI potential with Federated Learning. Learn implementation insights and benefits.</description>
+      <pubDate>Sun, 29 Mar 2026 09:46:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/fedlearn-ai/</guid>
+    </item>
     <item>
       <title>MLOps Simplified</title>
       <link>https://kubaik.github.io/mlops-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn Apache Kafka Streams for real-time data processing &amp; analysis.</description>
       <pubDate>Sat, 28 Mar 2026 15:38:24 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Cache</title>
-      <link>https://kubaik.github.io/boost-speed-cache/</link>
-      <description>Boost website speed with caching strategies using Redis &amp; Memcached.</description>
-      <pubDate>Sat, 28 Mar 2026 14:57:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-cache/</guid>
     </item>
   </channel>
 </rss>
