@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 19:23:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 19:38:19 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame debt.</description>
+      <pubDate>Sun, 29 Mar 2026 19:38:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>Boost ASO</title>
       <link>https://kubaik.github.io/boost-aso/</link>
@@ -138,13 +145,6 @@
       <description>Optimize WebAssembly performance with expert tips and tricks.</description>
       <pubDate>Sun, 29 Mar 2026 12:35:02 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-wa-speed/</guid>
-    </item>
-    <item>
-      <title>TypeScript: Scale Up</title>
-      <link>https://kubaik.github.io/typescript-scale-up/</link>
-      <description>Boost large-scale app development with TypeScript. Learn how to scale up with confidence.</description>
-      <pubDate>Sun, 29 Mar 2026 12:19:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-scale-up/</guid>
     </item>
   </channel>
 </rss>
