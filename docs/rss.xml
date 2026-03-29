@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 18:28:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 18:31:13 +0000</lastBuildDate>
+    <item>
+      <title>AR Dev 101</title>
+      <link>https://kubaik.github.io/ar-dev-101/</link>
+      <description>Learn AR development basics &amp; start building immersive experiences.</description>
+      <pubDate>Sun, 29 Mar 2026 18:31:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-dev-101/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Compare Scrum &amp; Kanban: choose the best Agile method</description>
       <pubDate>Sun, 29 Mar 2026 10:11:00 +0000</pubDate>
       <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
-    </item>
-    <item>
-      <title>FedLearn: AI</title>
-      <link>https://kubaik.github.io/fedlearn-ai/</link>
-      <description>Unlock AI potential with Federated Learning. Learn implementation insights and benefits.</description>
-      <pubDate>Sun, 29 Mar 2026 09:46:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/fedlearn-ai/</guid>
     </item>
   </channel>
 </rss>
