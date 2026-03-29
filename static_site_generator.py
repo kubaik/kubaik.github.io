@@ -422,6 +422,20 @@ class StaticSiteGenerator:
             color: #9ca3af;
         }
         .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
+        /* Suppress ALL browser-native input decorations */
+        .search-input::-webkit-search-decoration,
+        .search-input::-webkit-search-cancel-button,
+        .search-input::-webkit-search-results-button,
+        .search-input::-webkit-search-results-decoration,
+        .search-input::-webkit-contacts-auto-fill-button,
+        .search-input::-webkit-credentials-auto-fill-button,
+        .search-input::-ms-clear,
+        .search-input::-ms-reveal {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            visibility: hidden !important;
+        }
     </style>
 </head>
 <body>
@@ -457,6 +471,10 @@ class StaticSiteGenerator:
                     class="search-input"
                     placeholder="Search posts by title, description, or tags..."
                     autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    data-form-type="other"
                 >
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
