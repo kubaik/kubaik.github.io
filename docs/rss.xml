@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 13:28:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 13:31:39 +0000</lastBuildDate>
+    <item>
+      <title>API Test Made Easy</title>
+      <link>https://kubaik.github.io/api-test-made-easy/</link>
+      <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn more.</description>
+      <pubDate>Sun, 29 Mar 2026 13:31:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-test-made-easy/</guid>
+    </item>
     <item>
       <title>AutoML Accelerated</title>
       <link>https://kubaik.github.io/automl-accelerated/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform: code, deploy, and manage infrastructure with ease.</description>
       <pubDate>Sun, 29 Mar 2026 07:14:24 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-code-your-way/</guid>
-    </item>
-    <item>
-      <title>Rust: Safe Memory</title>
-      <link>https://kubaik.github.io/rust-safe-memory/</link>
-      <description>Learn how Rust ensures memory safety with its unique ownership system.</description>
-      <pubDate>Sun, 29 Mar 2026 05:46:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-safe-memory/</guid>
     </item>
   </channel>
 </rss>
