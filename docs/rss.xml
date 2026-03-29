@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 19:05:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 19:10:16 +0000</lastBuildDate>
+    <item>
+      <title>Double Your Assets</title>
+      <link>https://kubaik.github.io/double-your-assets/</link>
+      <description>Unlock efficiency with Digital Twin Tech. Learn how to double assets &amp; boost productivity in our latest post.</description>
+      <pubDate>Sun, 29 Mar 2026 19:10:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/double-your-assets/</guid>
+    </item>
+    <item>
+      <title>Data Warehousing Simplified</title>
+      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
+      <description>Simplify data management with our expert solutions. Learn more</description>
+      <pubDate>Sun, 29 Mar 2026 19:03:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
+    </item>
     <item>
       <title>Boost App Speed</title>
       <link>https://kubaik.github.io/boost-app-speed/</link>
@@ -131,13 +145,6 @@
       <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Right&apos;</description>
       <pubDate>Sun, 29 Mar 2026 11:59:39 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-right/</guid>
-    </item>
-    <item>
-      <title>Boost Models</title>
-      <link>https://kubaik.github.io/boost-models/</link>
-      <description>Unlock model potential with expert feature engineering techniques.</description>
-      <pubDate>Sun, 29 Mar 2026 11:35:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-models/</guid>
     </item>
   </channel>
 </rss>
