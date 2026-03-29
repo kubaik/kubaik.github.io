@@ -379,7 +379,7 @@ class StaticSiteGenerator:
         }
         .search-input {
             flex: 1;
-            padding: 8px 0;
+            padding: 4px 0;
             border: none !important;
             outline: none !important;
             box-shadow: none !important;
@@ -668,7 +668,7 @@ class StaticSiteGenerator:
         const loadMoreButton      = document.getElementById('load-more');
         const loadingSpinner      = document.getElementById('loading-spinner');
         const postsContainer      = document.getElementById('posts-container');
-        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
+        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle').true;
         const backToTopButton     = document.getElementById('back-to-top');
 
         let currentPage          = 1;
