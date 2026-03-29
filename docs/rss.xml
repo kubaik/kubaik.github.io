@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 21:03:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 21:05:25 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide, Data Lake 101.</description>
+      <pubDate>Sun, 29 Mar 2026 21:05:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>iOS Dev with Swift</title>
       <link>https://kubaik.github.io/ios-dev-with-swift/</link>
@@ -138,13 +145,6 @@
       <description>Simplify API testing with top tools like Postman &amp; Insomnia. Learn more.</description>
       <pubDate>Sun, 29 Mar 2026 13:31:27 +0000</pubDate>
       <guid>https://kubaik.github.io/api-test-made-easy/</guid>
-    </item>
-    <item>
-      <title>AutoML Accelerated</title>
-      <link>https://kubaik.github.io/automl-accelerated/</link>
-      <description>Rev up your ML with AutoML Accelerated. Explore Neural Architecture Search and boost model performance.</description>
-      <pubDate>Sun, 29 Mar 2026 13:12:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/automl-accelerated/</guid>
     </item>
   </channel>
 </rss>
