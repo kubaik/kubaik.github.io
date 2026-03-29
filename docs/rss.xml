@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 10:23:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 10:25:17 +0000</lastBuildDate>
+    <item>
+      <title>Design Smarter</title>
+      <link>https://kubaik.github.io/design-smarter/</link>
+      <description>Elevate your online presence with responsive web design techniques and expert tips.</description>
+      <pubDate>Sun, 29 Mar 2026 10:25:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smarter/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Unlock top tech leadership skills to drive innovation and success.</description>
       <pubDate>Sat, 28 Mar 2026 17:37:14 +0000</pubDate>
       <guid>https://kubaik.github.io/lead-tech/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials, including arrow functions, classes, and more.</description>
-      <pubDate>Sat, 28 Mar 2026 16:43:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
