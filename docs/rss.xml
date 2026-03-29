@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2026 23:38:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 03:20:23 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS dev with Swift. Build powerful apps with ease.</description>
+      <pubDate>Sun, 29 Mar 2026 03:20:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>Cyber Safe</title>
       <link>https://kubaik.github.io/cyber-safe/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Jamstack architecture boosts site speed &amp; security with modern web development techniques.</description>
       <pubDate>Sat, 28 Mar 2026 09:46:42 +0000</pubDate>
       <guid>https://kubaik.github.io/jamstack-fast-secure/</guid>
-    </item>
-    <item>
-      <title>Debug Smarter</title>
-      <link>https://kubaik.github.io/debug-smarter/</link>
-      <description>Master debugging with expert techniques &amp; tools.</description>
-      <pubDate>Sat, 28 Mar 2026 09:40:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-smarter/</guid>
     </item>
   </channel>
 </rss>
