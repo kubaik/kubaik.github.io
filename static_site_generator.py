@@ -353,7 +353,7 @@ class StaticSiteGenerator:
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
     <style>
         .search-container {
-            margin: 1rem 0;
+            margin: 0.3rem 0 1rem;
             max-width: 400px;
         }
         .search-wrapper {
