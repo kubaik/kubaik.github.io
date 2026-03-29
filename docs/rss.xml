@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 20:53:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2026 20:55:42 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev with Swift</title>
+      <link>https://kubaik.github.io/ios-dev-with-swift/</link>
+      <description>Learn iOS development with Swift. Discover tips, tutorials, and best practices.</description>
+      <pubDate>Sun, 29 Mar 2026 20:55:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
+    </item>
     <item>
       <title>Lazy Load Done</title>
       <link>https://kubaik.github.io/lazy-load-done/</link>
@@ -138,13 +145,6 @@
       <description>Rev up your ML with AutoML Accelerated. Explore Neural Architecture Search and boost model performance.</description>
       <pubDate>Sun, 29 Mar 2026 13:12:22 +0000</pubDate>
       <guid>https://kubaik.github.io/automl-accelerated/</guid>
-    </item>
-    <item>
-      <title>Cloud Power: Azure</title>
-      <link>https://kubaik.github.io/cloud-power-azure/</link>
-      <description>Unlock cloud potential with Azure. Discover scalable solutions &amp; transform your business.</description>
-      <pubDate>Sun, 29 Mar 2026 12:51:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-power-azure/</guid>
     </item>
   </channel>
 </rss>
