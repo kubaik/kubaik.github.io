@@ -817,7 +817,7 @@ class StaticSiteGenerator:
             const time = document.createElement('time');
             time.dateTime   = post.created_at;
             time.textContent = formatDisplayDate(post.created_at);
-            meta.appendChild(time);
+            
             article.appendChild(meta);
 
             return article;

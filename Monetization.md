@@ -93,8 +93,8 @@ The enhanced system I provided automates much of this process, but you'll need t
 
 How to Use:
 
-Initialize: python blog_system.py init
-Configure: Edit config.yaml and add your Google AdSense ID (format: ca-pub-xxxxxxxxxx)
+Initialize: 
+Configure: Edit config.yaml and python blog_system.py initadd your Google AdSense ID (format: ca-pub-xxxxxxxxxx)
 Generate: python blog_system.py auto to create posts with ads
 Build: python blog_system.py build to rebuild with all features
 test 
