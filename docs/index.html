@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,98 +79,35 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="alternate" type="application/rss+xml" title="Tech Blog" href="/rss.xml">
     <style>
-        .search-container {
-            margin: 0;
-            max-width: 400px;
-        }
+        .search-container { margin: 0 0 1.5rem 0; max-width: 420px; }
         .search-wrapper {
-            display: flex;
-            align-items: center;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 0 12px;
-            background: #fff;
-            transition: border-color 0.2s;
-            box-shadow: none;
-            overflow: hidden;
+            display: flex; align-items: center;
+            border: 2px solid #e0e0e0; border-radius: 50px;
+            padding: 0 12px; background: #fff;
+            transition: border-color 0.2s; overflow: hidden;
         }
-        .search-wrapper:focus-within {
-            border-color: #6366f1;
-        }
-        .search-icon {
-            color: #9ca3af;
-            pointer-events: none;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
-        }
+        .search-wrapper:focus-within { border-color: #6366f1; }
+        .search-icon { color: #9ca3af; pointer-events: none; flex-shrink: 0; display: flex; align-items: center; margin-right: 8px; }
         .search-input {
-            flex: 1;
-            padding: 4px 0;
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            font-size: 0.95rem;
-            background: transparent;
-            box-sizing: border-box;
-            border-radius: 0;
+            flex: 1; padding: 8px 0;
+            border: none !important; outline: none !important; box-shadow: none !important;
+            -webkit-appearance: none; appearance: none;
+            font-size: 0.95rem; background: transparent; border-radius: 0;
         }
-        .clear-search {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #9ca3af;
-            padding: 2px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-        }
-        .clear-search:hover { color: #333; }
-        .search-results-count {
-            text-align: left;
-            margin-top: 0.4rem;
-            color: #666;
-            font-size: 0.85rem;
-            min-height: 1.2em;
-        }
-        .search-highlight {
-            background: #fef08a;
-            border-radius: 2px;
-            padding: 0 1px;
-        }
-        .post-card.hidden-by-search {
-            display: none;
-        }
-        .no-results-message {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #666;
-        }
-        .no-results-message svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-            color: #9ca3af;
-        }
-        .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
-        /* Suppress ALL browser-native input decorations */
         .search-input::-webkit-search-decoration,
         .search-input::-webkit-search-cancel-button,
-        .search-input::-webkit-search-results-button,
-        .search-input::-webkit-search-results-decoration,
-        .search-input::-webkit-contacts-auto-fill-button,
         .search-input::-webkit-credentials-auto-fill-button,
-        .search-input::-ms-clear,
-        .search-input::-ms-reveal {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-            visibility: hidden !important;
+        .search-input::-ms-clear { display: none !important; width: 0 !important; }
+        .clear-search {
+            background: none; border: none; cursor: pointer;
+            color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
         }
+        .clear-search:hover { color: #333; }
+        .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
+        .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
+        .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
+        .no-results-message svg { width: 48px; height: 48px; margin-bottom: 1rem; color: #9ca3af; display: block; margin: 0 auto 1rem; }
+        .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
     </style>
 </head>
 <body>
@@ -196,24 +132,16 @@
         <!-- Search Bar -->
         <div class="search-container">
             <div class="search-wrapper">
-                <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
                     <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                          stroke-linejoin="round"/>
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <input
-                    type="text"
-                    id="search-input"
-                    class="search-input"
+                <input type="text" id="search-input" class="search-input"
                     placeholder="Search posts by title, description, or tags..."
-                    autocomplete="off"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                    data-form-type="other"
-                >
+                    autocomplete="off" autocorrect="off" autocapitalize="off"
+                    spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                         <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 </button>
@@ -225,6 +153,22 @@
             <h2>Latest Posts</h2>
             
             <div id="posts-container" class="post-grid">
+                
+                <article class="post-card">
+                    <h3><a href="/go-concurrency/">Go Concurrency</a></h3>
+                    <p class="post-excerpt">Learn Go concurrency basics & best practices.</p>
+                    
+                    <div class="tags">
+                        
+                        <span class="tag">CloudNative</span>
+                        
+                        <span class="tag">CleanCode</span>
+                        
+                        <span class="tag">GoLang</span>
+                        
+                    </div>
+                    
+                </article>
                 
                 <article class="post-card">
                     <h3><a href="/multi-cloud-future/">Multi-Cloud: Future</a></h3>
@@ -370,22 +314,6 @@
                     
                 </article>
                 
-                <article class="post-card">
-                    <h3><a href="/cloud-power-azure/">Cloud Power: Azure</a></h3>
-                    <p class="post-excerpt">Unlock cloud potential with Azure. Discover scalable solutions & transform your business.</p>
-                    
-                    <div class="tags">
-                        
-                        <span class="tag">TechTips</span>
-                        
-                        <span class="tag">developer</span>
-                        
-                        <span class="tag">TypeScript</span>
-                        
-                    </div>
-                    
-                </article>
-                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -404,12 +332,11 @@
 
             <div class="scroll-options">
                 <label class="toggle-switch">
-                    <input type="checkbox" id="infinite-scroll-toggle" >
+                    <input type="checkbox" id="infinite-scroll-toggle">
                     <span class="slider"></span>
                     Enable Infinite Scroll
                 </label>
             </div>
-
             
         </section>
     </main>
@@ -435,75 +362,153 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        // ─── SEARCH ──────────────────────────────────────────────────────────
-        const searchInput       = document.getElementById('search-input');
-        const clearSearchBtn    = document.getElementById('clear-search');
-        const resultsCount      = document.getElementById('search-results-count');
+        // ── ALL SHARED STATE UP FRONT ─────────────────────────────────────────
+        // Declared here so both search and load-more can reference them safely.
+        const searchInput          = document.getElementById('search-input');
+        const clearSearchBtn       = document.getElementById('clear-search');
+        const resultsCount         = document.getElementById('search-results-count');
+        const postsContainer       = document.getElementById('posts-container');
+        const loadMoreButton       = document.getElementById('load-more');
+        const loadingSpinner       = document.getElementById('loading-spinner');
+        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
+        const backToTopButton      = document.getElementById('back-to-top');
 
-        // Cache original text into data attributes once on load so we never
-        // read stale / already-highlighted innerHTML during subsequent searches.
-        function cacheCardText() {
-            document.querySelectorAll('.post-card').forEach(card => {
-                const link    = card.querySelector('h3 a');
-                const excerpt = card.querySelector('.post-excerpt');
-                if (link    && !link.dataset.orig)    link.dataset.orig    = link.textContent;
-                if (excerpt && !excerpt.dataset.orig) excerpt.dataset.orig = excerpt.textContent;
-            });
+        const postsPerPage         = 10;
+        let   allPosts             = [];   // populated by fetch below
+        let   currentPage          = 1;
+        let   isLoading            = false;
+        let   searchActive         = false;
+        let   infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
+
+        if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
+
+        // ── FETCH ALL POSTS JSON ──────────────────────────────────────────────
+        // Both search (full-corpus) and load-more depend on this array.
+        fetch('/posts.json')
+            .then(r => r.json())
+            .then(posts => {
+                allPosts = posts;
+                updateLoadMoreButton();
+                // Re-run search if user typed before the fetch completed
+                if (searchInput && searchInput.value.trim()) {
+                    performSearch(searchInput.value.trim().toLowerCase());
+                }
+            })
+            .catch(err => console.error('posts.json fetch failed:', err));
+
+        // ── HELPERS ──────────────────────────────────────────────────────────
+        function escapeRe(s) {
+            return s.replace(/[.*+?^${}()|[\]\]/g, '\$&');
         }
-        cacheCardText();
-
-        function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
         function highlight(text, query) {
-            return text.replace(new RegExp('(' + escapeRe(query) + ')', 'gi'),
-                                '<span class="search-highlight">$1</span>');
+            return text.replace(
+                new RegExp('(' + escapeRe(query) + ')', 'gi'),
+                '<span class="search-highlight">$1</span>'
+            );
         }
 
-        function restoreCard(card) {
-            const link    = card.querySelector('h3 a');
-            const excerpt = card.querySelector('.post-excerpt');
-            if (link    && link.dataset.orig)    link.textContent    = link.dataset.orig;
-            if (excerpt && excerpt.dataset.orig) excerpt.textContent = excerpt.dataset.orig;
+        function formatDisplayDate(iso) {
+            try {
+                const d = new Date(iso);
+                return d.getDate() + ' ' +
+                    ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'][d.getMonth()] +
+                    ' ' + d.getFullYear();
+            } catch { return iso.split('T')[0]; }
         }
+
+        function createPostElement(post) {
+            const article  = document.createElement('article');
+            article.className = 'post-card';
+
+            const h3   = document.createElement('h3');
+            const link = document.createElement('a');
+            link.href        = '/' + post.slug + '/';
+            link.textContent = post.title;
+            h3.appendChild(link);
+
+            const excerpt = document.createElement('p');
+            excerpt.className   = 'post-excerpt';
+            excerpt.textContent = post.meta_description;
+
+            article.appendChild(h3);
+            article.appendChild(excerpt);
+
+            if (post.tags && post.tags.length > 0) {
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'tags';
+                post.tags.slice(0, 3).forEach(t => {
+                    const span = document.createElement('span');
+                    span.className   = 'tag';
+                    span.textContent = t;
+                    tagsDiv.appendChild(span);
+                });
+                article.appendChild(tagsDiv);
+            }
+
+            const meta = document.createElement('div');
+            meta.className = 'post-meta';
+            const time = document.createElement('time');
+            time.dateTime    = post.created_at;
+            time.textContent = formatDisplayDate(post.created_at);
+            meta.appendChild(time);
+            article.appendChild(meta);
+
+            return article;
+        }
+
+        // ── SEARCH ───────────────────────────────────────────────────────────
+        // Searches ALL posts from allPosts JSON — not just the ones in the DOM.
+        // Replaces the container contents with matching results and hides
+        // load-more/infinite-scroll controls while a search is active.
 
         function performSearch(query) {
-            let visible = 0;
-            document.querySelectorAll('.post-card').forEach(card => {
-                const link    = card.querySelector('h3 a');
-                const excerpt = card.querySelector('.post-excerpt');
-                const title   = (link?.dataset.orig    || '').toLowerCase();
-                const desc    = (excerpt?.dataset.orig || '').toLowerCase();
-                const tags    = Array.from(card.querySelectorAll('.tag'))
-                                     .map(t => t.textContent.toLowerCase());
+            if (!allPosts.length) return; // wait for fetch
+            searchActive = true;
 
-                const match = title.includes(query) || desc.includes(query)
-                              || tags.some(t => t.includes(query));
-
-                if (match) {
-                    card.classList.remove('hidden-by-search');
-                    if (link    && link.dataset.orig)    link.innerHTML    = highlight(link.dataset.orig,    query);
-                    if (excerpt && excerpt.dataset.orig) excerpt.innerHTML = highlight(excerpt.dataset.orig, query);
-                    visible++;
-                } else {
-                    card.classList.add('hidden-by-search');
-                    restoreCard(card);
-                }
+            const matched = allPosts.filter(post => {
+                const t = (post.title           || '').toLowerCase();
+                const d = (post.meta_description|| '').toLowerCase();
+                const g = (post.tags            || []).map(x => x.toLowerCase());
+                return t.includes(query) || d.includes(query) || g.some(x => x.includes(query));
             });
 
-            // results count
-            resultsCount.textContent = visible === 0 ? `No results for "${query}"`
-                                     : visible === 1 ? '1 post found'
-                                     : `${visible} posts found`;
+            // Render only matched posts
+            postsContainer.innerHTML = '';
+            matched.forEach(post => {
+                const el      = createPostElement(post);
+                const link    = el.querySelector('h3 a');
+                const excerpt = el.querySelector('.post-excerpt');
+                if (link)    link.innerHTML    = highlight(link.textContent,    query);
+                if (excerpt) excerpt.innerHTML = highlight(excerpt.textContent, query);
+                postsContainer.appendChild(el);
+            });
 
-            // no-results message
+            // Hide pagination while searching
+            const lmc = document.getElementById('load-more-container');
+            if (lmc) lmc.style.display = 'none';
+
+            // Results count
+            const n = matched.length;
+            resultsCount.textContent = n === 0 ? 'No results for "' + query + '"'
+                                     : n === 1 ? '1 post found'
+                                     : n + ' posts found';
+
+            // No-results block
             let noRes = document.getElementById('no-results');
-            if (visible === 0) {
+            if (n === 0) {
                 if (!noRes) {
                     noRes = document.createElement('div');
-                    noRes.id = 'no-results';
+                    noRes.id        = 'no-results';
                     noRes.className = 'no-results-message';
-                    noRes.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><h3>No posts found</h3><p>Try different keywords or clear the search.</p>';
-                    document.getElementById('posts-container').after(noRes);
+                    noRes.innerHTML =
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">' +
+                        '<circle cx="11" cy="11" r="8"/>' +
+                        '<path d="m21 21-4.35-4.35"/></svg>' +
+                        '<h3>No posts found</h3>' +
+                        '<p>Try different keywords or clear the search.</p>';
+                    postsContainer.after(noRes);
                 }
             } else if (noRes) {
                 noRes.remove();
@@ -511,13 +516,21 @@
         }
 
         function clearSearch() {
-            document.querySelectorAll('.post-card').forEach(card => {
-                card.classList.remove('hidden-by-search');
-                restoreCard(card);
-            });
+            searchActive = false;
+
+            // Re-render first page from allPosts
+            postsContainer.innerHTML = '';
+            allPosts.slice(0, postsPerPage).forEach(post =>
+                postsContainer.appendChild(createPostElement(post))
+            );
+            currentPage = 1;
+
             resultsCount.textContent = '';
             const noRes = document.getElementById('no-results');
             if (noRes) noRes.remove();
+
+            // Restore load-more / infinite scroll
+            updateLoadMoreButton();
         }
 
         if (searchInput) {
@@ -543,28 +556,7 @@
             });
         }
 
-        // ─── LOAD MORE / INFINITE SCROLL ────────────────────────────────────
-        const loadMoreButton      = document.getElementById('load-more');
-        const loadingSpinner      = document.getElementById('loading-spinner');
-        const postsContainer      = document.getElementById('posts-container');
-        const infiniteScrollToggle = document.getElementById('infinite-scroll-toggle');
-        const backToTopButton     = document.getElementById('back-to-top');
-
-        let currentPage          = 1;
-        const postsPerPage       = 10;
-        let allPosts             = [];
-        let isLoading            = false;
-        let infiniteScrollEnabled = localStorage.getItem('infiniteScroll') === 'true';
-
-        if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
-
-        fetch('/posts.json')
-            .then(r => r.json())
-            .then(posts => {
-                allPosts = posts;
-                updateLoadMoreButton();
-            })
-            .catch(err => console.error('Error loading posts.json:', err));
+        // ── LOAD MORE / INFINITE SCROLL ───────────────────────────────────────
 
         if (loadMoreButton) {
             loadMoreButton.addEventListener('click', function (e) {
@@ -603,7 +595,7 @@
         }
 
         function loadMorePosts() {
-            if (isLoading || !hasMorePosts()) return;
+            if (isLoading || searchActive || !hasMorePosts()) return;
             isLoading = true;
             if (loadingSpinner) loadingSpinner.style.display = 'block';
             if (loadMoreButton) { loadMoreButton.disabled = true; loadMoreButton.style.opacity = '0.6'; }
@@ -613,18 +605,13 @@
                 const start = (currentPage - 1) * postsPerPage;
                 allPosts.slice(start, start + postsPerPage).forEach((post, i) => {
                     const el = createPostElement(post);
-                    el.style.opacity = '0';
+                    el.style.opacity   = '0';
                     el.style.transform = 'translateY(20px)';
                     postsContainer.appendChild(el);
-                    // cache text for search on dynamically added cards
-                    const link    = el.querySelector('h3 a');
-                    const excerpt = el.querySelector('.post-excerpt');
-                    if (link)    link.dataset.orig    = link.textContent;
-                    if (excerpt) excerpt.dataset.orig = excerpt.textContent;
                     setTimeout(() => {
                         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
+                        el.style.opacity    = '1';
+                        el.style.transform  = 'translateY(0)';
                     }, i * 100);
                 });
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
@@ -637,67 +624,20 @@
         function hasMorePosts() { return currentPage * postsPerPage < allPosts.length; }
 
         function updateLoadMoreButton() {
-            if (!loadMoreButton) return;
-            const show = hasMorePosts() && !infiniteScrollEnabled;
-            loadMoreButton.style.display = show ? 'block' : 'none';
+            if (searchActive) return; // leave hidden while searching
+            const show      = hasMorePosts() && !infiniteScrollEnabled;
             const container = document.getElementById('load-more-container');
-            if (container) container.style.display = show ? 'block' : 'none';
+            if (loadMoreButton) loadMoreButton.style.display = show ? 'block' : 'none';
+            if (container)      container.style.display      = show ? 'block' : 'none';
         }
 
-        function enableInfiniteScroll()  { window.addEventListener('scroll', infiniteScrollHandler); }
+        function enableInfiniteScroll()  { window.addEventListener('scroll',    infiniteScrollHandler); }
         function disableInfiniteScroll() { window.removeEventListener('scroll', infiniteScrollHandler); }
 
         function infiniteScrollHandler() {
-            if (isLoading || !hasMorePosts()) return;
+            if (isLoading || searchActive || !hasMorePosts()) return;
             if (window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight - 1000)
                 loadMorePosts();
-        }
-
-        function formatDisplayDate(iso) {
-            try {
-                const d = new Date(iso);
-                return `${d.getDate()} ${['January','February','March','April','May','June',
-                    'July','August','September','October','November','December'][d.getMonth()]} ${d.getFullYear()}`;
-            } catch { return iso.split('T')[0]; }
-        }
-
-        function createPostElement(post) {
-            const article = document.createElement('article');
-            article.className = 'post-card';
-
-            const h3   = document.createElement('h3');
-            const link = document.createElement('a');
-            link.href        = '/' + post.slug + '/';
-            link.textContent = post.title;
-            h3.appendChild(link);
-
-            const excerpt = document.createElement('p');
-            excerpt.className   = 'post-excerpt';
-            excerpt.textContent = post.meta_description;
-
-            article.appendChild(h3);
-            article.appendChild(excerpt);
-
-            if (post.tags && post.tags.length > 0) {
-                const tags = document.createElement('div');
-                tags.className = 'tags';
-                post.tags.slice(0, 3).forEach(t => {
-                    const span = document.createElement('span');
-                    span.className   = 'tag';
-                    span.textContent = t;
-                    tags.appendChild(span);
-                });
-                article.appendChild(tags);
-            }
-
-            const meta = document.createElement('div');
-            meta.className = 'post-meta';
-            const time = document.createElement('time');
-            time.dateTime   = post.created_at;
-            time.textContent = formatDisplayDate(post.created_at);
-            article.appendChild(meta);
-
-            return article;
         }
     });
     </script>
