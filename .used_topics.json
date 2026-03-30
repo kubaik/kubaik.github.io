@@ -8,5 +8,6 @@
   "Data Lake Architecture",
   "Profiling and Benchmarking",
   "AI Model Training Best Practices",
-  "Delta Lake and Data Lakehouse"
+  "Delta Lake and Data Lakehouse",
+  "CQRS and Event Sourcing"
 ]

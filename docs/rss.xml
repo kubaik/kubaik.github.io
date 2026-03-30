@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Mar 2026 23:40:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 03:23:45 +0000</lastBuildDate>
+    <item>
+      <title>CQRS Unlocked</title>
+      <link>https://kubaik.github.io/cqrs-unlocked/</link>
+      <description>Unlock scalable software with CQRS &amp; Event Sourcing. Learn patterns &amp; best practices.</description>
+      <pubDate>Mon, 30 Mar 2026 03:23:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
+    </item>
     <item>
       <title>Delta Lake: The Future</title>
       <link>https://kubaik.github.io/delta-lake-the-future/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
       <pubDate>Sun, 29 Mar 2026 17:11:20 +0000</pubDate>
       <guid>https://kubaik.github.io/app-architecture/</guid>
-    </item>
-    <item>
-      <title>Pen Test 101</title>
-      <link>https://kubaik.github.io/pen-test-101/</link>
-      <description>Learn pen test basics &amp; methodologies to secure your network with Pen Test 101.</description>
-      <pubDate>Sun, 29 Mar 2026 16:43:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/pen-test-101/</guid>
     </item>
   </channel>
 </rss>
