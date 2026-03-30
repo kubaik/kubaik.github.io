@@ -442,7 +442,6 @@ nav a:last-child::after {
 
 /* Infinite Scroll Toggle */
 .scroll-options {
-    display:none;
     text-align: center;
     margin: 2rem 0;
 }
