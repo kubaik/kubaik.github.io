@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 15:23:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 15:26:05 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD On-The-Go</title>
+      <link>https://kubaik.github.io/cicd-on-the-go/</link>
+      <description>Streamline mobile app development with CI/CD on-the-go automation</description>
+      <pubDate>Mon, 30 Mar 2026 15:25:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
+    </item>
     <item>
       <title>Mesh Up</title>
       <link>https://kubaik.github.io/mesh-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with Digital Twin Tech. Learn how to double assets &amp; boost productivity in our latest post.</description>
       <pubDate>Sun, 29 Mar 2026 19:10:05 +0000</pubDate>
       <guid>https://kubaik.github.io/double-your-assets/</guid>
-    </item>
-    <item>
-      <title>Data Warehousing Simplified</title>
-      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
-      <description>Simplify data management with our expert solutions. Learn more</description>
-      <pubDate>Sun, 29 Mar 2026 19:03:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
     </item>
   </channel>
 </rss>
