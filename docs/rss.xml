@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 08:04:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 08:05:58 +0000</lastBuildDate>
+    <item>
+      <title>PHP Evolved</title>
+      <link>https://kubaik.github.io/php-evolved/</link>
+      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
+      <pubDate>Mon, 30 Mar 2026 08:05:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/php-evolved/</guid>
+    </item>
     <item>
       <title>Scale Smart</title>
       <link>https://kubaik.github.io/scale-smart/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
       <pubDate>Sun, 29 Mar 2026 17:38:54 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-ent-apps/</guid>
-    </item>
-    <item>
-      <title>Balance Done</title>
-      <link>https://kubaik.github.io/balance-done/</link>
-      <description>Master load balancing techniques for optimized app performance.</description>
-      <pubDate>Sun, 29 Mar 2026 17:33:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-done/</guid>
     </item>
   </channel>
 </rss>
