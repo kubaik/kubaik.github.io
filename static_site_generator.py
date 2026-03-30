@@ -359,7 +359,7 @@ class StaticSiteGenerator:
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <input type="text" id="search-input" class="search-input"
-                    placeholder="Search posts by title, description, or tags..."
+                    placeholder="Search by title, description, or tags....."
                     autocomplete="off" autocorrect="off" autocapitalize="off"
                     spellcheck="false" data-form-type="other">
                 <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
