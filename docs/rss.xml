@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 17:38:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 18:07:02 +0000</lastBuildDate>
+    <item>
+      <title>AI Revolution</title>
+      <link>https://kubaik.github.io/ai-revolution/</link>
+      <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
+      <pubDate>Mon, 30 Mar 2026 18:06:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revolution/</guid>
+    </item>
     <item>
       <title>NFT Tech Unleashed</title>
       <link>https://kubaik.github.io/nft-tech-unleashed/</link>
@@ -138,13 +145,6 @@
       <description>Learn iOS development with Swift. Discover tips, tutorials, and best practices.</description>
       <pubDate>Sun, 29 Mar 2026 20:55:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ios-dev-with-swift/</guid>
-    </item>
-    <item>
-      <title>Lazy Load Done</title>
-      <link>https://kubaik.github.io/lazy-load-done/</link>
-      <description>Boost site speed with lazy loading. Learn how to implement it effectively.</description>
-      <pubDate>Sun, 29 Mar 2026 20:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load-done/</guid>
     </item>
   </channel>
 </rss>
