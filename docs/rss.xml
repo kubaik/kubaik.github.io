@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 21:51:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 22:45:46 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
+      <pubDate>Mon, 30 Mar 2026 22:45:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse, revolutionizing analytics and storage.</description>
       <pubDate>Sun, 29 Mar 2026 23:40:45 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
-    </item>
-    <item>
-      <title>Train Smarter</title>
-      <link>https://kubaik.github.io/train-smarter/</link>
-      <description>Boost AI model performance with expert training tips and best practices.</description>
-      <pubDate>Sun, 29 Mar 2026 22:39:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/train-smarter/</guid>
     </item>
   </channel>
 </rss>
