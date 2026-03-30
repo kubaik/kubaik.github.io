@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 17:33:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 17:38:01 +0000</lastBuildDate>
+    <item>
+      <title>NFT Tech Unleashed</title>
+      <link>https://kubaik.github.io/nft-tech-unleashed/</link>
+      <description>Unlock NFT potential: Explore tech &amp; use cases</description>
+      <pubDate>Mon, 30 Mar 2026 17:37:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/nft-tech-unleashed/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn how to implement it effectively.</description>
       <pubDate>Sun, 29 Mar 2026 20:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load-done/</guid>
-    </item>
-    <item>
-      <title>AR Dev 101</title>
-      <link>https://kubaik.github.io/ar-dev-101/</link>
-      <description>Learn AR development basics &amp; start building immersive experiences.</description>
-      <pubDate>Sun, 29 Mar 2026 20:39:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-dev-101/</guid>
     </item>
   </channel>
 </rss>
