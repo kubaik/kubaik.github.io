@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 19:10:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 20:55:41 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Mon, 30 Mar 2026 20:55:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>Debug Smarter</title>
       <link>https://kubaik.github.io/debug-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Optimize code with profiling &amp; benchmarking techniques to boost performance.</description>
       <pubDate>Sun, 29 Mar 2026 21:40:01 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-performance/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake basics &amp; architecture in our beginner&apos;s guide, Data Lake 101.</description>
-      <pubDate>Sun, 29 Mar 2026 21:05:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
