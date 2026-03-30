@@ -514,7 +514,6 @@ class StaticSiteGenerator:
 
         function formatDisplayDate(iso) {
             try {
-                console.log(iso)
                 var d = new Date(iso);
                 return d.getDate() + ' ' +
                     ['January','February','March','April','May','June',
