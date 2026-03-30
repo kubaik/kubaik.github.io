@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 16:28:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 16:31:08 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Boost query performance with expert database indexing strategies.</description>
+      <pubDate>Mon, 30 Mar 2026 16:30:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>CI/CD On-The-Go</title>
       <link>https://kubaik.github.io/cicd-on-the-go/</link>
@@ -138,13 +145,6 @@
       <description>Maximize app visibility with expert ASO tips and strategies.</description>
       <pubDate>Sun, 29 Mar 2026 19:23:35 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-aso/</guid>
-    </item>
-    <item>
-      <title>Double Your Assets</title>
-      <link>https://kubaik.github.io/double-your-assets/</link>
-      <description>Unlock efficiency with Digital Twin Tech. Learn how to double assets &amp; boost productivity in our latest post.</description>
-      <pubDate>Sun, 29 Mar 2026 19:10:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-your-assets/</guid>
     </item>
   </channel>
 </rss>
