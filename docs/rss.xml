@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 08:41:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 10:23:48 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Boost productivity with expert time management tips tailored for engineers.</description>
+      <pubDate>Mon, 30 Mar 2026 10:23:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>ES6+ Essentials</title>
       <link>https://kubaik.github.io/es6-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover top BI tools to boost business insights and decision-making.</description>
       <pubDate>Sun, 29 Mar 2026 18:54:29 +0000</pubDate>
       <guid>https://kubaik.github.io/bi-tools/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to ensure data quality &amp; compliance.</description>
-      <pubDate>Sun, 29 Mar 2026 18:41:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
