@@ -330,6 +330,16 @@ class StaticSiteGenerator:
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
         .no-results-message svg { width: 48px; height: 48px; margin-bottom: 1rem; color: #9ca3af; display: block; margin: 0 auto 1rem; }
         .no-results-message h3 { margin: 0 0 0.5rem; color: #333; }
+        .toggle-switch {
+        position: relative;
+        display: none !important;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #6c757d;
+        }
+
     </style>
 </head>
 <body>
