@@ -9,5 +9,6 @@
   "Profiling and Benchmarking",
   "AI Model Training Best Practices",
   "Delta Lake and Data Lakehouse",
-  "CQRS and Event Sourcing"
+  "CQRS and Event Sourcing",
+  "Scalability Patterns"
 ]
