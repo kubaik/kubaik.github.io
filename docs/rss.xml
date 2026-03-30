@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 08:05:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 08:21:57 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Maximize rewards with Reinforcement Learning strategies. Discover winning approaches.</description>
+      <pubDate>Mon, 30 Mar 2026 08:21:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>PHP Evolved</title>
       <link>https://kubaik.github.io/php-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of cloud computing with multi-cloud architecture.</description>
       <pubDate>Sun, 29 Mar 2026 17:59:11 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-cloud-future/</guid>
-    </item>
-    <item>
-      <title>Angular Ent Apps</title>
-      <link>https://kubaik.github.io/angular-ent-apps/</link>
-      <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
-      <pubDate>Sun, 29 Mar 2026 17:38:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/angular-ent-apps/</guid>
     </item>
   </channel>
 </rss>
