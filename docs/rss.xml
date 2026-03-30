@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 16:39:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 17:05:32 +0000</lastBuildDate>
+    <item>
+      <title>BI Essentials</title>
+      <link>https://kubaik.github.io/bi-essentials/</link>
+      <description>Unlock data insights with top BI tools and strategies.</description>
+      <pubDate>Mon, 30 Mar 2026 17:05:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/bi-essentials/</guid>
+    </item>
     <item>
       <title>Unlock GCP Power</title>
       <link>https://kubaik.github.io/unlock-gcp-power/</link>
@@ -138,13 +145,6 @@
       <description>Learn AR development basics &amp; start building immersive experiences.</description>
       <pubDate>Sun, 29 Mar 2026 20:39:36 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-dev-101/</guid>
-    </item>
-    <item>
-      <title>Tame Tech Debt</title>
-      <link>https://kubaik.github.io/tame-tech-debt/</link>
-      <description>Master tech debt management &amp; boost efficiency. Learn strategies to tame debt.</description>
-      <pubDate>Sun, 29 Mar 2026 19:38:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
     </item>
   </channel>
 </rss>
