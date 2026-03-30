@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Mar 2026 10:23:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2026 11:58:19 +0000</lastBuildDate>
+    <item>
+      <title>ML Anomaly Detection</title>
+      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
+      <description>Discover ML anomaly detection techniques to identify unusual patterns in data.</description>
+      <pubDate>Mon, 30 Mar 2026 11:58:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
+    </item>
     <item>
       <title>Engineer Your Time</title>
       <link>https://kubaik.github.io/engineer-your-time/</link>
@@ -138,13 +145,6 @@
       <description>Optimize app performance with expert tips and tools.</description>
       <pubDate>Sun, 29 Mar 2026 18:56:52 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-speed/</guid>
-    </item>
-    <item>
-      <title>BI Tools</title>
-      <link>https://kubaik.github.io/bi-tools/</link>
-      <description>Discover top BI tools to boost business insights and decision-making.</description>
-      <pubDate>Sun, 29 Mar 2026 18:54:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-tools/</guid>
     </item>
   </channel>
 </rss>
