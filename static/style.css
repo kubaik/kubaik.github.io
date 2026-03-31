@@ -354,7 +354,7 @@ nav a:last-child::after {
     display: block;
 }
 .post-content a:hover {
-    text-decoration: underline;
+    border-bottom-color: #764ba2;
 }
 .post-card a {
     text-decoration: none;
@@ -1256,7 +1256,7 @@ main {
     
     .post-content a {
         color: #667eea;
-        text-decoration: underline;
+        border-bottom: 2px solid transparent;
     }
     
     .post-content pre {
