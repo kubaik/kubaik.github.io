@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 12:12:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 12:20:00 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Optimize frontend performance with expert tuning tips.</description>
+      <pubDate>Tue, 31 Mar 2026 12:19:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>Web3: The DApp Era</title>
       <link>https://kubaik.github.io/web3-the-dapp-era/</link>
@@ -138,13 +145,6 @@
       <description>Discover the AI Revolution: Explore Generative AI &amp; Large Language Models</description>
       <pubDate>Mon, 30 Mar 2026 18:06:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revolution/</guid>
-    </item>
-    <item>
-      <title>NFT Tech Unleashed</title>
-      <link>https://kubaik.github.io/nft-tech-unleashed/</link>
-      <description>Unlock NFT potential: Explore tech &amp; use cases</description>
-      <pubDate>Mon, 30 Mar 2026 17:37:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech-unleashed/</guid>
     </item>
   </channel>
 </rss>
