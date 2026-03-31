@@ -376,7 +376,7 @@ class StaticSiteGenerator:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-               <a href="{{ base_path }}/{{ post.slug }}/" class="post-card-link">
+              <a href="{{ base_path }}/{{ post.slug }}/" class="post-card-link">
                     <article class="post-card">
                         <h3>{{ post.title }}</h3>
                         <p class="post-excerpt">{{ post.meta_description }}</p>
