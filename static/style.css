@@ -354,10 +354,15 @@ nav a:last-child::after {
     display: block;
 }
 a:hover {
-    text-decoration: none;
+    text-decoration: underline;
 }
-.post-card .post-excerpt a:hover {
-    text-decoration: none;
+
+.post-card .post-excerpt a,
+.post-card .post-excerpt a:hover,
+.post-card .post-excerpt a:focus,
+.post-card .post-excerpt a:active {
+    text-decoration: none !important;
+    color: inherit;
 }
 .post-card-link:hover .post-excerpt {
     color: #667eea;
