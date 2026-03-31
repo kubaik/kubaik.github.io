@@ -329,13 +329,13 @@ nav a:last-child::after {
     font-size: 1.4rem;
 }
 
-.post-card h3 a {
+.post-card h3 a , .post-card p a {
     text-decoration: none;
     color: #2c3e50;
     transition: color 0.3s;
 }
 
-.post-card h3 a:hover , .post-grid p a:hover {
+.post-card h3 a:hover , .post-card p a:hover {
     color: #667eea;
 }
 
