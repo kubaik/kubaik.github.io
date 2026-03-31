@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 05:18:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 07:27:30 +0000</lastBuildDate>
+    <item>
+      <title>Design Smart</title>
+      <link>https://kubaik.github.io/design-smart/</link>
+      <description>Learn expert responsive web design techniques to create mobile-friendly sites.</description>
+      <pubDate>Tue, 31 Mar 2026 07:27:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-smart/</guid>
+    </item>
     <item>
       <title>Boost Code: Top VS Code Extensions</title>
       <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
@@ -138,13 +145,6 @@
       <description>Maximize rewards with Reinforcement Learning strategies. Discover winning approaches.</description>
       <pubDate>Mon, 30 Mar 2026 08:21:46 +0000</pubDate>
       <guid>https://kubaik.github.io/rl-wins/</guid>
-    </item>
-    <item>
-      <title>PHP Evolved</title>
-      <link>https://kubaik.github.io/php-evolved/</link>
-      <description>Unlock PHP&apos;s full potential with modern development techniques.</description>
-      <pubDate>Mon, 30 Mar 2026 08:05:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/php-evolved/</guid>
     </item>
   </channel>
 </rss>
