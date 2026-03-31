@@ -330,7 +330,8 @@ nav a:last-child::after {
 }
 
 
-.post-card h3 a:hover , .post-card p a:hover {
+.post-card h3 a:hover,
+.post-card .post-excerpt a:hover {
     color: #667eea;
 }
 
@@ -355,7 +356,9 @@ nav a:last-child::after {
 a:hover {
     text-decoration: underline;
 }
-
+.post-card .post-excerpt a:hover {
+    text-decoration: none;
+}
 .post-card-link:hover .post-excerpt {
     color: #667eea;
 }

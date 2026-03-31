@@ -377,8 +377,11 @@ class StaticSiteGenerator:
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
               <article class="post-card">
-                    <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3>
-                    <p class="post-excerpt">{{ post.meta_description }}</p>
+                    <h3><a href="{{ base_path }}/{{ post.slug }}/">
+                           {{ post.title }}</a></h3>
+                    <p class="post-excerpt">
+                        <a href="{{ base_path }}/{{ post.slug }}/">
+                            {{ post.meta_description }}</a></p>
                     {% if post.tags %}
                     <div class="tags">
                         {% for tag in post.tags[:3] %}
@@ -386,7 +389,6 @@ class StaticSiteGenerator:
                         {% endfor %}
                     </div>
                     {% endif %}
-                   
                 </article>
                 {% endfor %}
             </div>
