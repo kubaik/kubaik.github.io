@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 22:41:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 23:41:21 +0000</lastBuildDate>
+    <item>
+      <title>Canary Deploy</title>
+      <link>https://kubaik.github.io/canary-deploy/</link>
+      <description>Learn about Canary Deploy: a low-risk deployment strategy for smooth releases.</description>
+      <pubDate>Tue, 31 Mar 2026 23:41:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/canary-deploy/</guid>
+    </item>
     <item>
       <title>Vue.js: Build Smart</title>
       <link>https://kubaik.github.io/vuejs-build-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover Web3 &amp; the future of DApps, revolutionizing online interactions.</description>
       <pubDate>Tue, 31 Mar 2026 11:59:44 +0000</pubDate>
       <guid>https://kubaik.github.io/web3-the-dapp-era/</guid>
-    </item>
-    <item>
-      <title>IoT Device Control</title>
-      <link>https://kubaik.github.io/iot-device-control/</link>
-      <description>Securely manage IoT devices with expert control solutions.</description>
-      <pubDate>Tue, 31 Mar 2026 11:02:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/iot-device-control/</guid>
     </item>
   </channel>
 </rss>
