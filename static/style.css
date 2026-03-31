@@ -93,6 +93,10 @@ a {
     text-decoration: none;
     color: inherit;
 }
+.post-card-link * {
+    text-decoration: none;
+    color: inherit;
+}
 
 .post-card {
     padding: 1.5rem;
