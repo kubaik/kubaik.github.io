@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 13:43:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 13:49:54 +0000</lastBuildDate>
+    <item>
+      <title>Python for Data</title>
+      <link>https://kubaik.github.io/python-for-data/</link>
+      <description>Master data science with Python. Learn key libraries &amp; techniques.</description>
+      <pubDate>Tue, 31 Mar 2026 13:49:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-data/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Build scalable Angular enterprise apps with expert guides and best practices.</description>
       <pubDate>Mon, 30 Mar 2026 23:43:02 +0000</pubDate>
       <guid>https://kubaik.github.io/angular-ent-apps/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
-      <pubDate>Mon, 30 Mar 2026 22:45:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
