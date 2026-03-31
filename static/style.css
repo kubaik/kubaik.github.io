@@ -324,7 +324,7 @@ nav a:last-child::after {
     box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
-.post-card h3 {
+.post-card h3  {
     margin-bottom: 1rem;
     font-size: 1.4rem;
 }
@@ -335,7 +335,7 @@ nav a:last-child::after {
     transition: color 0.3s;
 }
 
-.post-card h3 a:hover {
+.post-card h3 a:hover , .post-grid p a:hover {
     color: #667eea;
 }
 
