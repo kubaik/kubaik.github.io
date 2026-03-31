@@ -353,10 +353,13 @@ nav a:last-child::after {
     color: inherit;
     display: block;
 }
-a:hover {
+.post-content a:hover {
     text-decoration: underline;
 }
-
+.post-card a {
+    text-decoration: none;
+    color: inherit;
+}
 .post-card .post-excerpt a,
 .post-card .post-excerpt a:hover,
 .post-card .post-excerpt a:focus,
