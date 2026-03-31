@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 17:01:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 17:07:20 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
+      <pubDate>Tue, 31 Mar 2026 17:07:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>Unlock Azure</title>
       <link>https://kubaik.github.io/unlock-azure/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert responsive web design techniques to create mobile-friendly sites.</description>
       <pubDate>Tue, 31 Mar 2026 07:27:19 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smart/</guid>
-    </item>
-    <item>
-      <title>Boost Code: Top VS Code Extensions</title>
-      <link>https://kubaik.github.io/boost-code-top-vs-code-extensions/</link>
-      <description>Boost coding productivity with top VS Code extensions.</description>
-      <pubDate>Tue, 31 Mar 2026 05:18:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-code-top-vs-code-extensions/</guid>
     </item>
   </channel>
 </rss>
