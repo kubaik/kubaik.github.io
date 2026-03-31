@@ -648,15 +648,14 @@
     "topic": "ETL vs ELT Processes"
   },
   "internet_of_things_(iot)_architecture": {
-    "timestamp": "2026-03-26T07:20:06.314108",
+    "timestamp": "2026-03-31T09:10:37.017452",
     "hashtags": [
       "IoT",
       "SmartCities",
-      "EdgeComputing",
       "ArtificialIntelligence",
       "IoTArchitecture",
+      "EdgeComputing",
       "CloudNative",
-      "DigitalTransformation",
       "DeviceManagement"
     ],
     "topic": "Internet of Things (IoT) Architecture"
