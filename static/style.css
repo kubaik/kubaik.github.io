@@ -354,7 +354,7 @@ nav a:last-child::after {
     display: block;
 }
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 .post-card .post-excerpt a:hover {
     text-decoration: none;
