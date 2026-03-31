@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 09:18:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 09:34:41 +0000</lastBuildDate>
+    <item>
+      <title>WCAG Guide</title>
+      <link>https://kubaik.github.io/wcag-guide/</link>
+      <description>Learn web accessibility standards with our WCAG guide, ensuring inclusive digital experiences.</description>
+      <pubDate>Tue, 31 Mar 2026 09:34:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-guide/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Made Easy</title>
       <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Boost query performance with expert database indexing strategies.</description>
       <pubDate>Mon, 30 Mar 2026 16:30:57 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>CI/CD On-The-Go</title>
-      <link>https://kubaik.github.io/cicd-on-the-go/</link>
-      <description>Streamline mobile app development with CI/CD on-the-go automation</description>
-      <pubDate>Mon, 30 Mar 2026 15:25:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
     </item>
   </channel>
 </rss>
