@@ -329,11 +329,6 @@ nav a:last-child::after {
     font-size: 1.4rem;
 }
 
-.post-card h3 a , .post-card p a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: color 0.3s;
-}
 
 .post-card h3 a:hover , .post-card p a:hover {
     color: #667eea;
@@ -352,7 +347,24 @@ nav a:last-child::after {
     color: #6c757d;
     font-size: 0.9rem;
 }
- 
+.post-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.post-card-link:hover .post-excerpt {
+    color: #667eea;
+}
+
+.post-card-link:hover h3 {
+    color: #667eea;
+}
+
+.post-card h3,
+.post-card .post-excerpt {
+    transition: color 0.3s ease;
+}
 
 /* Enhanced Load More Section */
 .load-more-container {
