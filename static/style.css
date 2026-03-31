@@ -1,171 +1,1754 @@
-/* =========================
-   BASE / RESET
-========================= */
+/* =================================================================
+   CRITICAL FIX: POST HEADER CENTERING AND GRADIENT
+   Add this at the VERY TOP of your static/style.css file
+   ================================================================= */
+
+/* Force gradient header background on ALL post headers */
+header.post-header,
+.post-header,
+article.blog-post > header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 4rem 2rem 3rem 2rem !important;
+    margin: 0 -2rem 3rem -2rem !important;
+    border-radius: 25px!important;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
+}
+
+
+/* Force white color on title */
+header.post-header h1,
+.post-header h1,
+article.blog-post > header h1 {
+    color: white !important;
+    font-size: 2.75rem !important;
+    margin-bottom: 1.5rem !important;
+    font-weight: 800 !important;
+}
+
+/* Force tags to CENTER - this is critical */
+header.post-header .tags,
+.post-header .tags,
+article.blog-post > header .tags {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 2rem !important;
+    gap: 0.75rem !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
+/* Force tag styling with glassmorphism */
+header.post-header .tag,
+.post-header .tag,
+article.blog-post > header .tag {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    padding: 0.6rem 1.25rem !important;
+    border-radius: 50px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 600 !important;
+}
+
+/* Force date styling */
+header.post-header .post-meta,
+.post-header .post-meta,
+article.blog-post > header .post-meta {
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+    margin-top: 1.5rem !important;
+    border-radius: 25px!important;
+
+}
+
+header.post-header .post-meta time,
+.post-header .post-meta time {
+    background: rgba(255, 255, 255, 0.15) !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 50px !important;
+    color: white !important;
+}
+/* FORCE POST HEADER STYLES */
+header.post-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: 25px!important;
+}
+/* ============================================
+   BLOG POST HEADER - CRITICAL STYLES
+   ============================================ */
+
+/* Force post header styles to apply */
+article.blog-post header.post-header,
+.blog-post .post-header,
+header.post-header {
+    margin: 0 -2rem 3rem -2rem !important;
+    padding: 4rem 2rem 3rem 2rem !important;
+    text-align: center !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-radius: 25px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Force tags to center */
+article.blog-post .post-header .tags,
+.blog-post .post-header .tags,
+header.post-header .tags {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 2rem !important;
+    gap: 0.75rem !important;
+    flex-wrap: wrap !important;
+}
+
+/* Force tag styling */
+article.blog-post .post-header .tag,
+.blog-post .post-header .tag,
+header.post-header .tag {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    padding: 0.6rem 1.25rem !important;
+    border-radius: 50px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+}
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #f8f9fb;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
     color: #333;
+    background-color: #f8f9fa;
 }
 
-/* Links (safe default) */
-a {
-    text-decoration: none;
-    color: inherit;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
+/* ============================================
+   ENHANCED PROFESSIONAL HEADER & NAVIGATION
+   ============================================ */
 
-/* =========================
-   HERO SECTION
-========================= */
-.hero {
-    padding: 1.5rem 1rem 0.75rem;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-radius: 20px;
-    margin-bottom: 0.5rem;
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-.search-container {
-    margin: 0.5rem auto 1.5rem;
-    max-width: 400px;
-}
-
-
-/* =========================
-   POST HEADER (CLEAN)
-========================= */
-.post-header {
-    margin: 0 -2rem 3rem;
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-radius: 25px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
-}
-
-.post-header h1 {
-    font-size: 2.75rem;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-}
-
-.post-header .post-meta {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-.post-header .tags {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-}
-
-.post-header .tag {
-    background: rgba(255,255,255,0.2);
-    color: white;
-    padding: 0.6rem 1.25rem;
-    border-radius: 50px;
-    border: 1.5px solid rgba(255,255,255,0.3);
-}
-
-
-/* =========================
-   POST CARDS
-========================= */
-.post-card-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.post-card-link * {
-    text-decoration: none;
-    color: inherit;
-}
-
-.post-card {
-    padding: 1.5rem;
-    border-radius: 12px;
+/* Header */
+header {
     background: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+header.scrolled {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+/* Container with Flexbox */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+/* Logo/Site Title */
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+header h1 a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateY(-1px);
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.3px;
+}
+
+/* Hover Effect */
+nav a:hover {
+    color: #6366f1;
+    background: #f0f4ff;
+    transform: translateY(-2px);
+}
+
+/* Active/Current Page */
+nav a.active {
+    color: #6366f1;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    font-weight: 600;
+}
+
+/* Underline Animation */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 60%;
+}
+
+/* Last Link as CTA Button (Contact/Terms) */
+nav a:last-child {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+nav a:last-child:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+}
+
+nav a:last-child::after {
+    display: none;
+}
+
+/* Mobile Menu Elements */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
     cursor: pointer;
-}
-
-.post-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.post-card h3 {
-    margin-bottom: 0.5rem;
-}
-
-.post-card .post-excerpt {
-    color: #666;
+    color: #2c3e50;
+    padding: 0.5rem;
     transition: color 0.3s ease;
 }
 
-/* Hover effect for whole card */
-.post-card-link:hover h3,
+.mobile-menu-toggle:hover {
+    color: #6366f1;
+}
+
+.mobile-menu-close {
+    display: none;
+}
+
+.mobile-menu-overlay {
+    display: none;
+}
+
+/* Enhanced Post Grid */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.post-card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2rem;
+    background: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover::before {
+    transform: scaleX(1);
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.post-card h3  {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+
+.post-card h3 a:hover,
+.post-card .post-excerpt a:hover {
+    color: #667eea;
+}
+
+.post-excerpt {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.post-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.post-content a:hover {
+    border-bottom-color: #764ba2;
+}
+.post-card a {
+    text-decoration: none;
+    color: inherit;
+}
+.post-card .post-excerpt a,
+.post-card .post-excerpt a:hover,
+.post-card .post-excerpt a:focus,
+.post-card .post-excerpt a:active {
+    text-decoration: none !important;
+    color: inherit;
+}
 .post-card-link:hover .post-excerpt {
     color: #667eea;
 }
 
+.post-card-link:hover h3 {
+    color: #667eea;
+}
 
-/* =========================
-   BLOG CONTENT LINKS
-========================= */
+.post-card h3,
+.post-card .post-excerpt {
+    transition: color 0.3s ease;
+}
+
+/* Enhanced Load More Section */
+.load-more-container {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.load-more-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.load-more-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.load-more-button:hover::before {
+    left: 100%;
+}
+
+.load-more-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.load-more-button:active {
+    transform: translateY(-1px);
+}
+
+.load-more-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.button-icon {
+    transition: transform 0.3s;
+}
+
+.load-more-button:hover .button-icon {
+    transform: translateY(2px);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Infinite Scroll Toggle */
+.scroll-options {
+    display: none !important;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.toggle-switch {
+    position: relative;
+    display: none !important;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+    background-color: #667eea;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* AdSense Ad Slots */
+.ad-header, .ad-middle, .ad-footer {
+    text-align: center;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+.ad-header { margin-bottom: 20px; }
+.ad-middle { margin: 30px 0; }
+.ad-footer { margin-top: 20px; }
+
+/* AdSense Responsive */
+.adsbygoogle {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Ad Placeholder (when AdSense not configured) */
+.ad-placeholder {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Affiliate Links Styling */
+a[rel*="sponsored"] {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px dashed #007bff;
+}
+
+a[rel*="sponsored"]:hover {
+    color: #0056b3;
+    border-bottom-style: solid;
+}
+
+/* Affiliate Disclaimer */
+.affiliate-disclaimer {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 30px 0;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+/* Main Content */
+main {
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+/* Hero Section - Homepage Style */
+.hero {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    padding: 1rem 1rem 0.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+
+/* ============================================
+   ENHANCED BLOG POST STYLING - MODERN & PROFESSIONAL
+   Replaces the basic blog post styles in style.css
+   ============================================ */
+
+/* ============================================
+   1. STUNNING HEADER WITH GRADIENT & ANIMATION
+   ============================================ */
+
+.post-header {
+    margin: -0 -2rem 3rem -2rem;
+    padding: 4rem 2rem 3rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.25);
+}
+
+/* Animated gradient shimmer */
+.post-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Decorative pattern overlay */
+.post-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.post-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced title */
+.post-header h1 {
+    font-size: 2.75rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Date meta */
+.post-header .post-meta {
+    display: flex;
+    justify-content: center;  /* Now just centers the time */
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1rem;
+    font-weight: 500;
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.post-header .post-meta time {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.post-header .post-meta time::before {
+    content: "📅";
+    margin-right: 0.5rem;
+}
+
+/* ============================================
+   2. BEAUTIFUL GLASSMORPHISM TAGS
+   ============================================ */
+
+.post-header .tags {
+    display: flex !important;
+    justify-content: center !important;  /* Force centering */
+    margin-top: 2rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.post-header .tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    cursor: default;
+}
+
+.post-header .tag::before {
+    content: "#";
+    margin-right: 0.25rem;
+    opacity: 0.8;
+    font-weight: 700;
+}
+
+.post-header .tag:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   3. ENHANCED CONTENT TYPOGRAPHY
+   ============================================ */
+
+.blog-post {
+    max-width: 850px;
+    margin: 0 auto;
+    animation: fadeInContent 0.8s ease-out;
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #2d3748;
+    margin-top: 0;
+}
+
+/* First paragraph emphasis */
+.post-content > p:first-of-type {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: #4a5568;
+    font-weight: 400;
+}
+
+/* H2 with gradient underline */
+.post-content h2 {
+    color: #1a202c;
+    margin: 3rem 0 1.5rem 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.post-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+/* H3 styling */
+.post-content h3 {
+    color: #2d3748;
+    margin: 2.5rem 0 1.25rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* H4 styling */
+.post-content h4 {
+    color: #4a5568;
+    margin: 2rem 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Paragraph spacing */
+.post-content p {
+    margin-bottom: 1.75rem;
+    line-height: 1.8;
+}
+
+/* ============================================
+   4. BEAUTIFUL CUSTOM LISTS
+   ============================================ */
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: 2rem;
+    padding-left: 0;
+}
+
+/* Custom arrow bullets */
+.post-content ul {
+    list-style: none;
+}
+
+.post-content ul li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.post-content ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Numbered list with gradient badges */
+.post-content ol {
+    counter-reset: item;
+    list-style: none;
+}
+
+.post-content ol li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    counter-increment: item;
+    line-height: 1.7;
+}
+
+.post-content ol li::before {
+    content: counter(item);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   5. STUNNING BLOCKQUOTES
+   ============================================ */
+
+.post-content blockquote {
+    border-left: 4px solid #667eea;
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+    margin: 2.5rem 0;
+    font-style: italic;
+    color: #4a5568;
+    background: linear-gradient(to right, #f7fafc, #edf2f7);
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.post-content blockquote::before {
+    content: """";
+    position: absolute;
+    top: 0.5rem;
+    left: 1.5rem;
+    font-size: 3rem;
+    color: #667eea;
+    opacity: 0.3;
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.post-content blockquote p {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   6. ENHANCED CODE BLOCKS
+   ============================================ */
+
+.post-content code {
+    background: #f7fafc;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #d63384;
+    border: 1px solid #e2e8f0;
+}
+
+.post-content pre {
+    background: #1a202c;
+    padding: 1.75rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid #2d3748;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Rainbow gradient border */
+.post-content pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+}
+
+.post-content pre code {
+    background: none;
+    padding: 0;
+    color: #e2e8f0;
+    border: none;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+/* ============================================
+   7. ENHANCED LINKS & EMPHASIS
+   ============================================ */
+
 .post-content a {
     color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .post-content a:hover {
+    color: #764ba2;
     border-bottom-color: #764ba2;
 }
 
-
-/* =========================
-   TAGS (GENERAL)
-========================= */
-.tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+.post-content strong {
+    color: #1a202c;
+    font-weight: 700;
 }
 
+/* ============================================
+   8. BEAUTIFUL IMAGES
+   ============================================ */
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-content img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   9. ENHANCED TABLES
+   ============================================ */
+
+.post-content table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.post-content table thead {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.post-content table th {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.post-content table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.post-content table tbody tr:hover {
+    background: #f7fafc;
+}
+
+.post-content table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================
+   10. HORIZONTAL RULE
+   ============================================ */
+
+.post-content hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+    margin: 3rem 0;
+}
+
+/* ============================================
+   11. AFFILIATE DISCLAIMER
+   ============================================ */
+
+.affiliate-disclaimer {
+    background: linear-gradient(135deg, #fff9e6, #fff3cd);
+    border-left: 4px solid #ffc107;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    font-size: 0.95rem;
+    color: #856404;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.affiliate-disclaimer::before {
+    content: "ℹ️";
+    position: absolute;
+    top: 1.5rem;
+    left: -0.5rem;
+    font-size: 3rem;
+    opacity: 0.1;
+}
+
+.affiliate-disclaimer p {
+    margin: 0;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   12. RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .post-header {
+        margin: 0 -1rem 2rem -1rem !important;
+        padding: 3rem 1.5rem 2rem;
+    }
+    
+    .post-header h1 {
+        font-size: 2rem;
+    }
+    
+    .post-header .tags {
+        gap: 0.5rem;
+    }
+    
+    .post-header .tag {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .post-content {
+        font-size: 1.05rem;
+    }
+    
+    .post-content > p:first-of-type {
+        font-size: 1.15rem;
+    }
+    
+    .post-content h2 {
+        font-size: 1.75rem;
+        margin: 2.5rem 0 1.25rem 0;
+    }
+    
+    .post-content h3 {
+        font-size: 1.35rem;
+    }
+    
+    .post-content ul li,
+    .post-content ol li {
+        padding-left: 1.75rem;
+    }
+    
+    .post-content blockquote {
+        padding: 1.25rem 1.25rem 1.25rem 1.75rem;
+    }
+    
+    .post-content pre {
+        padding: 1.25rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-header {
+        margin: 0 -1rem 1.5rem -1rem;
+        padding: 2.5rem 1rem 1.5rem;
+    }
+    
+    .post-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .post-header .tag {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.8rem;
+    }
+    
+    .post-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   13. PRINT OPTIMIZATION
+   ============================================ */
+
+@media print {
+    .post-header {
+        background: #667eea !important;
+        color: white !important;
+        page-break-after: avoid;
+    }
+    
+    .post-content {
+        font-size: 12pt;
+        line-height: 1.6;
+    }
+    
+    .post-content h2 {
+        page-break-after: avoid;
+    }
+    
+    .post-content a {
+        color: #667eea;
+        border-bottom: 2px solid transparent;
+    }
+    
+    .post-content pre {
+        page-break-inside: avoid;
+    }
+}
+
+/* ============================================
+   14. DARK MODE SUPPORT (OPTIONAL)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    .post-content {
+        color: #e2e8f0;
+    }
+    
+    .post-content h2,
+    .post-content h3 {
+        color: #f7fafc;
+    }
+    
+    .post-content code {
+        background: #2d3748;
+        color: #f093fb;
+        border-color: #4a5568;
+    }
+}
+
+
+
+/* Tags (for other places like post cards) */
+.post-card .tags,
+.post-grid .tags {
+    display: flex;
+    justify-content: center;  /* Center tags */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;  /* Space above tags */
+}
 .tag {
-    background: #eef1ff;
-    color: #667eea;
-    padding: 0.3rem 0.75rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
+    font-weight: 500;
 }
 
-
-/* =========================
-   UTILITIES
-========================= */
-.hidden {
-    display: none;
+/* Footer */
+footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 3rem 0;
+    margin-top: 3rem;
 }
 
-.invisible {
-    visibility: hidden;
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #34495e;
+}
+
+/* Page Content */
+.page-content {
+    max-width: 100%;
+}
+
+.page-content h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.page-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   SEARCH FUNCTIONALITY STYLES
+   ============================================ */
+ 
+.search-container {
+    margin: 2rem 0;
+    max-width: 480px;
+}
+ 
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+ 
+.search-wrapper:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+ 
+.search-icon {
+    color: #6c757d;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+ 
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+    background: transparent;
+}
+ 
+.search-input::placeholder {
+    color: #999;
+}
+ 
+.clear-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+}
+ 
+.clear-search:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+ 
+.search-results-count {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+ 
+/* Hide posts that don't match search */
+.post-card.hidden-by-search {
+    display: none !important;
+}
+ 
+/* Highlight matching text */
+.search-highlight {
+    background: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+ 
+/* No results message */
+.no-results-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+ 
+.no-results-message svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+}
+ 
+.no-results-message h3 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+ 
+.no-results-message p {
+    color: #6c757d;
+}
+ 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        max-width: 100%;
+    }
+    
+    .search-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .search-input::placeholder {
+        font-size: 14px;
+    }
+}
+ 
+
+/* Animation Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    transform: translateX(-100%);
+    animation: slideInLeft 0.6s forwards;
+}
+
+@keyframes slideInLeft {
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE MOBILE NAVIGATION
+   ============================================ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    header .container {
+        padding: 1rem;
+    }
+    
+    /* Show hamburger menu button */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    /* Hide navigation by default on mobile */
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        gap: 0.5rem;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+    }
+    
+    /* Show navigation when menu is open */
+    nav.mobile-menu-open {
+        right: 0;
+    }
+    
+    /* Mobile navigation links */
+    nav a {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+    }
+    
+    /* Close button for mobile menu */
+    .mobile-menu-close {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #2c3e50;
+        padding: 0.5rem;
+        line-height: 1;
+    }
+    
+    /* Overlay when mobile menu is open */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+    
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+    
+    /* Smaller logo text on mobile */
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    header h1 a {
+        font-size: 1.2rem;
+    }
+    
+    .hero {
+         padding: 2rem 1rem 0.5rem 1rem; /* top right bottom left */
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .post-header {
+        margin: 0 -1rem 2rem -1rem;
+        padding: 2rem 1rem;
+    }
+    
+    .post-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .post-header .tags {
+        gap: 0.5rem;
+    }
+    
+    .post-header .tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .post-card {
+        padding: 1.5rem;
+    }
+    
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .ad-header, .ad-middle, .ad-footer {
+        min-height: 80px;
+        margin: 15px 0;
+    }
+    
+    .load-more-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .toggle-switch {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1rem;
+    }
+    
+    .hero {
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .post-header {
+        margin: 0 -1rem 1.5rem -1rem;
+        padding: 1.5rem 1rem;
+    }
+    
+    .post-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .post-header .tag {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.8rem;
+    }
+    
+    .post-card {
+        padding: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .back-to-top,
+    .load-more-button,
+    .loading-spinner,
+    .scroll-options,
+    .ad-header,
+    .ad-middle,
+    .ad-footer,
+    .ad-placeholder,
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+    
+    .post-header {
+        background: #667eea !important;
+        color: white !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .post-card {
+        border: 2px solid #000;
+    }
+    
+    .hero, .post-header {
+        background: #000;
+        color: #fff;
+    }
+    
+    .load-more-button {
+        background: #000;
+        border: 2px solid #fff;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .post-card:hover {
+        transform: none;
+    }
+    
+    .load-more-button:hover {
+        transform: none;
+    }
+    
+    .back-to-top:hover {
+        transform: none;
+    }
+    
+    .post-header .tag:hover {
+        transform: none;
+    }
+    
+    nav a:hover {
+        transform: none;
+    }
 }
