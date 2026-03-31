@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 11:57:45 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 11:59:56 +0000</lastBuildDate>
+    <item>
+      <title>Web3: The DApp Era</title>
+      <link>https://kubaik.github.io/web3-the-dapp-era/</link>
+      <description>Discover Web3 &amp; the future of DApps, revolutionizing online interactions.</description>
+      <pubDate>Tue, 31 Mar 2026 11:59:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-the-dapp-era/</guid>
+    </item>
     <item>
       <title>IoT Device Control</title>
       <link>https://kubaik.github.io/iot-device-control/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NFT potential: Explore tech &amp; use cases</description>
       <pubDate>Mon, 30 Mar 2026 17:37:51 +0000</pubDate>
       <guid>https://kubaik.github.io/nft-tech-unleashed/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top BI tools and strategies.</description>
-      <pubDate>Mon, 30 Mar 2026 17:05:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
