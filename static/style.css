@@ -99,6 +99,7 @@ a {
     border-radius: 12px;
     background: #fff;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
 .post-card:hover {
