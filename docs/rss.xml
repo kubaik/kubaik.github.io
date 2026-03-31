@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 13:30:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 13:43:57 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert backend architecture patterns and blueprints for scalable systems.</description>
+      <pubDate>Tue, 31 Mar 2026 13:43:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Learn data visualization best practices to turn insights into action with &apos;Visualize Smart&apos;.</description>
       <pubDate>Mon, 30 Mar 2026 22:45:33 +0000</pubDate>
       <guid>https://kubaik.github.io/visualize-smart/</guid>
-    </item>
-    <item>
-      <title>Speed Up</title>
-      <link>https://kubaik.github.io/speed-up/</link>
-      <description>Boost website speed with expert web performance optimization tips.</description>
-      <pubDate>Mon, 30 Mar 2026 21:51:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/speed-up/</guid>
     </item>
   </channel>
 </rss>
