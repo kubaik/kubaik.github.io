@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 18:20:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 19:12:46 +0000</lastBuildDate>
+    <item>
+      <title>Scale Up: Replicate</title>
+      <link>https://kubaik.github.io/scale-up-replicate/</link>
+      <description>Learn database replication &amp; sharding to scale up your system&apos;s performance and reliability.</description>
+      <pubDate>Tue, 31 Mar 2026 19:12:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-up-replicate/</guid>
+    </item>
     <item>
       <title>5G Revolution</title>
       <link>https://kubaik.github.io/5g-revolution/</link>
@@ -138,13 +145,6 @@
       <description>Simplify full-stack dev with Next.js. Learn how to build fast, scalable apps with ease.</description>
       <pubDate>Tue, 31 Mar 2026 09:18:35 +0000</pubDate>
       <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Boost app performance with monitoring &amp; observability. Learn how to see it all.</description>
-      <pubDate>Tue, 31 Mar 2026 09:12:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
