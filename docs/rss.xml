@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 09:39:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 09:41:43 +0000</lastBuildDate>
+    <item>
+      <title>Balance Done</title>
+      <link>https://kubaik.github.io/balance-done/</link>
+      <description>Master load balancing techniques for optimal performance &amp; reliability.</description>
+      <pubDate>Tue, 31 Mar 2026 09:41:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/balance-done/</guid>
+    </item>
     <item>
       <title>WCAG Guide</title>
       <link>https://kubaik.github.io/wcag-guide/</link>
@@ -138,13 +145,6 @@
       <description>Unlock GCP&apos;s full potential with expert tips and tutorials.</description>
       <pubDate>Mon, 30 Mar 2026 16:39:27 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-gcp-power/</guid>
-    </item>
-    <item>
-      <title>Index Smarter</title>
-      <link>https://kubaik.github.io/index-smarter/</link>
-      <description>Boost query performance with expert database indexing strategies.</description>
-      <pubDate>Mon, 30 Mar 2026 16:30:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/index-smarter/</guid>
     </item>
   </channel>
 </rss>
