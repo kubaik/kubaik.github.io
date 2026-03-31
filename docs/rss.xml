@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 18:03:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 18:05:24 +0000</lastBuildDate>
+    <item>
+      <title>Mobile UX Wins</title>
+      <link>https://kubaik.github.io/mobile-ux-wins/</link>
+      <description>Elevate mobile app design with expert UX tips and best practices.</description>
+      <pubDate>Tue, 31 Mar 2026 18:05:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-ux-wins/</guid>
+    </item>
     <item>
       <title>Spark Big Data</title>
       <link>https://kubaik.github.io/spark-big-data/</link>
@@ -138,13 +145,6 @@
       <description>Discover the ultimate IoT blueprint for a connected future</description>
       <pubDate>Tue, 31 Mar 2026 09:10:36 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-blueprint/</guid>
-    </item>
-    <item>
-      <title>SRE 101</title>
-      <link>https://kubaik.github.io/sre-101/</link>
-      <description>Learn SRE fundamentals &amp; improve system reliability with expert insights.</description>
-      <pubDate>Tue, 31 Mar 2026 08:51:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/sre-101/</guid>
     </item>
   </channel>
 </rss>
