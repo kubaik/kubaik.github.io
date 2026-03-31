@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 21:49:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 22:41:44 +0000</lastBuildDate>
+    <item>
+      <title>Vue.js: Build Smart</title>
+      <link>https://kubaik.github.io/vuejs-build-smart/</link>
+      <description>Learn Vue.js component architecture to build scalable apps</description>
+      <pubDate>Tue, 31 Mar 2026 22:41:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/vuejs-build-smart/</guid>
+    </item>
     <item>
       <title>Crack Tech Interviews</title>
       <link>https://kubaik.github.io/crack-tech-interviews/</link>
@@ -138,13 +145,6 @@
       <description>Securely manage IoT devices with expert control solutions.</description>
       <pubDate>Tue, 31 Mar 2026 11:02:10 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-control/</guid>
-    </item>
-    <item>
-      <title>Balance Done</title>
-      <link>https://kubaik.github.io/balance-done/</link>
-      <description>Master load balancing techniques for optimal performance &amp; reliability.</description>
-      <pubDate>Tue, 31 Mar 2026 09:41:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-done/</guid>
     </item>
   </channel>
 </rss>
