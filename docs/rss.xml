@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 17:12:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 17:14:04 +0000</lastBuildDate>
+    <item>
+      <title>NLP Unleashed</title>
+      <link>https://kubaik.github.io/nlp-unleashed/</link>
+      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
+      <pubDate>Tue, 31 Mar 2026 17:13:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/nlp-unleashed/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Learn penetration testing methodologies &amp; techniques in our expert guide.</description>
       <pubDate>Tue, 31 Mar 2026 08:32:44 +0000</pubDate>
       <guid>https://kubaik.github.io/pen-test-guide/</guid>
-    </item>
-    <item>
-      <title>Design Smart</title>
-      <link>https://kubaik.github.io/design-smart/</link>
-      <description>Learn expert responsive web design techniques to create mobile-friendly sites.</description>
-      <pubDate>Tue, 31 Mar 2026 07:27:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smart/</guid>
     </item>
   </channel>
 </rss>
