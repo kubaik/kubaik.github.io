@@ -68,5 +68,6 @@
   "Refactoring Legacy Code",
   "Code Review Best Practices",
   "Infrastructure as Code (Terraform)",
-  "Message Queues and Async Processing"
+  "Message Queues and Async Processing",
+  "Edge Computing Applications"
 ]

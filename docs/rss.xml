@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 09:05:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 09:06:56 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Discover edge computing applications transforming industries with real-time data processing.</description>
+      <pubDate>Wed, 01 Apr 2026 09:06:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Queue Up: Async Done Right</title>
       <link>https://kubaik.github.io/queue-up-async-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
       <pubDate>Tue, 31 Mar 2026 17:01:35 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-azure/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>ETL vs ELT: Compare data integration processes &amp; choose the best approach for your business needs.</description>
-      <pubDate>Tue, 31 Mar 2026 15:10:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
