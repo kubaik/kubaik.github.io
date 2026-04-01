@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 17:30:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 17:37:11 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Real-Time Data Processing: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-real-time-data-processing-a-complete/</link>
+      <description>A comprehensive guide to Real-Time Data Processing covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 17:37:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-real-time-data-processing-a-complete/</guid>
+    </item>
+    <item>
+      <title>Understanding Kotlin for Backend Development: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-kotlin-for-backend-development-a-com/</link>
+      <description>A comprehensive guide to Kotlin for Backend Development covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 17:30:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-kotlin-for-backend-development-a-com/</guid>
+    </item>
     <item>
       <title>Blue/Green Deploy</title>
       <link>https://kubaik.github.io/bluegreen-deploy/</link>
@@ -131,13 +145,6 @@
       <description>Streamline cloud migration with expert strategies and best practices.</description>
       <pubDate>Wed, 01 Apr 2026 05:20:32 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-smart/</guid>
-    </item>
-    <item>
-      <title>Log On: Top Solutions</title>
-      <link>https://kubaik.github.io/log-on-top-solutions/</link>
-      <description>Discover top log management solutions to boost security &amp; efficiency.</description>
-      <pubDate>Wed, 01 Apr 2026 04:19:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/log-on-top-solutions/</guid>
     </item>
   </channel>
 </rss>
