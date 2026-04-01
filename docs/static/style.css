@@ -47,7 +47,7 @@ article.blog-post > header .tag {
     background: rgba(255, 255, 255, 0.2) !important;
     color: white !important;
     padding: 0.6rem 1.25rem !important;
-    border-radius: 50px !important;
+    border-radius: 15px !important;
     border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
     font-weight: 600 !important;
 }
