@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 04:17:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 04:19:54 +0000</lastBuildDate>
+    <item>
+      <title>Log On: Top Solutions</title>
+      <link>https://kubaik.github.io/log-on-top-solutions/</link>
+      <description>Discover top log management solutions to boost security &amp; efficiency.</description>
+      <pubDate>Wed, 01 Apr 2026 04:19:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-on-top-solutions/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert documentation best practices with Doc Right. Improve clarity, accuracy, and efficiency.</description>
       <pubDate>Tue, 31 Mar 2026 12:45:04 +0000</pubDate>
       <guid>https://kubaik.github.io/doc-right/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Optimize frontend performance with expert tuning tips.</description>
-      <pubDate>Tue, 31 Mar 2026 12:19:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
