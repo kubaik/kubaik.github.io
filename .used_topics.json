@@ -67,5 +67,6 @@
   "Cloud Migration Strategies",
   "Refactoring Legacy Code",
   "Code Review Best Practices",
-  "Infrastructure as Code (Terraform)"
+  "Infrastructure as Code (Terraform)",
+  "Message Queues and Async Processing"
 ]
