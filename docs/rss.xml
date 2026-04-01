@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 18:02:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 18:17:01 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Real-Time Web Applications: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-real-time-web-applications-a-complet/</link>
+      <description>A comprehensive guide to Real-Time Web Applications covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 18:16:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-real-time-web-applications-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Microservices vs Monolithic Architecture: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-microservices-vs-monolithic-architec/</link>
@@ -138,13 +145,6 @@
       <description>Discover edge computing applications transforming industries with real-time data processing.</description>
       <pubDate>Wed, 01 Apr 2026 09:06:45 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-computing/</guid>
-    </item>
-    <item>
-      <title>Queue Up: Async Done Right</title>
-      <link>https://kubaik.github.io/queue-up-async-done-right/</link>
-      <description>Unlock efficient async processing with message queues. Learn how to do it right.</description>
-      <pubDate>Wed, 01 Apr 2026 07:57:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/queue-up-async-done-right/</guid>
     </item>
   </channel>
 </rss>
