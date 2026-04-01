@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 09:33:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 09:47:31 +0000</lastBuildDate>
+    <item>
+      <title>DBMS Essentials</title>
+      <link>https://kubaik.github.io/dbms-essentials/</link>
+      <description>Learn DBMS essentials &amp; master database management tools for efficient data handling.</description>
+      <pubDate>Wed, 01 Apr 2026 09:47:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/dbms-essentials/</guid>
+    </item>
     <item>
       <title>API Gateway: 5 Key Patterns</title>
       <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Unlock peak productivity with proven memory management tips.</description>
       <pubDate>Tue, 31 Mar 2026 17:22:49 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-memory/</guid>
-    </item>
-    <item>
-      <title>NLP Unleashed</title>
-      <link>https://kubaik.github.io/nlp-unleashed/</link>
-      <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
-      <pubDate>Tue, 31 Mar 2026 17:13:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-unleashed/</guid>
     </item>
   </channel>
 </rss>
