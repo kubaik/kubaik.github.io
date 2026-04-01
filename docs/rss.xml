@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 18:01:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 18:02:54 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Microservices vs Monolithic Architecture: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-microservices-vs-monolithic-architec/</link>
+      <description>A comprehensive guide to Microservices vs Monolithic Architecture covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 18:02:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-microservices-vs-monolithic-architec/</guid>
+    </item>
     <item>
       <title>Understanding Salary Negotiation for Tech Roles: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-salary-negotiation-for-tech-roles-a-/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient async processing with message queues. Learn how to do it right.</description>
       <pubDate>Wed, 01 Apr 2026 07:57:37 +0000</pubDate>
       <guid>https://kubaik.github.io/queue-up-async-done-right/</guid>
-    </item>
-    <item>
-      <title>Terraform: Code Your Infrastructure</title>
-      <link>https://kubaik.github.io/terraform-code-your-infrastructure/</link>
-      <description>Learn Terraform: Automate infrastructure deployment with code.</description>
-      <pubDate>Wed, 01 Apr 2026 07:46:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/terraform-code-your-infrastructure/</guid>
     </item>
   </channel>
 </rss>
