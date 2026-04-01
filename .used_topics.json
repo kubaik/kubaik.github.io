@@ -80,5 +80,6 @@
   "Functional Programming Concepts",
   "Hyperparameter Tuning Methods",
   "Serverless Architecture Patterns",
-  "Vector Databases and Embeddings"
+  "Vector Databases and Embeddings",
+  "Blue-Green Deployment"
 ]
