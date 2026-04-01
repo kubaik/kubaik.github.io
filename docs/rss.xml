@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 22:04:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 22:50:01 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Transfer Learning Implementation: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-transfer-learning-implementation-a-c/</link>
+      <description>A comprehensive guide to Transfer Learning Implementation covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 22:49:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-transfer-learning-implementation-a-c/</guid>
+    </item>
     <item>
       <title>Understanding C# .NET Core Applications: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-c-net-core-applications-a-complete-g/</link>
@@ -138,13 +145,6 @@
       <description>Learn Blue-Green Deployment: Zero-downtime releases &amp; effortless rollbacks</description>
       <pubDate>Wed, 01 Apr 2026 17:06:09 +0000</pubDate>
       <guid>https://kubaik.github.io/bluegreen-deploy/</guid>
-    </item>
-    <item>
-      <title>Understanding Vector Databases and Embeddings: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-vector-databases-and-embeddings-a-co/</link>
-      <description>A comprehensive guide to Vector Databases and Embeddings covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 15:54:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-vector-databases-and-embeddings-a-co/</guid>
     </item>
   </channel>
 </rss>
