@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 20:09:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 20:55:49 +0000</lastBuildDate>
+    <item>
+      <title>Understanding MLOps and ML Pipeline Automation: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-mlops-and-ml-pipeline-automation-a-c/</link>
+      <description>A comprehensive guide to MLOps and ML Pipeline Automation covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 20:55:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-mlops-and-ml-pipeline-automation-a-c/</guid>
+    </item>
     <item>
       <title>Understanding A/B Testing and Experimentation: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-ab-testing-and-experimentation-a-com/</link>
@@ -138,13 +145,6 @@
       <description>Learn core Functional Programming concepts &amp; principles in our FP Fundamentals guide.</description>
       <pubDate>Wed, 01 Apr 2026 13:55:00 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-fundamentals/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.0 &amp; OIDC</title>
-      <link>https://kubaik.github.io/oauth-20-oidc/</link>
-      <description>Learn OAuth 2.0 &amp; OpenID Connect fundamentals for secure authentication &amp; authorization.</description>
-      <pubDate>Wed, 01 Apr 2026 12:42:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-20-oidc/</guid>
     </item>
   </channel>
 </rss>
