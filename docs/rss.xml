@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 20:55:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 21:09:53 +0000</lastBuildDate>
+    <item>
+      <title>Understanding High Availability Systems: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</link>
+      <description>A comprehensive guide to High Availability Systems covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 21:09:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-high-availability-systems-a-complete/</guid>
+    </item>
     <item>
       <title>Understanding MLOps and ML Pipeline Automation: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-mlops-and-ml-pipeline-automation-a-c/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with expert hyperparameter tuning methods.</description>
       <pubDate>Wed, 01 Apr 2026 14:12:36 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-in/</guid>
-    </item>
-    <item>
-      <title>FP Fundamentals</title>
-      <link>https://kubaik.github.io/fp-fundamentals/</link>
-      <description>Learn core Functional Programming concepts &amp; principles in our FP Fundamentals guide.</description>
-      <pubDate>Wed, 01 Apr 2026 13:55:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-fundamentals/</guid>
     </item>
   </channel>
 </rss>
