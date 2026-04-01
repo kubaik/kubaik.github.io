@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 23:07:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 23:44:20 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Application Performance Monitoring: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-application-performance-monitoring-a/</link>
+      <description>A comprehensive guide to Application Performance Monitoring covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 23:44:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-application-performance-monitoring-a/</guid>
+    </item>
     <item>
       <title>Understanding Rust Memory Safety: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-rust-memory-safety-a-complete-guide/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Real-Time Data Processing covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 17:37:00 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-real-time-data-processing-a-complete/</guid>
-    </item>
-    <item>
-      <title>Understanding Kotlin for Backend Development: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-kotlin-for-backend-development-a-com/</link>
-      <description>A comprehensive guide to Kotlin for Backend Development covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 17:30:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-kotlin-for-backend-development-a-com/</guid>
     </item>
   </channel>
 </rss>
