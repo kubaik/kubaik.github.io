@@ -2,8 +2,9 @@ name: AI Blog Automation
 
 on:
   schedule:
-    - cron: '0 * * * *'   # Runs every hour at min 0
- 
+    - cron: '0 * * * *'   # Runs at the top of every hour
+    - cron: '30 * * * *'  # Runs at 30 mins past every hour
+
   workflow_dispatch:
     inputs:
       force_cleanup:
@@ -26,11 +27,12 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true  # Changed to true so delayed/queued runs don't block the next scheduled run
 
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20  # Prevents hung runs from blocking the scheduler queue
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -376,7 +376,6 @@ class StaticSiteGenerator:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-
                     <article class="post-card"> 
                         <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3> 
                         <p class="post-excerpt">{{ post.meta_description }}</p> 
@@ -388,7 +387,6 @@ class StaticSiteGenerator:
                         </div> 
                         {% endif %}
                     </article>
-                    
                 {% endfor %}
             </div>
 
