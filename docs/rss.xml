@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 13:55:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 14:12:47 +0000</lastBuildDate>
+    <item>
+      <title>Tune In</title>
+      <link>https://kubaik.github.io/tune-in/</link>
+      <description>Optimize model performance with expert hyperparameter tuning methods.</description>
+      <pubDate>Wed, 01 Apr 2026 14:12:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-in/</guid>
+    </item>
     <item>
       <title>FP Fundamentals</title>
       <link>https://kubaik.github.io/fp-fundamentals/</link>
@@ -138,13 +145,6 @@
       <description>Land your dream job with our expert tech interview prep guide.</description>
       <pubDate>Tue, 31 Mar 2026 21:49:43 +0000</pubDate>
       <guid>https://kubaik.github.io/crack-tech-interviews/</guid>
-    </item>
-    <item>
-      <title>API Done Right</title>
-      <link>https://kubaik.github.io/api-done-right/</link>
-      <description>Learn RESTful API design principles for scalable, secure, and efficient APIs.</description>
-      <pubDate>Tue, 31 Mar 2026 20:52:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-done-right/</guid>
     </item>
   </channel>
 </rss>
