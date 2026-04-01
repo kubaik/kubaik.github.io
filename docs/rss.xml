@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 18:53:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 18:58:14 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Java Spring Boot Development: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-java-spring-boot-development-a-compl/</link>
+      <description>A comprehensive guide to Java Spring Boot Development covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 18:58:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-java-spring-boot-development-a-compl/</guid>
+    </item>
     <item>
       <title>Understanding Application Security Testing (SAST/DAST): A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-application-security-testing-sastdas/</link>
@@ -138,13 +145,6 @@
       <description>Learn 5 essential API Gateway patterns to optimize performance, security &amp; scalability.</description>
       <pubDate>Wed, 01 Apr 2026 09:33:20 +0000</pubDate>
       <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
-    </item>
-    <item>
-      <title>Svelte JS</title>
-      <link>https://kubaik.github.io/svelte-js/</link>
-      <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript</description>
-      <pubDate>Wed, 01 Apr 2026 09:18:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/svelte-js/</guid>
     </item>
   </channel>
 </rss>
