@@ -1,4 +1,5 @@
 import json
+import shutil
 import markdown as md
 from pathlib import Path
 from typing import Dict, List
@@ -23,6 +24,7 @@ class StaticSiteGenerator:
         posts = self._get_all_posts()
         if not posts:
             print("No posts found. Creating placeholder homepage...")
+        self._copy_static_files()       # ← NEW: ensures static/ is always in docs/
         self._generate_homepage(posts)
         self._generate_post_pages(posts)
         self._generate_static_pages()
@@ -31,6 +33,35 @@ class StaticSiteGenerator:
         self._generate_posts_json(posts)
         self._generate_ads_txt()
         print(f"Site generated successfully with {len(posts)} posts!")
+
+    # ── NEW METHOD ────────────────────────────────────────────────────────────
+    def _copy_static_files(self):
+        """
+        Copies everything in ./static/ into ./docs/static/.
+        This guarantees that navigation.js, style.css, and any other static
+        assets are always present in the deployed docs/ folder, even on a
+        clean runner where docs/ was just created.
+        """
+        src = Path("./static")
+        dst = Path("./docs/static")
+
+        if not src.exists():
+            print("WARNING: ./static/ directory not found — skipping static file copy.")
+            return
+
+        dst.mkdir(parents=True, exist_ok=True)
+
+        copied = 0
+        for src_file in src.rglob("*"):
+            if src_file.is_file():
+                rel = src_file.relative_to(src)
+                dst_file = dst / rel
+                dst_file.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_file, dst_file)
+                copied += 1
+
+        print(f"Copied {copied} static file(s) from ./static/ → ./docs/static/")
+    # ─────────────────────────────────────────────────────────────────────────
 
     def _generate_ads_txt(self):
         config = self.blog_system.config
@@ -223,6 +254,9 @@ class StaticSiteGenerator:
 
     def _load_templates(self) -> Dict[str, Template]:
         template_strings = {
+            # ── POST PAGE ─────────────────────────────────────────────────────
+            # Uses {{ base_path }}/static/ — absolute from site root.
+            # base_path is e.g. '' (user page) or '/repo-name' (project page).
             "post": """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -287,6 +321,9 @@ class StaticSiteGenerator:
 </body>
 </html>""",
 
+            # ── HOMEPAGE ──────────────────────────────────────────────────────
+            # Lives at docs/index.html — same level as docs/static/,
+            # so {{ base_path }}/static/ resolves correctly.
             "index": """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,15 +413,15 @@ class StaticSiteGenerator:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts[:posts_per_page] %}
-                    <article class="post-card"> 
-                        <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3> 
-                        <p class="post-excerpt">{{ post.meta_description }}</p> 
+                    <article class="post-card">
+                        <h3><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></h3>
+                        <p class="post-excerpt">{{ post.meta_description }}</p>
                         {% if post.tags %}
-                        <div class="tags"> 
+                        <div class="tags">
                             {% for tag in post.tags[:3] %}
-                            <span class="tag">{{ tag }}</span> 
-                            {% endfor %} 
-                        </div> 
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </article>
                 {% endfor %}
@@ -434,7 +471,6 @@ class StaticSiteGenerator:
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        // ── ALL SHARED STATE UP FRONT ─────────────────────────────────────────
         var searchInput          = document.getElementById('search-input');
         var clearSearchBtn       = document.getElementById('clear-search');
         var resultsCount         = document.getElementById('search-results-count');
@@ -453,17 +489,12 @@ class StaticSiteGenerator:
 
         if (infiniteScrollToggle) infiniteScrollToggle.checked = infiniteScrollEnabled;
 
-        // ── SEED FROM DOM ─────────────────────────────────────────────────────
-        // FIX: Reads the server-rendered post cards to populate allPosts as a
-        // reliable fallback when posts.json cannot be fetched (e.g. base_path
-        // mismatch on GitHub Pages project sites). This ensures search and
-        // load-more always have data to work with even on fetch failure.
         function seedFromDOM() {
             if (!postsContainer) return;
             allPosts = Array.from(postsContainer.querySelectorAll('article.post-card')).map(function(el) {
                 var anchor = el.querySelector('h3 a');
                 var href   = anchor ? (anchor.getAttribute('href') || '') : '';
-                var slug   = href.replace(/\\/+$/, '').split('/').filter(Boolean).pop() || '';
+                var slug   = href.replace(/\/+$/, '').split('/').filter(Boolean).pop() || '';
                 return {
                     slug:             slug,
                     title:            anchor ? anchor.textContent.trim() : '',
@@ -474,13 +505,6 @@ class StaticSiteGenerator:
             });
         }
 
-        // ── FETCH ALL POSTS JSON ──────────────────────────────────────────────
-        // FIX: Changed from '{{ base_path }}/posts.json' to 'posts.json'.
-        // posts.json is always a sibling of index.html in docs/, so a bare
-        // relative URL resolves correctly regardless of base_path or the
-        // GitHub Pages hosting prefix (user page vs project page).
-        // Previously '{{ base_path }}/posts.json' would render as e.g.
-        // '/my-repo/posts.json' which is a 404 when docs/ is the site root.
         fetch('posts.json')
             .then(function(r) {
                 if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -499,9 +523,8 @@ class StaticSiteGenerator:
                 updateLoadMoreButton();
             });
 
-        // ── HELPERS ──────────────────────────────────────────────────────────
         function escapeRe(s) {
-            return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         function highlight(text, query) {
@@ -555,12 +578,12 @@ class StaticSiteGenerator:
             var time = document.createElement('time');
             time.dateTime    = post.created_at;
             time.textContent = formatDisplayDate(post.created_at);
+            meta.appendChild(time);
             article.appendChild(meta);
 
             return article;
         }
 
-        // ── SEARCH ───────────────────────────────────────────────────────────
         function performSearch(query) {
             if (!allPosts.length) return;
             searchActive = true;
@@ -647,7 +670,6 @@ class StaticSiteGenerator:
             });
         }
 
-        // ── LOAD MORE / INFINITE SCROLL ───────────────────────────────────────
         if (loadMoreButton) {
             loadMoreButton.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -735,6 +757,13 @@ class StaticSiteGenerator:
 </body>
 </html>""",
 
+            # ── STATIC PAGES (about, contact, privacy, terms) ─────────────────
+            # These live at docs/about/index.html etc. — one level deep.
+            # FIXED: Changed ../static/ → {{ base_path }}/static/ so the path
+            # is always absolute from the site root, matching how post pages
+            # and the homepage reference static assets. This eliminates the
+            # 404 caused by relative ../static/ paths breaking on GitHub Pages
+            # project sites where base_path adds a prefix (e.g. /repo-name).
             "about": """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -743,7 +772,7 @@ class StaticSiteGenerator:
     <title>About - {{ site_name }}</title>
     <meta name="description" content="About {{ site_name }}">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/about/">
     <style>
         .about-section { background:#f8f9fa; padding:2rem; margin-bottom:2rem; border-radius:8px; border-left:4px solid #6366f1; }
@@ -770,16 +799,18 @@ class StaticSiteGenerator:
         .cta-box h3 { margin-top:0; color:#333; font-size:1.5rem; }
         .cta-button { display:inline-block; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:1rem 2rem; border-radius:8px; text-decoration:none; font-weight:600; margin-top:1rem; transition:transform 0.3s ease; }
         .cta-button:hover { transform:scale(1.05); }
-        .team-section { background:#f0f4ff; padding:2rem; border-radius:8px; border-left:4px solid #8b5cf6; }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><a href="../">{{ site_name }}</a></h1>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
-                <a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-                <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a>
+                <a href="{{ base_path }}/">Home</a>
+                <a href="{{ base_path }}/about/">About</a>
+                <a href="{{ base_path }}/contact/">Contact</a>
+                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
             </nav>
         </div>
     </header>
@@ -820,12 +851,12 @@ class StaticSiteGenerator:
             <div class="cta-box">
                 <h3>📬 Stay Connected</h3>
                 <p>Want to stay updated with the latest AI and technology insights?</p>
-                <a href="../contact/" class="cta-button">Contact Us</a>
+                <a href="{{ base_path }}/contact/" class="cta-button">Contact Us</a>
             </div>
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>""",
 
@@ -836,7 +867,7 @@ class StaticSiteGenerator:
     <title>Privacy Policy - {{ site_name }}</title>
     <meta name="description" content="Privacy Policy for {{ site_name }}">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
     <style>
         .privacy-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
@@ -861,9 +892,14 @@ class StaticSiteGenerator:
 </head>
 <body>
     <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav>
+            <a href="{{ base_path }}/">Home</a>
+            <a href="{{ base_path }}/about/">About</a>
+            <a href="{{ base_path }}/contact/">Contact</a>
+            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+            <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+        </nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
@@ -939,7 +975,7 @@ class StaticSiteGenerator:
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>""",
 
@@ -950,7 +986,7 @@ class StaticSiteGenerator:
     <title>Terms of Service - {{ site_name }}</title>
     <meta name="description" content="Terms of Service for {{ site_name }}">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
     <style>
         .terms-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
@@ -972,9 +1008,14 @@ class StaticSiteGenerator:
 </head>
 <body>
     <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav>
+            <a href="{{ base_path }}/">Home</a>
+            <a href="{{ base_path }}/about/">About</a>
+            <a href="{{ base_path }}/contact/">Contact</a>
+            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+            <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+        </nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Terms of Service</h2><p>Please read these terms carefully before using our site</p></div>
@@ -1027,7 +1068,7 @@ class StaticSiteGenerator:
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>""",
 
@@ -1038,7 +1079,7 @@ class StaticSiteGenerator:
     <title>Contact Us - {{ site_name }}</title>
     <meta name="description" content="Contact {{ site_name }}">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="canonical" href="{{ base_url }}/contact/">
     <style>
         .contact-method { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
@@ -1056,9 +1097,14 @@ class StaticSiteGenerator:
 </head>
 <body>
     <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav>
+            <a href="{{ base_path }}/">Home</a>
+            <a href="{{ base_path }}/about/">About</a>
+            <a href="{{ base_path }}/contact/">Contact</a>
+            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+            <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
+        </nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Contact Us</h2><p>Get in touch with the {{ site_name }} team</p></div>
@@ -1110,7 +1156,7 @@ class StaticSiteGenerator:
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
 </body>
 </html>"""
         }
