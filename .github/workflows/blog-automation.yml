@@ -2,7 +2,7 @@ name: AI Blog Automation
 
 on:
   schedule:
-    - cron: '0,35 * * * *'   # Runs every 35 minutes 
+    - cron: '0 * * * *'   # Runs every 1 hour 
  
   workflow_dispatch:
     inputs:
