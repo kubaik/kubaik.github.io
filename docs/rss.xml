@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 19:05:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 19:07:21 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Test-Driven Development (TDD): A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-test-driven-development-tdd-a-comple/</link>
+      <description>A comprehensive guide to Test-Driven Development (TDD) covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 19:07:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-test-driven-development-tdd-a-comple/</guid>
+    </item>
     <item>
       <title>Understanding Java Spring Boot Development: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-java-spring-boot-development-a-compl/</link>
@@ -138,13 +145,6 @@
       <description>Learn DBMS essentials &amp; master database management tools for efficient data handling.</description>
       <pubDate>Wed, 01 Apr 2026 09:47:19 +0000</pubDate>
       <guid>https://kubaik.github.io/dbms-essentials/</guid>
-    </item>
-    <item>
-      <title>API Gateway: 5 Key Patterns</title>
-      <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
-      <description>Learn 5 essential API Gateway patterns to optimize performance, security &amp; scalability.</description>
-      <pubDate>Wed, 01 Apr 2026 09:33:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
     </item>
   </channel>
 </rss>
