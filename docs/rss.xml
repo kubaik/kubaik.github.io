@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2026 23:41:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 03:28:10 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down</title>
+      <link>https://kubaik.github.io/lock-it-down/</link>
+      <description>Safeguard data with encryption &amp; key management best practices.</description>
+      <pubDate>Wed, 01 Apr 2026 03:27:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Optimize frontend performance with expert tuning tips.</description>
       <pubDate>Tue, 31 Mar 2026 12:19:48 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>Web3: The DApp Era</title>
-      <link>https://kubaik.github.io/web3-the-dapp-era/</link>
-      <description>Discover Web3 &amp; the future of DApps, revolutionizing online interactions.</description>
-      <pubDate>Tue, 31 Mar 2026 11:59:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-the-dapp-era/</guid>
     </item>
   </channel>
 </rss>
