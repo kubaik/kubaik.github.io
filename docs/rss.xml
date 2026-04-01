@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 09:31:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 09:33:30 +0000</lastBuildDate>
+    <item>
+      <title>API Gateway: 5 Key Patterns</title>
+      <link>https://kubaik.github.io/api-gateway-5-key-patterns/</link>
+      <description>Learn 5 essential API Gateway patterns to optimize performance, security &amp; scalability.</description>
+      <pubDate>Wed, 01 Apr 2026 09:33:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-gateway-5-key-patterns/</guid>
+    </item>
     <item>
       <title>Svelte JS</title>
       <link>https://kubaik.github.io/svelte-js/</link>
@@ -138,13 +145,6 @@
       <description>Unlock NLP secrets: discover techniques for human-computer interaction</description>
       <pubDate>Tue, 31 Mar 2026 17:13:50 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-unleashed/</guid>
-    </item>
-    <item>
-      <title>Kotlin Android Dev</title>
-      <link>https://kubaik.github.io/kotlin-android-dev/</link>
-      <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
-      <pubDate>Tue, 31 Mar 2026 17:07:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
     </item>
   </channel>
 </rss>
