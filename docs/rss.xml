@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 09:06:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 09:18:38 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript</description>
+      <pubDate>Wed, 01 Apr 2026 09:18:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>Edge Computing</title>
       <link>https://kubaik.github.io/edge-computing/</link>
@@ -138,13 +145,6 @@
       <description>Learn Android dev with Kotlin. Expert guides &amp; tutorials.</description>
       <pubDate>Tue, 31 Mar 2026 17:07:08 +0000</pubDate>
       <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
-    </item>
-    <item>
-      <title>Unlock Azure</title>
-      <link>https://kubaik.github.io/unlock-azure/</link>
-      <description>Discover Azure Cloud Services &amp; unlock new possibilities</description>
-      <pubDate>Tue, 31 Mar 2026 17:01:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-azure/</guid>
     </item>
   </channel>
 </rss>
