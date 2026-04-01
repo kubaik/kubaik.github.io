@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 18:17:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 18:33:25 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Application Security Testing (SAST/DAST): A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-application-security-testing-sastdas/</link>
+      <description>A comprehensive guide to Application Security Testing (SAST/DAST) covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 18:33:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-application-security-testing-sastdas/</guid>
+    </item>
     <item>
       <title>Understanding Real-Time Web Applications: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-real-time-web-applications-a-complet/</link>
@@ -138,13 +145,6 @@
       <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript</description>
       <pubDate>Wed, 01 Apr 2026 09:18:26 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>Edge Computing</title>
-      <link>https://kubaik.github.io/edge-computing/</link>
-      <description>Discover edge computing applications transforming industries with real-time data processing.</description>
-      <pubDate>Wed, 01 Apr 2026 09:06:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing/</guid>
     </item>
   </channel>
 </rss>
