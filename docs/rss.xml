@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 23:44:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2026 23:58:35 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Image Optimization Techniques: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-image-optimization-techniques-a-comp/</link>
+      <description>A comprehensive guide to Image Optimization Techniques covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Wed, 01 Apr 2026 23:58:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-image-optimization-techniques-a-comp/</guid>
+    </item>
     <item>
       <title>Understanding Application Performance Monitoring: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-application-performance-monitoring-a/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Project Management for Developers covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 17:43:42 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-project-management-for-developers-a-/</guid>
-    </item>
-    <item>
-      <title>Understanding Real-Time Data Processing: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-real-time-data-processing-a-complete/</link>
-      <description>A comprehensive guide to Real-Time Data Processing covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 17:37:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-real-time-data-processing-a-complete/</guid>
     </item>
   </channel>
 </rss>
