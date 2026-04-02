@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 10:07:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 11:01:05 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Apache Kafka for Streaming: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-apache-kafka-for-streaming-a-complet/</link>
+      <description>A comprehensive guide to Apache Kafka for Streaming covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 11:00:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-apache-kafka-for-streaming-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Snowflake Cloud Data Platform: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-snowflake-cloud-data-platform-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Rust Memory Safety covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 23:07:11 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-rust-memory-safety-a-complete-guide/</guid>
-    </item>
-    <item>
-      <title>Understanding Transfer Learning Implementation: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-transfer-learning-implementation-a-c/</link>
-      <description>A comprehensive guide to Transfer Learning Implementation covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 22:49:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-transfer-learning-implementation-a-c/</guid>
     </item>
   </channel>
 </rss>
