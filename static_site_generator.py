@@ -305,7 +305,7 @@ class StaticSiteGenerator:
         .search-wrapper {
             display: flex; align-items: center;
             border: 2px solid #e0e0e0; border-radius: 50px;
-            padding: 2px 2px; background: #fff;
+            padding: 2px 10px; background: #fff;
             transition: border-color 0.2s; overflow: hidden;
         }
         .search-wrapper:focus-within { border-color: #6366f1; }

@@ -14,11 +14,6 @@ on:
         type: boolean
   push:
     branches: [ main ]
-    paths:
-      - 'blog_system.py'
-      - 'config.yaml'
-      - 'requirements.txt'
-      - '.github/workflows/blog-automation.yml'
 
 permissions:
   contents: write
