@@ -965,16 +965,15 @@
     "topic": "Prompt Engineering for LLMs"
   },
   "modern_web_development_frameworks": {
-    "timestamp": "2026-03-24T21:45:45.320339",
+    "timestamp": "2026-04-02T05:10:45.765727",
     "hashtags": [
       "WebDev",
-      "ReactJS",
-      "Angular",
-      "VueJS",
       "FullStack",
       "JavaScript",
+      "ReactJS",
       "CloudNative",
-      "Serverless"
+      "Serverless",
+      "DevOps"
     ],
     "topic": "Modern Web Development Frameworks"
   },
