@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 09:19:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 09:36:34 +0000</lastBuildDate>
+    <item>
+      <title>Understanding AI Model Monitoring and Maintenance: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</link>
+      <description>A comprehensive guide to AI Model Monitoring and Maintenance covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 09:36:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</guid>
+    </item>
     <item>
       <title>Understanding Git Advanced Techniques: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-git-advanced-techniques-a-complete-g/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to C# .NET Core Applications covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 22:04:39 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-c-net-core-applications-a-complete-g/</guid>
-    </item>
-    <item>
-      <title>Understanding Server-Side Rendering (SSR): A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-server-side-rendering-ssr-a-complete/</link>
-      <description>A comprehensive guide to Server-Side Rendering (SSR) covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 21:52:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-server-side-rendering-ssr-a-complete/</guid>
     </item>
   </channel>
 </rss>
