@@ -11,7 +11,7 @@ article.blog-post > header {
     color: white !important;
     text-align: center !important;
     padding: 4rem 2rem 3rem 2rem !important;
-    margin: 0 -2rem 3rem -2rem !important;
+    margin: 0 -1rem 3rem -1rem  !important;
     border-radius: 25px!important;
     box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3) !important;
 }
