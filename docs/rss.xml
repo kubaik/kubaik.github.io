@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2026 23:58:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 02:55:50 +0000</lastBuildDate>
+    <item>
+      <title>ML Uncovered</title>
+      <link>https://kubaik.github.io/ml-uncovered/</link>
+      <description>Uncover the power of Machine Learning. Learn key algorithms and concepts.</description>
+      <pubDate>Thu, 02 Apr 2026 02:55:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ml-uncovered/</guid>
+    </item>
     <item>
       <title>Understanding Image Optimization Techniques: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-image-optimization-techniques-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to AutoML and Neural Architecture Search covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 17:48:44 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-automl-and-neural-architecture-searc/</guid>
-    </item>
-    <item>
-      <title>Understanding Project Management for Developers: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-project-management-for-developers-a-/</link>
-      <description>A comprehensive guide to Project Management for Developers covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 17:43:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-project-management-for-developers-a-/</guid>
     </item>
   </channel>
 </rss>
