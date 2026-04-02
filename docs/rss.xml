@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 19:07:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 19:30:51 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Mobile App Architecture Patterns: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-mobile-app-architecture-patterns-a-c/</link>
+      <description>A comprehensive guide to Mobile App Architecture Patterns covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 19:30:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-mobile-app-architecture-patterns-a-c/</guid>
+    </item>
     <item>
       <title>Understanding Agile Development Methodologies: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-agile-development-methodologies-a-co/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Caching Strategies (Redis, Memcached) covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 12:08:21 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-caching-strategies-redis-memcached-a/</guid>
-    </item>
-    <item>
-      <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
-      <description>A comprehensive guide to Disaster Recovery Planning covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 11:55:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</guid>
     </item>
   </channel>
 </rss>
