@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 20:05:16 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 20:43:33 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Open Source Contribution Guide: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-open-source-contribution-guide-a-com/</link>
+      <description>A comprehensive guide to Open Source Contribution Guide covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 20:43:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-open-source-contribution-guide-a-com/</guid>
+    </item>
     <item>
       <title>Understanding Jamstack Architecture: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-jamstack-architecture-a-complete-gui/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Database Design and Normalization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 13:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</guid>
-    </item>
-    <item>
-      <title>Understanding AI Model Deployment Strategies: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-ai-model-deployment-strategies-a-com/</link>
-      <description>A comprehensive guide to AI Model Deployment Strategies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 13:20:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-ai-model-deployment-strategies-a-com/</guid>
     </item>
   </channel>
 </rss>
