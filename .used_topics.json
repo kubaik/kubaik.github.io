@@ -125,5 +125,6 @@
   "Disaster Recovery Planning",
   "Caching Strategies (Redis, Memcached)",
   "AI Model Deployment Strategies",
-  "Database Design and Normalization"
+  "Database Design and Normalization",
+  "GitOps Workflow Implementation"
 ]
