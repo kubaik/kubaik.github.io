@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 20:43:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 21:03:50 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Deep Learning Neural Networks: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-deep-learning-neural-networks-a-comp/</link>
+      <description>A comprehensive guide to Deep Learning Neural Networks covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 21:03:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-deep-learning-neural-networks-a-comp/</guid>
+    </item>
     <item>
       <title>Understanding Open Source Contribution Guide: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-open-source-contribution-guide-a-com/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to GitOps Workflow Implementation covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 13:34:33 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-gitops-workflow-implementation-a-com/</guid>
-    </item>
-    <item>
-      <title>Understanding Database Design and Normalization: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</link>
-      <description>A comprehensive guide to Database Design and Normalization covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 13:25:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</guid>
     </item>
   </channel>
 </rss>
