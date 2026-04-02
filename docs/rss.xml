@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 21:44:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 21:46:10 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Ruby on Rails Web Apps: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-ruby-on-rails-web-apps-a-complete-gu/</link>
+      <description>A comprehensive guide to Ruby on Rails Web Apps covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 21:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-ruby-on-rails-web-apps-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding JWT Authentication Implementation: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-jwt-authentication-implementation-a-/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to React Best Practices and Patterns covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 13:50:15 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-react-best-practices-and-patterns-a-/</guid>
-    </item>
-    <item>
-      <title>Understanding Command Line Productivity Tips: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-command-line-productivity-tips-a-com/</link>
-      <description>A comprehensive guide to Command Line Productivity Tips covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 13:45:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-command-line-productivity-tips-a-com/</guid>
     </item>
   </channel>
 </rss>
