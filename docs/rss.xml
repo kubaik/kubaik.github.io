@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 06:54:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 07:14:11 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Developer Workflow Automation: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-developer-workflow-automation-a-comp/</link>
+      <description>A comprehensive guide to Developer Workflow Automation covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 07:13:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-developer-workflow-automation-a-comp/</guid>
+    </item>
     <item>
       <title>K8s Orchestration</title>
       <link>https://kubaik.github.io/k8s-orchestration/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Java Spring Boot Development covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 18:58:03 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-java-spring-boot-development-a-compl/</guid>
-    </item>
-    <item>
-      <title>Understanding Application Security Testing (SAST/DAST): A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-application-security-testing-sastdas/</link>
-      <description>A comprehensive guide to Application Security Testing (SAST/DAST) covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 18:33:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-application-security-testing-sastdas/</guid>
     </item>
   </channel>
 </rss>
