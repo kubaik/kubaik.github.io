@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 21:48:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 22:40:35 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Thu, 02 Apr 2026 22:40:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>Understanding Cybersecurity Fundamentals: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-cybersecurity-fundamentals-a-complet/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Data Engineering Pipelines covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 14:09:44 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-data-engineering-pipelines-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding Clean Code Principles: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-clean-code-principles-a-complete-gui/</link>
-      <description>A comprehensive guide to Clean Code Principles covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 14:04:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-clean-code-principles-a-complete-gui/</guid>
     </item>
   </channel>
 </rss>
