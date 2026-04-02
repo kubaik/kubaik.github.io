@@ -138,5 +138,6 @@
   "TypeScript for Large-Scale Apps",
   "Recommender Systems Design",
   "WebAssembly Performance Optimization",
-  "Mobile Performance Optimization"
+  "Mobile Performance Optimization",
+  "Rate Limiting and Throttling"
 ]

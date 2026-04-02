@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 17:12:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 17:25:47 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Rate Limiting and Throttling: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-rate-limiting-and-throttling-a-compl/</link>
+      <description>A comprehensive guide to Rate Limiting and Throttling covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 17:25:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-rate-limiting-and-throttling-a-compl/</guid>
+    </item>
     <item>
       <title>Understanding Mobile Performance Optimization: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-mobile-performance-optimization-a-co/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Apache Kafka for Streaming covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 11:00:56 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-apache-kafka-for-streaming-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding Snowflake Cloud Data Platform: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-snowflake-cloud-data-platform-a-comp/</link>
-      <description>A comprehensive guide to Snowflake Cloud Data Platform covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 10:07:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-snowflake-cloud-data-platform-a-comp/</guid>
     </item>
   </channel>
 </rss>
