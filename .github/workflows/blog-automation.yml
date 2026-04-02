@@ -3,7 +3,7 @@ name: AI Blog Automation
 on:
   schedule:
     - cron: '0 * * * *'   # Runs at the top of every hour
-    - cron: '30 * * * *'  # Runs at 30 minutes past every hour
+    - cron: '30 * * * *'  # Runs at 30 minute past every hour
 
   workflow_dispatch:
     inputs:
