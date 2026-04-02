@@ -87,7 +87,7 @@ article.blog-post header.post-header,
 .blog-post .post-header,
 header.post-header {
     margin:  0 0 3rem 0 !important;
-    padding: 4rem 2rem 3rem 2rem !important;
+    padding: 4rem 2rem 1rem 1rem !important;
     text-align: center !important;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     color: white !important;
