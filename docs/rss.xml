@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 14:06:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 14:09:55 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Data Engineering Pipelines: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-data-engineering-pipelines-a-complet/</link>
+      <description>A comprehensive guide to Data Engineering Pipelines covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 14:09:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-data-engineering-pipelines-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Clean Code Principles: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-clean-code-principles-a-complete-gui/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Network Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 07:48:42 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-network-performance-optimization-a-c/</guid>
-    </item>
-    <item>
-      <title>Understanding Container Security Best Practices: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-container-security-best-practices-a-/</link>
-      <description>A comprehensive guide to Container Security Best Practices covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 07:25:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-container-security-best-practices-a-/</guid>
     </item>
   </channel>
 </rss>
