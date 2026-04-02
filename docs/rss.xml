@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 08:52:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 08:54:42 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Tailwind CSS Utility-First Design: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-tailwind-css-utility-first-design-a-/</link>
+      <description>A comprehensive guide to Tailwind CSS Utility-First Design covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 08:54:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-tailwind-css-utility-first-design-a-/</guid>
+    </item>
     <item>
       <title>Understanding Scrum vs Kanban: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-scrum-vs-kanban-a-complete-guide/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to MLOps and ML Pipeline Automation covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Wed, 01 Apr 2026 20:55:37 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mlops-and-ml-pipeline-automation-a-c/</guid>
-    </item>
-    <item>
-      <title>Understanding A/B Testing and Experimentation: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-ab-testing-and-experimentation-a-com/</link>
-      <description>A comprehensive guide to A/B Testing and Experimentation covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Wed, 01 Apr 2026 20:08:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-ab-testing-and-experimentation-a-com/</guid>
     </item>
   </channel>
 </rss>
