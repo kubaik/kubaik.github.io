@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 17:09:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 17:12:40 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Mobile Performance Optimization: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-mobile-performance-optimization-a-co/</link>
+      <description>A comprehensive guide to Mobile Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 17:12:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-mobile-performance-optimization-a-co/</guid>
+    </item>
     <item>
       <title>Understanding WebAssembly Performance Optimization: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-webassembly-performance-optimization/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Snowflake Cloud Data Platform covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 10:07:20 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-snowflake-cloud-data-platform-a-comp/</guid>
-    </item>
-    <item>
-      <title>Understanding AI Model Monitoring and Maintenance: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</link>
-      <description>A comprehensive guide to AI Model Monitoring and Maintenance covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 09:36:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-ai-model-monitoring-and-maintenance-/</guid>
     </item>
   </channel>
 </rss>
