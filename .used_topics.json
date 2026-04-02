@@ -122,5 +122,6 @@
   "Snowflake Cloud Data Platform",
   "Apache Kafka for Streaming",
   "Cryptocurrency and Blockchain",
-  "Disaster Recovery Planning"
+  "Disaster Recovery Planning",
+  "Caching Strategies (Redis, Memcached)"
 ]
