@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2026 21:46:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2026 21:48:05 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Cybersecurity Fundamentals: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-cybersecurity-fundamentals-a-complet/</link>
+      <description>A comprehensive guide to Cybersecurity Fundamentals covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Thu, 02 Apr 2026 21:47:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-cybersecurity-fundamentals-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Ruby on Rails Web Apps: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-ruby-on-rails-web-apps-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Clean Code Principles covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 14:04:18 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-clean-code-principles-a-complete-gui/</guid>
-    </item>
-    <item>
-      <title>Understanding React Best Practices and Patterns: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-react-best-practices-and-patterns-a-/</link>
-      <description>A comprehensive guide to React Best Practices and Patterns covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 13:50:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-react-best-practices-and-patterns-a-/</guid>
     </item>
   </channel>
 </rss>
