@@ -242,23 +242,6 @@ nav a:hover::after {
     width: 60%;
 }
 
-/* Last Link as CTA Button (Contact/Terms) */
-nav a:last-child {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-nav a:last-child:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
-}
-
-nav a:last-child::after {
-    display: none;
-}
 
 /* Mobile Menu Elements */
 .mobile-menu-toggle {
