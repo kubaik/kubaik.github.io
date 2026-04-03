@@ -19,7 +19,10 @@ from hashtag_manager import HashtagManager, add_hashtags_to_post
 
 
 class RateLimitError(Exception):
-    pass
+    """Raised when an API returns a 429 rate-limit response."""
+    def __init__(self, message: str, retry_after_seconds: float = 0):
+        super().__init__(message)
+        self.retry_after_seconds = retry_after_seconds
 
 
 class BlogSystem:
@@ -29,9 +32,12 @@ class BlogSystem:
         self.output_dir.mkdir(exist_ok=True)
 
         # API keys — each optional, fallback chain uses whichever are set
-        self.groq_key = os.getenv("GROQ_API_KEY")
-        self.gemini_key = os.getenv("GEMINI_API_KEY")
+        self.groq_key       = os.getenv("GROQ_API_KEY")
+        self.gemini_key     = os.getenv("GEMINI_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
+
+        # Log which keys are actually available at startup
+        self._log_key_status()
 
         # self.api_key kept for compatibility with other modules (monetization, etc.)
         self.api_key = self.groq_key or self.gemini_key or self.openrouter_key
@@ -41,6 +47,14 @@ class BlogSystem:
 
         # Initialize hashtag manager
         self.hashtag_manager = HashtagManager(config)
+
+    def _log_key_status(self):
+        """Log which API keys are configured so CI logs are easy to diagnose."""
+        print("=== API Key Status ===")
+        print(f"  Groq:        {'✓ configured' if self.groq_key       else '✗ NOT SET'}")
+        print(f"  Gemini:      {'✓ configured' if self.gemini_key     else '✗ NOT SET'}")
+        print(f"  OpenRouter:  {'✓ configured' if self.openrouter_key else '✗ NOT SET'}")
+        print("======================")
 
     # ─────────────────────────────────────────────────────────────
     # CLEANUP
@@ -54,7 +68,7 @@ class BlogSystem:
             print("No docs directory found.")
             return
 
-        fixed_count = 0
+        fixed_count   = 0
         removed_count = 0
 
         for post_dir in self.output_dir.iterdir():
@@ -62,7 +76,7 @@ class BlogSystem:
                 continue
 
             post_json_path = post_dir / "post.json"
-            markdown_path = post_dir / "index.md"
+            markdown_path  = post_dir / "index.md"
 
             if not post_json_path.exists() and markdown_path.exists():
                 try:
@@ -85,13 +99,35 @@ class BlogSystem:
         print(f"Cleanup complete: {fixed_count} recovered, {removed_count} removed")
 
     # ─────────────────────────────────────────────────────────────
+    # HELPER: parse Groq retry-after header
+    # ─────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def _parse_groq_retry_after(error_text: str) -> float:
+        """
+        Extract the retry-after duration from a Groq rate-limit error message.
+        Example fragment: "Please try again in 17m55.679999999s"
+        Returns seconds as a float, or 0 if not found.
+        """
+        # Try "Xm Y.Zs" format
+        m = re.search(r'in\s+(?:(\d+)m\s*)?(\d+(?:\.\d+)?)s', error_text)
+        if m:
+            minutes = int(m.group(1)) if m.group(1) else 0
+            seconds = float(m.group(2))
+            return minutes * 60 + seconds
+        return 0
+
+    # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN: Groq → Gemini → OpenRouter → local
     # ─────────────────────────────────────────────────────────────
 
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 2500) -> str:
         """
-        Try each provider in order. Falls back on RateLimitError or any
-        exception. Raises Exception only if every configured provider fails.
+        Try each provider in order.
+        - On RateLimitError from Groq: if the wait is ≤ 20 min, sleep and retry once,
+          then fall through to Gemini if it still fails.
+        - Falls back on any exception.
+        - Raises Exception only if every configured provider fails.
         """
 
         # 1. Groq (primary) — 100k tokens/day free
@@ -101,11 +137,29 @@ class BlogSystem:
                 print("API: Groq responded successfully.")
                 return result
             except RateLimitError as e:
-                print(f"Groq rate limited: {e}")
-                print("Falling back to Gemini...")
+                retry_after = e.retry_after_seconds
+                print(f"Groq rate limited. Retry-after: {retry_after:.0f}s")
+
+                # If wait is short enough, sleep and retry once before falling back
+                if 0 < retry_after <= 1200:  # ≤ 20 minutes
+                    print(f"Sleeping {retry_after:.0f}s then retrying Groq once...")
+                    await asyncio.sleep(retry_after + 5)  # +5s buffer
+                    try:
+                        result = await self._call_groq(messages, max_tokens)
+                        print("API: Groq responded successfully (after retry).")
+                        return result
+                    except RateLimitError:
+                        print("Groq still rate limited after sleep. Falling back to Gemini...")
+                    except Exception as retry_err:
+                        print(f"Groq retry error: {retry_err}. Falling back to Gemini...")
+                else:
+                    print("Wait too long or unknown. Falling back to Gemini immediately...")
+
             except Exception as e:
-                print(f"Groq error: {e}")
-                print("Falling back to Gemini...")
+                print(f"Groq error: {e}. Falling back to Gemini...")
+
+        else:
+            print("Groq key not configured — skipping.")
 
         # 2. Google Gemini (fallback 1) — 1M tokens/day free
         if self.gemini_key:
@@ -114,11 +168,11 @@ class BlogSystem:
                 print("API: Gemini responded successfully.")
                 return result
             except RateLimitError as e:
-                print(f"Gemini rate limited: {e}")
-                print("Falling back to OpenRouter...")
+                print(f"Gemini rate limited: {e}. Falling back to OpenRouter...")
             except Exception as e:
-                print(f"Gemini error: {e}")
-                print("Falling back to OpenRouter...")
+                print(f"Gemini error: {e}. Falling back to OpenRouter...")
+        else:
+            print("Gemini key not configured — skipping.")
 
         # 3. OpenRouter (fallback 2) — free models, no daily cap
         if self.openrouter_key:
@@ -127,9 +181,14 @@ class BlogSystem:
                 print("API: OpenRouter responded successfully.")
                 return result
             except Exception as e:
-                print(f"OpenRouter error: {e}")
+                print(f"OpenRouter error: {e}.")
+        else:
+            print("OpenRouter key not configured — skipping.")
 
-        raise Exception("All API providers failed or are unconfigured.")
+        raise Exception(
+            "All configured API providers failed. "
+            "Add GEMINI_API_KEY or OPENROUTER_API_KEY as GitHub secrets for a working fallback."
+        )
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
         """Call Groq API (OpenAI-compatible endpoint)."""
@@ -149,7 +208,9 @@ class BlogSystem:
                 headers=headers, json=data
             ) as response:
                 if response.status == 429:
-                    raise RateLimitError(await response.text())
+                    text = await response.text()
+                    retry_after = self._parse_groq_retry_after(text)
+                    raise RateLimitError(text, retry_after_seconds=retry_after)
                 if response.status != 200:
                     raise Exception(f"Groq {response.status}: {await response.text()}")
                 result = await response.json()
@@ -165,7 +226,6 @@ class BlogSystem:
             if m["role"] == "system":
                 system_text = m["content"]
             elif m["role"] == "user":
-                # Prepend system prompt to first user message
                 text = f"{system_text}\n\n{m['content']}" if system_text else m["content"]
                 gemini_contents.append({
                     "role": "user",
@@ -204,11 +264,9 @@ class BlogSystem:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
-            # OpenRouter recommends sending your site URL
             "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io")
         }
         data = {
-            # Free model — no daily cap on OpenRouter free tier
             "model": "meta-llama/llama-3.1-8b-instruct:free",
             "messages": messages,
             "max_tokens": max_tokens,
@@ -249,13 +307,13 @@ class BlogSystem:
                 "role": "user",
                 "content": f"""Write a blog post about: {topic}{keyword_text}
 
-    Return a JSON object with exactly these keys:
-    {{
-    "title": "SEO-friendly title under 60 characters",
-    "meta_description": "Compelling summary under 160 characters",
-    "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-    "content": "Full markdown article 1500+ words with ## and ### headings. Use \\n for line breaks. Do NOT include the title as a heading."
-    }}"""
+Return a JSON object with exactly these keys:
+{{
+  "title": "SEO-friendly title under 60 characters",
+  "meta_description": "Compelling summary under 160 characters",
+  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+  "content": "Full markdown article 1500+ words with ## and ### headings. Use \\n for line breaks. Do NOT include the title as a heading."
+}}"""
             }
         ]
 
@@ -270,18 +328,15 @@ class BlogSystem:
         # 1. Strip markdown fences if present
         text = raw.strip()
         if text.startswith("```"):
-            # Extract content between first and last fence
             lines = text.split("\n")
-            # Remove opening fence line (```json or ```)
             lines = lines[1:]
-            # Remove closing fence if present
             if lines and lines[-1].strip() == "```":
                 lines = lines[:-1]
             text = "\n".join(lines).strip()
 
         # 2. Find the JSON object boundaries
         start = text.find("{")
-        end = text.rfind("}") + 1
+        end   = text.rfind("}") + 1
         if start != -1 and end > start:
             text = text[start:end]
 
@@ -292,8 +347,6 @@ class BlogSystem:
             pass
 
         # 4. Fix unescaped control characters inside strings
-        # Replace literal newlines/tabs inside the JSON with escaped versions
-        # This regex replaces real newlines that appear inside JSON string values
         fixed = self._fix_json_control_chars(text)
 
         try:
@@ -305,14 +358,13 @@ class BlogSystem:
         print("Attempting regex field extraction...")
         return self._extract_fields_with_regex(text, topic)
 
-
     def _fix_json_control_chars(self, text: str) -> str:
         """
         Replace literal control characters inside JSON string values
         with their escaped equivalents.
         """
-        result = []
-        in_string = False
+        result      = []
+        in_string   = False
         escape_next = False
 
         for char in text:
@@ -332,7 +384,6 @@ class BlogSystem:
                 continue
 
             if in_string:
-                # Replace control characters with their escaped versions
                 if char == '\n':
                     result.append('\\n')
                 elif char == '\r':
@@ -340,8 +391,7 @@ class BlogSystem:
                 elif char == '\t':
                     result.append('\\t')
                 elif ord(char) < 32:
-                    # Other control characters — skip them
-                    pass
+                    pass  # skip other control characters
                 else:
                     result.append(char)
             else:
@@ -349,46 +399,46 @@ class BlogSystem:
 
         return ''.join(result)
 
-
     def _extract_fields_with_regex(self, text: str, topic: str) -> dict:
         """
         Last-resort field extraction when JSON is too broken to parse.
-        Pulls out individual fields and returns a valid dict.
         """
         def extract(pattern, default=""):
             match = re.search(pattern, text, re.DOTALL)
             return match.group(1).strip() if match else default
 
         title = extract(r'"title"\s*:\s*"([^"]+)"') or f"Understanding {topic}"
-        meta = extract(r'"meta_description"\s*:\s*"([^"]+)"') or f"A guide to {topic}"
+        meta  = extract(r'"meta_description"\s*:\s*"([^"]+)"') or f"A guide to {topic}"
 
-        # Try to get keywords array
         kw_match = re.search(r'"keywords"\s*:\s*\[([^\]]+)\]', text)
         if kw_match:
             keywords = re.findall(r'"([^"]+)"', kw_match.group(1))
         else:
             keywords = [topic.lower(), "guide", "tutorial", "technology", "development"]
 
-        # Content is the hardest — try to grab everything after "content":
-        content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*\}|"\s*,\s*"[a-z])', text, re.DOTALL)
+        content_match = re.search(
+            r'"content"\s*:\s*"(.*?)(?:"\s*\}|"\s*,\s*"[a-z])', text, re.DOTALL
+        )
         if content_match:
             content = content_match.group(1)
-            # Unescape basic sequences
             content = content.replace('\\n', '\n').replace('\\t', '\t').replace('\\"', '"')
         else:
-            # Nothing usable — return None so caller falls back to template
             raise ValueError("Could not extract content field from malformed JSON response")
 
         return {
-            "title": title,
+            "title":            title,
             "meta_description": meta,
-            "keywords": keywords[:5],
-            "content": content
-        }    
+            "keywords":         keywords[:5],
+            "content":          content
+        }
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
+        """
+        Main entry point: try API generation first, fall back to local template.
+        The local template is ALWAYS used if every API fails — it is not a failure state.
+        """
         if not self.api_key:
-            print("No API keys found. Using fallback content generation.")
+            print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
         try:
@@ -415,23 +465,22 @@ class BlogSystem:
             enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
                 post.content, topic
             )
-            post.content = enhanced_content
-            post.affiliate_links = affiliate_links
+            post.content          = enhanced_content
+            post.affiliate_links  = affiliate_links
             post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
 
             # Trending hashtags
             print("Generating trending hashtags...")
             hashtags = await self.hashtag_manager.get_daily_hashtags(topic, max_hashtags=10)
-            post.tags = list(set(post.tags + hashtags))[:15]
-            post.seo_keywords = list(set(post.seo_keywords + hashtags))[:15]
+            post.tags           = list(set(post.tags + hashtags))[:15]
+            post.seo_keywords   = list(set(post.seo_keywords + hashtags))[:15]
             post.twitter_hashtags = self.hashtag_manager.format_hashtags_for_twitter(hashtags[:5])
             print(f"Hashtags: {', '.join(hashtags[:5])}")
 
             return post
 
         except Exception as e:
-            print(f"Error generating blog post: {e}")
-            print("Falling back to local template content...")
+            print(f"All API providers exhausted ({e}). Using local template content.")
             return self._generate_fallback_post(topic)
 
     # ─────────────────────────────────────────────────────────────
@@ -441,7 +490,7 @@ class BlogSystem:
     def _generate_fallback_post(self, topic: str) -> BlogPost:
         """Generate a fallback post when all APIs are unavailable."""
         title = f"Understanding {topic}: A Complete Guide"
-        slug = self._create_slug(title)
+        slug  = self._create_slug(title)
 
         content = f"""## Introduction
 
@@ -503,8 +552,8 @@ Remember to stay updated with the latest developments in {topic} as the field co
         enhanced_content, affiliate_links = self.monetization.inject_affiliate_links(
             post.content, topic
         )
-        post.content = enhanced_content
-        post.affiliate_links = affiliate_links
+        post.content           = enhanced_content
+        post.affiliate_links   = affiliate_links
         post.monetization_data = self.monetization.generate_ad_slots(enhanced_content)
 
         return post
@@ -544,7 +593,9 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     print(f"Picking topic from {config_path}")
 
     if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Config file {config_path} not found. Run 'python blog_system.py init' first.")
+        raise FileNotFoundError(
+            f"Config file {config_path} not found. Run 'python blog_system.py init' first."
+        )
 
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
@@ -565,7 +616,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     if not available:
         print("All topics used, resetting...")
         available = topics
-        used = []
+        used      = []
 
     topic = random.choice(available)
     used.append(topic)
@@ -584,31 +635,31 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
 def create_sample_config():
     """Create a sample config.yaml file with monetization settings."""
     config = {
-        "site_name": "Tech Blog",
+        "site_name":        "Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
-        "base_url": "https://kubaik.github.io",
-        "base_path": "",
+        "base_url":         "https://kubaik.github.io",
+        "base_path":        "",
 
         # Monetization settings
-        "amazon_affiliate_tag": "aiblogcontent-20",
-        "google_analytics_id": "G-DST4PJYK6V",
-        "google_adsense_id": "ca-pub-4477679588953789",
-        "google_search_console_key": "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
+        "amazon_affiliate_tag":        "aiblogcontent-20",
+        "google_analytics_id":         "G-DST4PJYK6V",
+        "google_adsense_id":           "ca-pub-4477679588953789",
+        "google_search_console_key":   "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
         "google_adsense_verification": "ca-pub-4477679588953789",
 
         # Social media accounts
         "social_accounts": {
-            "twitter": "@KubaiKevin",
+            "twitter":  "@KubaiKevin",
             "linkedin": "your-linkedin-page",
             "facebook": "your-facebook-page"
         },
 
         "twitter_api": {
-            "api_key": "xXYqgAm2Gu3sgAPhzcS8bHR3i",
-            "api_secret": "FdHGXdNHIKRb5ixTwsyZ9ITc25pYTsOhn1Wq0jDdOzI18M7frm",
-            "access_token": "263530787-mN4pGjKKmroFPzBSpVRXP7bb4euKMryGnH6o8gBC",
+            "api_key":             "xXYqgAm2Gu3sgAPhzcS8bHR3i",
+            "api_secret":          "FdHGXdNHIKRb5ixTwsyZ9ITc25pYTsOhn1Wq0jDdOzI18M7frm",
+            "access_token":        "263530787-mN4pGjKKmroFPzBSpVRXP7bb4euKMryGnH6o8gBC",
             "access_token_secret": "a8LwH56vRImFaOXrlCaw7lHD0yu5i1wVHJBIllnBJLB9V",
-            "bearer_token": "AAAAAAAAAAAAAAAAAAAAAGAYpwEAAAAAgMWEPoCpeWXsTJ0BlJCpXWGP3qU%3DryCORdvSbcYa9pfDeajtl8zwcAYd86wYuDvAZxCYlhfQr49HBO"
+            "bearer_token":        "AAAAAAAAAAAAAAAAAAAAAGAYpwEAAAAAgMWEPoCpeWXsTJ0BlJCpXWGP3qU%3DryCORdvSbcYa9pfDeajtl8zwcAYd86wYuDvAZxCYlhfQr49HBO"
         },
 
         "content_topics": [
@@ -879,7 +930,7 @@ if __name__ == "__main__":
             blog_system = BlogSystem(config)
 
             try:
-                topic = pick_next_topic()
+                topic     = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
                 blog_system.save_post(blog_post)
 
@@ -890,7 +941,7 @@ if __name__ == "__main__":
 
                 visibility = VisibilityAutomator(config)
 
-                hashtags = blog_post.twitter_hashtags if hasattr(blog_post, 'twitter_hashtags') else ""
+                hashtags   = blog_post.twitter_hashtags if hasattr(blog_post, 'twitter_hashtags') else ""
                 tweet_text = (
                     f"New Post: {blog_post.title}\n\n"
                     f"{blog_post.meta_description[:100]}...\n\n"
@@ -927,7 +978,7 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
 
             blog_system = BlogSystem(config)
-            generator = StaticSiteGenerator(blog_system)
+            generator   = StaticSiteGenerator(blog_system)
             generator.generate_site()
             print("Site rebuilt successfully!")
 
@@ -962,9 +1013,6 @@ if __name__ == "__main__":
 
             print(f"Output directory: {blog_system.output_dir}")
             print(f"Directory exists: {blog_system.output_dir.exists()}")
-            print(f"Groq key set:        {'Yes' if blog_system.groq_key else 'No'}")
-            print(f"Gemini key set:      {'Yes' if blog_system.gemini_key else 'No'}")
-            print(f"OpenRouter key set:  {'Yes' if blog_system.openrouter_key else 'No'}")
 
             if blog_system.output_dir.exists():
                 items = list(blog_system.output_dir.iterdir())
@@ -972,19 +1020,19 @@ if __name__ == "__main__":
                 for item in items:
                     print(f"  - {item.name} ({'dir' if item.is_dir() else 'file'})")
                     if item.is_dir():
-                        post_json = item / "post.json"
-                        post_md = item / "index.md"
+                        post_json   = item / "post.json"
+                        post_md     = item / "index.md"
                         social_json = item / "social_posts.json"
-                        print(f"    post.json:        {'Yes' if post_json.exists() else 'No'}")
-                        print(f"    index.md:         {'Yes' if post_md.exists() else 'No'}")
-                        print(f"    social_posts.json:{'Yes' if social_json.exists() else 'No'}")
+                        print(f"    post.json:         {'Yes' if post_json.exists()   else 'No'}")
+                        print(f"    index.md:          {'Yes' if post_md.exists()     else 'No'}")
+                        print(f"    social_posts.json: {'Yes' if social_json.exists() else 'No'}")
                         if post_json.exists():
                             try:
                                 with open(post_json, 'r') as f:
                                     data = json.load(f)
-                                print(f"    Valid post:       {data.get('title', 'Unknown')}")
-                                print(f"    Affiliate links:  {len(data.get('affiliate_links', []))}")
-                                print(f"    Ad slots:         {data.get('monetization_data', {}).get('ad_slots', 0)}")
+                                print(f"    Valid post:        {data.get('title', 'Unknown')}")
+                                print(f"    Affiliate links:   {len(data.get('affiliate_links', []))}")
+                                print(f"    Ad slots:          {data.get('monetization_data', {}).get('ad_slots', 0)}")
                             except Exception as e:
                                 print(f"    Invalid JSON: {e}")
 
@@ -1005,8 +1053,8 @@ if __name__ == "__main__":
                 config = yaml.safe_load(f)
 
             blog_system = BlogSystem(config)
-            generator = StaticSiteGenerator(blog_system)
-            posts = generator._get_all_posts()
+            generator   = StaticSiteGenerator(blog_system)
+            posts       = generator._get_all_posts()
 
             visibility = VisibilityAutomator(config)
 
@@ -1014,7 +1062,7 @@ if __name__ == "__main__":
             for post in posts:
                 social_posts = visibility.generate_social_posts(post)
 
-                post_dir = blog_system.output_dir / post.slug
+                post_dir    = blog_system.output_dir / post.slug
                 social_file = post_dir / "social_posts.json"
                 with open(social_file, 'w', encoding='utf-8') as f:
                     json.dump(social_posts, f, indent=2)
@@ -1036,19 +1084,19 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
 
-            visibility = VisibilityAutomator(config)
-            connection_test = visibility.test_twitter_connection()
+            visibility       = VisibilityAutomator(config)
+            connection_test  = visibility.test_twitter_connection()
             print(f"Connection test: {connection_test}")
 
             if connection_test['success']:
                 class TestPost:
                     def __init__(self):
-                        self.title = "Test - AI Blog System Twitter Integration"
+                        self.title            = "Test - AI Blog System Twitter Integration"
                         self.meta_description = "Testing our automated blog to Twitter posting system."
-                        self.slug = "test-twitter-integration"
-                        self.tags = ["test", "automation", "blogging"]
+                        self.slug             = "test-twitter-integration"
+                        self.tags             = ["test", "automation", "blogging"]
 
-                test_post = TestPost()
+                test_post    = TestPost()
                 social_posts = visibility.generate_social_posts(test_post)
                 print(f"\nGenerated Twitter post preview:")
                 print(f"  {social_posts['twitter']}")
