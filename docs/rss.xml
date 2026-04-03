@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 21:42:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 22:42:51 +0000</lastBuildDate>
+    <item>
+      <title>AI Forecasting</title>
+      <link>https://kubaik.github.io/ai-forecasting/</link>
+      <description>Predict the future with AI time series forecasting</description>
+      <pubDate>Fri, 03 Apr 2026 22:42:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-forecasting/</guid>
+    </item>
     <item>
       <title>Tech Portfolio</title>
       <link>https://kubaik.github.io/tech-portfolio/</link>
@@ -138,13 +145,6 @@
       <description>Explore the importance of AI ethics &amp; responsible AI development for a fairer future.</description>
       <pubDate>Fri, 03 Apr 2026 09:05:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ethics-matter/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
-      <pubDate>Fri, 03 Apr 2026 07:21:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
