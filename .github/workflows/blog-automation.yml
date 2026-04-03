@@ -69,8 +69,24 @@ jobs:
           echo "WARNING: GROQ_API_KEY secret is not set - will use fallback content generation"
         else
           echo "SUCCESS: GROQ_API_KEY API key is available"
-        fi    
+        fi
 
+    - name: Verify GEMINI_API_KEY API Key
+      run: |
+        if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+          echo "WARNING: GEMINI_API_KEY secret is not set - will use fallback content generation"
+        else
+          echo "SUCCESS: GEMINI_API_KEY API key is available"
+        fi
+
+    - name: Verify OPENROUTER_API_KEY API Key
+      run: |
+        if [ -z "${{ secrets.OPENROUTER_API_KEY }}" ]; then
+          echo "WARNING: OPENROUTER_API_KEY secret is not set - will use fallback content generation"
+        else
+          echo "SUCCESS: OPENROUTER_API_KEY API key is available"
+        fi            
+     
     - name: Initialize config if needed
       run: |
         if [ ! -f "config.yaml" ]; then
@@ -95,6 +111,8 @@ jobs:
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       run: |
         echo "Starting blog content generation"
         
