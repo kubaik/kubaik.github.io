@@ -262,6 +262,130 @@ class BlogSystem:
         raw = await self._call_api_with_fallback(messages, max_tokens=2500)
         return self._parse_json_response(raw, topic)
 
+    def _parse_json_response(self, raw: str, topic: str) -> dict:
+        """
+        Robustly parse a JSON response from an LLM.
+        Handles control characters, markdown fences, and malformed output.
+        """
+        # 1. Strip markdown fences if present
+        text = raw.strip()
+        if text.startswith("```"):
+            # Extract content between first and last fence
+            lines = text.split("\n")
+            # Remove opening fence line (```json or ```)
+            lines = lines[1:]
+            # Remove closing fence if present
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+            text = "\n".join(lines).strip()
+
+        # 2. Find the JSON object boundaries
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start != -1 and end > start:
+            text = text[start:end]
+
+        # 3. Try parsing as-is first
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
+
+        # 4. Fix unescaped control characters inside strings
+        # Replace literal newlines/tabs inside the JSON with escaped versions
+        # This regex replaces real newlines that appear inside JSON string values
+        fixed = self._fix_json_control_chars(text)
+
+        try:
+            return json.loads(fixed)
+        except json.JSONDecodeError as e:
+            print(f"JSON parse failed after fixing control chars: {e}")
+
+        # 5. Last resort: extract fields individually with regex
+        print("Attempting regex field extraction...")
+        return self._extract_fields_with_regex(text, topic)
+
+
+    def _fix_json_control_chars(self, text: str) -> str:
+        """
+        Replace literal control characters inside JSON string values
+        with their escaped equivalents.
+        """
+        result = []
+        in_string = False
+        escape_next = False
+
+        for char in text:
+            if escape_next:
+                result.append(char)
+                escape_next = False
+                continue
+
+            if char == '\\' and in_string:
+                escape_next = True
+                result.append(char)
+                continue
+
+            if char == '"':
+                in_string = not in_string
+                result.append(char)
+                continue
+
+            if in_string:
+                # Replace control characters with their escaped versions
+                if char == '\n':
+                    result.append('\\n')
+                elif char == '\r':
+                    result.append('\\r')
+                elif char == '\t':
+                    result.append('\\t')
+                elif ord(char) < 32:
+                    # Other control characters — skip them
+                    pass
+                else:
+                    result.append(char)
+            else:
+                result.append(char)
+
+        return ''.join(result)
+
+
+    def _extract_fields_with_regex(self, text: str, topic: str) -> dict:
+        """
+        Last-resort field extraction when JSON is too broken to parse.
+        Pulls out individual fields and returns a valid dict.
+        """
+        def extract(pattern, default=""):
+            match = re.search(pattern, text, re.DOTALL)
+            return match.group(1).strip() if match else default
+
+        title = extract(r'"title"\s*:\s*"([^"]+)"') or f"Understanding {topic}"
+        meta = extract(r'"meta_description"\s*:\s*"([^"]+)"') or f"A guide to {topic}"
+
+        # Try to get keywords array
+        kw_match = re.search(r'"keywords"\s*:\s*\[([^\]]+)\]', text)
+        if kw_match:
+            keywords = re.findall(r'"([^"]+)"', kw_match.group(1))
+        else:
+            keywords = [topic.lower(), "guide", "tutorial", "technology", "development"]
+
+        # Content is the hardest — try to grab everything after "content":
+        content_match = re.search(r'"content"\s*:\s*"(.*?)(?:"\s*\}|"\s*,\s*"[a-z])', text, re.DOTALL)
+        if content_match:
+            content = content_match.group(1)
+            # Unescape basic sequences
+            content = content.replace('\\n', '\n').replace('\\t', '\t').replace('\\"', '"')
+        else:
+            # Nothing usable — return None so caller falls back to template
+            raise ValueError("Could not extract content field from malformed JSON response")
+
+        return {
+            "title": title,
+            "meta_description": meta,
+            "keywords": keywords[:5],
+            "content": content
+        }    
+
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
             print("No API keys found. Using fallback content generation.")
