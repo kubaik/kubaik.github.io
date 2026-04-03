@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 13:56:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 14:03:27 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Security Compliance (SOC 2, ISO 27001): A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-security-compliance-soc-2-iso-27001-/</link>
+      <description>A comprehensive guide to Security Compliance (SOC 2, ISO 27001) covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 03 Apr 2026 14:03:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-security-compliance-soc-2-iso-27001-/</guid>
+    </item>
     <item>
       <title>AI Agent Dev</title>
       <link>https://kubaik.github.io/ai-agent-dev/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Deep Learning Neural Networks covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 21:03:38 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-deep-learning-neural-networks-a-comp/</guid>
-    </item>
-    <item>
-      <title>Understanding Open Source Contribution Guide: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-open-source-contribution-guide-a-com/</link>
-      <description>A comprehensive guide to Open Source Contribution Guide covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 20:43:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-open-source-contribution-guide-a-com/</guid>
     </item>
   </channel>
 </rss>
