@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 06:48:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 06:51:20 +0000</lastBuildDate>
+    <item>
+      <title>Optimize Queries</title>
+      <link>https://kubaik.github.io/optimize-queries/</link>
+      <description>Improve database performance with expert query optimization tips.</description>
+      <pubDate>Fri, 03 Apr 2026 06:51:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimize-queries/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Distributed Systems Design covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 15:06:57 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-distributed-systems-design-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding API Security Best Practices: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-api-security-best-practices-a-comple/</link>
-      <description>A comprehensive guide to API Security Best Practices covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 14:44:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-api-security-best-practices-a-comple/</guid>
     </item>
   </channel>
 </rss>
