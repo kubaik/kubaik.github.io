@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 20:47:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 21:42:52 +0000</lastBuildDate>
+    <item>
+      <title>Tech Portfolio</title>
+      <link>https://kubaik.github.io/tech-portfolio/</link>
+      <description>Create a tech portfolio that shines</description>
+      <pubDate>Fri, 03 Apr 2026 21:42:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-portfolio/</guid>
+    </item>
     <item>
       <title>Web Components</title>
       <link>https://kubaik.github.io/web-components/</link>
@@ -138,13 +145,6 @@
       <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
       <pubDate>Fri, 03 Apr 2026 07:21:52 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>Work Smart</title>
-      <link>https://kubaik.github.io/work-smart/</link>
-      <description>Boost productivity with expert remote work tips and best practices.</description>
-      <pubDate>Fri, 03 Apr 2026 06:58:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/work-smart/</guid>
     </item>
   </channel>
 </rss>
