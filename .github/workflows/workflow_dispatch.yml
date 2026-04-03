@@ -2,7 +2,7 @@ name: Watchdog - Blog Automation Monitor
 
 on:
   schedule:
-    - cron: '45 * * * *'  # Runs 45 minutes past every hour
+    - cron: 30 * * * *'  # Runs at :30, checking the :00 run
 
   workflow_dispatch:  # Allow manual trigger for testing
 
