@@ -240,32 +240,27 @@ class BlogSystem:
                 "role": "system",
                 "content": (
                     "You are an experienced tech blogger. "
-                    "Respond ONLY with valid JSON — no markdown fences, no preamble."
+                    "Respond ONLY with valid JSON — no markdown fences, no preamble. "
+                    "IMPORTANT: In the content field, use \\n for newlines, not actual line breaks. "
+                    "All special characters inside JSON strings must be properly escaped."
                 )
             },
             {
                 "role": "user",
                 "content": f"""Write a blog post about: {topic}{keyword_text}
 
-Return a JSON object with exactly these keys:
-{{
-  "title": "SEO-friendly title under 60 characters",
-  "meta_description": "Compelling summary under 160 characters",
-  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-  "content": "Full markdown article, 1500+ words, with ## and ### headings, bullet points, and code examples where relevant. Do NOT include the title as a heading."
-}}"""
+    Return a JSON object with exactly these keys:
+    {{
+    "title": "SEO-friendly title under 60 characters",
+    "meta_description": "Compelling summary under 160 characters",
+    "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+    "content": "Full markdown article 1500+ words with ## and ### headings. Use \\n for line breaks. Do NOT include the title as a heading."
+    }}"""
             }
         ]
 
         raw = await self._call_api_with_fallback(messages, max_tokens=2500)
-
-        # Strip accidental markdown fences just in case
-        raw = raw.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```", 2)[-1] if raw.count("```") >= 2 else raw
-            raw = re.sub(r"^json\n?", "", raw).strip().rstrip("```").strip()
-
-        return json.loads(raw)
+        return self._parse_json_response(raw, topic)
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
