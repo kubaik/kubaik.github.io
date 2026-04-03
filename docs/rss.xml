@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 19:49:41 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 20:47:07 +0000</lastBuildDate>
+    <item>
+      <title>Web Components</title>
+      <link>https://kubaik.github.io/web-components/</link>
+      <description>Learn about Web Components and Custom Elements</description>
+      <pubDate>Fri, 03 Apr 2026 20:46:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-components/</guid>
+    </item>
     <item>
       <title>Understanding Pair Programming Techniques: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-pair-programming-techniques-a-comple/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert remote work tips and best practices.</description>
       <pubDate>Fri, 03 Apr 2026 06:58:14 +0000</pubDate>
       <guid>https://kubaik.github.io/work-smart/</guid>
-    </item>
-    <item>
-      <title>Optimize Queries</title>
-      <link>https://kubaik.github.io/optimize-queries/</link>
-      <description>Improve database performance with expert query optimization tips.</description>
-      <pubDate>Fri, 03 Apr 2026 06:51:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimize-queries/</guid>
     </item>
   </channel>
 </rss>
