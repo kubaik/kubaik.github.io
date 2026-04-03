@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 19:13:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 19:49:41 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Pair Programming Techniques: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-pair-programming-techniques-a-comple/</link>
+      <description>A comprehensive guide to Pair Programming Techniques covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 03 Apr 2026 19:49:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-pair-programming-techniques-a-comple/</guid>
+    </item>
     <item>
       <title>VR Apps</title>
       <link>https://kubaik.github.io/vr-apps/</link>
@@ -138,13 +145,6 @@
       <description>Improve database performance with expert query optimization tips.</description>
       <pubDate>Fri, 03 Apr 2026 06:51:08 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-queries/</guid>
-    </item>
-    <item>
-      <title>Clean Data Matters</title>
-      <link>https://kubaik.github.io/clean-data-matters/</link>
-      <description>Learn why clean data matters for business success &amp; discover expert tips on data quality management.</description>
-      <pubDate>Fri, 03 Apr 2026 05:13:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/clean-data-matters/</guid>
     </item>
   </channel>
 </rss>
