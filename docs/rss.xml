@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 09:05:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 10:54:04 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock cloud freedom with multi-cloud architecture. Learn how to thrive in a cloud-agnostic world.</description>
+      <pubDate>Fri, 03 Apr 2026 10:53:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>AI Ethics Matter</title>
       <link>https://kubaik.github.io/ai-ethics-matter/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Mobile Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 17:12:28 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mobile-performance-optimization-a-co/</guid>
-    </item>
-    <item>
-      <title>Understanding WebAssembly Performance Optimization: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-webassembly-performance-optimization/</link>
-      <description>A comprehensive guide to WebAssembly Performance Optimization covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 17:04:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-webassembly-performance-optimization/</guid>
     </item>
   </channel>
 </rss>
