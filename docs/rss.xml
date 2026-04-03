@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 22:42:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 23:42:48 +0000</lastBuildDate>
+    <item>
+      <title>Tech Writing</title>
+      <link>https://kubaik.github.io/tech-writing/</link>
+      <description>Improve your technical writing skills</description>
+      <pubDate>Fri, 03 Apr 2026 23:42:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-writing/</guid>
+    </item>
     <item>
       <title>AI Forecasting</title>
       <link>https://kubaik.github.io/ai-forecasting/</link>
@@ -138,13 +145,6 @@
       <description>Unlock cloud freedom with multi-cloud architecture. Learn how to thrive in a cloud-agnostic world.</description>
       <pubDate>Fri, 03 Apr 2026 10:53:53 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-evolved/</guid>
-    </item>
-    <item>
-      <title>AI Ethics Matter</title>
-      <link>https://kubaik.github.io/ai-ethics-matter/</link>
-      <description>Explore the importance of AI ethics &amp; responsible AI development for a fairer future.</description>
-      <pubDate>Fri, 03 Apr 2026 09:05:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ethics-matter/</guid>
     </item>
   </channel>
 </rss>
