@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 13:16:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 13:21:18 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Docker Containerization Guide: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
+      <description>A comprehensive guide to Docker Containerization Guide covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 03 Apr 2026 13:21:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</guid>
+    </item>
     <item>
       <title>Understanding AWS Cloud Architecture: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-aws-cloud-architecture-a-complete-gu/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Mobile App Architecture Patterns covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 19:30:40 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mobile-app-architecture-patterns-a-c/</guid>
-    </item>
-    <item>
-      <title>Understanding Agile Development Methodologies: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-agile-development-methodologies-a-co/</link>
-      <description>A comprehensive guide to Agile Development Methodologies covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 19:07:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-agile-development-methodologies-a-co/</guid>
     </item>
   </channel>
 </rss>
