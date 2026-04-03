@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 13:25:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 13:27:15 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Data Warehousing Solutions: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-data-warehousing-solutions-a-complet/</link>
+      <description>A comprehensive guide to Data Warehousing Solutions covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 03 Apr 2026 13:27:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-data-warehousing-solutions-a-complet/</guid>
+    </item>
     <item>
       <title>Understanding Docker Containerization Guide: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Jamstack Architecture covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 20:05:04 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-jamstack-architecture-a-complete-gui/</guid>
-    </item>
-    <item>
-      <title>Understanding Mobile App Architecture Patterns: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-mobile-app-architecture-patterns-a-c/</link>
-      <description>A comprehensive guide to Mobile App Architecture Patterns covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 19:30:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-mobile-app-architecture-patterns-a-c/</guid>
     </item>
   </channel>
 </rss>
