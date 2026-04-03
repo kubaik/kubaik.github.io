@@ -152,7 +152,7 @@
    ============================================ */
 
 .blog-post {
-    max-width: 950px;
+    max-width: 850px;
     margin: 0 auto;
     animation: fadeInContent 0.8s ease-out;
 }
