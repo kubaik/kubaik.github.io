@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 14:03:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 14:21:41 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Blockchain Technology Explained: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-blockchain-technology-explained-a-co/</link>
+      <description>A comprehensive guide to Blockchain Technology Explained covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Fri, 03 Apr 2026 14:21:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-blockchain-technology-explained-a-co/</guid>
+    </item>
     <item>
       <title>Understanding Security Compliance (SOC 2, ISO 27001): A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-security-compliance-soc-2-iso-27001-/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to JWT Authentication Implementation covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 21:26:37 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-jwt-authentication-implementation-a-/</guid>
-    </item>
-    <item>
-      <title>Understanding Deep Learning Neural Networks: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-deep-learning-neural-networks-a-comp/</link>
-      <description>A comprehensive guide to Deep Learning Neural Networks covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 21:03:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-deep-learning-neural-networks-a-comp/</guid>
     </item>
   </channel>
 </rss>
