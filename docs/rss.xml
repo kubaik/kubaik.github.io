@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 06:58:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2026 07:22:04 +0000</lastBuildDate>
+    <item>
+      <title>Data Governance</title>
+      <link>https://kubaik.github.io/data-governance/</link>
+      <description>Learn about data governance frameworks &amp; best practices to manage data effectively.</description>
+      <pubDate>Fri, 03 Apr 2026 07:21:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-governance/</guid>
+    </item>
     <item>
       <title>Work Smart</title>
       <link>https://kubaik.github.io/work-smart/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Recommender Systems Design covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Thu, 02 Apr 2026 16:36:59 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-recommender-systems-design-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding TypeScript for Large-Scale Apps: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-typescript-for-large-scale-apps-a-co/</link>
-      <description>A comprehensive guide to TypeScript for Large-Scale Apps covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Thu, 02 Apr 2026 15:36:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-typescript-for-large-scale-apps-a-co/</guid>
     </item>
   </channel>
 </rss>
