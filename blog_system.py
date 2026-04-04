@@ -165,6 +165,12 @@ class BlogSystem:
         - Venice is excluded because it rate-limits aggressively on the free tier.
         - allow_fallbacks: true lets OpenRouter try any other available provider
           automatically, so a single upstream 429 never fails the whole request.
+
+        Retries:
+        - Connection-level errors (reset by peer, timeout, etc.) are retried up
+          to 3 times with a short back-off. These are transient network blips
+          common in CI environments and are not API errors.
+        - API-level errors (4xx/5xx) are NOT retried — they raise immediately.
         """
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
@@ -173,7 +179,7 @@ class BlogSystem:
             "X-Title":      self.config.get("site_name", "Tech Blog")
         }
         data = {
-            "model": "openai/gpt-4o-mini",
+            "model": "meta-llama/llama-3.3-70b-instruct:free",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,
@@ -182,18 +188,44 @@ class BlogSystem:
                 "allow_fallbacks": True     # try any other provider automatically
             }
         }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers=headers, json=data
-            ) as response:
-                if response.status != 200:
-                    raise Exception(f"OpenRouter {response.status}: {await response.text()}")
-                result = await response.json()
-                # OpenRouter can embed errors inside a 200 response
-                if "error" in result:
-                    raise Exception(f"OpenRouter error payload: {result['error']}")
-                return result["choices"][0]["message"]["content"]
+
+        max_attempts = 3
+        wait_seconds = [3, 8]   # wait 3s after attempt 1, 8s after attempt 2
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        "https://openrouter.ai/api/v1/chat/completions",
+                        headers=headers,
+                        json=data,
+                        timeout=aiohttp.ClientTimeout(total=60)
+                    ) as response:
+                        if response.status != 200:
+                            # API error — don't retry, raise immediately
+                            raise Exception(f"OpenRouter {response.status}: {await response.text()}")
+                        result = await response.json()
+                        if "error" in result:
+                            raise Exception(f"OpenRouter error payload: {result['error']}")
+                        return result["choices"][0]["message"]["content"]
+
+            except aiohttp.ClientConnectionError as e:
+                # Connection reset, DNS failure, etc. — worth retrying
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(f"OpenRouter connection error (attempt {attempt}/{max_attempts}): {e}")
+                    print(f"Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(f"OpenRouter connection failed after {max_attempts} attempts: {e}")
+
+            except asyncio.TimeoutError:
+                if attempt < max_attempts:
+                    wait = wait_seconds[attempt - 1]
+                    print(f"OpenRouter timeout (attempt {attempt}/{max_attempts}). Retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+                else:
+                    raise Exception(f"OpenRouter timed out after {max_attempts} attempts.")
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
