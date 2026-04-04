@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 14:31:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 14:58:12 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Mastery</title>
+      <link>https://kubaik.github.io/cloud-mastery/</link>
+      <description>Master AWS Cloud Architecture with expert insights and best practices.</description>
+      <pubDate>Sat, 04 Apr 2026 14:58:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-mastery/</guid>
+    </item>
     <item>
       <title>Clean Data Matters</title>
       <link>https://kubaik.github.io/clean-data-matters/</link>
@@ -138,13 +145,6 @@
       <description>Improve your technical writing skills</description>
       <pubDate>Fri, 03 Apr 2026 23:42:38 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-writing/</guid>
-    </item>
-    <item>
-      <title>AI Forecasting</title>
-      <link>https://kubaik.github.io/ai-forecasting/</link>
-      <description>Predict the future with AI time series forecasting</description>
-      <pubDate>Fri, 03 Apr 2026 22:42:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-forecasting/</guid>
     </item>
   </channel>
 </rss>
