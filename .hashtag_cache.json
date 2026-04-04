@@ -908,16 +908,15 @@
     "topic": "CQRS and Event Sourcing"
   },
   "native_ios_development_with_swift": {
-    "timestamp": "2026-03-27T18:45:56.519698",
+    "timestamp": "2026-04-04T14:09:49.242962",
     "hashtags": [
-      "SwiftUI",
+      "SwiftDevelopment",
       "iOSDev",
       "MobileTech",
       "AppleEcosystem",
       "NativeApps",
-      "DevOps",
-      "CloudNative",
-      "CrossPlatform"
+      "CrossPlatform",
+      "CodingWithSwift"
     ],
     "topic": "Native iOS Development with Swift"
   },
