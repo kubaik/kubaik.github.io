@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 15:26:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 15:53:15 +0000</lastBuildDate>
+    <item>
+      <title>React Native: Build Once</title>
+      <link>https://kubaik.github.io/react-native-build-once/</link>
+      <description>Discover how to build powerful cross-platform apps with React Native. Learn best practices and tips to maximize your development efficiency!</description>
+      <pubDate>Sat, 04 Apr 2026 15:53:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-native-build-once/</guid>
+    </item>
     <item>
       <title>Tame Tech Debt</title>
       <link>https://kubaik.github.io/tame-tech-debt/</link>
@@ -138,13 +145,6 @@
       <description>Boost model performance with feature engineering techniques</description>
       <pubDate>Sat, 04 Apr 2026 04:47:14 +0000</pubDate>
       <guid>https://kubaik.github.io/feature-engineering/</guid>
-    </item>
-    <item>
-      <title>WAF Guide</title>
-      <link>https://kubaik.github.io/waf-guide/</link>
-      <description>Protect your website with WAF</description>
-      <pubDate>Sat, 04 Apr 2026 02:48:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-guide/</guid>
     </item>
   </channel>
 </rss>
