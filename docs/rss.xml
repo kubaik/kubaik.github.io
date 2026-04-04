@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 21:27:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 21:53:32 +0000</lastBuildDate>
+    <item>
+      <title>Grid &amp; Flexbox</title>
+      <link>https://kubaik.github.io/grid-flexbox/</link>
+      <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
+      <pubDate>Sat, 04 Apr 2026 21:53:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/grid-flexbox/</guid>
+    </item>
     <item>
       <title>Agile Dev 101</title>
       <link>https://kubaik.github.io/agile-dev-101/</link>
@@ -138,13 +145,6 @@
       <description>Discover XAI techniques to unlock transparent AI decision-making.</description>
       <pubDate>Sat, 04 Apr 2026 13:51:35 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-xai/</guid>
-    </item>
-    <item>
-      <title>Federated Learning</title>
-      <link>https://kubaik.github.io/federated-learning/</link>
-      <description>Discover the essentials of Federated Learning implementation. Learn how to enhance privacy and efficiency in AI without compromising data security.</description>
-      <pubDate>Sat, 04 Apr 2026 13:31:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/federated-learning/</guid>
     </item>
   </channel>
 </rss>
