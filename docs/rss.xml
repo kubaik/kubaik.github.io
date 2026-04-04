@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Apr 2026 23:42:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 02:48:43 +0000</lastBuildDate>
+    <item>
+      <title>WAF Guide</title>
+      <link>https://kubaik.github.io/waf-guide/</link>
+      <description>Protect your website with WAF</description>
+      <pubDate>Sat, 04 Apr 2026 02:48:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-guide/</guid>
+    </item>
     <item>
       <title>Tech Writing</title>
       <link>https://kubaik.github.io/tech-writing/</link>
@@ -138,13 +145,6 @@
       <description>Learn how Zero Trust Security Architecture can protect your network with a &apos;never trust, always verify&apos; approach.</description>
       <pubDate>Fri, 03 Apr 2026 11:43:45 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
-    </item>
-    <item>
-      <title>Cloud Evolved</title>
-      <link>https://kubaik.github.io/cloud-evolved/</link>
-      <description>Unlock cloud freedom with multi-cloud architecture. Learn how to thrive in a cloud-agnostic world.</description>
-      <pubDate>Fri, 03 Apr 2026 10:53:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-evolved/</guid>
     </item>
   </channel>
 </rss>
