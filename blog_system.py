@@ -158,7 +158,7 @@ class BlogSystem:
 
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
         """
-        Call OpenRouter — meta-llama/llama-3.3-70b-instruct:free.
+        Call OpenRouter — openai/gpt-4o-mini.
         Same 70B model family as Groq, no daily token cap on the free tier.
 
         Provider routing:
@@ -179,7 +179,7 @@ class BlogSystem:
             "X-Title":      self.config.get("site_name", "Tech Blog")
         }
         data = {
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
+            "model": "openai/gpt-4o-mini",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,
