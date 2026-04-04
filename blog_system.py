@@ -173,7 +173,7 @@ class BlogSystem:
             "X-Title":      self.config.get("site_name", "Tech Blog")
         }
         data = {
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
+            "model": "openai/gpt-4o-mini",
             "messages": messages,
             "max_tokens": max_tokens,
             "temperature": 0.7,
