@@ -5,6 +5,7 @@
 <url><loc>https://kubaik.github.io/contact/</loc><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/privacy-policy/</loc><priority>0.5</priority></url>
 <url><loc>https://kubaik.github.io/terms-of-service/</loc><priority>0.5</priority></url>
+<url><loc>https://kubaik.github.io/federated-learning/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/understanding-graphql-api-development-a-complete-g/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/understanding-cloud-security-best-practices-a-comp/</loc><priority>0.9</priority></url>
@@ -476,7 +477,6 @@
 <url><loc>https://kubaik.github.io/web3-dapp-revolution/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nft-tech-unlocked/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/vue-component-architecture/</loc><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/federated-learning/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/lock-it-down-soc-2-iso/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/nextjs-full-stack-done/</loc><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/code-the-future/</loc><priority>0.9</priority></url>
