@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 19:28:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 19:52:18 +0000</lastBuildDate>
+    <item>
+      <title>IoT Device Control</title>
+      <link>https://kubaik.github.io/iot-device-control/</link>
+      <description>Master IoT device control &amp; management for secure, efficient operations.</description>
+      <pubDate>Sat, 04 Apr 2026 19:52:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/iot-device-control/</guid>
+    </item>
     <item>
       <title>Boot Up with Java</title>
       <link>https://kubaik.github.io/boot-up-with-java/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Cloud Security Best Practices covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Sat, 04 Apr 2026 11:12:40 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-cloud-security-best-practices-a-comp/</guid>
-    </item>
-    <item>
-      <title>Understanding System Design Interview Tips: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-system-design-interview-tips-a-compl/</link>
-      <description>A comprehensive guide to System Design Interview Tips covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Sat, 04 Apr 2026 11:01:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-system-design-interview-tips-a-compl/</guid>
     </item>
   </channel>
 </rss>
