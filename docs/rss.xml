@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 13:25:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 13:31:32 +0000</lastBuildDate>
+    <item>
+      <title>Federated Learning</title>
+      <link>https://kubaik.github.io/federated-learning/</link>
+      <description>Discover the essentials of Federated Learning implementation. Learn how to enhance privacy and efficiency in AI without compromising data security.</description>
+      <pubDate>Sat, 04 Apr 2026 13:31:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/federated-learning/</guid>
+    </item>
     <item>
       <title>Understanding CI/CD Pipeline Implementation: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</link>
@@ -138,13 +145,6 @@
       <description>Discover VR applications</description>
       <pubDate>Fri, 03 Apr 2026 19:13:36 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-apps/</guid>
-    </item>
-    <item>
-      <title>BDD Explained</title>
-      <link>https://kubaik.github.io/bdd-explained/</link>
-      <description>Learn Behavior-Driven Development</description>
-      <pubDate>Fri, 03 Apr 2026 18:59:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/bdd-explained/</guid>
     </item>
   </channel>
 </rss>
