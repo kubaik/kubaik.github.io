@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 06:06:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 06:28:40 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh Unlocked</title>
+      <link>https://kubaik.github.io/data-mesh-unlocked/</link>
+      <description>Unlock scalable data management with Data Mesh Architecture. Learn more.</description>
+      <pubDate>Sat, 04 Apr 2026 06:28:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-unlocked/</guid>
+    </item>
     <item>
       <title>React Native Apps</title>
       <link>https://kubaik.github.io/react-native-apps/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Data Warehousing Solutions covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 03 Apr 2026 13:27:03 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-data-warehousing-solutions-a-complet/</guid>
-    </item>
-    <item>
-      <title>Understanding Docker Containerization Guide: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
-      <description>A comprehensive guide to Docker Containerization Guide covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 03 Apr 2026 13:21:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</guid>
     </item>
   </channel>
 </rss>
