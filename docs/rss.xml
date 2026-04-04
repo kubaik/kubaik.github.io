@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 10:42:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 11:01:48 +0000</lastBuildDate>
+    <item>
+      <title>Understanding System Design Interview Tips: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-system-design-interview-tips-a-compl/</link>
+      <description>A comprehensive guide to System Design Interview Tips covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Sat, 04 Apr 2026 11:01:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-system-design-interview-tips-a-compl/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Discover advancements in Multi-Modal AI Systems</description>
       <pubDate>Fri, 03 Apr 2026 15:46:57 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-modal-ai/</guid>
-    </item>
-    <item>
-      <title>Vulnerability Management</title>
-      <link>https://kubaik.github.io/vulnerability-management/</link>
-      <description>Protect your systems from cyber threats</description>
-      <pubDate>Fri, 03 Apr 2026 14:53:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/vulnerability-management/</guid>
     </item>
   </channel>
 </rss>
