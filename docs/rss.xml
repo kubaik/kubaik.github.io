@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 18:21:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 18:23:38 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Debugging Techniques: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-debugging-techniques-a-complete-guid/</link>
+      <description>A comprehensive guide to Debugging Techniques covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Sat, 04 Apr 2026 18:23:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-debugging-techniques-a-complete-guid/</guid>
+    </item>
     <item>
       <title>Doc Right</title>
       <link>https://kubaik.github.io/doc-right/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from threats. Learn expert mobile app security tips and best practices.</description>
       <pubDate>Sat, 04 Apr 2026 08:53:03 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>Patterns in Action</title>
-      <link>https://kubaik.github.io/patterns-in-action/</link>
-      <description>Explore real-world design patterns in action, boosting efficiency and innovation.</description>
-      <pubDate>Sat, 04 Apr 2026 07:53:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/patterns-in-action/</guid>
     </item>
   </channel>
 </rss>
