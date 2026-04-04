@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 14:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 14:24:52 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right</title>
+      <link>https://kubaik.github.io/devops-done-right/</link>
+      <description>Unlock DevOps success with expert best practices and cultural insights.</description>
+      <pubDate>Sat, 04 Apr 2026 14:24:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Create a tech portfolio that shines</description>
       <pubDate>Fri, 03 Apr 2026 21:42:40 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-portfolio/</guid>
-    </item>
-    <item>
-      <title>Web Components</title>
-      <link>https://kubaik.github.io/web-components/</link>
-      <description>Learn about Web Components and Custom Elements</description>
-      <pubDate>Fri, 03 Apr 2026 20:46:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-components/</guid>
     </item>
   </channel>
 </rss>
