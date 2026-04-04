@@ -2741,15 +2741,15 @@
     "topic": "IoT Device Management"
   },
   "technical_debt_management": {
-    "timestamp": "2026-03-29T19:38:08.388555",
+    "timestamp": "2026-04-04T15:26:20.411435",
     "hashtags": [
       "TechDebt",
       "CodeQuality",
       "DevOps",
       "CloudNative",
-      "AIforCode",
-      "CodeRefactoring",
-      "SustainableCode"
+      "TechnicalDebt",
+      "AgileDevelopment",
+      "SoftwareEngineering"
     ],
     "topic": "Technical Debt Management"
   },

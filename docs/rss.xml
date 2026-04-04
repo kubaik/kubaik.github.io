@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 14:58:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 15:26:32 +0000</lastBuildDate>
+    <item>
+      <title>Tame Tech Debt</title>
+      <link>https://kubaik.github.io/tame-tech-debt/</link>
+      <description>Learn to manage technical debt &amp; boost dev efficiency</description>
+      <pubDate>Sat, 04 Apr 2026 15:26:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-tech-debt/</guid>
+    </item>
     <item>
       <title>Cloud Mastery</title>
       <link>https://kubaik.github.io/cloud-mastery/</link>
@@ -138,13 +145,6 @@
       <description>Protect your website with WAF</description>
       <pubDate>Sat, 04 Apr 2026 02:48:30 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-guide/</guid>
-    </item>
-    <item>
-      <title>Tech Writing</title>
-      <link>https://kubaik.github.io/tech-writing/</link>
-      <description>Improve your technical writing skills</description>
-      <pubDate>Fri, 03 Apr 2026 23:42:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-writing/</guid>
     </item>
   </channel>
 </rss>
