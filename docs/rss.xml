@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 09:50:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 10:42:55 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Boost efficiency with smart backend testing strategies.</description>
+      <pubDate>Sat, 04 Apr 2026 10:42:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>Smart Contract Dev</title>
       <link>https://kubaik.github.io/smart-contract-dev/</link>
@@ -138,13 +145,6 @@
       <description>Protect your systems from cyber threats</description>
       <pubDate>Fri, 03 Apr 2026 14:53:50 +0000</pubDate>
       <guid>https://kubaik.github.io/vulnerability-management/</guid>
-    </item>
-    <item>
-      <title>Understanding Blockchain Technology Explained: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-blockchain-technology-explained-a-co/</link>
-      <description>A comprehensive guide to Blockchain Technology Explained covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Fri, 03 Apr 2026 14:21:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-blockchain-technology-explained-a-co/</guid>
     </item>
   </channel>
 </rss>
