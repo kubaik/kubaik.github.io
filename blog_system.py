@@ -242,7 +242,9 @@ class BlogSystem:
                     "You are an experienced tech blogger. "
                     "Respond ONLY with valid JSON — no markdown fences, no preamble. "
                     "IMPORTANT: In the content field, use \\n for newlines, not actual line breaks. "
-                    "All special characters inside JSON strings must be properly escaped."
+                    "All special characters inside JSON strings must be properly escaped. "
+                    "Only use these escape sequences inside strings: \\n \\r \\t \\\\ \\\" — "
+                    "do NOT use any other backslash sequences (e.g. do not write \\T, \\C, \\A, \\S, etc.)."
                 )
             },
             {
@@ -291,9 +293,7 @@ class BlogSystem:
         except json.JSONDecodeError:
             pass
 
-        # 4. Fix unescaped control characters inside strings
-        # Replace literal newlines/tabs inside the JSON with escaped versions
-        # This regex replaces real newlines that appear inside JSON string values
+        # 4. Fix unescaped control characters AND invalid escape sequences
         fixed = self._fix_json_control_chars(text)
 
         try:
@@ -305,50 +305,84 @@ class BlogSystem:
         print("Attempting regex field extraction...")
         return self._extract_fields_with_regex(text, topic)
 
+    # Valid JSON escape characters after a backslash
+    _VALID_JSON_ESCAPES = set('"\\\/bfnrtu')
 
     def _fix_json_control_chars(self, text: str) -> str:
         """
-        Replace literal control characters inside JSON string values
-        with their escaped equivalents.
+        Walk the JSON character by character and fix two classes of problems
+        inside string values:
+
+        1. Real control characters (newline, tab, carriage-return, etc.)
+           → replace with their valid JSON escape sequences.
+
+        2. Invalid backslash escapes like \\T, \\C, \\A, \\S …
+           → replace the backslash with a space so the string stays readable
+             and the JSON becomes parseable.
+
+        Valid JSON escape sequences are: \\" \\\\ \\/ \\b \\f \\n \\r \\t \\uXXXX
+        Everything else is illegal and must be neutralised.
         """
         result = []
         in_string = False
-        escape_next = False
+        i = 0
+        n = len(text)
 
-        for char in text:
-            if escape_next:
+        while i < n:
+            char = text[i]
+
+            if not in_string:
+                # Outside a string: track when we enter one
+                if char == '"':
+                    in_string = True
                 result.append(char)
-                escape_next = False
+                i += 1
                 continue
 
-            if char == '\\' and in_string:
-                escape_next = True
-                result.append(char)
+            # ── We are inside a JSON string ──────────────────────────
+
+            if char == '\\':
+                # Peek at the next character
+                if i + 1 < n:
+                    next_char = text[i + 1]
+                    if next_char in self._VALID_JSON_ESCAPES:
+                        # Legitimate escape sequence — keep both chars as-is
+                        result.append(char)
+                        result.append(next_char)
+                        i += 2
+                    else:
+                        # Invalid escape (e.g. \T \C \A \S \p …)
+                        # Drop the backslash; keep the following character
+                        result.append(next_char)
+                        i += 2
+                else:
+                    # Backslash at end of text — just drop it
+                    i += 1
                 continue
 
             if char == '"':
-                in_string = not in_string
+                # Closing quote — exit string mode
+                in_string = False
                 result.append(char)
+                i += 1
                 continue
 
-            if in_string:
-                # Replace control characters with their escaped versions
-                if char == '\n':
-                    result.append('\\n')
-                elif char == '\r':
-                    result.append('\\r')
-                elif char == '\t':
-                    result.append('\\t')
-                elif ord(char) < 32:
-                    # Other control characters — skip them
-                    pass
-                else:
-                    result.append(char)
+            # Replace real control characters with escape sequences
+            if char == '\n':
+                result.append('\\n')
+            elif char == '\r':
+                result.append('\\r')
+            elif char == '\t':
+                result.append('\\t')
+            elif ord(char) < 32:
+                # Other ASCII control chars — skip silently
+                pass
             else:
                 result.append(char)
 
-        return ''.join(result)
+            i += 1
 
+        return ''.join(result)
 
     def _extract_fields_with_regex(self, text: str, topic: str) -> dict:
         """
@@ -384,7 +418,7 @@ class BlogSystem:
             "meta_description": meta,
             "keywords": keywords[:5],
             "content": content
-        }    
+        }
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
         if not self.api_key:
