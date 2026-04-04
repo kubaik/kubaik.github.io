@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2026 13:48:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2026 13:51:44 +0000</lastBuildDate>
+    <item>
+      <title>Unlock XAI</title>
+      <link>https://kubaik.github.io/unlock-xai/</link>
+      <description>Discover XAI techniques to unlock transparent AI decision-making.</description>
+      <pubDate>Sat, 04 Apr 2026 13:51:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-xai/</guid>
+    </item>
     <item>
       <title>Federated Learning</title>
       <link>https://kubaik.github.io/federated-learning/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Pair Programming Techniques covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Fri, 03 Apr 2026 19:49:30 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-pair-programming-techniques-a-comple/</guid>
-    </item>
-    <item>
-      <title>VR Apps</title>
-      <link>https://kubaik.github.io/vr-apps/</link>
-      <description>Discover VR applications</description>
-      <pubDate>Fri, 03 Apr 2026 19:13:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-apps/</guid>
     </item>
   </channel>
 </rss>
