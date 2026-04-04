@@ -160,6 +160,11 @@ class BlogSystem:
         """
         Call OpenRouter — meta-llama/llama-3.3-70b-instruct:free.
         Same 70B model family as Groq, no daily token cap on the free tier.
+
+        Provider routing:
+        - Venice is excluded because it rate-limits aggressively on the free tier.
+        - allow_fallbacks: true lets OpenRouter try any other available provider
+          automatically, so a single upstream 429 never fails the whole request.
         """
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
@@ -168,10 +173,14 @@ class BlogSystem:
             "X-Title":      self.config.get("site_name", "Tech Blog")
         }
         data = {
-            "model": "meta-llama/llama-3.3-70b-instruct:free",   # same quality as Groq
+            "model": "meta-llama/llama-3.3-70b-instruct:free",
             "messages": messages,
             "max_tokens": max_tokens,
-            "temperature": 0.7
+            "temperature": 0.7,
+            "provider": {
+                "ignore": ["Venice"],       # skip the rate-limited upstream
+                "allow_fallbacks": True     # try any other provider automatically
+            }
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(
