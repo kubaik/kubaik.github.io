@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 12:27:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 12:41:57 +0000</lastBuildDate>
+    <item>
+      <title>Engineer Your Time</title>
+      <link>https://kubaik.github.io/engineer-your-time/</link>
+      <description>Boost productivity with expert time management tips for engineers.</description>
+      <pubDate>Sun, 05 Apr 2026 12:41:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineer-your-time/</guid>
+    </item>
     <item>
       <title>RPA: Automate</title>
       <link>https://kubaik.github.io/rpa-automate/</link>
@@ -138,13 +145,6 @@
       <description>Boost SEO &amp; speed with Server-Side Rendering (SSR). Learn how to unlock its full potential.</description>
       <pubDate>Sun, 05 Apr 2026 06:12:21 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-ssr/</guid>
-    </item>
-    <item>
-      <title>XAI Uncovered</title>
-      <link>https://kubaik.github.io/xai-uncovered/</link>
-      <description>Unlock the power of Explainable AI. Discover XAI techniques &amp; demystify AI decision-making.</description>
-      <pubDate>Sun, 05 Apr 2026 05:58:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/xai-uncovered/</guid>
     </item>
   </channel>
 </rss>
