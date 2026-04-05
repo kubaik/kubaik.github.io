@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 11:55:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 11:58:03 +0000</lastBuildDate>
+    <item>
+      <title>Boost Performance</title>
+      <link>https://kubaik.github.io/boost-performance/</link>
+      <description>Optimize code with profiling &amp; benchmarking techniques to boost performance.</description>
+      <pubDate>Sun, 05 Apr 2026 11:57:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-performance/</guid>
+    </item>
     <item>
       <title>Lock It Down</title>
       <link>https://kubaik.github.io/lock-it-down/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Kafka Streams simplifies real-time data processing with Apache Kafka. Learn key concepts, use cases, and best practices to enhance your streaming applications.</description>
       <pubDate>Sun, 05 Apr 2026 04:33:18 +0000</pubDate>
       <guid>https://kubaik.github.io/kafka-streams/</guid>
-    </item>
-    <item>
-      <title>Boost App Visibility</title>
-      <link>https://kubaik.github.io/boost-app-visibility/</link>
-      <description>Unlock your app&apos;s potential with essential App Store Optimization (ASO) strategies. Boost visibility, increase downloads, and elevate your app&apos;s success today!</description>
-      <pubDate>Sun, 05 Apr 2026 03:42:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-app-visibility/</guid>
     </item>
   </channel>
 </rss>
