@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 22:57:17 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 23:28:07 +0000</lastBuildDate>
+    <item>
+      <title>Data Warehousing Simplified</title>
+      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
+      <description>Simplify data management with our expert solutions. Learn more.</description>
+      <pubDate>Sun, 05 Apr 2026 23:27:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
+    </item>
     <item>
       <title>Jamstack 101</title>
       <link>https://kubaik.github.io/jamstack-101/</link>
@@ -138,13 +145,6 @@
       <description>Improve website speed with expert tips and tricks.</description>
       <pubDate>Sun, 05 Apr 2026 14:31:17 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>PWA: Future of Apps</title>
-      <link>https://kubaik.github.io/pwa-future-of-apps/</link>
-      <description>Discover the future of apps with PWA. Learn how Progressive Web Apps are revolutionizing mobile experience.</description>
-      <pubDate>Sun, 05 Apr 2026 13:51:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/pwa-future-of-apps/</guid>
     </item>
   </channel>
 </rss>
