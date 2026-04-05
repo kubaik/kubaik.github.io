@@ -792,9 +792,7 @@ class StaticSiteGenerator:
             <div class="about-section">
                 <h2>Welcome to {{ site_name }}</h2>
                 <p>{{ site_name }} is an innovative AI-powered technology blog dedicated to delivering high-quality, informative content on the latest developments in artificial intelligence, machine learning, and emerging technologies.</p>
-            </div>
-            <div class="about-section">
-                <h2>🎯 Our Mission</h2>
+                  <h2>🎯 Our Mission</h2>
                 <p>To empower readers with knowledge about artificial intelligence and technology through accessible, accurate, and engaging content.</p>
             </div>
             <div class="about-section">
