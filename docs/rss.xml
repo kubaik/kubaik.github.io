@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 10:28:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 11:00:42 +0000</lastBuildDate>
+    <item>
+      <title>Index Smarter</title>
+      <link>https://kubaik.github.io/index-smarter/</link>
+      <description>Unlock the power of database performance with &apos;Index Smarter.&apos; Discover effective indexing strategies to optimize queries and boost efficiency.</description>
+      <pubDate>Sun, 05 Apr 2026 11:00:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/index-smarter/</guid>
+    </item>
     <item>
       <title>Next.js: Full-Stack Made Easy</title>
       <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Ensure zero downtime with high availability systems. Learn more.</description>
       <pubDate>Sat, 04 Apr 2026 23:25:25 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on/</guid>
-    </item>
-    <item>
-      <title>Vector DBs</title>
-      <link>https://kubaik.github.io/vector-dbs/</link>
-      <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
-      <pubDate>Sat, 04 Apr 2026 22:55:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/vector-dbs/</guid>
     </item>
   </channel>
 </rss>
