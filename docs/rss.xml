@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 03:42:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 04:33:29 +0000</lastBuildDate>
+    <item>
+      <title>Kafka Streams</title>
+      <link>https://kubaik.github.io/kafka-streams/</link>
+      <description>Discover how Kafka Streams simplifies real-time data processing with Apache Kafka. Learn key concepts, use cases, and best practices to enhance your streaming applications.</description>
+      <pubDate>Sun, 05 Apr 2026 04:33:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/kafka-streams/</guid>
+    </item>
     <item>
       <title>Boost App Visibility</title>
       <link>https://kubaik.github.io/boost-app-visibility/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of live web apps, enabling real-time collaboration &amp; instant updates.</description>
       <pubDate>Sat, 04 Apr 2026 16:28:38 +0000</pubDate>
       <guid>https://kubaik.github.io/live-web-apps/</guid>
-    </item>
-    <item>
-      <title>React Native: Build Once</title>
-      <link>https://kubaik.github.io/react-native-build-once/</link>
-      <description>Discover how to build powerful cross-platform apps with React Native. Learn best practices and tips to maximize your development efficiency!</description>
-      <pubDate>Sat, 04 Apr 2026 15:53:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-native-build-once/</guid>
     </item>
   </channel>
 </rss>
