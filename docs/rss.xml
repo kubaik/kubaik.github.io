@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 09:34:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 10:02:42 +0000</lastBuildDate>
+    <item>
+      <title>App Architectures</title>
+      <link>https://kubaik.github.io/app-architectures/</link>
+      <description>Learn expert mobile app architecture patterns for scalable &amp; efficient apps.</description>
+      <pubDate>Sun, 05 Apr 2026 10:02:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/app-architectures/</guid>
+    </item>
     <item>
       <title>Optimize DB Queries</title>
       <link>https://kubaik.github.io/optimize-db-queries/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the secrets to efficient Distributed Systems Design. Discover best practices and strategies to create smarter, scalable solutions for modern challenges.</description>
       <pubDate>Sat, 04 Apr 2026 20:55:10 +0000</pubDate>
       <guid>https://kubaik.github.io/design-smarter/</guid>
-    </item>
-    <item>
-      <title>Boost with Azure</title>
-      <link>https://kubaik.github.io/boost-with-azure/</link>
-      <description>Unlock cloud potential with Azure. Discover scalable solutions.</description>
-      <pubDate>Sat, 04 Apr 2026 20:23:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-with-azure/</guid>
     </item>
   </channel>
 </rss>
