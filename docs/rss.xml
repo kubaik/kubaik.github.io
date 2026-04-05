@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 13:51:20 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 14:31:29 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed</title>
+      <link>https://kubaik.github.io/boost-speed/</link>
+      <description>Improve website speed with expert tips and tricks.</description>
+      <pubDate>Sun, 05 Apr 2026 14:31:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed/</guid>
+    </item>
     <item>
       <title>PWA: Future of Apps</title>
       <link>https://kubaik.github.io/pwa-future-of-apps/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart code splitting strategies.</description>
       <pubDate>Sun, 05 Apr 2026 07:57:20 +0000</pubDate>
       <guid>https://kubaik.github.io/split-smarter/</guid>
-    </item>
-    <item>
-      <title>ES6+ Essentials</title>
-      <link>https://kubaik.github.io/es6-essentials/</link>
-      <description>Unlock modern JavaScript with ES6+ essentials, featuring latest features and best practices.</description>
-      <pubDate>Sun, 05 Apr 2026 07:53:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/es6-essentials/</guid>
     </item>
   </channel>
 </rss>
