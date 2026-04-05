@@ -11,7 +11,7 @@ AI for Edge Computing represents an important area of technology development tha
 ## Key Benefits
 
 - **Improved Performance**: AI for Edge Computing can significantly enhance system performance
-- **Better Scalability**: Implementing AI for Edge Computing helps applications scale more effectively  
+- **Better Scalability**: Implementing AI for Edge Computing helps applications scale more effectively
 - **Enhanced User Experience**: Users benefit from the improvements that AI for Edge Computing brings
 - **Cost Effectiveness**: Proper implementation can reduce operational costs
 

@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 10:02:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 10:18:53 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Mobile Backend as a Service (BaaS): A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-mobile-backend-as-a-service-baas-a-c/</link>
+      <description>A comprehensive guide to Mobile Backend as a Service (BaaS) covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Sun, 05 Apr 2026 10:18:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-mobile-backend-as-a-service-baas-a-c/</guid>
+    </item>
+    <item>
+      <title>Understanding AI for Edge Computing: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-ai-for-edge-computing-a-complete-gui/</link>
+      <description>A comprehensive guide to AI for Edge Computing covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Sun, 05 Apr 2026 10:15:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-ai-for-edge-computing-a-complete-gui/</guid>
+    </item>
     <item>
       <title>App Architectures</title>
       <link>https://kubaik.github.io/app-architectures/</link>
@@ -131,20 +145,6 @@
       <description>Master CSS Grid &amp; Flexbox for responsive layouts</description>
       <pubDate>Sat, 04 Apr 2026 21:53:20 +0000</pubDate>
       <guid>https://kubaik.github.io/grid-flexbox/</guid>
-    </item>
-    <item>
-      <title>Agile Dev 101</title>
-      <link>https://kubaik.github.io/agile-dev-101/</link>
-      <description>Learn Agile Dev basics &amp; boost productivity with flexible methodologies.</description>
-      <pubDate>Sat, 04 Apr 2026 21:26:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/agile-dev-101/</guid>
-    </item>
-    <item>
-      <title>Design Smarter</title>
-      <link>https://kubaik.github.io/design-smarter/</link>
-      <description>Unlock the secrets to efficient Distributed Systems Design. Discover best practices and strategies to create smarter, scalable solutions for modern challenges.</description>
-      <pubDate>Sat, 04 Apr 2026 20:55:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-smarter/</guid>
     </item>
   </channel>
 </rss>
