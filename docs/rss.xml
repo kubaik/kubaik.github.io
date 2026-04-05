@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 23:28:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 23:56:19 +0000</lastBuildDate>
+    <item>
+      <title>Ace Sys Design</title>
+      <link>https://kubaik.github.io/ace-sys-design/</link>
+      <description>Master system design interviews with expert tips and strategies.</description>
+      <pubDate>Sun, 05 Apr 2026 23:56:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ace-sys-design/</guid>
+    </item>
     <item>
       <title>Data Warehousing Simplified</title>
       <link>https://kubaik.github.io/data-warehousing-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Ace your tech interviews with our comprehensive guide! Discover essential tips, resources, and strategies to boost your confidence and land your dream job.</description>
       <pubDate>Sun, 05 Apr 2026 14:59:37 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-interview-prep/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Improve website speed with expert tips and tricks.</description>
-      <pubDate>Sun, 05 Apr 2026 14:31:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
