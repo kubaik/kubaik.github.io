@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 14:31:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 14:59:48 +0000</lastBuildDate>
+    <item>
+      <title>Tech Interview Prep</title>
+      <link>https://kubaik.github.io/tech-interview-prep/</link>
+      <description>Ace your tech interviews with our comprehensive guide! Discover essential tips, resources, and strategies to boost your confidence and land your dream job.</description>
+      <pubDate>Sun, 05 Apr 2026 14:59:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
+    </item>
     <item>
       <title>Boost Speed</title>
       <link>https://kubaik.github.io/boost-speed/</link>
@@ -138,13 +145,6 @@
       <description>Learn Flutter app development &amp; build natively compiled apps.</description>
       <pubDate>Sun, 05 Apr 2026 08:36:53 +0000</pubDate>
       <guid>https://kubaik.github.io/flutter-app-dev/</guid>
-    </item>
-    <item>
-      <title>Split Smarter</title>
-      <link>https://kubaik.github.io/split-smarter/</link>
-      <description>Boost app performance with smart code splitting strategies.</description>
-      <pubDate>Sun, 05 Apr 2026 07:57:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-smarter/</guid>
     </item>
   </channel>
 </rss>
