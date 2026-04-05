@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 17:25:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 17:27:48 +0000</lastBuildDate>
+    <item>
+      <title>Backend Blueprint</title>
+      <link>https://kubaik.github.io/backend-blueprint/</link>
+      <description>Learn expert Backend Architecture Patterns &amp; boost app performance.</description>
+      <pubDate>Sun, 05 Apr 2026 17:27:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/backend-blueprint/</guid>
+    </item>
     <item>
       <title>Data Governance</title>
       <link>https://kubaik.github.io/data-governance/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Mobile Backend as a Service (BaaS) covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Sun, 05 Apr 2026 10:18:25 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-mobile-backend-as-a-service-baas-a-c/</guid>
-    </item>
-    <item>
-      <title>Understanding AI for Edge Computing: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-ai-for-edge-computing-a-complete-gui/</link>
-      <description>A comprehensive guide to AI for Edge Computing covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Sun, 05 Apr 2026 10:15:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-ai-for-edge-computing-a-complete-gui/</guid>
     </item>
   </channel>
 </rss>
