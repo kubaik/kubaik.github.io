@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 15:27:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 15:54:41 +0000</lastBuildDate>
+    <item>
+      <title>CLI Hacks</title>
+      <link>https://kubaik.github.io/cli-hacks/</link>
+      <description>Boost productivity with expert CLI hacks and tips.</description>
+      <pubDate>Sun, 05 Apr 2026 15:54:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/cli-hacks/</guid>
+    </item>
     <item>
       <title>Block Buster: Crypto</title>
       <link>https://kubaik.github.io/block-buster-crypto/</link>
@@ -138,13 +145,6 @@
       <description>Boost performance with expert DB query optimization tips.</description>
       <pubDate>Sun, 05 Apr 2026 09:34:08 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-db-queries/</guid>
-    </item>
-    <item>
-      <title>Unlock SOC 2 &amp; ISO 27001</title>
-      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
-      <description>Discover key strategies to unlock SOC 2 and ISO 27001 compliance. Elevate your security framework and protect your business with our expert insights!</description>
-      <pubDate>Sun, 05 Apr 2026 09:05:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
     </item>
   </channel>
 </rss>
