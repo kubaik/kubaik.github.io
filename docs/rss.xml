@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 14:59:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 15:27:07 +0000</lastBuildDate>
+    <item>
+      <title>Block Buster: Crypto</title>
+      <link>https://kubaik.github.io/block-buster-crypto/</link>
+      <description>Unlock crypto&apos;s potential with blockchain insights</description>
+      <pubDate>Sun, 05 Apr 2026 15:26:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-buster-crypto/</guid>
+    </item>
     <item>
       <title>Tech Interview Prep</title>
       <link>https://kubaik.github.io/tech-interview-prep/</link>
@@ -138,13 +145,6 @@
       <description>Discover key strategies to unlock SOC 2 and ISO 27001 compliance. Elevate your security framework and protect your business with our expert insights!</description>
       <pubDate>Sun, 05 Apr 2026 09:05:06 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
-    </item>
-    <item>
-      <title>Flutter App Dev</title>
-      <link>https://kubaik.github.io/flutter-app-dev/</link>
-      <description>Learn Flutter app development &amp; build natively compiled apps.</description>
-      <pubDate>Sun, 05 Apr 2026 08:36:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/flutter-app-dev/</guid>
     </item>
   </channel>
 </rss>
