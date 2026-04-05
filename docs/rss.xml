@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 08:37:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 09:05:18 +0000</lastBuildDate>
+    <item>
+      <title>Unlock SOC 2 &amp; ISO 27001</title>
+      <link>https://kubaik.github.io/unlock-soc-2-iso-27001/</link>
+      <description>Discover key strategies to unlock SOC 2 and ISO 27001 compliance. Elevate your security framework and protect your business with our expert insights!</description>
+      <pubDate>Sun, 05 Apr 2026 09:05:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-soc-2-iso-27001/</guid>
+    </item>
     <item>
       <title>Flutter App Dev</title>
       <link>https://kubaik.github.io/flutter-app-dev/</link>
@@ -138,13 +145,6 @@
       <description>Master IoT device control &amp; management for secure, efficient operations.</description>
       <pubDate>Sat, 04 Apr 2026 19:52:06 +0000</pubDate>
       <guid>https://kubaik.github.io/iot-device-control/</guid>
-    </item>
-    <item>
-      <title>Boot Up with Java</title>
-      <link>https://kubaik.github.io/boot-up-with-java/</link>
-      <description>Learn Java Spring Boot development with our expert guide and tutorials.</description>
-      <pubDate>Sat, 04 Apr 2026 19:28:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/boot-up-with-java/</guid>
     </item>
   </channel>
 </rss>
