@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 10:21:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 10:28:11 +0000</lastBuildDate>
+    <item>
+      <title>Next.js: Full-Stack Made Easy</title>
+      <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
+      <description>Simplify full-stack dev with Next.js. Learn how to build seamless apps with ease.</description>
+      <pubDate>Sun, 05 Apr 2026 10:27:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
+    </item>
     <item>
       <title>WCAG Simplified</title>
       <link>https://kubaik.github.io/wcag-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient similarity searches with Vector DBs &amp; embeddings.</description>
       <pubDate>Sat, 04 Apr 2026 22:55:29 +0000</pubDate>
       <guid>https://kubaik.github.io/vector-dbs/</guid>
-    </item>
-    <item>
-      <title>No-Code Revolt</title>
-      <link>https://kubaik.github.io/no-code-revolt/</link>
-      <description>Discover the No-Code Revolt! Explore how low-code and no-code platforms empower everyone to create apps without coding skills. Join the movement today!</description>
-      <pubDate>Sat, 04 Apr 2026 22:23:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/no-code-revolt/</guid>
     </item>
   </channel>
 </rss>
