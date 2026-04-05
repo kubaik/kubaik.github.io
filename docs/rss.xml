@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 11:25:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 11:51:58 +0000</lastBuildDate>
+    <item>
+      <title>Lock It Down</title>
+      <link>https://kubaik.github.io/lock-it-down/</link>
+      <description>Protect your data with encryption &amp; key management best practices.</description>
+      <pubDate>Sun, 05 Apr 2026 11:51:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-it-down/</guid>
+    </item>
     <item>
       <title>Canary Deploy</title>
       <link>https://kubaik.github.io/canary-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your app&apos;s potential with essential App Store Optimization (ASO) strategies. Boost visibility, increase downloads, and elevate your app&apos;s success today!</description>
       <pubDate>Sun, 05 Apr 2026 03:42:32 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-app-visibility/</guid>
-    </item>
-    <item>
-      <title>Test Smarter</title>
-      <link>https://kubaik.github.io/test-smarter/</link>
-      <description>Optimize backend testing with smarter strategies and techniques.</description>
-      <pubDate>Sun, 05 Apr 2026 01:50:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-smarter/</guid>
     </item>
   </channel>
 </rss>
