@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 17:27:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 17:55:04 +0000</lastBuildDate>
+    <item>
+      <title>Micro vs Mono</title>
+      <link>https://kubaik.github.io/micro-vs-mono/</link>
+      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
+      <pubDate>Sun, 05 Apr 2026 17:54:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
+    </item>
     <item>
       <title>Backend Blueprint</title>
       <link>https://kubaik.github.io/backend-blueprint/</link>
@@ -138,13 +145,6 @@
       <description>Learn WCAG simplified: Easy guide to web accessibility standards</description>
       <pubDate>Sun, 05 Apr 2026 10:21:35 +0000</pubDate>
       <guid>https://kubaik.github.io/wcag-simplified/</guid>
-    </item>
-    <item>
-      <title>Understanding Mobile Backend as a Service (BaaS): A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-mobile-backend-as-a-service-baas-a-c/</link>
-      <description>A comprehensive guide to Mobile Backend as a Service (BaaS) covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Sun, 05 Apr 2026 10:18:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-mobile-backend-as-a-service-baas-a-c/</guid>
     </item>
   </channel>
 </rss>

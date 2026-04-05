@@ -54,5 +54,6 @@
   "Command Line Productivity Tips",
   "Monitoring and Observability",
   "Data Governance Frameworks",
-  "Backend Architecture Patterns"
+  "Backend Architecture Patterns",
+  "Microservices vs Monolithic Architecture"
 ]
