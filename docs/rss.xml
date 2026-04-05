@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 19:54:25 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 20:25:38 +0000</lastBuildDate>
+    <item>
+      <title>JWT Auth Done</title>
+      <link>https://kubaik.github.io/jwt-auth-done/</link>
+      <description>Learn how to implement JWT authentication with our expert guide.</description>
+      <pubDate>Sun, 05 Apr 2026 20:25:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
+    </item>
     <item>
       <title>Scrum vs Kanban</title>
       <link>https://kubaik.github.io/scrum-vs-kanban/</link>
@@ -138,13 +145,6 @@
       <description>Optimize code with profiling &amp; benchmarking techniques to boost performance.</description>
       <pubDate>Sun, 05 Apr 2026 11:57:51 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-performance/</guid>
-    </item>
-    <item>
-      <title>Lock It Down</title>
-      <link>https://kubaik.github.io/lock-it-down/</link>
-      <description>Protect your data with encryption &amp; key management best practices.</description>
-      <pubDate>Sun, 05 Apr 2026 11:51:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/lock-it-down/</guid>
     </item>
   </channel>
 </rss>
