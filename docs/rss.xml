@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 20:56:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 21:25:48 +0000</lastBuildDate>
+    <item>
+      <title>GitOps Done Right</title>
+      <link>https://kubaik.github.io/gitops-done-right/</link>
+      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
+      <pubDate>Sun, 05 Apr 2026 21:25:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/gitops-done-right/</guid>
+    </item>
     <item>
       <title>ML Anomaly Detection</title>
       <link>https://kubaik.github.io/ml-anomaly-detection/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficiency with RPA. Automate repetitive tasks &amp; boost productivity.</description>
       <pubDate>Sun, 05 Apr 2026 12:27:16 +0000</pubDate>
       <guid>https://kubaik.github.io/rpa-automate/</guid>
-    </item>
-    <item>
-      <title>Crack Code Complexity</title>
-      <link>https://kubaik.github.io/crack-code-complexity/</link>
-      <description>Master algorithm complexity analysis &amp; simplify code with expert tips.</description>
-      <pubDate>Sun, 05 Apr 2026 12:20:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/crack-code-complexity/</guid>
     </item>
   </channel>
 </rss>
