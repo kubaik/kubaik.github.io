@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 18:06:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 18:34:30 +0000</lastBuildDate>
+    <item>
+      <title>Boost Mobile Speed</title>
+      <link>https://kubaik.github.io/boost-mobile-speed/</link>
+      <description>Boost mobile speed with expert optimization tips and techniques.</description>
+      <pubDate>Sun, 05 Apr 2026 18:34:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
+    </item>
     <item>
       <title>Dev PM 101</title>
       <link>https://kubaik.github.io/dev-pm-101/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of database performance with &apos;Index Smarter.&apos; Discover effective indexing strategies to optimize queries and boost efficiency.</description>
       <pubDate>Sun, 05 Apr 2026 11:00:30 +0000</pubDate>
       <guid>https://kubaik.github.io/index-smarter/</guid>
-    </item>
-    <item>
-      <title>Next.js: Full-Stack Made Easy</title>
-      <link>https://kubaik.github.io/nextjs-full-stack-made-easy/</link>
-      <description>Simplify full-stack dev with Next.js. Learn how to build seamless apps with ease.</description>
-      <pubDate>Sun, 05 Apr 2026 10:27:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-full-stack-made-easy/</guid>
     </item>
   </channel>
 </rss>
