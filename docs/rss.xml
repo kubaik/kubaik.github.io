@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 21:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2026 22:24:35 +0000</lastBuildDate>
+    <item>
+      <title>5G Revolution</title>
+      <link>https://kubaik.github.io/5g-revolution/</link>
+      <description>Discover the 5G revolution: faster speeds, new use cases, and a transformed future.</description>
+      <pubDate>Sun, 05 Apr 2026 22:24:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/5g-revolution/</guid>
+    </item>
     <item>
       <title>Boost Models</title>
       <link>https://kubaik.github.io/boost-models/</link>
@@ -138,13 +145,6 @@
       <description>Unlock your potential in tech leadership! Discover essential skills for success, from strategic thinking to effective communication. Master your path today!</description>
       <pubDate>Sun, 05 Apr 2026 13:34:31 +0000</pubDate>
       <guid>https://kubaik.github.io/mastering-tech-leadership-essential-skills-for-suc/</guid>
-    </item>
-    <item>
-      <title>Engineer Your Time</title>
-      <link>https://kubaik.github.io/engineer-your-time/</link>
-      <description>Boost productivity with expert time management tips for engineers.</description>
-      <pubDate>Sun, 05 Apr 2026 12:41:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineer-your-time/</guid>
     </item>
   </channel>
 </rss>
