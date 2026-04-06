@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 16:31:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 16:40:19 +0000</lastBuildDate>
+    <item>
+      <title>Git Pro Tips</title>
+      <link>https://kubaik.github.io/git-pro-tips/</link>
+      <description>Boost Git skills with expert tips and advanced techniques.</description>
+      <pubDate>Mon, 06 Apr 2026 16:40:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/git-pro-tips/</guid>
+    </item>
     <item>
       <title>Digital Twin: Future Now</title>
       <link>https://kubaik.github.io/digital-twin-future-now/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to CI/CD Pipeline Implementation covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 06 Apr 2026 10:20:32 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</guid>
-    </item>
-    <item>
-      <title>Edge Computing</title>
-      <link>https://kubaik.github.io/edge-computing/</link>
-      <description>Discover edge computing applications transforming industries with real-time data processing.</description>
-      <pubDate>Mon, 06 Apr 2026 10:10:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-computing/</guid>
     </item>
   </channel>
 </rss>
