@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 20:24:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 20:32:27 +0000</lastBuildDate>
+    <item>
+      <title>WAF: Shield Your Site</title>
+      <link>https://kubaik.github.io/waf-shield-your-site/</link>
+      <description>Protect your site from attacks with a Web Application Firewall (WAF). Learn how to shield your online presence.</description>
+      <pubDate>Mon, 06 Apr 2026 20:32:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-shield-your-site/</guid>
+    </item>
     <item>
       <title>Delta Lake: The Future</title>
       <link>https://kubaik.github.io/delta-lake-the-future/</link>
@@ -138,13 +145,6 @@
       <description>Explore the latest VR applications transforming entertainment, education, and more. Discover how Virtual Reality is shaping our future in &apos;VR Now&apos;.</description>
       <pubDate>Mon, 06 Apr 2026 12:37:51 +0000</pubDate>
       <guid>https://kubaik.github.io/vr-now/</guid>
-    </item>
-    <item>
-      <title>Visualize Smart</title>
-      <link>https://kubaik.github.io/visualize-smart/</link>
-      <description>Boost insights with data visualization best practices. Learn how to &apos;Visualize Smart&apos; and elevate your data storytelling.</description>
-      <pubDate>Mon, 06 Apr 2026 11:43:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/visualize-smart/</guid>
     </item>
   </channel>
 </rss>
