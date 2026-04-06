@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 10:25:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 10:31:10 +0000</lastBuildDate>
+    <item>
+      <title>AR Revolved</title>
+      <link>https://kubaik.github.io/ar-revolved/</link>
+      <description>Discover the future of tech with AR Revolved, your guide to innovative Augmented Reality development.</description>
+      <pubDate>Mon, 06 Apr 2026 10:30:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ar-revolved/</guid>
+    </item>
     <item>
       <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
@@ -138,13 +145,6 @@
       <description>Master Kubernetes orchestration with our expert guide.</description>
       <pubDate>Mon, 06 Apr 2026 08:04:59 +0000</pubDate>
       <guid>https://kubaik.github.io/k8s-orchestration/</guid>
-    </item>
-    <item>
-      <title>Web3 DApps</title>
-      <link>https://kubaik.github.io/web3-dapps/</link>
-      <description>Discover the power of Web3 DApps, decentralized apps revolutionizing the internet.</description>
-      <pubDate>Mon, 06 Apr 2026 06:28:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/web3-dapps/</guid>
     </item>
   </channel>
 </rss>
