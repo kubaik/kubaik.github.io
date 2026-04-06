@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 17:40:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 18:37:22 +0000</lastBuildDate>
+    <item>
+      <title>Vision Tech</title>
+      <link>https://kubaik.github.io/vision-tech/</link>
+      <description>Explore innovative computer vision applications and trends in Vision Tech.</description>
+      <pubDate>Mon, 06 Apr 2026 18:37:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/vision-tech/</guid>
+    </item>
     <item>
       <title>Balance Made Easy</title>
       <link>https://kubaik.github.io/balance-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Discover the future of tech with AR Revolved, your guide to innovative Augmented Reality development.</description>
       <pubDate>Mon, 06 Apr 2026 10:30:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ar-revolved/</guid>
-    </item>
-    <item>
-      <title>Understanding Disaster Recovery Planning: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</link>
-      <description>A comprehensive guide to Disaster Recovery Planning covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Mon, 06 Apr 2026 10:24:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-disaster-recovery-planning-a-complet/</guid>
     </item>
   </channel>
 </rss>
