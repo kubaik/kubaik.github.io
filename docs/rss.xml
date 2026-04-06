@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 14:09:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 15:09:27 +0000</lastBuildDate>
+    <item>
+      <title>Quantum 101</title>
+      <link>https://kubaik.github.io/quantum-101/</link>
+      <description>Unlock the mysteries of quantum computing with our &apos;Quantum 101&apos; guide. Discover essential concepts and how they reshape technology and our future!</description>
+      <pubDate>Mon, 06 Apr 2026 15:09:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/quantum-101/</guid>
+    </item>
     <item>
       <title>API Test Made Easy</title>
       <link>https://kubaik.github.io/api-test-made-easy/</link>
@@ -138,13 +145,6 @@
       <description>Learn Go concurrency basics and best practices for efficient parallel programming.</description>
       <pubDate>Mon, 06 Apr 2026 10:00:18 +0000</pubDate>
       <guid>https://kubaik.github.io/go-concurrency/</guid>
-    </item>
-    <item>
-      <title>ETL vs ELT</title>
-      <link>https://kubaik.github.io/etl-vs-elt/</link>
-      <description>Compare ETL vs ELT: Which data integration process is right for you?</description>
-      <pubDate>Mon, 06 Apr 2026 09:47:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/etl-vs-elt/</guid>
     </item>
   </channel>
 </rss>
