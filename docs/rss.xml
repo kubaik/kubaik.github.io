@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 21:22:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 21:33:19 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your API</title>
+      <link>https://kubaik.github.io/secure-your-api/</link>
+      <description>Protect your API from threats. Learn expert security best practices.</description>
+      <pubDate>Mon, 06 Apr 2026 21:33:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-api/</guid>
+    </item>
     <item>
       <title>Swift iOS Dev</title>
       <link>https://kubaik.github.io/swift-ios-dev/</link>
@@ -138,13 +145,6 @@
       <description>Discover how Blue-Green Deployment ensures zero downtime for your applications. Maximize efficiency and reliability with our comprehensive guide!</description>
       <pubDate>Mon, 06 Apr 2026 13:49:17 +0000</pubDate>
       <guid>https://kubaik.github.io/blue-green-zero-downtime/</guid>
-    </item>
-    <item>
-      <title>FP Basics</title>
-      <link>https://kubaik.github.io/fp-basics/</link>
-      <description>Learn the fundamentals of functional programming concepts and principles.</description>
-      <pubDate>Mon, 06 Apr 2026 12:56:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/fp-basics/</guid>
     </item>
   </channel>
 </rss>
