@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 17:22:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 17:27:32 +0000</lastBuildDate>
+    <item>
+      <title>Deep Learning</title>
+      <link>https://kubaik.github.io/deep-learning/</link>
+      <description>Unlock AI potential with Deep Learning Neural Networks, discover applications &amp; techniques.</description>
+      <pubDate>Mon, 06 Apr 2026 17:27:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/deep-learning/</guid>
+    </item>
     <item>
       <title>Git Pro Tips</title>
       <link>https://kubaik.github.io/git-pro-tips/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to VS Code Extensions for Productivity covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 06 Apr 2026 10:21:47 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-vs-code-extensions-for-productivity-/</guid>
-    </item>
-    <item>
-      <title>Understanding CI/CD Pipeline Implementation: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</link>
-      <description>A comprehensive guide to CI/CD Pipeline Implementation covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Mon, 06 Apr 2026 10:20:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</guid>
     </item>
   </channel>
 </rss>
