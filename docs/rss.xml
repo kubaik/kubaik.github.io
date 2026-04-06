@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 05:36:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 05:38:36 +0000</lastBuildDate>
+    <item>
+      <title>Data Mesh: Simplified</title>
+      <link>https://kubaik.github.io/data-mesh-simplified/</link>
+      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn how to simplify &amp; democratize data access.</description>
+      <pubDate>Mon, 06 Apr 2026 05:38:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-mesh-simplified/</guid>
+    </item>
     <item>
       <title>SQL vs NoSQL</title>
       <link>https://kubaik.github.io/sql-vs-nosql/</link>
@@ -138,13 +145,6 @@
       <description>Learn how data governance frameworks boost compliance &amp; efficiency</description>
       <pubDate>Sun, 05 Apr 2026 17:01:16 +0000</pubDate>
       <guid>https://kubaik.github.io/data-governance/</guid>
-    </item>
-    <item>
-      <title>See It All</title>
-      <link>https://kubaik.github.io/see-it-all/</link>
-      <description>Discover the power of monitoring and observability in &apos;See It All.&apos; Uncover insights, optimize performance, and enhance your system&apos;s reliability today!</description>
-      <pubDate>Sun, 05 Apr 2026 16:29:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/see-it-all/</guid>
     </item>
   </channel>
 </rss>
