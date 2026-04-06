@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 08:05:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 08:09:19 +0000</lastBuildDate>
+    <item>
+      <title>API Done Right</title>
+      <link>https://kubaik.github.io/api-done-right/</link>
+      <description>Learn RESTful API design principles for scalable, secure, and reliable APIs.</description>
+      <pubDate>Mon, 06 Apr 2026 08:09:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-done-right/</guid>
+    </item>
     <item>
       <title>K8s Orchestration</title>
       <link>https://kubaik.github.io/k8s-orchestration/</link>
@@ -138,13 +145,6 @@
       <description>Boost mobile speed with expert optimization tips and techniques.</description>
       <pubDate>Sun, 05 Apr 2026 18:34:20 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-mobile-speed/</guid>
-    </item>
-    <item>
-      <title>Dev PM 101</title>
-      <link>https://kubaik.github.io/dev-pm-101/</link>
-      <description>Master dev project management with Dev PM 101. Learn essentials for success.</description>
-      <pubDate>Sun, 05 Apr 2026 18:06:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/dev-pm-101/</guid>
     </item>
   </channel>
 </rss>
