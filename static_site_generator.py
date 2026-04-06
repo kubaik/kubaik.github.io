@@ -920,7 +920,6 @@ class StaticSiteGenerator:
             <div id="your-rights" class="privacy-section">
                 <h3>6. Your Privacy Rights</h3>
                 <ul>
-                    <li><strong>Access:</strong> Request a copy of your personal information</li>
                     <li><strong>Correction:</strong> Request correction of inaccurate information</li>
                     <li><strong>Deletion:</strong> Request deletion of your personal information</li>
                 </ul>
