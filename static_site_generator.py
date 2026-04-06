@@ -1068,6 +1068,15 @@ class StaticSiteGenerator:
                 <p class="response-time">We typically respond within 5 working days</p>
             </div>
             <div class="contact-method">
+                <h3>💬 What We Cover</h3>
+                <ul>
+                    <li><strong>General Inquiries:</strong> Questions about our content or AI technology</li>
+                    <li><strong>Collaboration:</strong> Partnership opportunities and guest posting</li>
+                    <li><strong>Technical Support:</strong> Issues accessing content</li>
+                    <li><strong>Feedback:</strong> Suggestions for improvement or topic requests</li>
+                </ul>
+            </div>
+            <div class="contact-method">
                 <h3>⏰ Office Hours</h3>
                 <p><strong>Monday – Friday:</strong> 10:00 AM – 4:00 PM (EAT)</p>
                 <p>Weekend messages will be reviewed on the next business day.</p>
