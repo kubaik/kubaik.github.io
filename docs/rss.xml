@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 03:46:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 04:40:45 +0000</lastBuildDate>
+    <item>
+      <title>SQL vs NoSQL</title>
+      <link>https://kubaik.github.io/sql-vs-nosql/</link>
+      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
+      <pubDate>Mon, 06 Apr 2026 04:40:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
+    </item>
     <item>
       <title>Core Power</title>
       <link>https://kubaik.github.io/core-power/</link>
@@ -138,13 +145,6 @@
       <description>Discover the power of monitoring and observability in &apos;See It All.&apos; Uncover insights, optimize performance, and enhance your system&apos;s reliability today!</description>
       <pubDate>Sun, 05 Apr 2026 16:29:52 +0000</pubDate>
       <guid>https://kubaik.github.io/see-it-all/</guid>
-    </item>
-    <item>
-      <title>CLI Hacks</title>
-      <link>https://kubaik.github.io/cli-hacks/</link>
-      <description>Boost productivity with expert CLI hacks and tips.</description>
-      <pubDate>Sun, 05 Apr 2026 15:54:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/cli-hacks/</guid>
     </item>
   </channel>
 </rss>
