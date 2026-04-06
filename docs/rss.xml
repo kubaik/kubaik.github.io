@@ -5,7 +5,28 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 10:10:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 10:22:33 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Database Design and Normalization: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</link>
+      <description>A comprehensive guide to Database Design and Normalization covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 10:22:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</guid>
+    </item>
+    <item>
+      <title>Understanding VS Code Extensions for Productivity: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-vs-code-extensions-for-productivity-/</link>
+      <description>A comprehensive guide to VS Code Extensions for Productivity covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 10:21:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-vs-code-extensions-for-productivity-/</guid>
+    </item>
+    <item>
+      <title>Understanding CI/CD Pipeline Implementation: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</link>
+      <description>A comprehensive guide to CI/CD Pipeline Implementation covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 10:20:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-cicd-pipeline-implementation-a-compl/</guid>
+    </item>
     <item>
       <title>Edge Computing</title>
       <link>https://kubaik.github.io/edge-computing/</link>
@@ -124,27 +145,6 @@
       <description>Protect your data with expert cloud security best practices.</description>
       <pubDate>Mon, 06 Apr 2026 06:14:49 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-cloud/</guid>
-    </item>
-    <item>
-      <title>Data Mesh: Simplified</title>
-      <link>https://kubaik.github.io/data-mesh-simplified/</link>
-      <description>Unlock data&apos;s full potential with Data Mesh Architecture. Learn how to simplify &amp; democratize data access.</description>
-      <pubDate>Mon, 06 Apr 2026 05:38:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-mesh-simplified/</guid>
-    </item>
-    <item>
-      <title>SQL vs NoSQL</title>
-      <link>https://kubaik.github.io/sql-vs-nosql/</link>
-      <description>Compare SQL &amp; NoSQL databases: pros, cons &amp; use cases.</description>
-      <pubDate>Mon, 06 Apr 2026 04:40:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/sql-vs-nosql/</guid>
-    </item>
-    <item>
-      <title>Core Power</title>
-      <link>https://kubaik.github.io/core-power/</link>
-      <description>Unlock the power of C# .NET Core apps, explore core features &amp; best practices.</description>
-      <pubDate>Mon, 06 Apr 2026 03:45:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-power/</guid>
     </item>
   </channel>
 </rss>

@@ -16,21 +16,31 @@ class VisibilityAutomator:
         self._init_twitter()
     
     def _init_twitter(self):
+        import os
         """Initialize Twitter API v2 client"""
         twitter_config = self.config.get('twitter_api', {})
         
         if not twitter_config:
             print("⚠️ No Twitter API credentials found in config")
             return
-        
+        # Environment variables take priority over config.yaml
+        api_key             = os.getenv('TWITTER_API_KEY')             or twitter_config.get('api_key')
+        api_secret          = os.getenv('TWITTER_API_SECRET')          or twitter_config.get('api_secret')
+        access_token        = os.getenv('TWITTER_ACCESS_TOKEN')        or twitter_config.get('access_token')
+        access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET') or twitter_config.get('access_token_secret')
+        bearer_token        = os.getenv('TWITTER_BEARER_TOKEN')        or twitter_config.get('bearer_token')    
+
+        if not all([api_key, api_secret, access_token, access_token_secret]):
+            print("⚠️ Missing Twitter credentials")
+            return
         try:
             self.twitter_client = tweepy.Client(
-                bearer_token=twitter_config.get('bearer_token'),
-                consumer_key=twitter_config.get('api_key'),
-                consumer_secret=twitter_config.get('api_secret'),
-                access_token=twitter_config.get('access_token'),
-                access_token_secret=twitter_config.get('access_token_secret'),
-                wait_on_rate_limit=True  
+                bearer_token=bearer_token,
+                consumer_key=api_key,
+                consumer_secret=api_secret,
+                access_token=access_token,
+                access_token_secret=access_token_secret,
+                wait_on_rate_limit=True
             )
             me = self.twitter_client.get_me()
             self._username = me.data.username
