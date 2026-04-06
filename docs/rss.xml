@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 06:15:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 06:28:33 +0000</lastBuildDate>
+    <item>
+      <title>Web3 DApps</title>
+      <link>https://kubaik.github.io/web3-dapps/</link>
+      <description>Discover the power of Web3 DApps, decentralized apps revolutionizing the internet.</description>
+      <pubDate>Mon, 06 Apr 2026 06:28:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/web3-dapps/</guid>
+    </item>
     <item>
       <title>Secure Cloud</title>
       <link>https://kubaik.github.io/secure-cloud/</link>
@@ -138,13 +145,6 @@
       <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
       <pubDate>Sun, 05 Apr 2026 17:54:52 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-vs-mono/</guid>
-    </item>
-    <item>
-      <title>Backend Blueprint</title>
-      <link>https://kubaik.github.io/backend-blueprint/</link>
-      <description>Learn expert Backend Architecture Patterns &amp; boost app performance.</description>
-      <pubDate>Sun, 05 Apr 2026 17:27:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/backend-blueprint/</guid>
     </item>
   </channel>
 </rss>
