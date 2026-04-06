@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 12:38:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 12:56:17 +0000</lastBuildDate>
+    <item>
+      <title>FP Basics</title>
+      <link>https://kubaik.github.io/fp-basics/</link>
+      <description>Learn the fundamentals of functional programming concepts and principles.</description>
+      <pubDate>Mon, 06 Apr 2026 12:56:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/fp-basics/</guid>
+    </item>
     <item>
       <title>VR Now</title>
       <link>https://kubaik.github.io/vr-now/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Docker Containerization Guide covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 06 Apr 2026 09:37:57 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</guid>
-    </item>
-    <item>
-      <title>Understanding Responsive Web Design Techniques: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-responsive-web-design-techniques-a-c/</link>
-      <description>A comprehensive guide to Responsive Web Design Techniques covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Mon, 06 Apr 2026 09:16:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-responsive-web-design-techniques-a-c/</guid>
     </item>
   </channel>
 </rss>
