@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 19:42:08 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 19:48:29 +0000</lastBuildDate>
+    <item>
+      <title>Data Lake 101</title>
+      <link>https://kubaik.github.io/data-lake-101/</link>
+      <description>Learn Data Lake Architecture basics &amp; best practices in our introductory guide, Data Lake 101.</description>
+      <pubDate>Mon, 06 Apr 2026 19:48:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/data-lake-101/</guid>
+    </item>
     <item>
       <title>Web Dev Evolved</title>
       <link>https://kubaik.github.io/web-dev-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Learn Vue.js component architecture and build scalable apps with reusable code.</description>
       <pubDate>Mon, 06 Apr 2026 11:31:06 +0000</pubDate>
       <guid>https://kubaik.github.io/vuejs-components/</guid>
-    </item>
-    <item>
-      <title>Boost Speed</title>
-      <link>https://kubaik.github.io/boost-speed/</link>
-      <description>Improve website speed with expert frontend performance tuning tips.</description>
-      <pubDate>Mon, 06 Apr 2026 11:27:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed/</guid>
     </item>
   </channel>
 </rss>
