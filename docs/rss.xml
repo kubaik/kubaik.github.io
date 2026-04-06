@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 10:08:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 10:10:47 +0000</lastBuildDate>
+    <item>
+      <title>Edge Computing</title>
+      <link>https://kubaik.github.io/edge-computing/</link>
+      <description>Discover edge computing applications transforming industries with real-time data processing.</description>
+      <pubDate>Mon, 06 Apr 2026 10:10:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-computing/</guid>
+    </item>
     <item>
       <title>Understanding React Best Practices and Patterns: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-react-best-practices-and-patterns-a-/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the power of C# .NET Core apps, explore core features &amp; best practices.</description>
       <pubDate>Mon, 06 Apr 2026 03:45:58 +0000</pubDate>
       <guid>https://kubaik.github.io/core-power/</guid>
-    </item>
-    <item>
-      <title>Serverless Simplified</title>
-      <link>https://kubaik.github.io/serverless-simplified/</link>
-      <description>Learn Serverless Architecture Patterns made easy with our simplified guide.</description>
-      <pubDate>Mon, 06 Apr 2026 01:52:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-simplified/</guid>
     </item>
   </channel>
 </rss>
