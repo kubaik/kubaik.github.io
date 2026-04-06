@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 18:37:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 18:48:16 +0000</lastBuildDate>
+    <item>
+      <title>Write to Thrive</title>
+      <link>https://kubaik.github.io/write-to-thrive/</link>
+      <description>Boost your career with effective technical writing skills. Learn to communicate clearly and succeed.</description>
+      <pubDate>Mon, 06 Apr 2026 18:48:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/write-to-thrive/</guid>
+    </item>
     <item>
       <title>Vision Tech</title>
       <link>https://kubaik.github.io/vision-tech/</link>
@@ -138,13 +145,6 @@
       <description>Simplify async processing with message queues. Learn how to boost efficiency</description>
       <pubDate>Mon, 06 Apr 2026 11:15:48 +0000</pubDate>
       <guid>https://kubaik.github.io/async-made-easy/</guid>
-    </item>
-    <item>
-      <title>AR Revolved</title>
-      <link>https://kubaik.github.io/ar-revolved/</link>
-      <description>Discover the future of tech with AR Revolved, your guide to innovative Augmented Reality development.</description>
-      <pubDate>Mon, 06 Apr 2026 10:30:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ar-revolved/</guid>
     </item>
   </channel>
 </rss>
