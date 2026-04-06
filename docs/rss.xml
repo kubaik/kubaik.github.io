@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 09:38:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 09:41:55 +0000</lastBuildDate>
+    <item>
+      <title>Lazy Load</title>
+      <link>https://kubaik.github.io/lazy-load/</link>
+      <description>Boost site speed with lazy loading. Learn implementation tips and best practices.</description>
+      <pubDate>Mon, 06 Apr 2026 09:41:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/lazy-load/</guid>
+    </item>
     <item>
       <title>Understanding Docker Containerization Guide: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>Unlock model potential with expert feature engineering techniques.</description>
       <pubDate>Sun, 05 Apr 2026 21:53:54 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
-      <pubDate>Sun, 05 Apr 2026 21:25:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
