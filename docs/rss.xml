@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 19:33:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 19:42:08 +0000</lastBuildDate>
+    <item>
+      <title>Web Dev Evolved</title>
+      <link>https://kubaik.github.io/web-dev-evolved/</link>
+      <description>Discover the latest in web dev: Explore modern frameworks &amp; trends shaping the future of web development.</description>
+      <pubDate>Mon, 06 Apr 2026 19:41:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/web-dev-evolved/</guid>
+    </item>
     <item>
       <title>Python for DS</title>
       <link>https://kubaik.github.io/python-for-ds/</link>
@@ -138,13 +145,6 @@
       <description>Improve website speed with expert frontend performance tuning tips.</description>
       <pubDate>Mon, 06 Apr 2026 11:27:13 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed/</guid>
-    </item>
-    <item>
-      <title>AI Pulse Check</title>
-      <link>https://kubaik.github.io/ai-pulse-check/</link>
-      <description>Stay ahead with AI model monitoring &amp; maintenance. Ensure peak performance &amp; accuracy.</description>
-      <pubDate>Mon, 06 Apr 2026 11:20:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pulse-check/</guid>
     </item>
   </channel>
 </rss>
