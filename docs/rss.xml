@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 13:49:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 14:00:14 +0000</lastBuildDate>
+    <item>
+      <title>iOS Dev: Swift</title>
+      <link>https://kubaik.github.io/ios-dev-swift/</link>
+      <description>Learn Swift for iOS development with expert guides and tutorials.</description>
+      <pubDate>Mon, 06 Apr 2026 14:00:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ios-dev-swift/</guid>
+    </item>
     <item>
       <title>Blue-Green: Zero Downtime</title>
       <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to PHP Modern Development covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 06 Apr 2026 09:43:41 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-php-modern-development-a-complete-gu/</guid>
-    </item>
-    <item>
-      <title>Lazy Load</title>
-      <link>https://kubaik.github.io/lazy-load/</link>
-      <description>Boost site speed with lazy loading. Learn implementation tips and best practices.</description>
-      <pubDate>Mon, 06 Apr 2026 09:41:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/lazy-load/</guid>
     </item>
   </channel>
 </rss>
