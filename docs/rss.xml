@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 20:32:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 21:22:47 +0000</lastBuildDate>
+    <item>
+      <title>Swift iOS Dev</title>
+      <link>https://kubaik.github.io/swift-ios-dev/</link>
+      <description>Learn Native iOS Dev with Swift. Build powerful apps with expert guides and tutorials.</description>
+      <pubDate>Mon, 06 Apr 2026 21:22:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/swift-ios-dev/</guid>
+    </item>
     <item>
       <title>WAF: Shield Your Site</title>
       <link>https://kubaik.github.io/waf-shield-your-site/</link>
@@ -138,13 +145,6 @@
       <description>Learn the fundamentals of functional programming concepts and principles.</description>
       <pubDate>Mon, 06 Apr 2026 12:56:05 +0000</pubDate>
       <guid>https://kubaik.github.io/fp-basics/</guid>
-    </item>
-    <item>
-      <title>VR Now</title>
-      <link>https://kubaik.github.io/vr-now/</link>
-      <description>Explore the latest VR applications transforming entertainment, education, and more. Discover how Virtual Reality is shaping our future in &apos;VR Now&apos;.</description>
-      <pubDate>Mon, 06 Apr 2026 12:37:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/vr-now/</guid>
     </item>
   </channel>
 </rss>
