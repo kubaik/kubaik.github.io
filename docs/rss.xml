@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 17:27:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 17:31:51 +0000</lastBuildDate>
+    <item>
+      <title>Unlock Snowflake</title>
+      <link>https://kubaik.github.io/unlock-snowflake/</link>
+      <description>Unlock Snowflake&apos;s full potential and discover a faster, more flexible data cloud solution.</description>
+      <pubDate>Mon, 06 Apr 2026 17:31:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
+    </item>
     <item>
       <title>Deep Learning</title>
       <link>https://kubaik.github.io/deep-learning/</link>
@@ -138,13 +145,6 @@
       <description>A comprehensive guide to Database Design and Normalization covering key concepts, benefits, and best practices for developers.</description>
       <pubDate>Mon, 06 Apr 2026 10:22:12 +0000</pubDate>
       <guid>https://kubaik.github.io/understanding-database-design-and-normalization-a-/</guid>
-    </item>
-    <item>
-      <title>Understanding VS Code Extensions for Productivity: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-vs-code-extensions-for-productivity-/</link>
-      <description>A comprehensive guide to VS Code Extensions for Productivity covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Mon, 06 Apr 2026 10:21:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-vs-code-extensions-for-productivity-/</guid>
     </item>
   </channel>
 </rss>
