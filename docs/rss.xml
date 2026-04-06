@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Apr 2026 23:56:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 01:52:18 +0000</lastBuildDate>
+    <item>
+      <title>Serverless Simplified</title>
+      <link>https://kubaik.github.io/serverless-simplified/</link>
+      <description>Learn Serverless Architecture Patterns made easy with our simplified guide.</description>
+      <pubDate>Mon, 06 Apr 2026 01:52:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-simplified/</guid>
+    </item>
     <item>
       <title>Ace Sys Design</title>
       <link>https://kubaik.github.io/ace-sys-design/</link>
@@ -138,13 +145,6 @@
       <description>Unlock crypto&apos;s potential with blockchain insights</description>
       <pubDate>Sun, 05 Apr 2026 15:26:55 +0000</pubDate>
       <guid>https://kubaik.github.io/block-buster-crypto/</guid>
-    </item>
-    <item>
-      <title>Tech Interview Prep</title>
-      <link>https://kubaik.github.io/tech-interview-prep/</link>
-      <description>Ace your tech interviews with our comprehensive guide! Discover essential tips, resources, and strategies to boost your confidence and land your dream job.</description>
-      <pubDate>Sun, 05 Apr 2026 14:59:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-interview-prep/</guid>
     </item>
   </channel>
 </rss>
