@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 05:38:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 06:15:00 +0000</lastBuildDate>
+    <item>
+      <title>Secure Cloud</title>
+      <link>https://kubaik.github.io/secure-cloud/</link>
+      <description>Protect your data with expert cloud security best practices.</description>
+      <pubDate>Mon, 06 Apr 2026 06:14:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-cloud/</guid>
+    </item>
     <item>
       <title>Data Mesh: Simplified</title>
       <link>https://kubaik.github.io/data-mesh-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Learn expert Backend Architecture Patterns &amp; boost app performance.</description>
       <pubDate>Sun, 05 Apr 2026 17:27:36 +0000</pubDate>
       <guid>https://kubaik.github.io/backend-blueprint/</guid>
-    </item>
-    <item>
-      <title>Data Governance</title>
-      <link>https://kubaik.github.io/data-governance/</link>
-      <description>Learn how data governance frameworks boost compliance &amp; efficiency</description>
-      <pubDate>Sun, 05 Apr 2026 17:01:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-governance/</guid>
     </item>
   </channel>
 </rss>
