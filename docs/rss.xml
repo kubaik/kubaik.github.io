@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 09:38:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 09:43:59 +0000</lastBuildDate>
+    <item>
+      <title>Understanding PHP Modern Development: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-php-modern-development-a-complete-gu/</link>
+      <description>A comprehensive guide to PHP Modern Development covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 09:43:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-php-modern-development-a-complete-gu/</guid>
+    </item>
     <item>
       <title>Understanding Docker Containerization Guide: A Complete Guide</title>
       <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
@@ -138,13 +145,6 @@
       <description>Unlock model potential with expert feature engineering techniques.</description>
       <pubDate>Sun, 05 Apr 2026 21:53:54 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-models/</guid>
-    </item>
-    <item>
-      <title>GitOps Done Right</title>
-      <link>https://kubaik.github.io/gitops-done-right/</link>
-      <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
-      <pubDate>Sun, 05 Apr 2026 21:25:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/gitops-done-right/</guid>
     </item>
   </channel>
 </rss>
