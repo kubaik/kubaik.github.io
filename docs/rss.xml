@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 06:28:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 08:05:11 +0000</lastBuildDate>
+    <item>
+      <title>K8s Orchestration</title>
+      <link>https://kubaik.github.io/k8s-orchestration/</link>
+      <description>Master Kubernetes orchestration with our expert guide.</description>
+      <pubDate>Mon, 06 Apr 2026 08:04:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-orchestration/</guid>
+    </item>
     <item>
       <title>Web3 DApps</title>
       <link>https://kubaik.github.io/web3-dapps/</link>
@@ -138,13 +145,6 @@
       <description>Master dev project management with Dev PM 101. Learn essentials for success.</description>
       <pubDate>Sun, 05 Apr 2026 18:06:25 +0000</pubDate>
       <guid>https://kubaik.github.io/dev-pm-101/</guid>
-    </item>
-    <item>
-      <title>Micro vs Mono</title>
-      <link>https://kubaik.github.io/micro-vs-mono/</link>
-      <description>Micro vs Mono: Weighing microservices &amp; monolithic architecture pros &amp; cons.</description>
-      <pubDate>Sun, 05 Apr 2026 17:54:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-vs-mono/</guid>
     </item>
   </channel>
 </rss>
