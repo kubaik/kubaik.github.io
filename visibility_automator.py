@@ -29,9 +29,13 @@ class VisibilityAutomator:
                 consumer_key=twitter_config.get('api_key'),
                 consumer_secret=twitter_config.get('api_secret'),
                 access_token=twitter_config.get('access_token'),
-                access_token_secret=twitter_config.get('access_token_secret')
+                access_token_secret=twitter_config.get('access_token_secret'),
+                wait_on_rate_limit=True  
             )
-            print("✅ Twitter API initialized")
+            me = self.twitter_client.get_me()
+            self._username = me.data.username
+            print(f"✅ Twitter API initialized as @{self._username}")
+
         except Exception as e:
             print(f"❌ Twitter initialization failed: {e}")
             self.twitter_client = None
@@ -75,8 +79,7 @@ class VisibilityAutomator:
             tweet_id = response.data['id']
             
             # Get authenticated user info for URL
-            me = self.twitter_client.get_me()
-            username = me.data.username
+            username = self._username or "i"
             
             tweet_url = f"https://twitter.com/{username}/status/{tweet_id}"
             
