@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 18:48:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 19:33:11 +0000</lastBuildDate>
+    <item>
+      <title>Python for DS</title>
+      <link>https://kubaik.github.io/python-for-ds/</link>
+      <description>Learn Python for Data Science: tutorials, tips, and tools for beginners.</description>
+      <pubDate>Mon, 06 Apr 2026 19:32:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/python-for-ds/</guid>
+    </item>
     <item>
       <title>Write to Thrive</title>
       <link>https://kubaik.github.io/write-to-thrive/</link>
@@ -138,13 +145,6 @@
       <description>Stay ahead with AI model monitoring &amp; maintenance. Ensure peak performance &amp; accuracy.</description>
       <pubDate>Mon, 06 Apr 2026 11:20:55 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pulse-check/</guid>
-    </item>
-    <item>
-      <title>Async Made Easy</title>
-      <link>https://kubaik.github.io/async-made-easy/</link>
-      <description>Simplify async processing with message queues. Learn how to boost efficiency</description>
-      <pubDate>Mon, 06 Apr 2026 11:15:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-made-easy/</guid>
     </item>
   </channel>
 </rss>
