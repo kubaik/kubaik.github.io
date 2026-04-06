@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 11:31:18 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 11:43:49 +0000</lastBuildDate>
+    <item>
+      <title>Visualize Smart</title>
+      <link>https://kubaik.github.io/visualize-smart/</link>
+      <description>Boost insights with data visualization best practices. Learn how to &apos;Visualize Smart&apos; and elevate your data storytelling.</description>
+      <pubDate>Mon, 06 Apr 2026 11:43:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/visualize-smart/</guid>
+    </item>
     <item>
       <title>Vue.js Components</title>
       <link>https://kubaik.github.io/vuejs-components/</link>
@@ -138,13 +145,6 @@
       <description>Unlock efficient AI with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
       <pubDate>Mon, 06 Apr 2026 09:08:42 +0000</pubDate>
       <guid>https://kubaik.github.io/transfer-learn/</guid>
-    </item>
-    <item>
-      <title>GraphQL Done Right</title>
-      <link>https://kubaik.github.io/graphql-done-right/</link>
-      <description>Discover best practices for GraphQL API development in &quot;GraphQL Done Right.&quot; Boost efficiency and performance with expert tips and real-world examples.</description>
-      <pubDate>Mon, 06 Apr 2026 08:52:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-done-right/</guid>
     </item>
   </channel>
 </rss>
