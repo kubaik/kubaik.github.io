@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 12:56:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 13:49:29 +0000</lastBuildDate>
+    <item>
+      <title>Blue-Green: Zero Downtime</title>
+      <link>https://kubaik.github.io/blue-green-zero-downtime/</link>
+      <description>Discover how Blue-Green Deployment ensures zero downtime for your applications. Maximize efficiency and reliability with our comprehensive guide!</description>
+      <pubDate>Mon, 06 Apr 2026 13:49:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/blue-green-zero-downtime/</guid>
+    </item>
     <item>
       <title>FP Basics</title>
       <link>https://kubaik.github.io/fp-basics/</link>
@@ -138,13 +145,6 @@
       <description>Boost site speed with lazy loading. Learn implementation tips and best practices.</description>
       <pubDate>Mon, 06 Apr 2026 09:41:42 +0000</pubDate>
       <guid>https://kubaik.github.io/lazy-load/</guid>
-    </item>
-    <item>
-      <title>Understanding Docker Containerization Guide: A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
-      <description>A comprehensive guide to Docker Containerization Guide covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Mon, 06 Apr 2026 09:37:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</guid>
     </item>
   </channel>
 </rss>
