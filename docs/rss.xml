@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 23:21:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 23:30:08 +0000</lastBuildDate>
+    <item>
+      <title>Zero Trust: Secure All</title>
+      <link>https://kubaik.github.io/zero-trust-secure-all/</link>
+      <description>Learn about Zero Trust Security Architecture and how to secure your network with a &apos;never trust, always verify&apos; approach.</description>
+      <pubDate>Mon, 06 Apr 2026 23:29:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-secure-all/</guid>
+    </item>
     <item>
       <title>AutoML Evolved</title>
       <link>https://kubaik.github.io/automl-evolved/</link>
@@ -138,13 +145,6 @@
       <description>Simplify MLOps with AutoML. Learn how to automate ML pipelines for efficient model deployment.</description>
       <pubDate>Mon, 06 Apr 2026 15:33:43 +0000</pubDate>
       <guid>https://kubaik.github.io/automl/</guid>
-    </item>
-    <item>
-      <title>Quantum 101</title>
-      <link>https://kubaik.github.io/quantum-101/</link>
-      <description>Unlock the mysteries of quantum computing with our &apos;Quantum 101&apos; guide. Discover essential concepts and how they reshape technology and our future!</description>
-      <pubDate>Mon, 06 Apr 2026 15:09:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/quantum-101/</guid>
     </item>
   </channel>
 </rss>
