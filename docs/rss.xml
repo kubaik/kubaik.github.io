@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 10:00:31 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 10:04:28 +0000</lastBuildDate>
+    <item>
+      <title>Deploy AI Smarter</title>
+      <link>https://kubaik.github.io/deploy-ai-smarter/</link>
+      <description>Unlock the secrets to effective AI model deployment! Discover smarter strategies to enhance performance, efficiency, and scalability in your projects.</description>
+      <pubDate>Mon, 06 Apr 2026 10:04:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-ai-smarter/</guid>
+    </item>
     <item>
       <title>Go Concurrency</title>
       <link>https://kubaik.github.io/go-concurrency/</link>
@@ -138,13 +145,6 @@
       <description>Master system design interviews with expert tips and strategies.</description>
       <pubDate>Sun, 05 Apr 2026 23:56:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ace-sys-design/</guid>
-    </item>
-    <item>
-      <title>Data Warehousing Simplified</title>
-      <link>https://kubaik.github.io/data-warehousing-simplified/</link>
-      <description>Simplify data management with our expert solutions. Learn more.</description>
-      <pubDate>Sun, 05 Apr 2026 23:27:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-warehousing-simplified/</guid>
     </item>
   </channel>
 </rss>
