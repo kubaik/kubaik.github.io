@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 09:05:35 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 09:08:54 +0000</lastBuildDate>
+    <item>
+      <title>Transfer Learn</title>
+      <link>https://kubaik.github.io/transfer-learn/</link>
+      <description>Unlock efficient AI with Transfer Learning. Learn how to implement &amp; boost model performance.</description>
+      <pubDate>Mon, 06 Apr 2026 09:08:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/transfer-learn/</guid>
+    </item>
     <item>
       <title>GraphQL Done Right</title>
       <link>https://kubaik.github.io/graphql-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn how to implement JWT authentication with our expert guide.</description>
       <pubDate>Sun, 05 Apr 2026 20:25:26 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-auth-done/</guid>
-    </item>
-    <item>
-      <title>Scrum vs Kanban</title>
-      <link>https://kubaik.github.io/scrum-vs-kanban/</link>
-      <description>Learn the differences between Scrum &amp; Kanban</description>
-      <pubDate>Sun, 05 Apr 2026 19:54:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/scrum-vs-kanban/</guid>
     </item>
   </channel>
 </rss>
