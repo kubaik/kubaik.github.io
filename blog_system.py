@@ -532,11 +532,11 @@ def create_sample_config():
         },
 
         "twitter_api": {
-            "api_key":             "vRAbQ4hBb5VVyVCZu80nJWMYa",
-            "api_secret":          "7VbtAxw6UFwJA9IPffCIIugJGDIBOU570IAtbaVFHA0jIK7DgL",
-            "access_token":        "263530787-93G4YmrfjWgFBdz6BrPU7dQhxSFcx7CV0VzviVzm",
-            "access_token_secret": "pefd4hyGOT6Ma30fF36VHJqgoYoRrBZd6I8vwu9mrdcul",
-            "bearer_token":        "AAAAAAAAAAAAAAAAAAAAALI%2F8wEAAAAA%2ByWNO8pm9AZqMU5XENyGRKOwino%3DxCORGDMLXcGacYEuVKKNyFyi2QNfxvSmySCnA8MdLu3IE9CW0c"
+            "api_key":             "0VwOjrys4eiqc4bsVlfWfFHoi",
+            "api_secret":          "5etYHhCMrt2JqpRSJqLRweqsLOPYY8ZfLRJSJrY5OUuXEO0syM",
+            "access_token":        "263530787-Zp5Ks7ILA2t0zih6QfJCQuBTt3uxn5jxnO8zQGwD",
+            "access_token_secret": "g7bcDsPKrkS8rcTpr79IOZpXfQ4aRW9Bh9es9PGZHfQJJ",
+            "bearer_token":        "AAAAAAAAAAAAAAAAAAAAALI%2F8wEAAAAAezOr7qqRaRNSNZMCYPonALoAZRk%3DktNJUlImwXUD3VtI7SrMpdc5x6Ppq7XIgFvkhykbeGFkw338JI"
         },
 
         "content_topics": [

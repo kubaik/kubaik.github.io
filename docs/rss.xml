@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Apr 2026 09:08:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 09:38:35 +0000</lastBuildDate>
+    <item>
+      <title>Understanding Docker Containerization Guide: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</link>
+      <description>A comprehensive guide to Docker Containerization Guide covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 09:37:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-docker-containerization-guide-a-comp/</guid>
+    </item>
+    <item>
+      <title>Understanding Responsive Web Design Techniques: A Complete Guide</title>
+      <link>https://kubaik.github.io/understanding-responsive-web-design-techniques-a-c/</link>
+      <description>A comprehensive guide to Responsive Web Design Techniques covering key concepts, benefits, and best practices for developers.</description>
+      <pubDate>Mon, 06 Apr 2026 09:16:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/understanding-responsive-web-design-techniques-a-c/</guid>
+    </item>
     <item>
       <title>Transfer Learn</title>
       <link>https://kubaik.github.io/transfer-learn/</link>
@@ -131,20 +145,6 @@
       <description>Streamline devops with GitOps. Learn best practices for a seamless workflow implementation.</description>
       <pubDate>Sun, 05 Apr 2026 21:25:36 +0000</pubDate>
       <guid>https://kubaik.github.io/gitops-done-right/</guid>
-    </item>
-    <item>
-      <title>ML Anomaly Detection</title>
-      <link>https://kubaik.github.io/ml-anomaly-detection/</link>
-      <description>Detect unusual patterns with ML anomaly detection techniques.</description>
-      <pubDate>Sun, 05 Apr 2026 20:56:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ml-anomaly-detection/</guid>
-    </item>
-    <item>
-      <title>JWT Auth Done</title>
-      <link>https://kubaik.github.io/jwt-auth-done/</link>
-      <description>Learn how to implement JWT authentication with our expert guide.</description>
-      <pubDate>Sun, 05 Apr 2026 20:25:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-auth-done/</guid>
     </item>
   </channel>
 </rss>
