@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 11:34:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 11:48:50 +0000</lastBuildDate>
+    <item>
+      <title>RL Wins</title>
+      <link>https://kubaik.github.io/rl-wins/</link>
+      <description>Boost performance with RL strategies. Discover expert tips and insights on Reinforcement Learning.</description>
+      <pubDate>Tue, 07 Apr 2026 11:48:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/rl-wins/</guid>
+    </item>
     <item>
       <title>Rails Web Apps</title>
       <link>https://kubaik.github.io/rails-web-apps/</link>
@@ -138,13 +145,6 @@
       <description>Boost productivity with expert memory management tips and best practices.</description>
       <pubDate>Tue, 07 Apr 2026 01:49:02 +0000</pubDate>
       <guid>https://kubaik.github.io/optimize-memory/</guid>
-    </item>
-    <item>
-      <title>Push Done Right</title>
-      <link>https://kubaik.github.io/push-done-right/</link>
-      <description>Boost engagement with perfect push notifications. Learn expert implementation tips.</description>
-      <pubDate>Tue, 07 Apr 2026 00:05:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/push-done-right/</guid>
     </item>
   </channel>
 </rss>
