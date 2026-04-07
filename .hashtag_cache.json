@@ -2172,15 +2172,15 @@
     "topic": "Low-Code/No-Code Platforms"
   },
   "apache_spark_big_data_processing": {
-    "timestamp": "2026-03-31T17:40:15.531673",
+    "timestamp": "2026-04-07T17:37:39.911960",
     "hashtags": [
       "BigDataProcessing",
-      "ApacheSpark",
+      "SparkComputing",
       "DataEngineering",
-      "AIAnalytics",
       "CloudComputing",
-      "SparkML",
-      "DataIntelligence"
+      "ArtificialIntelligence",
+      "DataAnalytics",
+      "SparkStreaming"
     ],
     "topic": "Apache Spark Big Data Processing"
   },
