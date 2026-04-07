@@ -163,5 +163,6 @@
   "Application Security Testing (SAST/DAST)",
   "CQRS and Event Sourcing",
   "AI Agent Development",
-  "Rate Limiting and Throttling"
+  "Rate Limiting and Throttling",
+  "Kotlin for Backend Development"
 ]
