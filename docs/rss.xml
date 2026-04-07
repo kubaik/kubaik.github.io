@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 23:11:02 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 23:32:48 +0000</lastBuildDate>
+    <item>
+      <title>Lock Down: Cyber Basics</title>
+      <link>https://kubaik.github.io/lock-down-cyber-basics/</link>
+      <description>Discover essential cybersecurity fundamentals in &apos;Lock Down: Cyber Basics.&apos; Learn how to protect your data and stay safe online with expert tips and strategies.</description>
+      <pubDate>Tue, 07 Apr 2026 23:32:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/lock-down-cyber-basics/</guid>
+    </item>
     <item>
       <title>EDA: Scale Smarter</title>
       <link>https://kubaik.github.io/eda-scale-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Unlock instant insights with real-time data processing. Learn how to Process Now.</description>
       <pubDate>Tue, 07 Apr 2026 13:25:38 +0000</pubDate>
       <guid>https://kubaik.github.io/process-now/</guid>
-    </item>
-    <item>
-      <title>Contribute Open Source</title>
-      <link>https://kubaik.github.io/contribute-open-source/</link>
-      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
-      <pubDate>Tue, 07 Apr 2026 13:05:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/contribute-open-source/</guid>
     </item>
   </channel>
 </rss>
