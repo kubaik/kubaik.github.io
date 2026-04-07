@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 04:29:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 05:30:50 +0000</lastBuildDate>
+    <item>
+      <title>Test Smarter</title>
+      <link>https://kubaik.github.io/test-smarter/</link>
+      <description>Optimize with data-driven decisions. Learn A/B testing &amp; experimentation strategies.</description>
+      <pubDate>Tue, 07 Apr 2026 05:30:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-smarter/</guid>
+    </item>
     <item>
       <title>SOLID Code</title>
       <link>https://kubaik.github.io/solid-code/</link>
@@ -138,13 +145,6 @@
       <description>Simplify load balancing with expert techniques and tools for optimal performance.</description>
       <pubDate>Mon, 06 Apr 2026 17:40:09 +0000</pubDate>
       <guid>https://kubaik.github.io/balance-made-easy/</guid>
-    </item>
-    <item>
-      <title>Unlock Snowflake</title>
-      <link>https://kubaik.github.io/unlock-snowflake/</link>
-      <description>Unlock Snowflake&apos;s full potential and discover a faster, more flexible data cloud solution.</description>
-      <pubDate>Mon, 06 Apr 2026 17:31:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-snowflake/</guid>
     </item>
   </channel>
 </rss>
