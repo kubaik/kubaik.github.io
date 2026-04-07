@@ -30,7 +30,7 @@ class VisibilityAutomator:
         access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET') 
         bearer_token        = os.getenv('TWITTER_BEARER_TOKEN')        
 
-        if not all([api_key, api_secret, access_token, access_token_secret]):
+        if not [api_key, api_secret, access_token, access_token_secret]:
             print("⚠️ Missing Twitter credentials")
             return
         try:
