@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 07:46:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 08:09:46 +0000</lastBuildDate>
+    <item>
+      <title>Scale Smart</title>
+      <link>https://kubaik.github.io/scale-smart/</link>
+      <description>Unlock scalable growth with proven patterns and strategies.</description>
+      <pubDate>Tue, 07 Apr 2026 08:09:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-smart/</guid>
+    </item>
     <item>
       <title>Secure Your App</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Protect your site from attacks with a Web Application Firewall (WAF). Learn how to shield your online presence.</description>
       <pubDate>Mon, 06 Apr 2026 20:32:14 +0000</pubDate>
       <guid>https://kubaik.github.io/waf-shield-your-site/</guid>
-    </item>
-    <item>
-      <title>Delta Lake: The Future</title>
-      <link>https://kubaik.github.io/delta-lake-the-future/</link>
-      <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse. Learn more.</description>
-      <pubDate>Mon, 06 Apr 2026 20:23:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
     </item>
   </channel>
 </rss>
