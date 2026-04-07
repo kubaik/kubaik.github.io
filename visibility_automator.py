@@ -18,11 +18,6 @@ class VisibilityAutomator:
     def _init_twitter(self):
         import os
         """Initialize Twitter API v2 client"""
-        twitter_config = self.config.get('twitter_api', {})
-        
-        if not twitter_config:
-            print("⚠️ No Twitter API credentials found in config")
-            return
         
         api_key             = os.getenv('TWITTER_API_KEY')  
         api_secret          = os.getenv('TWITTER_API_SECRET')          
