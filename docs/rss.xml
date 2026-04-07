@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 17:30:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 17:37:52 +0000</lastBuildDate>
+    <item>
+      <title>Spark Big Data</title>
+      <link>https://kubaik.github.io/spark-big-data/</link>
+      <description>Unlock insights with Apache Spark Big Data Processing. Learn how to spark big data analytics &amp; drive business growth.</description>
+      <pubDate>Tue, 07 Apr 2026 17:37:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/spark-big-data/</guid>
+    </item>
     <item>
       <title>Test to Secure</title>
       <link>https://kubaik.github.io/test-to-secure/</link>
@@ -138,13 +145,6 @@
       <description>Protect your app from cyber threats. Learn mobile app security best practices.</description>
       <pubDate>Tue, 07 Apr 2026 07:46:06 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>NLP Essentials</title>
-      <link>https://kubaik.github.io/nlp-essentials/</link>
-      <description>Unlock NLP techniques for text analysis, sentiment &amp; more.</description>
-      <pubDate>Tue, 07 Apr 2026 07:40:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/nlp-essentials/</guid>
     </item>
   </channel>
 </rss>
