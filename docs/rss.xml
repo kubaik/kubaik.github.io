@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 07:20:21 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 07:22:41 +0000</lastBuildDate>
+    <item>
+      <title>Train Smarter</title>
+      <link>https://kubaik.github.io/train-smarter/</link>
+      <description>Optimize AI model training with expert best practices.</description>
+      <pubDate>Tue, 07 Apr 2026 07:22:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/train-smarter/</guid>
+    </item>
     <item>
       <title>Code Review Done Right</title>
       <link>https://kubaik.github.io/code-review-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Learn Python for Data Science: tutorials, tips, and tools for beginners.</description>
       <pubDate>Mon, 06 Apr 2026 19:32:59 +0000</pubDate>
       <guid>https://kubaik.github.io/python-for-ds/</guid>
-    </item>
-    <item>
-      <title>Write to Thrive</title>
-      <link>https://kubaik.github.io/write-to-thrive/</link>
-      <description>Boost your career with effective technical writing skills. Learn to communicate clearly and succeed.</description>
-      <pubDate>Mon, 06 Apr 2026 18:48:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/write-to-thrive/</guid>
     </item>
   </channel>
 </rss>
