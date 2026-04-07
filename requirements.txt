@@ -6,3 +6,5 @@ pygments==2.17.2
 requests
 requests-oauthlib
 tweepy
+numpy
+scikit-learn

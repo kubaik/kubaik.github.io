@@ -111,3 +111,18 @@ python delete_fallback_posts.py --delete
 
 # Then rebuild the site
 python blog_system.py build
+
+###################################################################################################
+
+# Always start with a dry run to see what it finds
+python delete_similar_posts.py
+
+# Tune the threshold until the groups look right
+python delete_similar_posts.py --threshold 0.85   # stricter — only near-identical
+python delete_similar_posts.py --threshold 0.65   # looser — catches broader overlaps
+
+# Keep the post with the most content instead of the oldest
+python delete_similar_posts.py --keep-longest
+
+# Once happy, delete
+python delete_similar_posts.py --delete --threshold 0.80
