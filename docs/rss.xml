@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 16:49:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 17:28:23 +0000</lastBuildDate>
     <item>
       <title>Rust: Safe Memory</title>
       <link>https://kubaik.github.io/rust-safe-memory/</link>
@@ -40,13 +40,6 @@
       <description>Boost website speed with Static Site Generation (SSG). Learn how to improve performance and user experience.</description>
       <pubDate>Tue, 07 Apr 2026 14:00:05 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
-    </item>
-    <item>
-      <title>Understanding Site Reliability Engineering (SRE): A Complete Guide</title>
-      <link>https://kubaik.github.io/understanding-site-reliability-engineering-sre-a-c/</link>
-      <description>A comprehensive guide to Site Reliability Engineering (SRE) covering key concepts, benefits, and best practices for developers.</description>
-      <pubDate>Tue, 07 Apr 2026 13:55:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/understanding-site-reliability-engineering-sre-a-c/</guid>
     </item>
     <item>
       <title>Process Now</title>
@@ -145,6 +138,13 @@
       <description>Unlock NLP techniques for text analysis, sentiment &amp; more.</description>
       <pubDate>Tue, 07 Apr 2026 07:40:11 +0000</pubDate>
       <guid>https://kubaik.github.io/nlp-essentials/</guid>
+    </item>
+    <item>
+      <title>AI Evolved</title>
+      <link>https://kubaik.github.io/ai-evolved/</link>
+      <description>Unlock AI&apos;s full potential with multi-modal systems, transforming tech forever.</description>
+      <pubDate>Tue, 07 Apr 2026 07:27:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-evolved/</guid>
     </item>
   </channel>
 </rss>
