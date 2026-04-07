@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 03:42:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 04:29:37 +0000</lastBuildDate>
+    <item>
+      <title>SOLID Code</title>
+      <link>https://kubaik.github.io/solid-code/</link>
+      <description>Learn SOLID design principles for cleaner, scalable code.</description>
+      <pubDate>Tue, 07 Apr 2026 04:29:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-code/</guid>
+    </item>
     <item>
       <title>ML Decoded</title>
       <link>https://kubaik.github.io/ml-decoded/</link>
@@ -138,13 +145,6 @@
       <description>Unlock Snowflake&apos;s full potential and discover a faster, more flexible data cloud solution.</description>
       <pubDate>Mon, 06 Apr 2026 17:31:39 +0000</pubDate>
       <guid>https://kubaik.github.io/unlock-snowflake/</guid>
-    </item>
-    <item>
-      <title>Deep Learning</title>
-      <link>https://kubaik.github.io/deep-learning/</link>
-      <description>Unlock AI potential with Deep Learning Neural Networks, discover applications &amp; techniques.</description>
-      <pubDate>Mon, 06 Apr 2026 17:27:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/deep-learning/</guid>
     </item>
   </channel>
 </rss>
