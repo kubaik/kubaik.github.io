@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 12:40:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 13:05:48 +0000</lastBuildDate>
+    <item>
+      <title>Contribute Open Source</title>
+      <link>https://kubaik.github.io/contribute-open-source/</link>
+      <description>Learn how to contribute to open source projects with our beginner&apos;s guide.</description>
+      <pubDate>Tue, 07 Apr 2026 13:05:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/contribute-open-source/</guid>
+    </item>
     <item>
       <title>Remote Work Done Right</title>
       <link>https://kubaik.github.io/remote-work-done-right/</link>
@@ -138,13 +145,6 @@
       <description>Unlock machine learning secrets. Learn ML algorithms &amp; boost your skills.</description>
       <pubDate>Tue, 07 Apr 2026 03:42:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ml-decoded/</guid>
-    </item>
-    <item>
-      <title>SIEM Simplified</title>
-      <link>https://kubaik.github.io/siem-simplified/</link>
-      <description>Simplify security monitoring with SIEM. Learn how to streamline threat detection &amp; response.</description>
-      <pubDate>Tue, 07 Apr 2026 03:33:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/siem-simplified/</guid>
     </item>
   </channel>
 </rss>
