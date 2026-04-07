@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 17:54:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 18:39:46 +0000</lastBuildDate>
+    <item>
+      <title>Svelte JS</title>
+      <link>https://kubaik.github.io/svelte-js/</link>
+      <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript.</description>
+      <pubDate>Tue, 07 Apr 2026 18:39:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/svelte-js/</guid>
+    </item>
     <item>
       <title>AI Predicts</title>
       <link>https://kubaik.github.io/ai-predicts/</link>
@@ -138,13 +145,6 @@
       <description>Maximize network speed with expert tips and tricks.</description>
       <pubDate>Tue, 07 Apr 2026 08:34:09 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-network-speed/</guid>
-    </item>
-    <item>
-      <title>Scale Smart</title>
-      <link>https://kubaik.github.io/scale-smart/</link>
-      <description>Unlock scalable growth with proven patterns and strategies.</description>
-      <pubDate>Tue, 07 Apr 2026 08:09:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smart/</guid>
     </item>
   </channel>
 </rss>
