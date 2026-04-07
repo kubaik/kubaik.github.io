@@ -23,12 +23,12 @@ class VisibilityAutomator:
         if not twitter_config:
             print("⚠️ No Twitter API credentials found in config")
             return
-        # Environment variables take priority over config.yaml
-        api_key             = os.getenv('TWITTER_API_KEY')             or twitter_config.get('api_key')
-        api_secret          = os.getenv('TWITTER_API_SECRET')          or twitter_config.get('api_secret')
-        access_token        = os.getenv('TWITTER_ACCESS_TOKEN')        or twitter_config.get('access_token')
-        access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET') or twitter_config.get('access_token_secret')
-        bearer_token        = os.getenv('TWITTER_BEARER_TOKEN')        or twitter_config.get('bearer_token')    
+        
+        api_key             = os.getenv('TWITTER_API_KEY')  
+        api_secret          = os.getenv('TWITTER_API_SECRET')          
+        access_token        = os.getenv('TWITTER_ACCESS_TOKEN')        
+        access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET') 
+        bearer_token        = os.getenv('TWITTER_BEARER_TOKEN')        
 
         if not all([api_key, api_secret, access_token, access_token_secret]):
             print("⚠️ Missing Twitter credentials")

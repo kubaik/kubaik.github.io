@@ -531,14 +531,6 @@ def create_sample_config():
             "facebook": "your-facebook-page"
         },
 
-        "twitter_api": {
-            "api_key":             "0VwOjrys4eiqc4bsVlfWfFHoi",
-            "api_secret":          "5etYHhCMrt2JqpRSJqLRweqsLOPYY8ZfLRJSJrY5OUuXEO0syM",
-            "access_token":        "263530787-Zp5Ks7ILA2t0zih6QfJCQuBTt3uxn5jxnO8zQGwD",
-            "access_token_secret": "g7bcDsPKrkS8rcTpr79IOZpXfQ4aRW9Bh9es9PGZHfQJJ",
-            "bearer_token":        "AAAAAAAAAAAAAAAAAAAAALI%2F8wEAAAAAezOr7qqRaRNSNZMCYPonALoAZRk%3DktNJUlImwXUD3VtI7SrMpdc5x6Ppq7XIgFvkhykbeGFkw338JI"
-        },
-
         "content_topics": [
             # AI & MACHINE LEARNING
             "Machine Learning Algorithms Explained",
