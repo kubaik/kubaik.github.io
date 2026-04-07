@@ -162,5 +162,6 @@
   "Svelte and Modern JavaScript",
   "Application Security Testing (SAST/DAST)",
   "CQRS and Event Sourcing",
-  "AI Agent Development"
+  "AI Agent Development",
+  "Rate Limiting and Throttling"
 ]

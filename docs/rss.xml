@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 19:55:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 20:41:13 +0000</lastBuildDate>
+    <item>
+      <title>Limit the Flow</title>
+      <link>https://kubaik.github.io/limit-the-flow/</link>
+      <description>Learn rate limiting &amp; throttling techniques to prevent abuse &amp; optimize system performance.</description>
+      <pubDate>Tue, 07 Apr 2026 20:41:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/limit-the-flow/</guid>
+    </item>
     <item>
       <title>AI Agents Rise</title>
       <link>https://kubaik.github.io/ai-agents-rise/</link>
@@ -138,13 +145,6 @@
       <description>Optimize model performance with top hyperparameter tuning methods.</description>
       <pubDate>Tue, 07 Apr 2026 10:03:06 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-up/</guid>
-    </item>
-    <item>
-      <title>Data Flow</title>
-      <link>https://kubaik.github.io/data-flow/</link>
-      <description>Streamline data workflows with efficient engineering pipelines.</description>
-      <pubDate>Tue, 07 Apr 2026 09:49:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-flow/</guid>
     </item>
   </channel>
 </rss>
