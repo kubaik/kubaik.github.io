@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 05:30:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 06:17:02 +0000</lastBuildDate>
+    <item>
+      <title>Cloud Evolved</title>
+      <link>https://kubaik.github.io/cloud-evolved/</link>
+      <description>Unlock the power of Multi-Cloud Architecture with Cloud Evolved. Learn how to thrive in a hybrid world.</description>
+      <pubDate>Tue, 07 Apr 2026 06:16:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-evolved/</guid>
+    </item>
     <item>
       <title>Test Smarter</title>
       <link>https://kubaik.github.io/test-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Explore innovative computer vision applications and trends in Vision Tech.</description>
       <pubDate>Mon, 06 Apr 2026 18:37:10 +0000</pubDate>
       <guid>https://kubaik.github.io/vision-tech/</guid>
-    </item>
-    <item>
-      <title>Balance Made Easy</title>
-      <link>https://kubaik.github.io/balance-made-easy/</link>
-      <description>Simplify load balancing with expert techniques and tools for optimal performance.</description>
-      <pubDate>Mon, 06 Apr 2026 17:40:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/balance-made-easy/</guid>
     </item>
   </channel>
 </rss>
