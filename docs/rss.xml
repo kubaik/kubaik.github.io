@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 01:49:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 03:33:50 +0000</lastBuildDate>
+    <item>
+      <title>SIEM Simplified</title>
+      <link>https://kubaik.github.io/siem-simplified/</link>
+      <description>Simplify security monitoring with SIEM. Learn how to streamline threat detection &amp; response.</description>
+      <pubDate>Tue, 07 Apr 2026 03:33:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/siem-simplified/</guid>
+    </item>
     <item>
       <title>Optimize Memory</title>
       <link>https://kubaik.github.io/optimize-memory/</link>
@@ -138,13 +145,6 @@
       <description>Boost Git skills with expert tips and advanced techniques.</description>
       <pubDate>Mon, 06 Apr 2026 16:40:07 +0000</pubDate>
       <guid>https://kubaik.github.io/git-pro-tips/</guid>
-    </item>
-    <item>
-      <title>Digital Twin: Future Now</title>
-      <link>https://kubaik.github.io/digital-twin-future-now/</link>
-      <description>Explore how Digital Twin technology is revolutionizing industries today. Discover its applications, benefits, and the future it holds for innovation and efficiency.</description>
-      <pubDate>Mon, 06 Apr 2026 16:31:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/digital-twin-future-now/</guid>
     </item>
   </channel>
 </rss>
