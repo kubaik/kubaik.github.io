@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 07:40:23 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 07:46:19 +0000</lastBuildDate>
+    <item>
+      <title>Secure Your App</title>
+      <link>https://kubaik.github.io/secure-your-app/</link>
+      <description>Protect your app from cyber threats. Learn mobile app security best practices.</description>
+      <pubDate>Tue, 07 Apr 2026 07:46:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-your-app/</guid>
+    </item>
     <item>
       <title>NLP Essentials</title>
       <link>https://kubaik.github.io/nlp-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the future of data management with Delta Lake &amp; Data Lakehouse. Learn more.</description>
       <pubDate>Mon, 06 Apr 2026 20:23:49 +0000</pubDate>
       <guid>https://kubaik.github.io/delta-lake-the-future/</guid>
-    </item>
-    <item>
-      <title>Data Lake 101</title>
-      <link>https://kubaik.github.io/data-lake-101/</link>
-      <description>Learn Data Lake Architecture basics &amp; best practices in our introductory guide, Data Lake 101.</description>
-      <pubDate>Mon, 06 Apr 2026 19:48:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/data-lake-101/</guid>
     </item>
   </channel>
 </rss>
