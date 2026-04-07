@@ -671,15 +671,15 @@
     "topic": "AI Model Deployment Strategies"
   },
   "static_site_generation_(ssg)": {
-    "timestamp": "2026-03-26T19:18:25.529730",
+    "timestamp": "2026-04-07T14:00:06.199101",
     "hashtags": [
-      "StaticSites",
+      "StaticSiteGeneration",
       "Jamstack",
-      "WebDevelopment",
+      "WebDev",
+      "HeadlessCMS",
       "Serverless",
-      "DevOps",
       "CloudNative",
-      "SiteGeneration"
+      "DevOpsTools"
     ],
     "topic": "Static Site Generation (SSG)"
   },
