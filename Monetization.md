@@ -101,3 +101,13 @@ test
 
 Please store the following recovery codes in a safe place.
 39899368 7557534644562325 4775911375475328 3200884863234973 5074926508020529 12418813
+
+
+# Safe first — see what would be deleted without touching anything
+python delete_fallback_posts.py
+
+# Actually delete once you're happy with the list
+python delete_fallback_posts.py --delete
+
+# Then rebuild the site
+python blog_system.py build
