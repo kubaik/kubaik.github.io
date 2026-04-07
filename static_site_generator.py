@@ -236,6 +236,7 @@ class StaticSiteGenerator:
     {{ structured_data | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
+    <script defer src="{{ base_path }}/static/code_runner.js"></script>
 </head>
 <body>
     {{ header_ad | safe }}
