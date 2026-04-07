@@ -1988,15 +1988,15 @@
     "topic": "Azure Cloud Services"
   },
   "incident_response_planning": {
-    "timestamp": "2026-04-02T05:57:34.921168",
+    "timestamp": "2026-04-07T14:13:34.901046",
     "hashtags": [
-      "CyberResilience",
+      "CyberSecurity",
       "IncidentResponse",
-      "TechSecurity",
-      "CloudComputing",
-      "ArtificialIntelligence",
+      "ThreatManagement",
+      "CloudProtection",
+      "AIpoweredSecurity",
       "DigitalRisk",
-      "ThreatManagement"
+      "ZeroTrust"
     ],
     "topic": "Incident Response Planning"
   },
