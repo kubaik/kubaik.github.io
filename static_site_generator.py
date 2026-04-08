@@ -352,7 +352,7 @@ class StaticSiteGenerator:
             <p>{{ site_description }}</p>
         </div>
 
-        <!-- Search Bar -->
+        <!-- Search Bars -->
         <div class="search-container">
             <div class="search-wrapper">
                 <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
