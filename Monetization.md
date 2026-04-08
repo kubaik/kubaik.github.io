@@ -144,3 +144,4 @@ python deduplicate_posts.py --delete
 # Or via blog_system.py shortcut
 python blog_system.py dedup
 
+test
