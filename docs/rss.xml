@@ -139,12 +139,5 @@
       <pubDate>Tue, 07 Apr 2026 19:42:25 +0000</pubDate>
       <guid>https://kubaik.github.io/cqrs-unlocked/</guid>
     </item>
-    <item>
-      <title>Secure Code: SAST/DAST</title>
-      <link>https://kubaik.github.io/secure-code-sastdast/</link>
-      <description>Boost app security with SAST/DAST testing. Learn how to identify vulnerabilities.</description>
-      <pubDate>Tue, 07 Apr 2026 18:55:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-code-sastdast/</guid>
-    </item>
   </channel>
 </rss>
