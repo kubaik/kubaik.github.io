@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 18:27:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 19:43:28 +0000</lastBuildDate>
+    <item>
+      <title>EDA: Event Smarts</title>
+      <link>https://kubaik.github.io/eda-event-smarts/</link>
+      <description>Discover how Event-Driven Architecture (EDA) enhances system responsiveness and scalability. Unlock the potential of event-driven design for your projects!</description>
+      <pubDate>Wed, 08 Apr 2026 19:43:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/eda-event-smarts/</guid>
+    </item>
     <item>
       <title>BDD Simplified...</title>
       <link>https://kubaik.github.io/bdd-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock DevOps success with expert best practices and cultural tips.</description>
       <pubDate>Wed, 08 Apr 2026 11:51:24 +0000</pubDate>
       <guid>https://kubaik.github.io/devops-done-right-0426/</guid>
-    </item>
-    <item>
-      <title>AI Wordsmiths</title>
-      <link>https://kubaik.github.io/ai-wordsmiths/</link>
-      <description>Unlock AI&apos;s writing potential with Generative AI &amp; Large Language Models.</description>
-      <pubDate>Wed, 08 Apr 2026 11:49:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wordsmiths/</guid>
     </item>
   </channel>
 </rss>
