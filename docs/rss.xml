@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 14:14:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 15:05:28 +0000</lastBuildDate>
+    <item>
+      <title>Twin Vision</title>
+      <link>https://kubaik.github.io/twin-vision/</link>
+      <description>Unlock the power of Digital Twin Technology with Twin Vision. Discover its impact on industries and innovation.</description>
+      <pubDate>Wed, 08 Apr 2026 15:05:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/twin-vision/</guid>
+    </item>
     <item>
       <title>Mastering Application Security: SAST vs. DAST Explained</title>
       <link>https://kubaik.github.io/mastering-application-security-sast-vs-dast-explai/</link>
@@ -138,13 +145,6 @@
       <description>Learn how TypeScript boosts large-scale app development with scalability and maintainability.</description>
       <pubDate>Wed, 08 Apr 2026 09:49:29 +0000</pubDate>
       <guid>https://kubaik.github.io/scale-with-typescript/</guid>
-    </item>
-    <item>
-      <title>LLM Hacks</title>
-      <link>https://kubaik.github.io/llm-hacks/</link>
-      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
-      <pubDate>Wed, 08 Apr 2026 09:36:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-hacks/</guid>
     </item>
   </channel>
 </rss>
