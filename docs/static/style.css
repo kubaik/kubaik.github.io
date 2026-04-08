@@ -203,7 +203,6 @@ main {
 
 /* ── Clickable card wrapper ── */
 .post-card-link {
-    display: block;
     text-decoration: none;
     color: inherit;
     border: 1px solid #e9ecef;
@@ -215,6 +214,7 @@ main {
     overflow: hidden;
     cursor: pointer;
 }
+
 
 .post-card-link::before {
     content: '';
