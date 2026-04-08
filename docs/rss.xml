@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 11:17:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 11:35:52 +0000</lastBuildDate>
+    <item>
+      <title>Mesh Up Data (April 2026)</title>
+      <link>https://kubaik.github.io/mesh-up-data-april-2026/</link>
+      <description>Unlock data&apos;s full potential with Data Mesh Architecture, a decentralized approach to data management.</description>
+      <pubDate>Wed, 08 Apr 2026 11:35:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/mesh-up-data-april-2026/</guid>
+    </item>
     <item>
       <title>Auth Done (April 2026)</title>
       <link>https://kubaik.github.io/auth-done-april-2026/</link>
@@ -138,13 +145,6 @@
       <description>Learn BDD basics &amp; simplify your testing process with our easy guide to Behavior-Driven Development.</description>
       <pubDate>Wed, 08 Apr 2026 01:50:01 +0000</pubDate>
       <guid>https://kubaik.github.io/bdd-simplified/</guid>
-    </item>
-    <item>
-      <title>Boost Speed: Redis vs Memcached</title>
-      <link>https://kubaik.github.io/boost-speed-redis-vs-memcached/</link>
-      <description>Discover the best caching strategies with our in-depth comparison of Redis vs Memcached. Boost your application speed and performance today!</description>
-      <pubDate>Wed, 08 Apr 2026 01:04:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-redis-vs-memcached/</guid>
     </item>
   </channel>
 </rss>
