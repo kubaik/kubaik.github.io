@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 09:57:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 09:58:56 +0000</lastBuildDate>
+    <item>
+      <title>Tap to Impress</title>
+      <link>https://kubaik.github.io/tap-to-impress/</link>
+      <description>Elevate your mobile app with expert UI/UX tips and best practices.</description>
+      <pubDate>Wed, 08 Apr 2026 09:58:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/tap-to-impress/</guid>
+    </item>
     <item>
       <title>Scale with TypeScript</title>
       <link>https://kubaik.github.io/scale-with-typescript/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential cybersecurity fundamentals in &apos;Lock Down: Cyber Basics.&apos; Learn how to protect your data and stay safe online with expert tips and strategies.</description>
       <pubDate>Tue, 07 Apr 2026 23:32:36 +0000</pubDate>
       <guid>https://kubaik.github.io/lock-down-cyber-basics/</guid>
-    </item>
-    <item>
-      <title>Refactor Now</title>
-      <link>https://kubaik.github.io/refactor-now/</link>
-      <description>Improve code quality &amp; reduce bugs: learn when to refactor legacy code</description>
-      <pubDate>Tue, 07 Apr 2026 22:33:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactor-now/</guid>
     </item>
   </channel>
 </rss>
