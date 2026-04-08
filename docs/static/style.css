@@ -199,10 +199,13 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    align-items: stretch;   /* all cards in a row grow to the tallest */
 }
 
 /* ── Clickable card wrapper ── */
 .post-card-link {
+    display: flex;          /* flex so the inner article can stretch to fill */
+    flex-direction: column;
     text-decoration: none;
     color: inherit;
     border: 1px solid #e9ecef;
@@ -213,8 +216,8 @@ main {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    height: 100%;           /* fill the grid cell so equal-height rows work */
 }
-
 
 .post-card-link::before {
     content: '';
@@ -238,9 +241,10 @@ main {
     color: inherit;
 }
 
-/* The inner card content — no border/shadow, just padding */
+/* The inner card content — stretches to fill the <a> wrapper height */
 .post-card {
     padding: 2rem;
+    flex: 1;                /* grow to fill remaining height inside the flex link */
 }
 
 .post-card h3 {
