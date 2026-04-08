@@ -397,8 +397,8 @@ class BlogSystem:
         # distinguish the post rather than giving up entirely.
         print("Warning: could not generate a fully unique title. "
               "Appending date suffix to differentiate.")
-        suffix = datetime.now().strftime("%B %Y")
-        return f"{title}"
+        suffix = datetime.now().strftime("%m/%y")
+        return f"{title} ({suffix})"
 
     async def _generate_title(self, topic: str, keywords: List[str] = None,
                                extra_instruction: str = "") -> str:
