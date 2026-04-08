@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 06:19:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 07:08:13 +0000</lastBuildDate>
+    <item>
+      <title>DDoS Defense</title>
+      <link>https://kubaik.github.io/ddos-defense/</link>
+      <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
+      <pubDate>Wed, 08 Apr 2026 07:08:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ddos-defense/</guid>
+    </item>
     <item>
       <title>BI Essentials</title>
       <link>https://kubaik.github.io/bi-essentials/</link>
@@ -138,13 +145,6 @@
       <description>Discover Svelte JS: Build fast, scalable apps with modern JavaScript.</description>
       <pubDate>Tue, 07 Apr 2026 18:39:35 +0000</pubDate>
       <guid>https://kubaik.github.io/svelte-js/</guid>
-    </item>
-    <item>
-      <title>AI Predicts</title>
-      <link>https://kubaik.github.io/ai-predicts/</link>
-      <description>Unlock future trends with AI-powered time series forecasting. Learn how to predict with precision.</description>
-      <pubDate>Tue, 07 Apr 2026 17:54:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-predicts/</guid>
     </item>
   </channel>
 </rss>
