@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 01:04:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 01:50:13 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our easy guide to Behavior-Driven Development.</description>
+      <pubDate>Wed, 08 Apr 2026 01:50:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>Boost Speed: Redis vs Memcached</title>
       <link>https://kubaik.github.io/boost-speed-redis-vs-memcached/</link>
@@ -138,13 +145,6 @@
       <description>Learn Terraform basics &amp; master Infrastructure as Code (IaC) with our beginner&apos;s guide.</description>
       <pubDate>Tue, 07 Apr 2026 15:03:19 +0000</pubDate>
       <guid>https://kubaik.github.io/terraform-101/</guid>
-    </item>
-    <item>
-      <title>Respond Fast</title>
-      <link>https://kubaik.github.io/respond-fast/</link>
-      <description>Act swiftly in a crisis with a solid incident response plan. Learn how to respond fast and minimize damage.</description>
-      <pubDate>Tue, 07 Apr 2026 14:13:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/respond-fast/</guid>
     </item>
   </channel>
 </rss>
