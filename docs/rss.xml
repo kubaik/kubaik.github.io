@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 19:43:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 19:50:02 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Documentation: Essential Best Practices for Clarity</title>
+      <link>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</link>
+      <description>Unlock the secrets to effective documentation! Discover essential best practices for clarity and precision that enhance communication and streamline processes.</description>
+      <pubDate>Wed, 08 Apr 2026 19:49:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</guid>
+    </item>
     <item>
       <title>EDA: Event Smarts</title>
       <link>https://kubaik.github.io/eda-event-smarts/</link>
@@ -138,13 +145,6 @@
       <description>Optimize database queries for faster performance and improved efficiency. Learn expert tips and tricks.</description>
       <pubDate>Wed, 08 Apr 2026 11:57:58 +0000</pubDate>
       <guid>https://kubaik.github.io/query-smarter/</guid>
-    </item>
-    <item>
-      <title>DevOps Done Right (04/26)</title>
-      <link>https://kubaik.github.io/devops-done-right-0426/</link>
-      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
-      <pubDate>Wed, 08 Apr 2026 11:51:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/devops-done-right-0426/</guid>
     </item>
   </channel>
 </rss>
