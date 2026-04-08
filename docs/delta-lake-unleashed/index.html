@@ -165,24 +165,23 @@
 <p>The Delta Lake architecture is designed to be highly scalable and performant, with support for distributed processing and storage. This allows for the processing of large datasets and the support of high-performance use cases.</p>
 <h3 id="example-use-case-data-ingestion-and-processing">Example Use Case: Data Ingestion and Processing</h3>
 <p>The following example demonstrates the use of Delta Lake for data ingestion and processing using Apache Spark:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">delta.tables</span> <span class="kn">import</span> <span class="o">*</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+from delta.tables import *
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
 
-<span class="c1"># Create a Delta Lake table</span>
-<span class="n">delta_table</span> <span class="o">=</span> <span class="n">DeltaTable</span><span class="o">.</span><span class="n">forPath</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="s2">&quot;s3://my-bucket/data&quot;</span><span class="p">)</span>
+# Create a Delta Lake table
+delta_table = DeltaTable.forPath(spark, &quot;s3://my-bucket/data&quot;)
 
-<span class="c1"># Ingest data into the Delta Lake table</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;s3://my-bucket/data.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;append&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;s3://my-bucket/data&quot;</span><span class="p">)</span>
+# Ingest data into the Delta Lake table
+data = spark.read.format(&quot;csv&quot;).option(&quot;header&quot;, True).load(&quot;s3://my-bucket/data.csv&quot;)
+data.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;s3://my-bucket/data&quot;)
 
-<span class="c1"># Process the data using Apache Spark</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">delta_table</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;age &gt; 30&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="n">results</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Process the data using Apache Spark
+results = delta_table.toDF().filter(&quot;age &gt; 30&quot;).groupBy(&quot;country&quot;).count()
+results.show()
+</code></pre>
 <p>This example demonstrates the ingestion of data from a CSV file into a Delta Lake table, and then processing the data using Apache Spark.</p>
 <h2 id="performance-and-scalability">Performance and Scalability</h2>
 <p>Delta Lake is designed to be highly performant and scalable, with support for distributed processing and storage. The following metrics demonstrate the performance of Delta Lake:
@@ -195,37 +194,36 @@
 * <strong>GCP</strong>: $0.026 per GB-month for storage, $0.000004 per object PUT request</p>
 <h3 id="example-use-case-real-time-data-processing">Example Use Case: Real-time Data Processing</h3>
 <p>The following example demonstrates the use of Delta Lake for real-time data processing using Apache Flink:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
-<span class="c1">// Create a StreamExecutionEnvironment</span>
-<span class="n">StreamExecutionEnvironment</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StreamExecutionEnvironment</span><span class="p">.</span><span class="na">getExecutionEnvironment</span><span class="p">();</span>
+// Create a StreamExecutionEnvironment
+StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-<span class="c1">// Create a DataStream from a Delta Lake table</span>
-<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">addSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">DeltaLakeSource</span><span class="p">(</span><span class="s">&quot;s3://my-bucket/data&quot;</span><span class="p">));</span>
+// Create a DataStream from a Delta Lake table
+DataStream&lt;Tuple2&lt;String, Integer&gt;&gt; data = env.addSource(new DeltaLakeSource(&quot;s3://my-bucket/data&quot;));
 
-<span class="c1">// Process the data in real-time</span>
-<span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Apply a filter and aggregation</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f0</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="na">f1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
+// Process the data in real-time
+DataStream&lt;Tuple2&lt;String, Integer&gt;&gt; results = data.map(new MapFunction&lt;Tuple2&lt;String, Integer&gt;, Tuple2&lt;String, Integer&gt;&gt;() {
+    @Override
+    public Tuple2&lt;String, Integer&gt; map(Tuple2&lt;String, Integer&gt; value) throws Exception {
+        // Apply a filter and aggregation
+        if (value.f1 &gt; 30) {
+            return new Tuple2&lt;&gt;(value.f0, value.f1 * 2);
+        } else {
+            return new Tuple2&lt;&gt;(value.f0, 0);
+        }
+    }
+});
 
-<span class="c1">// Print the results</span>
-<span class="n">results</span><span class="p">.</span><span class="na">print</span><span class="p">();</span>
+// Print the results
+results.print();
 
-<span class="c1">// Execute the job</span>
-<span class="n">env</span><span class="p">.</span><span class="na">execute</span><span class="p">();</span>
-</code></pre></div>
-
+// Execute the job
+env.execute();
+</code></pre>
 <p>This example demonstrates the use of Delta Lake for real-time data processing using Apache Flink.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>The following common problems and solutions are relevant to Delta Lake:
@@ -238,27 +236,26 @@
 * <strong>Query optimization</strong>: use Apache Spark's built-in query optimization features, such as <code>DataFrame.cache</code> and <code>DataFrame.repartition</code></p>
 <h3 id="example-use-case-data-validation-and-cleansing">Example Use Case: Data Validation and Cleansing</h3>
 <p>The following example demonstrates the use of data validation and cleansing using Apache Spark:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Data Validation and Cleansing Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Data Validation and Cleansing Example&quot;).getOrCreate()
 
-<span class="c1"># Create a DataFrame from a CSV file</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;s3://my-bucket/data.csv&quot;</span><span class="p">)</span>
+# Create a DataFrame from a CSV file
+data = spark.read.format(&quot;csv&quot;).option(&quot;header&quot;, True).load(&quot;s3://my-bucket/data.csv&quot;)
 
-<span class="c1"># Validate the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">))</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+# Validate the data
+data = data.withColumn(&quot;age&quot;, col(&quot;age&quot;).cast(&quot;int&quot;))
+data = data.filter(col(&quot;age&quot;) &gt; 0)
 
-<span class="c1"># Cleanse the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropDuplicates</span><span class="p">()</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">])</span>
+# Cleanse the data
+data = data.dropDuplicates()
+data = data.fillna(&quot;unknown&quot;, [&quot;name&quot;, &quot;email&quot;])
 
-<span class="c1"># Print the results</span>
-<span class="n">data</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Print the results
+data.show()
+</code></pre>
 <p>This example demonstrates the use of data validation and cleansing using Apache Spark.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Delta Lake is a powerful and flexible storage layer that brings reliability and performance to data lakes. It provides a combination of features from data warehouses and data lakes, enabling the creation of a data lakehouse. With its support for ACID transactions, data versioning, and schema evolution, Delta Lake is well-suited for a wide range of use cases, from data ingestion and processing to real-time data processing and analytics.</p>

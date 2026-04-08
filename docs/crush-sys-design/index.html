@@ -162,113 +162,110 @@
 <p>Let's dive into some concrete system design examples, complete with code snippets and explanations.</p>
 <h3 id="example-1-designing-a-url-shortener">Example 1: Designing a URL Shortener</h3>
 <p>A URL shortener is a simple yet effective system that reduces long URLs to shorter, more manageable links. Here's an example implementation using Python and the Redis database:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Connect to Redis database</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Connect to Redis database
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="k">def</span> <span class="nf">shorten_url</span><span class="p">(</span><span class="n">long_url</span><span class="p">):</span>
-    <span class="c1"># Generate a unique short URL</span>
-    <span class="n">short_url</span> <span class="o">=</span> <span class="n">generate_short_url</span><span class="p">()</span>
-    <span class="c1"># Store the mapping in Redis</span>
-    <span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">short_url</span><span class="p">,</span> <span class="n">long_url</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">short_url</span>
+def shorten_url(long_url):
+    # Generate a unique short URL
+    short_url = generate_short_url()
+    # Store the mapping in Redis
+    redis_client.set(short_url, long_url)
+    return short_url
 
-<span class="k">def</span> <span class="nf">generate_short_url</span><span class="p">():</span>
-    <span class="c1"># Generate a unique 6-character short URL</span>
-    <span class="kn">import</span> <span class="nn">random</span>
-    <span class="kn">import</span> <span class="nn">string</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+def generate_short_url():
+    # Generate a unique 6-character short URL
+    import random
+    import string
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
-<span class="c1"># Test the URL shortener</span>
-<span class="n">long_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.example.com/very/long/url&quot;</span>
-<span class="n">short_url</span> <span class="o">=</span> <span class="n">shorten_url</span><span class="p">(</span><span class="n">long_url</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Short URL: </span><span class="si">{</span><span class="n">short_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the URL shortener
+long_url = &quot;https://www.example.com/very/long/url&quot;
+short_url = shorten_url(long_url)
+print(f&quot;Short URL: {short_url}&quot;)
+</code></pre>
 <p>In this example, we use Redis to store the mapping between short and long URLs. The <code>shorten_url</code> function generates a unique short URL and stores it in Redis, while the <code>generate_short_url</code> function generates a random 6-character short URL.</p>
 <h3 id="example-2-building-a-chat-application">Example 2: Building a Chat Application</h3>
 <p>A chat application is a more complex system that requires real-time communication and scalability. Here's an example implementation using Node.js, Socket.IO, and MongoDB:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">io</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;socket.io&#39;</span><span class="p">)(</span><span class="nx">server</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">mongoose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const mongoose = require('mongoose');
 
-<span class="c1">// Connect to MongoDB database</span>
-<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost:27017/chat&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNewUrlParser</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">useUnifiedTopology</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+// Connect to MongoDB database
+mongoose.connect('mongodb://localhost:27017/chat', { useNewUrlParser: true, useUnifiedTopology: true });
 
-<span class="c1">// Define the chat schema</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">chatSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="nb">Date</span>
-<span class="p">});</span>
+// Define the chat schema
+const chatSchema = new mongoose.Schema({
+  message: String,
+  username: String,
+  timestamp: Date
+});
 
-<span class="c1">// Create a chat model</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Chat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Chat&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">chatSchema</span><span class="p">);</span>
+// Create a chat model
+const Chat = mongoose.model('Chat', chatSchema);
 
-<span class="c1">// Handle socket connections</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">socket</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;New connection established&#39;</span><span class="p">);</span>
+// Handle socket connections
+io.on('connection', (socket) =&gt; {
+  console.log('New connection established');
 
-<span class="w">  </span><span class="c1">// Handle incoming messages</span>
-<span class="w">  </span><span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">chat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Chat</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">()</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">    </span><span class="nx">chat</span><span class="p">.</span><span class="nx">save</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Broadcast the message to all connected clients</span>
-<span class="w">        </span><span class="nx">io</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">chat</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
+  // Handle incoming messages
+  socket.on('message', (message) =&gt; {
+    const chat = new Chat({
+      message: message.message,
+      username: message.username,
+      timestamp: new Date()
+    });
+    chat.save((err) =&gt; {
+      if (err) {
+        console.error(err);
+      } else {
+        // Broadcast the message to all connected clients
+        io.emit('message', chat);
+      }
+    });
+  });
+});
 
-<span class="c1">// Start the server</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Start the server
+server.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>In this example, we use Socket.IO to establish real-time communication between clients and the server. We also use MongoDB to store chat messages and handle incoming messages using the <code>socket.on</code> event listener.</p>
 <h3 id="example-3-designing-a-recommendation-system">Example 3: Designing a Recommendation System</h3>
 <p>A recommendation system is a complex system that suggests products or content to users based on their preferences and behavior. Here's an example implementation using Python and the TensorFlow library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ratings.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('ratings.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
 
-<span class="c1"># Define the model architecture</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-  <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-  <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-  <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-  <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
-<span class="p">])</span>
+# Define the model architecture
+model = keras.Sequential([
+  keras.layers.Embedding(input_dim=1000, output_dim=128, input_length=1),
+  keras.layers.Flatten(),
+  keras.layers.Dense(64, activation='relu'),
+  keras.layers.Dense(1, activation='sigmoid')
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">test_data</span><span class="p">)</span>
+# Train the model
+model.fit(train_data, epochs=10, batch_size=128, validation_data=test_data)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+loss, accuracy = model.evaluate(test_data)
+print(f'Accuracy: {accuracy:.3f}')
+</code></pre>
 <p>In this example, we use TensorFlow to build a recommendation system that suggests products based on user ratings. We define a neural network architecture using the <code>keras.Sequential</code> API and train the model using the <code>fit</code> method.</p>
 <h2 id="common-system-design-problems-and-solutions">Common System Design Problems and Solutions</h2>
 <p>Here are some common system design problems and solutions:</p>

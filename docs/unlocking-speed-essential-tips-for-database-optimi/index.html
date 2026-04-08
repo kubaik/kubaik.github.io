@@ -155,22 +155,19 @@
 <p>Indexes are crucial for speeding up data retrieval. An index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional space. </p>
 <h3 id="practical-example">Practical Example</h3>
 <p>Let's assume you have a <code>users</code> table with millions of records, and you frequently run queries to find users by their email address:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</code></pre>
 <p>To optimize searches by email, create an index:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_email ON users(email);
+</code></pre>
 <p><strong>Expected Improvement</strong>: Without the index, a query like:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <p>Could take several seconds on a large dataset. With the index, this query can be executed in milliseconds, drastically improving performance.</p>
 <h3 id="best-practices-for-indexing">Best Practices for Indexing</h3>
 <ol>
@@ -181,9 +178,8 @@
 <h2 id="query-optimization-techniques">Query Optimization Techniques</h2>
 <h3 id="analyzing-queries">Analyzing Queries</h3>
 <p>Utilizing tools like <strong>EXPLAIN</strong> in PostgreSQL or <strong>SHOW PROFILE</strong> in MySQL can help you analyze query performance. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">ANALYZE</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <p>This command provides insights into how the database engine executes the query, including whether it uses an index.</p>
 <h3 id="common-query-optimizations">Common Query Optimizations</h3>
 <ol>
@@ -201,14 +197,12 @@ SELECT name FROM users WHERE email = 'example@example.com';</code></p>
 </ol>
 <h3 id="code-example-of-a-common-query-rewrite">Code Example of a Common Query Rewrite</h3>
 <p><strong>Inefficient Query:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%John%&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE name LIKE '%John%';
+</code></pre>
 <p><strong>Optimized Query:</strong></p>
 <p>If you have an index on <code>name</code>, rewrite it to:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">ILIKE</span><span class="w"> </span><span class="s1">&#39;John%&#39;</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT name FROM users WHERE name ILIKE 'John%' LIMIT 10;
+</code></pre>
 <h3 id="monitoring-and-adjusting-query-performance">Monitoring and Adjusting Query Performance</h3>
 <p>Tools like <strong>PgHero</strong> for PostgreSQL can help monitor slow queries and suggest optimizations. Set up alerts for queries that exceed a certain response time (e.g., 1 second).</p>
 <h2 id="database-configuration-tuning">Database Configuration Tuning</h2>
@@ -228,18 +222,17 @@ SELECT name FROM users WHERE email = 'example@example.com';</code></p>
 <ul>
 <li><strong>Example</strong>: Cache the results of expensive queries. </li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="n">cache</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+cache = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="k">def</span> <span class="nf">get_user_email</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="n">email</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">email</span> <span class="o">=</span> <span class="n">query_database_for_email</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>  <span class="c1"># Assume this is a DB call</span>
-        <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">email</span>
-</code></pre></div>
-
+def get_user_email(user_id):
+    email = cache.get(user_id)
+    if email is None:
+        email = query_database_for_email(user_id)  # Assume this is a DB call
+        cache.set(user_id, email)
+    return email
+</code></pre>
 <h3 id="configuration-parameters">Configuration Parameters</h3>
 <p>Tune your database configuration based on your workload. For example, in PostgreSQL, consider adjusting:</p>
 <ul>
@@ -250,16 +243,15 @@ SELECT name FROM users WHERE email = 'example@example.com';</code></p>
 <p>When dealing with large tables, consider partitioning to improve query performance. PostgreSQL and MySQL support table partitioning, allowing you to split large datasets into smaller, more manageable parts.</p>
 <h3 id="use-case-for-partitioning">Use Case for Partitioning</h3>
 <p>Assume a <code>sales</code> table with billions of records. Partitioning by date can significantly improve query performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">sale_date</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">    </span><span class="n">amount</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">RANGE</span><span class="w"> </span><span class="p">(</span><span class="n">sale_date</span><span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE sales (
+    id SERIAL PRIMARY KEY,
+    sale_date DATE NOT NULL,
+    amount DECIMAL(10, 2)
+) PARTITION BY RANGE (sale_date);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sales_2023</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">sales</span>
-<span class="w">    </span><span class="k">FOR</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE sales_2023 PARTITION OF sales
+    FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+</code></pre>
 <h3 id="benefits-of-partitioning">Benefits of Partitioning</h3>
 <ul>
 <li><strong>Faster Query Performance</strong>: Queries that filter on the partition key (e.g., <code>sale_date</code>) only scan relevant partitions.</li>

@@ -175,106 +175,103 @@
 <p>Here are a few practical examples of AI agent development:</p>
 <h3 id="example-1-simple-reflex-agent">Example 1: Simple Reflex Agent</h3>
 <p>A simple reflex agent can be implemented using Python and the TensorFlow framework. The following code snippet shows an example of a simple reflex agent that reacts to the current state of the environment:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Define the environment</span>
-<span class="k">class</span> <span class="nc">Environment</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>
+# Define the environment
+class Environment:
+    def __init__(self):
+        self.state = 0
 
-    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    def get_state(self):
+        return self.state
 
-    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+    def set_state(self, state):
+        self.state = state
 
-<span class="c1"># Define the agent</span>
-<span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)),</span>
-            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="p">])</span>
+# Define the agent
+class Agent:
+    def __init__(self):
+        self.model = tf.keras.models.Sequential([
+            tf.keras.layers.Dense(64, activation='relu', input_shape=(1,)),
+            tf.keras.layers.Dense(1)
+        ])
 
-    <span class="k">def</span> <span class="nf">get_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    def get_action(self, state):
+        return self.model.predict(state)
 
-<span class="c1"># Create the environment and agent</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
-<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">()</span>
+# Create the environment and agent
+env = Environment()
+agent = Agent()
 
-<span class="c1"># Test the agent</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-<span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the agent
+state = env.get_state()
+action = agent.get_action(state)
+print(action)
+</code></pre>
 <p>This code snippet shows an example of a simple reflex agent that reacts to the current state of the environment. The agent uses a deep learning model to predict the next action based on the current state.</p>
 <h3 id="example-2-goal-based-agent">Example 2: Goal-Based Agent</h3>
 <p>A goal-based agent can be implemented using Python and the Unity game engine. The following code snippet shows an example of a goal-based agent that uses planning and decision-making to achieve its goals:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.AI</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.AI;
 
-<span class="c1">// Define the agent</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Agent</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Define the goal</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Transform</span><span class="w"> </span><span class="n">goal</span><span class="p">;</span>
+// Define the agent
+public class Agent : MonoBehaviour
+{
+    // Define the goal
+    public Transform goal;
 
-<span class="w">    </span><span class="c1">// Define the navigation mesh</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">NavMeshAgent</span><span class="w"> </span><span class="n">navMeshAgent</span><span class="p">;</span>
+    // Define the navigation mesh
+    public NavMeshAgent navMeshAgent;
 
-<span class="w">    </span><span class="c1">// Update is called once per frame</span>
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Check if the agent has reached the goal</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">Distance</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">goal</span><span class="p">.</span><span class="n">position</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1f</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// If the agent has reached the goal, stop moving</span>
-<span class="w">            </span><span class="n">navMeshAgent</span><span class="p">.</span><span class="n">isStopped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">else</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// If the agent has not reached the goal, move towards the goal</span>
-<span class="w">            </span><span class="n">navMeshAgent</span><span class="p">.</span><span class="n">SetDestination</span><span class="p">(</span><span class="n">goal</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Update is called once per frame
+    void Update()
+    {
+        // Check if the agent has reached the goal
+        if (Vector3.Distance(transform.position, goal.position) &lt; 1f)
+        {
+            // If the agent has reached the goal, stop moving
+            navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            // If the agent has not reached the goal, move towards the goal
+            navMeshAgent.SetDestination(goal.position);
+        }
+    }
+}
+</code></pre>
 <p>This code snippet shows an example of a goal-based agent that uses planning and decision-making to achieve its goals. The agent uses the Unity game engine and the NavMeshAgent component to move towards the goal.</p>
 <h3 id="example-3-utility-based-agent">Example 3: Utility-Based Agent</h3>
 <p>A utility-based agent can be implemented using Python and the AWS SageMaker platform. The following code snippet shows an example of a utility-based agent that makes decisions based on a utility function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import boto3
+import numpy as np
 
-<span class="c1"># Define the utility function</span>
-<span class="k">def</span> <span class="nf">utility_function</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+# Define the utility function
+def utility_function(state):
+    return np.sum(state)
 
-<span class="c1"># Define the agent</span>
-<span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sagemaker</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sagemaker&#39;</span><span class="p">)</span>
+# Define the agent
+class Agent:
+    def __init__(self):
+        self.sagemaker = boto3.client('sagemaker')
 
-    <span class="k">def</span> <span class="nf">get_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="c1"># Calculate the utility of each possible action</span>
-        <span class="n">utilities</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-            <span class="n">utilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">utility_function</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="n">action</span><span class="p">))</span>
+    def get_action(self, state):
+        # Calculate the utility of each possible action
+        utilities = []
+        for action in range(10):
+            utilities.append(utility_function(state + action))
 
-        <span class="c1"># Choose the action with the highest utility</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">utilities</span><span class="p">)</span>
+        # Choose the action with the highest utility
+        return np.argmax(utilities)
 
-<span class="c1"># Create the agent</span>
-<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">()</span>
+# Create the agent
+agent = Agent()
 
-<span class="c1"># Test the agent</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the agent
+state = np.array([1, 2, 3])
+action = agent.get_action(state)
+print(action)
+</code></pre>
 <p>This code snippet shows an example of a utility-based agent that makes decisions based on a utility function. The agent uses the AWS SageMaker platform to calculate the utility of each possible action and choose the action with the highest utility.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when developing AI agents, including:

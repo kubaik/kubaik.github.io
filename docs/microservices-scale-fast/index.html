@@ -163,50 +163,48 @@
 * <strong>gRPC</strong>: A high-performance RPC framework developed by Google.
 * <strong>Message queues</strong>: Using message brokers like RabbitMQ or Apache Kafka to handle service communication.</p>
 <p>Here is an example of using RESTful APIs to communicate between services using Node.js and Express.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// users_service.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">// users_service.js
+const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Retrieve user data from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">userId</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">userData</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users/:id', (req, res) =&gt; {
+  const userId = req.params.id;
+  // Retrieve user data from database
+  const userData = { id: userId, name: 'John Doe' };
+  res.json(userData);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Users service listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
+app.listen(3000, () =&gt; {
+  console.log('Users service listening on port 3000');
+});
+</code></pre>
+<pre><code class="language-javascript">// orders_service.js
+const express = require('express');
+const app = express();
+const axios = require('axios');
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// orders_service.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+app.get('/orders/:id', (req, res) =&gt; {
+  const orderId = req.params.id;
+  // Retrieve order data from database
+  const orderData = { id: orderId, userId: 1 };
+  // Call users service to retrieve user data
+  axios.get(`http://localhost:3000/users/${orderData.userId}`)
+    .then(response =&gt; {
+      const userData = response.data;
+      // Combine order and user data
+      const combinedData = { ...orderData, user: userData };
+      res.json(combinedData);
+    })
+    .catch(error =&gt; {
+      console.error(error);
+      res.status(500).json({ message: 'Error retrieving user data' });
+    });
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/orders/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">orderId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Retrieve order data from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">orderData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">orderId</span><span class="p">,</span><span class="w"> </span><span class="nx">userId</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="c1">// Call users service to retrieve user data</span>
-<span class="w">  </span><span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`http://localhost:3000/users/</span><span class="si">${</span><span class="nx">orderData</span><span class="p">.</span><span class="nx">userId</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Combine order and user data</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">combinedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="nx">orderData</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="p">};</span>
-<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">combinedData</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">500</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Error retrieving user data&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3001</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Orders service listening on port 3001&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3001, () =&gt; {
+  console.log('Orders service listening on port 3001');
+});
+</code></pre>
 <p>In this example, the <code>orders_service</code> calls the <code>users_service</code> to retrieve user data using a RESTful API.</p>
 <h2 id="choosing-the-right-tools-and-platforms">Choosing the Right Tools and Platforms</h2>
 <p>When building a microservices architecture, it's essential to choose the right tools and platforms to support your services. Some popular options include:
@@ -215,23 +213,22 @@
 * <strong>Service discovery</strong>: Using tools like etcd or Consul to manage service registration and discovery.
 * <strong>API gateways</strong>: Using tools like NGINX or Amazon API Gateway to manage API traffic and security.</p>
 <p>For example, using Docker to containerize services can simplify deployment and management. Here is an example of a <code>Dockerfile</code> for the <code>users_service</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile">FROM node:14
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+WORKDIR /app
 
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+COPY package*.json ./
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+RUN npm install
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build
+RUN npm run build
 
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+EXPOSE 3000
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;npm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="w"> </span><span class="p">]</span>
-</code></pre></div>
-
+CMD [ &quot;npm&quot;, &quot;start&quot; ]
+</code></pre>
 <p>This <code>Dockerfile</code> builds a Docker image for the <code>users_service</code> using Node.js 14 and exposes port 3000.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>When building a microservices architecture, it's essential to consider performance benchmarks and pricing. For example, using Amazon Web Services (AWS) to host services can provide a high level of scalability and reliability. Here are some estimated costs for hosting services on AWS:

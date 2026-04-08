@@ -181,12 +181,11 @@
 <p>Let’s assume you’re testing a REST API for a simple task manager application. The API has an endpoint to create a new task:</p>
 <p><strong>Endpoint</strong>: <code>POST https://api.taskmanager.com/tasks</code></p>
 <p><strong>Request Body</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complete API Testing&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;completed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;title&quot;: &quot;Complete API Testing&quot;,
+  &quot;completed&quot;: false
+}
+</code></pre>
 <h4 id="step-by-step-instructions">Step-by-Step Instructions</h4>
 <ol>
 <li><strong>Create a New Request</strong>:</li>
@@ -265,15 +264,14 @@
 <p>Let’s take a look at testing a GraphQL API for the same task manager application.</p>
 <p><strong>Endpoint</strong>: <code>POST https://api.taskmanager.com/graphql</code></p>
 <p><strong>Query</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">mutation</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">createTask</span><span class="p">(</span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Complete API Testing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">completed</span><span class="p">:</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span>
-<span class="w">    </span><span class="n">title</span>
-<span class="w">    </span><span class="n">completed</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">mutation {
+  createTask(input: { title: &quot;Complete API Testing&quot;, completed: false }) {
+    id
+    title
+    completed
+  }
+}
+</code></pre>
 <h4 id="step-by-step-instructions_1">Step-by-Step Instructions</h4>
 <ol>
 <li><strong>Create a New Request</strong>:</li>

@@ -183,14 +183,13 @@
 </ol>
 <h2 id="practical-examples">Practical Examples</h2>
 <p>Let's consider a practical example of optimizing a database query for improved performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Before Optimization</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- Before Optimization
+SELECT * FROM orders WHERE order_date &gt;= '2022-01-01';
 
-<span class="c1">-- After Optimization</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_order_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">order_date</span><span class="p">);</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- After Optimization
+CREATE INDEX idx_order_date ON orders(order_date);
+SELECT * FROM orders WHERE order_date &gt;= '2022-01-01';
+</code></pre>
 <p>In this example, creating an index on the <code>order_date</code> column can significantly speed up the query execution by allowing the database to quickly locate relevant records.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Database optimization is a critical component of ensuring high-performance and scalable applications. By following best practices such as indexing, query optimization, and performance monitoring, you can enhance the efficiency and responsiveness of your database system. Implementing these strategies will not only improve user experience but also lead to cost savings and increased productivity. Stay proactive in optimizing your database to meet the evolving demands of your applications and users.</p>

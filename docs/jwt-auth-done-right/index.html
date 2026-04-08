@@ -166,35 +166,33 @@
 * <strong>Python</strong>: <code>PyJWT</code> library (pip install pyjwt)
 * <strong>Java</strong>: <code>jjwt</code> library (Maven dependency: io.jsonwebtoken)</p>
 <p>Here is an example of generating a JWT token using Node.js and the <code>jsonwebtoken</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-secret-key&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
+const secretKey = 'my-secret-key';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">userId</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span>
-<span class="p">};</span>
+const payload = {
+  userId: 1,
+  role: 'admin'
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</code></pre></div>
-
+const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+console.log(token);
+</code></pre>
 <p>This code generates a JWT token with a payload containing the user ID and role. The token is signed with a secret key and expires in 1 hour.</p>
 <h2 id="token-verification-and-validation">Token Verification and Validation</h2>
 <p>When a client includes a JWT token in a request, the server must verify and validate the token before granting access to the protected resource. The verification process involves checking the token's signature and payload. Here is an example of verifying a JWT token using Node.js and the <code>jsonwebtoken</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-secret-key&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
+const secretKey = 'my-secret-key';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&#39;</span><span class="p">;</span>
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 
-<span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">payload</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Invalid token&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Valid token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">payload</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+jwt.verify(token, secretKey, (err, payload) =&gt; {
+  if (err) {
+    console.log('Invalid token');
+  } else {
+    console.log('Valid token', payload);
+  }
+});
+</code></pre>
 <p>This code verifies the token's signature and payload. If the token is invalid or expired, an error is logged.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered when implementing JWT authentication include:

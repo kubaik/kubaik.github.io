@@ -157,24 +157,23 @@
 * Python: With its simplicity and flexibility, Python is a popular choice for web development, data analysis, and machine learning applications.
 * Node.js: Built on JavaScript, Node.js is a popular choice for real-time web applications, such as chatbots and live updates.</p>
 <p>For example, if we are building a real-time chat application, we can use Node.js with the Socket.IO library to establish WebSocket connections between clients and the server. Here is an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">io</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;socket.io&#39;</span><span class="p">)(</span><span class="nx">server</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
-<span class="nx">io</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">socket</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Client connected&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Received message: </span><span class="si">${</span><span class="nx">message</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">io</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
+io.on('connection', (socket) =&gt; {
+  console.log('Client connected');
+  socket.on('message', (message) =&gt; {
+    console.log(`Received message: ${message}`);
+    io.emit('message', message);
+  });
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This code sets up a simple WebSocket server using Node.js and Socket.IO, allowing clients to connect and send messages to each other in real-time.</p>
 <h2 id="database-design-and-integration">Database Design and Integration</h2>
 <p>A well-designed database is critical for storing and retrieving data efficiently. There are several types of databases, including:
@@ -182,40 +181,38 @@
 * NoSQL databases: Such as MongoDB, Cassandra, and Redis, which use a flexible schema to store data.
 * Graph databases: Such as Neo4j, which use a graph data structure to store relationships between data entities.</p>
 <p>For example, if we are building an e-commerce application, we can use a relational database like MySQL to store product information, customer data, and order history. Here is an example SQL query to retrieve product information:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">products</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Electronics&#39;</span>
-<span class="k">AND</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT *
+FROM products
+WHERE category = 'Electronics'
+AND price &gt; 100;
+</code></pre>
 <p>This query retrieves all products in the "Electronics" category with a price greater than $100.</p>
 <h3 id="api-design-and-security">API Design and Security</h3>
 <p>A well-designed API is essential for exposing backend functionality to frontend applications and third-party services. There are several API design principles, including:
 * RESTful API design: Which uses HTTP verbs (GET, POST, PUT, DELETE) to interact with resources.
 * API security: Which uses authentication and authorization mechanisms, such as OAuth and JWT, to protect API endpoints.</p>
 <p>For example, if we are building a RESTful API for a blog application, we can use API endpoints like <code>/posts</code> to retrieve a list of blog posts, <code>/posts/{id}</code> to retrieve a single blog post, and <code>/posts</code> to create a new blog post. Here is an example code snippet using the Express.js framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/posts&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Retrieve a list of blog posts from the database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">posts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">posts</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">posts</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/posts', (req, res) =&gt; {
+  // Retrieve a list of blog posts from the database
+  const posts = db.posts.findAll();
+  res.json(posts);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/posts/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Retrieve a single blog post from the database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">posts</span><span class="p">.</span><span class="nx">findById</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">post</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/posts/:id', (req, res) =&gt; {
+  // Retrieve a single blog post from the database
+  const post = db.posts.findById(req.params.id);
+  res.json(post);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/posts&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Create a new blog post in the database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">posts</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">post</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.post('/posts', (req, res) =&gt; {
+  // Create a new blog post in the database
+  const post = db.posts.create(req.body);
+  res.json(post);
+});
+</code></pre>
 <p>This code sets up a simple RESTful API using Express.js, allowing clients to retrieve and create blog posts.</p>
 <h2 id="performance-optimization-and-scaling">Performance Optimization and Scaling</h2>
 <p>Performance optimization and scaling are critical for ensuring that the backend architecture can handle increasing traffic and user demand. There are several techniques for optimizing performance, including:

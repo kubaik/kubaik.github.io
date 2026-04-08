@@ -172,110 +172,106 @@
 <p>Let’s build a simple CI/CD pipeline using <strong>GitHub Actions</strong> and <strong>Docker</strong>. This example will demonstrate how to automate testing and deployment of a Node.js application.</p>
 <h4 id="step-1-setting-up-your-nodejs-application">Step 1: Setting Up Your Node.js Application</h4>
 <p>Create a basic Node.js application with the following structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">/</span><span class="nx">my</span><span class="o">-</span><span class="nx">node</span><span class="o">-</span><span class="nx">app</span>
-<span class="o">|--</span><span class="w"> </span><span class="nx">Dockerfile</span>
-<span class="o">|--</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">js</span>
-<span class="o">|--</span><span class="w"> </span><span class="kn">package</span><span class="p">.</span><span class="nx">json</span>
-<span class="o">|--</span><span class="w"> </span><span class="p">.</span><span class="nx">github</span>
-<span class="w">    </span><span class="o">|--</span><span class="w"> </span><span class="nx">workflows</span>
-<span class="w">        </span><span class="o">|--</span><span class="w"> </span><span class="nx">ci</span><span class="o">-</span><span class="nx">cd</span><span class="p">.</span><span class="nx">yml</span>
-</code></pre></div>
-
+<pre><code class="language-plaintext">/my-node-app
+|-- Dockerfile
+|-- app.js
+|-- package.json
+|-- .github
+    |-- workflows
+        |-- ci-cd.yml
+</code></pre>
 <p><strong>app.js</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/', (req, res) =&gt; {
+    res.send('Hello, World!');
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server is running on port </span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(PORT, () =&gt; {
+    console.log(`Server is running on port ${PORT}`);
+});
+</code></pre>
 <p><strong>package.json</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-node-app&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A simple Node.js app&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;main&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;app.js&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;scripts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;test&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;echo &#39;No tests specified&#39; &amp;&amp; exit 0&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;express&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^4.17.1&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;my-node-app&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;A simple Node.js app&quot;,
+  &quot;main&quot;: &quot;app.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo 'No tests specified' &amp;&amp; exit 0&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^4.17.1&quot;
+  }
+}
+</code></pre>
 <p><strong>Dockerfile</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Use the official Node.js image.</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># Use the official Node.js image.
+FROM node:14
 
-<span class="c"># Set the working directory.</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/usr/src/app</span>
+# Set the working directory.
+WORKDIR /usr/src/app
 
-<span class="c"># Copy package.json and install dependencies.</span>
-<span class="k">COPY</span><span class="w"> </span>package.json<span class="w"> </span>./
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+# Copy package.json and install dependencies.
+COPY package.json ./
+RUN npm install
 
-<span class="c"># Copy the application code.</span>
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+# Copy the application code.
+COPY . .
 
-<span class="c"># Expose the application port.</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+# Expose the application port.
+EXPOSE 3000
 
-<span class="c"># Command to run the application.</span>
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.js&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+# Command to run the application.
+CMD [&quot;node&quot;, &quot;app.js&quot;]
+</code></pre>
 <h4 id="step-2-creating-the-cicd-workflow">Step 2: Creating the CI/CD Workflow</h4>
 <p>Now we will define the CI/CD workflow in <code>.github/workflows/ci-cd.yml</code>.</p>
 <p><strong>ci-cd.yml</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI/CD Pipeline</span>
+<pre><code class="language-yaml">name: CI/CD Pipeline
 
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+      - name: Install dependencies
+        run: npm install
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+      - name: Run tests
+        run: npm test
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Docker image</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">docker build . -t my-node-app</span>
+      - name: Build Docker image
+        run: |
+          docker build . -t my-node-app
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Push Docker image</span>
-<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">DOCKER_HUB_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DOCKER_HUB_USERNAME }}</span>
-<span class="w">          </span><span class="nt">DOCKER_HUB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DOCKER_HUB_TOKEN }}</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">echo &quot;${{ secrets.DOCKER_HUB_TOKEN }}&quot; | docker login -u &quot;${{ secrets.DOCKER_HUB_USERNAME }}&quot; --password-stdin</span>
-<span class="w">          </span><span class="no">docker tag my-node-app $DOCKER_HUB_USERNAME/my-node-app:latest</span>
-<span class="w">          </span><span class="no">docker push $DOCKER_HUB_USERNAME/my-node-app:latest</span>
+      - name: Push Docker image
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo &quot;${{ secrets.DOCKER_HUB_TOKEN }}&quot; | docker login -u &quot;${{ secrets.DOCKER_HUB_USERNAME }}&quot; --password-stdin
+          docker tag my-node-app $DOCKER_HUB_USERNAME/my-node-app:latest
+          docker push $DOCKER_HUB_USERNAME/my-node-app:latest
 
-<span class="nt">*Recommended</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*</span>
-</code></pre></div>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*
 
+</code></pre>
 <p>In this workflow:</p>
 <ul>
 <li>The pipeline triggers on every push to the <code>main</code> branch.</li>
@@ -285,30 +281,29 @@
 <h3 id="implementing-cicd-with-gitlab-ci">Implementing CI/CD with GitLab CI</h3>
 <p>For teams using <strong>GitLab</strong>, the CI/CD pipeline can be managed through a <code>.gitlab-ci.yml</code> file. Here’s how you can set it up:</p>
 <p><strong>.gitlab-ci.yml</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nt">stages</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<pre><code class="language-yaml">stages:
+  - build
+  - test
+  - deploy
 
-<span class="nt">build</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker build -t my-node-app .</span>
+build:
+  stage: build
+  script:
+    - docker build -t my-node-app .
 
-<span class="nt">test</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
+test:
+  stage: test
+  script:
+    - npm install
+    - npm test
 
-<span class="nt">deploy</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;$DOCKER_PASSWORD&quot; | docker login -u &quot;$DOCKER_USERNAME&quot; --password-stdin</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker tag my-node-app $DOCKER_USERNAME/my-node-app:latest</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker push $DOCKER_USERNAME/my-node-app:latest</span>
-</code></pre></div>
-
+deploy:
+  stage: deploy
+  script:
+    - echo &quot;$DOCKER_PASSWORD&quot; | docker login -u &quot;$DOCKER_USERNAME&quot; --password-stdin
+    - docker tag my-node-app $DOCKER_USERNAME/my-node-app:latest
+    - docker push $DOCKER_USERNAME/my-node-app:latest
+</code></pre>
 <h3 id="common-challenges-in-cicd-and-their-solutions">Common Challenges in CI/CD and Their Solutions</h3>
 <ol>
 <li><strong>Integration Issues</strong>: Different tools and services may not integrate seamlessly. Use <strong>Webhook</strong> or API calls to connect external services.</li>

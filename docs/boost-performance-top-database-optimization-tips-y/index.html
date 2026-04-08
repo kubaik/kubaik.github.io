@@ -176,14 +176,13 @@
 </ul>
 <h3 id="practical-example">Practical Example</h3>
 <p>Suppose you have a <code>users</code> table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</code></pre>
 <p>Choosing <code>INT</code> for <code>user_id</code> and appropriate <code>VARCHAR</code> lengths balances storage and performance.</p>
 <hr />
 <h2 id="2-effective-indexing-strategies">2. Effective Indexing Strategies</h2>
@@ -206,13 +205,11 @@
 </ul>
 <h3 id="practical-example_1">Practical Example</h3>
 <p>Optimize a query like:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = 123 AND order_date &gt; '2023-01-01';
+</code></pre>
 <p>Create a composite index:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_order_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_customer_order_date ON orders (customer_id, order_date);
+</code></pre>
 <p>This index speeds up the query by covering both filtering columns.</p>
 <hr />
 <h2 id="3-query-optimization-techniques">3. Query Optimization Techniques</h2>
@@ -221,13 +218,12 @@
 <ul>
 <li>Retrieve only necessary columns to reduce data transfer and processing.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Instead of:</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<pre><code class="language-sql">-- Instead of:
+SELECT * FROM users WHERE user_id = 10;
 
-<span class="c1">-- Use:</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</code></pre></div>
-
+-- Use:
+SELECT username, email FROM users WHERE user_id = 10;
+</code></pre>
 <h3 id="use-where-clauses-effectively">Use WHERE Clauses Effectively</h3>
 <ul>
 <li>Filter data early to reduce result set size.</li>
@@ -237,9 +233,8 @@
 <ul>
 <li>Use <code>LIMIT</code> for pagination or when only a subset of data is needed.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT username FROM users ORDER BY created_at DESC LIMIT 10;
+</code></pre>
 <h3 id="avoid-complex-joins-subqueries-when-possible">Avoid Complex Joins &amp; Subqueries When Possible</h3>
 <ul>
 <li>Simplify queries or break them into smaller parts.</li>
@@ -247,20 +242,18 @@
 </ul>
 <h3 id="practical-example-query-rewrite">Practical Example: Query Rewrite</h3>
 <p>Original query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_total</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2023-01-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;active&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT u.username, o.order_total
+FROM users u
+JOIN orders o ON u.user_id = o.customer_id
+WHERE o.order_date &gt; '2023-01-01' AND u.status = 'active';
+</code></pre>
 <p>Optimized approach:</p>
 <ul>
 <li>Ensure <code>order_date</code> and <code>status</code> columns are indexed.</li>
 <li>Consider creating a covering index:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_orders_date_status</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_total</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_orders_date_status ON orders (order_date, customer_id, order_total);
+</code></pre>
 <p>This allows the database to retrieve all needed data directly from the index.</p>
 <hr />
 <h2 id="4-regular-maintenance-and-monitoring">4. Regular Maintenance and Monitoring</h2>
@@ -289,12 +282,11 @@
 <li><strong>Write-ahead logs:</strong> Optimize log flushing and checkpointing to balance durability and performance.</li>
 </ul>
 <h3 id="example-tuning-mysql">Example: Tuning MySQL</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
-<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">8G</span>
-<span class="na">max_connections</span><span class="o">=</span><span class="s">200</span>
-<span class="na">query_cache_size</span><span class="o">=</span><span class="s">0</span>
-</code></pre></div>
-
+<pre><code class="language-ini">[mysqld]
+innodb_buffer_pool_size=8G
+max_connections=200
+query_cache_size=0
+</code></pre>
 <p>Always test changes in a staging environment before applying to production.</p>
 <hr />
 <h2 id="6-hardware-and-infrastructure-optimization">6. Hardware and Infrastructure Optimization</h2>

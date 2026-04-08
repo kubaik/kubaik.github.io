@@ -170,28 +170,27 @@
 * Google Cloud Pub/Sub: $0.006 per message (minimum 1 million messages), with additional costs for data processing and storage.</p>
 <h3 id="example-code-producing-and-consuming-events-with-apache-kafka">Example Code: Producing and Consuming Events with Apache Kafka</h3>
 <p>Here's an example of producing and consuming events using Apache Kafka and the Kafka Python client:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Producer code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python"># Producer code
+from kafka import KafkaProducer
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Produce an event</span>
-<span class="n">event</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="mi">456</span><span class="p">}</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
+# Produce an event
+event = {'order_id': 123, 'customer_id': 456}
+producer.send('orders', value=event)
 
-<span class="c1"># Consumer code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+# Consumer code
+from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume events</span>
-<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
-    <span class="n">event</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">value</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Consume events
+for message in consumer:
+    event = message.value
+    print(f&quot;Received event: {event}&quot;)
+</code></pre>
 <p>This code demonstrates how to produce an event using the <code>KafkaProducer</code> class and consume events using the <code>KafkaConsumer</code> class.</p>
 <h2 id="implementing-eda-in-a-real-world-system">Implementing EDA in a Real-World System</h2>
 <p>To illustrate the implementation of EDA in a real-world system, consider a simple e-commerce platform that uses EDA to process orders. The platform consists of several services:
@@ -206,51 +205,50 @@
 4. The email service consumes the "order placed" event and sends a confirmation email.</p>
 <h3 id="example-code-implementing-eda-in-a-simple-e-commerce-platform">Example Code: Implementing EDA in a Simple E-Commerce Platform</h3>
 <p>Here's an example of implementing EDA in a simple e-commerce platform using Python and Apache Kafka:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Order service code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python"># Order service code
+from kafka import KafkaProducer
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Produce an &quot;order placed&quot; event</span>
-<span class="k">def</span> <span class="nf">place_order</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">customer_id</span><span class="p">):</span>
-    <span class="n">event</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">,</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="n">customer_id</span><span class="p">}</span>
-    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
+# Produce an &quot;order placed&quot; event
+def place_order(order_id, customer_id):
+    event = {'order_id': order_id, 'customer_id': customer_id}
+    producer.send('orders', value=event)
 
-<span class="c1"># Inventory service code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+# Inventory service code
+from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume &quot;order placed&quot; events and update inventory levels</span>
-<span class="k">def</span> <span class="nf">update_inventory</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Update inventory levels</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updated inventory levels for order </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Consume &quot;order placed&quot; events and update inventory levels
+def update_inventory(event):
+    # Update inventory levels
+    print(f&quot;Updated inventory levels for order {event['order_id']}&quot;)
 
-<span class="c1"># Payment service code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+# Payment service code
+from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume &quot;order placed&quot; events and process payments</span>
-<span class="k">def</span> <span class="nf">process_payment</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Process payment</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed payment for order </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Consume &quot;order placed&quot; events and process payments
+def process_payment(event):
+    # Process payment
+    print(f&quot;Processed payment for order {event['order_id']}&quot;)
 
-<span class="c1"># Email service code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+# Email service code
+from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume &quot;order placed&quot; events and send confirmation emails</span>
-<span class="k">def</span> <span class="nf">send_confirmation_email</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Send confirmation email</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent confirmation email for order </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;order_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Consume &quot;order placed&quot; events and send confirmation emails
+def send_confirmation_email(event):
+    # Send confirmation email
+    print(f&quot;Sent confirmation email for order {event['order_id']}&quot;)
+</code></pre>
 <p>This code demonstrates how to implement EDA in a simple e-commerce platform using Apache Kafka and Python.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing EDA, several common problems can arise:
@@ -264,25 +262,24 @@
 <p>For example, to address event duplication, you can use a unique event ID and implement idempotent event processing. To address event loss, you can use a message queue with persistence and acknowledgment mechanisms.</p>
 <h3 id="example-code-implementing-idempotent-event-processing">Example Code: Implementing Idempotent Event Processing</h3>
 <p>Here's an example of implementing idempotent event processing using Python and Apache Kafka:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Event processor code</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+<pre><code class="language-python"># Event processor code
+from kafka import KafkaConsumer
 
-<span class="c1"># Create a Kafka consumer</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka consumer
+consumer = KafkaConsumer('orders', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Consume events and process them idempotently</span>
-<span class="k">def</span> <span class="nf">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Check if event has already been processed</span>
-    <span class="k">if</span> <span class="n">has_event_been_processed</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;event_id&#39;</span><span class="p">]):</span>
-        <span class="k">return</span>
+# Consume events and process them idempotently
+def process_event(event):
+    # Check if event has already been processed
+    if has_event_been_processed(event['event_id']):
+        return
 
-    <span class="c1"># Process event</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed event </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;event_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    # Process event
+    print(f&quot;Processed event {event['event_id']}&quot;)
 
-    <span class="c1"># Mark event as processed</span>
-    <span class="n">mark_event_as_processed</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;event_id&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+    # Mark event as processed
+    mark_event_as_processed(event['event_id'])
+</code></pre>
 <p>This code demonstrates how to implement idempotent event processing using a unique event ID and a processing history.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To evaluate the performance of an EDA system, several benchmarks can be used:

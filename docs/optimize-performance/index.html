@@ -171,17 +171,16 @@
 2. <strong>Instrumentation</strong>: adding code to the application to collect detailed data about specific events</p>
 <h3 id="example-profiling-a-python-application">Example: Profiling a Python Application</h3>
 <p>Let's consider a simple Python example using the <code>cProfile</code> module:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cProfile</span>
+<pre><code class="language-python">import cProfile
 
-<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000000</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">+=</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="n">result</span>
+def my_function():
+    result = 0
+    for i in range(10000000):
+        result += i
+    return result
 
-<span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;my_function()&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+cProfile.run('my_function()')
+</code></pre>
 <p>This code runs the <code>my_function</code> function under the <code>cProfile</code> profiler, which collects data about the function's execution time, call count, and other metrics.</p>
 <h2 id="benchmarking-techniques">Benchmarking Techniques</h2>
 <p>Benchmarking involves measuring the execution time of specific code sections or entire applications. This can be done using various techniques, such as:
@@ -189,24 +188,23 @@
 * <strong>Macro-benchmarking</strong>: measuring the execution time of larger code sections or entire applications</p>
 <h3 id="example-benchmarking-a-c-application">Example: Benchmarking a C++ Application</h3>
 <p>Let's consider an example using Google Benchmark:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;benchmark/benchmark.h&gt;</span>
+<pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">my_function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+void my_function() {
+    int result = 0;
+    for (int i = 0; i &lt; 10000000; i++) {
+        result += i;
+    }
+}
 
-<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">BM_MyFunction</span><span class="p">(</span><span class="n">benchmark</span><span class="o">::</span><span class="n">State</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">my_function</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="n">BENCHMARK</span><span class="p">(</span><span class="n">BM_MyFunction</span><span class="p">);</span>
-<span class="n">BENCHMARK_MAIN</span><span class="p">();</span>
-</code></pre></div>
-
+static void BM_MyFunction(benchmark::State&amp; state) {
+    for (auto _ : state) {
+        my_function();
+    }
+}
+BENCHMARK(BM_MyFunction);
+BENCHMARK_MAIN();
+</code></pre>
 <p>This code defines a benchmark for the <code>my_function</code> function using Google Benchmark. The <code>BM_MyFunction</code> function is executed repeatedly, and the average execution time is measured.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Profiling and benchmarking have numerous real-world applications, such as:

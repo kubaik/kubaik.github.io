@@ -184,18 +184,17 @@
 <p>To build a PWA, developers typically start by creating a new web application using their chosen framework or library. They then add PWA features, such as a service worker and manifest file, to enable offline support and home screen installation.</p>
 <h3 id="code-example-registering-a-service-worker">Code Example: Registering a Service Worker</h3>
 <p>One of the key features of a PWA is the service worker. A service worker is a script that runs in the background, allowing the application to manage network requests and cache resources. To register a service worker, developers can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Register the service worker</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;sw.js&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service worker registered&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error registering service worker:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Register the service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(registration =&gt; {
+      console.log('Service worker registered');
+    })
+    .catch(error =&gt; {
+      console.error('Error registering service worker:', error);
+    });
+}
+</code></pre>
 <p>This code checks if the browser supports service workers, and if so, registers the service worker script.</p>
 <h2 id="implementing-pwa-features">Implementing PWA Features</h2>
 <p>Once a service worker is registered, developers can start implementing PWA features. Some of the key features of a PWA include:</p>
@@ -206,26 +205,25 @@
 </ul>
 <h3 id="code-example-caching-resources">Code Example: Caching Resources</h3>
 <p>To implement offline support, developers can use caching to store resources locally on the user's device. This can be done using the Cache API, which is a part of the service worker. Here is an example of how to cache resources:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Cache resources</span>
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">cacheResponse</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cacheResponse</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="nx">cacheResponse</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;my-cache&#39;</span><span class="p">);</span>
-<span class="w">              </span><span class="nx">cache</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">clone</span><span class="p">());</span>
-<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="w">            </span><span class="p">});</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Cache resources
+self.addEventListener('fetch', event =&gt; {
+  event.respondWith(
+    caches.match(event.request)
+      .then(cacheResponse =&gt; {
+        if (cacheResponse) {
+          return cacheResponse;
+        } else {
+          return fetch(event.request)
+            .then(response =&gt; {
+              const cache = await caches.open('my-cache');
+              cache.put(event.request, response.clone());
+              return response;
+            });
+        }
+      })
+  );
+});
+</code></pre>
 <p>This code caches resources locally, so that they can be retrieved even when the user is offline.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>PWAs have a number of real-world use cases, including:</p>

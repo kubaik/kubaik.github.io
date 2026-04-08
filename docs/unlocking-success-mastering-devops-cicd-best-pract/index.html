@@ -157,55 +157,52 @@
 <p><strong>Tool</strong>: Git (GitHub, GitLab, Bitbucket)</p>
 <p><strong>Practice</strong>: Use a version control system like Git to manage your source code. Every change should be documented with clear commit messages.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>init
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
-</code></pre></div>
-
+<pre><code class="language-bash">git init
+git add .
+git commit -m &quot;Initial commit&quot;
+git push origin main
+</code></pre>
 <p><strong>Why</strong>: Having a clear history of changes helps in tracking issues and understanding project evolution.</p>
 <h3 id="2-automated-testing">2. Automated Testing</h3>
 <p><strong>Tools</strong>: Jest for JavaScript, pytest for Python, JUnit for Java</p>
 <p><strong>Practice</strong>: Implement automated tests to ensure code quality. A typical CI pipeline runs tests every time code is pushed to the repository.</p>
 <p><strong>Example</strong>: Using Jest to test a simple function.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// sum.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sum</span><span class="p">;</span>
+<pre><code class="language-javascript">// sum.js
+function sum(a, b) {
+    return a + b;
+}
+module.exports = sum;
 
-<span class="c1">// sum.test.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./sum&#39;</span><span class="p">);</span>
+// sum.test.js
+const sum = require('./sum');
 
-<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;adds 1 + 2 to equal 3&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+test('adds 1 + 2 to equal 3', () =&gt; {
+    expect(sum(1, 2)).toBe(3);
+});
+</code></pre>
 <p><strong>CI Configuration</strong>: In a GitHub Actions workflow, you can run these tests automatically.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<pre><code class="language-yaml">name: CI
 
-<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+on: [push]
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
+      - name: Install dependencies
+        run: npm install
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+      - name: Run tests
+        run: npm test
+</code></pre>
 <p><strong>Why</strong>: Automated tests catch bugs early in the development cycle, reducing the cost of fixing them later.</p>
 <h3 id="3-continuous-integration">3. Continuous Integration</h3>
 <p><strong>Tool</strong>: Jenkins, Travis CI, CircleCI</p>
@@ -255,20 +252,19 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <p><strong>Tools</strong>: Terraform, AWS CloudFormation</p>
 <p><strong>Practice</strong>: Manage your infrastructure using code to ensure consistency and repeatability.</p>
 <p><strong>Example</strong>: Using Terraform to provision an EC2 instance.</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-east-1&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-hcl">provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;app&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c55b159cbfafe01e&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
+resource &quot;aws_instance&quot; &quot;app&quot; {
+  ami           = &quot;ami-0c55b159cbfafe01e&quot;
+  instance_type = &quot;t2.micro&quot;
 
-<span class="w">  </span><span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MyAppInstance&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  tags = {
+    Name = &quot;MyAppInstance&quot;
+  }
+}
+</code></pre>
 <p><strong>Why</strong>: IaC allows for versioning and tracking of infrastructure changes, providing a clear history and improving disaster recovery.</p>
 <h3 id="6-monitoring-and-logging">6. Monitoring and Logging</h3>
 <p><strong>Tools</strong>: Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana)</p>

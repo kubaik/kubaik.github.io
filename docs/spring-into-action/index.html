@@ -165,35 +165,34 @@
 * <strong>Improved scalability</strong>: Spring Boot's support for microservices and cloud-native deployments make it easy to scale applications horizontally.</p>
 <h3 id="example-1-building-a-simple-restful-api-with-spring-boot">Example 1: Building a Simple RESTful API with Spring Boot</h3>
 <p>Let's take a look at an example of building a simple RESTful API with Spring Boot. In this example, we will create a API that returns a list of books.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Book.java</span>
-<span class="nd">@Entity</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Id</span>
-<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">AUTO</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">author</span><span class="p">;</span>
-<span class="w">    </span><span class="c1">// getters and setters</span>
-<span class="p">}</span>
+<pre><code class="language-java">// Book.java
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String title;
+    private String author;
+    // getters and setters
+}
 
-<span class="c1">// BookController.java</span>
-<span class="nd">@RestController</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/api/books&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BookController</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">BookRepository</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">;</span>
+// BookController.java
+@RestController
+@RequestMapping(&quot;/api/books&quot;)
+public class BookController {
+    @Autowired
+    private BookRepository bookRepository;
 
-<span class="w">    </span><span class="nd">@GetMapping</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getBooks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    @GetMapping
+    public List&lt;Book&gt; getBooks() {
+        return bookRepository.findAll();
+    }
+}
 
-<span class="c1">// BookRepository.java</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BookRepository</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// BookRepository.java
+public interface BookRepository extends JpaRepository&lt;Book, Long&gt; {
+}
+</code></pre>
 <p>In this example, we define a <code>Book</code> entity, a <code>BookController</code> that handles GET requests, and a <code>BookRepository</code> that provides access to the data storage. We use Spring Data JPA to define the repository, which eliminates the need to write boilerplate code.</p>
 <h3 id="use-cases-for-spring-boot">Use Cases for Spring Boot</h3>
 <p>Spring Boot is a versatile framework that can be used for a wide range of applications, including:
@@ -208,13 +207,12 @@
 * <strong>Use a monitoring and logging tool</strong>: Tools like Prometheus and Grafana provide a comprehensive monitoring and logging system that makes it easy to detect and diagnose issues in production.</p>
 <h3 id="example-2-configuring-spring-boot-for-production-with-docker">Example 2: Configuring Spring Boot for Production with Docker</h3>
 <p>Let's take a look at an example of configuring Spring Boot for production with Docker. In this example, we will create a Dockerfile that builds a Docker image for our application.</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">openjdk:8-jdk-alpine</span>
-<span class="k">ARG</span><span class="w"> </span><span class="nv">JAR_FILE</span><span class="o">=</span>target/myapp.jar
-<span class="k">COPY</span><span class="w"> </span><span class="si">${</span><span class="nv">JAR_FILE</span><span class="si">}</span><span class="w"> </span>app.jar
-<span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span><span class="s2">&quot;-jar&quot;</span><span class="p">,</span><span class="s2">&quot;/app.jar&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-dockerfile"># Dockerfile
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/myapp.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT [&quot;java&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]
+</code></pre>
 <p>In this example, we use the <code>openjdk:8-jdk-alpine</code> base image and copy the JAR file into the container. We then define the entry point for the container using the <code>ENTRYPOINT</code> instruction.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>So how does Spring Boot perform in terms of performance? Here are some benchmarks:
@@ -224,19 +222,18 @@
 <p>For example, a benchmarking study by Pivotal found that Spring Boot applications outperformed traditional Java EE applications in terms of startup time and memory usage. The study found that Spring Boot applications started up in an average of 1.2 seconds, compared to 10.2 seconds for traditional Java EE applications.</p>
 <h3 id="example-3-optimizing-spring-boot-performance-with-caching">Example 3: Optimizing Spring Boot Performance with Caching</h3>
 <p>Let's take a look at an example of optimizing Spring Boot performance with caching. In this example, we will use the Spring Cache framework to cache the results of a database query.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// BookService.java</span>
-<span class="nd">@Service</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BookService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">BookRepository</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">;</span>
+<pre><code class="language-java">// BookService.java
+@Service
+public class BookService {
+    @Autowired
+    private BookRepository bookRepository;
 
-<span class="w">    </span><span class="nd">@Cacheable</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;books&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getBooks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bookRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Cacheable(value = &quot;books&quot;)
+    public List&lt;Book&gt; getBooks() {
+        return bookRepository.findAll();
+    }
+}
+</code></pre>
 <p>In this example, we use the <code>@Cacheable</code> annotation to cache the results of the <code>getBooks()</code> method. We then use the <code>BookRepository</code> to retrieve the data from the database.</p>
 <h3 id="pricing-and-cost">Pricing and Cost</h3>
 <p>So how much does it cost to use Spring Boot? The answer is: it's free! Spring Boot is an open-source framework, which means that it can be used at no cost. However, there are some costs associated with using Spring Boot, including:

@@ -167,78 +167,75 @@
 <p>One of the most common applications of AI is in hiring and recruitment. However, AI systems can perpetuate biases and discrimination if they are not designed with fairness in mind. To address this issue, companies like IBM and Accenture are using AI systems that are specifically designed to detect and prevent bias.</p>
 <p>For example, IBM's AI-powered hiring platform uses a combination of natural language processing (NLP) and machine learning (ML) to analyze resumes and identify the most qualified candidates. The system is designed to ignore demographic information such as age, gender, and race, and instead focuses on skills and experience.</p>
 <p>Here is an example of how this might be implemented in code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;resumes.csv&quot;</span><span class="p">)</span>
+# Load the data
+data = pd.read_csv(&quot;resumes.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier on the training data</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;demographics&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">train_data</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+# Train a random forest classifier on the training data
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(train_data.drop(&quot;demographics&quot;, axis=1), train_data[&quot;target&quot;])
 
-<span class="c1"># Evaluate the model on the testing data</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;demographics&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">test_data</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model on the testing data
+accuracy = model.score(test_data.drop(&quot;demographics&quot;, axis=1), test_data[&quot;target&quot;])
+print(&quot;Accuracy:&quot;, accuracy)
+</code></pre>
 <p>This code trains a random forest classifier on a dataset of resumes, ignoring demographic information and focusing on skills and experience.</p>
 <h3 id="example-2-transparency-in-healthcare">Example 2: Transparency in Healthcare</h3>
 <p>Another area where AI ethics is critical is in healthcare. AI systems are being used to diagnose diseases, predict patient outcomes, and develop personalized treatment plans. However, these systems can be complex and difficult to understand, making it challenging to ensure transparency and accountability.</p>
 <p>To address this issue, companies like Google and Microsoft are developing AI systems that provide clear explanations of their decision-making processes. For example, Google's AI-powered diagnosis system provides a detailed explanation of how it arrived at a particular diagnosis, including the data sources used and the algorithms employed.</p>
 <p>Here is an example of how this might be implemented in code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;patient_data.npy&quot;</span><span class="p">)</span>
+# Load the data
+data = np.load(&quot;patient_data.npy&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
-<span class="c1"># Train a logistic regression model on the training data</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+# Train a logistic regression model on the training data
+model = LogisticRegression(random_state=42)
+model.fit(train_data[:, :-1], train_data[:, -1])
 
-<span class="c1"># Evaluate the model on the testing data</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">predictions</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+# Evaluate the model on the testing data
+predictions = model.predict(test_data[:, :-1])
+accuracy = accuracy_score(test_data[:, -1], predictions)
+print(&quot;Accuracy:&quot;, accuracy)
 
-<span class="c1"># Provide an explanation of the model&#39;s decision-making process</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficients:&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept:&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
-</code></pre></div>
-
+# Provide an explanation of the model's decision-making process
+print(&quot;Coefficients:&quot;, model.coef_)
+print(&quot;Intercept:&quot;, model.intercept_)
+</code></pre>
 <p>This code trains a logistic regression model on a dataset of patient outcomes, providing a clear explanation of the model's decision-making process, including the coefficients and intercept.</p>
 <h3 id="example-3-security-in-finance">Example 3: Security in Finance</h3>
 <p>AI systems are also being used in finance to detect and prevent cyber attacks. However, these systems can be vulnerable to attacks themselves, making it critical to ensure their security.</p>
 <p>To address this issue, companies like JPMorgan Chase and Goldman Sachs are using AI systems that are specifically designed to detect and prevent cyber attacks. For example, JPMorgan Chase's AI-powered cyber security system uses a combination of machine learning and natural language processing to detect and respond to potential threats.</p>
 <p>Here is an example of how this might be implemented in code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">IsolationForest</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import IsolationForest
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;transaction_data.csv&quot;</span><span class="p">)</span>
+# Load the data
+data = pd.read_csv(&quot;transaction_data.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
 
-<span class="c1"># Train an isolation forest model on the training data</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+# Train an isolation forest model on the training data
+model = IsolationForest(n_estimators=100, random_state=42)
+model.fit(train_data)
 
-<span class="c1"># Evaluate the model on the testing data</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predictions:&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model on the testing data
+predictions = model.predict(test_data)
+print(&quot;Predictions:&quot;, predictions)
+</code></pre>
 <p>This code trains an isolation forest model on a dataset of financial transactions, detecting and responding to potential cyber attacks.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of AI ethics, there are also several common problems that can arise. Here are a few examples:</p>

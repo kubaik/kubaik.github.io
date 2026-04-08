@@ -179,48 +179,42 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to illustrate the importance of code review:</p>
 <h3 id="example-1-error-handling">Example 1: Error Handling</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-</code></pre></div>
-
+<pre><code class="language-python">def divide(a, b):
+    return a / b
+</code></pre>
 <p>This code is missing error handling, which can result in a division by zero error. A code review would highlight this issue and suggest adding error handling, such as:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot divide by zero&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-</code></pre></div>
-
+<pre><code class="language-python">def divide(a, b):
+    if b == 0:
+        raise ValueError(&quot;Cannot divide by zero&quot;)
+    return a / b
+</code></pre>
 <h3 id="example-2-security">Example 2: Security</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">and</span> <span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
-</code></pre></div>
-
+<pre><code class="language-python">def authenticate(username, password):
+    if username == &quot;admin&quot; and password == &quot;password&quot;:
+        return True
+    return False
+</code></pre>
 <p>This code is insecure, as it uses a hardcoded username and password. A code review would highlight this issue and suggest using a secure authentication mechanism, such as:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<pre><code class="language-python">import hashlib
 
-<span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="n">stored_password</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">and</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="n">stored_password</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
-</code></pre></div>
-
+def authenticate(username, password):
+    stored_password = hashlib.sha256(&quot;password&quot;.encode()).hexdigest()
+    if username == &quot;admin&quot; and hashlib.sha256(password.encode()).hexdigest() == stored_password:
+        return True
+    return False
+</code></pre>
 <h3 id="example-3-performance">Example 3: Performance</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;User &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)})</span>
-    <span class="k">return</span> <span class="n">users</span>
-</code></pre></div>
-
+<pre><code class="language-python">def get_users():
+    users = []
+    for i in range(1000000):
+        users.append({&quot;id&quot;: i, &quot;name&quot;: &quot;User &quot; + str(i)})
+    return users
+</code></pre>
 <p>This code is inefficient, as it creates a large list of users in memory. A code review would highlight this issue and suggest using a more efficient approach, such as:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="k">yield</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;User &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)}</span>
-</code></pre></div>
-
+<pre><code class="language-python">def get_users():
+    for i in range(1000000):
+        yield {&quot;id&quot;: i, &quot;name&quot;: &quot;User &quot; + str(i)}
+</code></pre>
 <p>This approach uses a generator to yield each user one at a time, rather than creating a large list in memory.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur during code review, along with solutions:

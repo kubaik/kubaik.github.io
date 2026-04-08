@@ -165,39 +165,38 @@
 <h3 id="code-example-bias-detection-in-machine-learning-models">Code Example: Bias Detection in Machine Learning Models</h3>
 <p>Here is an example of how to detect bias in a machine learning model using <strong>Scikit-learn</strong> and <strong>AI Fairness 360</strong>:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">aif360.algorithms.preprocessing</span> <span class="kn">import</span> <span class="n">Reweighing</span>
-<span class="kn">from</span> <span class="nn">aif360.datasets</span> <span class="kn">import</span> <span class="n">BinaryLabelDataset</span>
-<span class="kn">from</span> <span class="nn">aif360.metrics</span> <span class="kn">import</span> <span class="n">BinaryLabelDatasetMetric</span>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from aif360.algorithms.preprocessing import Reweighing
+from aif360.datasets import BinaryLabelDataset
+from aif360.metrics import BinaryLabelDatasetMetric
 
-<span class="c1"># Load the iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a binary label dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">BinaryLabelDataset</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">protected_attribute</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+# Create a binary label dataset
+dataset = BinaryLabelDataset(X_train, y_train, protected_attribute=1)
 
-<span class="c1"># Apply reweighing to mitigate bias</span>
-<span class="n">rw</span> <span class="o">=</span> <span class="n">Reweighing</span><span class="p">(</span><span class="n">unprivileged_groups</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}],</span> <span class="n">privileged_groups</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}])</span>
-<span class="n">transformed_dataset</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+# Apply reweighing to mitigate bias
+rw = Reweighing(unprivileged_groups=[{'feature': 1, 'value': 0}], privileged_groups=[{'feature': 1, 'value': 1}])
+transformed_dataset = rw.fit_transform(dataset)
 
-<span class="c1"># Evaluate the transformed dataset</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">BinaryLabelDatasetMetric</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original dataset metrics:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disparate impact: &quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">.</span><span class="n">disparate_impact</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Statistical parity difference: &quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">.</span><span class="n">statistical_parity_difference</span><span class="p">())</span>
+# Evaluate the transformed dataset
+metric = BinaryLabelDatasetMetric(dataset)
+print(&quot;Original dataset metrics:&quot;)
+print(&quot;Disparate impact: &quot;, metric.disparate_impact())
+print(&quot;Statistical parity difference: &quot;, metric.statistical_parity_difference())
 
-<span class="n">metric_transformed</span> <span class="o">=</span> <span class="n">BinaryLabelDatasetMetric</span><span class="p">(</span><span class="n">transformed_dataset</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transformed dataset metrics:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disparate impact: &quot;</span><span class="p">,</span> <span class="n">metric_transformed</span><span class="o">.</span><span class="n">disparate_impact</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Statistical parity difference: &quot;</span><span class="p">,</span> <span class="n">metric_transformed</span><span class="o">.</span><span class="n">statistical_parity_difference</span><span class="p">())</span>
-</code></pre></div>
-
+metric_transformed = BinaryLabelDatasetMetric(transformed_dataset)
+print(&quot;Transformed dataset metrics:&quot;)
+print(&quot;Disparate impact: &quot;, metric_transformed.disparate_impact())
+print(&quot;Statistical parity difference: &quot;, metric_transformed.statistical_parity_difference())
+</code></pre>
 <p>This code example demonstrates how to detect bias in a machine learning model using <strong>Scikit-learn</strong> and <strong>AI Fairness 360</strong>. The <code>Reweighing</code> algorithm is used to mitigate bias in the dataset, and the <code>BinaryLabelDatasetMetric</code> is used to evaluate the transformed dataset.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>AI ethics has a wide range of real-world applications, from <strong>healthcare</strong> to <strong>finance</strong>. Here are a few examples:
@@ -207,29 +206,28 @@
 <h3 id="code-example-explainable-ai-xai-for-medical-diagnosis">Code Example: Explainable AI (XAI) for Medical Diagnosis</h3>
 <p>Here is an example of how to use <strong>SHAP</strong> to provide insights into the decision-making process of an AI system for medical diagnosis:</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">import</span> <span class="nn">shap</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import shap
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;medical_data.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv(&quot;medical_data.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop(&quot;target&quot;, axis=1), df[&quot;target&quot;], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
 
-<span class="c1"># Use SHAP to provide insights into the decision-making process</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">Explainer</span><span class="p">(</span><span class="n">rf</span><span class="p">)</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Use SHAP to provide insights into the decision-making process
+explainer = shap.Explainer(rf)
+shap_values = explainer(X_test)
 
-<span class="c1"># Plot the SHAP values</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">beeswarm</span><span class="p">(</span><span class="n">shap_values</span><span class="p">)</span>
-</code></pre></div>
-
+# Plot the SHAP values
+shap.plots.beeswarm(shap_values)
+</code></pre>
 <p>This code example demonstrates how to use <strong>SHAP</strong> to provide insights into the decision-making process of an AI system for medical diagnosis. The <code>shap.Explainer</code> class is used to create an explainer object, and the <code>shap.plots.beeswarm</code> function is used to plot the SHAP values.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>AI ethics is not without its challenges, and there are several common problems that developers may encounter. Here are a few examples:
@@ -242,33 +240,32 @@
 3. <strong>Data anonymization</strong>: Data anonymization techniques like <strong>k-anonymity</strong> and <strong>l-diversity</strong> can help to protect sensitive data.</p>
 <h3 id="code-example-data-anonymization-using-k-anonymity">Code Example: Data Anonymization using k-Anonymity</h3>
 <p>Here is an example of how to use <strong>k-anonymity</strong> to anonymize sensitive data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;sensitive_data.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv(&quot;sensitive_data.csv&quot;)
 
-<span class="c1"># Scale the data using Min-Max Scaler</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+# Scale the data using Min-Max Scaler
+scaler = MinMaxScaler()
+df_scaled = scaler.fit_transform(df)
 
-<span class="c1"># Apply k-anonymity</span>
-<span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">df_anonymized</span> <span class="o">=</span> <span class="n">df_scaled</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_anonymized</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
-        <span class="n">df_anonymized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_anonymized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
+# Apply k-anonymity
+k = 5
+df_anonymized = df_scaled.copy()
+for i in range(len(df_anonymized)):
+    for j in range(k):
+        df_anonymized[i, j] = df_anonymized[i, j] + (j % 2 == 0) * 0.1
 
-<span class="c1"># Evaluate the anonymized data</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original data metrics:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean: &quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard deviation: &quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+# Evaluate the anonymized data
+print(&quot;Original data metrics:&quot;)
+print(&quot;Mean: &quot;, df.mean())
+print(&quot;Standard deviation: &quot;, df.std())
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Anonymized data metrics:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean: &quot;</span><span class="p">,</span> <span class="n">df_anonymized</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard deviation: &quot;</span><span class="p">,</span> <span class="n">df_anonymized</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
-</code></pre></div>
-
+print(&quot;Anonymized data metrics:&quot;)
+print(&quot;Mean: &quot;, df_anonymized.mean())
+print(&quot;Standard deviation: &quot;, df_anonymized.std())
+</code></pre>
 <p>This code example demonstrates how to use <strong>k-anonymity</strong> to anonymize sensitive data. The <code>MinMaxScaler</code> class is used to scale the data, and the <code>k-anonymity</code> algorithm is applied to the scaled data.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>AI ethics is a critical aspect of responsible AI development, ensuring that AI systems are designed and developed with fairness, transparency, and accountability in mind. By applying the principles of AI ethics, developers can create AI systems that are fair, transparent, and accountable. Here are some actionable next steps:

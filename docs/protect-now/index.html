@@ -154,24 +154,23 @@
 <h3 id="vulnerability-scanning-and-assessment">Vulnerability Scanning and Assessment</h3>
 <p>The first step in vulnerability management is to identify vulnerabilities through scanning and assessment. This can be done using tools like Nessus, OpenVAS, or Qualys. These tools scan systems, networks, and applications for known vulnerabilities and provide a report on the findings. For example, Nessus can scan a network and identify vulnerabilities in operating systems, applications, and devices.</p>
 <p>Here's an example of how to use Nessus to scan a network:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Define the Nessus API credentials and URL</span>
-<span class="n">nessus_url</span> <span class="o">=</span> <span class="s2">&quot;https://nessus.example.com:8834&quot;</span>
-<span class="n">nessus_username</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
-<span class="n">nessus_password</span> <span class="o">=</span> <span class="s2">&quot;password&quot;</span>
+# Define the Nessus API credentials and URL
+nessus_url = &quot;https://nessus.example.com:8834&quot;
+nessus_username = &quot;admin&quot;
+nessus_password = &quot;password&quot;
 
-<span class="c1"># Authenticate with the Nessus API</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">nessus_url</span> <span class="o">+</span> <span class="s2">&quot;/login&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">nessus_username</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">nessus_password</span><span class="p">})</span>
+# Authenticate with the Nessus API
+response = requests.post(nessus_url + &quot;/login&quot;, data={&quot;username&quot;: nessus_username, &quot;password&quot;: nessus_password})
 
-<span class="c1"># Scan the network</span>
-<span class="n">scan_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">nessus_url</span> <span class="o">+</span> <span class="s2">&quot;/scans&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="s2">&quot;token=&quot;</span> <span class="o">+</span> <span class="n">scan_id</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="s2">&quot;scan_uuid&quot;</span><span class="p">})</span>
+# Scan the network
+scan_id = response.json()[&quot;token&quot;]
+response = requests.post(nessus_url + &quot;/scans&quot;, headers={&quot;X-Cookie&quot;: &quot;token=&quot; + scan_id}, data={&quot;uuid&quot;: &quot;scan_uuid&quot;})
 
-<span class="c1"># Get the scan results</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">nessus_url</span> <span class="o">+</span> <span class="s2">&quot;/scans/&quot;</span> <span class="o">+</span> <span class="n">scan_id</span> <span class="o">+</span> <span class="s2">&quot;/results&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="s2">&quot;token=&quot;</span> <span class="o">+</span> <span class="n">scan_id</span><span class="p">})</span>
-</code></pre></div>
-
+# Get the scan results
+response = requests.get(nessus_url + &quot;/scans/&quot; + scan_id + &quot;/results&quot;, headers={&quot;X-Cookie&quot;: &quot;token=&quot; + scan_id})
+</code></pre>
 <p>This code snippet demonstrates how to use the Nessus API to scan a network and retrieve the scan results.</p>
 <h2 id="prioritization-and-remediation">Prioritization and Remediation</h2>
 <p>Once vulnerabilities have been identified, they need to be prioritized and remediated. Prioritization involves determining which vulnerabilities to fix first based on their severity and potential impact. Remediation involves applying patches, updates, or configuration changes to fix the vulnerabilities.</p>
@@ -195,29 +194,28 @@
 <li><strong>Access control</strong>: This involves restricting access to vulnerable systems, networks, or applications to prevent exploitation.</li>
 </ol>
 <p>For example, patch management can be used to remediate vulnerabilities in operating systems and applications. Here's an example of how to use Ansible to apply patches to a Linux system:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Apply</span><span class="w"> </span><span class="nx">patches</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">Linux</span><span class="w"> </span><span class="nx">system</span>
-<span class="w">  </span><span class="nx">hosts</span><span class="p">:</span><span class="w"> </span><span class="nx">linux_systems</span>
-<span class="w">  </span><span class="nx">become</span><span class="p">:</span><span class="w"> </span><span class="nx">yes</span>
+<pre><code class="language-yml">---
+- name: Apply patches to Linux system
+  hosts: linux_systems
+  become: yes
 
-<span class="w">  </span><span class="nx">tasks</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Update</span><span class="w"> </span><span class="kn">package</span><span class="w"> </span><span class="nx">list</span>
-<span class="w">    </span><span class="nx">apt</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">update_cache</span><span class="p">:</span><span class="w"> </span><span class="nx">yes</span>
+  tasks:
+  - name: Update package list
+    apt:
+      update_cache: yes
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Upgrade</span><span class="w"> </span><span class="nx">packages</span>
-<span class="w">    </span><span class="nx">apt</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">upgrade</span><span class="p">:</span><span class="w"> </span><span class="nx">dist</span>
+  - name: Upgrade packages
+    apt:
+      upgrade: dist
 
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">Install</span><span class="w"> </span><span class="nx">security</span><span class="w"> </span><span class="nx">updates</span>
-<span class="w">    </span><span class="nx">apt</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{ item }}&quot;</span>
-<span class="w">      </span><span class="nx">state</span><span class="p">:</span><span class="w"> </span><span class="nx">present</span>
-<span class="w">    </span><span class="nx">loop</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">linux</span><span class="o">-</span><span class="nx">image</span><span class="o">-</span><span class="nx">generic</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">linux</span><span class="o">-</span><span class="nx">headers</span><span class="o">-</span><span class="nx">generic</span>
-</code></pre></div>
-
+  - name: Install security updates
+    apt:
+      name: &quot;{{ item }}&quot;
+      state: present
+    loop:
+      - linux-image-generic
+      - linux-headers-generic
+</code></pre>
 <p>This code snippet demonstrates how to use Ansible to apply patches to a Linux system.</p>
 <h2 id="vulnerability-management-tools-and-platforms">Vulnerability Management Tools and Platforms</h2>
 <p>There are several tools and platforms that can be used to manage vulnerabilities, including:</p>
@@ -249,24 +247,23 @@
 <li><strong>Implement a vulnerability management process</strong>: Implementing a vulnerability management process can help ensure that vulnerabilities are identified, prioritized, and remediated in a timely and effective manner.</li>
 </ul>
 <p>For example, automating vulnerability scanning and assessment can help reduce the workload and improve efficiency. Here's an example of how to use Python to automate vulnerability scanning using the OpenVAS API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Define the OpenVAS API credentials and URL</span>
-<span class="n">openvas_url</span> <span class="o">=</span> <span class="s2">&quot;https://openvas.example.com:9390&quot;</span>
-<span class="n">openvas_username</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
-<span class="n">openvas_password</span> <span class="o">=</span> <span class="s2">&quot;password&quot;</span>
+# Define the OpenVAS API credentials and URL
+openvas_url = &quot;https://openvas.example.com:9390&quot;
+openvas_username = &quot;admin&quot;
+openvas_password = &quot;password&quot;
 
-<span class="c1"># Authenticate with the OpenVAS API</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">openvas_url</span> <span class="o">+</span> <span class="s2">&quot;/login&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">openvas_username</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">openvas_password</span><span class="p">})</span>
+# Authenticate with the OpenVAS API
+response = requests.post(openvas_url + &quot;/login&quot;, data={&quot;username&quot;: openvas_username, &quot;password&quot;: openvas_password})
 
-<span class="c1"># Scan the network</span>
-<span class="n">scan_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">openvas_url</span> <span class="o">+</span> <span class="s2">&quot;/scans&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="s2">&quot;token=&quot;</span> <span class="o">+</span> <span class="n">scan_id</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="s2">&quot;scan_uuid&quot;</span><span class="p">})</span>
+# Scan the network
+scan_id = response.json()[&quot;token&quot;]
+response = requests.post(openvas_url + &quot;/scans&quot;, headers={&quot;X-Cookie&quot;: &quot;token=&quot; + scan_id}, data={&quot;uuid&quot;: &quot;scan_uuid&quot;})
 
-<span class="c1"># Get the scan results</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">openvas_url</span> <span class="o">+</span> <span class="s2">&quot;/scans/&quot;</span> <span class="o">+</span> <span class="n">scan_id</span> <span class="o">+</span> <span class="s2">&quot;/results&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="s2">&quot;token=&quot;</span> <span class="o">+</span> <span class="n">scan_id</span><span class="p">})</span>
-</code></pre></div>
-
+# Get the scan results
+response = requests.get(openvas_url + &quot;/scans/&quot; + scan_id + &quot;/results&quot;, headers={&quot;X-Cookie&quot;: &quot;token=&quot; + scan_id})
+</code></pre>
 <p>This code snippet demonstrates how to use the OpenVAS API to automate vulnerability scanning and assessment.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, vulnerability management is a critical component of any organization's cybersecurity strategy. It involves identifying, prioritizing, and remediating vulnerabilities in systems, networks, and applications. There are several tools and platforms that can be used to manage vulnerabilities, including Tenable.io, Qualys, and Nessus. To implement effective vulnerability management, organizations should automate vulnerability scanning and assessment, use cloud-based vulnerability management platforms, and implement a vulnerability management process.</p>

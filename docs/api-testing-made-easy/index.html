@@ -169,30 +169,29 @@
 <li><strong>Postman Enterprise</strong>: custom pricing for large teams and organizations</li>
 </ul>
 <p>Here's an example of a Postman test script:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Set API endpoint and request method</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.example.com/users&quot;</span><span class="p">;</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Set API endpoint and request method
+var endpoint = &quot;https://api.example.com/users&quot;;
+var method = &quot;GET&quot;;
 
-<span class="c1">// Set request headers</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Authorization&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Bearer YOUR_API_KEY&quot;</span>
-<span class="p">};</span>
+// Set request headers
+var headers = {
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;
+};
 
-<span class="c1">// Send the request and verify the response</span>
-<span class="nx">pm</span><span class="p">.</span><span class="nx">sendRequest</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="nx">endpoint</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">method</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="nx">headers</span>
-<span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">pm</span><span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Send the request and verify the response
+pm.sendRequest({
+    url: endpoint,
+    method: method,
+    headers: headers
+}, function (err, res) {
+    if (err) {
+        console.log(err);
+    } else {
+        pm.expect(res.status).to.equal(200);
+    }
+});
+</code></pre>
 <p>This script sends a GET request to the specified endpoint, sets the request headers, and verifies that the response status code is 200.</p>
 <h3 id="insomnia">Insomnia</h3>
 <p>Insomnia is another popular API testing tool that offers a similar feature set to Postman. Its user interface is designed to be more minimalist and intuitive, making it a great choice for developers who prefer a simple and straightforward testing experience. Insomnia offers a free version, as well as a paid plan:</p>
@@ -201,28 +200,27 @@
 <li><strong>Insomnia Pro</strong>: $9.99/month (billed annually), includes 10,000 API requests per month</li>
 </ul>
 <p>Here's an example of an Insomnia test script:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Set API endpoint and request method</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.example.com/users&quot;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Set API endpoint and request method
+const endpoint = &quot;https://api.example.com/users&quot;;
+const method = &quot;GET&quot;;
 
-<span class="c1">// Set request headers</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Authorization&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Bearer YOUR_API_KEY&quot;</span>
-<span class="p">};</span>
+// Set request headers
+const headers = {
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;
+};
 
-<span class="c1">// Send the request and verify the response</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="nx">endpoint</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">method</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="nx">headers</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Send the request and verify the response
+fetch(endpoint, {
+    method: method,
+    headers: headers
+})
+.then(response =&gt; response.json())
+.then(data =&gt; {
+    console.log(data);
+    expect(response.status).toBe(200);
+});
+</code></pre>
 <p>This script sends a GET request to the specified endpoint, sets the request headers, and verifies that the response status code is 200.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>API testing can be challenging, especially when dealing with complex systems and large datasets. Here are some common problems and solutions:</p>

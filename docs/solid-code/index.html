@@ -155,264 +155,250 @@
 <h3 id="single-responsibility-principle-srp">Single Responsibility Principle (SRP)</h3>
 <p>The Single Responsibility Principle states that a class should have only one reason to change. This means that a class should have a single responsibility or purpose, and should not be responsible for multiple, unrelated tasks. For example, a <code>User</code> class should not be responsible for both user authentication and data storage.</p>
 <p>Here is an example of a <code>User</code> class that violates the SRP:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
+<pre><code class="language-java">public class User {
+    private String username;
+    private String password;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// authentication logic</span>
-<span class="w">    </span><span class="p">}</span>
+    public void authenticate() {
+        // authentication logic
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">saveToDatabase</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// database logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public void saveToDatabase() {
+        // database logic
+    }
+}
+</code></pre>
 <p>In this example, the <code>User</code> class is responsible for both authentication and data storage. To fix this, we can create separate classes for authentication and data storage:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Authenticator</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// authentication logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-java">public class Authenticator {
+    public void authenticate(User user) {
+        // authentication logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserRepository</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">saveUser</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// database logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class UserRepository {
+    public void saveUser(User user) {
+        // database logic
+    }
+}
+</code></pre>
 <p>By separating the responsibilities of the <code>User</code> class, we can make the code more maintainable and scalable.</p>
 <h2 id="openclosed-principle-ocp">Open/Closed Principle (OCP)</h2>
 <p>The Open/Closed Principle states that a class should be open for extension but closed for modification. This means that a class should be designed to allow for new functionality to be added without modifying the existing code.</p>
 <p>For example, let's say we have a <code>PaymentGateway</code> class that supports only PayPal payments:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentGateway</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="na">getPaymentMethod</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="p">.</span><span class="na">PAYPAL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// PayPal payment logic</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="s">&quot;Unsupported payment method&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-java">public class PaymentGateway {
+    public void processPayment(Payment payment) {
+        if (payment.getPaymentMethod() == PaymentMethod.PAYPAL) {
+            // PayPal payment logic
+        } else {
+            throw new UnsupportedOperationException(&quot;Unsupported payment method&quot;);
+        }
+    }
+}
+</code></pre>
 <p>To add support for new payment methods, such as Stripe or Bank Transfer, we can modify the existing code to add new conditions:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentGateway</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="na">getPaymentMethod</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="p">.</span><span class="na">PAYPAL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// PayPal payment logic</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="na">getPaymentMethod</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="p">.</span><span class="na">STRIPE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Stripe payment logic</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="na">getPaymentMethod</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="p">.</span><span class="na">BANK_TRANSFER</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Bank Transfer payment logic</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="s">&quot;Unsupported payment method&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-java">public class PaymentGateway {
+    public void processPayment(Payment payment) {
+        if (payment.getPaymentMethod() == PaymentMethod.PAYPAL) {
+            // PayPal payment logic
+        } else if (payment.getPaymentMethod() == PaymentMethod.STRIPE) {
+            // Stripe payment logic
+        } else if (payment.getPaymentMethod() == PaymentMethod.BANK_TRANSFER) {
+            // Bank Transfer payment logic
+        } else {
+            throw new UnsupportedOperationException(&quot;Unsupported payment method&quot;);
+        }
+    }
+}
+</code></pre>
 <p>However, this approach violates the OCP because we are modifying the existing code to add new functionality. A better approach would be to use polymorphism to allow for new payment methods to be added without modifying the existing code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentMethod</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-java">public abstract class PaymentMethod {
+    public abstract void processPayment(Payment payment);
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PayPalPaymentMethod</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// PayPal payment logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class PayPalPaymentMethod extends PaymentMethod {
+    @Override
+    public void processPayment(Payment payment) {
+        // PayPal payment logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StripePaymentMethod</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Stripe payment logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class StripePaymentMethod extends PaymentMethod {
+    @Override
+    public void processPayment(Payment payment) {
+        // Stripe payment logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentGateway</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">,</span><span class="w"> </span><span class="n">PaymentMethod</span><span class="w"> </span><span class="n">paymentMethod</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">paymentMethod</span><span class="p">.</span><span class="na">processPayment</span><span class="p">(</span><span class="n">payment</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class PaymentGateway {
+    public void processPayment(Payment payment, PaymentMethod paymentMethod) {
+        paymentMethod.processPayment(payment);
+    }
+}
+</code></pre>
 <p>By using polymorphism, we can add new payment methods without modifying the existing code.</p>
 <h3 id="liskov-substitution-principle-lsp">Liskov Substitution Principle (LSP)</h3>
 <p>The Liskov Substitution Principle states that subtypes should be substitutable for their base types. This means that any code that uses a base type should be able to work with a subtype without knowing the difference.</p>
 <p>For example, let's say we have a <code>Bird</code> class and a <code>Duck</code> class that extends <code>Bird</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Bird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fly</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// flying logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-java">public class Bird {
+    public void fly() {
+        // flying logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Duck</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fly</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// duck flying logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class Duck extends Bird {
+    @Override
+    public void fly() {
+        // duck flying logic
+    }
+}
+</code></pre>
 <p>In this example, the <code>Duck</code> class is a subtype of the <code>Bird</code> class, and it overrides the <code>fly()</code> method to provide its own implementation. This is an example of the LSP in action, because we can use a <code>Duck</code> object wherever a <code>Bird</code> object is expected:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BirdCage</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addBird</span><span class="p">(</span><span class="n">Bird</span><span class="w"> </span><span class="n">bird</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">bird</span><span class="p">.</span><span class="na">fly</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-java">public class BirdCage {
+    public void addBird(Bird bird) {
+        bird.fly();
+    }
+}
 
-<span class="n">BirdCage</span><span class="w"> </span><span class="n">cage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BirdCage</span><span class="p">();</span>
-<span class="n">cage</span><span class="p">.</span><span class="na">addBird</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Duck</span><span class="p">());</span>
-</code></pre></div>
-
+BirdCage cage = new BirdCage();
+cage.addBird(new Duck());
+</code></pre>
 <p>However, if we add a <code>Penguin</code> class that extends <code>Bird</code> but does not override the <code>fly()</code> method, we may encounter problems:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Penguin</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// does not override fly()</span>
-<span class="p">}</span>
+<pre><code class="language-java">public class Penguin extends Bird {
+    // does not override fly()
+}
 
-<span class="n">cage</span><span class="p">.</span><span class="na">addBird</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Penguin</span><span class="p">());</span><span class="w"> </span><span class="c1">// throws an error because penguins cannot fly</span>
-</code></pre></div>
-
+cage.addBird(new Penguin()); // throws an error because penguins cannot fly
+</code></pre>
 <p>To fix this, we can create a separate <code>FlyingBird</code> class that extends <code>Bird</code> and provides a <code>fly()</code> method:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FlyingBird</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fly</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code class="language-java">public abstract class FlyingBird extends Bird {
+    public abstract void fly();
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Duck</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">FlyingBird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fly</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// duck flying logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class Duck extends FlyingBird {
+    @Override
+    public void fly() {
+        // duck flying logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Penguin</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Bird</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// does not override fly()</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class Penguin extends Bird {
+    // does not override fly()
+}
+</code></pre>
 <p>By creating a separate <code>FlyingBird</code> class, we can ensure that only birds that can fly are substitutable for the <code>FlyingBird</code> type.</p>
 <h2 id="interface-segregation-principle-isp">Interface Segregation Principle (ISP)</h2>
 <p>The Interface Segregation Principle states that clients should not be forced to depend on interfaces they do not use. This means that instead of having a large, fat interface, we should break it down into smaller, more specialized interfaces.</p>
 <p>For example, let's say we have a <code>Printable</code> interface that has methods for printing, scanning, and faxing:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Printable</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">();</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">scan</span><span class="p">();</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">fax</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-java">public interface Printable {
+    void print();
+    void scan();
+    void fax();
+}
+</code></pre>
 <p>If we have a <code>Printer</code> class that implements the <code>Printable</code> interface, but does not support scanning or faxing, we may encounter problems:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Printer</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Printable</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// printing logic</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-java">public class Printer implements Printable {
+    @Override
+    public void print() {
+        // printing logic
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">scan</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="s">&quot;Scanning not supported&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    @Override
+    public void scan() {
+        throw new UnsupportedOperationException(&quot;Scanning not supported&quot;);
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fax</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="s">&quot;Faxing not supported&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public void fax() {
+        throw new UnsupportedOperationException(&quot;Faxing not supported&quot;);
+    }
+}
+</code></pre>
 <p>To fix this, we can break down the <code>Printable</code> interface into smaller, more specialized interfaces:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Printer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code class="language-java">public interface Printer {
+    void print();
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Scanner</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">scan</span><span class="p">();</span>
-<span class="p">}</span>
+public interface Scanner {
+    void scan();
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">FaxMachine</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">fax</span><span class="p">();</span>
-<span class="p">}</span>
+public interface FaxMachine {
+    void fax();
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PrinterImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Printer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// printing logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class PrinterImpl implements Printer {
+    @Override
+    public void print() {
+        // printing logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ScannerImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Scanner</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">scan</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// scanning logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class ScannerImpl implements Scanner {
+    @Override
+    public void scan() {
+        // scanning logic
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FaxMachineImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">FaxMachine</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fax</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// faxing logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class FaxMachineImpl implements FaxMachine {
+    @Override
+    public void fax() {
+        // faxing logic
+    }
+}
+</code></pre>
 <p>By breaking down the <code>Printable</code> interface into smaller interfaces, we can ensure that clients only depend on the interfaces they need.</p>
 <h3 id="dependency-inversion-principle-dip">Dependency Inversion Principle (DIP)</h3>
 <p>The Dependency Inversion Principle states that high-level modules should not depend on low-level modules, but both should depend on abstractions. This means that instead of having a high-level module depend directly on a low-level module, we should introduce an abstraction that both modules can depend on.</p>
 <p>For example, let's say we have a <code>PaymentProcessor</code> class that depends on a <code>PaymentGateway</code> class:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">PaymentGateway</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">;</span>
+<pre><code class="language-java">public class PaymentProcessor {
+    private PaymentGateway paymentGateway;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">PaymentProcessor</span><span class="p">(</span><span class="n">PaymentGateway</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">paymentGateway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public PaymentProcessor(PaymentGateway paymentGateway) {
+        this.paymentGateway = paymentGateway;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">paymentGateway</span><span class="p">.</span><span class="na">processPayment</span><span class="p">(</span><span class="n">payment</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public void processPayment(Payment payment) {
+        paymentGateway.processPayment(payment);
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentGateway</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// payment processing logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class PaymentGateway {
+    public void processPayment(Payment payment) {
+        // payment processing logic
+    }
+}
+</code></pre>
 <p>In this example, the <code>PaymentProcessor</code> class depends directly on the <code>PaymentGateway</code> class. To fix this, we can introduce an abstraction, such as a <code>PaymentProcessorInterface</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">PaymentProcessorInterface</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-java">public interface PaymentProcessorInterface {
+    void processPayment(Payment payment);
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentProcessor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PaymentProcessorInterface</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">PaymentGateway</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">;</span>
+public class PaymentProcessor implements PaymentProcessorInterface {
+    private PaymentGateway paymentGateway;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">PaymentProcessor</span><span class="p">(</span><span class="n">PaymentGateway</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">paymentGateway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paymentGateway</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public PaymentProcessor(PaymentGateway paymentGateway) {
+        this.paymentGateway = paymentGateway;
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">paymentGateway</span><span class="p">.</span><span class="na">processPayment</span><span class="p">(</span><span class="n">payment</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    @Override
+    public void processPayment(Payment payment) {
+        paymentGateway.processPayment(payment);
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PaymentGateway</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PaymentProcessorInterface</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processPayment</span><span class="p">(</span><span class="n">Payment</span><span class="w"> </span><span class="n">payment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// payment processing logic</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class PaymentGateway implements PaymentProcessorInterface {
+    @Override
+    public void processPayment(Payment payment) {
+        // payment processing logic
+    }
+}
+</code></pre>
 <p>By introducing an abstraction, we can decouple the <code>PaymentProcessor</code> class from the <code>PaymentGateway</code> class and make the code more maintainable and scalable.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can arise when the SOLID principles are not followed, along with specific solutions:</p>

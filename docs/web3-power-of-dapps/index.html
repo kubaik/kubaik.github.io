@@ -161,46 +161,44 @@
 </ul>
 <h2 id="building-dapps-with-ethereum">Building DApps with Ethereum</h2>
 <p>One of the most popular platforms for building DApps is Ethereum. Ethereum provides a robust set of tools and libraries, including Solidity, Web3.js, and Truffle, making it an ideal choice for developers. Here's an example of a simple DApp built using Ethereum and Solidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// SPDX-License-Identifier: MIT</span>
-<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleDApp</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">private </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">balance</span><span class="p">;</span>
+contract SimpleDApp {
+    address private owner;
+    uint public balance;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        owner = msg.sender;
+        balance = 0;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">deposit</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function deposit() public payable {
+        balance += msg.value;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can withdraw&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>amount<span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>balance<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>amount<span class="p">);</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function withdraw(uint amount) public {
+        require(msg.sender == owner, &quot;Only the owner can withdraw&quot;);
+        require(amount &lt;= balance, &quot;Insufficient balance&quot;);
+        payable(msg.sender).transfer(amount);
+        balance -= amount;
+    }
+}
+</code></pre>
 <p>This example demonstrates a simple DApp that allows users to deposit and withdraw Ether. The <code>deposit</code> function increments the balance, while the <code>withdraw</code> function checks the sender's identity and balance before transferring the funds.</p>
 <h3 id="front-end-integration-with-web3js">Front-end Integration with Web3.js</h3>
 <p>To interact with the DApp, we need to build a front-end interface using Web3.js. Here's an example of how to connect to the Ethereum network and call the <code>deposit</code> function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAbi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span>
+const contractAddress = '0x...';
+const contractAbi = [...];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">contractAbi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
-<span class="c1">// Deposit 1 Ether</span>
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">deposit</span><span class="p">().</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ether&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">});</span>
-</code></pre></div>
-
+// Deposit 1 Ether
+contract.methods.deposit().send({ from: '0x...', value: web3.utils.toWei('1', 'ether') });
+</code></pre>
 <p>This example demonstrates how to connect to the Ethereum network using Infura, a popular service for accessing blockchain data. We then create a contract instance using the <code>web3.eth.Contract</code> class, and call the <code>deposit</code> function using the <code>send</code> method.</p>
 <h2 id="real-world-use-cases">Real-world Use Cases</h2>
 <p>DApps have a wide range of real-world use cases, from finance and gaming to social media and supply chain management. Here are a few examples:</p>

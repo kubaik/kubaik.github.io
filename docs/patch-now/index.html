@@ -162,26 +162,25 @@
 <li>Code reviews using tools like CodeSonar or Veracode</li>
 </ul>
 <p>For example, the following code snippet shows how to use Nmap to scan a network for open ports:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nmap</span>
+<pre><code class="language-python">import nmap
 
-<span class="c1"># Create an Nmap object</span>
-<span class="n">nm</span> <span class="o">=</span> <span class="n">nmap</span><span class="o">.</span><span class="n">PortScanner</span><span class="p">()</span>
+# Create an Nmap object
+nm = nmap.PortScanner()
 
-<span class="c1"># Scan the network</span>
-<span class="n">nm</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="s1">&#39;192.168.1.0/24&#39;</span><span class="p">,</span> <span class="s1">&#39;1-1024&#39;</span><span class="p">)</span>
+# Scan the network
+nm.scan('192.168.1.0/24', '1-1024')
 
-<span class="c1"># Print the results</span>
-<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">nm</span><span class="o">.</span><span class="n">all_hosts</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Host : </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">hostname</span><span class="p">()))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;State : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">state</span><span class="p">())</span>
-    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">all_protocols</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Protocol : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">proto</span><span class="p">)</span>
-        <span class="n">lport</span> <span class="o">=</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">][</span><span class="n">proto</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="nb">sorted</span><span class="p">(</span><span class="n">lport</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="n">lport</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;port : </span><span class="si">%s</span><span class="se">\t</span><span class="s1">state : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">][</span><span class="n">proto</span><span class="p">][</span><span class="n">port</span><span class="p">][</span><span class="s1">&#39;state&#39;</span><span class="p">]))</span>
-</code></pre></div>
-
+# Print the results
+for host in nm.all_hosts():
+    print('Host : %s (%s)' % (host, nm[host].hostname()))
+    print('State : %s' % nm[host].state())
+    for proto in nm[host].all_protocols():
+        print('Protocol : %s' % proto)
+        lport = nm[host][proto].keys()
+        sorted(lport)
+        for port in lport:
+            print ('port : %s\tstate : %s' % (port, nm[host][proto][port]['state']))
+</code></pre>
 <p>This code snippet uses the Nmap library to scan a network for open ports and print the results.</p>
 <h2 id="prioritizing-vulnerabilities">Prioritizing Vulnerabilities</h2>
 <p>Once vulnerabilities have been identified, they need to be prioritized based on their severity and potential impact. This can be done using a variety of metrics, including:</p>
@@ -191,28 +190,27 @@
 <li>Compliance requirements, such as PCI-DSS or HIPAA</li>
 </ul>
 <p>For example, the following code snippet shows how to use the CVSS calculator to calculate the CVSS score for a vulnerability:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cvss</span>
+<pre><code class="language-python">import cvss
 
-<span class="c1"># Create a CVSS object</span>
-<span class="n">cvss_obj</span> <span class="o">=</span> <span class="n">cvss</span><span class="o">.</span><span class="n">CVSS</span><span class="p">()</span>
+# Create a CVSS object
+cvss_obj = cvss.CVSS()
 
-<span class="c1"># Set the vulnerability metrics</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_av</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>  <span class="c1"># Attack Vector: Network</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_ac</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>  <span class="c1"># Attack Complexity: Low</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_pr</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>  <span class="c1"># Privileges Required: None</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_ui</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>  <span class="c1"># User Interaction: None</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_s</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>  <span class="c1"># Scope: Unchanged</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_c</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>  <span class="c1"># Confidentiality: High</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_i</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>  <span class="c1"># Integrity: High</span>
-<span class="n">cvss_obj</span><span class="o">.</span><span class="n">set_a</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>  <span class="c1"># Availability: High</span>
+# Set the vulnerability metrics
+cvss_obj.set_av('N')  # Attack Vector: Network
+cvss_obj.set_ac('L')  # Attack Complexity: Low
+cvss_obj.set_pr('N')  # Privileges Required: None
+cvss_obj.set_ui('N')  # User Interaction: None
+cvss_obj.set_s('U')  # Scope: Unchanged
+cvss_obj.set_c('H')  # Confidentiality: High
+cvss_obj.set_i('H')  # Integrity: High
+cvss_obj.set_a('H')  # Availability: High
 
-<span class="c1"># Calculate the CVSS score</span>
-<span class="n">cvss_score</span> <span class="o">=</span> <span class="n">cvss_obj</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+# Calculate the CVSS score
+cvss_score = cvss_obj.calculate()
 
-<span class="c1"># Print the CVSS score</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CVSS Score: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cvss_score</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the CVSS score
+print('CVSS Score: %s' % cvss_score)
+</code></pre>
 <p>This code snippet uses the CVSS library to calculate the CVSS score for a vulnerability based on its metrics.</p>
 <h2 id="remediating-vulnerabilities">Remediating Vulnerabilities</h2>
 <p>Remediating vulnerabilities is the final step in the vulnerability management process. This can be done using a variety of techniques, including:</p>
@@ -223,29 +221,28 @@
 <li>Conducting regular security audits and penetration testing</li>
 </ul>
 <p>For example, the following code snippet shows how to use Ansible to patch a Linux system:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
-<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Patch</span> <span class="n">Linux</span> <span class="n">system</span>
-  <span class="n">hosts</span><span class="p">:</span> <span class="n">linux_systems</span>
-  <span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
+<pre><code class="language-python">---
+- name: Patch Linux system
+  hosts: linux_systems
+  become: yes
 
-  <span class="n">tasks</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Update</span> <span class="n">package</span> <span class="nb">list</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">update_cache</span><span class="p">:</span> <span class="n">yes</span>
+  tasks:
+  - name: Update package list
+    apt:
+      update_cache: yes
 
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Upgrade</span> <span class="n">packages</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">upgrade</span><span class="p">:</span> <span class="n">dist</span>
+  - name: Upgrade packages
+    apt:
+      upgrade: dist
 
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Install</span> <span class="n">security</span> <span class="n">updates</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;{{ item }}&quot;</span>
-      <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
-    <span class="n">loop</span><span class="p">:</span>
-      <span class="o">-</span> <span class="n">linux</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">generic</span>
-      <span class="o">-</span> <span class="n">linux</span><span class="o">-</span><span class="n">headers</span><span class="o">-</span><span class="n">generic</span>
-</code></pre></div>
-
+  - name: Install security updates
+    apt:
+      name: &quot;{{ item }}&quot;
+      state: present
+    loop:
+      - linux-image-generic
+      - linux-headers-generic
+</code></pre>
 <p>This code snippet uses Ansible to update the package list, upgrade packages, and install security updates on a Linux system.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that organizations face when implementing vulnerability management include:</p>

@@ -166,50 +166,49 @@
 </ol>
 <h3 id="example-implementing-access-controls-with-aws-iam">Example: Implementing Access Controls with AWS IAM</h3>
 <p>One of the requirements of SOC 2 and ISO 27001 is to implement access controls to ensure that only authorized personnel have access to sensitive information. Here is an example of how to implement access controls using AWS IAM:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an IAM client</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+# Create an IAM client
+iam = boto3.client('iam')
 
-<span class="c1"># Create a new user</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span>
-<span class="p">)</span>
+# Create a new user
+iam.create_user(
+    UserName='newuser'
+)
 
-<span class="c1"># Create a new group</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span>
-<span class="p">)</span>
+# Create a new group
+iam.create_group(
+    GroupName='newgroup'
+)
 
-<span class="c1"># Add the user to the group</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">add_user_to_group</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span><span class="p">,</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span>
-<span class="p">)</span>
+# Add the user to the group
+iam.add_user_to_group(
+    UserName='newuser',
+    GroupName='newgroup'
+)
 
-<span class="c1"># Create a new policy</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span>
-    <span class="n">PolicyName</span><span class="o">=</span><span class="s1">&#39;newpolicy&#39;</span><span class="p">,</span>
-    <span class="n">PolicyDocument</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;{</span>
-<span class="s1">        &quot;Version&quot;: &quot;2012-10-17&quot;,</span>
-<span class="s1">        &quot;Statement&quot;: [</span>
-<span class="s1">            {</span>
-<span class="s1">                &quot;Sid&quot;: &quot;AllowAccessToSensitiveData&quot;,</span>
-<span class="s1">                &quot;Effect&quot;: &quot;Allow&quot;,</span>
-<span class="s1">                &quot;Action&quot;: &quot;s3:GetObject&quot;,</span>
-<span class="s1">                &quot;Resource&quot;: &quot;arn:aws:s3:::sensitive-data-bucket/*&quot;</span>
-<span class="s1">            }</span>
-<span class="s1">        ]</span>
-<span class="s1">    }&#39;&#39;&#39;</span>
-<span class="p">)</span>
+# Create a new policy
+iam.create_policy(
+    PolicyName='newpolicy',
+    PolicyDocument='''{
+        &quot;Version&quot;: &quot;2012-10-17&quot;,
+        &quot;Statement&quot;: [
+            {
+                &quot;Sid&quot;: &quot;AllowAccessToSensitiveData&quot;,
+                &quot;Effect&quot;: &quot;Allow&quot;,
+                &quot;Action&quot;: &quot;s3:GetObject&quot;,
+                &quot;Resource&quot;: &quot;arn:aws:s3:::sensitive-data-bucket/*&quot;
+            }
+        ]
+    }'''
+)
 
-<span class="c1"># Attach the policy to the group</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">attach_group_policy</span><span class="p">(</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span><span class="p">,</span>
-    <span class="n">PolicyArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:policy/newpolicy&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Attach the policy to the group
+iam.attach_group_policy(
+    GroupName='newgroup',
+    PolicyArn='arn:aws:iam::123456789012:policy/newpolicy'
+)
+</code></pre>
 <p>This code creates a new user, group, and policy, and attaches the policy to the group. The policy allows access to a sensitive data bucket.</p>
 <h2 id="tools-and-platforms-for-security-compliance">Tools and Platforms for Security Compliance</h2>
 <p>There are several tools and platforms that can help with security compliance, including:</p>
@@ -223,25 +222,24 @@
 </ul>
 <h3 id="example-using-splunk-for-log-management">Example: Using Splunk for Log Management</h3>
 <p>Splunk is a popular tool for log management and SIEM. Here is an example of how to use Splunk to monitor logs:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">splunklib.binding</span> <span class="k">as</span> <span class="nn">binding</span>
+<pre><code class="language-python">import splunklib.binding as binding
 
-<span class="c1"># Create a Splunk connection</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">binding</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="mi">8089</span><span class="p">,</span>
-    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
-<span class="p">)</span>
+# Create a Splunk connection
+connection = binding.connect(
+    host='localhost',
+    port=8089,
+    username='admin',
+    password='password'
+)
 
-<span class="c1"># Search for logs</span>
-<span class="n">search_query</span> <span class="o">=</span> <span class="s1">&#39;index=main | stats count by sourcetype&#39;</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_query</span><span class="p">)</span>
+# Search for logs
+search_query = 'index=main | stats count by sourcetype'
+results = connection.search(search_query)
 
-<span class="c1"># Print the results</span>
-<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the results
+for result in results:
+    print(result)
+</code></pre>
 <p>This code connects to a Splunk instance, searches for logs, and prints the results.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to security compliance:</p>
@@ -263,19 +261,18 @@
 </ul>
 <h3 id="example-using-aws-config-for-resource-inventory">Example: Using AWS Config for Resource Inventory</h3>
 <p>AWS Config provides resource inventory and configuration management capabilities. Here is an example of how to use AWS Config to monitor resources:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS Config client</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
+# Create an AWS Config client
+config = boto3.client('config')
 
-<span class="c1"># Get a list of resources</span>
-<span class="n">resources</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">list_discovered_resources</span><span class="p">()</span>
+# Get a list of resources
+resources = config.list_discovered_resources()
 
-<span class="c1"># Print the resources</span>
-<span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the resources
+for resource in resources:
+    print(resource)
+</code></pre>
 <p>This code connects to AWS Config, gets a list of resources, and prints the resources.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, security compliance is a critical component of any organization's overall security posture. SOC 2 and ISO 27001 are two of the most widely recognized security compliance frameworks. Implementing these frameworks requires a thorough understanding of the requirements and a well-planned approach. There are several tools and platforms that can help with security compliance, including AWS IAM, Splunk, and Qualys. Common problems related to security compliance include lack of resources, complexity of security controls, and insufficient training. By outsourcing to an MSSP, using a SOAR platform, and providing regular training and awareness programs, organizations can overcome these challenges.</p>

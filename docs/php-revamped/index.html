@@ -154,15 +154,14 @@
 <h3 id="php-7-and-beyond">PHP 7 and Beyond</h3>
 <p>PHP 7, released in 2015, marked a significant milestone in the language's history. It introduced a new Zend Engine, which provided a substantial boost in performance. According to the official PHP benchmarks, PHP 7 is approximately 2-3 times faster than its predecessor, PHP 5.6. This improvement is largely due to the new engine's ability to handle more requests per second, reducing the overall latency of applications.</p>
 <p>To demonstrate the performance difference, let's consider a simple example using the <code>php-benchmark</code> script, which measures the execution time of a PHP script. We'll compare the performance of PHP 5.6 and PHP 7.4 using the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// benchmark.php</span>
-<span class="x">$start = microtime(true);</span>
-<span class="x">for ($i = 0; $i &lt; 1000000; $i++) {</span>
-<span class="x">    $a = 1 + 1;</span>
-<span class="x">}</span>
-<span class="x">$end = microtime(true);</span>
-<span class="x">echo &quot;Execution time: &quot; . ($end - $start) . &quot; seconds\n&quot;;</span>
-</code></pre></div>
-
+<pre><code class="language-php">// benchmark.php
+$start = microtime(true);
+for ($i = 0; $i &lt; 1000000; $i++) {
+    $a = 1 + 1;
+}
+$end = microtime(true);
+echo &quot;Execution time: &quot; . ($end - $start) . &quot; seconds\n&quot;;
+</code></pre>
 <p>Running this script on PHP 5.6 and PHP 7.4, we get the following results:
 * PHP 5.6: Execution time: 1.234 seconds
 * PHP 7.4: Execution time: 0.421 seconds</p>
@@ -175,39 +174,35 @@
 <li><strong>Docker</strong>: A containerization platform that enables developers to create isolated environments for their applications.</li>
 </ul>
 <p>Let's explore how to use Composer to manage dependencies in a PHP project. Suppose we want to install the <code>monolog</code> library, which provides a simple logging mechanism. We can add the following line to our <code>composer.json</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;require&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;monolog/monolog&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^2.3&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+    &quot;require&quot;: {
+        &quot;monolog/monolog&quot;: &quot;^2.3&quot;
+    }
+}
+</code></pre>
 <p>Then, we can run the following command to install the dependency:</p>
-<div class="codehilite"><pre><span></span><code>composer<span class="w"> </span>install
-</code></pre></div>
-
+<pre><code class="language-bash">composer install
+</code></pre>
 <p>This will download and install the <code>monolog</code> library, making it available for use in our project.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common issue in PHP development is handling errors and exceptions. To address this, we can use try-catch blocks to catch and handle exceptions. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">try {</span>
-<span class="x">    // code that may throw an exception</span>
-<span class="x">    $data = json_decode($json, true);</span>
-<span class="x">    if (json_last_error() !== JSON_ERROR_NONE) {</span>
-<span class="x">        throw new Exception(json_last_error_msg());</span>
-<span class="x">    }</span>
-<span class="x">} catch (Exception $e) {</span>
-<span class="x">    // handle the exception</span>
-<span class="x">    error_log($e-&gt;getMessage());</span>
-<span class="x">    header(&#39;HTTP/1.1 500 Internal Server Error&#39;);</span>
-<span class="x">    exit;</span>
-<span class="x">}</span>
-</code></pre></div>
-
+<pre><code class="language-php">try {
+    // code that may throw an exception
+    $data = json_decode($json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception(json_last_error_msg());
+    }
+} catch (Exception $e) {
+    // handle the exception
+    error_log($e-&gt;getMessage());
+    header('HTTP/1.1 500 Internal Server Error');
+    exit;
+}
+</code></pre>
 <p>This code catches any exceptions that occur during the execution of the <code>json_decode</code> function and logs the error message.</p>
 <p>Another common problem is optimizing database queries. To improve performance, we can use indexing, caching, and query optimization techniques. For instance, we can use the <code>EXPLAIN</code> statement to analyze the query execution plan:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <p>This will provide valuable insights into the query's performance, allowing us to identify areas for improvement.</p>
 <h2 id="performance-optimization-techniques">Performance Optimization Techniques</h2>
 <p>To further optimize PHP applications, developers can employ various techniques, such as:</p>
@@ -218,20 +213,18 @@
 <li><strong>Database Indexing</strong>: Create indexes on frequently queried columns to improve query performance.</li>
 </ol>
 <p>Let's consider an example of using caching to improve performance. Suppose we have a PHP script that retrieves user data from a database:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// user.php</span>
-<span class="x">$userData = fetchUserData($userId);</span>
-</code></pre></div>
-
+<pre><code class="language-php">// user.php
+$userData = fetchUserData($userId);
+</code></pre>
 <p>We can cache the user data using a library like <code>redis</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// user.php</span>
-<span class="x">$redis = new Redis();</span>
-<span class="x">$userData = $redis-&gt;get(&#39;user:&#39; . $userId);</span>
-<span class="x">if (!$userData) {</span>
-<span class="x">    $userData = fetchUserData($userId);</span>
-<span class="x">    $redis-&gt;set(&#39;user:&#39; . $userId, $userData);</span>
-<span class="x">}</span>
-</code></pre></div>
-
+<pre><code class="language-php">// user.php
+$redis = new Redis();
+$userData = $redis-&gt;get('user:' . $userId);
+if (!$userData) {
+    $userData = fetchUserData($userId);
+    $redis-&gt;set('user:' . $userId, $userData);
+}
+</code></pre>
 <p>This code checks if the user data is cached in Redis. If it is, the script returns the cached data. Otherwise, it fetches the data from the database, caches it, and returns the result.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Modern PHP development is used in a variety of real-world applications, including:</p>
@@ -241,31 +234,29 @@
 <li><strong>Social media platforms</strong>: PHP is used to build social media platforms like Facebook and Twitter.</li>
 </ul>
 <p>For example, suppose we want to build a simple e-commerce platform using PHP and MySQL. We can use the following database schema:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="n">price</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    price DECIMAL(10, 2)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">total</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
-<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">product_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">products</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    product_id INT,
+    quantity INT,
+    total DECIMAL(10, 2),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+</code></pre>
 <p>We can then use PHP to create a simple shopping cart system:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// cart.php</span>
-<span class="x">$cart = array();</span>
-<span class="x">if (isset($_POST[&#39;add_to_cart&#39;])) {</span>
-<span class="x">    $productId = $_POST[&#39;product_id&#39;];</span>
-<span class="x">    $quantity = $_POST[&#39;quantity&#39;];</span>
-<span class="x">    $cart[$productId] = $quantity;</span>
-<span class="x">}</span>
-</code></pre></div>
-
+<pre><code class="language-php">// cart.php
+$cart = array();
+if (isset($_POST['add_to_cart'])) {
+    $productId = $_POST['product_id'];
+    $quantity = $_POST['quantity'];
+    $cart[$productId] = $quantity;
+}
+</code></pre>
 <p>This code creates a simple shopping cart system that allows users to add products to their cart.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>When building a PHP application, developers should consider the costs associated with hosting, maintenance, and scalability. Some popular hosting options include:</p>

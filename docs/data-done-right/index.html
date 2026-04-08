@@ -170,16 +170,15 @@
 <p>For example, Amazon Redshift provides a feature called Redshift Spectrum, which allows users to query data in Amazon S3 without having to load it into the data warehouse. This can be particularly useful for organizations with large amounts of data stored in S3.</p>
 <h3 id="example-loading-data-into-amazon-redshift">Example: Loading Data into Amazon Redshift</h3>
 <p>To load data into Amazon Redshift, you can use the <code>COPY</code> command, which supports various data formats, including CSV and JSON. Here is an example of loading a CSV file into a Redshift table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">COPY</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;s3://mybucket/data.csv&#39;</span>
-<span class="n">CREDENTIALS</span><span class="w"> </span><span class="s1">&#39;aws_access_key_id=YOUR_ACCESS_KEY;aws_secret_access_key=YOUR_SECRET_KEY&#39;</span>
-<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
-<span class="n">EMPTYASNULL</span>
-<span class="n">BLANKSASNULL</span>
-<span class="n">TRUNCATECOLUMNS</span>
-<span class="n">TRIMBLANKS</span>
-</code></pre></div>
-
+<pre><code class="language-sql">COPY mytable (id, name, email)
+FROM 's3://mybucket/data.csv'
+CREDENTIALS 'aws_access_key_id=YOUR_ACCESS_KEY;aws_secret_access_key=YOUR_SECRET_KEY'
+DELIMITER ','
+EMPTYASNULL
+BLANKSASNULL
+TRUNCATECOLUMNS
+TRIMBLANKS
+</code></pre>
 <p>This command loads the data from the <code>data.csv</code> file in the <code>mybucket</code> S3 bucket into the <code>mytable</code> table in the Redshift cluster.</p>
 <h2 id="data-warehousing-architecture">Data Warehousing Architecture</h2>
 <p>A typical data warehousing architecture consists of the following components:
@@ -193,19 +192,18 @@
 * Apache Spark: an in-memory data processing engine that supports batch and streaming processing
 * Apache NiFi: a data integration tool that supports data ingestion, processing, and storage</p>
 <p>For example, Apache Beam provides a feature called <code>Pipeline</code>, which allows users to define a data processing workflow using a Java or Python API. Here is an example of a Beam pipeline that reads data from a Kafka topic and writes it to a BigQuery table:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Pipeline</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pipeline</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-<span class="n">pipeline</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">KafkaIO</span><span class="p">.</span><span class="na">read</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withBootstrapServers</span><span class="p">(</span><span class="s">&quot;localhost:9092&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withTopic</span><span class="p">(</span><span class="s">&quot;mytopic&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withGroupId</span><span class="p">(</span><span class="s">&quot;mygroup&quot;</span><span class="p">))</span>
-<span class="w"> </span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">ParDo</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyTransform</span><span class="p">()))</span>
-<span class="w"> </span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">BigQueryIO</span><span class="p">.</span><span class="na">writeTableRows</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;myproject:mydataset.mytable&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withCreateDisposition</span><span class="p">(</span><span class="n">CREATE_IF_NEEDED</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="na">withWriteDisposition</span><span class="p">(</span><span class="n">WRITE_APPEND</span><span class="p">));</span>
-<span class="n">pipeline</span><span class="p">.</span><span class="na">run</span><span class="p">();</span>
-</code></pre></div>
-
+<pre><code class="language-java">Pipeline pipeline = Pipeline.create();
+pipeline.apply(KafkaIO.read()
+    .withBootstrapServers(&quot;localhost:9092&quot;)
+    .withTopic(&quot;mytopic&quot;)
+    .withGroupId(&quot;mygroup&quot;))
+ .apply(ParDo.of(new MyTransform()))
+ .apply(BigQueryIO.writeTableRows()
+    .to(&quot;myproject:mydataset.mytable&quot;)
+    .withCreateDisposition(CREATE_IF_NEEDED)
+    .withWriteDisposition(WRITE_APPEND));
+pipeline.run();
+</code></pre>
 <p>This pipeline reads data from the <code>mytopic</code> Kafka topic, applies a transformation using the <code>MyTransform</code> class, and writes the transformed data to the <code>mytable</code> BigQuery table.</p>
 <h2 id="data-warehousing-best-practices">Data Warehousing Best Practices</h2>
 <p>To ensure a successful data warehousing implementation, organizations should follow these best practices:
@@ -215,18 +213,17 @@
 * <strong>Implement data quality and validation</strong>: ensure that the data is accurate, complete, and consistent
 * <strong>Monitor and optimize performance</strong>: regularly monitor the data warehouse's performance and optimize it as needed</p>
 <p>For example, to implement data quality and validation, organizations can use tools like Apache Airflow, which provides a feature called <code>Sensor</code>, which allows users to define a data quality check using a Python API. Here is an example of an Airflow sensor that checks the data quality of a BigQuery table:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">airflow.sensors.bigquery_sensor</span> <span class="kn">import</span> <span class="n">BigQuerySensor</span>
+<pre><code class="language-python">from airflow.sensors.bigquery_sensor import BigQuerySensor
 
-<span class="n">sensor</span> <span class="o">=</span> <span class="n">BigQuerySensor</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;data_quality_check&#39;</span><span class="p">,</span>
-    <span class="n">conn_id</span><span class="o">=</span><span class="s1">&#39;bigquery_default&#39;</span><span class="p">,</span>
-    <span class="n">sql</span><span class="o">=</span><span class="s1">&#39;SELECT COUNT(*) FROM mytable WHERE email IS NULL&#39;</span><span class="p">,</span>
-    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="s1">&#39;myproject&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset_id&#39;</span><span class="p">:</span> <span class="s1">&#39;mydataset&#39;</span><span class="p">,</span> <span class="s1">&#39;table_id&#39;</span><span class="p">:</span> <span class="s1">&#39;mytable&#39;</span><span class="p">},</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">18</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">,</span>
-    <span class="n">poke_interval</span><span class="o">=</span><span class="mi">60</span>
-<span class="p">)</span>
-</code></pre></div>
-
+sensor = BigQuerySensor(
+    task_id='data_quality_check',
+    conn_id='bigquery_default',
+    sql='SELECT COUNT(*) FROM mytable WHERE email IS NULL',
+    params={'project_id': 'myproject', 'dataset_id': 'mydataset', 'table_id': 'mytable'},
+    timeout=18*60*60,
+    poke_interval=60
+)
+</code></pre>
 <p>This sensor checks the data quality of the <code>mytable</code> BigQuery table by running a SQL query that counts the number of rows with null email values. If the count is greater than 0, the sensor fails and triggers a notification.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that organizations may encounter when implementing a data warehouse include:
@@ -240,31 +237,30 @@
 * <strong>Performance optimization tools</strong>: tools like Amazon Redshift's query optimization or Google BigQuery's query caching that improve performance
 * <strong>Security and access control tools</strong>: tools like Apache Ranger or Amazon Redshift's row-level security that secure and control access to data</p>
 <p>For example, to solve the problem of data silos, organizations can use a data integration tool like Apache NiFi, which provides a feature called <code>Flow</code>, which allows users to define a data flow using a graphical interface. Here is an example of a NiFi flow that integrates data from multiple sources:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Flow&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;processors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GetHTTP&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Get Data from API&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.example.com/data&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PutSQL&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Put Data in Database&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;dbUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jdbc:mysql://localhost:3306/mydb&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;tableName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mytable&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;connections&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;API to Database&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Get Data from API&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;destination&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Put Data in Database&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;My Flow&quot;,
+  &quot;processors&quot;: [
+    {
+      &quot;type&quot;: &quot;GetHTTP&quot;,
+      &quot;name&quot;: &quot;Get Data from API&quot;,
+      &quot;url&quot;: &quot;https://api.example.com/data&quot;
+    },
+    {
+      &quot;type&quot;: &quot;PutSQL&quot;,
+      &quot;name&quot;: &quot;Put Data in Database&quot;,
+      &quot;dbUrl&quot;: &quot;jdbc:mysql://localhost:3306/mydb&quot;,
+      &quot;tableName&quot;: &quot;mytable&quot;
+    }
+  ],
+  &quot;connections&quot;: [
+    {
+      &quot;name&quot;: &quot;API to Database&quot;,
+      &quot;source&quot;: &quot;Get Data from API&quot;,
+      &quot;destination&quot;: &quot;Put Data in Database&quot;
+    }
+  ]
+}
+</code></pre>
 <p>This flow integrates data from an API and puts it into a database using a graphical interface.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Some real-world use cases for data warehousing include:
@@ -272,31 +268,30 @@
 * <strong>Financial analysis</strong>: a data warehouse that provides financial data, including revenue, expenses, and profitability, to support financial analysis and reporting
 * <strong>Marketing analytics</strong>: a data warehouse that provides marketing data, including campaign performance, customer engagement, and conversion rates, to support marketing analytics and optimization</p>
 <p>For example, a retail company can use a data warehouse to analyze customer behavior and optimize marketing campaigns. Here is an example of a data warehouse schema that supports customer 360:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">phone</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
-<span class="w">  </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  phone VARCHAR(20),
+  address VARCHAR(255)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">transactions</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">total</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">customers</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
-<span class="p">);</span>
+CREATE TABLE transactions (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  total DECIMAL(10, 2),
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">behaviors</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">behavior_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">behavior_type</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">customers</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE behaviors (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  behavior_date DATE,
+  behavior_type VARCHAR(255),
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+</code></pre>
 <p>This schema provides a single, unified view of customer data, including demographic, transactional, and behavioral data.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Some performance benchmarks for popular data warehousing solutions include:
@@ -304,13 +299,12 @@
 * <strong>Google BigQuery</strong>: 10-100 GB/s data loading speed, 1-10 ms query latency, and 100-1000 concurrent queries
 * <strong>Microsoft Azure Synapse Analytics</strong>: 10-100 GB/s data loading speed, 1-10 ms query latency, and 100-1000 concurrent queries</p>
 <p>For example, Amazon Redshift provides a feature called <code>Redshift Spectrum</code>, which allows users to query data in Amazon S3 without having to load it into the data warehouse. Here is an example of a benchmark that compares the performance of Redshift Spectrum with traditional Redshift:</p>
-<div class="codehilite"><pre><span></span><code>| Query | Redshift Spectrum | Traditional Redshift |
+<pre><code class="language-markdown">| Query | Redshift Spectrum | Traditional Redshift |
 | --- | --- | --- |
 | Select * from table | 10 ms | 100 ms |
 | Select count(*) from table | 1 ms | 10 ms |
 | Select sum(column) from table | 5 ms | 50 ms |
-</code></pre></div>
-
+</code></pre>
 <p>This benchmark shows that Redshift Spectrum provides faster query performance than traditional Redshift for certain types of queries.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>Some pricing models for popular data warehousing solutions include:
@@ -323,13 +317,12 @@
 * <strong>Data compression</strong>: compressing data to reduce storage costs
 * <strong>Data archiving</strong>: archiving infrequently accessed data to reduce storage costs</p>
 <p>For example, Amazon Redshift provides a feature called <code>Auto Scaling</code>, which allows users to automatically scale the number of nodes up or down based on workload demand. Here is an example of a cost optimization strategy that uses auto-scaling:</p>
-<div class="codehilite"><pre><span></span><code>| Node Type | Node Count | Hourly Cost |
+<pre><code class="language-markdown">| Node Type | Node Count | Hourly Cost |
 | --- | --- | --- |
 | dc2.large | 1 | $0.25 |
 | dc2.large | 2 | $0.50 |
 | dc2.large | 4 | $1.00 |
-</code></pre></div>
-
+</code></pre>
 <p>This strategy shows that auto-scaling can help optimize costs by reducing the number of nodes during periods of low workload demand.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, data warehousing is a critical component of any data-driven organization. By selecting the right data warehousing solution, implementing best practices, and optimizing performance and costs, organizations can unlock the full potential of their data and drive business success. Some key takeaways from this article include:

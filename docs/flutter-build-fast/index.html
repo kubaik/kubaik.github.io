@@ -173,23 +173,22 @@
 </ul>
 <h3 id="example-code-optimizing-widget-rendering">Example Code: Optimizing Widget Rendering</h3>
 <p>Here is an example of how to optimize widget rendering using the <code>const</code> keyword and the <code>ListView</code> widget:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">OptimizedWidget</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">itemCount:</span><span class="w"> </span><span class="m">100</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">title:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item </span><span class="si">$</span><span class="n">index</span><span class="s1">&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class OptimizedWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 100,
+      itemBuilder: (context, index) {
+        return const ListTile(
+          title: const Text('Item $index'),
+        );
+      },
+    );
+  }
+}
+</code></pre>
 <p>In this example, we use the <code>const</code> keyword to declare a constant <code>Text</code> widget, which reduces the number of widgets created and improves rendering performance. We also use the <code>ListView</code> widget to display a large list of data, which provides a more efficient rendering mechanism than the <code>Column</code> widget.</p>
 <h2 id="using-third-party-libraries-and-tools">Using Third-Party Libraries and Tools</h2>
 <p>Flutter provides a wide range of third-party libraries and tools that can help you build fast and efficient apps. Some popular libraries and tools include:</p>
@@ -206,41 +205,40 @@
 </ul>
 <h3 id="example-code-using-firebase-firestore">Example Code: Using Firebase Firestore</h3>
 <p>Here is an example of how to use Firebase Firestore to store and retrieve data:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:cloud_firestore/cloud_firestore.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:cloud_firestore/cloud_firestore.dart';
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">FirestoreExample</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">_FirestoreExampleState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_FirestoreExampleState</span><span class="p">();</span>
-<span class="p">}</span>
+class FirestoreExample extends StatefulWidget {
+  @override
+  _FirestoreExampleState createState() =&gt; _FirestoreExampleState();
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">_FirestoreExampleState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">FirestoreExample</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">FirebaseFirestore</span><span class="w"> </span><span class="n">_firestore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FirebaseFirestore</span><span class="p">.</span><span class="n">instance</span><span class="p">;</span>
+class _FirestoreExampleState extends State&lt;FirestoreExample&gt; {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">StreamBuilder</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">stream:</span><span class="w"> </span><span class="n">_firestore</span><span class="p">.</span><span class="n">collection</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">).</span><span class="n">snapshots</span><span class="p">(),</span>
-<span class="w">      </span><span class="nl">builder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">snapshot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">snapshot</span><span class="p">.</span><span class="n">hasData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">            </span><span class="nl">child:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">CircularProgressIndicator</span><span class="p">(),</span>
-<span class="w">          </span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _firestore.collection('items').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: const CircularProgressIndicator(),
+          );
+        }
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">itemCount:</span><span class="w"> </span><span class="n">snapshot</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">docs</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-<span class="w">          </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">snapshot</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">docs</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]),</span>
-<span class="w">            </span><span class="p">);</span>
-<span class="w">          </span><span class="p">},</span>
-<span class="w">        </span><span class="p">);</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        return ListView.builder(
+          itemCount: snapshot.data.docs.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(snapshot.data.docs[index]['name']),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+</code></pre>
 <p>In this example, we use the <code>cloud_firestore</code> package to interact with the Firebase Firestore database. We create a <code>StreamBuilder</code> widget to handle real-time data updates and rendering, and use the <code>ListView</code> widget to display a list of data.</p>
 <h2 id="solving-common-problems">Solving Common Problems</h2>
 <p>When building fast and efficient Flutter apps, you may encounter common problems such as:</p>
@@ -257,35 +255,34 @@
 </ul>
 <h3 id="example-code-optimizing-app-startup">Example Code: Optimizing App Startup</h3>
 <p>Here is an example of how to optimize app startup using the <code>flutter pub</code> command:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;My App&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">MyHomePage</span><span class="p">(),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: const MyHomePage(),
+    );
+  }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyHomePage</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">body:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">child:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: const Center(
+        child: const Text('Hello, World!'),
+      ),
+    );
+  }
+}
+</code></pre>
 <p>In this example, we use the <code>flutter pub</code> command to analyze our app's startup performance and identify bottlenecks. We also use the <code>WidgetsFlutterBinding.ensureInitialized()</code> method to ensure that the Flutter binding is initialized before running the app.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In this article, we explored how to build fast and efficient Flutter apps, with a focus on practical code examples and real-world use cases. We covered topics such as optimizing widget rendering, using third-party libraries and tools, and solving common problems.</p>

@@ -165,22 +165,21 @@
 4. <strong>Develop data products</strong>: Develop data products that provide standardized access to data, such as APIs, data pipelines, or data catalogs.</p>
 <h3 id="example-implementing-data-mesh-with-apache-spark-and-aws">Example: Implementing Data Mesh with Apache Spark and AWS</h3>
 <p>Let's consider an example of implementing Data Mesh using Apache Spark and AWS. In this example, we will create a data pipeline that extracts data from a relational database, transforms it using Apache Spark, and loads it into an AWS S3 data lake.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Data Mesh Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Data Mesh Example&quot;).getOrCreate()
 
-<span class="c1"># Extract data from a relational database</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;jdbc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;jdbc:postgresql://localhost:5432/mydatabase&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;driver&quot;</span><span class="p">,</span> <span class="s2">&quot;org.postgresql.Driver&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;dbtable&quot;</span><span class="p">,</span> <span class="s2">&quot;mytable&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;myuser&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;mypassword&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+# Extract data from a relational database
+df = spark.read.format(&quot;jdbc&quot;).option(&quot;url&quot;, &quot;jdbc:postgresql://localhost:5432/mydatabase&quot;).option(&quot;driver&quot;, &quot;org.postgresql.Driver&quot;).option(&quot;dbtable&quot;, &quot;mytable&quot;).option(&quot;user&quot;, &quot;myuser&quot;).option(&quot;password&quot;, &quot;mypassword&quot;).load()
 
-<span class="c1"># Transform data using Apache Spark</span>
-<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+# Transform data using Apache Spark
+transformed_df = df.filter(col(&quot;age&quot;) &gt; 18).groupBy(&quot;country&quot;).count()
 
-<span class="c1"># Load data into an AWS S3 data lake</span>
-<span class="n">transformed_df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;s3a://mybucket/mydata&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Load data into an AWS S3 data lake
+transformed_df.write.format(&quot;parquet&quot;).save(&quot;s3a://mybucket/mydata&quot;)
+</code></pre>
 <p>In this example, we use Apache Spark to extract data from a relational database, transform it, and load it into an AWS S3 data lake. This data pipeline can be managed by a team responsible for the data domain, allowing them to own and manage their data.</p>
 <h2 id="benefits-of-data-mesh">Benefits of Data Mesh</h2>
 <p>The Data Mesh architecture provides several benefits, including:
@@ -199,34 +198,33 @@
 * <strong>Data security</strong>: Implement data security measures, such as encryption and access controls, to protect sensitive data.</p>
 <h3 id="example-implementing-data-governance-with-apache-atlas">Example: Implementing Data Governance with Apache Atlas</h3>
 <p>Let's consider an example of implementing data governance using Apache Atlas. In this example, we will create a data governance framework that defines data standards, policies, and procedures.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">atlas</span> <span class="kn">import</span> <span class="n">Atlas</span>
+<pre><code class="language-python">from atlas import Atlas
 
-<span class="c1"># Create an Atlas client</span>
-<span class="n">atlas</span> <span class="o">=</span> <span class="n">Atlas</span><span class="p">(</span><span class="s2">&quot;http://localhost:21000&quot;</span><span class="p">)</span>
+# Create an Atlas client
+atlas = Atlas(&quot;http://localhost:21000&quot;)
 
-<span class="c1"># Define a data governance framework</span>
-<span class="n">framework</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Governance Framework&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A framework for governing data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;policies&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Quality Policy&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A policy for ensuring data quality&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Validation Rule&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A rule for validating data&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;data.quality &gt; 0.5&quot;</span>
-                <span class="p">}</span>
-            <span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+# Define a data governance framework
+framework = {
+    &quot;name&quot;: &quot;Data Governance Framework&quot;,
+    &quot;description&quot;: &quot;A framework for governing data&quot;,
+    &quot;policies&quot;: [
+        {
+            &quot;name&quot;: &quot;Data Quality Policy&quot;,
+            &quot;description&quot;: &quot;A policy for ensuring data quality&quot;,
+            &quot;rules&quot;: [
+                {
+                    &quot;name&quot;: &quot;Data Validation Rule&quot;,
+                    &quot;description&quot;: &quot;A rule for validating data&quot;,
+                    &quot;condition&quot;: &quot;data.quality &gt; 0.5&quot;
+                }
+            ]
+        }
+    ]
+}
 
-<span class="c1"># Create the data governance framework</span>
-<span class="n">atlas</span><span class="o">.</span><span class="n">create_governance_framework</span><span class="p">(</span><span class="n">framework</span><span class="p">)</span>
-</code></pre></div>
-
+# Create the data governance framework
+atlas.create_governance_framework(framework)
+</code></pre>
 <p>In this example, we use Apache Atlas to create a data governance framework that defines data standards, policies, and procedures. This framework can be used to govern data across the organization, ensuring data quality, security, and compliance.</p>
 <h2 id="tools-and-platforms-for-data-mesh">Tools and Platforms for Data Mesh</h2>
 <p>Several tools and platforms can be used to implement a Data Mesh architecture, including:
@@ -237,22 +235,21 @@
 * <strong>Databricks</strong>: A cloud-based data engineering platform.</p>
 <h3 id="example-implementing-data-mesh-with-databricks-and-snowflake">Example: Implementing Data Mesh with Databricks and Snowflake</h3>
 <p>Let's consider an example of implementing Data Mesh using Databricks and Snowflake. In this example, we will create a data pipeline that extracts data from a Snowflake data warehouse, transforms it using Databricks, and loads it into an AWS S3 data lake.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Data Mesh Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Data Mesh Example&quot;).getOrCreate()
 
-<span class="c1"># Extract data from a Snowflake data warehouse</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;snowflake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_account&quot;</span><span class="p">,</span> <span class="s2">&quot;myaccount&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_user&quot;</span><span class="p">,</span> <span class="s2">&quot;myuser&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_password&quot;</span><span class="p">,</span> <span class="s2">&quot;mypassword&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_warehouse&quot;</span><span class="p">,</span> <span class="s2">&quot;mywarehouse&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_database&quot;</span><span class="p">,</span> <span class="s2">&quot;mydatabase&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;sf_schema&quot;</span><span class="p">,</span> <span class="s2">&quot;myschema&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+# Extract data from a Snowflake data warehouse
+df = spark.read.format(&quot;snowflake&quot;).option(&quot;sf_account&quot;, &quot;myaccount&quot;).option(&quot;sf_user&quot;, &quot;myuser&quot;).option(&quot;sf_password&quot;, &quot;mypassword&quot;).option(&quot;sf_warehouse&quot;, &quot;mywarehouse&quot;).option(&quot;sf_database&quot;, &quot;mydatabase&quot;).option(&quot;sf_schema&quot;, &quot;myschema&quot;).load()
 
-<span class="c1"># Transform data using Databricks</span>
-<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+# Transform data using Databricks
+transformed_df = df.filter(col(&quot;age&quot;) &gt; 18).groupBy(&quot;country&quot;).count()
 
-<span class="c1"># Load data into an AWS S3 data lake</span>
-<span class="n">transformed_df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;s3a://mybucket/mydata&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Load data into an AWS S3 data lake
+transformed_df.write.format(&quot;parquet&quot;).save(&quot;s3a://mybucket/mydata&quot;)
+</code></pre>
 <p>In this example, we use Databricks and Snowflake to create a data pipeline that extracts data from a Snowflake data warehouse, transforms it, and loads it into an AWS S3 data lake. This data pipeline can be managed by a team responsible for the data domain, allowing them to own and manage their data.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Data Mesh is a powerful architecture for managing data at scale. By treating data as a product, teams can own and manage their data domains, improving data quality, increasing data-driven decision-making, and reducing data management costs. To get started with Data Mesh, identify your data domains, establish a governance framework, implement self-serve data infrastructure, and develop data products. Consider using tools and platforms like Apache Spark, Apache Atlas, AWS S3, Snowflake, and Databricks to support your Data Mesh implementation.</p>

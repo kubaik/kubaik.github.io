@@ -163,45 +163,42 @@
 <li>Using hypermedia links for navigation within the API</li>
 </ul>
 <p>Example of a RESTful API endpoint:</p>
-<div class="codehilite"><pre><span></span><code>GET /api/users/{id}
-</code></pre></div>
-
+<pre><code class="language-markdown">GET /api/users/{id}
+</code></pre>
 <h3 id="2-singleton-pattern">2. Singleton Pattern</h3>
 <p>The Singleton pattern ensures that a class has only one instance and provides a global point of access to it. This pattern is useful when you need to control access to a shared resource or manage a global state within your API.</p>
 <p>Example implementation in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
-    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+<pre><code class="language-python">class Singleton:
+    _instance = None
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
-</code></pre></div>
-
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
+</code></pre>
 <h3 id="3-factory-pattern">3. Factory Pattern</h3>
 <p>The Factory pattern is useful for creating objects without specifying the exact class of object that will be created. This pattern provides a way to delegate the object creation logic to a separate factory class.</p>
 <p>Example implementation in Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">interface</span> <span class="nc">Shape</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code class="language-java">interface Shape {
+    void draw();
+}
 
-<span class="kd">class</span> <span class="nc">Circle</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Shape</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Drawing a circle&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println(&quot;Drawing a circle&quot;);
+    }
+}
 
-<span class="kd">class</span> <span class="nc">ShapeFactory</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Shape</span><span class="w"> </span><span class="nf">createShape</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;circle&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Circle</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ShapeFactory {
+    public Shape createShape(String type) {
+        if (type.equals(&quot;circle&quot;)) {
+            return new Circle();
+        }
+        return null;
+    }
+}
+</code></pre>
 <h2 id="best-practices-for-api-design">Best Practices for API Design</h2>
 <p>To ensure that your APIs are well-designed and easy to consume, consider the following best practices:</p>
 <ol>

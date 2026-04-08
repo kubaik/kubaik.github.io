@@ -166,56 +166,53 @@
 4. <strong>Implement service discovery</strong>: Use a service discovery mechanism such as Netflix's Eureka or Apache ZooKeeper to manage the registration and discovery of services.</p>
 <h3 id="example-code-service-discovery-using-netflixs-eureka">Example Code: Service Discovery using Netflix's Eureka</h3>
 <p>Here is an example of how to use Netflix's Eureka for service discovery in a Java application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.appinfo.ApplicationInfoManager</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.discovery.EurekaClient</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.discovery.EurekaClientConfig</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import com.netflix.appinfo.ApplicationInfoManager;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.EurekaClientConfig;
 
-<span class="c1">// Create an instance of the Eureka client</span>
-<span class="n">EurekaClient</span><span class="w"> </span><span class="n">eurekaClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EurekaClient</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">EurekaClientConfig</span><span class="p">());</span>
+// Create an instance of the Eureka client
+EurekaClient eurekaClient = new EurekaClient(new EurekaClientConfig());
 
-<span class="c1">// Register the service with Eureka</span>
-<span class="n">ApplicationInfoManager</span><span class="p">.</span><span class="na">getInstance</span><span class="p">().</span><span class="na">setInstanceStatus</span><span class="p">(</span><span class="n">InstanceStatus</span><span class="p">.</span><span class="na">UP</span><span class="p">);</span>
+// Register the service with Eureka
+ApplicationInfoManager.getInstance().setInstanceStatus(InstanceStatus.UP);
 
-<span class="c1">// Get an instance of the service from Eureka</span>
-<span class="n">InstanceInfo</span><span class="w"> </span><span class="n">instanceInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eurekaClient</span><span class="p">.</span><span class="na">getNextServerFromEureka</span><span class="p">(</span><span class="s">&quot;my-service&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-</code></pre></div>
-
+// Get an instance of the service from Eureka
+InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka(&quot;my-service&quot;, false);
+</code></pre>
 <p>In this example, we create an instance of the Eureka client and register our service with it. We then use the <code>getNextServerFromEureka</code> method to get an instance of the service from Eureka.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem in microservices architecture is <strong>communication between services</strong>. To solve this problem, we can use APIs or message queues such as Apache Kafka or RabbitMQ. For example, we can use REST APIs to communicate between services:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python"># Import the necessary libraries
+import requests
 
-<span class="c1"># Define the URL of the service</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://my-service:8080/api/data&quot;</span>
+# Define the URL of the service
+url = &quot;http://my-service:8080/api/data&quot;
 
-<span class="c1"># Send a GET request to the service</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+# Send a GET request to the service
+response = requests.get(url)
 
-<span class="c1"># Print the response</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the response
+print(response.json())
+</code></pre>
 <p>In this example, we use the <code>requests</code> library to send a GET request to the service and print the response.</p>
 <p>Another common problem is <strong>service failure</strong>. To solve this problem, we can use <strong>circuit breakers</strong> such as Netflix's Hystrix or Apache Circuit Breaker. A circuit breaker detects when a service is failing and prevents further requests to it until it becomes available again. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.hystrix.HystrixCommand</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.netflix.hystrix.HystrixCommandGroupKey</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
 
-<span class="c1">// Define a command to get data from the service</span>
-<span class="n">HystrixCommand</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HystrixCommand</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">(</span><span class="n">HystrixCommandGroupKey</span><span class="p">.</span><span class="na">Factory</span><span class="p">.</span><span class="na">asKey</span><span class="p">(</span><span class="s">&quot;my-service&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get data from the service</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getDataFromService</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
+// Define a command to get data from the service
+HystrixCommand&lt;String&gt; command = new HystrixCommand&lt;String&gt;(HystrixCommandGroupKey.Factory.asKey(&quot;my-service&quot;)) {
+    @Override
+    protected String run() throws Exception {
+        // Get data from the service
+        return getDataFromService();
+    }
+};
 
-<span class="c1">// Execute the command</span>
-<span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="na">execute</span><span class="p">();</span>
-</code></pre></div>
-
+// Execute the command
+String data = command.execute();
+</code></pre>
 <p>In this example, we define a command to get data from the service using Hystrix. If the service fails, Hystrix will detect it and prevent further requests to it until it becomes available again.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some concrete use cases for microservices architecture:

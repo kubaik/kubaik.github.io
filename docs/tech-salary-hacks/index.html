@@ -165,22 +165,21 @@
 <h3 id="using-data-to-inform-your-negotiation">Using Data to Inform Your Negotiation</h3>
 <p>Using data to inform your negotiation can be a powerful tool. For example, if you are a data scientist, you can use data visualization tools like Tableau or Power BI to create interactive dashboards that demonstrate your skills and qualifications.</p>
 <p>Here is an example of how you can use Python and the popular data science library Pandas to create a simple data visualization:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Category&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a sample dataset
+data = {'Category': ['A', 'B', 'C', 'D'],
+        'Value': [10, 20, 30, 40]}
+df = pd.DataFrame(data)
 
-<span class="c1"># Create a bar chart</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Category&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample Data Visualization&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Create a bar chart
+plt.bar(df['Category'], df['Value'])
+plt.xlabel('Category')
+plt.ylabel('Value')
+plt.title('Sample Data Visualization')
+plt.show()
+</code></pre>
 <p>This code creates a simple bar chart that can be used to visualize data. By using data visualization tools and techniques, you can create interactive and dynamic dashboards that demonstrate your skills and qualifications.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can arise during the salary negotiation process. Some of these problems include:</p>
@@ -214,18 +213,17 @@
 <li><strong>Negotiate confidently</strong>: Be confident and assertive during the negotiation process, and be willing to walk away if the company is not willing to meet your target salary range.</li>
 </ol>
 <p>Here is an example of how you can use a spreadsheet to track your salary negotiation progress:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Company&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Google&#39;</span><span class="p">,</span> <span class="s1">&#39;Facebook&#39;</span><span class="p">,</span> <span class="s1">&#39;Amazon&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;Salary&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200000</span><span class="p">,</span> <span class="mi">250000</span><span class="p">,</span> <span class="mi">300000</span><span class="p">],</span>
-        <span class="s1">&#39;Benefits&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Health insurance, retirement plan&#39;</span><span class="p">,</span> <span class="s1">&#39;Health insurance, retirement plan, stock options&#39;</span><span class="p">,</span> <span class="s1">&#39;Health insurance, retirement plan, stock options, flexible work arrangements&#39;</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a sample dataset
+data = {'Company': ['Google', 'Facebook', 'Amazon'],
+        'Salary': [200000, 250000, 300000],
+        'Benefits': ['Health insurance, retirement plan', 'Health insurance, retirement plan, stock options', 'Health insurance, retirement plan, stock options, flexible work arrangements']}
+df = pd.DataFrame(data)
 
-<span class="c1"># Print the dataset</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the dataset
+print(df)
+</code></pre>
 <p>This code creates a simple spreadsheet that can be used to track your salary negotiation progress. By using a spreadsheet to track your progress, you can stay organized and focused during the negotiation process.</p>
 <h2 id="using-alternative-forms-of-compensation">Using Alternative Forms of Compensation</h2>
 <p>Alternative forms of compensation can be a valuable tool in the salary negotiation process. Some examples of alternative forms of compensation include:</p>
@@ -279,27 +277,26 @@
 * The top companies for data scientists in terms of salary are Google, Microsoft, and Amazon (Glassdoor)</p>
 <p>By keeping these statistics in mind and utilizing the strategies and techniques outlined in this article, you can negotiate a higher salary and achieve your career goals. </p>
 <p>Here is an example of how you can use Python and the popular data science library Scikit-learn to create a simple machine learning model that predicts salary based on experience and location:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.linear_model import LinearRegression
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Experience&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-        <span class="s1">&#39;Location&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="s1">&#39;Salary&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">70000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">90000</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a sample dataset
+data = {'Experience': [1, 2, 3, 4, 5],
+        'Location': [0, 1, 0, 1, 0],
+        'Salary': [50000, 60000, 70000, 80000, 90000]}
+df = pd.DataFrame(data)
 
-<span class="c1"># Create a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+# Create a linear regression model
+model = LinearRegression()
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Experience&#39;</span><span class="p">,</span> <span class="s1">&#39;Location&#39;</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">])</span>
+# Train the model
+model.fit(df[['Experience', 'Location']], df['Salary'])
 
-<span class="c1"># Make a prediction</span>
-<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+# Make a prediction
+prediction = model.predict([[5, 0]])
 
-<span class="nb">print</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
-</code></pre></div>
-
+print(prediction)
+</code></pre>
 <p>This code creates a simple machine learning model that predicts salary based on experience and location. By using machine learning models and techniques, you can gain a deeper understanding of the factors that affect salary and make more informed decisions during the negotiation process. </p>
 <p>Finally, here are some key takeaways to keep in mind:
 * Salary negotiation is a critical component of the job search process for tech professionals

@@ -168,36 +168,34 @@
 <li><strong>Create a <code>tsconfig.json</code> file</strong>: Create a new file called <code>tsconfig.json</code> in the root of your project directory to configure the TypeScript compiler.</li>
 </ol>
 <p>Here is an example <code>tsconfig.json</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es5&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;commonjs&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;sourceMap&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;outDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;sourceMap&quot;: true,
+    &quot;outDir&quot;: &quot;build&quot;
+  }
+}
+</code></pre>
 <p>This configuration tells the TypeScript compiler to target ECMAScript 5, use the CommonJS module system, generate source maps, and output compiled JavaScript files in the <code>build</code> directory.</p>
 <h2 id="writing-typescript-code">Writing TypeScript Code</h2>
 <p>Once you have set up your project, you can start writing TypeScript code. Here is an example of a simple TypeScript class:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// greeter.ts</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Greeter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<pre><code class="language-typescript">// greeter.ts
+class Greeter {
+  private name: string;
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  constructor(name: string) {
+    this.name = name;
+  }
 
-<span class="w">  </span><span class="nx">greet</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  greet(): string {
+    return `Hello, ${this.name}!`;
+  }
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">greeter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Greeter</span><span class="p">(</span><span class="s2">&quot;World&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeter</span><span class="p">.</span><span class="nx">greet</span><span class="p">());</span><span class="w"> </span><span class="c1">// Output: Hello, World!</span>
-</code></pre></div>
-
+const greeter = new Greeter(&quot;World&quot;);
+console.log(greeter.greet()); // Output: Hello, World!
+</code></pre>
 <p>This code defines a <code>Greeter</code> class with a private <code>name</code> property, a constructor that initializes the <code>name</code> property, and a <code>greet</code> method that returns a greeting message.</p>
 <h2 id="using-typescript-with-popular-frameworks-and-libraries">Using TypeScript with Popular Frameworks and Libraries</h2>
 <p>TypeScript can be used with popular frameworks and libraries such as React, Angular, and Vue.js. Here are some examples:</p>
@@ -207,22 +205,21 @@
 <li><strong>Vue.js</strong>: To use TypeScript with Vue.js, you will need to install the <code>vue-property-decorator</code> package and create a <code>tsconfig.json</code> file that targets the <code>es5</code> target and uses the <code>commonjs</code> module system.</li>
 </ul>
 <p>Here is an example of using TypeScript with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// App.tsx</span>
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;react&quot;</span><span class="p">;</span>
+<pre><code class="language-typescript">// App.tsx
+import * as React from &quot;react&quot;;
 
-<span class="kd">interface</span><span class="w"> </span><span class="nx">Props</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+interface Props {
+  name: string;
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">!&lt;</span><span class="err">/div&gt;;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class App extends React.Component&lt;Props&gt; {
+  render() {
+    return &lt;div&gt;Hello, {this.props.name}!&lt;/div&gt;;
+  }
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
-</code></pre></div>
-
+export default App;
+</code></pre>
 <p>This code defines a <code>App</code> component that takes a <code>name</code> prop and renders a greeting message.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>TypeScript can have a significant impact on the performance of large-scale applications. Here are some performance benchmarks that compare the execution time of TypeScript and JavaScript code:</p>
@@ -231,29 +228,28 @@
 <li><strong>Memory usage</strong>: TypeScript code can use up to 20% less memory than equivalent JavaScript code due to the improved type checking and optimization.</li>
 </ul>
 <p>Here is an example of a performance benchmark that compares the execution time of TypeScript and JavaScript code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// benchmark.ts</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1000000</span><span class="p">;</span>
+<pre><code class="language-typescript">// benchmark.ts
+const iterations = 1000000;
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+function add(a: number, b: number): number {
+  return a + b;
+}
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s2">&quot;TypeScript&quot;</span><span class="p">);</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">iterations</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">add</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s2">&quot;TypeScript&quot;</span><span class="p">);</span>
+console.time(&quot;TypeScript&quot;);
+for (let i = 0; i &lt; iterations; i++) {
+  add(1, 2);
+}
+console.timeEnd(&quot;TypeScript&quot;);
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s2">&quot;JavaScript&quot;</span><span class="p">);</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">iterations</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="nx">add</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s2">&quot;JavaScript&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+console.time(&quot;JavaScript&quot;);
+for (let i = 0; i &lt; iterations; i++) {
+  function add(a, b) {
+    return a + b;
+  }
+  add(1, 2);
+}
+console.timeEnd(&quot;JavaScript&quot;);
+</code></pre>
 <p>This code defines a <code>add</code> function that takes two numbers and returns their sum, and then measures the execution time of the function using the <code>console.time</code> and <code>console.timeEnd</code> functions.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when using TypeScript, along with specific solutions:</p>
@@ -263,16 +259,14 @@
 <li><strong>Error TS2559: Type has no properties in common</strong>: This error occurs when the TypeScript compiler cannot find any common properties between two types. To solve this error, make sure that the types are defined and used correctly.</li>
 </ul>
 <p>Here is an example of how to solve the <code>Error TS2307: Cannot find module</code> error:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// example.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;fs&quot;</span><span class="p">;</span>
+<pre><code class="language-typescript">// example.ts
+import * as fs from &quot;fs&quot;;
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s2">&quot;example.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;utf8&quot;</span><span class="p">));</span>
-</code></pre></div>
-
+console.log(fs.readFileSync(&quot;example.txt&quot;, &quot;utf8&quot;));
+</code></pre>
 <p>To solve this error, make sure that the <code>fs</code> module is installed and imported correctly. You can install the <code>@types/node</code> package to provide type definitions for the <code>fs</code> module:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>--save-dev<span class="w"> </span>@types/node
-</code></pre></div>
-
+<pre><code class="language-bash">npm install --save-dev @types/node
+</code></pre>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>TypeScript is a powerful tool for building large-scale applications. Its optional static typing and other features make it easier to catch errors early and improve code maintainability. By following the steps outlined in this article, developers can set up a new TypeScript project, write TypeScript code, and use TypeScript with popular frameworks and libraries.</p>
 <p>To get started with TypeScript, follow these next steps:</p>

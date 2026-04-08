@@ -165,28 +165,27 @@
 * <strong>Virtual Real Estate</strong>: NFTs can be used to create unique virtual real estate, such as plots of land in a virtual world.</p>
 <h3 id="code-example-creating-an-nft-on-ethereum">Code Example: Creating an NFT on Ethereum</h3>
 <p>Here is an example of how to create an NFT on Ethereum using the Solidity programming language:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Mapping of NFTs to their owners</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">))</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>nftOwners<span class="p">;</span>
+contract MyNFT {
+    // Mapping of NFTs to their owners
+    mapping (address =&gt; mapping (uint256 =&gt; uint256)) public nftOwners;
 
-<span class="w">    </span><span class="c1">// Function to create a new NFT</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createNFT</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_tokenId</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_tokenURI<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new NFT and assign it to the creator</span>
-<span class="w">        </span>nftOwners<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>_tokenId<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>_tokenId<span class="p">;</span>
+    // Function to create a new NFT
+    function createNFT(uint256 _tokenId, string memory _tokenURI) public {
+        // Create a new NFT and assign it to the creator
+        nftOwners[msg.sender][_tokenId] = _tokenId;
 
-<span class="w">        </span><span class="c1">// Emit an event to notify the blockchain of the new NFT</span>
-<span class="w">        </span>emit<span class="w"> </span>NewNFT<span class="p">(</span>_tokenId<span class="p">,</span><span class="w"> </span>_tokenURI<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Emit an event to notify the blockchain of the new NFT
+        emit NewNFT(_tokenId, _tokenURI);
+    }
 
-<span class="w">    </span><span class="c1">// Event to notify the blockchain of a new NFT</span>
-<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">NewNFT</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">indexed</span><span class="w"> </span>_tokenId<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">_tokenURI</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Event to notify the blockchain of a new NFT
+    event NewNFT(uint256 indexed _tokenId, string _tokenURI);
+}
+</code></pre>
 <p>This contract creates a new NFT with a unique token ID and assigns it to the creator. The <code>createNFT</code> function can be called by anyone to create a new NFT, and the <code>NewNFT</code> event is emitted to notify the blockchain of the new NFT.</p>
 <h2 id="tools-and-platforms-for-nft-development">Tools and Platforms for NFT Development</h2>
 <p>There are several tools and platforms available for NFT development, including:
@@ -203,41 +202,40 @@
 * <strong>Layer 2 scaling solutions</strong>: Using layer 2 scaling solutions such as Optimism or Polygon to reduce the gas cost.</p>
 <h3 id="code-example-batching-nft-transactions">Code Example: Batching NFT Transactions</h3>
 <p>Here is an example of how to batch multiple NFT transactions together using the Web3.js library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="c1">// Define the NFT contract ABI and address</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContractABI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
+// Define the NFT contract ABI and address
+const nftContractABI = [...];
+const nftContractAddress = '0x...';
 
-<span class="c1">// Create a new instance of the NFT contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">nftContractABI</span><span class="p">,</span><span class="w"> </span><span class="nx">nftContractAddress</span><span class="p">);</span>
+// Create a new instance of the NFT contract
+const nftContract = new web3.eth.Contract(nftContractABI, nftContractAddress);
 
-<span class="c1">// Define the batch of NFT transactions</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ether&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">createNFT</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://example.com/nft1.json&#39;</span><span class="p">).</span><span class="nx">encodeABI</span><span class="p">()</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ether&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">createNFT</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://example.com/nft2.json&#39;</span><span class="p">).</span><span class="nx">encodeABI</span><span class="p">()</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">];</span>
+// Define the batch of NFT transactions
+const batch = [
+    {
+        from: '0x...',
+        to: '0x...',
+        value: web3.utils.toWei('1', 'ether'),
+        data: nftContract.methods.createNFT(1, 'https://example.com/nft1.json').encodeABI()
+    },
+    {
+        from: '0x...',
+        to: '0x...',
+        value: web3.utils.toWei('1', 'ether'),
+        data: nftContract.methods.createNFT(2, 'https://example.com/nft2.json').encodeABI()
+    }
+];
 
-<span class="c1">// Send the batch of transactions</span>
-<span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">sendTransaction</span><span class="p">({</span>
-<span class="w">    </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="nx">nftContractAddress</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ether&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">batchTransactions</span><span class="p">(</span><span class="nx">batch</span><span class="p">).</span><span class="nx">encodeABI</span><span class="p">()</span>
-<span class="p">})</span>
-</code></pre></div>
-
+// Send the batch of transactions
+web3.eth.sendTransaction({
+    from: '0x...',
+    to: nftContractAddress,
+    value: web3.utils.toWei('2', 'ether'),
+    data: nftContract.methods.batchTransactions(batch).encodeABI()
+})
+</code></pre>
 <p>This code batches multiple NFT transactions together and sends them as a single transaction, reducing the overall gas cost.</p>
 <h2 id="real-world-implementations">Real-World Implementations</h2>
 <p>Several companies and organizations are already using NFT technology in real-world applications. For example:
@@ -246,57 +244,56 @@
 * <strong>The NBA</strong>: The NBA has developed a platform for creating and trading unique digital collectibles, such as rare in-game items and limited edition digital trading cards.</p>
 <h3 id="code-example-implementing-an-nft-marketplace">Code Example: Implementing an NFT Marketplace</h3>
 <p>Here is an example of how to implement an NFT marketplace using the React.js library:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;web3&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import Web3 from 'web3';
 
-<span class="c1">// Define the NFT contract ABI and address</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContractABI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
+// Define the NFT contract ABI and address
+const nftContractABI = [...];
+const nftContractAddress = '0x...';
 
-<span class="c1">// Create a new instance of the NFT contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">nftContractABI</span><span class="p">,</span><span class="w"> </span><span class="nx">nftContractAddress</span><span class="p">);</span>
+// Create a new instance of the NFT contract
+const nftContract = new Web3.eth.Contract(nftContractABI, nftContractAddress);
 
-<span class="c1">// Define the marketplace component</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">Marketplace</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">nfts</span><span class="p">,</span><span class="w"> </span><span class="nx">setNfts</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">account</span><span class="p">,</span><span class="w"> </span><span class="nx">setAccount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+// Define the marketplace component
+function Marketplace() {
+    const [nfts, setNfts] = useState([]);
+    const [account, setAccount] = useState(null);
 
-<span class="w">    </span><span class="c1">// Load the NFTs from the contract</span>
-<span class="w">    </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getNFTs</span><span class="p">().</span><span class="nx">call</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">nfts</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">setNfts</span><span class="p">(</span><span class="nx">nfts</span><span class="p">);</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+    // Load the NFTs from the contract
+    useEffect(() =&gt; {
+        nftContract.methods.getNFTs().call().then((nfts) =&gt; {
+            setNfts(nfts);
+        });
+    }, []);
 
-<span class="w">    </span><span class="c1">// Handle the purchase of an NFT</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">handlePurchase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">nft</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Send a transaction to the contract to purchase the NFT</span>
-<span class="w">        </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">purchaseNFT</span><span class="p">(</span><span class="nx">nft</span><span class="p">.</span><span class="nx">tokenId</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span>
-<span class="w">            </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="nx">account</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ether&#39;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">};</span>
+    // Handle the purchase of an NFT
+    const handlePurchase = (nft) =&gt; {
+        // Send a transaction to the contract to purchase the NFT
+        nftContract.methods.purchaseNFT(nft.tokenId).send({
+            from: account,
+            value: web3.utils.toWei('1', 'ether')
+        });
+    };
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Marketplace</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-<span class="w">                </span><span class="p">{</span><span class="nx">nfts</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">nft</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">                    </span><span class="o">&lt;</span><span class="nx">li</span><span class="w"> </span><span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">nft</span><span class="p">.</span><span class="nx">tokenId</span><span class="p">}</span><span class="o">&gt;</span>
-<span class="w">                        </span><span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="p">{</span><span class="nx">nft</span><span class="p">.</span><span class="nx">tokenURI</span><span class="p">}</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">                        </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">nft</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">                        </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">nft</span><span class="p">.</span><span class="nx">description</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">                        </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">handlePurchase</span><span class="p">(</span><span class="nx">nft</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Purchase</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">                    </span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-<span class="w">                </span><span class="p">))}</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="err">/ul&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">}</span>
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Marketplace&lt;/h1&gt;
+            &lt;ul&gt;
+                {nfts.map((nft) =&gt; (
+                    &lt;li key={nft.tokenId}&gt;
+                        &lt;img src={nft.tokenURI} /&gt;
+                        &lt;p&gt;{nft.name}&lt;/p&gt;
+                        &lt;p&gt;{nft.description}&lt;/p&gt;
+                        &lt;button onClick={() =&gt; handlePurchase(nft)}&gt;Purchase&lt;/button&gt;
+                    &lt;/li&gt;
+                ))}
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Marketplace</span><span class="p">;</span>
-</code></pre></div>
-
+export default Marketplace;
+</code></pre>
 <p>This code implements a basic NFT marketplace, which allows users to browse and purchase unique digital assets.</p>
 <h2 id="pricing-data-and-revenue-models">Pricing Data and Revenue Models</h2>
 <p>The pricing of NFTs can vary widely depending on several factors, including the rarity and uniqueness of the asset, the demand for the asset, and the platform fees. According to data from Rarible, the average price of an NFT on their platform is around $100-$500.</p>

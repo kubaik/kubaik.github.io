@@ -171,28 +171,26 @@
 </ul>
 <h3 id="example-building-a-static-website-with-nextjs">Example: Building a Static Website with Next.js</h3>
 <p>Here is an example of how to build a simple static website using Next.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Head</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next/head&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// pages/index.js
+import Head from 'next/head';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Home</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Static</span><span class="w"> </span><span class="nx">Website</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">website</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function Home() {
+  return (
+    &lt;div&gt;
+      &lt;Head&gt;
+        &lt;title&gt;My Static Website&lt;/title&gt;
+      &lt;/Head&gt;
+      &lt;h1&gt;Welcome to my static website&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Home</span><span class="p">;</span>
-</code></pre></div>
-
+export default Home;
+</code></pre>
 <p>In this example, we define a simple <code>Home</code> component that renders an <code>&lt;h1&gt;</code> tag with a welcome message. We also use the <code>Head</code> component from <code>next/head</code> to define the page title.</p>
 <p>To generate the static HTML files, we can run the following command:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>build
-</code></pre></div>
-
+<pre><code class="language-bash">npm run build
+</code></pre>
 <p>This will generate the static HTML files in the <code>public</code> directory, which can be served directly by a web server or CDN.</p>
 <h2 id="common-use-cases-for-ssg">Common Use Cases for SSG</h2>
 <p>SSG is suitable for a wide range of use cases, including:</p>
@@ -204,41 +202,39 @@
 </ol>
 <h3 id="example-building-a-static-e-commerce-website-with-gatsby">Example: Building a Static E-commerce Website with Gatsby</h3>
 <p>Here is an example of how to build a simple static e-commerce website using Gatsby:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/pages/products.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Link</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;gatsby&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// src/pages/products.js
+import React from 'react';
+import { Link } from 'gatsby';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">10.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 2&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">9.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 3&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">12.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
+const Products = () =&gt; {
+  const products = [
+    { id: 1, name: 'Product 1', price: 10.99 },
+    { id: 2, name: 'Product 2', price: 9.99 },
+    { id: 3, name: 'Product 3', price: 12.99 },
+  ];
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Products</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">products</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">product</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">product</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;</span>
-<span class="w">            </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="p">{</span><span class="sb">`/products/</span><span class="si">${</span><span class="nx">product</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">}&gt;</span>
-<span class="w">              </span><span class="p">{</span><span class="nx">product</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">$</span><span class="p">{</span><span class="nx">product</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span>
-<span class="w">            </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
-<span class="w">          </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">))}</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Products&lt;/h1&gt;
+      &lt;ul&gt;
+        {products.map((product) =&gt; (
+          &lt;li key={product.id}&gt;
+            &lt;Link to={`/products/${product.id}`}&gt;
+              {product.name} - ${product.price}
+            &lt;/Link&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Products</span><span class="p">;</span>
-</code></pre></div>
-
+export default Products;
+</code></pre>
 <p>In this example, we define a <code>Products</code> component that renders a list of products, with each product linked to its own page. We use the <code>Link</code> component from <code>gatsby</code> to create the links.</p>
 <p>To generate the static HTML files, we can run the following command:</p>
-<div class="codehilite"><pre><span></span><code>gatsby<span class="w"> </span>build
-</code></pre></div>
-
+<pre><code class="language-bash">gatsby build
+</code></pre>
 <p>This will generate the static HTML files in the <code>public</code> directory, which can be served directly by a web server or CDN.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>SSG can significantly improve website performance, with page load times often reduced by 50-70%. According to a study by Google, the average page load time for a website is around 3-4 seconds. With SSG, page load times can be reduced to under 1 second.</p>
@@ -271,24 +267,22 @@
 </ol>
 <h3 id="example-handling-dynamic-content-with-a-serverless-function">Example: Handling Dynamic Content with a Serverless Function</h3>
 <p>Here is an example of how to handle dynamic content using a serverless function:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// functions/handleComment.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">APIGatewayEvent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;aws-lambda&#39;</span><span class="p">;</span>
+<pre><code class="language-js">// functions/handleComment.js
+import { APIGatewayEvent } from 'aws-lambda';
 
-<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="nx">APIGatewayEvent</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Process the comment and update the database</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Comment processed successfully&#39;</span><span class="w"> </span><span class="p">}),</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div>
-
+export const handler = async (event: APIGatewayEvent) =&gt; {
+  const comment = event.body;
+  // Process the comment and update the database
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Comment processed successfully' }),
+  };
+};
+</code></pre>
 <p>In this example, we define a serverless function that handles a comment submission. We use the <code>APIGatewayEvent</code> type to define the event object, and we process the comment and update the database using the <code>event.body</code> property.</p>
 <p>To deploy the serverless function, we can run the following command:</p>
-<div class="codehilite"><pre><span></span><code>serverless<span class="w"> </span>deploy
-</code></pre></div>
-
+<pre><code class="language-bash">serverless deploy
+</code></pre>
 <p>This will deploy the serverless function to AWS, where it can be triggered by an API Gateway.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>SSG is a powerful technique for improving website performance, scalability, and security. By generating static HTML files ahead of time, we can reduce the load on the server and improve page load times. With the right tools and platforms, such as Next.js, Gatsby, and Hugo, we can build fast, secure, and scalable websites that meet the needs of modern users.</p>

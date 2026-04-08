@@ -165,83 +165,80 @@
 <p>Practicing coding skills is essential to perform well in tech interviews. Here are a few examples of coding challenges you can practice:</p>
 <h3 id="reversing-a-linked-list">Reversing a Linked List</h3>
 <p>Reversing a linked list is a common coding challenge that involves reversing the order of nodes in a singly linked list. Here's an example implementation in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+<pre><code class="language-python">class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-<span class="k">def</span> <span class="nf">reverse_linked_list</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-    <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">current</span> <span class="o">=</span> <span class="n">head</span>
-    <span class="k">while</span> <span class="n">current</span><span class="p">:</span>
-        <span class="n">next_node</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">next</span>
-        <span class="n">current</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">current</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="n">next_node</span>
-    <span class="k">return</span> <span class="n">prev</span>
+def reverse_linked_list(head):
+    prev = None
+    current = head
+    while current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    return prev
 
-<span class="c1"># Example usage:</span>
-<span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+# Example usage:
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
 
-<span class="n">reversed_head</span> <span class="o">=</span> <span class="n">reverse_linked_list</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-<span class="k">while</span> <span class="n">reversed_head</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">reversed_head</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">reversed_head</span> <span class="o">=</span> <span class="n">reversed_head</span><span class="o">.</span><span class="n">next</span>
-</code></pre></div>
-
+reversed_head = reverse_linked_list(head)
+while reversed_head:
+    print(reversed_head.data)
+    reversed_head = reversed_head.next
+</code></pre>
 <p>This implementation has a time complexity of O(n), where n is the number of nodes in the linked list, and a space complexity of O(1), since we only use a constant amount of space to store the previous node.</p>
 <h3 id="implementing-a-stack-using-an-array">Implementing a Stack using an Array</h3>
 <p>Implementing a stack using an array is another common coding challenge that involves creating a stack data structure using an array. Here's an example implementation in Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Stack</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">;</span>
+<pre><code class="language-java">public class Stack {
+    private int[] array;
+    private int top;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Stack</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">size</span><span class="o">]</span><span class="p">;</span>
-<span class="w">        </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public Stack(int size) {
+        array = new int[size];
+        top = -1;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">element</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Stack is full&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">array</span><span class="o">[++</span><span class="n">top</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public void push(int element) {
+        if (top == array.length - 1) {
+            throw new RuntimeException(&quot;Stack is full&quot;);
+        }
+        array[++top] = element;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">pop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Stack is empty&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">array</span><span class="o">[</span><span class="n">top</span><span class="o">--]</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public int pop() {
+        if (top == -1) {
+            throw new RuntimeException(&quot;Stack is empty&quot;);
+        }
+        return array[top--];
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Stack is empty&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">array</span><span class="o">[</span><span class="n">top</span><span class="o">]</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public int peek() {
+        if (top == -1) {
+            throw new RuntimeException(&quot;Stack is empty&quot;);
+        }
+        return array[top];
+    }
+}
 
-<span class="c1">// Example usage:</span>
-<span class="n">Stack</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Stack</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-<span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">());</span><span class="w"> </span><span class="c1">// prints 3</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="na">peek</span><span class="p">());</span><span class="w"> </span><span class="c1">// prints 2</span>
-</code></pre></div>
-
+// Example usage:
+Stack stack = new Stack(5);
+stack.push(1);
+stack.push(2);
+stack.push(3);
+System.out.println(stack.pop()); // prints 3
+System.out.println(stack.peek()); // prints 2
+</code></pre>
 <p>This implementation has a time complexity of O(1) for push, pop, and peek operations, since we only access the top element of the array.</p>
 <h3 id="optimizing-database-queries">Optimizing Database Queries</h3>
 <p>Optimizing database queries is a critical aspect of software development, as slow database queries can significantly impact the performance of your application. Here's an example of how you can optimize a slow database query using indexing:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<pre><code class="language-sql">CREATE INDEX idx_name ON customers (name);
 
-<span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+EXPLAIN SELECT * FROM customers WHERE name = 'John Doe';
+</code></pre>
 <p>This query creates an index on the <code>name</code> column of the <code>customers</code> table, which can significantly improve the performance of the query. According to a report by PostgreSQL, indexing can improve query performance by up to 90%.</p>
 <h2 id="using-tools-and-platforms">Using Tools and Platforms</h2>
 <p>There are many tools and platforms available to help you prepare for tech interviews, including:</p>

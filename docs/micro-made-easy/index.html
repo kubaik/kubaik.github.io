@@ -164,48 +164,46 @@
 3. <strong>Select a service discovery mechanism</strong>: Choose a mechanism for services to register and discover each other. Popular options include Netflix's Eureka, Apache ZooKeeper, and etcd.</p>
 <h3 id="example-implementing-a-simple-microservice-with-nodejs-and-express">Example: Implementing a Simple Microservice with Node.js and Express</h3>
 <p>Here's an example of a simple microservice implemented with Node.js and Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// users.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">// users.js
+const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users', (req, res) =&gt; {
+  const users = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Doe' },
+  ];
+  res.json(users);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Users service listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Users service listening on port 3000');
+});
+</code></pre>
 <p>This service listens on port 3000 and responds to GET requests to the <code>/users</code> endpoint.</p>
 <h3 id="example-using-docker-to-containerize-microservices">Example: Using Docker to Containerize Microservices</h3>
 <p>Docker is a popular tool for containerizing microservices. Here's an example of how to use Docker to containerize the users service:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># Dockerfile
+FROM node:14
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+WORKDIR /app
 
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+COPY package*.json ./
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+RUN npm install
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build
+RUN npm run build
 
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+EXPOSE 3000
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;users.js&quot;</span><span class="w"> </span><span class="p">]</span>
-</code></pre></div>
-
+CMD [ &quot;node&quot;, &quot;users.js&quot; ]
+</code></pre>
 <p>This Dockerfile uses the official Node.js 14 image, sets up the application directory, installs dependencies, copies the application code, builds the application, exposes port 3000, and sets the command to run the <code>users.js</code> file.</p>
 <h3 id="example-using-kubernetes-to-orchestrate-microservices">Example: Using Kubernetes to Orchestrate Microservices</h3>
 <p>Kubernetes is a popular tool for orchestrating microservices. Here's an example of how to use Kubernetes to deploy the users service:</p>
-<div class="codehilite"><pre><span></span><code># deployment.yaml
+<pre><code class="language-yml"># deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -225,8 +223,7 @@ spec:
         image: users:latest
         ports:
         - containerPort: 3000
-</code></pre></div>
-
+</code></pre>
 <p>This YAML file defines a Kubernetes deployment with 3 replicas of the users service.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that arise when implementing microservices architecture include:

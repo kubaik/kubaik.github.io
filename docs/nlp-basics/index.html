@@ -163,40 +163,38 @@
 <p>These techniques can be used individually or in combination to solve a wide range of NLP tasks.</p>
 <h2 id="practical-nlp-with-python">Practical NLP with Python</h2>
 <p>Python is a popular language for NLP tasks due to its simplicity and the availability of several NLP libraries, including NLTK, spaCy, and gensim. Here is an example of how to use NLTK to perform sentiment analysis on a piece of text:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.sentiment.vader</span> <span class="kn">import</span> <span class="n">SentimentIntensityAnalyzer</span>
+<pre><code class="language-python">import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-<span class="c1"># Download the VADER sentiment lexicon</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;vader_lexicon&#39;</span><span class="p">)</span>
+# Download the VADER sentiment lexicon
+nltk.download('vader_lexicon')
 
-<span class="c1"># Initialize the sentiment analyzer</span>
-<span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+# Initialize the sentiment analyzer
+sia = SentimentIntensityAnalyzer()
 
-<span class="c1"># Analyze the sentiment of a piece of text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I loved the new restaurant, the food was amazing!&quot;</span>
-<span class="n">sentiment</span> <span class="o">=</span> <span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Analyze the sentiment of a piece of text
+text = &quot;I loved the new restaurant, the food was amazing!&quot;
+sentiment = sia.polarity_scores(text)
 
-<span class="c1"># Print the sentiment scores</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the sentiment scores
+print(sentiment)
+</code></pre>
 <p>This code uses the VADER sentiment lexicon to analyze the sentiment of a piece of text and returns a dictionary with the sentiment scores. The scores include the positive, negative, and neutral sentiment scores, as well as a compound score that calculates the sum of all the lexicon ratings which have been normalized between -1(most extreme negative) and +1 (most extreme positive).</p>
 <h3 id="nlp-with-spacy">NLP with spaCy</h3>
 <p>spaCy is another popular NLP library for Python that is known for its high-performance and ease of use. Here is an example of how to use spaCy to perform named entity recognition on a piece of text:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import spacy
 
-<span class="c1"># Load the English language model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+# Load the English language model
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
 
-<span class="c1"># Process a piece of text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is looking to buy U.K. startup for $1 billion&quot;</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Process a piece of text
+text = &quot;Apple is looking to buy U.K. startup for $1 billion&quot;
+doc = nlp(text)
 
-<span class="c1"># Print the named entities</span>
-<span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the named entities
+for ent in doc.ents:
+    print(ent.text, ent.label_)
+</code></pre>
 <p>This code uses the English language model to process a piece of text and identify the named entities. The <code>ents</code> attribute of the <code>doc</code> object returns a list of named entities, which can be accessed using the <code>text</code> and <code>label_</code> attributes.</p>
 <h2 id="nlp-platforms-and-services">NLP Platforms and Services</h2>
 <p>There are several NLP platforms and services available that provide pre-trained models and APIs for NLP tasks. Some of the most popular platforms and services include:</p>

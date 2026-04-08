@@ -155,62 +155,59 @@
 <h4 id="example-building-a-simple-restful-api-with-expressjs">Example: Building a Simple RESTful API with Express.js</h4>
 <p>Let's create a basic RESTful API using Express.js to manage a list of books.</p>
 <p><strong>Step 1: Set Up Your Project</strong></p>
-<div class="codehilite"><pre><span></span><code>mkdir<span class="w"> </span>book-api
-<span class="nb">cd</span><span class="w"> </span>book-api
-npm<span class="w"> </span>init<span class="w"> </span>-y
-npm<span class="w"> </span>install<span class="w"> </span>express<span class="w"> </span>body-parser
-</code></pre></div>
-
+<pre><code class="language-bash">mkdir book-api
+cd book-api
+npm init -y
+npm install express body-parser
+</code></pre>
 <p><strong>Step 2: Create the API</strong></p>
 <p>Create a file named <code>app.js</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">bodyParser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const PORT = 3000;
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+app.use(bodyParser.json());
 
-<span class="kd">let</span><span class="w"> </span><span class="nx">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1984&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;George Orwell&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;To Kill a Mockingbird&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Harper Lee&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+let books = [
+    { id: 1, title: &quot;1984&quot;, author: &quot;George Orwell&quot; },
+    { id: 2, title: &quot;To Kill a Mockingbird&quot;, author: &quot;Harper Lee&quot; },
+];
 
-<span class="c1">// GET all books</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/books&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">books</span><span class="p">);</span>
-<span class="p">});</span>
+// GET all books
+app.get('/books', (req, res) =&gt; {
+    res.status(200).json(books);
+});
 
-<span class="c1">// GET a book by ID</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/books/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">));</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">book</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">404</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">book</span><span class="p">);</span>
-<span class="p">});</span>
+// GET a book by ID
+app.get('/books/:id', (req, res) =&gt; {
+    const book = books.find(b =&gt; b.id === parseInt(req.params.id));
+    if (!book) return res.status(404).send('Book not found');
+    res.status(200).json(book);
+});
 
-<span class="c1">// POST a new book</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/books&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newBook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="nx">books</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newBook</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">newBook</span><span class="p">);</span>
-<span class="p">});</span>
+// POST a new book
+app.post('/books', (req, res) =&gt; {
+    const { title, author } = req.body;
+    const newBook = { id: books.length + 1, title, author };
+    books.push(newBook);
+    res.status(201).json(newBook);
+});
 
-<span class="c1">// DELETE a book by ID</span>
-<span class="nx">app</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="s1">&#39;/books/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">));</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">204</span><span class="p">).</span><span class="nx">send</span><span class="p">();</span>
-<span class="p">});</span>
+// DELETE a book by ID
+app.delete('/books/:id', (req, res) =&gt; {
+    books = books.filter(b =&gt; b.id !== parseInt(req.params.id));
+    res.status(204).send();
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server is running on http://localhost:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(PORT, () =&gt; {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+</code></pre>
 <p><strong>Step 3: Test the API</strong></p>
 <p>You can test this API using tools like <strong>Postman</strong> or <strong>cURL</strong>. For example, to get all books, use:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://localhost:3000/books
-</code></pre></div>
-
+<pre><code class="language-bash">curl -X GET http://localhost:3000/books
+</code></pre>
 <h3 id="2-graphql-api-design">2. GraphQL API Design</h3>
 <p><strong>GraphQL</strong> is an alternative to REST that allows clients to request specific data, which can lead to more efficient data retrieval and reduced over-fetching.</p>
 <h4 id="characteristics-of-graphql-apis">Characteristics of GraphQL APIs:</h4>
@@ -221,70 +218,67 @@ npm<span class="w"> </span>install<span class="w"> </span>express<span class="w"
 </ul>
 <h4 id="example-building-a-simple-graphql-api-with-apollo-server">Example: Building a Simple GraphQL API with Apollo Server</h4>
 <p><strong>Step 1: Set Up Your Project</strong></p>
-<div class="codehilite"><pre><span></span><code>mkdir<span class="w"> </span>graphql-book-api
-<span class="nb">cd</span><span class="w"> </span>graphql-book-api
-npm<span class="w"> </span>init<span class="w"> </span>-y
-npm<span class="w"> </span>install<span class="w"> </span>apollo-server<span class="w"> </span>graphql
-</code></pre></div>
-
+<pre><code class="language-bash">mkdir graphql-book-api
+cd graphql-book-api
+npm init -y
+npm install apollo-server graphql
+</code></pre>
 <p><strong>Step 2: Create the API</strong></p>
 <p>Create a file named <code>index.js</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">,</span><span class="w"> </span><span class="nx">gql</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer, gql } = require('apollo-server');
 
-<span class="kd">let</span><span class="w"> </span><span class="nx">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1984&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;George Orwell&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;To Kill a Mockingbird&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Harper Lee&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+let books = [
+    { id: 1, title: &quot;1984&quot;, author: &quot;George Orwell&quot; },
+    { id: 2, title: &quot;To Kill a Mockingbird&quot;, author: &quot;Harper Lee&quot; },
+];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gql</span><span class="sb">`</span>
-<span class="sb">    type Book {</span>
-<span class="sb">        id: ID!</span>
-<span class="sb">        title: String!</span>
-<span class="sb">        author: String!</span>
-<span class="sb">    }</span>
+const typeDefs = gql`
+    type Book {
+        id: ID!
+        title: String!
+        author: String!
+    }
 
-<span class="sb">    type Query {</span>
-<span class="sb">        books: [Book]</span>
-<span class="sb">        book(id: ID!): Book</span>
-<span class="sb">    }</span>
+    type Query {
+        books: [Book]
+        book(id: ID!): Book
+    }
 
-<span class="sb">    type Mutation {</span>
-<span class="sb">        addBook(title: String!, author: String!): Book</span>
-<span class="sb">    }</span>
-<span class="sb">`</span><span class="p">;</span>
+    type Mutation {
+        addBook(title: String!, author: String!): Book
+    }
+`;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">books</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">books</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">book</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">id</span><span class="p">)),</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">Mutation</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">addBook</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">newBook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="w"> </span><span class="p">};</span>
-<span class="w">            </span><span class="nx">books</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newBook</span><span class="p">);</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">newBook</span><span class="p">;</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="p">};</span>
+const resolvers = {
+    Query: {
+        books: () =&gt; books,
+        book: (parent, args) =&gt; books.find(b =&gt; b.id === parseInt(args.id)),
+    },
+    Mutation: {
+        addBook: (parent, { title, author }) =&gt; {
+            const newBook = { id: books.length + 1, title, author };
+            books.push(newBook);
+            return newBook;
+        },
+    },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span><span class="w"> </span><span class="nx">typeDefs</span><span class="p">,</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">});</span>
+const server = new ApolloServer({ typeDefs, resolvers });
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`🚀  Server ready at </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+    console.log(`🚀  Server ready at ${url}`);
+});
+</code></pre>
 <p><strong>Step 3: Test the API</strong></p>
 <p>Using a tool like <strong>GraphiQL</strong> or <strong>Postman</strong>, you can run queries. For example, to get all books:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">books</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">id</span>
-<span class="w">        </span><span class="n">title</span>
-<span class="w">        </span><span class="n">author</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+    books {
+        id
+        title
+        author
+    }
+}
+</code></pre>
 <h3 id="3-grpc-for-high-performance-apis">3. gRPC for High-Performance APIs</h3>
 <p><strong>gRPC</strong> (Google Remote Procedure Call) is a modern, open-source RPC framework that can efficiently connect services in and across data centers.</p>
 <h4 id="characteristics-of-grpc">Characteristics of gRPC:</h4>
@@ -295,65 +289,62 @@ npm<span class="w"> </span>install<span class="w"> </span>apollo-server<span cla
 </ul>
 <h4 id="example-building-a-grpc-api-in-nodejs">Example: Building a gRPC API in Node.js</h4>
 <p><strong>Step 1: Set Up Your Project</strong></p>
-<div class="codehilite"><pre><span></span><code>mkdir<span class="w"> </span>grpc-book-api
-<span class="nb">cd</span><span class="w"> </span>grpc-book-api
-npm<span class="w"> </span>init<span class="w"> </span>-y
-npm<span class="w"> </span>install<span class="w"> </span>grpc<span class="w"> </span>@grpc/proto-loader
-</code></pre></div>
-
+<pre><code class="language-bash">mkdir grpc-book-api
+cd grpc-book-api
+npm init -y
+npm install grpc @grpc/proto-loader
+</code></pre>
 <p><strong>Step 2: Create the Protobuf File</strong></p>
 <p>Create a file named <code>books.proto</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+<pre><code class="language-protobuf">syntax = &quot;proto3&quot;;
 
-<span class="kd">service</span><span class="w"> </span><span class="n">BookService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">rpc</span><span class="w"> </span><span class="n">GetBooks</span><span class="w"> </span><span class="p">(</span><span class="n">Empty</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">BookList</span><span class="p">);</span>
-<span class="w">    </span><span class="k">rpc</span><span class="w"> </span><span class="n">AddBook</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="p">);</span>
-<span class="p">}</span>
+service BookService {
+    rpc GetBooks (Empty) returns (BookList);
+    rpc AddBook (Book) returns (Book);
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">Book</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="na">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="na">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
-<span class="p">}</span>
+message Book {
+    int32 id = 1;
+    string title = 2;
+    string author = 3;
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">BookList</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">repeated</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="na">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
+message BookList {
+    repeated Book books = 1;
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">Empty</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
-
+message Empty {}
+</code></pre>
 <p><strong>Step 3: Implement the API</strong></p>
 <p>Create a file named <code>server.js</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">grpc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@grpc/grpc-js&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">protoLoader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@grpc/proto-loader&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">packageDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">protoLoader</span><span class="p">.</span><span class="nx">loadSync</span><span class="p">(</span><span class="s1">&#39;books.proto&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">booksProto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">packageDefinition</span><span class="p">).</span><span class="nx">BookService</span><span class="p">;</span>
+<pre><code class="language-javascript">const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+const packageDefinition = protoLoader.loadSync('books.proto', {});
+const booksProto = grpc.loadPackageDefinition(packageDefinition).BookService;
 
-<span class="kd">let</span><span class="w"> </span><span class="nx">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1984&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;George Orwell&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;To Kill a Mockingbird&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Harper Lee&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+let books = [
+    { id: 1, title: &quot;1984&quot;, author: &quot;George Orwell&quot; },
+    { id: 2, title: &quot;To Kill a Mockingbird&quot;, author: &quot;Harper Lee&quot; },
+];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">getBooks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">call</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">books</span><span class="w"> </span><span class="p">});</span>
-<span class="p">};</span>
+const getBooks = (call, callback) =&gt; {
+    callback(null, { books });
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">addBook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">call</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newBook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">books</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="nx">call</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="nx">call</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">author</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="nx">books</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newBook</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="nx">newBook</span><span class="p">);</span>
-<span class="p">};</span>
+const addBook = (call, callback) =&gt; {
+    const newBook = { id: books.length + 1, title: call.request.title, author: call.request.author };
+    books.push(newBook);
+    callback(null, newBook);
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">Server</span><span class="p">();</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">addService</span><span class="p">(</span><span class="nx">booksProto</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getBooks</span><span class="p">,</span><span class="w"> </span><span class="nx">addBook</span><span class="w"> </span><span class="p">});</span>
+const server = new grpc.Server();
+server.addService(booksProto.service, { getBooks, addBook });
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">bindAsync</span><span class="p">(</span><span class="s1">&#39;127.0.0.1:50051&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">ServerCredentials</span><span class="p">.</span><span class="nx">createInsecure</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;gRPC server running at http://127.0.0.1:50051&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(), () =&gt; {
+    server.start();
+    console.log('gRPC server running at http://127.0.0.1:50051');
+});
+</code></pre>
 <p><strong>Step 4: Test the API</strong></p>
 <p>You can use a gRPC client or tools like <strong>BloomRPC</strong> to call the methods. For example, to get all books, you'd call <code>GetBooks</code>.</p>
 <h3 id="common-challenges-and-solutions">Common Challenges and Solutions</h3>

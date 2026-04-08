@@ -168,12 +168,11 @@ Suppose you're working with a customer dataset to predict churn. You might engin
 - Customer tenure (duration since account creation)
 - Average purchase value
 - Interaction frequency</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="c1"># Example feature engineering</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tenure_months&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;last_login&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;signup_date&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span> <span class="o">//</span> <span class="mi">30</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;avg_purchase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;total_spent&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;purchase_count&#39;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-python">import pandas as pd
+# Example feature engineering
+df['tenure_months'] = (pd.to_datetime(df['last_login']) - pd.to_datetime(df['signup_date'])).dt.days // 30
+df['avg_purchase'] = df['total_spent'] / df['purchase_count']
+</code></pre>
 <h3 id="2-exploratory-data-analysis-eda">2. Exploratory Data Analysis (EDA)</h3>
 <p><strong>Why it matters:</strong> EDA helps you understand data distributions, relationships, and potential issues.</p>
 <p><strong>Tools &amp; techniques:</strong>
@@ -183,13 +182,12 @@ Suppose you're working with a customer dataset to predict churn. You might engin
 - Detecting outliers</p>
 <p><strong>Practical advice:</strong>
 Use visualization libraries like <a href="https://matplotlib.org/">Matplotlib</a> and <a href="https://seaborn.pydata.org/">Seaborn</a> to identify patterns.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import seaborn as sns
+import matplotlib.pyplot as plt
 
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;sales&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+sns.boxplot(x='category', y='sales', data=df)
+plt.show()
+</code></pre>
 <h3 id="3-supervised-learning-algorithms">3. Supervised Learning Algorithms</h3>
 <p>Supervised learning involves training models on labeled data to make predictions.</p>
 <p><strong>Common algorithms:</strong>
@@ -200,24 +198,24 @@ Use visualization libraries like <a href="https://matplotlib.org/">Matplotlib</a
 - Gradient Boosting Machines (e.g., XGBoost, LightGBM)
 - Support Vector Machines (SVM)</p>
 <p><strong>Example: Predicting Customer Churn with Random Forest</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;churn&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;churn&#39;</span><span class="p">]</span>
+X = df.drop('churn', axis=1)
+y = df['churn']
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
 
-<span class="n">preds</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">preds</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+preds = rf.predict(X_test)
+print(f'Accuracy: {accuracy_score(y_test, preds):.2f}')
+</code></pre>
 <h3 id="4-unsupervised-learning-techniques">4. Unsupervised Learning Techniques</h3>
 <p>Unsupervised methods uncover hidden patterns in unlabeled data.</p>
 <p><strong>Common techniques:</strong>
@@ -225,16 +223,15 @@ Use visualization libraries like <a href="https://matplotlib.org/">Matplotlib</a
 - Dimensionality Reduction (PCA, t-SNE)
 - Anomaly Detection</p>
 <p><strong>Practical example: Customer Segmentation</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+import numpy as np
 
-<span class="c1"># Assume &#39;features&#39; is a preprocessed feature matrix</span>
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">clusters</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+# Assume 'features' is a preprocessed feature matrix
+kmeans = KMeans(n_clusters=3, random_state=42)
+clusters = kmeans.fit_predict(features)
 
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span>
-</code></pre></div>
-
+df['segment'] = clusters
+</code></pre>
 <h3 id="5-model-evaluation-validation">5. Model Evaluation &amp; Validation</h3>
 <p>Ensuring your model’s robustness is vital.</p>
 <p><strong>Key metrics:</strong>
@@ -242,11 +239,10 @@ Use visualization libraries like <a href="https://matplotlib.org/">Matplotlib</a
 - Regression: Mean Absolute Error (MAE), Mean Squared Error (MSE), R-squared</p>
 <p><strong>Cross-validation:</strong>
 Use techniques like k-fold cross-validation to assess generalization.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">rf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average CV accuracy: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python">from sklearn.model_selection import cross_val_score
+scores = cross_val_score(rf, X, y, cv=5, scoring='accuracy')
+print(f'Average CV accuracy: {scores.mean():.2f}')
+</code></pre>
 <h3 id="6-advanced-techniques">6. Advanced Techniques</h3>
 <p><strong>Deep Learning:</strong> Use neural networks for complex data like images, text, or time series.</p>
 <p><strong>Natural Language Processing (NLP):</strong>
@@ -258,16 +254,15 @@ Use techniques like k-fold cross-validation to assess generalization.</p>
 - LSTM networks for sequential data</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <p><strong>Example: Sentiment Analysis using NLP</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
 
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-<span class="n">X_text</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;review_text&#39;</span><span class="p">])</span>
+vectorizer = TfidfVectorizer(max_features=5000)
+X_text = vectorizer.fit_transform(df['review_text'])
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_text</span><span class="p">,</span> <span class="n">y_sentiment</span><span class="p">)</span>
-</code></pre></div>
-
+model = LogisticRegression()
+model.fit(X_text, y_sentiment)
+</code></pre>
 <h2 id="practical-tips-for-success">Practical Tips for Success</h2>
 <ul>
 <li><strong>Start simple:</strong> Build baseline models before experimenting with complex algorithms.</li>

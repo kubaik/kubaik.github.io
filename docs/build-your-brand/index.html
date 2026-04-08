@@ -180,69 +180,68 @@
 <li><strong>Contact</strong>: a way for visitors to get in touch with you, including email, social media, or a contact form</li>
 </ol>
 <p>Here's an example of how you could structure your portfolio using HTML and CSS:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Introduction --&gt;</span>
-<span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;intro&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to my portfolio!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>I&#39;m a web developer with 5 years of experience in building responsive and scalable web applications.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;!-- Introduction --&gt;
+&lt;section id=&quot;intro&quot;&gt;
+  &lt;h1&gt;Welcome to my portfolio!&lt;/h1&gt;
+  &lt;p&gt;I'm a web developer with 5 years of experience in building responsive and scalable web applications.&lt;/p&gt;
+&lt;/section&gt;
 
-<span class="cm">&lt;!-- Projects --&gt;</span>
-<span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;projects&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>My Projects<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Project 1: Todo List App<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>A web application built using React, Redux, and MongoDB.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>const TodoList = () =&gt; {
+&lt;!-- Projects --&gt;
+&lt;section id=&quot;projects&quot;&gt;
+  &lt;h2&gt;My Projects&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;h3&gt;Project 1: Todo List App&lt;/h3&gt;
+      &lt;p&gt;A web application built using React, Redux, and MongoDB.&lt;/p&gt;
+      &lt;code&gt;const TodoList = () =&gt; {
         // code snippet
-      }<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Project 2: Personal Website<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>A website built using WordPress and customized with CSS and JavaScript.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;screenshot.png&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;screenshot&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+      }&lt;/code&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;h3&gt;Project 2: Personal Website&lt;/h3&gt;
+      &lt;p&gt;A website built using WordPress and customized with CSS and JavaScript.&lt;/p&gt;
+      &lt;img src=&quot;screenshot.png&quot; alt=&quot;screenshot&quot;&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
 
-<span class="cm">&lt;!-- Skills --&gt;</span>
-<span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;skills&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>My Skills<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>HTML/CSS<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>JavaScript<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>React<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Redux<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>MongoDB<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+&lt;!-- Skills --&gt;
+&lt;section id=&quot;skills&quot;&gt;
+  &lt;h2&gt;My Skills&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;HTML/CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+    &lt;li&gt;React&lt;/li&gt;
+    &lt;li&gt;Redux&lt;/li&gt;
+    &lt;li&gt;MongoDB&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
 
-<span class="cm">&lt;!-- Experience --&gt;</span>
-<span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;experience&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>My Experience<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Web Developer, ABC Company (2020-2022)<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Developed and maintained multiple web applications using React and Node.js.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Freelance Web Developer (2018-2020)<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Built custom websites and web applications for clients using WordPress and JavaScript.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+&lt;!-- Experience --&gt;
+&lt;section id=&quot;experience&quot;&gt;
+  &lt;h2&gt;My Experience&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;h3&gt;Web Developer, ABC Company (2020-2022)&lt;/h3&gt;
+      &lt;p&gt;Developed and maintained multiple web applications using React and Node.js.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;h3&gt;Freelance Web Developer (2018-2020)&lt;/h3&gt;
+      &lt;p&gt;Built custom websites and web applications for clients using WordPress and JavaScript.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
 
-<span class="cm">&lt;!-- Contact --&gt;</span>
-<span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;contact&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Get in Touch<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Email: [your email]<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Twitter: [your Twitter handle]<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
-    <span class="cm">&lt;!-- contact form fields --&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;!-- Contact --&gt;
+&lt;section id=&quot;contact&quot;&gt;
+  &lt;h2&gt;Get in Touch&lt;/h2&gt;
+  &lt;p&gt;Email: [your email]&lt;/p&gt;
+  &lt;p&gt;Twitter: [your Twitter handle]&lt;/p&gt;
+  &lt;form&gt;
+    &lt;!-- contact form fields --&gt;
+  &lt;/form&gt;
+&lt;/section&gt;
+</code></pre>
 <p>This example uses HTML and CSS to create a basic portfolio structure. You can customize the design and layout to fit your brand and preferences.</p>
 <h2 id="measuring-and-optimizing-your-portfolios-performance">Measuring and Optimizing Your Portfolio's Performance</h2>
 <p>Once you've built and launched your portfolio, it's essential to measure and optimize its performance. You can use tools like Google Analytics to track visitor metrics, such as:</p>
@@ -266,35 +265,34 @@
 <li>Improve your call-to-action (CTA) to increase the conversion rate</li>
 </ul>
 <p>Here's an example of how you could use JavaScript to track visitor metrics and optimize your portfolio's performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Track page views</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">pageViews</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;page-views&#39;</span><span class="p">);</span>
-<span class="nx">pageViews</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// track page view event</span>
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;page view&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Track page views
+const pageViews = document.getElementById('page-views');
+pageViews.addEventListener('click', () =&gt; {
+  // track page view event
+  ga('send', 'event', 'page view', 'portfolio');
+});
 
-<span class="c1">// Track bounce rate</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">bounceRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;bounce-rate&#39;</span><span class="p">);</span>
-<span class="nx">bounceRate</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// track bounce rate event</span>
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bounce rate&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+// Track bounce rate
+const bounceRate = document.getElementById('bounce-rate');
+bounceRate.addEventListener('click', () =&gt; {
+  // track bounce rate event
+  ga('send', 'event', 'bounce rate', 'portfolio');
+});
 
-<span class="c1">// Track average session duration</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">averageSessionDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;average-session-duration&#39;</span><span class="p">);</span>
-<span class="nx">averageSessionDuration</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// track average session duration event</span>
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;average session duration&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+// Track average session duration
+const averageSessionDuration = document.getElementById('average-session-duration');
+averageSessionDuration.addEventListener('click', () =&gt; {
+  // track average session duration event
+  ga('send', 'event', 'average session duration', 'portfolio');
+});
 
-<span class="c1">// Track conversion rate</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">conversionRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;conversion-rate&#39;</span><span class="p">);</span>
-<span class="nx">conversionRate</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// track conversion rate event</span>
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;conversion rate&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Track conversion rate
+const conversionRate = document.getElementById('conversion-rate');
+conversionRate.addEventListener('click', () =&gt; {
+  // track conversion rate event
+  ga('send', 'event', 'conversion rate', 'portfolio');
+});
+</code></pre>
 <p>This example uses JavaScript to track visitor metrics and optimize your portfolio's performance. You can customize the code to fit your specific needs and goals.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building and maintaining a tech portfolio, you may encounter common problems, such as:</p>
@@ -317,27 +315,26 @@
 <li><strong>Refresh your design</strong>: refresh your portfolio's design to make it more modern and engaging</li>
 </ol>
 <p>Here's an example of how you could use CSS to refresh your portfolio's design:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Update font styles */</span>
-<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="n">Arial</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
-<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Update font styles */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
 
-<span class="c">/* Update color scheme */</span>
-<span class="nt">header</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#fff</span><span class="p">;</span>
-<span class="p">}</span>
+/* Update color scheme */
+header {
+  background-color: #333;
+  color: #fff;
+}
 
-<span class="c">/* Update layout */</span>
-<span class="nt">main</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
-<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
-<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+/* Update layout */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+</code></pre>
 <p>This example uses CSS to refresh your portfolio's design. You can customize the code to fit your specific needs and goals.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Building a tech portfolio is a great way to demonstrate your skills and experience to potential employers, clients, or investors. By defining your portfolio's purpose and scope, choosing the right platform and tools, creating a strong portfolio structure, measuring and optimizing your portfolio's performance, and addressing common problems, you can create a effective and engaging portfolio.</p>

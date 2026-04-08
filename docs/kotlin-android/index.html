@@ -163,130 +163,126 @@
 1. <strong>Install Android Studio</strong>: Download and install the latest version of Android Studio from the official website.
 2. <strong>Create a new project</strong>: Create a new Android project in Android Studio, selecting Kotlin as the programming language.
 3. <strong>Add dependencies</strong>: Add the necessary dependencies to your <code>build.gradle</code> file, including the Kotlin standard library and any other required libraries.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// build.gradle</span>
-<span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib:1.6.10&quot;</span>
-<span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s2">&quot;androidx.appcompat:appcompat:1.3.0&quot;</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">// build.gradle
+dependencies {
+    implementation &quot;org.jetbrains.kotlin:kotlin-stdlib:1.6.10&quot;
+    implementation &quot;androidx.appcompat:appcompat:1.3.0&quot;
+}
+</code></pre>
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to get you started with Kotlin Android development:</p>
 <h3 id="example-1-hello-world-app">Example 1: Hello World App</h3>
 <p>Create a new Android project in Android Studio, and replace the contents of <code>MainActivity.kt</code> with the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// MainActivity.kt</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">androidx.appcompat.app.AppCompatActivity</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.widget.TextView</span>
+<pre><code class="language-kotlin">// MainActivity.kt
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">textView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextView</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-<span class="w">        </span><span class="n">textView</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, World!&quot;</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val textView = TextView(this)
+        textView.text = &quot;Hello, World!&quot;
+        setContentView(textView)
+    }
+}
+</code></pre>
 <p>This code creates a simple "Hello World" app that displays a text view with the message "Hello, World!".</p>
 <h3 id="example-2-recyclerview-with-kotlin">Example 2: RecyclerView with Kotlin</h3>
 <p>Create a new Android project, and add the following code to <code>MainActivity.kt</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// MainActivity.kt</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">androidx.appcompat.app.AppCompatActivity</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">androidx.recyclerview.widget.LinearLayoutManager</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">androidx.recyclerview.widget.RecyclerView</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.android.synthetic.main.activity_main.*</span>
+<pre><code class="language-kotlin">// MainActivity.kt
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">recyclerView</span><span class="p">:</span><span class="w"> </span><span class="n">RecyclerView</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">adapter</span><span class="p">:</span><span class="w"> </span><span class="n">MyAdapter</span>
+class MainActivity : AppCompatActivity() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: MyAdapter
 
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">activity_main</span><span class="p">)</span>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-<span class="w">        </span><span class="n">recyclerView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">id</span><span class="p">.</span><span class="na">recycler_view</span><span class="p">)</span>
-<span class="w">        </span><span class="n">recyclerView</span><span class="p">.</span><span class="na">layoutManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LinearLayoutManager</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+        recyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-<span class="w">        </span><span class="n">adapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyAdapter</span><span class="p">(</span><span class="n">getData</span><span class="p">())</span>
-<span class="w">        </span><span class="n">recyclerView</span><span class="p">.</span><span class="na">adapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adapter</span>
-<span class="w">    </span><span class="p">}</span>
+        adapter = MyAdapter(getData())
+        recyclerView.adapter = adapter
+    }
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getData</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mutableListOf</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1.</span><span class="p">.</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">data</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Item </span><span class="si">$</span><span class="n">i</span><span class="s">&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    private fun getData(): List&lt;String&gt; {
+        val data = mutableListOf&lt;String&gt;()
+        for (i in 1..10) {
+            data.add(&quot;Item $i&quot;)
+        }
+        return data
+    }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyAdapter</span><span class="p">(</span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">data</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">RecyclerView</span><span class="p">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="p">.</span><span class="na">ViewHolder</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreateViewHolder</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span><span class="w"> </span><span class="n">ViewGroup</span><span class="p">,</span><span class="w"> </span><span class="n">viewType</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="n">ViewHolder</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LayoutInflater</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="na">context</span><span class="p">).</span><span class="na">inflate</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">item</span><span class="p">,</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ViewHolder</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+class MyAdapter(private val data: List&lt;String&gt;) : RecyclerView.Adapter&lt;MyAdapter.ViewHolder&gt;() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+        return ViewHolder(view)
+    }
 
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onBindViewHolder</span><span class="p">(</span><span class="n">holder</span><span class="p">:</span><span class="w"> </span><span class="n">ViewHolder</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">holder</span><span class="p">.</span><span class="na">textView</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">position</span><span class="o">]</span>
-<span class="w">    </span><span class="p">}</span>
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.textView.text = data[position]
+    }
 
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getItemCount</span><span class="p">():</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">size</span>
-<span class="w">    </span><span class="p">}</span>
+    override fun getItemCount(): Int {
+        return data.size
+    }
 
-<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">ViewHolder</span><span class="p">(</span><span class="n">itemView</span><span class="p">:</span><span class="w"> </span><span class="n">View</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">RecyclerView</span><span class="p">.</span><span class="na">ViewHolder</span><span class="p">(</span><span class="n">itemView</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">textView</span><span class="p">:</span><span class="w"> </span><span class="n">TextView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itemView</span><span class="p">.</span><span class="na">findViewById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">id</span><span class="p">.</span><span class="na">text_view</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textView: TextView = itemView.findViewById(R.id.text_view)
+    }
+}
+</code></pre>
 <p>This code creates a RecyclerView that displays a list of items. The <code>MyAdapter</code> class is responsible for binding the data to the views.</p>
 <h3 id="example-3-retrofit-with-kotlin-coroutines">Example 3: Retrofit with Kotlin Coroutines</h3>
 <p>Create a new Android project, and add the following code to <code>MainActivity.kt</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// MainActivity.kt</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">androidx.appcompat.app.AppCompatActivity</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.*</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Call</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Response</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Retrofit</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.converter.gson.GsonConverterFactory</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.http.GET</span>
+<pre><code class="language-kotlin">// MainActivity.kt
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 
-<span class="kd">interface</span><span class="w"> </span><span class="nc">ApiService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@GET</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span>
-<span class="p">}</span>
+interface ApiService {
+    @GET(&quot;users&quot;)
+    suspend fun getUsers(): List&lt;User&gt;
+}
 
-<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+data class User(val id: Int, val name: String)
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">retrofit</span><span class="p">:</span><span class="w"> </span><span class="n">Retrofit</span>
+class MainActivity : AppCompatActivity() {
+    private lateinit var retrofit: Retrofit
 
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">activity_main</span><span class="p">)</span>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-<span class="w">        </span><span class="n">retrofit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Retrofit</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">baseUrl</span><span class="p">(</span><span class="s">&quot;https://api.example.com/&quot;</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">addConverterFactory</span><span class="p">(</span><span class="n">GsonConverterFactory</span><span class="p">.</span><span class="na">create</span><span class="p">())</span>
-<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+        retrofit = Retrofit.Builder()
+            .baseUrl(&quot;https://api.example.com/&quot;)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">apiService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retrofit</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">ApiService</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
+        val apiService = retrofit.create(ApiService::class.java)
 
-<span class="w">        </span><span class="n">CoroutineScope</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">IO</span><span class="p">).</span><span class="na">launch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apiService</span><span class="p">.</span><span class="na">getUsers</span><span class="p">()</span>
-<span class="w">            </span><span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">Main</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Handle the response</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = apiService.getUsers()
+            withContext(Dispatchers.Main) {
+                // Handle the response
+            }
+        }
+    }
+}
+</code></pre>
 <p>This code uses Retrofit with Kotlin Coroutines to make a GET request to a API endpoint.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when working with Kotlin Android development:

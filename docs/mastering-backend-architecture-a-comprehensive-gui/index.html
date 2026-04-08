@@ -206,38 +206,35 @@
 <ol>
 <li><strong>Install Dependencies</strong>: Start by installing Node.js and Express using npm.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>express
-</code></pre></div>
-
+<pre><code class="language-bash">npm install express
+</code></pre>
 <ol>
 <li><strong>Create Routes</strong>: Define routes for handling HTTP requests like GET, POST, PUT, DELETE.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Return a list of users</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">app.get('/api/users', (req, res) =&gt; {
+  // Return a list of users
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Create a new user</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.post('/api/users', (req, res) =&gt; {
+  // Create a new user
+});
+</code></pre>
 <ol>
 <li><strong>Connect to Database</strong>: Use a database like MongoDB to store and retrieve data.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">mongoose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
-<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost/myapp&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNewUrlParser</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/myapp', { useNewUrlParser: true });
+</code></pre>
 <ol>
 <li><strong>Run the Server</strong>: Start the Express server to listen for incoming requests.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server running on port 3000');
+});
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering backend architecture is essential for building robust and scalable applications. By understanding the key components, following best practices, and implementing sound strategies, you can design backend architectures that meet the demands of modern software development. Keep exploring new technologies, stay updated with industry trends, and continuously refine your backend architecture skills to deliver high-quality solutions.</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">

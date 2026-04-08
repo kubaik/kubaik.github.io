@@ -154,28 +154,27 @@
 <h3 id="preparation-is-key">Preparation is Key</h3>
 <p>Before entering into any negotiation, it's essential to be prepared. This includes researching the market to understand the average salary for your role and location. Websites like Payscale, Indeed, and LinkedIn can provide valuable insights into salary ranges. For example, using Payscale's salary calculator, a software engineer with 5 years of experience in San Francisco can expect an average salary of around $153,000 per year.</p>
 <p>To further illustrate the importance of preparation, let's consider an example in Python, where we calculate the average salary based on location and experience:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_average_salary</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">experience</span><span class="p">):</span>
-    <span class="c1"># Sample data</span>
-    <span class="n">salaries</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;San Francisco&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mi">153000</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">200000</span><span class="p">},</span>
-        <span class="s1">&#39;New York&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mi">140000</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">180000</span><span class="p">},</span>
-    <span class="p">}</span>
+<pre><code class="language-python">def calculate_average_salary(location, experience):
+    # Sample data
+    salaries = {
+        'San Francisco': {5: 153000, 10: 200000},
+        'New York': {5: 140000, 10: 180000},
+    }
 
-    <span class="k">if</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">salaries</span> <span class="ow">and</span> <span class="n">experience</span> <span class="ow">in</span> <span class="n">salaries</span><span class="p">[</span><span class="n">location</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="n">salaries</span><span class="p">[</span><span class="n">location</span><span class="p">][</span><span class="n">experience</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
+    if location in salaries and experience in salaries[location]:
+        return salaries[location][experience]
+    else:
+        return None
 
-<span class="c1"># Example usage</span>
-<span class="n">location</span> <span class="o">=</span> <span class="s1">&#39;San Francisco&#39;</span>
-<span class="n">experience</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">average_salary</span> <span class="o">=</span> <span class="n">calculate_average_salary</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">experience</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">average_salary</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The average salary for </span><span class="si">{</span><span class="n">experience</span><span class="si">}</span><span class="s1"> years of experience in </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s1"> is $</span><span class="si">{</span><span class="n">average_salary</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No data available for the specified location and experience.&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage
+location = 'San Francisco'
+experience = 5
+average_salary = calculate_average_salary(location, experience)
+if average_salary:
+    print(f'The average salary for {experience} years of experience in {location} is ${average_salary}.')
+else:
+    print('No data available for the specified location and experience.')
+</code></pre>
 <p>This example demonstrates how to use data to make informed decisions about salary expectations. In real-world scenarios, this data would be much more comprehensive, possibly sourced from various online platforms and internal company data.</p>
 <h2 id="understanding-your-worth">Understanding Your Worth</h2>
 <p>Understanding your worth in the job market is crucial for effective negotiation. This involves not just your technical skills but also soft skills, achievements, and how you contribute to the company's goals. For instance, if you're a developer with expertise in machine learning and have successfully implemented a project that increased sales by 15%, you should highlight this during the negotiation.</p>
@@ -209,33 +208,32 @@
 </li>
 </ul>
 <p>To illustrate the concept of flexibility in negotiation, let's consider an example using JavaScript, where we simulate a negotiation process with multiple factors:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">negotiateSalary</span><span class="p">(</span><span class="nx">baseSalary</span><span class="p">,</span><span class="w"> </span><span class="nx">benefits</span><span class="p">,</span><span class="w"> </span><span class="nx">performanceBonus</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">baseSalary</span><span class="p">;</span>
+<pre><code class="language-javascript">function negotiateSalary(baseSalary, benefits, performanceBonus) {
+    let totalCompensation = baseSalary;
 
-<span class="w">    </span><span class="c1">// Adding benefits</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">benefits</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;additionalVacation&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">5000</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">benefits</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;professionalDevelopment&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">2000</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Adding benefits
+    if (benefits.includes('additionalVacation')) {
+        totalCompensation += 5000;
+    }
+    if (benefits.includes('professionalDevelopment')) {
+        totalCompensation += 2000;
+    }
 
-<span class="w">    </span><span class="c1">// Considering performance bonus</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">performanceBonus</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">performanceBonus</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    // Considering performance bonus
+    if (performanceBonus) {
+        totalCompensation += (totalCompensation * performanceBonus / 100);
+    }
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">totalCompensation</span><span class="p">;</span>
-<span class="p">}</span>
+    return totalCompensation;
+}
 
-<span class="c1">// Example usage</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">baseSalary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">120000</span><span class="p">;</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">benefits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;additionalVacation&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;professionalDevelopment&#39;</span><span class="p">];</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">performanceBonus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">totalCompensation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">negotiateSalary</span><span class="p">(</span><span class="nx">baseSalary</span><span class="p">,</span><span class="w"> </span><span class="nx">benefits</span><span class="p">,</span><span class="w"> </span><span class="nx">performanceBonus</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Your total compensation package is $</span><span class="si">${</span><span class="nx">totalCompensation</span><span class="si">}</span><span class="sb">.`</span><span class="p">);</span>
-</code></pre></div>
-
+// Example usage
+let baseSalary = 120000;
+let benefits = ['additionalVacation', 'professionalDevelopment'];
+let performanceBonus = 10;
+let totalCompensation = negotiateSalary(baseSalary, benefits, performanceBonus);
+console.log(`Your total compensation package is $${totalCompensation}.`);
+</code></pre>
 <p>This example shows how different components of a compensation package can be valued and negotiated.</p>
 <h2 id="tools-and-resources">Tools and Resources</h2>
 <p>Several tools and resources can aid in salary negotiation:</p>

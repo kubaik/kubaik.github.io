@@ -162,24 +162,23 @@
 * <strong>Disable unnecessary features</strong>: Disable features like Docker's debug mode, which can introduce security risks.
 * <strong>Use Docker's built-in security features</strong>: Docker provides features like AppArmor and SELinux, which can help restrict container privileges.</p>
 <p>Here's an example of how to use Docker's AppArmor feature to restrict container privileges:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Create a new Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:latest</span>
+<pre><code class="language-dockerfile"># Create a new Dockerfile
+FROM ubuntu:latest
 
-<span class="c"># Install and configure AppArmor</span>
-<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apparmor
-<span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;/usr/bin/docker-container&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/apparmor.d/docker-container
+# Install and configure AppArmor
+RUN apt-get update &amp;&amp; apt-get install -y apparmor
+RUN echo &quot;/usr/bin/docker-container&quot; &gt;&gt; /etc/apparmor.d/docker-container
 
-<span class="c"># Restrict container privileges</span>
-<span class="k">RUN</span><span class="w"> </span>apparmor_parser<span class="w"> </span>-r<span class="w"> </span>/etc/apparmor.d/docker-container
-</code></pre></div>
-
+# Restrict container privileges
+RUN apparmor_parser -r /etc/apparmor.d/docker-container
+</code></pre>
 <p>In this example, we create a new Dockerfile that installs and configures AppArmor. We then restrict the container's privileges by adding a new profile to AppArmor.</p>
 <h2 id="implementing-network-security-with-calico">Implementing Network Security with Calico</h2>
 <p>Calico is a popular network security platform for containers. It provides a rich set of features for securing container networks, including:
 * <strong>Network policy management</strong>: Calico allows you to define network policies that control traffic flow between containers.
 * <strong>Encryption</strong>: Calico provides encryption for container traffic, ensuring that data remains confidential.</p>
 <p>Here's an example of how to use Calico to secure container networks:</p>
-<div class="codehilite"><pre><span></span><code># Create a new Calico network policy
+<pre><code class="language-yml"># Create a new Calico network policy
 apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
@@ -193,31 +192,28 @@ spec:
       - 10.0.0.0/24
     ports:
     - 80
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we create a new Calico network policy that allows incoming HTTP traffic from the <code>10.0.0.0/24</code> subnet.</p>
 <h2 id="scanning-containers-for-vulnerabilities-with-clair">Scanning Containers for Vulnerabilities with Clair</h2>
 <p>Clair is a popular vulnerability scanner for containers. It provides a simple and effective way to identify vulnerabilities in your container images. Here's an example of how to use Clair to scan a container image:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install and configure Clair</span>
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>clair<span class="w"> </span>-p<span class="w"> </span><span class="m">6060</span>:6060<span class="w"> </span>-v<span class="w"> </span>/var/lib/clair:/var/lib/clair<span class="w"> </span>arminc/clair-local-scan
+<pre><code class="language-bash"># Install and configure Clair
+docker run -d --name clair -p 6060:6060 -v /var/lib/clair:/var/lib/clair arminc/clair-local-scan
 
-<span class="c1"># Scan a container image</span>
-docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--net<span class="o">=</span>host<span class="w"> </span>arminc/clair-local-scan<span class="w"> </span>/bin/sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;clair scan --ip 127.0.0.1 --port 6060 --timeout 300 --output json --report /tmp/report.json &lt;image-name&gt;&quot;</span>
-</code></pre></div>
-
+# Scan a container image
+docker run -it --rm --net=host arminc/clair-local-scan /bin/sh -c &quot;clair scan --ip 127.0.0.1 --port 6060 --timeout 300 --output json --report /tmp/report.json &lt;image-name&gt;&quot;
+</code></pre>
 <p>In this example, we install and configure Clair, and then scan a container image for vulnerabilities.</p>
 <h2 id="monitoring-container-security-with-prometheus-and-grafana">Monitoring Container Security with Prometheus and Grafana</h2>
 <p>Prometheus and Grafana are popular monitoring tools that can be used to monitor container security. Prometheus provides a robust monitoring platform, while Grafana provides a user-friendly dashboard for visualizing metrics. Here's an example of how to use Prometheus and Grafana to monitor container security:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Create a new Prometheus configuration file
+<pre><code class="language-yml"># Create a new Prometheus configuration file
 global:
   scrape_interval: 10s
 
 scrape_configs:
-  <span class="k">-</span> job_name: &#39;docker&#39;
+  - job_name: 'docker'
     static_configs:
-      <span class="k">-</span> targets: [&#39;localhost:8080&#39;]
-</code></pre></div>
-
+      - targets: ['localhost:8080']
+</code></pre>
 <p>In this example, we create a new Prometheus configuration file that scrapes metrics from a Docker container.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions related to container security:

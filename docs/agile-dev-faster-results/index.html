@@ -177,60 +177,57 @@
 <p>Here are a few practical examples of agile development in action:</p>
 <h3 id="example-1-implementing-scrum-with-jira">Example 1: Implementing Scrum with Jira</h3>
 <p>Let's say we're developing a web application using Scrum, and we're using Jira to manage our workflow. We can create a board in Jira to visualize our workflow, and track the progress of our tasks.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a Scrum board in Jira</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.issue.Issue</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.issue.IssueManager</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.project.Project</span><span class="p">;</span>
+<pre><code class="language-java">// Example of a Scrum board in Jira
+import com.atlassian.jira.issue.Issue;
+import com.atlassian.jira.issue.IssueManager;
+import com.atlassian.jira.project.Project;
 
-<span class="c1">// Create a new Scrum board</span>
-<span class="n">Project</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">// get the project</span>
-<span class="n">IssueManager</span><span class="w"> </span><span class="n">issueManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">// get the issue manager</span>
-<span class="n">Issue</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">issueManager</span><span class="p">.</span><span class="na">getIssue</span><span class="p">(</span><span class="s">&quot;PRO-1&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// get the issue</span>
+// Create a new Scrum board
+Project project = // get the project
+IssueManager issueManager = // get the issue manager
+Issue issue = issueManager.getIssue(&quot;PRO-1&quot;); // get the issue
 
-<span class="c1">// Add the issue to the board</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addIssue</span><span class="p">(</span><span class="n">issue</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the issue to the board
+board.addIssue(issue);
+</code></pre>
 <h3 id="example-2-using-kanban-with-trello">Example 2: Using Kanban with Trello</h3>
 <p>Let's say we're developing a mobile application using Kanban, and we're using Trello to manage our workflow. We can create a board in Trello to visualize our workflow, and track the progress of our tasks.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of a Kanban board in Trello</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python"># Example of a Kanban board in Trello
+import requests
 
-<span class="c1"># Create a new Trello board</span>
-<span class="n">board_id</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
-<span class="n">list_id</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
+# Create a new Trello board
+board_id = &quot;1234567890&quot;
+list_id = &quot;1234567890&quot;
 
-<span class="c1"># Add a new card to the board</span>
-<span class="n">card</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;New Card&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a new card&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;idList&quot;</span><span class="p">:</span> <span class="n">list_id</span><span class="p">,</span>
-    <span class="s2">&quot;idBoard&quot;</span><span class="p">:</span> <span class="n">board_id</span>
-<span class="p">}</span>
+# Add a new card to the board
+card = {
+    &quot;name&quot;: &quot;New Card&quot;,
+    &quot;desc&quot;: &quot;This is a new card&quot;,
+    &quot;idList&quot;: list_id,
+    &quot;idBoard&quot;: board_id
+}
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;https://api.trello.com/1/cards&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">card</span><span class="p">)</span>
-</code></pre></div>
-
+response = requests.post(&quot;https://api.trello.com/1/cards&quot;, json=card)
+</code></pre>
 <h3 id="example-3-implementing-xp-with-github">Example 3: Implementing XP with GitHub</h3>
 <p>Let's say we're developing a desktop application using XP, and we're using GitHub to manage our code. We can use GitHub's pull request feature to review and merge code changes.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of a pull request in GitHub</span>
-<span class="c1"># Create a new branch</span>
-git<span class="w"> </span>branch<span class="w"> </span>feature/new-feature
+<pre><code class="language-bash"># Example of a pull request in GitHub
+# Create a new branch
+git branch feature/new-feature
 
-<span class="c1"># Switch to the new branch</span>
-git<span class="w"> </span>checkout<span class="w"> </span>feature/new-feature
+# Switch to the new branch
+git checkout feature/new-feature
 
-<span class="c1"># Make changes and commit</span>
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;New feature&quot;</span>
+# Make changes and commit
+git add .
+git commit -m &quot;New feature&quot;
 
-<span class="c1"># Push the changes to GitHub</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/new-feature
+# Push the changes to GitHub
+git push origin feature/new-feature
 
-<span class="c1"># Create a pull request</span>
-gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--title<span class="w"> </span><span class="s2">&quot;New feature&quot;</span><span class="w"> </span>--body<span class="w"> </span><span class="s2">&quot;This is a new feature&quot;</span>
-</code></pre></div>
-
+# Create a pull request
+gh pr create --title &quot;New feature&quot; --body &quot;This is a new feature&quot;
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Agile development is not without its challenges. Here are some common problems and solutions:</p>
 <ul>

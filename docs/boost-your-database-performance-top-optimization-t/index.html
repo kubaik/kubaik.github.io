@@ -186,9 +186,8 @@
 <li><strong>SQL Server:</strong> Query Execution Plans in SQL Server Management Studio</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM orders WHERE order_date &gt; '2023-01-01';
+</code></pre>
 <p>These tools reveal how the database engine executes queries, helping you identify full table scans, missing indexes, or inefficient joins.</p>
 <hr />
 <h2 id="2-index-strategically">2. Index Strategically</h2>
@@ -208,13 +207,12 @@
 <li><strong>Use composite indexes wisely:</strong> For queries filtering on multiple columns, create a composite index covering them.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Creating an index on &#39;status&#39; column</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_users_status</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">status</span><span class="p">);</span>
+<pre><code class="language-sql">-- Creating an index on 'status' column
+CREATE INDEX idx_users_status ON users(status);
 
-<span class="c1">-- Creating a composite index</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_orders_date_status</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
-</code></pre></div>
-
+-- Creating a composite index
+CREATE INDEX idx_orders_date_status ON orders(order_date, status);
+</code></pre>
 <h3 id="monitoring-and-maintaining-indexes">Monitoring and Maintaining Indexes</h3>
 <p>Regularly review index usage with tools like:</p>
 <ul>
@@ -269,10 +267,9 @@
 <li>Use tools like <code>mysqltuner</code> or <code>pgTune</code> to get configuration suggestions.</li>
 </ul>
 <h3 id="example-adjusting-mysql-innodb-buffer-pool">Example: Adjusting MySQL InnoDB Buffer Pool</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Set to 70% of total RAM</span>
-<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">innodb_buffer_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="k">G</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">-- Set to 70% of total RAM
+SET GLOBAL innodb_buffer_pool_size = 8G;
+</code></pre>
 <p><em>(Note: Change the value in your configuration file for persistence.)</em></p>
 <hr />
 <h2 id="5-use-partitioning-and-sharding">5. Use Partitioning and Sharding</h2>
@@ -308,11 +305,10 @@
 <li>Use materialized views for precomputed aggregations.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- PostgreSQL materialized view</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">recent_orders</span><span class="w"> </span><span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">CURRENT_DATE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;7 days&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">-- PostgreSQL materialized view
+CREATE MATERIALIZED VIEW recent_orders AS
+SELECT * FROM orders WHERE order_date &gt; CURRENT_DATE - INTERVAL '7 days';
+</code></pre>
 <p>Update the view periodically to keep data fresh.</p>
 <hr />
 <h2 id="7-monitor-and-analyze-performance-regularly">7. Monitor and Analyze Performance Regularly</h2>

@@ -180,48 +180,47 @@
 <h4 id="example-1-using-lime">Example 1: Using LIME</h4>
 <p>LIME is a powerful tool for generating explanations for black-box models. Here’s how to implement it using Python and a Random Forest Classifier on the Iris dataset.</p>
 <p><strong>Installation</strong>:</p>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>lime<span class="w"> </span>scikit-learn
+<pre><code class="language-bash">pip install lime scikit-learn
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Andrew<span class="w"> </span>Ng<span class="err">&#39;</span>s<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>Course&lt;/a&gt;*
-</code></pre></div>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
+</code></pre>
 <p><strong>Code</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">lime.lime_tabular</span> <span class="kn">import</span> <span class="n">LimeTabularExplainer</span>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from lime.lime_tabular import LimeTabularExplainer
 
-<span class="c1"># Load dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
-<span class="n">feature_names</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span>
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+feature_names = iris.feature_names
 
-<span class="c1"># Train a Random Forest Classifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train a Random Forest Classifier
+model = RandomForestClassifier()
+model.fit(X, y)
 
-<span class="c1"># Set up LIME explainer</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">LimeTabularExplainer</span><span class="p">(</span>
-    <span class="n">training_data</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
-    <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span>
-    <span class="n">class_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;classification&#39;</span>
-<span class="p">)</span>
+# Set up LIME explainer
+explainer = LimeTabularExplainer(
+    training_data=X,
+    feature_names=feature_names,
+    class_names=iris.target_names,
+    mode='classification'
+)
 
-<span class="c1"># Choose an instance to explain</span>
-<span class="n">instance</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain_instance</span><span class="p">(</span>
-    <span class="n">data_instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
-    <span class="n">predict_fn</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">,</span>
-    <span class="n">num_features</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
+# Choose an instance to explain
+instance = X[1]
+explanation = explainer.explain_instance(
+    data_instance=instance,
+    predict_fn=model.predict_proba,
+    num_features=2
+)
 
-<span class="c1"># Display the explanation</span>
-<span class="n">explanation</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">()</span>
-</code></pre></div>
-
+# Display the explanation
+explanation.show_in_notebook()
+</code></pre>
 <p><strong>Explanation</strong>:
 - <strong>Data Preparation</strong>: We load the Iris dataset and train a Random Forest model.
 - <strong>LIME Setup</strong>: We initialize <code>LimeTabularExplainer</code> with the training data and specify feature and class names.
@@ -229,34 +228,32 @@
 <h4 id="example-2-using-shap">Example 2: Using SHAP</h4>
 <p>SHAP provides a unified measure of feature importance and is based on Shapley values from cooperative game theory.</p>
 <p><strong>Installation</strong>:</p>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>shap
-</code></pre></div>
-
+<pre><code class="language-bash">pip install shap
+</code></pre>
 <p><strong>Code</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">shap</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<pre><code class="language-python">import shap
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
 
-<span class="c1"># Load dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Train a Random Forest Classifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train a Random Forest Classifier
+model = RandomForestClassifier()
+model.fit(X, y)
 
-<span class="c1"># Create SHAP explainer</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Create SHAP explainer
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(X)
 
-<span class="c1"># Plot SHAP values for the first instance</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span><span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shap_values</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</code></pre></div>
-
+# Plot SHAP values for the first instance
+shap.initjs()
+shap.force_plot(explainer.expected_value[1], shap_values[1][0], X[0])
+</code></pre>
 <p><strong>Explanation</strong>:
 - <strong>Model Training</strong>: Similar to the LIME example, we train a Random Forest on the Iris dataset.
 - <strong>SHAP Explainer</strong>: We initialize <code>TreeExplainer</code>, which is optimized for tree-based models like Random Forest.
@@ -269,27 +266,26 @@
 <li><strong>Tools</strong>: Use SHAP for interpretability.</li>
 </ul>
 <p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">shap</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<pre><code class="language-python">import shap
+import pandas as pd
+from xgboost import XGBClassifier
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;pima-indians-diabetes.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Outcome&#39;</span><span class="p">]</span>
+# Load dataset
+data = pd.read_csv('pima-indians-diabetes.csv')
+X = data.drop('Outcome', axis=1)
+y = data['Outcome']
 
-<span class="c1"># Train GBM model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train GBM model
+model = XGBClassifier()
+model.fit(X, y)
 
-<span class="c1"># SHAP analysis</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">Explainer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# SHAP analysis
+explainer = shap.Explainer(model)
+shap_values = explainer(X)
 
-<span class="c1"># Visualize feature importance</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-</code></pre></div>
-
+# Visualize feature importance
+shap.summary_plot(shap_values, X)
+</code></pre>
 <p><strong>Metrics</strong>:
 - <strong>Accuracy</strong>: 85% on test set.
 - <strong>SHAP Visualization</strong>: Helps clinicians understand which features (e.g., BMI, glucose level) are driving predictions.</p>
@@ -300,32 +296,31 @@
 <li><strong>Tools</strong>: Use LIME for local explanations.</li>
 </ul>
 <p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">lime</span>
-<span class="kn">from</span> <span class="nn">lime.lime_tabular</span> <span class="kn">import</span> <span class="n">LimeTabularExplainer</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import lime
+from lime.lime_tabular import LimeTabularExplainer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load credit scoring dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span>
+# Load credit scoring dataset
+data = pd.read_csv('credit_data.csv')
+X = data.drop('default', axis=1)
+y = data['default']
 
-<span class="c1"># Split data</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train model
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
 
-<span class="c1"># Set up LIME</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">LimeTabularExplainer</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No Default&#39;</span><span class="p">,</span> <span class="s1">&#39;Default&#39;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;classification&#39;</span><span class="p">)</span>
+# Set up LIME
+explainer = LimeTabularExplainer(X_train.values, feature_names=X.columns.tolist(), class_names=['No Default', 'Default'], mode='classification')
 
-<span class="c1"># Explain a prediction</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Index of the instance to explain</span>
-<span class="n">exp</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain_instance</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">)</span>
-<span class="n">exp</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">()</span>
-</code></pre></div>
-
+# Explain a prediction
+i = 0  # Index of the instance to explain
+exp = explainer.explain_instance(X_test.values[i], model.predict_proba)
+exp.show_in_notebook()
+</code></pre>
 <p><strong>Metrics</strong>:
 - <strong>Precision</strong>: 90% for non-defaults, 80% for defaults.
 - <strong>LIME Output</strong>: Allows lenders to see which features (e.g., income, credit history) contribute to the prediction, aiding in decision-making.</p>

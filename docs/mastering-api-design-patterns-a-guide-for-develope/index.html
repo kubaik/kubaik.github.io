@@ -160,33 +160,30 @@
 <li><strong>Statelessness</strong>: Each request from a client to the server must contain all the information necessary to understand and process the request.</li>
 <li><strong>Uniform Interface</strong>: Use standard methods and representations (e.g., JSON or XML) to interact with resources.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>GET /api/users
+<pre><code class="language-markdown">GET /api/users
 POST /api/users
 PUT /api/users/{id}
 DELETE /api/users/{id}
-</code></pre></div>
-
+</code></pre>
 <h3 id="2-singleton-pattern">2. Singleton Pattern</h3>
 <p>The Singleton pattern ensures that a class has only one instance and provides a global point of access to it. This pattern is useful in scenarios where you need a single, shared resource across your application.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
-    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+<pre><code class="language-python">class Singleton:
+    _instance = None
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
-</code></pre></div>
-
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+</code></pre>
 <h3 id="3-factory-pattern">3. Factory Pattern</h3>
 <p>The Factory pattern is a creational design pattern that provides an interface for creating objects without specifying their concrete classes. This pattern is useful when you want to delegate the object creation logic to a separate factory class.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ShapeFactory</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">create_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_type</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">shape_type</span> <span class="o">==</span> <span class="s1">&#39;circle&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Circle</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">shape_type</span> <span class="o">==</span> <span class="s1">&#39;rectangle&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Rectangle</span><span class="p">()</span>
-</code></pre></div>
-
+<pre><code class="language-python">class ShapeFactory:
+    def create_shape(self, shape_type):
+        if shape_type == 'circle':
+            return Circle()
+        elif shape_type == 'rectangle':
+            return Rectangle()
+</code></pre>
 <h2 id="best-practices-for-api-design">Best Practices for API Design</h2>
 <p>To create well-designed APIs, developers should follow these best practices:</p>
 <ol>

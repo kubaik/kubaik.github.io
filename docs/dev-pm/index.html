@@ -173,90 +173,87 @@
 <p>Here are a few code examples that demonstrate how to implement project management techniques in your code:</p>
 <h3 id="example-1-using-github-issues-for-project-management">Example 1: Using GitHub Issues for Project Management</h3>
 <p>GitHub Issues is a powerful tool for managing projects. You can use it to track bugs, features, and other tasks. Here is an example of how to use GitHub Issues to manage a project:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Create a new issue</span>
-<span class="k">def</span> <span class="nf">create_issue</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.github.com/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/issues&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="s2">&quot;your-username&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;your-repo&quot;</span><span class="p">)</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+# Create a new issue
+def create_issue(title, body):
+    url = &quot;https://api.github.com/repos/{owner}/{repo}/issues&quot;.format(owner=&quot;your-username&quot;, repo=&quot;your-repo&quot;)
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    data = {&quot;title&quot;: title, &quot;body&quot;: body}
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
 
-<span class="c1"># Get all issues</span>
-<span class="k">def</span> <span class="nf">get_issues</span><span class="p">():</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.github.com/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/issues&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="s2">&quot;your-username&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;your-repo&quot;</span><span class="p">)</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+# Get all issues
+def get_issues():
+    url = &quot;https://api.github.com/repos/{owner}/{repo}/issues&quot;.format(owner=&quot;your-username&quot;, repo=&quot;your-repo&quot;)
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    response = requests.get(url, headers=headers)
+    return response.json()
 
-<span class="c1"># Update an issue</span>
-<span class="k">def</span> <span class="nf">update_issue</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.github.com/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/issues/</span><span class="si">{number}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="s2">&quot;your-username&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;your-repo&quot;</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">)</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre></div>
-
+# Update an issue
+def update_issue(number, title, body):
+    url = &quot;https://api.github.com/repos/{owner}/{repo}/issues/{number}&quot;.format(owner=&quot;your-username&quot;, repo=&quot;your-repo&quot;, number=number)
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    data = {&quot;title&quot;: title, &quot;body&quot;: body}
+    response = requests.patch(url, headers=headers, json=data)
+    return response.json()
+</code></pre>
 <h3 id="example-2-using-jira-api-for-project-management">Example 2: Using Jira API for Project Management</h3>
 <p>Jira API is a powerful tool for managing projects. You can use it to track issues, create projects, and assign tasks. Here is an example of how to use Jira API to manage a project:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.rest.client.api.JiraRestClient</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.rest.client.api.domain.Issue</span><span class="p">;</span>
+<pre><code class="language-java">import com.atlassian.jira.rest.client.api.JiraRestClient;
+import com.atlassian.jira.rest.client.api.domain.Issue;
 
-<span class="c1">// Create a new issue</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Issue</span><span class="w"> </span><span class="nf">createIssue</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">summary</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">JiraRestClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JiraRestClient</span><span class="p">(</span><span class="s">&quot;https://your-domain.atlassian.net&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-password&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">Issue</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Issue</span><span class="p">();</span>
-<span class="w">    </span><span class="n">issue</span><span class="p">.</span><span class="na">setSummary</span><span class="p">(</span><span class="n">summary</span><span class="p">);</span>
-<span class="w">    </span><span class="n">issue</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="n">description</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">getIssueClient</span><span class="p">().</span><span class="na">createIssue</span><span class="p">(</span><span class="n">issue</span><span class="p">);</span>
-<span class="p">}</span>
+// Create a new issue
+public Issue createIssue(String summary, String description) {
+    JiraRestClient client = new JiraRestClient(&quot;https://your-domain.atlassian.net&quot;, &quot;your-username&quot;, &quot;your-password&quot;);
+    Issue issue = new Issue();
+    issue.setSummary(summary);
+    issue.setDescription(description);
+    return client.getIssueClient().createIssue(issue);
+}
 
-<span class="c1">// Get all issues</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Issue</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getIssues</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">JiraRestClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JiraRestClient</span><span class="p">(</span><span class="s">&quot;https://your-domain.atlassian.net&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-password&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">getIssueClient</span><span class="p">().</span><span class="na">getIssues</span><span class="p">();</span>
-<span class="p">}</span>
+// Get all issues
+public List&lt;Issue&gt; getIssues() {
+    JiraRestClient client = new JiraRestClient(&quot;https://your-domain.atlassian.net&quot;, &quot;your-username&quot;, &quot;your-password&quot;);
+    return client.getIssueClient().getIssues();
+}
 
-<span class="c1">// Update an issue</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Issue</span><span class="w"> </span><span class="nf">updateIssue</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">summary</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">description</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">JiraRestClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JiraRestClient</span><span class="p">(</span><span class="s">&quot;https://your-domain.atlassian.net&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;your-password&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">Issue</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">getIssueClient</span><span class="p">().</span><span class="na">getIssue</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="w">    </span><span class="n">issue</span><span class="p">.</span><span class="na">setSummary</span><span class="p">(</span><span class="n">summary</span><span class="p">);</span>
-<span class="w">    </span><span class="n">issue</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="n">description</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">getIssueClient</span><span class="p">().</span><span class="na">updateIssue</span><span class="p">(</span><span class="n">issue</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Update an issue
+public Issue updateIssue(Long id, String summary, String description) {
+    JiraRestClient client = new JiraRestClient(&quot;https://your-domain.atlassian.net&quot;, &quot;your-username&quot;, &quot;your-password&quot;);
+    Issue issue = client.getIssueClient().getIssue(id);
+    issue.setSummary(summary);
+    issue.setDescription(description);
+    return client.getIssueClient().updateIssue(issue);
+}
+</code></pre>
 <h3 id="example-3-using-asana-api-for-project-management">Example 3: Using Asana API for Project Management</h3>
 <p>Asana API is a powerful tool for managing projects. You can use it to track tasks, create projects, and assign tasks. Here is an example of how to use Asana API to manage a project:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Create a new task</span>
-<span class="k">def</span> <span class="nf">create_task</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://app.asana.com/api/1.0/tasks&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+# Create a new task
+def create_task(name, description):
+    url = &quot;https://app.asana.com/api/1.0/tasks&quot;
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    data = {&quot;name&quot;: name, &quot;description&quot;: description}
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
 
-<span class="c1"># Get all tasks</span>
-<span class="k">def</span> <span class="nf">get_tasks</span><span class="p">():</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://app.asana.com/api/1.0/tasks&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+# Get all tasks
+def get_tasks():
+    url = &quot;https://app.asana.com/api/1.0/tasks&quot;
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    response = requests.get(url, headers=headers)
+    return response.json()
 
-<span class="c1"># Update a task</span>
-<span class="k">def</span> <span class="nf">update_task</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://app.asana.com/api/1.0/tasks/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer your-token&quot;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre></div>
-
+# Update a task
+def update_task(id, name, description):
+    url = &quot;https://app.asana.com/api/1.0/tasks/{id}&quot;.format(id=id)
+    headers = {&quot;Authorization&quot;: &quot;Bearer your-token&quot;}
+    data = {&quot;name&quot;: name, &quot;description&quot;: description}
+    response = requests.put(url, headers=headers, json=data)
+    return response.json()
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers face when managing projects, along with solutions:
 1. <strong>Scope creep</strong>: This occurs when the scope of the project changes over time, leading to delays and cost overruns. Solution: Use agile project management to break down the project into small, manageable chunks, and deliver working software in short cycles.

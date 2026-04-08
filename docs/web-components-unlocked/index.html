@@ -165,74 +165,68 @@
 <h2 id="creating-a-custom-element">Creating a Custom Element</h2>
 <p>To create a Custom Element, you need to define a class that extends the <code>HTMLElement</code> class and overrides the <code>connectedCallback</code> method. This method is called when the element is inserted into the DOM, and it's where you can put the code to initialize the element.</p>
 <p>Here's an example of a simple Custom Element that displays a greeting message:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">GreetingElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class GreetingElement extends HTMLElement {
+  connectedCallback() {
+    this.textContent = 'Hello, World!';
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;greeting-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">GreetingElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('greeting-element', GreetingElement);
+</code></pre>
 <p>You can then use this element in your HTML like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">greeting-element</span><span class="p">&gt;&lt;/</span><span class="nt">greeting-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;greeting-element&gt;&lt;/greeting-element&gt;
+</code></pre>
 <p>This will render the text "Hello, World!" on the page.</p>
 <h3 id="using-attributes-and-properties">Using Attributes and Properties</h3>
 <p>Custom Elements can also be customized using attributes and properties. For example, you can add an attribute to the <code>greeting-element</code> to specify the name of the person to greet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">GreetingElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class GreetingElement extends HTMLElement {
+  connectedCallback() {
+    const name = this.getAttribute('name');
+    this.textContent = `Hello, ${name}!`;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;greeting-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">GreetingElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('greeting-element', GreetingElement);
+</code></pre>
 <p>You can then use this element like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">greeting-element</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;John&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">greeting-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;greeting-element name=&quot;John&quot;&gt;&lt;/greeting-element&gt;
+</code></pre>
 <p>This will render the text "Hello, John!" on the page.</p>
 <h2 id="using-web-components-with-popular-frameworks">Using Web Components with Popular Frameworks</h2>
 <p>Web Components can be used with popular frameworks such as React, Angular, and Vue.js. For example, you can use the <code>lit-element</code> library to create Web Components that can be used with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">html</span><span class="p">,</span><span class="w"> </span><span class="nx">LitElement</span><span class="p">,</span><span class="w"> </span><span class="nx">property</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;lit-element&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { html, LitElement, property } from 'lit-element';
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">CounterElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="err">@</span><span class="nx">property</span><span class="p">({</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+class CounterElement extends LitElement {
+  @property({ type: Number }) count = 0;
 
-<span class="w">  </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">html</span><span class="sb">`</span>
-<span class="sb">      &lt;p&gt;Count: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
-<span class="sb">      &lt;button @click=</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">incrementCount</span><span class="si">}</span><span class="sb">&gt;+&lt;/button&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  render() {
+    return html`
+      &lt;p&gt;Count: ${this.count}&lt;/p&gt;
+      &lt;button @click=${this.incrementCount}&gt;+&lt;/button&gt;
+    `;
+  }
 
-<span class="w">  </span><span class="nx">incrementCount</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  incrementCount() {
+    this.count++;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;counter-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">CounterElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('counter-element', CounterElement);
+</code></pre>
 <p>You can then use this element in your React component like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">ReactDOM</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React from 'react';
+import ReactDOM from 'react-dom';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">counter</span><span class="err">-</span><span class="na">element</span><span class="p">&gt;&lt;/</span><span class="nt">counter</span><span class="p">-</span><span class="na">element</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;counter-element&gt;&lt;/counter-element&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(&lt;</span><span class="nt">App</span><span class="w"> </span><span class="p">/&gt;,</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
-</code></pre></div>
-
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
 <p>This will render the <code>counter-element</code> component on the page, with a button that increments the count when clicked.</p>
 <h3 id="performance-considerations">Performance Considerations</h3>
 <p>When using Web Components, it's essential to consider performance. Web Components can introduce additional overhead due to the creation of a new shadow DOM, which can affect rendering performance.</p>

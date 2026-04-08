@@ -162,18 +162,17 @@
 * <strong>Webpack</strong>: A popular module bundler that provides a flexible and customizable way to manage dependencies and optimize code for production.
 * <strong>TypeScript</strong>: The TypeScript compiler provides optional static typing and other features that help developers catch errors early and improve code maintainability.</p>
 <p>Here is an example of a basic <code>tsconfig.json</code> file that you can use to get started with TypeScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es6&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;commonjs&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;outDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;rootDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;strict&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;esModuleInterop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es6&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;outDir&quot;: &quot;build&quot;,
+    &quot;rootDir&quot;: &quot;src&quot;,
+    &quot;strict&quot;: true,
+    &quot;esModuleInterop&quot;: true
+  }
+}
+</code></pre>
 <p>This configuration tells the TypeScript compiler to target ES6 syntax, use the CommonJS module system, and output compiled code in the <code>build</code> directory.</p>
 <h2 id="managing-dependencies-with-npm-and-yarn">Managing Dependencies with npm and yarn</h2>
 <p>Managing dependencies is a critical aspect of building large-scale applications. npm and yarn are two popular package managers that provide a convenient way to manage dependencies and optimize code for production. Here are some key features and benefits of each:
@@ -186,9 +185,8 @@
     + Supports a wide range of package formats, including CommonJS, ES6, and UMD.
     + Provides a built-in caching mechanism to improve installation times.</p>
 <p>Here is an example of how to use npm to install dependencies:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>--save<span class="w"> </span>express<span class="w"> </span>typescript<span class="w"> </span>@types/express
-</code></pre></div>
-
+<pre><code class="language-bash">npm install --save express typescript @types/express
+</code></pre>
 <p>This command installs the Express.js framework, the TypeScript compiler, and the @types/express type definitions.</p>
 <h2 id="optimizing-code-for-production">Optimizing Code for Production</h2>
 <p>Optimizing code for production is critical to ensuring that your application performs well and scales to meet the needs of your users. Here are some key strategies for optimizing code:
@@ -196,18 +194,17 @@
 2. <strong>Tree shaking</strong>: Use tools like Webpack or Rollup to remove unused code and optimize dependencies, reducing the size of your application and improving performance.
 3. <strong>Code splitting</strong>: Use tools like Webpack or Rollup to split code into smaller chunks, reducing the size of your application and improving page load times.</p>
 <p>Here is an example of how to use Webpack to optimize code for production:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">webpack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">TerserPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;terser-webpack-plugin&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;production&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">minimize</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">minimizer</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="ow">new</span><span class="w"> </span><span class="nx">TerserPlugin</span><span class="p">()],</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+module.exports = {
+  mode: 'production',
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+};
+</code></pre>
 <p>This configuration tells Webpack to enable minimization and use the TerserPlugin to optimize code for production.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when building large-scale TypeScript applications, along with specific solutions:
@@ -215,18 +212,17 @@
 * <strong>Performance issues</strong>: Use tools like Webpack or Rollup to optimize code for production, and use caching mechanisms to improve installation times.
 * <strong>Dependency conflicts</strong>: Use tools like npm or yarn to manage dependencies, and use the <code>--save</code> flag to ensure that dependencies are installed correctly.</p>
 <p>Here is an example of how to use type guards to narrow the type of a variable:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">isString</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">function isString&lt;T&gt;(value: T): value is string {
+  return typeof value === 'string';
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isString</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">());</span><span class="w"> </span><span class="c1">// value is string</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span><span class="w"> </span><span class="c1">// value is number</span>
-<span class="p">}</span>
-</code></pre></div>
-
+const value: string | number = 'hello';
+if (isString(value)) {
+  console.log(value.toUpperCase()); // value is string
+} else {
+  console.log(value.toFixed(2)); // value is number
+}
+</code></pre>
 <p>This code defines a type guard <code>isString</code> that checks if a value is a string, and uses the type guard to narrow the type of the <code>value</code> variable.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for TypeScript in large-scale applications:
@@ -234,24 +230,23 @@
 * <strong>Google</strong>: Uses TypeScript to build the Google Cloud Platform, which provides a suite of cloud-based services for building, deploying, and managing applications.
 * <strong>Airbnb</strong>: Uses TypeScript to build the Airbnb platform, which provides a marketplace for booking and managing vacation rentals.</p>
 <p>Here is an example of how to use TypeScript to build a RESTful API:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">Response</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./models/User&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import express, { Request, Response } from 'express';
+import { User } from './models/User';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="kt">User</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users', (req: Request, res: Response) =&gt; {
+  const users: User[] = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Doe' },
+  ];
+  res.json(users);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This code defines a RESTful API using Express.js and TypeScript, and provides a simple example of how to retrieve a list of users.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for TypeScript in large-scale applications:
@@ -259,9 +254,8 @@
 * <strong>Memory usage</strong>: TypeScript memory usage is typically around 100-200 MB for small to medium-sized projects, and up to 1-2 GB for large projects.
 * <strong>Page load times</strong>: TypeScript page load times are typically around 1-2 seconds for small to medium-sized projects, and up to 5-10 seconds for large projects.</p>
 <p>Here is an example of how to use the <code>ts-benchmark</code> tool to measure TypeScript compilation times:</p>
-<div class="codehilite"><pre><span></span><code>ts-benchmark<span class="w"> </span>--files<span class="w"> </span>src/**/*.ts<span class="w"> </span>--outdir<span class="w"> </span>build
-</code></pre></div>
-
+<pre><code class="language-bash">ts-benchmark --files src/**/*.ts --outdir build
+</code></pre>
 <p>This command runs the <code>ts-benchmark</code> tool on all TypeScript files in the <code>src</code> directory and outputs the results to the <code>build</code> directory.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, TypeScript is a powerful tool for building large-scale applications, providing optional static typing, better code completion, and reduced runtime errors. By following the strategies and best practices outlined in this article, developers can build fast, scalable, and maintainable applications using TypeScript. Some key takeaways include:

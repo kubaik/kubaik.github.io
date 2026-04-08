@@ -157,29 +157,27 @@
 * There can only be one owner of a value at a time.
 * When the owner goes out of scope, the value will be dropped.</p>
 <p>This ownership system prevents common errors such as null or dangling pointers, which can lead to crashes, data corruption, or security vulnerabilities. For example, consider the following code snippet that demonstrates the ownership system in action:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// s is the owner of the string</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w"> </span><span class="c1">// t is now the owner of the string</span>
-<span class="w">    </span><span class="c1">// s is no longer valid, as it has been moved to t</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span><span class="w"> </span><span class="c1">// prints &quot;hello&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-rust">fn main() {
+    let s = String::from(&quot;hello&quot;); // s is the owner of the string
+    let t = s; // t is now the owner of the string
+    // s is no longer valid, as it has been moved to t
+    println!(&quot;{}&quot;, t); // prints &quot;hello&quot;
+}
+</code></pre>
 <p>In this example, the string "hello" is initially owned by <code>s</code>. When we assign <code>s</code> to <code>t</code>, the ownership is transferred to <code>t</code>, and <code>s</code> is no longer valid.</p>
 <h2 id="borrowing-system">Borrowing System</h2>
 <p>Rust's borrowing system allows developers to use values without taking ownership of them. There are two types of borrowing in Rust: immutable borrowing and mutable borrowing. Immutable borrowing allows multiple borrows of the same value, while mutable borrowing allows only one borrow at a time.</p>
 <p>Here's an example that demonstrates the borrowing system:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculate_length</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span><span class="w"> </span><span class="c1">// immutable borrow</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The length of &#39;{}&#39; is {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-rust">fn main() {
+    let s = String::from(&quot;hello&quot;);
+    let len = calculate_length(&amp;s); // immutable borrow
+    println!(&quot;The length of '{}' is {}.&quot;, s, len);
+}
 
-<span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span>: <span class="kp">&amp;</span><span class="nb">String</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span>
-<span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></div>
-
+fn calculate_length(s: &amp;String) -&gt; usize {
+    s.len()
+}
+</code></pre>
 <p>In this example, we pass a reference to <code>s</code> to the <code>calculate_length</code> function, which returns the length of the string. The <code>calculate_length</code> function borrows <code>s</code> immutably, allowing us to use <code>s</code> again after the function call.</p>
 <h3 id="smart-pointers">Smart Pointers</h3>
 <p>Rust provides several smart pointer types that manage memory automatically, eliminating the need for manual memory management. The most commonly used smart pointers are <code>Box</code>, <code>Rc</code>, and <code>Arc</code>.</p>
@@ -189,12 +187,11 @@
 <li><code>Arc</code> is an atomic reference-counted smart pointer that provides thread-safe reference counting.</li>
 </ul>
 <p>For example, consider the following code snippet that demonstrates the use of <code>Box</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// allocate memory on the heap</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of b is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-rust">fn main() {
+    let b = Box::new(5); // allocate memory on the heap
+    println!(&quot;The value of b is: {}&quot;, b);
+}
+</code></pre>
 <p>In this example, we use <code>Box</code> to allocate memory on the heap and store the value 5. When <code>b</code> goes out of scope, the memory is automatically deallocated.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms are available to help developers write safe and efficient Rust code. Some popular tools include:</p>

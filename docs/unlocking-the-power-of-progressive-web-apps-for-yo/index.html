@@ -214,67 +214,62 @@
 <h3 id="step-3-implement-core-pwa-features">Step 3: Implement Core PWA Features</h3>
 <h4 id="a-responsive-design">a) Responsive Design</h4>
 <p>Ensure your site adapts to all devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Example CSS for responsiveness */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c">/* Styles for mobile devices */</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">/* Example CSS for responsiveness */
+@media (max-width: 768px) {
+  /* Styles for mobile devices */
+}
+</code></pre>
 <h4 id="b-service-worker">b) Service Worker</h4>
 <p>A service worker is a script that runs in the background, enabling offline capabilities, caching, and push notifications.</p>
 <p><strong>Basic service worker example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;v1&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">([</span>
-<span class="w">        </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/app.js&#39;</span>
-<span class="w">      </span><span class="p">]);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">self.addEventListener('install', event =&gt; {
+  event.waitUntil(
+    caches.open('v1').then(cache =&gt; {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles.css',
+        '/app.js'
+      ]);
+    })
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', event =&gt; {
+  event.respondWith(
+    caches.match(event.request).then(response =&gt; {
+      return response || fetch(event.request);
+    })
+  );
+});
+</code></pre>
 <h4 id="c-web-app-manifest">c) Web App Manifest</h4>
 <p>Defines how your app appears to users when installed on their device:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Business App&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;short_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BusinessApp&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;start_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standalone&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;background_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;theme_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#3367D6&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;icons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/icon.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192x192&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;My Business App&quot;,
+  &quot;short_name&quot;: &quot;BusinessApp&quot;,
+  &quot;start_url&quot;: &quot;/&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#ffffff&quot;,
+  &quot;theme_color&quot;: &quot;#3367D6&quot;,
+  &quot;icons&quot;: [
+    {
+      &quot;src&quot;: &quot;/icon.png&quot;,
+      &quot;sizes&quot;: &quot;192x192&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    }
+  ]
+}
+</code></pre>
 <p>Register the manifest in your HTML:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;manifest&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/manifest.json&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot; /&gt;
+</code></pre>
 <h3 id="step-4-enable-https">Step 4: Enable HTTPS</h3>
 <p>PWAs require secure contexts to function correctly. Obtain an SSL certificate and serve your app over HTTPS to ensure security and build user trust.</p>
 <h3 id="step-5-test-your-pwa">Step 5: Test Your PWA</h3>
 <p>Use tools like <strong>Google Lighthouse</strong> to audit your PWA's performance, accessibility, and best practices:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Run Lighthouse audit from Chrome DevTools</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Run Lighthouse audit from Chrome DevTools
+</code></pre>
 <p>Address any issues flagged by the audit to improve your PWA's quality.</p>
 <h3 id="step-6-promote-and-distribute">Step 6: Promote and Distribute</h3>
 <p>Encourage users to add your PWA to their home screens with prompts or banners. Share direct URLs to increase discoverability.</p>

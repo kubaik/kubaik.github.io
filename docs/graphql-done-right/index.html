@@ -154,37 +154,35 @@
 <p>One of the key benefits of GraphQL is its ability to handle complex, nested queries. For example, consider a social media platform that allows users to view their friends' profiles, including their friends' friends. With a traditional REST API, this would require multiple requests to the server, resulting in increased latency and decreased performance. With GraphQL, a single query can retrieve all the necessary data, reducing the number of requests and improving user experience.</p>
 <h3 id="graphql-schema-definition">GraphQL Schema Definition</h3>
 <p>The first step in building a GraphQL API is to define the schema. The schema defines the types of data available, the relationships between them, and the operations that can be performed on them. Here is an example of a simple GraphQL schema definition using the GraphQL Schema Definition Language (SDL):</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">friends</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type User {
+  id: ID!
+  name: String!
+  friends: [User]
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="nl">users</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="p">}</span>
+type Query {
+  user(id: ID!): User
+  users: [User]
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Mutation</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="n">addFriend</span><span class="p">(</span><span class="n">userId</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">friendId</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="p">}</span>
-</code></pre></div>
-
+type Mutation {
+  createUser(name: String!): User
+  addFriend(userId: ID!, friendId: ID!): User
+}
+</code></pre>
 <p>This schema defines a <code>User</code> type with <code>id</code>, <code>name</code>, and <code>friends</code> fields, as well as <code>Query</code> and <code>Mutation</code> types that define the available operations.</p>
 <h2 id="resolvers-and-data-sources">Resolvers and Data Sources</h2>
 <p>Resolvers are functions that run on the server to fetch the data for each field in the schema. They can be as simple as returning a hardcoded value or as complex as querying a database or making an API call to an external service. Here is an example of a resolver for the <code>user</code> field:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Fetch user data from database or API</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">getUser</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">userData</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const resolvers = {
+  Query: {
+    user: (parent, { id }) =&gt; {
+      // Fetch user data from database or API
+      const userData = db.getUser(id);
+      return userData;
+    }
+  }
+};
+</code></pre>
 <p>In this example, the <code>user</code> resolver fetches the user data from a database or API and returns it to the client.</p>
 <h3 id="data-sources-and-performance">Data Sources and Performance</h3>
 <p>The choice of data source can have a significant impact on the performance of a GraphQL API. For example, using a relational database like PostgreSQL can provide strong consistency and data integrity, but may introduce additional latency due to the overhead of SQL queries. On the other hand, using a NoSQL database like MongoDB can provide faster performance, but may require additional effort to ensure data consistency.</p>
@@ -199,45 +197,43 @@
 * <strong>Query batching</strong>: batching multiple queries together to reduce the number of requests to the server
 * <strong>Pagination</strong>: paginating large datasets to reduce the amount of data transferred over the network</p>
 <p>For example, consider a query that fetches a list of users with their friends:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">users</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span>
-<span class="w">    </span><span class="n">name</span>
-<span class="w">    </span><span class="n">friends</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">id</span>
-<span class="w">      </span><span class="n">name</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+  users {
+    id
+    name
+    friends {
+      id
+      name
+    }
+  }
+}
+</code></pre>
 <p>This query can be optimized by caching the results of the <code>friends</code> fragment and reusing it across multiple queries.</p>
 <h3 id="caching-with-redis">Caching with Redis</h3>
 <p>Redis is a popular in-memory data store that can be used to cache query results. Here is an example of how to use Redis to cache query results:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const redis = require('redis');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+const cache = redis.createClient();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Check if result is cached</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`user:</span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="c1">// Fetch user data from database or API</span>
-<span class="w">          </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">getUser</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">          </span><span class="c1">// Cache result</span>
-<span class="w">          </span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="sb">`user:</span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">userData</span><span class="p">));</span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="nx">userData</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const resolvers = {
+  Query: {
+    user: (parent, { id }) =&gt; {
+      // Check if result is cached
+      return cache.get(`user:${id}`).then((result) =&gt; {
+        if (result) {
+          return JSON.parse(result);
+        } else {
+          // Fetch user data from database or API
+          const userData = db.getUser(id);
+          // Cache result
+          cache.set(`user:${id}`, JSON.stringify(userData));
+          return userData;
+        }
+      });
+    }
+  }
+};
+</code></pre>
 <p>In this example, the <code>user</code> resolver checks if the result is cached in Redis before fetching it from the database or API. If the result is cached, it returns the cached result. Otherwise, it fetches the result, caches it, and returns it to the client.</p>
 <h2 id="security-and-authentication">Security and Authentication</h2>
 <p>Security and authentication are critical components of any API. Here are some strategies for securing a GraphQL API:
@@ -245,39 +241,38 @@
 * <strong>Authorization</strong>: using authorization mechanisms like role-based access control (RBAC) to control access to sensitive data
 * <strong>Input validation</strong>: validating user input to prevent SQL injection and cross-site scripting (XSS) attacks</p>
 <p>For example, consider a GraphQL API that allows clients to create and update user accounts. To secure this API, you can use authentication and authorization mechanisms to control access to sensitive data:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">Mutation</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="n">updateUser</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type Mutation {
+  createUser(name: String!, password: String!): User
+  updateUser(id: ID!, name: String, password: String): User
+}
 
-<span class="err">const</span><span class="w"> </span><span class="err">resolvers</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">Mutation</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nl">createUser</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="n">Authenticate</span><span class="w"> </span><span class="n">client</span>
-<span class="w">      </span><span class="n">if</span><span class="w"> </span><span class="p">(</span><span class="err">!</span><span class="n">authenticateClient</span><span class="err">(</span><span class="p">)</span><span class="err">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Unauthorized</span><span class="err">&#39;</span><span class="p">)</span><span class="err">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">account</span>
-<span class="w">      </span><span class="n">const</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="n">db</span><span class="err">.</span><span class="n">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="err">;</span>
-<span class="w">      </span><span class="n">return</span><span class="w"> </span><span class="n">user</span><span class="err">;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nl">updateUser</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="n">Authenticate</span><span class="w"> </span><span class="n">client</span>
-<span class="w">      </span><span class="n">if</span><span class="w"> </span><span class="p">(</span><span class="err">!</span><span class="n">authenticateClient</span><span class="err">(</span><span class="p">)</span><span class="err">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Unauthorized</span><span class="err">&#39;</span><span class="p">)</span><span class="err">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="n">Authorize</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">account</span>
-<span class="w">      </span><span class="n">if</span><span class="w"> </span><span class="p">(</span><span class="err">!</span><span class="n">authorizeClientToUpdateUser</span><span class="err">(</span><span class="n">id</span><span class="p">)</span><span class="err">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Forbidden</span><span class="err">&#39;</span><span class="p">)</span><span class="err">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">account</span>
-<span class="w">      </span><span class="n">const</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="n">db</span><span class="err">.</span><span class="n">updateUser</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="err">;</span>
-<span class="w">      </span><span class="n">return</span><span class="w"> </span><span class="n">user</span><span class="err">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span><span class="err">;</span>
-</code></pre></div>
-
+const resolvers = {
+  Mutation: {
+    createUser: (parent, { name, password }) =&gt; {
+      // Authenticate client
+      if (!authenticateClient()) {
+        throw new Error('Unauthorized');
+      }
+      // Create user account
+      const user = db.createUser(name, password);
+      return user;
+    },
+    updateUser: (parent, { id, name, password }) =&gt; {
+      // Authenticate client
+      if (!authenticateClient()) {
+        throw new Error('Unauthorized');
+      }
+      // Authorize client to update user account
+      if (!authorizeClientToUpdateUser(id)) {
+        throw new Error('Forbidden');
+      }
+      // Update user account
+      const user = db.updateUser(id, name, password);
+      return user;
+    }
+  }
+};
+</code></pre>
 <p>In this example, the <code>createUser</code> and <code>updateUser</code> resolvers authenticate and authorize clients before creating or updating user accounts.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when building a GraphQL API:
@@ -285,18 +280,17 @@
 * <strong>Data consistency</strong>: using transactions or locking mechanisms to ensure data consistency
 * <strong>Error handling</strong>: using error handling mechanisms like try-catch blocks to handle errors and exceptions</p>
 <p>For example, consider a GraphQL API that allows clients to fetch a list of users with their friends. To solve the N+1 query problem, you can use batching to reduce the number of requests to the server:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">users</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span>
-<span class="w">    </span><span class="n">name</span>
-<span class="w">    </span><span class="n">friends</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">id</span>
-<span class="w">      </span><span class="n">name</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+  users {
+    id
+    name
+    friends {
+      id
+      name
+    }
+  }
+}
+</code></pre>
 <p>In this example, the <code>friends</code> field can be batched together to reduce the number of requests to the server.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for GraphQL:
@@ -304,22 +298,21 @@
 * <strong>E-commerce platforms</strong>: using GraphQL to fetch product data and order data
 * <strong>Content management systems</strong>: using GraphQL to fetch content data and metadata</p>
 <p>For example, consider a social media platform that allows users to view their friends' profiles, including their friends' friends. To implement this feature, you can use GraphQL to fetch the necessary data:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span>
-<span class="w">    </span><span class="n">name</span>
-<span class="w">    </span><span class="n">friends</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">id</span>
-<span class="w">      </span><span class="n">name</span>
-<span class="w">      </span><span class="n">friends</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">id</span>
-<span class="w">        </span><span class="n">name</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+  user(id: &quot;123&quot;) {
+    id
+    name
+    friends {
+      id
+      name
+      friends {
+        id
+        name
+      }
+    }
+  }
+}
+</code></pre>
 <p>In this example, the <code>friends</code> field is used to fetch the friends' data, and the <code>friends</code> field is used again to fetch the friends' friends' data.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Here are some popular tools and platforms for building GraphQL APIs:
@@ -327,27 +320,26 @@
 * <strong>Prisma</strong>: a popular ORM that provides features like data modeling, migration, and caching
 * <strong>GraphQL Yoga</strong>: a popular GraphQL server that provides features like caching, batching, and error handling</p>
 <p>For example, consider a GraphQL API that uses Apollo Server to provide features like caching and batching:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">typeDefs</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;schema.graphql&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">resolvers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Fetch user data from database or API</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">getUser</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">userData</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">cache</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;redis&#39;</span>
-<span class="p">});</span>
+const server = new ApolloServer({
+  typeDefs: 'schema.graphql',
+  resolvers: {
+    Query: {
+      user: (parent, { id }) =&gt; {
+        // Fetch user data from database or API
+        const userData = db.getUser(id);
+        return userData;
+      }
+    }
+  },
+  cache: 'redis'
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>In this example, the Apollo Server is used to provide features like caching and batching, and the <code>user</code> resolver is used to fetch user data from the database or API.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, building a GraphQL API requires careful consideration of factors like schema design, resolvers, data sources, query optimization, caching, security, and authentication. By using the right tools and platforms, and following best practices and guidelines, you can build a scalable and maintainable GraphQL API that meets the needs of your clients and users.</p>

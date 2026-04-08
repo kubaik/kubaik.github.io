@@ -162,79 +162,73 @@
 <p>Next.js also provides a set of built-in APIs and tools that make it easy to manage common tasks, such as authentication and data fetching. For example, the <code>getStaticProps</code> API allows you to pre-render pages at build time, while the <code>getServerSideProps</code> API allows you to render pages on the server at request time.</p>
 <h2 id="setting-up-a-nextjs-project">Setting Up a Next.js Project</h2>
 <p>To get started with Next.js, you'll need to create a new project using the <code>create-next-app</code> command-line tool. This tool provides a simple way to create a new Next.js project with a basic file structure and configuration.</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-app
+</code></pre>
 <p>This will create a new directory called <code>my-app</code> with a basic Next.js project structure. You can then navigate into the directory and start the development server using the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>my-app
-npm<span class="w"> </span>run<span class="w"> </span>dev
-</code></pre></div>
-
+<pre><code class="language-bash">cd my-app
+npm run dev
+</code></pre>
 <p>This will start the development server and make your application available at <code>http://localhost:3000</code>.</p>
 <h3 id="configuring-nextjs">Configuring Next.js</h3>
 <p>Next.js provides a range of configuration options that allow you to customize its behavior. For example, you can configure the <code>target</code> option to specify the Node.js version that your application should be compiled for. You can also configure the <code>webpack</code> option to customize the Webpack configuration used by Next.js.</p>
 <p>Here is an example of how you might configure Next.js to target Node.js 14:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// next.config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;serverless&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">webpack</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">config</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">config</span><span class="p">.</span><span class="nx">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">__filename</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">__dirname</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">config</span><span class="p">;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// next.config.js
+module.exports = {
+  target: 'serverless',
+  webpack: (config) =&gt; {
+    config.node = {
+      __filename: true,
+      __dirname: true,
+    };
+    return config;
+  },
+};
+</code></pre>
 <h2 id="building-a-full-stack-application-with-nextjs">Building a Full-Stack Application with Next.js</h2>
 <p>Next.js provides a range of features and tools that make it easy to build full-stack applications. For example, you can use the <code>api</code> directory to create API routes and serverless functions. You can also use the <code>pages</code> directory to create server-rendered pages.</p>
 <p>Here is an example of how you might create a simple API route using Next.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/users.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/api/users.js
+import { NextApiRequest, NextApiResponse } from 'next';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+const users = [
+  { id: 1, name: 'John Doe' },
+  { id: 2, name: 'Jane Doe' },
+];
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">405</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Method not allowed&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    return res.json(users);
+  } else {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+}
+</code></pre>
 <p>This API route can be accessed at <code>http://localhost:3000/api/users</code>.</p>
 <h3 id="using-a-database-with-nextjs">Using a Database with Next.js</h3>
 <p>Next.js provides a range of options for using a database with your application. For example, you can use a relational database like PostgreSQL or MySQL, or a NoSQL database like MongoDB.</p>
 <p>Here is an example of how you might use a PostgreSQL database with Next.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// lib/db.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Pool</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;pg&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// lib/db.js
+import { Pool } from 'pg';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Pool</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">database</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;mydb&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">5432</span><span class="p">,</span>
-<span class="p">});</span>
+const pool = new Pool({
+  user: 'myuser',
+  host: 'localhost',
+  database: 'mydb',
+  password: 'mypassword',
+  port: 5432,
+});
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">pool</span><span class="p">;</span>
-</code></pre></div>
-
+export default pool;
+</code></pre>
 <p>You can then use this database connection in your API routes and pages:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/users.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">pool</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../lib/db&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/api/users.js
+import pool from '../lib/db';
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">pool</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM users&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">rows</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const results = await pool.query('SELECT * FROM users');
+  return res.json(results.rows);
+}
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem that developers encounter when using Next.js is handling errors and exceptions. Next.js provides a range of options for handling errors, including error pages and error boundaries.</p>
 <p>Here are some common problems and solutions:

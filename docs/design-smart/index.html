@@ -172,30 +172,29 @@
 <p>For example, a movie streaming service may use a collaborative filtering algorithm to recommend movies to a user based on the viewing history of similar users.</p>
 <h3 id="practical-example-building-a-simple-recommender-system">Practical Example: Building a Simple Recommender System</h3>
 <p>Here is an example of building a simple recommender system using Python and the Scikit-learn library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.neighbors import NearestNeighbors
 
-<span class="c1"># Load the movie data</span>
-<span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;movies.csv&#39;</span><span class="p">)</span>
+# Load the movie data
+movies = pd.read_csv('movies.csv')
 
-<span class="c1"># Create a matrix of user-item interactions</span>
-<span class="n">interactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;interactions.csv&#39;</span><span class="p">)</span>
+# Create a matrix of user-item interactions
+interactions = pd.read_csv('interactions.csv')
 
-<span class="c1"># Create a nearest neighbors model</span>
-<span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;brute&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">)</span>
+# Create a nearest neighbors model
+nn = NearestNeighbors(n_neighbors=10, algorithm='brute', metric='cosine')
 
-<span class="c1"># Fit the model to the interaction data</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">interactions</span><span class="p">)</span>
+# Fit the model to the interaction data
+nn.fit(interactions)
 
-<span class="c1"># Make predictions for a given user</span>
-<span class="n">user_id</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">user_interactions</span> <span class="o">=</span> <span class="n">interactions</span><span class="p">[</span><span class="n">interactions</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">]</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">user_interactions</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+# Make predictions for a given user
+user_id = 1
+user_interactions = interactions[interactions['user_id'] == user_id]
+predictions = nn.kneighbors(user_interactions, return_distance=False)
 
-<span class="c1"># Print the predicted movies</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">movies</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">predictions</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the predicted movies
+print(movies.iloc[predictions])
+</code></pre>
 <p>This code builds a simple recommender system using a nearest neighbors algorithm. It loads the movie data and user interaction data, creates a matrix of user-item interactions, and fits a nearest neighbors model to the data. It then makes predictions for a given user and prints the predicted movies.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>One common problem in recommender systems is the cold start problem, where a new user or item is introduced and there is not enough data to make accurate recommendations. To solve this problem, we can use techniques such as:
@@ -243,67 +242,65 @@
 * AWS SageMaker: a fully managed service that provides a range of tools and services for deploying models.</p>
 <h3 id="code-example-using-tensorflow-recommenders">Code Example: Using TensorFlow Recommenders</h3>
 <p>Here is an example of using TensorFlow Recommenders to build a recommender system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_recommenders</span> <span class="k">as</span> <span class="nn">tfrs</span>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_recommenders as tfrs
 
-<span class="c1"># Define the user and item embeddings</span>
-<span class="n">user_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
-<span class="n">item_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+# Define the user and item embeddings
+user_embeddings = tf.keras.layers.Embedding(input_dim=1000, output_dim=64)
+item_embeddings = tf.keras.layers.Embedding(input_dim=1000, output_dim=64)
 
-<span class="c1"># Define the rating layer</span>
-<span class="n">rating_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
+# Define the rating layer
+rating_layer = tf.keras.layers.Dense(1, activation='sigmoid')
 
-<span class="c1"># Define the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">user_embeddings</span><span class="p">,</span> <span class="n">item_embeddings</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">rating_layer</span><span class="p">)</span>
+# Define the model
+model = tf.keras.Model(inputs=[user_embeddings, item_embeddings], outputs=rating_layer)
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">user_embeddings</span><span class="p">,</span> <span class="n">item_embeddings</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+model.fit(user_embeddings, item_embeddings, epochs=10)
+</code></pre>
 <p>This code defines a simple recommender system using TensorFlow Recommenders. It defines the user and item embeddings, the rating layer, and the model. It then compiles and trains the model using the Adam optimizer and binary cross-entropy loss.</p>
 <h3 id="code-example-using-pytorch">Code Example: Using PyTorch</h3>
 <p>Here is an example of using PyTorch to build a recommender system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
 
-<span class="c1"># Define the user and item embeddings</span>
-<span class="n">user_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
-<span class="n">item_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+# Define the user and item embeddings
+user_embeddings = nn.Embedding(1000, 64)
+item_embeddings = nn.Embedding(1000, 64)
 
-<span class="c1"># Define the rating layer</span>
-<span class="n">rating_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Define the rating layer
+rating_layer = nn.Linear(64, 1)
 
-<span class="c1"># Define the model</span>
-<span class="k">class</span> <span class="nc">RecommenderSystem</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">RecommenderSystem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_embeddings</span> <span class="o">=</span> <span class="n">user_embeddings</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">item_embeddings</span> <span class="o">=</span> <span class="n">item_embeddings</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rating_layer</span> <span class="o">=</span> <span class="n">rating_layer</span>
+# Define the model
+class RecommenderSystem(nn.Module):
+    def __init__(self):
+        super(RecommenderSystem, self).__init__()
+        self.user_embeddings = user_embeddings
+        self.item_embeddings = item_embeddings
+        self.rating_layer = rating_layer
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_ids</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">):</span>
-        <span class="n">user_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_embeddings</span><span class="p">(</span><span class="n">user_ids</span><span class="p">)</span>
-        <span class="n">item_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_embeddings</span><span class="p">(</span><span class="n">item_ids</span><span class="p">)</span>
-        <span class="n">ratings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rating_layer</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">user_embeddings</span><span class="p">,</span> <span class="n">item_embeddings</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">ratings</span>
+    def forward(self, user_ids, item_ids):
+        user_embeddings = self.user_embeddings(user_ids)
+        item_embeddings = self.item_embeddings(item_ids)
+        ratings = self.rating_layer(torch.cat((user_embeddings, item_embeddings), dim=1))
+        return ratings
 
-<span class="c1"># Initialize the model and optimizer</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RecommenderSystem</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+# Initialize the model and optimizer
+model = RecommenderSystem()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-<span class="c1"># Train the model</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-    <span class="n">ratings</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">)</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">ratings</span><span class="p">,</span> <span class="n">true_ratings</span><span class="p">)</span>
-    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-</code></pre></div>
-
+# Train the model
+for epoch in range(10):
+    optimizer.zero_grad()
+    ratings = model(user_ids, item_ids)
+    loss = nn.MSELoss()(ratings, true_ratings)
+    loss.backward()
+    optimizer.step()
+</code></pre>
 <p>This code defines a simple recommender system using PyTorch. It defines the user and item embeddings, the rating layer, and the model. It then initializes the model and optimizer, and trains the model using the Adam optimizer and mean squared error loss.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Recommender systems are a powerful tool for providing personalized recommendations to users. They can be used in a variety of applications, including e-commerce, movie streaming, and music streaming. By using techniques such as collaborative filtering, content-based filtering, and hybrid approach, we can build recommender systems that provide accurate and relevant recommendations.</p>

@@ -164,16 +164,15 @@
 2. Cloning the project repository to your local machine.
 3. Configuring your code editor or IDE.</p>
 <p>Here's an example of how you might set up your environment for the TensorFlow tutorials project:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install the required dependencies</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span> <span class="n">numpy</span> <span class="n">matplotlib</span>
+<pre><code class="language-python"># Install the required dependencies
+pip install tensorflow numpy matplotlib
 
-<span class="c1"># Clone the project repository</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">git</span>
+# Clone the project repository
+git clone https://github.com/tensorflow/tensorflow.git
 
-<span class="c1"># Configure your code editor or IDE</span>
-<span class="c1"># For example, you might create a new project in PyCharm and add the TensorFlow repository as a dependency</span>
-</code></pre></div>
-
+# Configure your code editor or IDE
+# For example, you might create a new project in PyCharm and add the TensorFlow repository as a dependency
+</code></pre>
 <h3 id="configuring-your-code-editor-or-ide">Configuring Your Code Editor or IDE</h3>
 <p>Your code editor or IDE is where you'll spend most of your time writing and debugging code. Here are a few popular options:
 * Visual Studio Code (VS Code): A lightweight, open-source code editor with a wide range of extensions available.
@@ -190,19 +189,18 @@
 3. Push your changes to the remote repository.
 4. Submit a pull request to the project maintainers.</p>
 <p>Here's an example of how you might submit a pull request for the TensorFlow tutorials project:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new branch for your changes</span>
-<span class="n">git</span> <span class="n">branch</span> <span class="n">my</span><span class="o">-</span><span class="n">branch</span>
+<pre><code class="language-python"># Create a new branch for your changes
+git branch my-branch
 
-<span class="c1"># Commit your changes with a descriptive message</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;Added new tutorial for TensorFlow 2.0&quot;</span>
+# Commit your changes with a descriptive message
+git commit -m &quot;Added new tutorial for TensorFlow 2.0&quot;
 
-<span class="c1"># Push your changes to the remote repository</span>
-<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">my</span><span class="o">-</span><span class="n">branch</span>
+# Push your changes to the remote repository
+git push origin my-branch
 
-<span class="c1"># Submit a pull request to the project maintainers</span>
-<span class="c1"># For example, you might create a new pull request on GitHub with a descriptive title and message</span>
-</code></pre></div>
-
+# Submit a pull request to the project maintainers
+# For example, you might create a new pull request on GitHub with a descriptive title and message
+</code></pre>
 <h3 id="best-practices-for-pull-requests">Best Practices for Pull Requests</h3>
 <p>Here are a few best practices to keep in mind when submitting pull requests:
 * Make sure your changes are well-documented and easy to understand.
@@ -219,15 +217,14 @@
 * <strong>Code review</strong>: When your pull request is reviewed, you may receive feedback and criticism. Solution: Be responsive to feedback and make changes as needed.
 * <strong>Testing and debugging</strong>: When testing and debugging your code, you may encounter errors and issues. Solution: Use tools like <code>pdb</code> and <code>print</code> statements to debug your code.</p>
 <p>For example, let's say you're experiencing merge conflicts when trying to merge your changes with the main branch. You might use the following command to resolve conflicts manually:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Merge the main branch with your changes</span>
-<span class="n">git</span> <span class="n">merge</span> <span class="n">main</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">commit</span>
+<pre><code class="language-python"># Merge the main branch with your changes
+git merge main --no-commit
 
-<span class="c1"># Resolve conflicts manually</span>
-<span class="c1"># For example, you might use a tool like `git diff` to compare the changes</span>
-<span class="n">git</span> <span class="n">diff</span> <span class="o">--</span><span class="n">ours</span>
-<span class="n">git</span> <span class="n">diff</span> <span class="o">--</span><span class="n">theirs</span>
-</code></pre></div>
-
+# Resolve conflicts manually
+# For example, you might use a tool like `git diff` to compare the changes
+git diff --ours
+git diff --theirs
+</code></pre>
 <h3 id="metrics-and-performance-benchmarks">Metrics and Performance Benchmarks</h3>
 <p>When contributing to open source projects, it's often helpful to include metrics and performance benchmarks to demonstrate the effectiveness of your changes. Here are a few examples:
 * <strong>CPU usage</strong>: You might use tools like <code>top</code> or <code>htop</code> to measure CPU usage before and after your changes.

@@ -163,23 +163,20 @@
 * <strong>Use composite indexes</strong>: Composite indexes, which include multiple columns, can be more effective than single-column indexes for queries that filter on multiple columns.
 * <strong>Avoid over-indexing</strong>: Creating too many indexes can slow down write operations and increase storage requirements.</p>
 <p>Here is an example of creating an index on a column in MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_name ON customers (name);
+</code></pre>
 <p>This index can improve the performance of queries that filter on the <code>name</code> column, such as:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM customers WHERE name = 'John Doe';
+</code></pre>
 <h3 id="caching-strategies">Caching Strategies</h3>
 <p>Caching is another technique that can improve query performance by reducing the number of times that the database needs to execute a query. Here are some caching strategies that can improve query performance:
 * <strong>Use query caching</strong>: Query caching involves storing the results of frequently executed queries in memory so that they can be quickly retrieved instead of re-executed.
 * <strong>Use result caching</strong>: Result caching involves storing the results of a query in memory so that they can be quickly retrieved instead of re-executed.
 * <strong>Use caching frameworks</strong>: Caching frameworks, such as Redis or Memcached, can provide a centralized caching layer that can be used to cache query results.</p>
 <p>Here is an example of using query caching in MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">query_cache_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1048576</span><span class="p">;</span>
-<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">query_cache_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1048576</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SET GLOBAL query_cache_size = 1048576;
+SET GLOBAL query_cache_limit = 1048576;
+</code></pre>
 <p>This sets the query cache size to 1MB and the query cache limit to 1MB, which can improve the performance of frequently executed queries.</p>
 <h3 id="query-rewriting">Query Rewriting</h3>
 <p>Query rewriting involves modifying a query to improve its performance without changing its semantics. Here are some query rewriting strategies that can improve query performance:
@@ -187,36 +184,33 @@
 * <strong>Avoid using SELECT *</strong>: Using SELECT * can retrieve unnecessary columns, which can slow down query performance. Instead, specify only the columns that are needed.
 * <strong>Use efficient aggregation functions</strong>: Using efficient aggregation functions, such as SUM and COUNT, can be faster than using less efficient functions, such as AVG and MAX.</p>
 <p>Here is an example of rewriting a query to use an efficient join order:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">customer_id</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">products</span><span class="p">.</span><span class="n">product_id</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT *
+FROM customers
+JOIN orders ON customers.customer_id = orders.customer_id
+JOIN products ON orders.product_id = products.product_id;
+</code></pre>
 <p>This query can be rewritten to join the smaller <code>customers</code> table first:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">products</span><span class="p">.</span><span class="n">product_id</span>
-<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_products</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order_products</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT *
+FROM customers
+JOIN (
+  SELECT *
+  FROM orders
+  JOIN products ON orders.product_id = products.product_id
+) AS order_products ON customers.customer_id = order_products.customer_id;
+</code></pre>
 <h3 id="using-amazon-aurora">Using Amazon Aurora</h3>
 <p>Amazon Aurora is a relational database service that provides high-performance and high-availability capabilities. Here are some benefits of using Amazon Aurora:
 * <strong>High-performance</strong>: Amazon Aurora provides high-performance capabilities, including up to 5x better performance than standard MySQL databases.
 * <strong>High-availability</strong>: Amazon Aurora provides high-availability capabilities, including automatic failover and self-healing.
 * <strong>Cost-effective</strong>: Amazon Aurora provides cost-effective pricing, with prices starting at $0.0255 per hour for a db.r4.large instance.</p>
 <p>Here is an example of creating an Amazon Aurora instance:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>rds<span class="w"> </span>create-db-instance<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--db-instance-identifier<span class="w"> </span>my-aurora-instance<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--db-instance-class<span class="w"> </span>db.r4.large<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--engine<span class="w"> </span>aurora-mysql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--master-username<span class="w"> </span>myuser<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--master-user-passwordmypassword
-</code></pre></div>
-
+<pre><code class="language-bash">aws rds create-db-instance \
+  --db-instance-identifier my-aurora-instance \
+  --db-instance-class db.r4.large \
+  --engine aurora-mysql \
+  --master-username myuser \
+  --master-user-passwordmypassword
+</code></pre>
 <p>This creates an Amazon Aurora instance with a db.r4.large instance type and a master username and password.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems and solutions related to query optimization:

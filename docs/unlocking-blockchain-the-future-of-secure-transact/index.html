@@ -167,23 +167,22 @@
 <li><strong>Step 1</strong>: Set up a Hyperledger Fabric network using tools like Docker and Kubernetes.</li>
 <li><strong>Step 2</strong>: Create a smart contract to record product information (e.g., origin, processing, and delivery).</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a product smart contract in Hyperledger Fabric</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Contract</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-contract-api&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Example of a product smart contract in Hyperledger Fabric
+const { Contract } = require('fabric-contract-api');
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">SupplyChainContract</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Contract</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="nx">createProduct</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">productId</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">origin</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">productId</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">origin</span><span class="o">:</span><span class="w"> </span><span class="nx">origin</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">(),</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">stub</span><span class="p">.</span><span class="nx">putState</span><span class="p">(</span><span class="nx">productId</span><span class="p">,</span><span class="w"> </span><span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">product</span><span class="p">)));</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">product</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class SupplyChainContract extends Contract {
+    async createProduct(ctx, productId, name, origin) {
+        const product = {
+            id: productId,
+            name: name,
+            origin: origin,
+            timestamp: new Date().toISOString(),
+        };
+        await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
+        return product;
+    }
+}
+</code></pre>
 <ul>
 <li><strong>Step 3</strong>: Deploy the smart contract and use REST APIs to interact with it.</li>
 </ul>
@@ -194,24 +193,22 @@
 <ul>
 <li><strong>Step 1</strong>: Use Stellar SDK to create a simple payment application.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">StellarSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stellar-sdk&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const StellarSdk = require('stellar-sdk');
 
-<span class="c1">// Create a new account on Stellar</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">StellarSdk</span><span class="p">.</span><span class="nx">Server</span><span class="p">(</span><span class="s1">&#39;https://horizon-testnet.stellar.org&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StellarSdk</span><span class="p">.</span><span class="nx">Keypair</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Created account with public key: </span><span class="si">${</span><span class="nx">pair</span><span class="p">.</span><span class="nx">publicKey</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-</code></pre></div>
-
+// Create a new account on Stellar
+const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+const pair = StellarSdk.Keypair.random();
+console.log(`Created account with public key: ${pair.publicKey()}`);
+</code></pre>
 <ul>
 <li><strong>Step 2</strong>: Fund the account using the Stellar test network and send payments.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">payment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">server</span><span class="p">.</span><span class="nx">transactions</span><span class="p">.</span><span class="nx">buildPayment</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">destination</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;destinationPublicKey&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">asset</span><span class="o">:</span><span class="w"> </span><span class="nx">StellarSdk</span><span class="p">.</span><span class="nx">Asset</span><span class="p">.</span><span class="kr">native</span><span class="p">(),</span>
-<span class="w">    </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;100&#39;</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const payment = await server.transactions.buildPayment({
+    destination: 'destinationPublicKey',
+    asset: StellarSdk.Asset.native(),
+    amount: '100',
+});
+</code></pre>
 <h3 id="3-digital-identity-verification">3. Digital Identity Verification</h3>
 <p><strong>Problem</strong>: Identity theft and fraud are prevalent in today's digital world.</p>
 <p><strong>Solution</strong>: Blockchain can create a secure and immutable digital identity. Companies like Civic are leading the charge by providing tools for identity verification on the blockchain.</p>
@@ -220,19 +217,18 @@
 <li><strong>Step 1</strong>: Use Civic’s API to create a decentralized identity verification service.</li>
 <li><strong>Step 2</strong>: Store user identities on the blockchain, allowing individuals to control their data.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of using Civic to verify identity</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">civic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@civic/civic-sdk&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Example of using Civic to verify identity
+const civic = require('@civic/civic-sdk');
 
-<span class="c1">// Request identity verification</span>
-<span class="nx">civic</span><span class="p">.</span><span class="nx">requestVerification</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Verification successful:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Verification failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-</code></pre></div>
-
+// Request identity verification
+civic.requestVerification()
+    .then(response =&gt; {
+        console.log('Verification successful:', response);
+    })
+    .catch(error =&gt; {
+        console.error('Verification failed:', error);
+    });
+</code></pre>
 <h2 id="performance-metrics-and-benchmarks">Performance Metrics and Benchmarks</h2>
 <p>When considering blockchain implementation, it's essential to evaluate performance metrics:</p>
 <ul>

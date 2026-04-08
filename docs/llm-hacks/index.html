@@ -158,18 +158,17 @@
 * <strong>Relevance</strong>: Ensure the prompt is relevant to the model's training data and capabilities.
 * <strong>Coherence</strong>: Use a consistent tone, style, and format throughout the prompt.</p>
 <p>To illustrate these principles, let's consider an example using the Hugging Face Transformers library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<pre><code class="language-python">from transformers import pipeline
 
-<span class="c1"># Define a specific, clear, and relevant prompt</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Write a short story about a character who discovers a hidden world within their reflection.&quot;</span>
+# Define a specific, clear, and relevant prompt
+prompt = &quot;Write a short story about a character who discovers a hidden world within their reflection.&quot;
 
-<span class="c1"># Initialize the model and generate a response</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;text-generation&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+# Initialize the model and generate a response
+model = pipeline(&quot;text-generation&quot;, model=&quot;t5-base&quot;)
+response = model(prompt, max_length=200)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;generated_text&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+print(response[0][&quot;generated_text&quot;])
+</code></pre>
 <p>This example demonstrates a well-crafted prompt that elicits a creative and engaging response from the model.</p>
 <h2 id="practical-applications-of-prompt-engineering">Practical Applications of Prompt Engineering</h2>
 <p>Prompt engineering has numerous applications across various industries, including:

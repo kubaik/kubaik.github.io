@@ -173,18 +173,17 @@
 <li>Master-master replication: In this setup, multiple database instances accept writes and replicate data with each other. This approach provides higher availability and better performance, as any instance can handle writes.</li>
 </ul>
 <p>For example, consider a scenario where we have a master-slave replication setup using MySQL. We can configure the master instance to replicate data to a slave instance using the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Master instance configuration</span>
-<span class="n">server</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="n">log</span><span class="o">-</span><span class="n">bin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mysql</span><span class="o">-</span><span class="n">bin</span>
-<span class="n">binlog</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">row</span>
+<pre><code class="language-sql">-- Master instance configuration
+server-id = 1
+log-bin = mysql-bin
+binlog-format = row
 
-<span class="c1">-- Slave instance configuration</span>
-<span class="n">server</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="n">log</span><span class="o">-</span><span class="n">bin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mysql</span><span class="o">-</span><span class="n">bin</span>
-<span class="n">binlog</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">row</span>
-<span class="n">change</span><span class="o">-</span><span class="n">master</span><span class="o">-</span><span class="k">to</span><span class="w"> </span><span class="n">master_host</span><span class="o">=</span><span class="s1">&#39;master_instance_ip&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">master_port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span><span class="w"> </span><span class="n">master_user</span><span class="o">=</span><span class="s1">&#39;replication_user&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">master_password</span><span class="o">=</span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Slave instance configuration
+server-id = 2
+log-bin = mysql-bin
+binlog-format = row
+change-master-to master_host='master_instance_ip', master_port=3306, master_user='replication_user', master_password='replication_password';
+</code></pre>
 <p>In this example, the master instance is configured to replicate data to the slave instance using the <code>log-bin</code> and <code>binlog-format</code> options. The slave instance is configured to connect to the master instance using the <code>change-master-to</code> command.</p>
 <h3 id="database-sharding">Database Sharding</h3>
 <p>Database sharding involves splitting data across multiple instances, each containing a portion of the overall data. This approach allows for horizontal scaling, as new instances can be added to handle increased load.</p>
@@ -194,19 +193,18 @@
 <li>Vertical sharding: In this approach, data is split across multiple instances, each containing a specific subset of data (e.g., user data, order data). This approach is useful for handling complex queries and improving data locality.</li>
 </ul>
 <p>For example, consider a scenario where we have an e-commerce platform using MongoDB, and we want to shard our data based on the user's location. We can use the following code to configure sharding:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Shard key configuration</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">shardKey</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;hashed&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Shard key configuration
+db.createCollection(&quot;orders&quot;, {
+    shardKey: { location: &quot;hashed&quot; }
+});
 
-<span class="c1">// Shard instance configuration</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shard1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shard1_instance_ip:27017&quot;</span><span class="p">);</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shard2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shard2_instance_ip:27017&quot;</span><span class="p">);</span>
+// Shard instance configuration
+db.addShard(&quot;shard1&quot;, &quot;shard1_instance_ip:27017&quot;);
+db.addShard(&quot;shard2&quot;, &quot;shard2_instance_ip:27017&quot;);
 
-<span class="c1">// Enable sharding for the collection</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">&quot;orders&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+// Enable sharding for the collection
+db.enableSharding(&quot;orders&quot;);
+</code></pre>
 <p>In this example, the <code>createCollection</code> method is used to create a new collection with a shard key based on the <code>location</code> field. The <code>addShard</code> method is used to add new shard instances, and the <code>enableSharding</code> method is used to enable sharding for the collection.</p>
 <h2 id="benefits-of-database-replication-and-sharding">Benefits of Database Replication and Sharding</h2>
 <p>Database replication and sharding offer several benefits, including:</p>
@@ -232,20 +230,19 @@
 <li><strong>Monitor and optimize</strong>: Regular monitoring and optimization can help identify and address performance issues, reducing the complexity and costs associated with replication and sharding.</li>
 </ol>
 <p>For example, consider a scenario where we have a database setup using PostgreSQL, and we want to implement conflict resolution using multi-version concurrency control. We can use the following code to configure conflict resolution:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a table with multi-version concurrency control</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="k">location</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-<span class="w">    </span><span class="k">version</span><span class="w"> </span><span class="nb">INTEGER</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Create a table with multi-version concurrency control
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    location VARCHAR(50),
+    version INTEGER
+);
 
-<span class="c1">-- Insert data into the table</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="k">location</span><span class="p">,</span><span class="w"> </span><span class="k">version</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;New York&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+-- Insert data into the table
+INSERT INTO orders (location, version) VALUES ('New York', 1);
 
-<span class="c1">-- Update data in the table using multi-version concurrency control</span>
-<span class="k">UPDATE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Los Angeles&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+-- Update data in the table using multi-version concurrency control
+UPDATE orders SET location = 'Los Angeles', version = version + 1 WHERE id = 1 AND version = 1;
+</code></pre>
 <p>In this example, the <code>CREATE TABLE</code> statement is used to create a new table with a <code>version</code> column, which is used to track the version of each row. The <code>INSERT INTO</code> statement is used to insert data into the table, and the <code>UPDATE</code> statement is used to update data in the table using multi-version concurrency control.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Database replication and sharding are used in a variety of real-world applications, including:</p>
@@ -287,21 +284,18 @@
 <ol>
 <li><strong>Install the MySQL Replication Manager</strong>: Install the MySQL Replication Manager using the <code>apt-get</code> command, as shown in the following example:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>mysql-replication-manager
-</code></pre></div>
-
+<pre><code class="language-bash">sudo apt-get install mysql-replication-manager
+</code></pre>
 <ol>
 <li><strong>Configure the MySQL Replication Manager</strong>: Configure the MySQL Replication Manager using the <code>mysqlrmm</code> command, as shown in the following example:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>mysqlrmm<span class="w"> </span>--create-cluster<span class="w"> </span>--cluster-name<span class="o">=</span>mycluster<span class="w"> </span>--master-ip<span class="o">=</span>master_instance_ip<span class="w"> </span>--master-port<span class="o">=</span><span class="m">3306</span><span class="w"> </span>--slave-ip<span class="o">=</span>slave_instance_ip<span class="w"> </span>--slave-port<span class="o">=</span><span class="m">3306</span>
-</code></pre></div>
-
+<pre><code class="language-bash">mysqlrmm --create-cluster --cluster-name=mycluster --master-ip=master_instance_ip --master-port=3306 --slave-ip=slave_instance_ip --slave-port=3306
+</code></pre>
 <ol>
 <li><strong>Start the MySQL Replication Manager</strong>: Start the MySQL Replication Manager using the <code>mysqlrmm</code> command, as shown in the following example:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>mysqlrmm<span class="w"> </span>--start
-</code></pre></div>
-
+<pre><code class="language-bash">mysqlrmm --start
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, database replication and sharding are essential techniques used to scale databases horizontally, improving performance, and ensuring high availability. By understanding the concepts, benefits, and practical implementation details of replication and sharding, developers and database administrators can design and implement scalable and performant database systems.</p>
 <p>To get started with database replication and sharding, follow these actionable next steps:</p>

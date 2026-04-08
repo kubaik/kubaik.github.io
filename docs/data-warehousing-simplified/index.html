@@ -171,91 +171,88 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to illustrate the implementation of a data warehouse:</p>
 <h3 id="example-1-creating-a-data-warehouse-in-amazon-redshift">Example 1: Creating a Data Warehouse in Amazon Redshift</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new database</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydatabase</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a new database
+CREATE DATABASE mydatabase;
 
-<span class="c1">-- Create a new schema</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="n">myschema</span><span class="p">;</span>
+-- Create a new schema
+CREATE SCHEMA myschema;
 
-<span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+-- Create a new table
+CREATE TABLE mytable (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255)
+);
 
-<span class="c1">-- Insert data into the table</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+-- Insert data into the table
+INSERT INTO mytable (id, name, email)
+VALUES (1, 'John Doe', 'john.doe@example.com');
+</code></pre>
 <p>This example creates a new database, schema, and table in Amazon Redshift, and inserts sample data into the table.</p>
 <h3 id="example-2-loading-data-into-google-bigquery">Example 2: Loading Data into Google BigQuery</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">bigquery</span>
+<pre><code class="language-python"># Import the necessary libraries
+from google.cloud import bigquery
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">bigquery</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+# Create a client instance
+client = bigquery.Client()
 
-<span class="c1"># Define the dataset and table</span>
-<span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;mydataset&#39;</span>
-<span class="n">table_id</span> <span class="o">=</span> <span class="s1">&#39;mytable&#39;</span>
+# Define the dataset and table
+dataset_id = 'mydataset'
+table_id = 'mytable'
 
-<span class="c1"># Load data from a CSV file</span>
-<span class="n">job_config</span> <span class="o">=</span> <span class="n">bigquery</span><span class="o">.</span><span class="n">LoadJobConfig</span><span class="p">(</span>
-  <span class="n">source_format</span><span class="o">=</span><span class="n">bigquery</span><span class="o">.</span><span class="n">SourceFormat</span><span class="o">.</span><span class="n">CSV</span><span class="p">,</span>
-  <span class="n">skip_leading_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-  <span class="n">autodetect</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
+# Load data from a CSV file
+job_config = bigquery.LoadJobConfig(
+  source_format=bigquery.SourceFormat.CSV,
+  skip_leading_rows=1,
+  autodetect=True
+)
 
-<span class="c1"># Load the data</span>
-<span class="n">load_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">load_table_from_uri</span><span class="p">(</span>
-  <span class="s1">&#39;gs://mybucket/data.csv&#39;</span><span class="p">,</span>
-  <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">table_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-  <span class="n">job_config</span><span class="o">=</span><span class="n">job_config</span>
-<span class="p">)</span>
+# Load the data
+load_job = client.load_table_from_uri(
+  'gs://mybucket/data.csv',
+  f'{dataset_id}.{table_id}',
+  job_config=job_config
+)
 
-<span class="c1"># Wait for the load job to complete</span>
-<span class="n">load_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-</code></pre></div>
-
+# Wait for the load job to complete
+load_job.result()
+</code></pre>
 <p>This example loads data from a CSV file in Google Cloud Storage into a Google BigQuery table using the <code>bigquery</code> library in Python.</p>
 <h3 id="example-3-creating-a-data-pipeline-in-apache-airflow">Example 3: Creating a Data Pipeline in Apache Airflow</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.bash_operator</span> <span class="kn">import</span> <span class="n">BashOperator</span>
+<pre><code class="language-python"># Import the necessary libraries
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
 
-<span class="c1"># Define the DAG</span>
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;depends_on_past&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-  <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="s1">&#39;retry_delay&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="p">}</span>
+# Define the DAG
+default_args = {
+  'owner': 'airflow',
+  'depends_on_past': False,
+  'start_date': datetime(2022, 12, 1),
+  'retries': 1,
+  'retry_delay': timedelta(minutes=5)
+}
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-  <span class="s1">&#39;mydag&#39;</span><span class="p">,</span>
-  <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-  <span class="n">schedule_interval</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">)</span>
+dag = DAG(
+  'mydag',
+  default_args=default_args,
+  schedule_interval=timedelta(days=1)
+)
 
-<span class="c1"># Define the tasks</span>
-<span class="n">task1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-  <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task1&#39;</span><span class="p">,</span>
-  <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;echo &quot;Hello World!&quot;&#39;</span>
-<span class="p">)</span>
+# Define the tasks
+task1 = BashOperator(
+  task_id='task1',
+  bash_command='echo &quot;Hello World!&quot;'
+)
 
-<span class="n">task2</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-  <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task2&#39;</span><span class="p">,</span>
-  <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;echo &quot;Goodbye World!&quot;&#39;</span>
-<span class="p">)</span>
+task2 = BashOperator(
+  task_id='task2',
+  bash_command='echo &quot;Goodbye World!&quot;'
+)
 
-<span class="c1"># Define the dependencies</span>
-<span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">task2</span>
-</code></pre></div>
-
+# Define the dependencies
+task1 &gt;&gt; task2
+</code></pre>
 <p>This example creates a simple data pipeline in Apache Airflow that runs two tasks in sequence.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that may arise during data warehousing, along with specific solutions:

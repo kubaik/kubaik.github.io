@@ -165,22 +165,21 @@
 3. <strong>Streaming architecture</strong>: This pattern involves using serverless functions to process streaming data. For example, a company can use serverless functions to process log data from its applications.</p>
 <h3 id="example-event-driven-architecture-with-aws-lambda">Example: Event-Driven Architecture with AWS Lambda</h3>
 <p>Here's an example of how to use AWS Lambda to build an event-driven architecture:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Define the Lambda function handler</span>
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process the event</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Event processed successfully&#39;</span>
-    <span class="p">}</span>
+# Define the Lambda function handler
+def lambda_handler(event, context):
+    # Process the event
+    print(event)
+    return {
+        'statusCode': 200,
+        'body': 'Event processed successfully'
+    }
 
-<span class="c1"># Create an S3 bucket and upload a file to trigger the Lambda function</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Body</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span> <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s1">&#39;test.txt&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Create an S3 bucket and upload a file to trigger the Lambda function
+s3 = boto3.client('s3')
+s3.put_object(Body='Hello World!', Bucket='my-bucket', Key='test.txt')
+</code></pre>
 <p>In this example, the Lambda function is triggered by an event (the upload of a file to S3) and processes the event by printing it to the console.</p>
 <h2 id="serverless-platforms-and-tools">Serverless Platforms and Tools</h2>
 <p>There are several serverless platforms and tools available, including:
@@ -192,7 +191,7 @@
 <p>For example, a company like Uber can use AWS Lambda to build a serverless application that handles the processing of user requests, such as estimating ride prices and times. This can help reduce the operational overhead and improve scalability, allowing Uber to focus on providing high-quality services to its users.</p>
 <h3 id="example-using-the-serverless-framework-to-build-a-serverless-application">Example: Using the Serverless Framework to Build a Serverless Application</h3>
 <p>Here's an example of how to use the Serverless Framework to build a serverless application:</p>
-<div class="codehilite"><pre><span></span><code># Define the serverless application
+<pre><code class="language-yml"># Define the serverless application
 service:
   name: my-service
 
@@ -204,16 +203,14 @@ functions:
       - http:
           path: hello
           method: get
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define the Lambda function handler</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello World!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+</code></pre>
+<pre><code class="language-python"># Define the Lambda function handler
+def hello(event, context):
+    return {
+        'statusCode': 200,
+        'body': 'Hello World!'
+    }
+</code></pre>
 <p>In this example, the Serverless Framework is used to define a serverless application that includes a Lambda function. The Lambda function is triggered by an HTTP request and returns a response.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when building serverless applications, including:
@@ -227,38 +224,37 @@ functions:
 <p>For example, a company like Airbnb can use provisioned concurrency to reduce cold starts and improve the performance of its serverless application. This can help provide a better user experience and improve the overall scalability of the application.</p>
 <h3 id="example-using-provisioned-concurrency-to-reduce-cold-starts">Example: Using Provisioned Concurrency to Reduce Cold Starts</h3>
 <p>Here's an example of how to use provisioned concurrency to reduce cold starts:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Define the Lambda function handler</span>
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process the event</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Event processed successfully&#39;</span>
-    <span class="p">}</span>
+# Define the Lambda function handler
+def lambda_handler(event, context):
+    # Process the event
+    print(event)
+    return {
+        'statusCode': 200,
+        'body': 'Event processed successfully'
+    }
 
-<span class="c1"># Create a Lambda function with provisioned concurrency</span>
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">publish_version</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-lambda-function&#39;</span><span class="p">,</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My Lambda function&#39;</span>
-<span class="p">)</span>
+# Create a Lambda function with provisioned concurrency
+lambda_client = boto3.client('lambda')
+lambda_client.publish_version(
+    FunctionName='my-lambda-function',
+    Description='My Lambda function'
+)
 
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">create_alias</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-lambda-function&#39;</span><span class="p">,</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;my-alias&#39;</span><span class="p">,</span>
-    <span class="n">FunctionVersion</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My alias&#39;</span>
-<span class="p">)</span>
+lambda_client.create_alias(
+    FunctionName='my-lambda-function',
+    Name='my-alias',
+    FunctionVersion='1',
+    Description='My alias'
+)
 
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">put_provisioned_concurrency_config</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;my-lambda-function&#39;</span><span class="p">,</span>
-    <span class="n">Qualifier</span><span class="o">=</span><span class="s1">&#39;my-alias&#39;</span><span class="p">,</span>
-    <span class="n">ProvisionedConcurrentExecutions</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-</code></pre></div>
-
+lambda_client.put_provisioned_concurrency_config(
+    FunctionName='my-lambda-function',
+    Qualifier='my-alias',
+    ProvisionedConcurrentExecutions=10
+)
+</code></pre>
 <p>In this example, provisioned concurrency is used to reserve a specified amount of concurrency for a Lambda function, which can help reduce cold starts.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>There are several real-world use cases for serverless architecture, including:

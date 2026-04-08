@@ -172,30 +172,29 @@
 * <strong>Analytics and Reporting</strong>: Define the analytics and reporting requirements, and ensure the system can provide the necessary insights.</p>
 <h3 id="example-configuring-logstash-for-data-collection">Example: Configuring Logstash for Data Collection</h3>
 <p>Logstash is a popular data collection tool that can be used to collect log data from various sources. Here's an example configuration file for collecting Apache HTTP server logs:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/apache2/access.log&quot;</span>
-<span class="w">    </span><span class="n">type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-ruby">input {
+  file {
+    path =&gt; &quot;/var/log/apache2/access.log&quot;
+    type =&gt; &quot;apache_access&quot;
+  }
+}
 
-<span class="n">filter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">grok</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{COMBINEDAPACHELOG}&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="n">date</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;YYYY-MM-DD HH:mm:ss&quot;</span><span class="w"> </span><span class="o">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+filter {
+  grok {
+    match =&gt; { &quot;message&quot; =&gt; &quot;%{COMBINEDAPACHELOG}&quot; }
+  }
+  date {
+    match =&gt; [ &quot;timestamp&quot;, &quot;YYYY-MM-DD HH:mm:ss&quot; ]
+  }
+}
 
-<span class="n">output</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">elasticsearch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">hosts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
-<span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+output {
+  elasticsearch {
+    hosts =&gt; &quot;localhost:9200&quot;
+    index =&gt; &quot;apache_access&quot;
+  }
+}
+</code></pre>
 <p>This configuration file tells Logstash to collect log data from the Apache HTTP server access log file, parse the log messages using the <code>grok</code> filter, and output the parsed data to an Elasticsearch index.</p>
 <h2 id="benefits-of-siem">Benefits of SIEM</h2>
 <p>The benefits of implementing a SIEM system include:
@@ -218,21 +217,20 @@
 * <strong>Integrating with Other Security Tools</strong>: Integrating the SIEM system with other security tools, such as intrusion detection systems and firewalls, to provide a more comprehensive view of security-related data.</p>
 <h3 id="example-tuning-alert-rules-with-splunk">Example: Tuning Alert Rules with Splunk</h3>
 <p>Splunk is a popular SIEM platform that provides a robust alerting system. Here's an example of how to tune alert rules in Splunk to reduce false positives:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new alert rule</span>
-<span class="o">|</span> <span class="n">alert_rule</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Suspicious Login Activity&quot;</span> 
-  <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Detects suspicious login activity&quot;</span> 
-  <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;high&quot;</span> 
-  <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;username, src_ip, dest_ip&quot;</span> 
-  <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;username != &#39;admin&#39; AND src_ip != &#39;10.0.0.1&#39; AND dest_ip != &#39;10.0.0.2&#39;&quot;</span>
+<pre><code class="language-python"># Create a new alert rule
+| alert_rule name=&quot;Suspicious Login Activity&quot; 
+  description=&quot;Detects suspicious login activity&quot; 
+  severity=&quot;high&quot; 
+  fields=&quot;username, src_ip, dest_ip&quot; 
+  condition=&quot;username != 'admin' AND src_ip != '10.0.0.1' AND dest_ip != '10.0.0.2'&quot;
 
-<span class="c1"># Tune the alert rule to reduce false positives</span>
-<span class="o">|</span> <span class="n">alert_rule</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Suspicious Login Activity&quot;</span> 
-  <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Detects suspicious login activity&quot;</span> 
-  <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;high&quot;</span> 
-  <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;username, src_ip, dest_ip&quot;</span> 
-  <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;username != &#39;admin&#39; AND src_ip != &#39;10.0.0.1&#39; AND dest_ip != &#39;10.0.0.2&#39; AND count &gt;= 5&quot;</span>
-</code></pre></div>
-
+# Tune the alert rule to reduce false positives
+| alert_rule name=&quot;Suspicious Login Activity&quot; 
+  description=&quot;Detects suspicious login activity&quot; 
+  severity=&quot;high&quot; 
+  fields=&quot;username, src_ip, dest_ip&quot; 
+  condition=&quot;username != 'admin' AND src_ip != '10.0.0.1' AND dest_ip != '10.0.0.2' AND count &gt;= 5&quot;
+</code></pre>
 <p>This example creates a new alert rule that detects suspicious login activity, and then tunes the rule to reduce false positives by adding a condition that requires at least 5 login attempts.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Some common use cases for SIEM systems include:
@@ -245,42 +243,41 @@
 * <strong>Data Retention</strong>: Determining the retention period for collected data, and ensuring the system has sufficient storage capacity.</p>
 <h3 id="example-implementing-a-compliance-monitoring-use-case-with-elk-stack">Example: Implementing a Compliance Monitoring Use Case with ELK Stack</h3>
 <p>The ELK Stack (Elasticsearch, Logstash, Kibana) is a popular open-source SIEM platform. Here's an example of how to implement a compliance monitoring use case with ELK Stack:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install and configure Logstash</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>logstash
-sudo<span class="w"> </span>nano<span class="w"> </span>/etc/logstash/conf.d/logstash.conf
+<pre><code class="language-bash"># Install and configure Logstash
+sudo apt-get install logstash
+sudo nano /etc/logstash/conf.d/logstash.conf
 
-<span class="c1"># Configure Logstash to collect log data from a Linux system</span>
-input<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>file<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s2">&quot;/var/log/syslog&quot;</span>
-<span class="w">    </span><span class="nb">type</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s2">&quot;syslog&quot;</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="o">}</span>
+# Configure Logstash to collect log data from a Linux system
+input {
+  file {
+    path =&gt; &quot;/var/log/syslog&quot;
+    type =&gt; &quot;syslog&quot;
+  }
+}
 
-filter<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>grok<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="nv">match</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s2">&quot;%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program} %{GREEDYDATA:message}&quot;</span><span class="w"> </span><span class="o">}</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="w">  </span>date<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="nv">match</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;timestamp&quot;</span>,<span class="w"> </span><span class="s2">&quot;MMM d HH:mm:ss&quot;</span><span class="w"> </span><span class="o">]</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="o">}</span>
+filter {
+  grok {
+    match =&gt; { &quot;message&quot; =&gt; &quot;%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program} %{GREEDYDATA:message}&quot; }
+  }
+  date {
+    match =&gt; [ &quot;timestamp&quot;, &quot;MMM d HH:mm:ss&quot; ]
+  }
+}
 
-output<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>elasticsearch<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="nv">hosts</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
-<span class="w">    </span><span class="nv">index</span><span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s2">&quot;syslog&quot;</span>
-<span class="w">  </span><span class="o">}</span>
-<span class="o">}</span>
+output {
+  elasticsearch {
+    hosts =&gt; &quot;localhost:9200&quot;
+    index =&gt; &quot;syslog&quot;
+  }
+}
 
-<span class="c1"># Install and configure Kibana</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>kibana
-sudo<span class="w"> </span>nano<span class="w"> </span>/etc/kibana/kibana.yml
+# Install and configure Kibana
+sudo apt-get install kibana
+sudo nano /etc/kibana/kibana.yml
 
-<span class="c1"># Configure Kibana to connect to the Elasticsearch index</span>
-elasticsearch.url:<span class="w"> </span><span class="s2">&quot;http://localhost:9200&quot;</span>
-</code></pre></div>
-
+# Configure Kibana to connect to the Elasticsearch index
+elasticsearch.url: &quot;http://localhost:9200&quot;
+</code></pre>
 <p>This example configures Logstash to collect log data from a Linux system, and then configures Kibana to connect to the Elasticsearch index and provide a user interface for compliance monitoring.</p>
 <h2 id="pricing-and-performance-benchmarks">Pricing and Performance Benchmarks</h2>
 <p>The pricing for SIEM systems varies widely, depending on the vendor, features, and implementation requirements. Some popular SIEM vendors and their pricing models include:

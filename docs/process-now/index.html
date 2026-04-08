@@ -175,47 +175,46 @@
 <h3 id="practical-example-real-time-twitter-sentiment-analysis-using-apache-kafka-and-python">Practical Example: Real-Time Twitter Sentiment Analysis using Apache Kafka and Python</h3>
 <p>In this example, we will use Apache Kafka and Python to build a real-time Twitter sentiment analysis system. We will use the Tweepy library to collect tweets, the TextBlob library to analyze sentiment, and Apache Kafka to process the data in real-time.</p>
 <p>Here is an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
-<span class="kn">from</span> <span class="nn">tweepy</span> <span class="kn">import</span> <span class="n">Stream</span>
-<span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
+<pre><code class="language-python">from kafka import KafkaProducer
+from tweepy import Stream
+from textblob import TextBlob
 
-<span class="c1"># Kafka producer configuration</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Kafka producer configuration
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Twitter API credentials</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s1">&#39;your-consumer-key&#39;</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s1">&#39;your-consumer-secret&#39;</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="s1">&#39;your-access-token&#39;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s1">&#39;your-access-token-secret&#39;</span>
+# Twitter API credentials
+consumer_key = 'your-consumer-key'
+consumer_secret = 'your-consumer-secret'
+access_token = 'your-access-token'
+access_token_secret = 'your-access-token-secret'
 
-<span class="c1"># Tweepy stream configuration</span>
-<span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
+# Tweepy stream configuration
+stream = Stream(consumer_key, consumer_secret, access_token, access_token_secret)
 
-<span class="c1"># Sentiment analysis function</span>
-<span class="k">def</span> <span class="nf">analyze_sentiment</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
-    <span class="n">analysis</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">analysis</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;positive&#39;</span>
-    <span class="k">elif</span> <span class="n">analysis</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;negative&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;neutral&#39;</span>
+# Sentiment analysis function
+def analyze_sentiment(tweet):
+    analysis = TextBlob(tweet.text)
+    if analysis.sentiment.polarity &gt; 0:
+        return 'positive'
+    elif analysis.sentiment.polarity &lt; 0:
+        return 'negative'
+    else:
+        return 'neutral'
 
-<span class="c1"># Kafka producer function</span>
-<span class="k">def</span> <span class="nf">produce_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
-    <span class="n">sentiment</span> <span class="o">=</span> <span class="n">analyze_sentiment</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;twitter_sentiment&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tweet&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;sentiment&#39;</span><span class="p">:</span> <span class="n">sentiment</span><span class="p">})</span>
+# Kafka producer function
+def produce_tweet(tweet):
+    sentiment = analyze_sentiment(tweet)
+    producer.send('twitter_sentiment', value={'tweet': tweet.text, 'sentiment': sentiment})
 
-<span class="c1"># Tweepy stream listener</span>
-<span class="k">class</span> <span class="nc">TweetListener</span><span class="p">(</span><span class="n">StreamListener</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">on_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-        <span class="n">produce_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+# Tweepy stream listener
+class TweetListener(StreamListener):
+    def on_status(self, tweet):
+        produce_tweet(tweet)
 
-<span class="c1"># Start the Tweepy stream</span>
-<span class="n">stream</span><span class="o">.</span><span class="n">listener</span> <span class="o">=</span> <span class="n">TweetListener</span><span class="p">()</span>
-<span class="n">stream</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">track</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;your-track-keyword&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Start the Tweepy stream
+stream.listener = TweetListener()
+stream.filter(track=['your-track-keyword'])
+</code></pre>
 <p>This code snippet collects tweets, analyzes sentiment using TextBlob, and produces the sentiment analysis results to an Apache Kafka topic.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>The performance of real-time data processing systems can vary depending on the tools and technologies used. Here are some performance benchmarks for Apache Kafka:</p>
@@ -247,32 +246,31 @@
 <li><strong>Data storage</strong>: Use a time-series database like InfluxDB to store the sensor data for historical analysis and trending.</li>
 </ol>
 <p>Here is an example code snippet for real-time IoT sensor data processing using Apache Kafka and Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">IsolationForest</span>
+<pre><code class="language-python">from kafka import KafkaConsumer
+from sklearn.ensemble import IsolationForest
 
-<span class="c1"># Kafka consumer configuration</span>
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;iot_sensor_data&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Kafka consumer configuration
+consumer = KafkaConsumer('iot_sensor_data', bootstrap_servers='localhost:9092')
 
-<span class="c1"># Machine learning model configuration</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+# Machine learning model configuration
+model = IsolationForest(n_estimators=100, contamination=0.1)
 
-<span class="c1"># Real-time data processing function</span>
-<span class="k">def</span> <span class="nf">process_sensor_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Apply machine learning algorithm to detect anomalies</span>
-    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">prediction</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># Send alert and notification</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Anomaly detected!&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Store data in time-series database</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Data stored successfully&#39;</span><span class="p">)</span>
+# Real-time data processing function
+def process_sensor_data(data):
+    # Apply machine learning algorithm to detect anomalies
+    prediction = model.predict(data)
+    if prediction == -1:
+        # Send alert and notification
+        print('Anomaly detected!')
+    else:
+        # Store data in time-series database
+        print('Data stored successfully')
 
-<span class="c1"># Kafka consumer loop</span>
-<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">value</span>
-    <span class="n">process_sensor_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+# Kafka consumer loop
+for message in consumer:
+    data = message.value
+    process_sensor_data(data)
+</code></pre>
 <p>This code snippet collects sensor data from IoT sensors, applies a machine learning algorithm to detect anomalies, and sends alerts and notifications when issues are detected.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>The pricing and cost considerations for real-time data processing systems can vary depending on the tools and technologies used. Here are some pricing details for Apache Kafka and Amazon Kinesis:</p>

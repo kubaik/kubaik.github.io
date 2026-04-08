@@ -173,19 +173,18 @@
 * <strong>Elastic Load Balancer</strong>: to distribute traffic across multiple instances
 * <strong>CloudWatch</strong>: to monitor and analyze performance metrics</p>
 <p>Here is an example code snippet in Python using the Boto3 library to create an EC2 Auto Scaling group:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">asg</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;autoscaling&#39;</span><span class="p">)</span>
+asg = boto3.client('autoscaling')
 
-<span class="n">asg</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
-    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;my-asg&#39;</span><span class="p">,</span>
-    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;my-lc&#39;</span><span class="p">,</span>
-    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">DesiredCapacity</span><span class="o">=</span><span class="mi">5</span>
-<span class="p">)</span>
-</code></pre></div>
-
+asg.create_auto_scaling_group(
+    AutoScalingGroupName='my-asg',
+    LaunchConfigurationName='my-lc',
+    MinSize=1,
+    MaxSize=10,
+    DesiredCapacity=5
+)
+</code></pre>
 <p>This code creates an Auto Scaling group with a minimum size of 1 instance, a maximum size of 10 instances, and a desired capacity of 5 instances.</p>
 <h2 id="implementing-a-secure-aws-cloud-architecture">Implementing a Secure AWS Cloud Architecture</h2>
 <p>Implementing a secure AWS Cloud Architecture requires a range of security measures, including:
@@ -195,46 +194,45 @@
 * <strong>Compliance and governance</strong>: to ensure adherence to regulatory requirements and industry standards</p>
 <h3 id="example-implementing-iam-roles-and-policies">Example: Implementing IAM Roles and Policies</h3>
 <p>Let's consider an example where we need to create an IAM role for an EC2 instance to access an S3 bucket. We can create a role with the necessary permissions using the following code snippet in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+iam = boto3.client('iam')
 
-<span class="n">iam</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;my-role&#39;</span><span class="p">,</span>
-    <span class="n">AssumeRolePolicyDocument</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Principal&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;Service&#39;</span><span class="p">:</span> <span class="s1">&#39;ec2.amazonaws.com&#39;</span>
-                <span class="p">},</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;sts:AssumeRole&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+iam.create_role(
+    RoleName='my-role',
+    AssumeRolePolicyDocument={
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Effect': 'Allow',
+                'Principal': {
+                    'Service': 'ec2.amazonaws.com'
+                },
+                'Action': 'sts:AssumeRole'
+            }
+        ]
+    }
+)
 
-<span class="n">iam</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span>
-    <span class="n">PolicyName</span><span class="o">=</span><span class="s1">&#39;my-policy&#39;</span><span class="p">,</span>
-    <span class="n">PolicyDocument</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;s3:GetObject&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Resource&#39;</span><span class="p">:</span> <span class="s1">&#39;arn:aws:s3:::my-bucket/*&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+iam.create_policy(
+    PolicyName='my-policy',
+    PolicyDocument={
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Effect': 'Allow',
+                'Action': 's3:GetObject',
+                'Resource': 'arn:aws:s3:::my-bucket/*'
+            }
+        ]
+    }
+)
 
-<span class="n">iam</span><span class="o">.</span><span class="n">attach_role_policy</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;my-role&#39;</span><span class="p">,</span>
-    <span class="n">PolicyArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:policy/my-policy&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+iam.attach_role_policy(
+    RoleName='my-role',
+    PolicyArn='arn:aws:iam::123456789012:policy/my-policy'
+)
+</code></pre>
 <p>This code creates an IAM role with a policy that allows the EC2 instance to access the S3 bucket.</p>
 <h2 id="optimizing-aws-cloud-architecture-for-cost-and-performance">Optimizing AWS Cloud Architecture for Cost and Performance</h2>
 <p>Optimizing AWS Cloud Architecture for cost and performance requires careful analysis of resource utilization, costs, and performance metrics. Some strategies for optimization include:
@@ -244,18 +242,17 @@
 * <strong>Using reserved instances</strong>: to commit to a certain level of usage in exchange for discounted prices</p>
 <h3 id="example-optimizing-ec2-instance-costs-using-reserved-instances">Example: Optimizing EC2 Instance Costs using Reserved Instances</h3>
 <p>Let's consider an example where we need to optimize EC2 instance costs for a web application. We can use reserved instances to commit to a certain level of usage in exchange for discounted prices. Here is an example code snippet in Python to create a reserved instance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+ec2 = boto3.client('ec2')
 
-<span class="n">ec2</span><span class="o">.</span><span class="n">purchase_reserved_instances_offering</span><span class="p">(</span>
-    <span class="n">InstanceType</span><span class="o">=</span><span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">InstanceCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">OfferingType</span><span class="o">=</span><span class="s1">&#39;Standard&#39;</span><span class="p">,</span>
-    <span class="n">ReservedInstancesOfferingId</span><span class="o">=</span><span class="s1">&#39;1234567890123456&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+ec2.purchase_reserved_instances_offering(
+    InstanceType='t2.micro',
+    InstanceCount=1,
+    OfferingType='Standard',
+    ReservedInstancesOfferingId='1234567890123456'
+)
+</code></pre>
 <p>This code purchases a reserved instance for a t2.micro instance type.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems and solutions when designing and implementing an AWS Cloud Architecture include:
@@ -265,19 +262,18 @@
 * <strong>Data management</strong>: managing data storage, processing, and analytics</p>
 <h3 id="example-solving-a-common-problem-with-aws-cloudformation">Example: Solving a Common Problem with AWS CloudFormation</h3>
 <p>Let's consider an example where we need to solve a common problem of creating a consistent and repeatable infrastructure deployment. We can use AWS CloudFormation to create a template that defines the infrastructure and its components. Here is an example code snippet in YAML to create a CloudFormation template:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Resources</span><span class="o">:</span>
-<span class="w">  </span><span class="n">MyEC2Instance</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::EC2::Instance&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">ImageId</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">FindInMap</span><span class="w"> </span><span class="o">[</span><span class="n">RegionMap</span><span class="o">,</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;AWS::Region&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;AMI&#39;</span><span class="o">]</span>
-<span class="w">      </span><span class="n">InstanceType</span><span class="o">:</span><span class="w"> </span><span class="n">t2</span><span class="o">.</span><span class="na">micro</span>
+<pre><code class="language-yml">Resources:
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', 'AMI']
+      InstanceType: t2.micro
 
-<span class="w">  </span><span class="n">MyS3Bucket</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::S3::Bucket&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">BucketName</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">bucket</span>
-</code></pre></div>
-
+  MyS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: my-bucket
+</code></pre>
 <p>This code creates a CloudFormation template that defines an EC2 instance and an S3 bucket.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, designing and implementing a scalable and secure AWS Cloud Architecture requires careful planning, consideration of various factors, and the use of a range of AWS services and tools. By following the principles and best practices outlined in this article, you can create a robust and efficient cloud architecture that meets your business needs.</p>

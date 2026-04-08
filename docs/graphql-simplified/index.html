@@ -163,68 +163,65 @@
 * <strong>Python with Django</strong>: Django is a high-level Python framework that provides an excellent foundation for building robust and scalable GraphQL APIs.
 * <strong>Ruby with Rails</strong>: Ruby on Rails is a mature framework that provides a lot of built-in functionality for building GraphQL APIs.</p>
 <p>For example, to set up a GraphQL API using Node.js with Express, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">graphqlHTTP</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-graphql&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">buildSchema</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;graphql&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">buildSchema</span><span class="p">(</span><span class="sb">`</span>
-<span class="sb">  type Query {</span>
-<span class="sb">    hello: String</span>
-<span class="sb">  }</span>
-<span class="sb">`</span><span class="p">);</span>
+const schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">hello</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">,</span>
-<span class="p">};</span>
+const root = {
+  hello: () =&gt; 'Hello, World!',
+};
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">graphqlHTTP</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">rootValue</span><span class="o">:</span><span class="w"> </span><span class="nx">root</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">graphiql</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="p">}));</span>
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">4000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 4000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(4000, () =&gt; {
+  console.log('Server listening on port 4000');
+});
+</code></pre>
 <p>This code sets up a simple GraphQL API that responds to queries on the <code>/graphql</code> endpoint.</p>
 <h2 id="implementing-resolvers">Implementing Resolvers</h2>
 <p>Resolvers are functions that run on the server to fetch the data for a particular field. They are the core of a GraphQL API, as they define how the data is retrieved and returned to the client. For example, to implement a resolver for a <code>User</code> type, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+<pre><code class="language-javascript">const resolvers = {
+  Query: {
+    user: (parent, { id }) =&gt; {
+      return users.find((user) =&gt; user.id === id);
+    },
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;jane@example.com&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
-</code></pre></div>
-
+const users = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
+];
+</code></pre>
 <p>This code defines a resolver for the <code>user</code> field that fetches a user by ID from an array of users.</p>
 <h2 id="using-graphql-with-databases">Using GraphQL with Databases</h2>
 <p>GraphQL can be used with a variety of databases, including relational databases like MySQL and PostgreSQL, and NoSQL databases like MongoDB. For example, to use GraphQL with MongoDB, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">MongoClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { MongoClient } = require('mongodb');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">MongoClient</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost:27017&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">db</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">usersCollection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+const client = new MongoClient('mongodb://localhost:27017');
+const db = client.db();
+const usersCollection = db.collection('users');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">usersCollection</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const resolvers = {
+  Query: {
+    user: (parent, { id }) =&gt; {
+      return usersCollection.findOne({ id: id });
+    },
+  },
+};
+</code></pre>
 <p>This code defines a resolver for the <code>user</code> field that fetches a user by ID from a MongoDB collection.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>GraphQL APIs can provide significant performance improvements compared to traditional REST APIs. For example, a study by Apollo Server found that GraphQL APIs can reduce the number of requests made to the server by up to 70%. Additionally, GraphQL APIs can provide faster response times, with some studies showing improvements of up to 30%.</p>
@@ -238,34 +235,33 @@
 2. <strong>Complex queries</strong>: GraphQL APIs can be used to implement complex queries that fetch multiple pieces of data in a single request.
 3. <strong>Microservices architecture</strong>: GraphQL APIs can be used to implement a microservices architecture, where multiple services communicate with each other using GraphQL.</p>
 <p>For example, to implement a real-time update using GraphQL, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SubscriptionServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;subscriptions-transport-ws&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { SubscriptionServer } = require('subscriptions-transport-ws');
+const { createServer } = require('http');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;text/plain&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+const server = createServer((req, res) =&gt; {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello, World!');
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">subscriptionServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SubscriptionServer</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">execute</span><span class="o">:</span><span class="w"> </span><span class="nx">execute</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">subscribe</span><span class="o">:</span><span class="w"> </span><span class="nx">subscribe</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Client connected&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">onDisconnect</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Client disconnected&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">server</span><span class="o">:</span><span class="w"> </span><span class="nx">server</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+const subscriptionServer = SubscriptionServer.create({
+  schema: schema,
+  execute: execute,
+  subscribe: subscribe,
+  onConnect: () =&gt; {
+    console.log('Client connected');
+  },
+  onDisconnect: () =&gt; {
+    console.log('Client disconnected');
+  },
+}, {
+  server: server,
+  path: '/graphql',
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">4000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 4000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen(4000, () =&gt; {
+  console.log('Server listening on port 4000');
+});
+</code></pre>
 <p>This code sets up a GraphQL API that provides real-time updates using WebSockets.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers encounter when building GraphQL APIs include:
@@ -282,18 +278,17 @@
 * <strong>Prisma</strong>: A popular ORM that provides a lot of built-in functionality for building GraphQL APIs.
 * <strong>GraphQL Yoga</strong>: A popular GraphQL server that provides a lot of built-in functionality for building GraphQL APIs.</p>
 <p>For example, to use Apollo Server to build a GraphQL API, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">typeDefs</span><span class="o">:</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">resolvers</span><span class="o">:</span><span class="w"> </span><span class="nx">resolvers</span><span class="p">,</span>
-<span class="p">});</span>
+const server = new ApolloServer({
+  typeDefs: schema,
+  resolvers: resolvers,
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>This code sets up a GraphQL API using Apollo Server.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, GraphQL APIs provide a lot of benefits for developers, including improved performance, reduced number of requests, and more accurate error messages. However, building a GraphQL API can be challenging, and developers need to be aware of common problems such as the N+1 query problem and security issues. By using the right tools and platforms, and following best practices such as batching and caching, developers can build high-performance GraphQL APIs that meet the needs of their users.</p>

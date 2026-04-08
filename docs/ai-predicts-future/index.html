@@ -161,30 +161,29 @@
 * <strong>Exponential Smoothing (ES) models</strong>: These models use a weighted average of past values to forecast future values.</p>
 <h2 id="practical-example-forecasting-stock-prices-with-arima">Practical Example: Forecasting Stock Prices with ARIMA</h2>
 <p>Let's consider an example of forecasting stock prices using the ARIMA model. We will use the <code>statsmodels</code> library in Python to implement the ARIMA model.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima_model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from statsmodels.tsa.arima_model import ARIMA
+from sklearn.metrics import mean_squared_error
 
-<span class="c1"># Load the stock price data</span>
-<span class="n">stock_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;stock_prices.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+# Load the stock price data
+stock_data = pd.read_csv('stock_prices.csv', index_col='Date', parse_dates=['Date'])
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">stock_data</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">stock_data</span><span class="p">))]</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">stock_data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">stock_data</span><span class="p">)):]</span>
+# Split the data into training and testing sets
+train_data = stock_data[:int(0.8 * len(stock_data))]
+test_data = stock_data[int(0.8 * len(stock_data)):]
 
-<span class="c1"># Create and fit the ARIMA model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">model_fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+# Create and fit the ARIMA model
+model = ARIMA(train_data, order=(5,1,0))
+model_fit = model.fit()
 
-<span class="c1"># Forecast the stock prices</span>
-<span class="n">forecast</span> <span class="o">=</span> <span class="n">model_fit</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
+# Forecast the stock prices
+forecast = model_fit.forecast(steps=len(test_data))
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">forecast</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error: &#39;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+mse = mean_squared_error(test_data, forecast)
+print('Mean Squared Error: ', mse)
+</code></pre>
 <p>In this example, we use the <code>statsmodels</code> library to create and fit an ARIMA model to the stock price data. We then use the model to forecast the stock prices and evaluate the model using the mean squared error (MSE) metric.</p>
 <h2 id="using-ai-for-time-series-forecasting">Using AI for Time Series Forecasting</h2>
 <p>AI can be used to improve the accuracy of time series forecasting by using machine learning algorithms to identify patterns in the data. Some popular AI algorithms for time series forecasting include:
@@ -193,37 +192,37 @@
 * <strong>Convolutional Neural Networks (CNNs)</strong>: These algorithms use convolutional layers to extract features from the data.</p>
 <h3 id="example-forecasting-energy-consumption-with-lstm">Example: Forecasting Energy Consumption with LSTM</h3>
 <p>Let's consider an example of forecasting energy consumption using the LSTM algorithm. We will use the <code>keras</code> library in Python to implement the LSTM model.</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Dense</span>
+import pandas as pd
+import numpy as np
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
 
-<span class="c1"># Load the energy consumption data</span>
-<span class="n">energy_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;energy_consumption.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+# Load the energy consumption data
+energy_data = pd.read_csv('energy_consumption.csv', index_col='Date', parse_dates=['Date'])
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">energy_data</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_data</span><span class="p">))]</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">energy_data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_data</span><span class="p">)):]</span>
+# Split the data into training and testing sets
+train_data = energy_data[:int(0.8 * len(energy_data))]
+test_data = energy_data[int(0.8 * len(energy_data)):]
 
-<span class="c1"># Create and compile the LSTM model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mean_squared_error&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">)</span>
+# Create and compile the LSTM model
+model = Sequential()
+model.add(LSTM(50, input_shape=(train_data.shape[1], 1)))
+model.add(Dense(1))
+model.compile(loss='mean_squared_error', optimizer='adam')
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+# Train the model
+model.fit(train_data, epochs=50, batch_size=32)
 
-<span class="c1"># Forecast the energy consumption</span>
-<span class="n">forecast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+# Forecast the energy consumption
+forecast = model.predict(test_data)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">forecast</span> <span class="o">-</span> <span class="n">test_data</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error: &#39;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+mse = np.mean((forecast - test_data) ** 2)
+print('Mean Squared Error: ', mse)
+</code></pre>
 <p>In this example, we use the <code>keras</code> library to create and compile an LSTM model to forecast energy consumption. We then train the model using the training data and evaluate the model using the mean squared error (MSE) metric.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered in time series forecasting include:

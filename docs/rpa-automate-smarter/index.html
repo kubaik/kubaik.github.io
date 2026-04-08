@@ -178,69 +178,66 @@
 </ul>
 <h3 id="code-examples">Code Examples</h3>
 <p>Here are a few examples of RPA code using UiPath:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example 1: Automating data entry using UiPath</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Core</span><span class="p">;</span>
+<pre><code class="language-csharp">// Example 1: Automating data entry using UiPath
+using UiPath.Core;
 
-<span class="k">class</span><span class="w"> </span><span class="nc">DataEntryBot</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new instance of the UiPath robot</span>
-<span class="w">        </span><span class="n">Robot</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Robot</span><span class="p">();</span>
+class DataEntryBot
+{
+    public static void Main(string[] args)
+    {
+        // Create a new instance of the UiPath robot
+        Robot robot = new Robot();
 
-<span class="w">        </span><span class="c1">// Launch the application</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="n">LaunchApp</span><span class="p">(</span><span class="s">&quot;notepad.exe&quot;</span><span class="p">);</span>
+        // Launch the application
+        robot.LaunchApp(&quot;notepad.exe&quot;);
 
-<span class="w">        </span><span class="c1">// Enter data into the application</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="n">Type</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
+        // Enter data into the application
+        robot.Type(&quot;Hello World!&quot;);
 
-<span class="w">        </span><span class="c1">// Close the application</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="n">CloseApp</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+        // Close the application
+        robot.CloseApp();
+    }
+}
+</code></pre>
+<pre><code class="language-python"># Example 2: Automating document processing using Automation Anywhere
+import automationanywhere
 
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example 2: Automating document processing using Automation Anywhere</span>
-<span class="kn">import</span> <span class="nn">automationanywhere</span>
+# Create a new instance of the Automation Anywhere robot
+robot = automationanywhere.Robot()
 
-<span class="c1"># Create a new instance of the Automation Anywhere robot</span>
-<span class="n">robot</span> <span class="o">=</span> <span class="n">automationanywhere</span><span class="o">.</span><span class="n">Robot</span><span class="p">()</span>
+# Launch the application
+robot.launch_app(&quot;Adobe Acrobat&quot;)
 
-<span class="c1"># Launch the application</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">launch_app</span><span class="p">(</span><span class="s2">&quot;Adobe Acrobat&quot;</span><span class="p">)</span>
+# Open the document
+robot.open_document(&quot;example.pdf&quot;)
 
-<span class="c1"># Open the document</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">open_document</span><span class="p">(</span><span class="s2">&quot;example.pdf&quot;</span><span class="p">)</span>
+# Extract data from the document
+data = robot.extract_data()
 
-<span class="c1"># Extract data from the document</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">extract_data</span><span class="p">()</span>
+# Save the data to a file
+robot.save_data(data, &quot;example.csv&quot;)
+</code></pre>
+<pre><code class="language-java">// Example 3: Automating workflow management using Blue Prism
+import com.blueprism.robot.*;
 
-<span class="c1"># Save the data to a file</span>
-<span class="n">robot</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;example.csv&quot;</span><span class="p">)</span>
-</code></pre></div>
+public class WorkflowBot
+{
+    public static void main(String[] args)
+    {
+        // Create a new instance of the Blue Prism robot
+        Robot robot = new Robot();
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example 3: Automating workflow management using Blue Prism</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.blueprism.robot.*</span><span class="p">;</span>
+        // Launch the application
+        robot.launchApp(&quot;Microsoft Outlook&quot;);
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WorkflowBot</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new instance of the Blue Prism robot</span>
-<span class="w">        </span><span class="n">Robot</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Robot</span><span class="p">();</span>
+        // Check for new emails
+        robot.checkEmails();
 
-<span class="w">        </span><span class="c1">// Launch the application</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="na">launchApp</span><span class="p">(</span><span class="s">&quot;Microsoft Outlook&quot;</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Check for new emails</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="na">checkEmails</span><span class="p">();</span>
-
-<span class="w">        </span><span class="c1">// Process the emails</span>
-<span class="w">        </span><span class="n">robot</span><span class="p">.</span><span class="na">processEmails</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Process the emails
+        robot.processEmails();
+    }
+}
+</code></pre>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>RPA can be used in a wide range of industries and applications, including:</p>
 <ul>

@@ -166,16 +166,15 @@
 * <strong>Snowflake</strong>: A cloud-based data warehouse platform that offers high performance and scalability, with pricing starting at $2 per credit hour.</p>
 <h3 id="example-loading-data-into-amazon-redshift">Example: Loading Data into Amazon Redshift</h3>
 <p>To load data into Amazon Redshift, you can use the <code>COPY</code> command, which is a high-performance loading mechanism that can handle large volumes of data. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">COPY</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;s3://my-bucket/sales.csv&#39;</span>
-<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
-<span class="n">EMPTYASNULL</span>
-<span class="n">BLANKSASNULL</span>
-<span class="n">TRUNCATECOLUMNS</span>
-<span class="n">TRIMBLANKS</span>
-<span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">COPY sales (id, date, amount)
+FROM 's3://my-bucket/sales.csv'
+DELIMITER ','
+EMPTYASNULL
+BLANKSASNULL
+TRUNCATECOLUMNS
+TRIMBLANKS
+;
+</code></pre>
 <p>This command loads data from a CSV file in an S3 bucket into a table named <code>sales</code> in the Amazon Redshift cluster.</p>
 <h2 id="data-integration-and-etl">Data Integration and ETL</h2>
 <p>Data integration and ETL (Extract, Transform, Load) are critical components of a data warehousing strategy. ETL involves extracting data from source systems, transforming it into a standardized format, and loading it into the data warehouse. Some popular ETL tools include:
@@ -184,21 +183,20 @@
 * <strong>Talend</strong>: An open-source ETL platform that offers high performance and scalability, with support for multiple data sources and sinks, and pricing starting at $10,000 per year.</p>
 <h3 id="example-transforming-data-with-apache-beam">Example: Transforming Data with Apache Beam</h3>
 <p>To transform data with Apache Beam, you can use the <code>ParDo</code> function, which applies a user-defined function to each element of a <code>PCollection</code>. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pipeline</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span>
-<span class="w">    </span><span class="n">TextIO</span><span class="p">.</span><span class="na">read</span><span class="p">().</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;gs://my-bucket/data.csv&quot;</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-java">PCollection&lt;String&gt; data = pipeline.apply(
+    TextIO.read().from(&quot;gs://my-bucket/data.csv&quot;)
+);
 
-<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">transformedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span>
-<span class="w">    </span><span class="n">ParDo</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">DoFn</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nd">@ProcessElement</span>
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processElement</span><span class="p">(</span><span class="nd">@Element</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">element</span><span class="p">,</span><span class="w"> </span><span class="n">OutputReceiver</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Apply transformation logic here</span>
-<span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">output</span><span class="p">(</span><span class="n">element</span><span class="p">.</span><span class="na">toUpperCase</span><span class="p">());</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="p">);</span>
-</code></pre></div>
-
+PCollection&lt;String&gt; transformedData = data.apply(
+    ParDo.of(new DoFn&lt;String, String&gt;() {
+        @ProcessElement
+        public void processElement(@Element String element, OutputReceiver&lt;String&gt; out) {
+            // Apply transformation logic here
+            out.output(element.toUpperCase());
+        }
+    })
+);
+</code></pre>
 <p>This code reads data from a CSV file in a GCS bucket, applies a transformation function to each element, and outputs the transformed data.</p>
 <h2 id="data-warehousing-best-practices">Data Warehousing Best Practices</h2>
 <p>To ensure a successful data warehousing strategy, follow these best practices:
@@ -208,9 +206,8 @@
 * <strong>Monitor and optimize performance</strong>: Regularly monitor data warehouse performance, and optimize queries and data structures as needed.</p>
 <h3 id="example-optimizing-query-performance-with-indexing">Example: Optimizing Query Performance with Indexing</h3>
 <p>To optimize query performance with indexing, you can create indexes on columns used in <code>WHERE</code> and <code>JOIN</code> clauses. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_sales_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="p">(</span><span class="nb">date</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_sales_date ON sales (date);
+</code></pre>
 <p>This command creates an index on the <code>date</code> column of the <code>sales</code> table, which can improve query performance by reducing the number of rows that need to be scanned.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered in data warehousing include:

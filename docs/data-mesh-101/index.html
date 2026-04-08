@@ -165,23 +165,22 @@
 * <strong>Data catalogs</strong>: These are the metadata repositories that store information about data products, such as data definitions, data quality, and data lineage.</p>
 <h3 id="example-data-pipeline-using-apache-beam">Example Data Pipeline using Apache Beam</h3>
 <p>Here is an example of a data pipeline using Apache Beam, a popular open-source data processing framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
+<pre><code class="language-python">import apache_beam as beam
 
-<span class="c1"># Define the data source</span>
-<span class="n">source</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;data/source.csv&#39;</span><span class="p">)</span>
+# Define the data source
+source = beam.io.ReadFromText('data/source.csv')
 
-<span class="c1"># Define the data transformation</span>
-<span class="n">transform</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+# Define the data transformation
+transform = beam.Map(lambda x: x.split(','))
 
-<span class="c1"># Define the data sink</span>
-<span class="n">sink</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">WriteToText</span><span class="p">(</span><span class="s1">&#39;data/sink.csv&#39;</span><span class="p">)</span>
+# Define the data sink
+sink = beam.io.WriteToText('data/sink.csv')
 
-<span class="c1"># Create the data pipeline</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span>
-<span class="n">pipeline</span> <span class="o">|</span> <span class="n">source</span> <span class="o">|</span> <span class="n">transform</span> <span class="o">|</span> <span class="n">sink</span>
-<span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-
+# Create the data pipeline
+pipeline = beam.Pipeline()
+pipeline | source | transform | sink
+pipeline.run()
+</code></pre>
 <p>This example demonstrates how to create a simple data pipeline using Apache Beam. The pipeline reads data from a CSV file, transforms the data by splitting it into columns, and writes the transformed data to a new CSV file.</p>
 <h2 id="data-mesh-implementation">Data Mesh Implementation</h2>
 <p>Implementing a Data Mesh architecture requires significant changes to an organization's data management practices. Here are some concrete steps to get started:
@@ -192,27 +191,26 @@
 5. <strong>Create data catalogs</strong>: Create data catalogs to store metadata about data products, such as data definitions, data quality, and data lineage.</p>
 <h3 id="example-data-catalog-using-apache-atlas">Example Data Catalog using Apache Atlas</h3>
 <p>Here is an example of a data catalog using Apache Atlas, a popular open-source data governance framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.atlas.model.instance.AtlasEntity</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.atlas.model.instance.AtlasEntityHeader</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.atlas.model.instance.AtlasRelationship</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.atlas.model.instance.AtlasEntity;
+import org.apache.atlas.model.instance.AtlasEntityHeader;
+import org.apache.atlas.model.instance.AtlasRelationship;
 
-<span class="c1">// Define the data product</span>
-<span class="n">AtlasEntity</span><span class="w"> </span><span class="n">dataProduct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasEntity</span><span class="p">(</span><span class="s">&quot;DataProduct&quot;</span><span class="p">);</span>
-<span class="n">dataProduct</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Customer Data&quot;</span><span class="p">);</span>
+// Define the data product
+AtlasEntity dataProduct = new AtlasEntity(&quot;DataProduct&quot;);
+dataProduct.setAttribute(&quot;name&quot;, &quot;Customer Data&quot;);
 
-<span class="c1">// Define the data source</span>
-<span class="n">AtlasEntity</span><span class="w"> </span><span class="n">dataSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasEntity</span><span class="p">(</span><span class="s">&quot;DataSource&quot;</span><span class="p">);</span>
-<span class="n">dataSource</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Customer Database&quot;</span><span class="p">);</span>
+// Define the data source
+AtlasEntity dataSource = new AtlasEntity(&quot;DataSource&quot;);
+dataSource.setAttribute(&quot;name&quot;, &quot;Customer Database&quot;);
 
-<span class="c1">// Define the data pipeline</span>
-<span class="n">AtlasEntity</span><span class="w"> </span><span class="n">dataPipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasEntity</span><span class="p">(</span><span class="s">&quot;DataPipeline&quot;</span><span class="p">);</span>
-<span class="n">dataPipeline</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Customer Data Pipeline&quot;</span><span class="p">);</span>
+// Define the data pipeline
+AtlasEntity dataPipeline = new AtlasEntity(&quot;DataPipeline&quot;);
+dataPipeline.setAttribute(&quot;name&quot;, &quot;Customer Data Pipeline&quot;);
 
-<span class="c1">// Create the data catalog</span>
-<span class="n">AtlasRelationship</span><span class="w"> </span><span class="n">relationship</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasRelationship</span><span class="p">(</span><span class="n">dataProduct</span><span class="p">,</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">dataPipeline</span><span class="p">);</span>
-<span class="n">relationship</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dataPipeline&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+// Create the data catalog
+AtlasRelationship relationship = new AtlasRelationship(dataProduct, dataSource, dataPipeline);
+relationship.setAttribute(&quot;type&quot;, &quot;dataPipeline&quot;);
+</code></pre>
 <p>This example demonstrates how to create a data catalog using Apache Atlas. The catalog defines a data product, a data source, and a data pipeline, and creates a relationship between them.</p>
 <h2 id="data-mesh-benefits">Data Mesh Benefits</h2>
 <p>The benefits of a Data Mesh architecture include:
@@ -228,30 +226,29 @@
 * <strong>Data pipeline complexity</strong>: Data pipelines can become complex and difficult to manage. Solution: Implement a data pipeline management framework, such as Apache Beam or Apache Airflow, to simplify data pipeline management.</p>
 <h3 id="example-data-pipeline-management-using-apache-airflow">Example Data Pipeline Management using Apache Airflow</h3>
 <p>Here is an example of a data pipeline management framework using Apache Airflow, a popular open-source workflow management framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.bash_operator</span> <span class="kn">import</span> <span class="n">BashOperator</span>
+<pre><code class="language-python">from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
 
-<span class="c1"># Define the data pipeline</span>
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span><span class="s1">&#39;data_pipeline&#39;</span><span class="p">,</span> <span class="n">default_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">})</span>
+# Define the data pipeline
+dag = DAG('data_pipeline', default_args={'owner': 'airflow'})
 
-<span class="c1"># Define the data tasks</span>
-<span class="n">task1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task1&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python data_task1.py&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
-<span class="p">)</span>
+# Define the data tasks
+task1 = BashOperator(
+    task_id='task1',
+    bash_command='python data_task1.py',
+    dag=dag
+)
 
-<span class="n">task2</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task2&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python data_task2.py&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span>
-<span class="p">)</span>
+task2 = BashOperator(
+    task_id='task2',
+    bash_command='python data_task2.py',
+    dag=dag
+)
 
-<span class="c1"># Define the data workflow</span>
-<span class="n">dag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
-<span class="n">dag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task2</span><span class="p">)</span>
-</code></pre></div>
-
+# Define the data workflow
+dag.append(task1)
+dag.append(task2)
+</code></pre>
 <p>This example demonstrates how to create a data pipeline management framework using Apache Airflow. The framework defines a data pipeline, data tasks, and a data workflow, and provides a simple and intuitive way to manage data pipelines.</p>
 <h2 id="data-mesh-pricing-and-performance">Data Mesh Pricing and Performance</h2>
 <p>The pricing and performance of a Data Mesh architecture can vary depending on the specific tools and platforms used. Here are some real metrics and pricing data:

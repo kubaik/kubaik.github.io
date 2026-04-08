@@ -169,20 +169,20 @@
 </ul>
 <h4 id="implementation-details">Implementation Details</h4>
 <p>Flipkart Lite leverages React, a popular JavaScript library, and service workers for caching. Here’s a simplified code snippet demonstrating how they implemented offline capabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="c1">// Registering a service worker</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/service-worker.js&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registered with scope:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">scope</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Service Worker registration failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Registering a service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(registration =&gt; {
+      console.log('Service Worker registered with scope:', registration.scope);
+    })
+    .catch(error =&gt; {
+      console.error('Service Worker registration failed:', error);
+    });
+}
+</code></pre>
 <h3 id="2-news-the-washington-post">2. News: The Washington Post</h3>
 <p>The Washington Post implemented a PWA to enhance the reading experience for its users.</p>
 <ul>
@@ -192,34 +192,33 @@
 </ul>
 <h4 id="key-features">Key Features</h4>
 <p>The PWA utilizes caching strategies to deliver content even when offline. Here’s a basic example of caching strategies in a service worker:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">CACHE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;news-cache-v1&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">urlsToCache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/styles/main.css&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/scripts/main.js&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<pre><code class="language-javascript">const CACHE_NAME = 'news-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/styles/main.css',
+  '/scripts/main.js',
+];
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">CACHE_NAME</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">cache</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Opened cache&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">(</span><span class="nx">urlsToCache</span><span class="p">);</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+self.addEventListener('install', (event) =&gt; {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) =&gt; {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', (event) =&gt; {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) =&gt; {
+        return response || fetch(event.request);
+      })
+  );
+});
+</code></pre>
 <h3 id="3-travel-trivago">3. Travel: Trivago</h3>
 <p>Trivago’s PWA allows users to search for hotel deals without needing to download a native app.</p>
 <ul>
@@ -231,47 +230,45 @@
 <h3 id="problem-1-limited-browser-support">Problem 1: Limited Browser Support</h3>
 <p>While most modern browsers support PWAs, some older versions do not. For instance, Internet Explorer does not support service workers.</p>
 <p><strong>Solution</strong>: Implement a feature detection strategy using libraries like Modernizr to ensure your PWA gracefully degrades on unsupported browsers.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Register service worker</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Fallback for unsupported browsers</span>
-<span class="w">  </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;This browser does not support PWAs.&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">if ('serviceWorker' in navigator) {
+  // Register service worker
+} else {
+  // Fallback for unsupported browsers
+  alert('This browser does not support PWAs.');
+}
+</code></pre>
 <h3 id="problem-2-performance-on-low-end-devices">Problem 2: Performance on Low-End Devices</h3>
 <p>PWAs can sometimes perform poorly on older devices due to resource constraints.</p>
 <p><strong>Solution</strong>: Optimize assets by using tools like <a href="https://developers.google.com/web/tools/lighthouse">Lighthouse</a> for performance auditing. Compress images using <a href="https://imageoptim.com/">ImageOptim</a> or <a href="https://tinypng.com/">TinyPNG</a> and serve them in modern formats like WebP for better performance.</p>
 <h3 id="problem-3-user-engagement">Problem 3: User Engagement</h3>
 <p>Low engagement rates can be a concern for PWAs, particularly if users are not prompted to add the app to their home screen.</p>
 <p><strong>Solution</strong>: Use the Web App Install Banner to encourage users to install your PWA. You can control this by listening to the <code>beforeinstallprompt</code> event:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">deferredPrompt</span><span class="p">;</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;beforeinstallprompt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Prevent the mini-info bar from appearing on mobile</span>
-<span class="w">  </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-<span class="w">  </span><span class="c1">// Stash the event so it can be triggered later</span>
-<span class="w">  </span><span class="nx">deferredPrompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">e</span><span class="p">;</span>
+<pre><code class="language-javascript">let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) =&gt; {
+  // Prevent the mini-info bar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later
+  deferredPrompt = e;
 
-<span class="w">  </span><span class="c1">// Show the install button</span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;install-button&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
-<span class="p">});</span>
+  // Show the install button
+  document.getElementById('install-button').style.display = 'block';
+});
 
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;install-button&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Hide the button</span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;install-button&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Show the install prompt</span>
-<span class="w">  </span><span class="nx">deferredPrompt</span><span class="p">.</span><span class="nx">prompt</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">deferredPrompt</span><span class="p">.</span><span class="nx">userChoice</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">choiceResult</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">choiceResult</span><span class="p">.</span><span class="nx">outcome</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;accepted&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User accepted the A2HS prompt&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User dismissed the A2HS prompt&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">deferredPrompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+document.getElementById('install-button').addEventListener('click', () =&gt; {
+  // Hide the button
+  document.getElementById('install-button').style.display = 'none';
+  // Show the install prompt
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) =&gt; {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+    } else {
+      console.log('User dismissed the A2HS prompt');
+    }
+    deferredPrompt = null;
+  });
+});
+</code></pre>
 <h2 id="tools-and-platforms-for-building-pwas">Tools and Platforms for Building PWAs</h2>
 <ol>
 <li><strong>Frameworks</strong>: Use frameworks like React, Angular, or Vue.js to streamline development.</li>

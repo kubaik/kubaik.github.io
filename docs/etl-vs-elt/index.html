@@ -176,52 +176,47 @@
 <h3 id="example-1-etl-process-using-apache-nifi">Example 1: ETL Process Using Apache Nifi</h3>
 <p>Apache Nifi is an open-source data integration tool that simplifies the ETL process. Below is a sample workflow demonstrating how to extract data from a CSV file, transform it, and load it into a PostgreSQL database.</p>
 <h4 id="step-1-extract-data-from-csv">Step 1: Extract Data from CSV</h4>
-<div class="codehilite"><pre><span></span><code>GetFile<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>Input<span class="w"> </span>Directory:<span class="w"> </span>/path/to/input
-<span class="w">  </span>Keep<span class="w"> </span>Source<span class="w"> </span>File:<span class="w"> </span><span class="nb">false</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-bash">GetFile {
+  Input Directory: /path/to/input
+  Keep Source File: false
+}
+</code></pre>
 <h4 id="step-2-transform-data">Step 2: Transform Data</h4>
 <p>You can use the <code>UpdateAttribute</code> processor to modify attributes or filter data.</p>
-<div class="codehilite"><pre><span></span><code>UpdateAttribute<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>Attributes<span class="w"> </span>to<span class="w"> </span>Update:<span class="w"> </span>
-<span class="w">    </span>-<span class="w"> </span><span class="s2">&quot;filename&quot;</span>:<span class="w"> </span><span class="si">${</span><span class="nv">filename</span><span class="si">}</span>
-<span class="w">    </span>-<span class="w"> </span><span class="s2">&quot;record_count&quot;</span>:<span class="w"> </span><span class="si">${</span><span class="nv">recordCount</span><span class="si">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-bash">UpdateAttribute {
+  Attributes to Update: 
+    - &quot;filename&quot;: ${filename}
+    - &quot;record_count&quot;: ${recordCount}
+}
+</code></pre>
 <h4 id="step-3-load-data-into-postgresql">Step 3: Load Data into PostgreSQL</h4>
 <p>Use the <code>PutSQL</code> processor to insert data into your PostgreSQL database.</p>
-<div class="codehilite"><pre><span></span><code>PutSQL<span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>SQL<span class="w"> </span>Statement:<span class="w"> </span>INSERT<span class="w"> </span>INTO<span class="w"> </span>target_table<span class="w"> </span><span class="o">(</span>column1,<span class="w"> </span>column2<span class="o">)</span><span class="w"> </span>VALUES<span class="w"> </span><span class="o">(</span>?,<span class="w"> </span>?<span class="o">)</span>
-<span class="w">  </span>Database<span class="w"> </span>Connection<span class="w"> </span>Pooling<span class="w"> </span>Service:<span class="w"> </span>PostgreSQLConnectionPool
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-bash">PutSQL {
+  SQL Statement: INSERT INTO target_table (column1, column2) VALUES (?, ?)
+  Database Connection Pooling Service: PostgreSQLConnectionPool
+}
+</code></pre>
 <h3 id="example-2-elt-process-using-google-bigquery">Example 2: ELT Process Using Google BigQuery</h3>
 <p>Google BigQuery can handle large datasets and allows you to load raw data and perform transformations later. Below is a sample SQL script to demonstrate the ELT process.</p>
 <h4 id="step-1-load-raw-data">Step 1: Load Raw Data</h4>
 <p>First, load data from a CSV file stored in Google Cloud Storage into a staging table in BigQuery.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mydataset</span><span class="p">.</span><span class="n">staging_table</span><span class="w"> </span><span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="o">`</span><span class="n">myproject</span><span class="p">.</span><span class="n">mydataset</span><span class="p">.</span><span class="n">source_table</span><span class="o">`</span>
-<span class="k">OPTIONS</span><span class="p">(</span>
-<span class="w">  </span><span class="n">format</span><span class="o">=</span><span class="s1">&#39;CSV&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="n">skip_leading_rows</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE OR REPLACE TABLE mydataset.staging_table AS
+SELECT *
+FROM `myproject.mydataset.source_table`
+OPTIONS(
+  format='CSV',
+  skip_leading_rows=1
+);
+</code></pre>
 <h4 id="step-2-transform-data_1">Step 2: Transform Data</h4>
 <p>After loading, apply transformations using SQL.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mydataset</span><span class="p">.</span><span class="n">final_table</span><span class="w"> </span><span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span>
-<span class="w">  </span><span class="k">UPPER</span><span class="p">(</span><span class="n">column1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">upper_column1</span><span class="p">,</span>
-<span class="w">  </span><span class="k">COUNT</span><span class="p">(</span><span class="n">column2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">count_column2</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">mydataset</span><span class="p">.</span><span class="n">staging_table</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">upper_column1</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE OR REPLACE TABLE mydataset.final_table AS
+SELECT 
+  UPPER(column1) AS upper_column1,
+  COUNT(column2) AS count_column2
+FROM mydataset.staging_table
+GROUP BY upper_column1;
+</code></pre>
 <h2 id="tools-comparison">Tools Comparison</h2>
 <p>Here’s a breakdown of popular ETL and ELT tools, highlighting their features, pricing, and performance metrics.</p>
 <h3 id="etl-tools">ETL Tools</h3>

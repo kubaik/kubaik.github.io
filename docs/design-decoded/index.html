@@ -174,15 +174,14 @@
 <li><strong>Docker</strong>: A containerization platform that allows developers to package and deploy applications in containers.</li>
 </ul>
 <p>For example, let's say we want to build a real-time analytics system using Apache Kafka. We can use the following code snippet to create a Kafka producer that sends data to a Kafka topic:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python">from kafka import KafkaProducer
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-<span class="c1"># Send data to a Kafka topic</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send data to a Kafka topic
+producer.send('my_topic', value='Hello, world!')
+</code></pre>
 <p>This code creates a Kafka producer that sends a message to a Kafka topic called <code>my_topic</code>.</p>
 <h2 id="practical-use-cases-for-distributed-systems-design">Practical Use Cases for Distributed Systems Design</h2>
 <p>Distributed systems design is used in a wide range of applications, including:</p>
@@ -192,30 +191,29 @@
 <li><strong>Social media</strong>: Distributed systems can be used to build scalable and reliable social media platforms that can handle large amounts of data and user interactions.</li>
 </ul>
 <p>For example, let's say we want to build a real-time analytics system that can process 100,000 events per second. We can use a combination of Apache Kafka, Apache Storm, and Apache Cassandra to build a system that can handle this volume of data. Here's an example of how we can use Apache Storm to process data from a Kafka topic:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.storm.topology.BasicOutputCollector</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.storm.topology.OutputCollector</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.storm.topology.TopologyContext</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.storm.tuple.Tuple</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.storm.topology.BasicOutputCollector;
+import org.apache.storm.topology.OutputCollector;
+import org.apache.storm.topology.TopologyContext;
+import org.apache.storm.tuple.Tuple;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyBolt</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">BaseRichBolt</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">OutputCollector</span><span class="w"> </span><span class="n">collector</span><span class="p">;</span>
+public class MyBolt extends BaseRichBolt {
+    private OutputCollector collector;
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">prepare</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">topoConf</span><span class="p">,</span><span class="w"> </span><span class="n">TopologyContext</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">OutputCollector</span><span class="w"> </span><span class="n">collector</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">collector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collector</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    @Override
+    public void prepare(Map&lt;String, Object&gt; topoConf, TopologyContext context, OutputCollector collector) {
+        this.collector = collector;
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="n">Tuple</span><span class="w"> </span><span class="n">tuple</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Process the data from the Kafka topic</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tuple</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// Send the processed data to a Cassandra database</span>
-<span class="w">        </span><span class="n">CassandraConnector</span><span class="w"> </span><span class="n">connector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CassandraConnector</span><span class="p">();</span>
-<span class="w">        </span><span class="n">connector</span><span class="p">.</span><span class="na">sendData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public void execute(Tuple tuple) {
+        // Process the data from the Kafka topic
+        String data = tuple.getString(0);
+        // Send the processed data to a Cassandra database
+        CassandraConnector connector = new CassandraConnector();
+        connector.sendData(data);
+    }
+}
+</code></pre>
 <p>This code defines a Storm bolt that processes data from a Kafka topic and sends the processed data to a Cassandra database.</p>
 <h2 id="common-problems-in-distributed-systems-design">Common Problems in Distributed Systems Design</h2>
 <p>Distributed systems design is a complex field, and there are many common problems that can arise. Some of these problems include:</p>
@@ -231,19 +229,18 @@
 <li><strong>Load balancing</strong>: Load balancing can be used to distribute traffic across multiple nodes, helping to ensure that no single node becomes overwhelmed.</li>
 </ul>
 <p>For example, let's say we want to build a distributed system that can handle 10,000 requests per second. We can use a combination of load balancing and replication to ensure that the system can handle this volume of traffic. Here's an example of how we can use HAProxy to load balance traffic across multiple nodes:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define the load balancer configuration</span>
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
+<pre><code class="language-bash"># Define the load balancer configuration
+frontend http
+    bind *:80
 
-<span class="w">    </span><span class="c1"># Define the backend nodes</span>
-<span class="w">    </span>backend<span class="w"> </span>nodes
-<span class="w">        </span>mode<span class="w"> </span>http
-<span class="w">        </span>balance<span class="w"> </span>roundrobin
-<span class="w">        </span>server<span class="w"> </span>node1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">        </span>server<span class="w"> </span>node2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-<span class="w">        </span>server<span class="w"> </span>node3<span class="w"> </span><span class="m">192</span>.168.1.3:80<span class="w"> </span>check
-</code></pre></div>
-
+    # Define the backend nodes
+    backend nodes
+        mode http
+        balance roundrobin
+        server node1 192.168.1.1:80 check
+        server node2 192.168.1.2:80 check
+        server node3 192.168.1.3:80 check
+</code></pre>
 <p>This configuration defines a load balancer that distributes traffic across three backend nodes using a round-robin algorithm.</p>
 <h2 id="performance-benchmarks-for-distributed-systems-design">Performance Benchmarks for Distributed Systems Design</h2>
 <p>When designing a distributed system, it's essential to consider performance benchmarks to ensure that the system can handle the required volume of traffic and data. Some common performance benchmarks include:</p>

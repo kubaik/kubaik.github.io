@@ -204,12 +204,11 @@ Automating login flow tests using Selenium or Cypress to quickly verify that aut
 - Automate unit tests as part of CI/CD pipelines</p>
 <p><strong>Example:</strong>
 Testing a function that calculates the total price in an e-commerce application.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_calculate_total</span><span class="p">():</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}]</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">10</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="mi">3</span>
-</code></pre></div>
-
+<pre><code class="language-python">def test_calculate_total():
+    items = [{'price': 10, 'quantity': 2}, {'price': 5, 'quantity': 3}]
+    total = calculate_total(items)
+    assert total == 10*2 + 5*3
+</code></pre>
 <h3 id="2-integration-testing">2. Integration Testing</h3>
 <p><strong>Purpose:</strong> Verify the interaction between different components or modules.</p>
 <p><strong>Tools:</strong> Postman, REST-assured, pytest</p>

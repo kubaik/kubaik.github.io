@@ -163,42 +163,41 @@
 * Practice coding in a variety of languages, including JavaScript, Python, and Java.</p>
 <h3 id="example-1-reverse-linked-list">Example 1: Reverse Linked List</h3>
 <p>Here's an example of a common coding challenge: reversing a linked list. Here's a solution in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+<pre><code class="language-python">class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
 
-<span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+class LinkedList:
+    def __init__(self):
+        self.head = None
 
-    <span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
-        <span class="k">while</span> <span class="n">current</span><span class="p">:</span>
-            <span class="n">next_node</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">next</span>
-            <span class="n">current</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
-            <span class="n">prev</span> <span class="o">=</span> <span class="n">current</span>
-            <span class="n">current</span> <span class="o">=</span> <span class="n">next_node</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">prev</span>
+    def reverse(self):
+        prev = None
+        current = self.head
+        while current:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+        self.head = prev
 
-<span class="c1"># Create a sample linked list: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5</span>
-<span class="n">ll</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+# Create a sample linked list: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+ll = LinkedList()
+ll.head = Node(1)
+ll.head.next = Node(2)
+ll.head.next.next = Node(3)
+ll.head.next.next.next = Node(4)
+ll.head.next.next.next.next = Node(5)
 
-<span class="c1"># Reverse the linked list</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+# Reverse the linked list
+ll.reverse()
 
-<span class="c1"># Print the reversed linked list</span>
-<span class="k">while</span> <span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">ll</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span>
-</code></pre></div>
-
+# Print the reversed linked list
+while ll.head:
+    print(ll.head.data)
+    ll.head = ll.head.next
+</code></pre>
 <p>This solution has a time complexity of O(n), where n is the number of nodes in the linked list, and a space complexity of O(1), since we're only using a constant amount of space to store the previous node.</p>
 <h2 id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h2>
 <p>Here are some common pitfalls to avoid during the tech interview process:
@@ -213,51 +212,50 @@
 * Research the company's tech stack and tools, and practice using them.</p>
 <h3 id="example-2-implementing-a-cache">Example 2: Implementing a Cache</h3>
 <p>Here's an example of a common system design challenge: implementing a cache. Here's a solution in JavaScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">Cache</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">capacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">capacity</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-javascript">class Cache {
+    constructor(capacity) {
+        this.capacity = capacity;
+        this.cache = new Map();
+    }
 
-<span class="w">    </span><span class="nx">get</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    get(key) {
+        if (this.cache.has(key)) {
+            const value = this.cache.get(key);
+            this.cache.delete(key);
+            this.cache.set(key, value);
+            return value;
+        } else {
+            return -1;
+        }
+    }
 
-<span class="w">    </span><span class="nx">put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">size</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">oldestKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="nx">oldestKey</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    put(key, value) {
+        if (this.cache.has(key)) {
+            this.cache.delete(key);
+        } else if (this.cache.size &gt;= this.capacity) {
+            const oldestKey = this.cache.keys().next().value;
+            this.cache.delete(oldestKey);
+        }
+        this.cache.set(key, value);
+    }
+}
 
-<span class="c1">// Create a sample cache with a capacity of 2</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Cache</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
+// Create a sample cache with a capacity of 2
+const cache = new Cache(2);
 
-<span class="c1">// Add some items to the cache</span>
-<span class="nx">cache</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="nx">cache</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+// Add some items to the cache
+cache.put(1, 1);
+cache.put(2, 2);
 
-<span class="c1">// Get an item from the cache</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mf">1</span><span class="p">));</span><span class="w"> </span><span class="c1">// Output: 1</span>
+// Get an item from the cache
+console.log(cache.get(1)); // Output: 1
 
-<span class="c1">// Add another item to the cache, evicting the oldest item</span>
-<span class="nx">cache</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+// Add another item to the cache, evicting the oldest item
+cache.put(3, 3);
 
-<span class="c1">// Get an item from the cache that was evicted</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span><span class="w"> </span><span class="c1">// Output: -1</span>
-</code></pre></div>
-
+// Get an item from the cache that was evicted
+console.log(cache.get(2)); // Output: -1
+</code></pre>
 <p>This solution has a time complexity of O(1), since we're using a Map to store the cache, and a space complexity of O(capacity), since we're storing at most capacity items in the cache.</p>
 <h2 id="using-tools-and-resources">Using Tools and Resources</h2>
 <p>Here are some tools and resources you can use to prepare for tech interviews:
@@ -271,54 +269,53 @@
 * <strong>"Clean Code"</strong> by Robert C. Martin: A guide to writing clean, maintainable code, with a focus on principles and best practices.</p>
 <h3 id="example-3-implementing-a-trie">Example 3: Implementing a Trie</h3>
 <p>Here's an example of a common data structures challenge: implementing a trie. Here's a solution in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">TrieNode</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_end_of_word</span> <span class="o">=</span> <span class="kc">False</span>
+<pre><code class="language-python">class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
 
-<span class="k">class</span> <span class="nc">Trie</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">TrieNode</span><span class="p">()</span>
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
 
-    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
-        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">TrieNode</span><span class="p">()</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">is_end_of_word</span> <span class="o">=</span> <span class="kc">True</span>
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end_of_word = True
 
-    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
-        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">is_end_of_word</span>
+    def search(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end_of_word
 
-    <span class="k">def</span> <span class="nf">starts_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
-        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">prefix</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
-        <span class="k">return</span> <span class="kc">True</span>
+    def starts_with(self, prefix):
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
 
-<span class="c1"># Create a sample trie</span>
-<span class="n">trie</span> <span class="o">=</span> <span class="n">Trie</span><span class="p">()</span>
+# Create a sample trie
+trie = Trie()
 
-<span class="c1"># Insert some words into the trie</span>
-<span class="n">trie</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
-<span class="n">trie</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">)</span>
-<span class="n">trie</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
+# Insert some words into the trie
+trie.insert(&quot;apple&quot;)
+trie.insert(&quot;app&quot;)
+trie.insert(&quot;banana&quot;)
 
-<span class="c1"># Search for a word in the trie</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">trie</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">))</span> <span class="c1"># Output: True</span>
+# Search for a word in the trie
+print(trie.search(&quot;apple&quot;)) # Output: True
 
-<span class="c1"># Check if a prefix exists in the trie</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">trie</span><span class="o">.</span><span class="n">starts_with</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">))</span> <span class="c1"># Output: True</span>
-</code></pre></div>
-
+# Check if a prefix exists in the trie
+print(trie.starts_with(&quot;app&quot;)) # Output: True
+</code></pre>
 <p>This solution has a time complexity of O(m), where m is the length of the word, and a space complexity of O(n), where n is the number of words in the trie.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Preparing for tech interviews requires a combination of technical skills, practice, and strategy. By focusing on data structures and algorithms, practicing coding challenges, and using tools and resources like LeetCode, HackerRank, and GitHub, you can improve your chances of success. Here are some concrete next steps you can take:

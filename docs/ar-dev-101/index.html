@@ -166,125 +166,122 @@
 * <strong>Unity Editor</strong>: The Unity Editor is a powerful tool for creating and editing AR experiences. It offers features like 3D modeling, physics, and graphics rendering, as well as a wide range of plugins and extensions.</p>
 <h3 id="practical-example-arkit-plane-detection">Practical Example: ARKit Plane Detection</h3>
 <p>Here's an example of how to use ARKit to detect planes in the real world:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
-<span class="kd">import</span> <span class="nc">ARKit</span>
+<pre><code class="language-swift">import UIKit
+import ARKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">sceneView</span> <span class="p">=</span> <span class="bp">ARSCNView</span><span class="p">()</span>
+class ViewController: UIViewController, ARSCNViewDelegate {
+    let sceneView = ARSCNView()
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="p">=</span> <span class="kc">self</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">showsStatistics</span> <span class="p">=</span> <span class="kc">true</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">autoenablesDefaultLighting</span> <span class="p">=</span> <span class="kc">true</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">sceneView</span><span class="p">)</span>
-    <span class="p">}</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sceneView.delegate = self
+        sceneView.showsStatistics = true
+        sceneView.autoenablesDefaultLighting = true
+        view.addSubview(sceneView)
+    }
 
-    <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="kc">_</span> <span class="n">renderer</span><span class="p">:</span> <span class="bp">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="n">node</span><span class="p">:</span> <span class="bp">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="n">anchor</span><span class="p">:</span> <span class="bp">ARAnchor</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">planeAnchor</span> <span class="p">=</span> <span class="n">anchor</span> <span class="k">as</span><span class="p">?</span> <span class="bp">ARPlaneAnchor</span> <span class="p">{</span>
-            <span class="kd">let</span> <span class="nv">plane</span> <span class="p">=</span> <span class="bp">SCNPlane</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">height</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">z</span><span class="p">))</span>
-            <span class="n">plane</span><span class="p">.</span><span class="n">firstMaterial</span><span class="p">?.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="p">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">blue</span>
-            <span class="kd">let</span> <span class="nv">planeNode</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="n">plane</span><span class="p">)</span>
-            <span class="n">planeNode</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="bp">SCNVector3</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">)</span>
-            <span class="n">node</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">planeNode</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let planeAnchor = anchor as? ARPlaneAnchor {
+            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+            plane.firstMaterial?.diffuse.contents = UIColor.blue
+            let planeNode = SCNNode(geometry: plane)
+            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: planeAnchor.center.y, z: planeAnchor.center.z)
+            node.addChildNode(planeNode)
+        }
+    }
+}
+</code></pre>
 <p>This code creates an AR scene view and sets up a delegate to handle plane detection. When a plane is detected, it creates a blue plane node and adds it to the scene.</p>
 <h3 id="practical-example-arcore-face-tracking">Practical Example: ARCore Face Tracking</h3>
 <p>Here's an example of how to use ARCore to track faces in the real world:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">android.opengl.GLES20</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">android.opengl.GLSurfaceView</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.ArCore</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Camera</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Frame</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Session</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.TrackingState</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.exceptions.CameraNotAvailableException</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.exceptions.UnavailableException</span><span class="p">;</span>
+<pre><code class="language-java">import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import com.google.ar.core.ArCore;
+import com.google.ar.core.Camera;
+import com.google.ar.core.Frame;
+import com.google.ar.core.Session;
+import com.google.ar.core.TrackingState;
+import com.google.ar.core.exceptions.CameraNotAvailableException;
+import com.google.ar.core.exceptions.UnavailableException;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FaceTrackingActivity</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">GLSurfaceView</span><span class="w"> </span><span class="n">surfaceView</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Session</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
+public class FaceTrackingActivity extends AppCompatActivity {
+    private GLSurfaceView surfaceView;
+    private Session session;
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">Bundle</span><span class="w"> </span><span class="n">savedInstanceState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
-<span class="w">        </span><span class="n">surfaceView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GLSurfaceView</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">surfaceView</span><span class="p">);</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Session</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnavailableException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Handle exception</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        surfaceView = new GLSurfaceView(this);
+        setContentView(surfaceView);
+        try {
+            session = new Session(this);
+        } catch (UnavailableException e) {
+            // Handle exception
+        }
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onResume</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">onResume</span><span class="p">();</span>
-<span class="w">        </span><span class="n">surfaceView</span><span class="p">.</span><span class="na">onResume</span><span class="p">();</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">session</span><span class="p">.</span><span class="na">resume</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">CameraNotAvailableException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Handle exception</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    @Override
+    protected void onResume() {
+        super.onResume();
+        surfaceView.onResume();
+        try {
+            session.resume();
+        } catch (CameraNotAvailableException e) {
+            // Handle exception
+        }
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onPause</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">onPause</span><span class="p">();</span>
-<span class="w">        </span><span class="n">surfaceView</span><span class="p">.</span><span class="na">onPause</span><span class="p">();</span>
-<span class="w">        </span><span class="n">session</span><span class="p">.</span><span class="na">pause</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    @Override
+    protected void onPause() {
+        super.onPause();
+        surfaceView.onPause();
+        session.pause();
+    }
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">drawFace</span><span class="p">(</span><span class="n">Face</span><span class="w"> </span><span class="n">face</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Draw face mesh and landmarks</span>
-<span class="w">    </span><span class="p">}</span>
+    private void drawFace(Face face) {
+        // Draw face mesh and landmarks
+    }
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onDrawFrame</span><span class="p">(</span><span class="n">GL10</span><span class="w"> </span><span class="n">gl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Frame</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">update</span><span class="p">();</span>
-<span class="w">        </span><span class="n">Camera</span><span class="w"> </span><span class="n">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="na">getCamera</span><span class="p">();</span>
-<span class="w">        </span><span class="n">TrackingState</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">camera</span><span class="p">.</span><span class="na">getTrackingState</span><span class="p">();</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">TrackingState</span><span class="p">.</span><span class="na">TRACKING</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Draw face</span>
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Face</span><span class="w"> </span><span class="n">face</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="na">getFaces</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">drawFace</span><span class="p">(</span><span class="n">face</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    private void onDrawFrame(GL10 gl) {
+        Frame frame = session.update();
+        Camera camera = frame.getCamera();
+        TrackingState state = camera.getTrackingState();
+        if (state == TrackingState.TRACKING) {
+            // Draw face
+            for (Face face : frame.getFaces()) {
+                drawFace(face);
+            }
+        }
+    }
+}
+</code></pre>
 <p>This code creates an AR session and sets up a surface view to render the AR scene. It uses the ARCore face tracking API to detect and track faces in the real world.</p>
 <h3 id="practical-example-unity-ar-development">Practical Example: Unity AR Development</h3>
 <p>Here's an example of how to use Unity to create an AR experience:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARFoundation</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARKit</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARKit;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ARController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ARSession</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ARCamera</span><span class="w"> </span><span class="n">camera</span><span class="p">;</span>
+public class ARController : MonoBehaviour {
+    public ARSession session;
+    public ARCamera camera;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ARSession</span><span class="p">();</span>
-<span class="w">        </span><span class="n">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="n">camera</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start() {
+        session = new ARSession();
+        camera = session.camera;
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update AR session and camera</span>
-<span class="w">        </span><span class="n">session</span><span class="p">.</span><span class="n">Update</span><span class="p">();</span>
-<span class="w">        </span><span class="n">camera</span><span class="p">.</span><span class="n">Update</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    void Update() {
+        // Update AR session and camera
+        session.Update();
+        camera.Update();
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnTrackedImageChanged</span><span class="p">(</span><span class="n">TrackedImage</span><span class="w"> </span><span class="n">image</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle tracked image changes</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void OnTrackedImageChanged(TrackedImage image) {
+        // Handle tracked image changes
+    }
+}
+</code></pre>
 <p>This code creates an AR session and camera, and updates them in the <code>Update</code> method. It also sets up a delegate to handle tracked image changes.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems and solutions in AR development:

@@ -198,19 +198,18 @@
 <p>Use tools like Consul or Eureka to enable services to find each other dynamically.</p>
 <h2 id="practical-examples-of-microservices-architecture">Practical Examples of Microservices Architecture</h2>
 <p>Let's consider a simplified online bookstore as an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+------------------+</span>
-<span class="c">| User Service        |       | Catalog Service     |       | Order Service    |</span>
-<span class="c">| </span><span class="nb">-</span><span class="c"> Manage users      |       | </span><span class="nb">-</span><span class="c"> Manage books      |       | </span><span class="nb">-</span><span class="c"> Manage orders  |</span>
-<span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+------------------+</span>
-<span class="c">        |                                |                         |</span>
-<span class="c">        | REST API                       | REST API                | REST API</span>
-<span class="c">        |                                |                         |</span>
-<span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+------------------+</span>
-<span class="c">| Payment Service     |       | Notification Service |    | Review Service   |</span>
-<span class="c">| </span><span class="nb">-</span><span class="c"> Process payments  |       | </span><span class="nb">-</span><span class="c"> Send alerts        |    | </span><span class="nb">-</span><span class="c"> Manage reviews |</span>
-<span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+---------------------+</span><span class="c">       </span><span class="nb">+------------------+</span>
-</code></pre></div>
-
+<pre><code class="language-plaintext">+---------------------+       +---------------------+       +------------------+
+| User Service        |       | Catalog Service     |       | Order Service    |
+| - Manage users      |       | - Manage books      |       | - Manage orders  |
++---------------------+       +---------------------+       +------------------+
+        |                                |                         |
+        | REST API                       | REST API                | REST API
+        |                                |                         |
++---------------------+       +---------------------+       +------------------+
+| Payment Service     |       | Notification Service |    | Review Service   |
+| - Process payments  |       | - Send alerts        |    | - Manage reviews |
++---------------------+       +---------------------+       +------------------+
+</code></pre>
 <p>Each service operates independently, communicating via REST APIs, and can be scaled based on load.</p>
 <h2 id="scalability-strategies-in-microservices">Scalability Strategies in Microservices</h2>
 <p>Scalability is one of the primary advantages of microservices. Here are actionable techniques to boost your app's scalability:</p>

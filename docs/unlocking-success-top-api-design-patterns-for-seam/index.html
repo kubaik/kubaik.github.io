@@ -152,9 +152,8 @@
 <li>Stateless communication: Avoid storing session state on the server and rely on client-side data for each request.</li>
 </ul>
 <p>Example of a RESTful API endpoint for retrieving user information:</p>
-<div class="codehilite"><pre><span></span><code>GET /users/{id}
-</code></pre></div>
-
+<pre><code class="language-markdown">GET /users/{id}
+</code></pre>
 <h2 id="2-graphql-api-design">2. GraphQL API Design</h2>
 <p>GraphQL is an alternative API design pattern that provides clients with the flexibility to request only the data they need. Key features of GraphQL API design include:</p>
 <ul>
@@ -163,14 +162,13 @@
 <li>Strongly typed schema: Define a schema that describes the data available in the API.</li>
 </ul>
 <p>Example of a GraphQL query to retrieve user information:</p>
-<div class="codehilite"><pre><span></span><code>query {
+<pre><code class="language-markdown">query {
   user(id: &quot;123&quot;) {
     name
     email
   }
 }
-</code></pre></div>
-
+</code></pre>
 <h2 id="3-versioning">3. Versioning</h2>
 <p>Versioning is essential in API design to ensure backward compatibility and provide a clear upgrade path for clients. Common approaches to API versioning include:</p>
 <ul>
@@ -179,9 +177,8 @@
 <li>Content negotiation: Allow clients to specify the desired version of the API in the request headers.</li>
 </ul>
 <p>Example of URL versioning:</p>
-<div class="codehilite"><pre><span></span><code>GET /v1/users
-</code></pre></div>
-
+<pre><code class="language-markdown">GET /v1/users
+</code></pre>
 <h2 id="4-pagination">4. Pagination</h2>
 <p>When designing APIs that return a large number of results, pagination is crucial to improve performance and reduce the load on both the server and client. Pagination strategies include:</p>
 <ul>
@@ -189,9 +186,8 @@
 <li>Cursor-based pagination: Use cursor values to navigate through paginated results efficiently.</li>
 </ul>
 <p>Example of offset-based pagination:</p>
-<div class="codehilite"><pre><span></span><code>GET /users?offset=0&amp;limit=10
-</code></pre></div>
-
+<pre><code class="language-markdown">GET /users?offset=0&amp;limit=10
+</code></pre>
 <h2 id="5-rate-limiting">5. Rate Limiting</h2>
 <p>Rate limiting is a critical aspect of API design to prevent abuse, ensure fair usage, and protect server resources from excessive requests. Implement rate limiting by:</p>
 <ul>
@@ -200,13 +196,12 @@
 <li>Allowing clients to check their rate limit status.</li>
 </ul>
 <p>Example of rate limiting response:</p>
-<div class="codehilite"><pre><span></span><code>HTTP/1.1 429 Too Many Requests
+<pre><code class="language-markdown">HTTP/1.1 429 Too Many Requests
 Content-Type: application/json
 {
   &quot;error&quot;: &quot;Rate limit exceeded. Try again in 5 minutes.&quot;
 }
-</code></pre></div>
-
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, mastering API design patterns is essential for building robust and scalable integration solutions. By following best practices such as RESTful design, GraphQL adoption, versioning strategies, pagination techniques, and rate limiting implementations, developers can create APIs that are intuitive, efficient, and developer-friendly. Whether you are designing APIs for internal use or exposing them to third-party developers, incorporating these design patterns will help unlock success in your integration projects. Stay tuned for more insights on API design and development best practices!</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">

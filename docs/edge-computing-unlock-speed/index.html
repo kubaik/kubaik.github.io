@@ -168,54 +168,53 @@
 * <strong>Autonomous vehicles</strong>: Edge computing can be used to process sensor data from autonomous vehicles, enabling real-time decision-making and navigation.</p>
 <h3 id="code-example-real-time-video-analytics">Code Example: Real-time Video Analytics</h3>
 <p>The following code example demonstrates how to use the OpenCV library to analyze video feeds from security cameras:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cv2</span>
+<pre><code class="language-python">import cv2
 
-<span class="c1"># Open the video capture device</span>
-<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Open the video capture device
+cap = cv2.VideoCapture(0)
 
-<span class="c1"># Set the video codec and frame rate</span>
-<span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FOURCC</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter_fourcc</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;XVID&#39;</span><span class="p">))</span>
-<span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+# Set the video codec and frame rate
+cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'XVID'))
+cap.set(cv2.CAP_PROP_FPS, 30)
 
-<span class="c1"># Define the object detection function</span>
-<span class="k">def</span> <span class="nf">detect_objects</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
-    <span class="c1"># Convert the frame to grayscale</span>
-    <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+# Define the object detection function
+def detect_objects(frame):
+    # Convert the frame to grayscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    <span class="c1"># Apply thresholding to segment the objects</span>
-    <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY_INV</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    # Apply thresholding to segment the objects
+    thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-    <span class="c1"># Find contours of the objects</span>
-    <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+    # Find contours of the objects
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    <span class="c1"># Draw bounding boxes around the objects</span>
-    <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
-        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    # Draw bounding boxes around the objects
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-    <span class="k">return</span> <span class="n">frame</span>
+    return frame
 
-<span class="c1"># Analyze the video feed</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
-        <span class="k">break</span>
+# Analyze the video feed
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-    <span class="c1"># Detect objects in the frame</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">detect_objects</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    # Detect objects in the frame
+    frame = detect_objects(frame)
 
-    <span class="c1"># Display the output</span>
-    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Output&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+    # Display the output
+    cv2.imshow('Output', frame)
 
-    <span class="c1"># Exit on key press</span>
-    <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">):</span>
-        <span class="k">break</span>
+    # Exit on key press
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
 
-<span class="c1"># Release the video capture device</span>
-<span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
-</code></pre></div>
-
+# Release the video capture device
+cap.release()
+cv2.destroyAllWindows()
+</code></pre>
 <p>This code example uses the OpenCV library to capture video frames from a security camera, detect objects in the frames, and display the output in real-time.</p>
 <h2 id="edge-computing-platforms-and-tools">Edge Computing Platforms and Tools</h2>
 <p>Several platforms and tools are available to support edge computing applications, including:
@@ -227,88 +226,87 @@
 * <strong>IoTivity</strong>: An open-source framework that provides a common platform for IoT device communication.</p>
 <h3 id="code-example-using-aws-iot-greengrass">Code Example: Using AWS IoT Greengrass</h3>
 <p>The following code example demonstrates how to use AWS IoT Greengrass to deploy an edge computing application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS IoT Greengrass client</span>
-<span class="n">greengrass</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;greengrass&#39;</span><span class="p">)</span>
+# Create an AWS IoT Greengrass client
+greengrass = boto3.client('greengrass')
 
-<span class="c1"># Define the edge computing application</span>
-<span class="k">def</span> <span class="nf">edge_app</span><span class="p">():</span>
-    <span class="c1"># Define the application code</span>
-    <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    import cv2</span>
+# Define the edge computing application
+def edge_app():
+    # Define the application code
+    code = &quot;&quot;&quot;
+    import cv2
 
-<span class="s2">    # Open the video capture device</span>
-<span class="s2">    cap = cv2.VideoCapture(0)</span>
+    # Open the video capture device
+    cap = cv2.VideoCapture(0)
 
-<span class="s2">    # Set the video codec and frame rate</span>
-<span class="s2">    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*&#39;XVID&#39;))</span>
-<span class="s2">    cap.set(cv2.CAP_PROP_FPS, 30)</span>
+    # Set the video codec and frame rate
+    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'XVID'))
+    cap.set(cv2.CAP_PROP_FPS, 30)
 
-<span class="s2">    # Define the object detection function</span>
-<span class="s2">    def detect_objects(frame):</span>
-<span class="s2">        # Convert the frame to grayscale</span>
-<span class="s2">        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)</span>
+    # Define the object detection function
+    def detect_objects(frame):
+        # Convert the frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-<span class="s2">        # Apply thresholding to segment the objects</span>
-<span class="s2">        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]</span>
+        # Apply thresholding to segment the objects
+        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-<span class="s2">        # Find contours of the objects</span>
-<span class="s2">        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)</span>
+        # Find contours of the objects
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-<span class="s2">        # Draw bounding boxes around the objects</span>
-<span class="s2">        for contour in contours:</span>
-<span class="s2">            x, y, w, h = cv2.boundingRect(contour)</span>
-<span class="s2">            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)</span>
+        # Draw bounding boxes around the objects
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-<span class="s2">        return frame</span>
+        return frame
 
-<span class="s2">    # Analyze the video feed</span>
-<span class="s2">    while True:</span>
-<span class="s2">        ret, frame = cap.read()</span>
-<span class="s2">        if not ret:</span>
-<span class="s2">            break</span>
+    # Analyze the video feed
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-<span class="s2">        # Detect objects in the frame</span>
-<span class="s2">        frame = detect_objects(frame)</span>
+        # Detect objects in the frame
+        frame = detect_objects(frame)
 
-<span class="s2">        # Display the output</span>
-<span class="s2">        cv2.imshow(&#39;Output&#39;, frame)</span>
+        # Display the output
+        cv2.imshow('Output', frame)
 
-<span class="s2">        # Exit on key press</span>
-<span class="s2">        if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):</span>
-<span class="s2">            break</span>
+        # Exit on key press
+        if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+            break
 
-<span class="s2">    # Release the video capture device</span>
-<span class="s2">    cap.release()</span>
-<span class="s2">    cv2.destroyAllWindows()</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+    # Release the video capture device
+    cap.release()
+    cv2.destroyAllWindows()
+    &quot;&quot;&quot;
 
-    <span class="c1"># Create a new edge computing application</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">greengrass</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span>
-        <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;EdgeApp&#39;</span><span class="p">,</span>
-        <span class="n">FunctionArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:lambda:us-east-1:123456789012:function:EdgeApp&#39;</span><span class="p">,</span>
-        <span class="n">FunctionConfiguration</span><span class="o">=</span><span class="p">{</span>
-            <span class="s1">&#39;Executable&#39;</span><span class="p">:</span> <span class="s1">&#39;edge_app&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Environment&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;Variables&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;CODE&#39;</span><span class="p">:</span> <span class="n">code</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
+    # Create a new edge computing application
+    response = greengrass.create_function(
+        Name='EdgeApp',
+        FunctionArn='arn:aws:lambda:us-east-1:123456789012:function:EdgeApp',
+        FunctionConfiguration={
+            'Executable': 'edge_app',
+            'Environment': {
+                'Variables': {
+                    'CODE': code
+                }
+            }
+        }
+    )
 
-    <span class="c1"># Deploy the edge computing application</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">greengrass</span><span class="o">.</span><span class="n">create_deployment</span><span class="p">(</span>
-        <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;EdgeGroup&#39;</span><span class="p">,</span>
-        <span class="n">DeploymentType</span><span class="o">=</span><span class="s1">&#39;NewDeployment&#39;</span><span class="p">,</span>
-        <span class="n">Deployment</span><span class="o">=</span><span class="s1">&#39;EdgeApp&#39;</span>
-    <span class="p">)</span>
+    # Deploy the edge computing application
+    response = greengrass.create_deployment(
+        GroupName='EdgeGroup',
+        DeploymentType='NewDeployment',
+        Deployment='EdgeApp'
+    )
 
-<span class="c1"># Run the edge computing application</span>
-<span class="n">edge_app</span><span class="p">()</span>
-</code></pre></div>
-
+# Run the edge computing application
+edge_app()
+</code></pre>
 <p>This code example uses the AWS IoT Greengrass client to create and deploy an edge computing application that analyzes video feeds from security cameras.</p>
 <h2 id="performance-metrics-and-pricing">Performance Metrics and Pricing</h2>
 <p>The performance metrics and pricing for edge computing applications vary depending on the platform and tools used. Some common performance metrics include:
@@ -322,70 +320,69 @@
 <p>For example, AWS IoT Greengrass pricing starts at $0.015 per hour per device, with discounts available for large-scale deployments. Microsoft Azure Edge pricing starts at $0.025 per hour per device, with discounts available for large-scale deployments.</p>
 <h3 id="code-example-measuring-performance-metrics">Code Example: Measuring Performance Metrics</h3>
 <p>The following code example demonstrates how to measure the latency and throughput of an edge computing application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
+<pre><code class="language-python">import time
+import cv2
 
-<span class="c1"># Define the edge computing application</span>
-<span class="k">def</span> <span class="nf">edge_app</span><span class="p">():</span>
-    <span class="c1"># Open the video capture device</span>
-    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Define the edge computing application
+def edge_app():
+    # Open the video capture device
+    cap = cv2.VideoCapture(0)
 
-    <span class="c1"># Set the video codec and frame rate</span>
-    <span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FOURCC</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoWriter_fourcc</span><span class="p">(</span><span class="o">*</span><span class="s1">&#39;XVID&#39;</span><span class="p">))</span>
-    <span class="n">cap</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    # Set the video codec and frame rate
+    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'XVID'))
+    cap.set(cv2.CAP_PROP_FPS, 30)
 
-    <span class="c1"># Define the object detection function</span>
-    <span class="k">def</span> <span class="nf">detect_objects</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
-        <span class="c1"># Convert the frame to grayscale</span>
-        <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    # Define the object detection function
+    def detect_objects(frame):
+        # Convert the frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        <span class="c1"># Apply thresholding to segment the objects</span>
-        <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY_INV</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        # Apply thresholding to segment the objects
+        thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-        <span class="c1"># Find contours of the objects</span>
-        <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+        # Find contours of the objects
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        <span class="c1"># Draw bounding boxes around the objects</span>
-        <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        # Draw bounding boxes around the objects
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-        <span class="k">return</span> <span class="n">frame</span>
+        return frame
 
-    <span class="c1"># Measure the latency and throughput</span>
-    <span class="n">latency</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">throughput</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="mi">0</span>
+    # Measure the latency and throughput
+    latency = 0
+    throughput = 0
+    frames = 0
 
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
-            <span class="k">break</span>
+    while True:
+        start_time = time.time()
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-        <span class="c1"># Detect objects in the frame</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="n">detect_objects</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        # Detect objects in the frame
+        frame = detect_objects(frame)
 
-        <span class="c1"># Measure the latency</span>
-        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">latency</span> <span class="o">+=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
-        <span class="n">frames</span> <span class="o">+=</span> <span class="mi">1</span>
+        # Measure the latency
+        end_time = time.time()
+        latency += (end_time - start_time)
+        frames += 1
 
-        <span class="c1"># Measure the throughput</span>
-        <span class="n">throughput</span> <span class="o">+=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        # Measure the throughput
+        throughput += frame.shape[0] * frame.shape[1] * frame.shape[2]
 
-    <span class="c1"># Calculate the average latency and throughput</span>
-    <span class="n">average_latency</span> <span class="o">=</span> <span class="n">latency</span> <span class="o">/</span> <span class="n">frames</span>
-    <span class="n">average_throughput</span> <span class="o">=</span> <span class="n">throughput</span> <span class="o">/</span> <span class="n">frames</span>
+    # Calculate the average latency and throughput
+    average_latency = latency / frames
+    average_throughput = throughput / frames
 
-    <span class="c1"># Print the results</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average latency: </span><span class="si">{</span><span class="n">average_latency</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Average throughput: </span><span class="si">{</span><span class="n">average_throughput</span><span class="si">}</span><span class="s1"> bytes per frame&#39;</span><span class="p">)</span>
+    # Print the results
+    print(f'Average latency: {average_latency} seconds')
+    print(f'Average throughput: {average_throughput} bytes per frame')
 
-<span class="c1"># Run the edge computing application</span>
-<span class="n">edge_app</span><span class="p">()</span>
-</code></pre></div>
-
+# Run the edge computing application
+edge_app()
+</code></pre>
 <p>This code example measures the latency and throughput of an edge computing application that analyzes video feeds from security cameras.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that arise in edge computing applications include:
@@ -402,23 +399,22 @@
 * <strong>Data normalization</strong>: Normalizing data to a common format.
 * <strong>Data transformation</strong>: Transforming data to improve quality and reduce noise.</p>
 <p>For example, the following code example demonstrates how to use data preprocessing techniques to improve data quality:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import numpy as np
 
-<span class="c1"># Define the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+# Define the data
+data = np.array([1, 2, 3, 4, 5])
 
-<span class="c1"># Remove noise and errors from data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+# Remove noise and errors from data
+data = np.array([x for x in data if x &gt; 0])
 
-<span class="c1"># Normalize data to a common format</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Normalize data to a common format
+data = data / np.max(data)
 
-<span class="c1"># Transform data to improve quality and reduce noise</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Transform data to improve quality and reduce noise
+data = np.log(data)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+print(data)
+</code></pre>
 <p>This code example uses data preprocessing techniques to improve the quality of the data.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, edge computing is a powerful technology that enables real-time processing and analysis of data at the edge of the network. By bringing computation closer to the source of data, edge computing can improve latency, reduce bandwidth usage, and enhance security.</p>

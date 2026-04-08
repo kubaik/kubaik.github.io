@@ -165,27 +165,26 @@
 * <strong>Sumo Logic</strong>: A cloud-based log management platform that provides advanced analytics, machine learning, and security capabilities.</p>
 <h3 id="example-collecting-log-data-with-logstash">Example: Collecting Log Data with Logstash</h3>
 <p>Logstash is a popular log collection and processing tool that can be used to collect log data from various sources, such as files, network devices, and applications. Here is an example Logstash configuration file that collects log data from a Apache web server:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">file</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;/var/log/apache2/access.log&quot;</span>
-<span class="w">    </span><span class="n">type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-ruby">input {
+  file {
+    path =&gt; &quot;/var/log/apache2/access.log&quot;
+    type =&gt; &quot;apache_access&quot;
+  }
+}
 
-<span class="n">filter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">grok</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;%{HTTPDATE:timestamp} %{IPORHOST:client_ip} %{WORD:method} %{URIPATH:request_uri} %{NUMBER:status}&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+filter {
+  grok {
+    match =&gt; { &quot;message&quot; =&gt; &quot;%{HTTPDATE:timestamp} %{IPORHOST:client_ip} %{WORD:method} %{URIPATH:request_uri} %{NUMBER:status}&quot; }
+  }
+}
 
-<span class="n">output</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">elasticsearch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">hosts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
-<span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;apache_access&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+output {
+  elasticsearch {
+    hosts =&gt; &quot;localhost:9200&quot;
+    index =&gt; &quot;apache_access&quot;
+  }
+}
+</code></pre>
 <p>This configuration file collects log data from the Apache access log file, parses the log data using a Grok filter, and outputs the parsed data to an Elasticsearch index.</p>
 <h2 id="log-management-best-practices">Log Management Best Practices</h2>
 <p>Effective log management requires a combination of people, processes, and technology. Here are some best practices to follow:
@@ -196,23 +195,22 @@
 5. <strong>Use log data for auditing and compliance</strong>: Use log data to demonstrate compliance with regulatory requirements and to support auditing and forensic analysis.</p>
 <h3 id="example-analyzing-log-data-with-elasticsearch">Example: Analyzing Log Data with Elasticsearch</h3>
 <p>Elasticsearch is a powerful search and analytics engine that can be used to analyze log data. Here is an example Elasticsearch query that analyzes Apache access log data:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">GET</span><span class="w"> </span><span class="err">/apache_access/_search</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;404&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;top_referrers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;terms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;referrer&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">GET /apache_access/_search
+{
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;status&quot;: &quot;404&quot;
+    }
+  },
+  &quot;aggs&quot;: {
+    &quot;top_referrers&quot;: {
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;referrer&quot;
+      }
+    }
+  }
+}
+</code></pre>
 <p>This query searches for Apache access log data with a status code of 404 and aggregates the results by referrer.</p>
 <h2 id="common-log-management-problems-and-solutions">Common Log Management Problems and Solutions</h2>
 <p>Here are some common log management problems and solutions:
@@ -222,31 +220,30 @@
 * <strong>Problem: Log data is not providing insights</strong>: Solution: Use log analytics tools, such as Elasticsearch or Sumo Logic, to extract insights from log data and support business decision-making.</p>
 <h3 id="example-visualizing-log-data-with-kibana">Example: Visualizing Log Data with Kibana</h3>
 <p>Kibana is a popular visualization tool that can be used to visualize log data. Here is an example Kibana dashboard that visualizes Apache access log data:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dashboard&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Top Referrers&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;panels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;terms&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;referrer&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Top Status Codes&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;panels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;terms&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;status&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;dashboard&quot;,
+  &quot;rows&quot;: [
+    {
+      &quot;title&quot;: &quot;Top Referrers&quot;,
+      &quot;panels&quot;: [
+        {
+          &quot;type&quot;: &quot;terms&quot;,
+          &quot;field&quot;: &quot;referrer&quot;
+        }
+      ]
+    },
+    {
+      &quot;title&quot;: &quot;Top Status Codes&quot;,
+      &quot;panels&quot;: [
+        {
+          &quot;type&quot;: &quot;terms&quot;,
+          &quot;field&quot;: &quot;status&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
 <p>This dashboard visualizes the top referrers and status codes for Apache access log data.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Effective log management is essential for ensuring the security, compliance, and performance of an organization's IT infrastructure. By using smart solutions, such as log management tools and platforms, and following best practices, organizations can overcome common log management challenges and extract insights from log data. Here are some actionable next steps:

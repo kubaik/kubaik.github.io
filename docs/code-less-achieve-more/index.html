@@ -164,35 +164,34 @@
 * <strong>Webflow</strong>: A low-code platform that enables developers to build web applications with a focus on design and user experience. Webflow offers a free plan, as well as several paid plans, including a $12/month basic plan and a $35/month business plan.</p>
 <h3 id="practical-example-building-a-web-application-with-bubble">Practical Example: Building a Web Application with Bubble</h3>
 <p>Bubble is a popular no-code platform that enables developers to build web applications without writing code. Here is an example of how to build a simple web application using Bubble:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new page in Bubble</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Home&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;grid&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">elements</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Create a new page in Bubble
+const page = {
+  name: 'Home',
+  layout: 'grid',
+  elements: [
+    {
+      type: 'text',
+      content: 'Hello World!'
+    }
+  ]
+}
 
-<span class="c1">// Add a button to the page</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;button&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Click me!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39; navigate&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">page</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;About&#39;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+// Add a button to the page
+const button = {
+  type: 'button',
+  text: 'Click me!',
+  action: {
+    type: ' navigate',
+    page: 'About'
+  }
+}
 
-<span class="c1">// Add the button to the page</span>
-<span class="nx">page</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">button</span><span class="p">)</span>
+// Add the button to the page
+page.elements.push(button)
 
-<span class="c1">// Save the page</span>
-<span class="nx">bubble</span><span class="p">.</span><span class="nx">savePage</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span>
-</code></pre></div>
-
+// Save the page
+bubble.savePage(page)
+</code></pre>
 <p>This example demonstrates how to create a new page in Bubble, add a text element and a button, and save the page. Bubble provides a visual interface for designing and building applications, making it easy to create complex applications without writing code.</p>
 <h2 id="use-cases-for-low-codeno-code-platforms">Use Cases for Low-Code/No-Code Platforms</h2>
 <p>Low-code and no-code platforms are suitable for a wide range of use cases, including:

@@ -176,157 +176,154 @@
 <p>Let's consider a few practical examples to illustrate the differences between Scrum and Kanban.</p>
 <h3 id="example-1-scrum-implementation">Example 1: Scrum Implementation</h3>
 <p>Suppose we're developing a web application using Scrum. We have a Product Owner who prioritizes the product backlog, a Scrum Master who facilitates the Scrum process, and a Development Team of 7 members. We use Jira to track our product backlog and sprint backlog.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example Scrum board in Jira</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ScrumBoard</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new sprint</span>
-<span class="w">        </span><span class="n">Sprint</span><span class="w"> </span><span class="n">sprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Sprint</span><span class="p">(</span><span class="s">&quot;Sprint 1&quot;</span><span class="p">);</span>
+<pre><code class="language-java">// Example Scrum board in Jira
+public class ScrumBoard {
+    public static void main(String[] args) {
+        // Create a new sprint
+        Sprint sprint = new Sprint(&quot;Sprint 1&quot;);
 
-<span class="w">        </span><span class="c1">// Add tasks to the sprint backlog</span>
-<span class="w">        </span><span class="n">sprint</span><span class="p">.</span><span class="na">addTask</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Implement login feature&quot;</span><span class="p">));</span>
-<span class="w">        </span><span class="n">sprint</span><span class="p">.</span><span class="na">addTask</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Implement registration feature&quot;</span><span class="p">));</span>
+        // Add tasks to the sprint backlog
+        sprint.addTask(new Task(&quot;Implement login feature&quot;));
+        sprint.addTask(new Task(&quot;Implement registration feature&quot;));
 
-<span class="w">        </span><span class="c1">// Display the sprint backlog</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">sprint</span><span class="p">.</span><span class="na">getTasks</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+        // Display the sprint backlog
+        System.out.println(sprint.getTasks());
+    }
+}
 
-<span class="kd">class</span> <span class="nc">Sprint</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tasks</span><span class="p">;</span>
+class Sprint {
+    private String name;
+    private List&lt;Task&gt; tasks;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Sprint</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    public Sprint(String name) {
+        this.name = name;
+        this.tasks = new ArrayList&lt;&gt;();
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addTask</span><span class="p">(</span><span class="n">Task</span><span class="w"> </span><span class="n">task</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">tasks</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">task</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getTasks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tasks</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public List&lt;Task&gt; getTasks() {
+        return tasks;
+    }
+}
 
-<span class="kd">class</span> <span class="nc">Task</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+class Task {
+    private String name;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Task</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public Task(String name) {
+        this.name = name;
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+</code></pre>
 <h3 id="example-2-kanban-implementation">Example 2: Kanban Implementation</h3>
 <p>Suppose we're developing a mobile application using Kanban. We use a Kanban board to track our work items, with columns for To-Do, In Progress, and Done. We limit our WIP to 3 items per column.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example Kanban board</span>
-<span class="k">class</span> <span class="nc">KanbanBoard</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;To-Do&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;In Progress&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;Done&quot;</span><span class="p">:</span> <span class="p">[]</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">wip_limit</span> <span class="o">=</span> <span class="mi">3</span>
+<pre><code class="language-python"># Example Kanban board
+class KanbanBoard:
+    def __init__(self):
+        self.columns = {
+            &quot;To-Do&quot;: [],
+            &quot;In Progress&quot;: [],
+            &quot;Done&quot;: []
+        }
+        self.wip_limit = 3
 
-    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">column</span><span class="p">])</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">wip_limit</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WIP limit exceeded for column </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
+    def add_item(self, item, column):
+        if len(self.columns[column]) &lt; self.wip_limit:
+            self.columns[column].append(item)
+        else:
+            print(&quot;WIP limit exceeded for column {}&quot;.format(column))
 
-    <span class="k">def</span> <span class="nf">display_board</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    def display_board(self):
+        for column, items in self.columns.items():
+            print(column)
+            for item in items:
+                print(item)
 
-<span class="c1"># Create a new Kanban board</span>
-<span class="n">board</span> <span class="o">=</span> <span class="n">KanbanBoard</span><span class="p">()</span>
+# Create a new Kanban board
+board = KanbanBoard()
 
-<span class="c1"># Add items to the board</span>
-<span class="n">board</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="s2">&quot;Implement login feature&quot;</span><span class="p">,</span> <span class="s2">&quot;To-Do&quot;</span><span class="p">)</span>
-<span class="n">board</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="s2">&quot;Implement registration feature&quot;</span><span class="p">,</span> <span class="s2">&quot;To-Do&quot;</span><span class="p">)</span>
-<span class="n">board</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="s2">&quot;Fix bug #123&quot;</span><span class="p">,</span> <span class="s2">&quot;In Progress&quot;</span><span class="p">)</span>
+# Add items to the board
+board.add_item(&quot;Implement login feature&quot;, &quot;To-Do&quot;)
+board.add_item(&quot;Implement registration feature&quot;, &quot;To-Do&quot;)
+board.add_item(&quot;Fix bug #123&quot;, &quot;In Progress&quot;)
 
-<span class="c1"># Display the board</span>
-<span class="n">board</span><span class="o">.</span><span class="n">display_board</span><span class="p">()</span>
-</code></pre></div>
-
+# Display the board
+board.display_board()
+</code></pre>
 <h3 id="example-3-hybrid-approach">Example 3: Hybrid Approach</h3>
 <p>Suppose we're developing a complex system that requires both Scrum and Kanban. We use Scrum for the development team and Kanban for the operations team.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example hybrid approach</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">HybridTeam</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new Scrum team</span>
-<span class="w">        </span><span class="n">ScrumTeam</span><span class="w"> </span><span class="n">scrumTeam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ScrumTeam</span><span class="p">();</span>
+<pre><code class="language-csharp">// Example hybrid approach
+public class HybridTeam {
+    public static void main(string[] args) {
+        // Create a new Scrum team
+        ScrumTeam scrumTeam = new ScrumTeam();
 
-<span class="w">        </span><span class="c1">// Create a new Kanban team</span>
-<span class="w">        </span><span class="n">KanbanTeam</span><span class="w"> </span><span class="n">kanbanTeam</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KanbanTeam</span><span class="p">();</span>
+        // Create a new Kanban team
+        KanbanTeam kanbanTeam = new KanbanTeam();
 
-<span class="w">        </span><span class="c1">// Add tasks to the Scrum team</span>
-<span class="w">        </span><span class="n">scrumTeam</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Implement login feature&quot;</span><span class="p">));</span>
-<span class="w">        </span><span class="n">scrumTeam</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Implement registration feature&quot;</span><span class="p">));</span>
+        // Add tasks to the Scrum team
+        scrumTeam.addTask(new Task(&quot;Implement login feature&quot;));
+        scrumTeam.addTask(new Task(&quot;Implement registration feature&quot;));
 
-<span class="w">        </span><span class="c1">// Add items to the Kanban team</span>
-<span class="w">        </span><span class="n">kanbanTeam</span><span class="p">.</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Deploy to production&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;To-Do&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">kanbanTeam</span><span class="p">.</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Monitor system performance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;In Progress&quot;</span><span class="p">);</span>
+        // Add items to the Kanban team
+        kanbanTeam.addItem(&quot;Deploy to production&quot;, &quot;To-Do&quot;);
+        kanbanTeam.addItem(&quot;Monitor system performance&quot;, &quot;In Progress&quot;);
 
-<span class="w">        </span><span class="c1">// Display the Scrum team&#39;s tasks</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">scrumTeam</span><span class="p">.</span><span class="n">getTasks</span><span class="p">());</span>
+        // Display the Scrum team's tasks
+        System.Console.WriteLine(scrumTeam.getTasks());
 
-<span class="w">        </span><span class="c1">// Display the Kanban team&#39;s board</span>
-<span class="w">        </span><span class="n">kanbanTeam</span><span class="p">.</span><span class="n">displayBoard</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+        // Display the Kanban team's board
+        kanbanTeam.displayBoard();
+    }
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ScrumTeam</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tasks</span><span class="p">;</span>
+public class ScrumTeam {
+    private List&lt;Task&gt; tasks;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">ScrumTeam</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    public ScrumTeam() {
+        tasks = new List&lt;Task&gt;();
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">addTask</span><span class="p">(</span><span class="n">Task</span><span class="w"> </span><span class="n">task</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">tasks</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">task</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public void addTask(Task task) {
+        tasks.Add(task);
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getTasks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tasks</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public List&lt;Task&gt; getTasks() {
+        return tasks;
+    }
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">KanbanTeam</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">board</span><span class="p">;</span>
+public class KanbanTeam {
+    private Dictionary&lt;string, List&lt;string&gt;&gt; board;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">KanbanTeam</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="n">board</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;To-Do&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">());</span>
-<span class="w">        </span><span class="n">board</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;In Progress&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">());</span>
-<span class="w">        </span><span class="n">board</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Done&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
+    public KanbanTeam() {
+        board = new Dictionary&lt;string, List&lt;string&gt;&gt;();
+        board.Add(&quot;To-Do&quot;, new List&lt;string&gt;());
+        board.Add(&quot;In Progress&quot;, new List&lt;string&gt;());
+        board.Add(&quot;Done&quot;, new List&lt;string&gt;());
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">addItem</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">column</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">board</span><span class="p">[</span><span class="n">column</span><span class="p">].</span><span class="n">Add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public void addItem(string item, string column) {
+        board[column].Add(item);
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">displayBoard</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">column</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">board</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">column</span><span class="p">.</span><span class="n">Key</span><span class="p">);</span>
-<span class="w">            </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">column</span><span class="p">.</span><span class="n">Value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public void displayBoard() {
+        foreach (var column in board) {
+            System.Console.WriteLine(column.Key);
+            foreach (var item in column.Value) {
+                System.Console.WriteLine(item);
+            }
+        }
+    }
+}
+</code></pre>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms support Scrum and Kanban, including:
 * Jira: A popular project management tool that supports Scrum and Kanban.

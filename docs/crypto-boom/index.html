@@ -154,34 +154,33 @@
 <h3 id="understanding-blockchain-technology">Understanding Blockchain Technology</h3>
 <p>Blockchain technology is a decentralized, distributed ledger system that enables secure, transparent, and tamper-proof data storage and transfer. It is the foundation upon which most cryptocurrencies are built, including Bitcoin and Ethereum. A blockchain consists of a network of nodes that work together to validate and record transactions, creating a permanent and unalterable record.</p>
 <p>To illustrate the concept of blockchain, let's consider a simple example using Python and the <code>hashlib</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<pre><code class="language-python">import hashlib
 
-<span class="c1"># Define a block class</span>
-<span class="k">class</span> <span class="nc">Block</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span> <span class="o">=</span> <span class="n">previous_hash</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">()</span>
+# Define a block class
+class Block:
+    def __init__(self, data, previous_hash):
+        self.data = data
+        self.previous_hash = previous_hash
+        self.hash = self.calculate_hash()
 
-    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">data_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_hash</span>
-        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    def calculate_hash(self):
+        data_string = str(self.data) + self.previous_hash
+        return hashlib.sha256(data_string.encode()).hexdigest()
 
-<span class="c1"># Create a blockchain</span>
-<span class="n">blockchain</span> <span class="o">=</span> <span class="p">[</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;Genesis Block&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)]</span>
+# Create a blockchain
+blockchain = [Block(&quot;Genesis Block&quot;, &quot;0&quot;)]
 
-<span class="c1"># Add new blocks to the blockchain</span>
-<span class="n">blockchain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;Transaction 1&quot;</span><span class="p">,</span> <span class="n">blockchain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span><span class="p">))</span>
-<span class="n">blockchain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;Transaction 2&quot;</span><span class="p">,</span> <span class="n">blockchain</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span><span class="p">))</span>
+# Add new blocks to the blockchain
+blockchain.append(Block(&quot;Transaction 1&quot;, blockchain[0].hash))
+blockchain.append(Block(&quot;Transaction 2&quot;, blockchain[1].hash))
 
-<span class="c1"># Print the blockchain</span>
-<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blockchain</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Block Data: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Previous Hash: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">previous_hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hash: </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the blockchain
+for block in blockchain:
+    print(f&quot;Block Data: {block.data}&quot;)
+    print(f&quot;Previous Hash: {block.previous_hash}&quot;)
+    print(f&quot;Hash: {block.hash}&quot;)
+    print(&quot;------------------------&quot;)
+</code></pre>
 <p>This example demonstrates the basic principles of blockchain, including data storage, hashing, and linking blocks together using previous hashes.</p>
 <h2 id="cryptocurrency-and-tokenization">Cryptocurrency and Tokenization</h2>
 <p>Cryptocurrencies are digital or virtual currencies that use cryptography for secure financial transactions. They are decentralized, meaning that they are not controlled by any government or institution, and are based on blockchain technology. Tokenization refers to the process of creating and issuing digital tokens, which can represent assets, rights, or utilities.</p>
@@ -192,46 +191,45 @@
 <li>Polkadot (XC-20 tokens)</li>
 </ul>
 <p>For example, let's consider the creation of a simple ERC-20 token using the <code>web3</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">web3</span> <span class="kn">import</span> <span class="n">Web3</span>
+<pre><code class="language-python">from web3 import Web3
 
-<span class="c1"># Set up the Ethereum provider</span>
-<span class="n">w3</span> <span class="o">=</span> <span class="n">Web3</span><span class="p">(</span><span class="n">Web3</span><span class="o">.</span><span class="n">HTTPProvider</span><span class="p">(</span><span class="s2">&quot;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&quot;</span><span class="p">))</span>
+# Set up the Ethereum provider
+w3 = Web3(Web3.HTTPProvider(&quot;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&quot;))
 
-<span class="c1"># Define the token contract</span>
-<span class="n">token_contract</span> <span class="o">=</span> <span class="n">w3</span><span class="o">.</span><span class="n">eth</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span>
-    <span class="n">address</span><span class="o">=</span><span class="s2">&quot;0x...TOKEN_CONTRACT_ADDRESS...&quot;</span><span class="p">,</span>
-    <span class="n">abi</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;internalType&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}],</span>
-            <span class="s2">&quot;stateMutability&quot;</span><span class="p">:</span> <span class="s2">&quot;view&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;internalType&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}],</span>
-            <span class="s2">&quot;stateMutability&quot;</span><span class="p">:</span> <span class="s2">&quot;view&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;internalType&quot;</span><span class="p">:</span> <span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;_to&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;address&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;internalType&quot;</span><span class="p">:</span> <span class="s2">&quot;uint256&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;_value&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uint256&quot;</span><span class="p">}],</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;transfer&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;stateMutability&quot;</span><span class="p">:</span> <span class="s2">&quot;nonpayable&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
+# Define the token contract
+token_contract = w3.eth.contract(
+    address=&quot;0x...TOKEN_CONTRACT_ADDRESS...&quot;,
+    abi=[
+        {
+            &quot;inputs&quot;: [],
+            &quot;name&quot;: &quot;name&quot;,
+            &quot;outputs&quot;: [{&quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;string&quot;}],
+            &quot;stateMutability&quot;: &quot;view&quot;,
+            &quot;type&quot;: &quot;function&quot;,
+        },
+        {
+            &quot;inputs&quot;: [],
+            &quot;name&quot;: &quot;symbol&quot;,
+            &quot;outputs&quot;: [{&quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;string&quot;}],
+            &quot;stateMutability&quot;: &quot;view&quot;,
+            &quot;type&quot;: &quot;function&quot;,
+        },
+        {
+            &quot;inputs&quot;: [{&quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;_to&quot;, &quot;type&quot;: &quot;address&quot;}, {&quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;_value&quot;, &quot;type&quot;: &quot;uint256&quot;}],
+            &quot;name&quot;: &quot;transfer&quot;,
+            &quot;outputs&quot;: [],
+            &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+            &quot;type&quot;: &quot;function&quot;,
+        },
+    ],
+)
 
-<span class="c1"># Call the token contract functions</span>
-<span class="n">token_name</span> <span class="o">=</span> <span class="n">token_contract</span><span class="o">.</span><span class="n">functions</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
-<span class="n">token_symbol</span> <span class="o">=</span> <span class="n">token_contract</span><span class="o">.</span><span class="n">functions</span><span class="o">.</span><span class="n">symbol</span><span class="p">()</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token Name: </span><span class="si">{</span><span class="n">token_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token Symbol: </span><span class="si">{</span><span class="n">token_symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Call the token contract functions
+token_name = token_contract.functions.name().call()
+token_symbol = token_contract.functions.symbol().call()
+print(f&quot;Token Name: {token_name}&quot;)
+print(f&quot;Token Symbol: {token_symbol}&quot;)
+</code></pre>
 <p>This example demonstrates the interaction with a token contract on the Ethereum blockchain, including calling functions to retrieve the token name and symbol.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Cryptocurrency and blockchain technology have a wide range of real-world applications, including:</p>

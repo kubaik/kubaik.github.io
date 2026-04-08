@@ -162,46 +162,44 @@
 <p>Let's consider a practical example of implementing a CI/CD pipeline using Jenkins and Docker. We will use a simple Node.js application as an example.</p>
 <h3 id="step-1-setting-up-the-jenkins-server">Step 1: Setting up the Jenkins Server</h3>
 <p>First, we need to set up a Jenkins server. We can use a cloud-based service like AWS EC2 or a self-managed server. The cost of running a Jenkins server on AWS EC2 can range from $30 to $100 per month, depending on the instance type and usage.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Jenkins on Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>default-jdk
-wget<span class="w"> </span>-q<span class="w"> </span>-O<span class="w"> </span>-<span class="w"> </span>https://pkg.jenkins.io/debian/jenkins.io.key<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
-sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list&#39;</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>jenkins
-</code></pre></div>
-
+<pre><code class="language-bash"># Install Jenkins on Ubuntu
+sudo apt-get update
+sudo apt-get install default-jdk
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins
+</code></pre>
 <h3 id="step-2-configuring-the-jenkins-job">Step 2: Configuring the Jenkins Job</h3>
 <p>Next, we need to configure a Jenkins job to build, test, and deploy our Node.js application. We will use the Jenkinsfile to define the pipeline.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Jenkinsfile</span>
-<span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
-<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm install&#39;</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm run build&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm run test&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;docker build -t my-app .&#39;</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;docker push my-app:latest&#39;</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;kubectl apply -f deployment.yaml&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">// Jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm run test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker build -t my-app .'
+                sh 'docker push my-app:latest'
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+}
+</code></pre>
 <h3 id="step-3-deploying-to-kubernetes">Step 3: Deploying to Kubernetes</h3>
 <p>Finally, we need to deploy our application to a Kubernetes cluster. We can use a tool like kubectl to apply the deployment configuration.</p>
-<div class="codehilite"><pre><span></span><code># deployment.yaml
+<pre><code class="language-yml"># deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -221,8 +219,7 @@ spec:
         image: my-app:latest
         ports:
         - containerPort: 3000
-</code></pre></div>
-
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Implementing a CI/CD pipeline can be challenging, and teams often encounter common problems. Here are some solutions to these problems:</p>
 <ul>

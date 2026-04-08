@@ -174,77 +174,74 @@
 * <strong>Azure IoT Edge</strong>: A cloud-based platform for deploying and managing Edge AI applications, developed by Microsoft.</p>
 <h2 id="implementing-edge-ai-with-tensorflow-lite">Implementing Edge AI with TensorFlow Lite</h2>
 <p>TensorFlow Lite is a popular choice for building Edge AI applications due to its ease of use and flexibility. Here's an example code snippet in Python, demonstrating how to use TensorFlow Lite to classify images on an edge device:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">lite</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import lite
 
-<span class="c1"># Load the TensorFlow Lite model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">lite</span><span class="o">.</span><span class="n">TFLiteModel</span><span class="p">(</span><span class="s1">&#39;model.tflite&#39;</span><span class="p">)</span>
+# Load the TensorFlow Lite model
+model = lite.TFLiteModel('model.tflite')
 
-<span class="c1"># Create a TensorFlow Lite interpreter</span>
-<span class="n">interpreter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_content</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+# Create a TensorFlow Lite interpreter
+interpreter = tf.lite.Interpreter(model_content=model)
 
-<span class="c1"># Allocate tensors for input and output</span>
-<span class="n">input_details</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_input_details</span><span class="p">()</span>
-<span class="n">output_details</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_output_details</span><span class="p">()</span>
+# Allocate tensors for input and output
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
-<span class="c1"># Load the input image</span>
-<span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">)</span>
-<span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_jpeg</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+# Load the input image
+input_image = tf.io.read_file('image.jpg')
+input_image = tf.image.decode_jpeg(input_image, channels=3)
 
-<span class="c1"># Preprocess the input image</span>
-<span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
-<span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+# Preprocess the input image
+input_image = tf.image.resize(input_image, (224, 224))
+input_image = tf.cast(input_image, tf.float32) / 255.0
 
-<span class="c1"># Run the inference</span>
-<span class="n">interpreter</span><span class="o">.</span><span class="n">set_tensor</span><span class="p">(</span><span class="n">input_details</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">input_image</span><span class="p">)</span>
-<span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+# Run the inference
+interpreter.set_tensor(input_details[0]['index'], input_image)
+interpreter.invoke()
 
-<span class="c1"># Get the output</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_tensor</span><span class="p">(</span><span class="n">output_details</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
+# Get the output
+output = interpreter.get_tensor(output_details[0]['index'])
 
-<span class="c1"># Print the classification result</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the classification result
+print(output)
+</code></pre>
 <p>This code snippet demonstrates how to load a pre-trained TensorFlow Lite model, create an interpreter, and run inference on an input image.</p>
 <h3 id="optimizing-edge-ai-models-with-openvino">Optimizing Edge AI Models with OpenVINO</h3>
 <p>OpenVINO provides a range of tools and techniques for optimizing Edge AI models, including model pruning, quantization, and knowledge distillation. Here's an example code snippet in Python, demonstrating how to use OpenVINO to optimize a pre-trained model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">openvino</span> <span class="kn">import</span> <span class="n">inference_engine</span> <span class="k">as</span> <span class="n">ie</span>
+<pre><code class="language-python">from openvino import inference_engine as ie
 
-<span class="c1"># Load the pre-trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ie</span><span class="o">.</span><span class="n">read_model</span><span class="p">(</span><span class="s1">&#39;model.xml&#39;</span><span class="p">)</span>
+# Load the pre-trained model
+model = ie.read_model('model.xml')
 
-<span class="c1"># Create an OpenVINO inference engine</span>
-<span class="n">ie_engine</span> <span class="o">=</span> <span class="n">ie</span><span class="o">.</span><span class="n">IECore</span><span class="p">()</span>
+# Create an OpenVINO inference engine
+ie_engine = ie.IECore()
 
-<span class="c1"># Optimize the model using model pruning</span>
-<span class="n">pruned_model</span> <span class="o">=</span> <span class="n">ie_engine</span><span class="o">.</span><span class="n">prune_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">])</span>
+# Optimize the model using model pruning
+pruned_model = ie_engine.prune_model(model, ['output'])
 
-<span class="c1"># Optimize the model using quantization</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">ie_engine</span><span class="o">.</span><span class="n">quantize_model</span><span class="p">(</span><span class="n">pruned_model</span><span class="p">)</span>
+# Optimize the model using quantization
+quantized_model = ie_engine.quantize_model(pruned_model)
 
-<span class="c1"># Save the optimized model</span>
-<span class="n">ie_engine</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="s1">&#39;optimized_model.xml&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the optimized model
+ie_engine.save_model(quantized_model, 'optimized_model.xml')
+</code></pre>
 <p>This code snippet demonstrates how to load a pre-trained model, create an OpenVINO inference engine, and optimize the model using model pruning and quantization.</p>
 <h2 id="deploying-edge-ai-with-azure-iot-edge">Deploying Edge AI with Azure IoT Edge</h2>
 <p>Azure IoT Edge provides a cloud-based platform for deploying and managing Edge AI applications. Here's an example code snippet in Python, demonstrating how to use Azure IoT Edge to deploy an Edge AI model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.iot.edge</span> <span class="kn">import</span> <span class="n">EdgeClient</span>
+<pre><code class="language-python">from azure.iot.edge import EdgeClient
 
-<span class="c1"># Create an Azure IoT Edge client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">EdgeClient</span><span class="p">(</span><span class="s1">&#39;edge_device_id&#39;</span><span class="p">)</span>
+# Create an Azure IoT Edge client
+client = EdgeClient('edge_device_id')
 
-<span class="c1"># Deploy the Edge AI model</span>
-<span class="n">client</span><span class="o">.</span><span class="n">deploy_module</span><span class="p">(</span><span class="s1">&#39;edge_ai_module&#39;</span><span class="p">,</span> <span class="s1">&#39;model.tflite&#39;</span><span class="p">)</span>
+# Deploy the Edge AI model
+client.deploy_module('edge_ai_module', 'model.tflite')
 
-<span class="c1"># Start the Edge AI module</span>
-<span class="n">client</span><span class="o">.</span><span class="n">start_module</span><span class="p">(</span><span class="s1">&#39;edge_ai_module&#39;</span><span class="p">)</span>
+# Start the Edge AI module
+client.start_module('edge_ai_module')
 
-<span class="c1"># Monitor the Edge AI module</span>
-<span class="n">client</span><span class="o">.</span><span class="n">monitor_module</span><span class="p">(</span><span class="s1">&#39;edge_ai_module&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Monitor the Edge AI module
+client.monitor_module('edge_ai_module')
+</code></pre>
 <p>This code snippet demonstrates how to create an Azure IoT Edge client, deploy an Edge AI model, start the Edge AI module, and monitor its performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Edge AI systems can encounter several challenges, including:

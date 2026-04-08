@@ -186,27 +186,26 @@
 </ul>
 <p><strong>Code Example</strong>: Using AWS IoT Greengrass</p>
 <p>You can deploy a Python Lambda function to analyze sensor data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">greengrasssdk</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import greengrasssdk
+import json
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">greengrasssdk</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot-data&#39;</span><span class="p">)</span>
+client = greengrasssdk.client('iot-data')
 
-<span class="k">def</span> <span class="nf">predict_failure</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">):</span>
-    <span class="c1"># Simple threshold-based prediction logic</span>
-    <span class="k">if</span> <span class="n">sensor_data</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>  <span class="c1"># example threshold</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
+def predict_failure(sensor_data):
+    # Simple threshold-based prediction logic
+    if sensor_data['temperature'] &gt; 80:  # example threshold
+        return True
+    return False
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="n">sensor_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">predict_failure</span><span class="p">(</span><span class="n">sensor_data</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-            <span class="n">topic</span><span class="o">=</span><span class="s1">&#39;machine/alerts&#39;</span><span class="p">,</span>
-            <span class="n">payload</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Potential failure detected!&#39;</span><span class="p">})</span>
-        <span class="p">)</span>
-    <span class="k">return</span>
-</code></pre></div>
-
+def lambda_handler(event, context):
+    sensor_data = json.loads(event['data'])
+    if predict_failure(sensor_data):
+        response = client.publish(
+            topic='machine/alerts',
+            payload=json.dumps({'message': 'Potential failure detected!'})
+        )
+    return
+</code></pre>
 <h3 id="2-smart-cities">2. Smart Cities</h3>
 <p><strong>Use Case</strong>: Traffic Management</p>
 <p>Smart cities can utilize edge computing to manage traffic flow efficiently. By processing data from traffic cameras and sensors at the edge, cities can reduce congestion in real-time.</p>
@@ -224,36 +223,35 @@
 </ul>
 <p><strong>Code Example</strong>: Using Azure IoT Edge with Python</p>
 <p>Here is a basic example of processing images from a traffic camera:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">azure.iot.device</span> <span class="kn">import</span> <span class="n">IoTHubDeviceClient</span><span class="p">,</span> <span class="n">Message</span>
+<pre><code class="language-python">import cv2
+import numpy as np
+from azure.iot.device import IoTHubDeviceClient, Message
 
-<span class="c1"># Initialize IoT Hub client</span>
-<span class="n">connection_string</span> <span class="o">=</span> <span class="s2">&quot;&lt;Your IoT Hub Connection String&gt;&quot;</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">IoTHubDeviceClient</span><span class="o">.</span><span class="n">create_from_connection_string</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span>
+# Initialize IoT Hub client
+connection_string = &quot;&lt;Your IoT Hub Connection String&gt;&quot;
+client = IoTHubDeviceClient.create_from_connection_string(connection_string)
 
-<span class="k">def</span> <span class="nf">process_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-    <span class="c1"># Simple image processing to detect cars</span>
-    <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
-    <span class="n">cars</span> <span class="o">=</span> <span class="n">car_cascade</span><span class="o">.</span><span class="n">detectMultiScale</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span>
+def process_image(image):
+    # Simple image processing to detect cars
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+    return len(cars)
 
-<span class="k">def</span> <span class="nf">send_data_to_hub</span><span class="p">(</span><span class="n">car_count</span><span class="p">):</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cars detected: </span><span class="si">{</span><span class="n">car_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+def send_data_to_hub(car_count):
+    msg = Message(f&quot;Cars detected: {car_count}&quot;)
+    client.send_message(msg)
 
-<span class="k">def</span> <span class="nf">capture_and_process</span><span class="p">():</span>
-    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Use appropriate video source</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="n">car_count</span> <span class="o">=</span> <span class="n">process_image</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
-        <span class="n">send_data_to_hub</span><span class="p">(</span><span class="n">car_count</span><span class="p">)</span>
+def capture_and_process():
+    cap = cv2.VideoCapture(0)  # Use appropriate video source
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        car_count = process_image(frame)
+        send_data_to_hub(car_count)
 
-    <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-</code></pre></div>
-
+    cap.release()
+</code></pre>
 <h3 id="3-healthcare-monitoring">3. Healthcare Monitoring</h3>
 <p><strong>Use Case</strong>: Remote Patient Monitoring</p>
 <p>In healthcare, edge computing can facilitate real-time monitoring of patients' vital signs, allowing for timely interventions.</p>
@@ -271,25 +269,24 @@
 </ul>
 <p><strong>Code Example</strong>: Using Google Cloud IoT Edge and Python</p>
 <p>Here’s a simple example of processing heart rate data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">pubsub_v1</span>
+<pre><code class="language-python">import random
+from google.cloud import pubsub_v1
 
-<span class="c1"># Initialize Pub/Sub client</span>
-<span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;Your Project ID&gt;&quot;</span>
-<span class="n">topic_id</span> <span class="o">=</span> <span class="s2">&quot;&lt;Your Topic ID&gt;&quot;</span>
-<span class="n">publisher</span> <span class="o">=</span> <span class="n">pubsub_v1</span><span class="o">.</span><span class="n">PublisherClient</span><span class="p">()</span>
-<span class="n">topic_path</span> <span class="o">=</span> <span class="n">publisher</span><span class="o">.</span><span class="n">topic_path</span><span class="p">(</span><span class="n">project_id</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">)</span>
+# Initialize Pub/Sub client
+project_id = &quot;&lt;Your Project ID&gt;&quot;
+topic_id = &quot;&lt;Your Topic ID&gt;&quot;
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path(project_id, topic_id)
 
-<span class="k">def</span> <span class="nf">monitor_heart_rate</span><span class="p">():</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">heart_rate</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Simulated heart rate</span>
-        <span class="k">if</span> <span class="n">heart_rate</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">:</span>  <span class="c1"># Threshold for alert</span>
-            <span class="n">alert</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Alert: High heart rate detected! Rate: </span><span class="si">{</span><span class="n">heart_rate</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic_path</span><span class="p">,</span> <span class="n">alert</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+def monitor_heart_rate():
+    while True:
+        heart_rate = random.randint(60, 100)  # Simulated heart rate
+        if heart_rate &gt; 90:  # Threshold for alert
+            alert = f&quot;Alert: High heart rate detected! Rate: {heart_rate}&quot;
+            publisher.publish(topic_path, alert.encode('utf-8'))
 
-<span class="n">monitor_heart_rate</span><span class="p">()</span>
-</code></pre></div>
-
+monitor_heart_rate()
+</code></pre>
 <h3 id="4-retail-analytics">4. Retail Analytics</h3>
 <p><strong>Use Case</strong>: In-Store Customer Analytics</p>
 <p>Retailers can use edge computing to analyze customer behavior in real-time, optimizing in-store marketing and inventory management.</p>

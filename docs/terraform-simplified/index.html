@@ -159,33 +159,32 @@
 * <strong>State</strong>: This refers to the current state of the infrastructure, which Terraform maintains in a file called <code>terraform.tfstate</code>. The state file is used to track changes to the infrastructure and to determine the actions required to achieve the desired state.</p>
 <h2 id="practical-example-deploying-a-web-server-on-aws">Practical Example: Deploying a Web Server on AWS</h2>
 <p>Let's consider a simple example of deploying a web server on AWS using Terraform. We'll create an EC2 instance with a public IP address and a security group that allows incoming traffic on port 80.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Create a security group that allows incoming traffic on port 80</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;web_server&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web_server_sg&quot;</span>
-<span class="w">  </span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow incoming traffic on port 80&quot;</span>
+# Create a security group that allows incoming traffic on port 80
+resource &quot;aws_security_group&quot; &quot;web_server&quot; {
+  name        = &quot;web_server_sg&quot;
+  description = &quot;Allow incoming traffic on port 80&quot;
 
-<span class="w">  </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
-<span class="w">    </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
 
-<span class="c1"># Create an EC2 instance with a public IP address</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;web_server&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="w">  </span><span class="na">vpc_security_group_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.web_server.id</span><span class="p">]</span>
-<span class="w">  </span><span class="na">associate_public_ip_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Create an EC2 instance with a public IP address
+resource &quot;aws_instance&quot; &quot;web_server&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+  vpc_security_group_ids = [aws_security_group.web_server.id]
+  associate_public_ip_address = true
+}
+</code></pre>
 <p>In this example, we define an AWS provider with the <code>us-west-2</code> region, create a security group that allows incoming traffic on port 80, and then create an EC2 instance with a public IP address and associate it with the security group.</p>
 <h3 id="cost-estimation">Cost Estimation</h3>
 <p>To estimate the cost of this deployment, we can use the AWS Pricing Calculator. Based on the instance type and region, the estimated monthly cost for this deployment would be:
@@ -195,39 +194,38 @@
 <p>Total estimated monthly cost: $15.00</p>
 <h2 id="real-world-use-case-deploying-a-kubernetes-cluster-on-gcp">Real-World Use Case: Deploying a Kubernetes Cluster on GCP</h2>
 <p>Let's consider a more complex example of deploying a Kubernetes cluster on GCP using Terraform. We'll create a cluster with three nodes, a network, and a subnet.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the GCP provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;google&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-project&quot;</span>
-<span class="w">  </span><span class="na">region</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-central1&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the GCP provider
+provider &quot;google&quot; {
+  project = &quot;my-project&quot;
+  region  = &quot;us-central1&quot;
+}
 
-<span class="c1"># Create a network and subnet</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_compute_network&quot;</span><span class="w"> </span><span class="nv">&quot;k8s_network&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;k8s-network&quot;</span>
-<span class="w">  </span><span class="na">auto_create_subnetworks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">false</span>
-<span class="p">}</span>
+# Create a network and subnet
+resource &quot;google_compute_network&quot; &quot;k8s_network&quot; {
+  name                    = &quot;k8s-network&quot;
+  auto_create_subnetworks = false
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_compute_subnetwork&quot;</span><span class="w"> </span><span class="nv">&quot;k8s_subnetwork&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;k8s-subnetwork&quot;</span>
-<span class="w">  </span><span class="na">ip_cidr_range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.0.0/16&quot;</span>
-<span class="w">  </span><span class="na">network</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="nv">google_compute_network.k8s_network.id</span>
-<span class="p">}</span>
+resource &quot;google_compute_subnetwork&quot; &quot;k8s_subnetwork&quot; {
+  name          = &quot;k8s-subnetwork&quot;
+  ip_cidr_range = &quot;10.0.0.0/16&quot;
+  network       = google_compute_network.k8s_network.id
+}
 
-<span class="c1"># Create a Kubernetes cluster</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_container_cluster&quot;</span><span class="w"> </span><span class="nv">&quot;k8s_cluster&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;k8s-cluster&quot;</span>
-<span class="w">  </span><span class="na">location</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-central1&quot;</span>
-<span class="w">  </span><span class="nb">node_pool</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;k8s-node-pool&quot;</span>
-<span class="w">    </span><span class="na">node_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span>
-<span class="w">    </span><span class="nb">node_config</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="na">preemptible</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
-<span class="w">      </span><span class="na">machine_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;n1-standard-1&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Create a Kubernetes cluster
+resource &quot;google_container_cluster&quot; &quot;k8s_cluster&quot; {
+  name               = &quot;k8s-cluster&quot;
+  location           = &quot;us-central1&quot;
+  node_pool {
+    name       = &quot;k8s-node-pool&quot;
+    node_count = 3
+    node_config {
+      preemptible  = true
+      machine_type = &quot;n1-standard-1&quot;
+    }
+  }
+}
+</code></pre>
 <p>In this example, we define a GCP provider with the <code>us-central1</code> region, create a network and subnet, and then create a Kubernetes cluster with three nodes.</p>
 <h3 id="performance-benchmarking">Performance Benchmarking</h3>
 <p>To benchmark the performance of this cluster, we can use a tool like <code>kubebench</code>. Based on the cluster configuration and node type, the estimated performance metrics would be:

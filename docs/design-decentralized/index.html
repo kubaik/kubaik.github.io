@@ -163,29 +163,28 @@
 <h2 id="load-balancing-and-replication">Load Balancing and Replication</h2>
 <p>Load balancing and replication are two essential techniques used in distributed systems design. Load balancing helps distribute incoming traffic across multiple nodes, ensuring that no single node is overwhelmed and becomes a bottleneck. Replication, on the other hand, involves maintaining multiple copies of data across different nodes to ensure high availability and fault tolerance.</p>
 <p>For example, consider a web application that uses a load balancer to distribute traffic across three identical nodes. Each node runs a web server and a database, and the load balancer routes incoming requests to the node with the least amount of traffic. This ensures that no single node is overwhelmed and becomes a bottleneck.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Define the load balancer and nodes</span>
-<span class="n">load_balancer</span> <span class="o">=</span> <span class="s1">&#39;http://load-balancer.example.com&#39;</span>
-<span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://node1.example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://node2.example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://node3.example.com&#39;</span><span class="p">]</span>
+# Define the load balancer and nodes
+load_balancer = 'http://load-balancer.example.com'
+nodes = ['http://node1.example.com', 'http://node2.example.com', 'http://node3.example.com']
 
-<span class="c1"># Define a function to route requests to the node with the least traffic</span>
-<span class="k">def</span> <span class="nf">route_request</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="c1"># Get the current traffic for each node</span>
-    <span class="n">traffic</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;/traffic&#39;</span><span class="p">)</span>
-        <span class="n">traffic</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;traffic&#39;</span><span class="p">])</span>
+# Define a function to route requests to the node with the least traffic
+def route_request(request):
+    # Get the current traffic for each node
+    traffic = []
+    for node in nodes:
+        response = requests.get(node + '/traffic')
+        traffic.append(response.json()['traffic'])
 
-    <span class="c1"># Route the request to the node with the least traffic</span>
-    <span class="n">least_traffic_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">traffic</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">traffic</span><span class="p">))]</span>
-    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">least_traffic_node</span> <span class="o">+</span> <span class="s1">&#39;/handle_request&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+    # Route the request to the node with the least traffic
+    least_traffic_node = nodes[traffic.index(min(traffic))]
+    return requests.get(least_traffic_node + '/handle_request', params=request.params)
 
-<span class="c1"># Test the load balancer</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">load_balancer</span> <span class="o">+</span> <span class="s1">&#39;/handle_request&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the load balancer
+request = requests.get(load_balancer + '/handle_request')
+print(request.status_code)
+</code></pre>
 <p>In this example, the load balancer routes incoming requests to the node with the least amount of traffic, ensuring that no single node is overwhelmed and becomes a bottleneck.</p>
 <h2 id="partitioning-and-data-consistency">Partitioning and Data Consistency</h2>
 <p>Partitioning is another essential technique used in distributed systems design. Partitioning involves dividing data into smaller, more manageable chunks, and distributing these chunks across multiple nodes. This helps to improve scalability and fault tolerance, as well as reduce the risk of data loss and corruption.</p>
@@ -196,58 +195,57 @@
 <li><strong>Eventual consistency</strong>: Nodes can have different versions of the data, but consistency is eventually achieved through replication and synchronization.</li>
 </ul>
 <p>For example, consider a distributed database that uses a combination of strong and weak consistency to ensure data consistency. The database uses a primary node to handle writes, and replicates data to secondary nodes for reads. The primary node ensures strong consistency for writes, while the secondary nodes use weak consistency for reads.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.atomic.AtomicLong</span><span class="p">;</span>
+<pre><code class="language-java">import java.util.concurrent.atomic.AtomicLong;
 
-<span class="c1">// Define a class to represent a node in the distributed database</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">AtomicLong</span><span class="w"> </span><span class="n">version</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+// Define a class to represent a node in the distributed database
+public class Node {
+    private AtomicLong version;
+    private String data;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Node</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public Node() {
+        this.version = new AtomicLong(0);
+        this.data = &quot;&quot;;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle writes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">newData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Increment the version number</span>
-<span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">newVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">version</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
+    // Define a method to handle writes
+    public void write(String newData) {
+        // Increment the version number
+        long newVersion = version.incrementAndGet();
 
-<span class="w">        </span><span class="c1">// Update the data</span>
-<span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newData</span><span class="p">;</span>
+        // Update the data
+        data = newData;
 
-<span class="w">        </span><span class="c1">// Replicate the data to secondary nodes</span>
-<span class="w">        </span><span class="n">replicateData</span><span class="p">(</span><span class="n">newVersion</span><span class="p">,</span><span class="w"> </span><span class="n">newData</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Replicate the data to secondary nodes
+        replicateData(newVersion, newData);
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle reads</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">read</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return the current data</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to handle reads
+    public String read() {
+        // Return the current data
+        return data;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to replicate data to secondary nodes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">replicateData</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">version</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Replicate the data to secondary nodes</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">getSecondaryNodes</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="na">updateData</span><span class="p">(</span><span class="n">version</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to replicate data to secondary nodes
+    public void replicateData(long version, String data) {
+        // Replicate the data to secondary nodes
+        for (Node node : getSecondaryNodes()) {
+            node.updateData(version, data);
+        }
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to update data on a secondary node</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateData</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">version</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Check if the version number is higher than the current version</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">version</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">version</span><span class="p">.</span><span class="na">get</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Update the data</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+    // Define a method to update data on a secondary node
+    public void updateData(long version, String data) {
+        // Check if the version number is higher than the current version
+        if (version &gt; this.version.get()) {
+            // Update the data
+            this.data = data;
 
-<span class="w">            </span><span class="c1">// Update the version number</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">version</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">version</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            // Update the version number
+            this.version.set(version);
+        }
+    }
+}
+</code></pre>
 <p>In this example, the distributed database uses a combination of strong and weak consistency to ensure data consistency. The primary node ensures strong consistency for writes, while the secondary nodes use weak consistency for reads.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Distributed systems design is a complex field, and there are many common problems that can arise. Some of these problems include:</p>
@@ -263,65 +261,64 @@
 <li><strong>Using a load balancer</strong>: Load balancers can be used to distribute incoming traffic across multiple nodes, ensuring that no single node is overwhelmed and becomes a bottleneck.</li>
 </ol>
 <p>For example, consider a distributed system that uses a consensus protocol to ensure data consistency. The system uses a primary node to handle writes, and replicates data to secondary nodes for reads. The primary node ensures strong consistency for writes, while the secondary nodes use weak consistency for reads.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import random
+import time
 
-<span class="c1"># Define a class to represent a node in the distributed system</span>
-<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">node_id</span> <span class="o">=</span> <span class="n">node_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+# Define a class to represent a node in the distributed system
+class Node:
+    def __init__(self, node_id):
+        self.node_id = node_id
+        self.data = {}
 
-    <span class="c1"># Define a method to handle writes</span>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># Simulate a network partition</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is partitioned&quot;</span><span class="p">)</span>
-            <span class="k">return</span>
+    # Define a method to handle writes
+    def write(self, key, value):
+        # Simulate a network partition
+        if random.random() &lt; 0.1:
+            print(f&quot;Node {self.node_id} is partitioned&quot;)
+            return
 
-        <span class="c1"># Update the data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        # Update the data
+        self.data[key] = value
 
-        <span class="c1"># Replicate the data to secondary nodes</span>
-        <span class="n">replicate_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        # Replicate the data to secondary nodes
+        replicate_data(self.node_id, key, value)
 
-    <span class="c1"># Define a method to handle reads</span>
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="c1"># Simulate a network partition</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is partitioned&quot;</span><span class="p">)</span>
-            <span class="k">return</span>
+    # Define a method to handle reads
+    def read(self, key):
+        # Simulate a network partition
+        if random.random() &lt; 0.1:
+            print(f&quot;Node {self.node_id} is partitioned&quot;)
+            return
 
-        <span class="c1"># Return the current data</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        # Return the current data
+        return self.data.get(key)
 
-<span class="c1"># Define a function to replicate data to secondary nodes</span>
-<span class="k">def</span> <span class="nf">replicate_data</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="c1"># Simulate a network partition</span>
-    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is partitioned&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+# Define a function to replicate data to secondary nodes
+def replicate_data(node_id, key, value):
+    # Simulate a network partition
+    if random.random() &lt; 0.1:
+        print(f&quot;Node {node_id} is partitioned&quot;)
+        return
 
-    <span class="c1"># Replicate the data to secondary nodes</span>
-    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">get_secondary_nodes</span><span class="p">(</span><span class="n">node_id</span><span class="p">):</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    # Replicate the data to secondary nodes
+    for node in get_secondary_nodes(node_id):
+        node.data[key] = value
 
-<span class="c1"># Define a function to get secondary nodes</span>
-<span class="k">def</span> <span class="nf">get_secondary_nodes</span><span class="p">(</span><span class="n">node_id</span><span class="p">):</span>
-    <span class="c1"># Simulate a network partition</span>
-    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="n">node_id</span><span class="si">}</span><span class="s2"> is partitioned&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[]</span>
+# Define a function to get secondary nodes
+def get_secondary_nodes(node_id):
+    # Simulate a network partition
+    if random.random() &lt; 0.1:
+        print(f&quot;Node {node_id} is partitioned&quot;)
+        return []
 
-    <span class="c1"># Return a list of secondary nodes</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">node_id</span><span class="p">]</span>
+    # Return a list of secondary nodes
+    return [Node(i) for i in range(1, 5) if i != node_id]
 
-<span class="c1"># Test the distributed system</span>
-<span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">node</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">))</span>
-</code></pre></div>
-
+# Test the distributed system
+node = Node(0)
+node.write(&quot;key&quot;, &quot;value&quot;)
+print(node.read(&quot;key&quot;))
+</code></pre>
 <p>In this example, the distributed system uses a consensus protocol to ensure data consistency. The system uses a primary node to handle writes, and replicates data to secondary nodes for reads. The primary node ensures strong consistency for writes, while the secondary nodes use weak consistency for reads.</p>
 <h2 id="real-world-examples-and-use-cases">Real-World Examples and Use Cases</h2>
 <p>Distributed systems design has many real-world applications and use cases. Some examples include:</p>
@@ -331,96 +328,95 @@
 <li><strong>E-commerce</strong>: E-commerce platforms, such as Amazon or eBay, use distributed systems design to provide scalable and highly available services to millions of users.</li>
 </ul>
 <p>For example, consider a cloud storage system that uses a distributed system to provide scalable and highly available storage solutions. The system uses a combination of strong and weak consistency to ensure data consistency, and employs a load balancer to distribute incoming traffic across multiple nodes.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.URI</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.http.HttpClient</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.http.HttpRequest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.http.HttpResponse</span><span class="p">;</span>
+<pre><code class="language-java">import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-<span class="c1">// Define a class to represent a node in the cloud storage system</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+// Define a class to represent a node in the cloud storage system
+public class Node {
+    private String id;
+    private String data;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Node</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public Node(String id) {
+        this.id = id;
+        this.data = &quot;&quot;;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle writes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">newData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the data</span>
-<span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newData</span><span class="p">;</span>
+    // Define a method to handle writes
+    public void write(String newData) {
+        // Update the data
+        data = newData;
 
-<span class="w">        </span><span class="c1">// Replicate the data to secondary nodes</span>
-<span class="w">        </span><span class="n">replicateData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Replicate the data to secondary nodes
+        replicateData(data);
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle reads</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">read</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return the current data</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to handle reads
+    public String read() {
+        // Return the current data
+        return data;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to replicate data to secondary nodes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">replicateData</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Replicate the data to secondary nodes</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">getSecondaryNodes</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="na">updateData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to replicate data to secondary nodes
+    public void replicateData(String data) {
+        // Replicate the data to secondary nodes
+        for (Node node : getSecondaryNodes()) {
+            node.updateData(data);
+        }
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to update data on a secondary node</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateData</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the data</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to update data on a secondary node
+    public void updateData(String data) {
+        // Update the data
+        this.data = data;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to get secondary nodes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="nf">getSecondaryNodes</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return a list of secondary nodes</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node1&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node2&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node3&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    // Define a method to get secondary nodes
+    public Node[] getSecondaryNodes() {
+        // Return a list of secondary nodes
+        return new Node[] { new Node(&quot;node1&quot;), new Node(&quot;node2&quot;), new Node(&quot;node3&quot;) };
+    }
+}
 
-<span class="c1">// Define a class to represent the cloud storage system</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CloudStorage</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span>
+// Define a class to represent the cloud storage system
+public class CloudStorage {
+    private Node[] nodes;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CloudStorage</span><span class="p">(</span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public CloudStorage(Node[] nodes) {
+        this.nodes = nodes;
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle writes</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Route the write to the primary node</span>
-<span class="w">        </span><span class="n">nodes</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define a method to handle writes
+    public void write(String key, String value) {
+        // Route the write to the primary node
+        nodes[0].write(value);
+    }
 
-<span class="w">    </span><span class="c1">// Define a method to handle reads</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Route the read to the primary node</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nodes</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">read</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    // Define a method to handle reads
+    public String read(String key) {
+        // Route the read to the primary node
+        return nodes[0].read();
+    }
+}
 
-<span class="c1">// Test the cloud storage system</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a cloud storage system with three nodes</span>
-<span class="w">        </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node0&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node1&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">&quot;node2&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="n">CloudStorage</span><span class="w"> </span><span class="n">cloudStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CloudStorage</span><span class="p">(</span><span class="n">nodes</span><span class="p">);</span>
+// Test the cloud storage system
+public class Main {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        // Create a cloud storage system with three nodes
+        Node[] nodes = new Node[] { new Node(&quot;node0&quot;), new Node(&quot;node1&quot;), new Node(&quot;node2&quot;) };
+        CloudStorage cloudStorage = new CloudStorage(nodes);
 
-<span class="w">        </span><span class="c1">// Write data to the cloud storage system</span>
-<span class="w">        </span><span class="n">cloudStorage</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">);</span>
+        // Write data to the cloud storage system
+        cloudStorage.write(&quot;key&quot;, &quot;value&quot;);
 
-<span class="w">        </span><span class="c1">// Read data from the cloud storage system</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cloudStorage</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Read data from the cloud storage system
+        String value = cloudStorage.read(&quot;key&quot;);
+        System.out.println(value);
+    }
+}
+</code></pre>
 <p>In this example, the cloud storage system uses a distributed system to provide scalable and highly available storage solutions. The system uses a combination of strong and weak consistency to ensure data consistency, and employs a load balancer to distribute incoming traffic across multiple nodes.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>Distributed systems design can have a significant impact on performance and pricing. For example, consider a cloud storage system that uses a distributed system to provide scalable and highly available storage solutions. The system uses a combination of strong and weak consistency to ensure data consistency, and employs a load balancer to distribute incoming traffic across multiple nodes.</p>

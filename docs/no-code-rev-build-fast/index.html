@@ -167,24 +167,23 @@
 <p>For example, a company like Airbnb could use a low-code platform like Microsoft Power Apps to build a custom application for managing property listings. This could include features like data modeling, workflow automation, and integration with external services like Google Maps.</p>
 <h3 id="code-example-building-a-simple-web-application-using-webflow">Code Example: Building a Simple Web Application using Webflow</h3>
 <p>Here is an example of how to build a simple web application using Webflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Create a new HTML page --&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Web Application<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="cm">&lt;!-- Add a button to the page --&gt;</span>
-    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;myFunction()&quot;</span><span class="p">&gt;</span>Click me!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="c1">// Define a function to handle the button click</span>
-<span class="w">      </span><span class="kd">function</span><span class="w"> </span><span class="nx">myFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- Create a new HTML page --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Web Application&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- Add a button to the page --&gt;
+    &lt;button onclick=&quot;myFunction()&quot;&gt;Click me!&lt;/button&gt;
+    &lt;script&gt;
+      // Define a function to handle the button click
+      function myFunction() {
+        alert(&quot;Hello, world!&quot;);
+      }
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>In this example, we create a new HTML page and add a button to the page. When the button is clicked, the <code>myFunction</code> function is called, which displays an alert box with the message "Hello, world!".</p>
 <h2 id="practical-use-cases">Practical Use Cases</h2>
 <p>Low-code and no-code platforms have a range of practical use cases, including:
@@ -194,24 +193,23 @@
 <p>For example, a company like Uber could use a low-code platform like Google App Maker to build a custom application for managing driver assignments. This could include features like data modeling, workflow automation, and integration with external services like Google Maps.</p>
 <h3 id="code-example-building-a-simple-mobile-application-using-adalo">Code Example: Building a Simple Mobile Application using Adalo</h3>
 <p>Here is an example of how to build a simple mobile application using Adalo:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new screen</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">screen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Screen</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My Mobile Application&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;vertical&quot;</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create a new screen
+const screen = new Screen({
+  title: &quot;My Mobile Application&quot;,
+  layout: &quot;vertical&quot;
+});
 
-<span class="c1">// Add a button to the screen</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Button</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Click me!&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">onClick</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+// Add a button to the screen
+const button = new Button({
+  text: &quot;Click me!&quot;,
+  onClick: () =&gt; {
+    alert(&quot;Hello, world!&quot;);
+  }
+});
 
-<span class="c1">// Add the button to the screen</span>
-<span class="nx">screen</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">button</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the button to the screen
+screen.addChild(button);
+</code></pre>
 <p>In this example, we create a new screen and add a button to the screen. When the button is clicked, the <code>onClick</code> function is called, which displays an alert box with the message "Hello, world!".</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Low-code and no-code platforms are not without their challenges. Some common problems and solutions include:
@@ -224,28 +222,27 @@
 <p>For example, a company like Facebook could use a low-code platform like Webflow to build a custom application for managing user profiles. This could include features like data modeling, workflow automation, and integration with external services like Facebook's API.</p>
 <h3 id="code-example-integrating-with-external-services-using-microsoft-power-apps">Code Example: Integrating with External Services using Microsoft Power Apps</h3>
 <p>Here is an example of how to integrate with external services using Microsoft Power Apps:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new connection to an external API</span>
-<span class="k">const</span><span class="w"> </span><span class="n">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Api</span><span class="p">({</span>
-<span class="w">  </span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://api.example.com&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="n">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="n">headers</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s">&quot;Authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Bearer YOUR_API_KEY&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+<pre><code class="language-csharp">// Create a new connection to an external API
+const api = new Api({
+  url: &quot;https://api.example.com&quot;,
+  method: &quot;GET&quot;,
+  headers: {
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;
+  }
+});
 
-<span class="c1">// Use the API to retrieve data</span>
-<span class="k">const</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="s">&quot;/users&quot;</span><span class="p">);</span>
+// Use the API to retrieve data
+const data = api.get(&quot;/users&quot;);
 
-<span class="c1">// Display the data in a table</span>
-<span class="k">const</span><span class="w"> </span><span class="n">table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Table</span><span class="p">({</span>
-<span class="w">  </span><span class="n">columns</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Email&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="n">data</span>
-<span class="p">});</span>
+// Display the data in a table
+const table = new Table({
+  columns: [&quot;Name&quot;, &quot;Email&quot;],
+  data: data
+});
 
-<span class="c1">// Add the table to the screen</span>
-<span class="n">screen</span><span class="p">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">table</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the table to the screen
+screen.addChild(table);
+</code></pre>
 <p>In this example, we create a new connection to an external API and use the API to retrieve data. We then display the data in a table and add the table to the screen.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Low-code and no-code platforms can offer impressive performance benchmarks, including:

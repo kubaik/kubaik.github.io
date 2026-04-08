@@ -172,38 +172,37 @@
 * <strong>Products</strong>: stores product information, such as product name, description, and price
 * <strong>Order Items</strong>: stores order item information, such as product ID, quantity, and order ID</p>
 <p>Here is an example of how we might define the database schema in MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">CustomerID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">Name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">Email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">Address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE Customers (
+  CustomerID INT PRIMARY KEY,
+  Name VARCHAR(255),
+  Email VARCHAR(255),
+  Address VARCHAR(255)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">OrderID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">CustomerID</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">OrderDate</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">TotalCost</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Customers</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span>
-<span class="p">);</span>
+CREATE TABLE Orders (
+  OrderID INT PRIMARY KEY,
+  CustomerID INT,
+  OrderDate DATE,
+  TotalCost DECIMAL(10, 2),
+  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Products</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">ProductID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">ProductName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">Description</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">Price</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">);</span>
+CREATE TABLE Products (
+  ProductID INT PRIMARY KEY,
+  ProductName VARCHAR(255),
+  Description VARCHAR(255),
+  Price DECIMAL(10, 2)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">OrderItems</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">OrderItemID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">ProductID</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">OrderID</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">Quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">ProductID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Products</span><span class="p">(</span><span class="n">ProductID</span><span class="p">),</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">OrderID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Orders</span><span class="p">(</span><span class="n">OrderID</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE OrderItems (
+  OrderItemID INT PRIMARY KEY,
+  ProductID INT,
+  OrderID INT,
+  Quantity INT,
+  FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+  FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+</code></pre>
 <p>This database schema defines the relationships between different tables and ensures data consistency and integrity.</p>
 <h2 id="database-performance-optimization">Database Performance Optimization</h2>
 <p>Database performance optimization is critical for ensuring fast data retrieval and storage. Here are some techniques for optimizing database performance:
@@ -213,13 +212,11 @@
 * <strong>Use connection pooling</strong>: Connection pooling involves reusing existing database connections to reduce the overhead of creating new connections.</p>
 <h3 id="example-optimizing-database-queries">Example: Optimizing Database Queries</h3>
 <p>Let's consider an example of optimizing database queries. Suppose we have a query that retrieves all orders for a specific customer:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">CustomerID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM Orders WHERE CustomerID = 1;
+</code></pre>
 <p>This query can be optimized by adding an index on the <code>CustomerID</code> column:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_CustomerID</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="p">(</span><span class="n">CustomerID</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_CustomerID ON Orders (CustomerID);
+</code></pre>
 <p>This index can improve query performance by allowing the database to quickly locate orders for the specified customer.</p>
 <h2 id="database-security-and-backup">Database Security and Backup</h2>
 <p>Database security and backup are critical for ensuring data integrity and availability. Here are some best practices for database security and backup:
@@ -228,13 +225,11 @@
 * <strong>Use backup and recovery</strong>: Backup and recovery involve creating backups of the database and recovering the database in case of a failure.</p>
 <h3 id="example-database-backup-and-recovery">Example: Database Backup and Recovery</h3>
 <p>Let's consider an example of database backup and recovery using MySQL. We can use the <code>mysqldump</code> command to create a backup of the database:</p>
-<div class="codehilite"><pre><span></span><code>mysqldump<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="w"> </span>password<span class="w"> </span>database_name<span class="w"> </span>&gt;<span class="w"> </span>backup.sql
-</code></pre></div>
-
+<pre><code class="language-bash">mysqldump -u root -p password database_name &gt; backup.sql
+</code></pre>
 <p>This command creates a backup of the database in a file named <code>backup.sql</code>. We can then use the <code>mysql</code> command to recover the database:</p>
-<div class="codehilite"><pre><span></span><code>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="w"> </span>password<span class="w"> </span>database_name<span class="w"> </span>&lt;<span class="w"> </span>backup.sql
-</code></pre></div>
-
+<pre><code class="language-bash">mysql -u root -p password database_name &lt; backup.sql
+</code></pre>
 <p>This command recovers the database from the backup file.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in database management:

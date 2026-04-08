@@ -162,44 +162,43 @@
 <h2 id="creating-custom-elements">Creating Custom Elements</h2>
 <p>To create a Custom Element, you need to define a class that extends the <code>HTMLElement</code> class and overrides the <code>connectedCallback</code> method. This method is called when the element is inserted into a document, and it's where you should put the code that sets up the element's initial state.</p>
 <p>Here is an example of a simple Custom Element:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">MyButton</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Click me!&#39;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Button clicked!&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class MyButton extends HTMLElement {
+  connectedCallback() {
+    this.textContent = 'Click me!';
+    this.addEventListener('click', () =&gt; {
+      alert('Button clicked!');
+    });
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-button&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyButton</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-button', MyButton);
+</code></pre>
 <p>This code defines a Custom Element called <code>my-button</code> that displays the text "Click me!" and alerts "Button clicked!" when clicked.</p>
 <h3 id="using-web-components-with-popular-frameworks">Using Web Components with Popular Frameworks</h3>
 <p>Web Components can be used with popular frameworks like React, Angular, and Vue.js. For example, you can use the <code>lit-element</code> library to create Web Components that work seamlessly with React.</p>
 <p>Here is an example of using <code>lit-element</code> to create a Web Component that displays a counter:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">html</span><span class="p">,</span><span class="w"> </span><span class="nx">LitElement</span><span class="p">,</span><span class="w"> </span><span class="nx">property</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;lit-element&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { html, LitElement, property } from 'lit-element';
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">Counter</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="err">@</span><span class="nx">property</span><span class="p">({</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+class Counter extends LitElement {
+  @property({ type: Number }) count = 0;
 
-<span class="w">  </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">html</span><span class="sb">`</span>
-<span class="sb">      &lt;button @click=</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">increment</span><span class="si">}</span><span class="sb">&gt;+&lt;/button&gt;</span>
-<span class="sb">      &lt;span&gt;Count: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="si">}</span><span class="sb">&lt;/span&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  render() {
+    return html`
+      &lt;button @click=${this.increment}&gt;+&lt;/button&gt;
+      &lt;span&gt;Count: ${this.count}&lt;/span&gt;
+    `;
+  }
 
-<span class="w">  </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  increment() {
+    this.count++;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-counter&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">Counter</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-counter', Counter);
+</code></pre>
 <p>This code defines a Web Component called <code>my-counter</code> that displays a button and a span element. When the button is clicked, the counter is incremented.</p>
 <h2 id="tools-and-platforms-for-web-components">Tools and Platforms for Web Components</h2>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>

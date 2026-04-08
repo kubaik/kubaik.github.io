@@ -164,19 +164,18 @@
 3. <strong>Operations and Supply Chain</strong>: BI tools can help operations and supply chain teams to analyze data on inventory levels, shipping times, and supply chain efficiency.</p>
 <h3 id="example-1-using-tableau-to-analyze-sales-data">Example 1: Using Tableau to Analyze Sales Data</h3>
 <p>Let's consider an example of using Tableau to analyze sales data. Suppose we have a dataset of sales data that includes columns for date, region, product, and sales amount. We can use Tableau to create a dashboard that shows the total sales amount by region, and to analyze the sales trend over time.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a connection to the sales data dataset</span>
-<span class="n">conn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tableau</span><span class="p">.</span><span class="n">connectTo</span><span class="p">(</span><span class="s">&quot;sales_data&quot;</span><span class="p">)</span>
+<pre><code class="language-tableau">// Create a connection to the sales data dataset
+conn = tableau.connectTo(&quot;sales_data&quot;)
 
-<span class="c1">// Create a worksheet to analyze the sales data</span>
-<span class="n">worksheet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s">&quot;Sales Analysis&quot;</span><span class="p">)</span>
+// Create a worksheet to analyze the sales data
+worksheet = conn.worksheet(&quot;Sales Analysis&quot;)
 
-<span class="c1">// Create a bar chart to show the total sales amount by region</span>
-<span class="n">bar_chart</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">worksheet</span><span class="p">.</span><span class="n">barChart</span><span class="p">(</span><span class="s">&quot;Region&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sales Amount&quot;</span><span class="p">)</span>
+// Create a bar chart to show the total sales amount by region
+bar_chart = worksheet.barChart(&quot;Region&quot;, &quot;Sales Amount&quot;)
 
-<span class="c1">// Create a line chart to show the sales trend over time</span>
-<span class="n">line_chart</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">worksheet</span><span class="p">.</span><span class="n">lineChart</span><span class="p">(</span><span class="s">&quot;Date&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sales Amount&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+// Create a line chart to show the sales trend over time
+line_chart = worksheet.lineChart(&quot;Date&quot;, &quot;Sales Amount&quot;)
+</code></pre>
 <p>In this example, we use Tableau to connect to the sales data dataset, create a worksheet to analyze the data, and create two visualizations: a bar chart to show the total sales amount by region, and a line chart to show the sales trend over time.</p>
 <h2 id="popular-business-intelligence-tools">Popular Business Intelligence Tools</h2>
 <p>Some of the most popular BI tools include:
@@ -202,40 +201,38 @@
 * <strong>Security Issues</strong>: BI tools can be vulnerable to security threats if not properly configured. Solution: Use authentication, authorization, and encryption techniques to secure the data and the tool.</p>
 <h3 id="example-2-using-python-to-clean-and-validate-data">Example 2: Using Python to Clean and Validate Data</h3>
 <p>Let's consider an example of using Python to clean and validate data. Suppose we have a dataset of customer data that includes columns for name, email, and phone number. We can use Python to clean and validate the data using the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Load the customer data dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customer_data.csv&quot;</span><span class="p">)</span>
+# Load the customer data dataset
+data = pd.read_csv(&quot;customer_data.csv&quot;)
 
-<span class="c1"># Clean and validate the email column</span>
-<span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-<span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+# Clean and validate the email column
+data[&quot;email&quot;] = data[&quot;email&quot;].apply(lambda x: x.strip().lower())
+data[&quot;email&quot;] = data[&quot;email&quot;].apply(lambda x: x if &quot;@&quot; in x else None)
 
-<span class="c1"># Clean and validate the phone number column</span>
-<span class="n">data</span><span class="p">[</span><span class="s2">&quot;phone_number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phone_number&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-<span class="n">data</span><span class="p">[</span><span class="s2">&quot;phone_number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;phone_number&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-
+# Clean and validate the phone number column
+data[&quot;phone_number&quot;] = data[&quot;phone_number&quot;].apply(lambda x: x.strip())
+data[&quot;phone_number&quot;] = data[&quot;phone_number&quot;].apply(lambda x: x if x.isdigit() else None)
+</code></pre>
 <p>In this example, we use Python to load the customer data dataset, clean and validate the email column, and clean and validate the phone number column.</p>
 <h2 id="example-3-using-r-to-build-a-predictive-model">Example 3: Using R to Build a Predictive Model</h2>
 <p>Let's consider an example of using R to build a predictive model. Suppose we have a dataset of sales data that includes columns for date, region, product, and sales amount. We can use R to build a predictive model using the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Load the sales data dataset</span>
-<span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;sales_data.csv&quot;</span><span class="p">)</span>
+<pre><code class="language-r"># Load the sales data dataset
+data &lt;- read.csv(&quot;sales_data.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
-<span class="n">train_index</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="w"> </span><span class="m">0.7</span><span class="o">*</span><span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-<span class="n">train_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train_index</span><span class="p">,]</span>
-<span class="n">test_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train_index</span><span class="p">,]</span>
+# Split the data into training and testing sets
+set.seed(123)
+train_index &lt;- sample(nrow(data), 0.7*nrow(data))
+train_data &lt;- data[train_index,]
+test_data &lt;- data[-train_index,]
 
-<span class="c1"># Build a linear regression model</span>
-<span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">sales_amount</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">date</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">region</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">product</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_data</span><span class="p">)</span>
+# Build a linear regression model
+model &lt;- lm(sales_amount ~ date + region + product, data = train_data)
 
-<span class="c1"># Evaluate the model on the testing set</span>
-<span class="n">predictions</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">test_data</span><span class="p">)</span>
-<span class="n">mse</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">predictions</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">test_data</span><span class="o">$</span><span class="n">sales_amount</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model on the testing set
+predictions &lt;- predict(model, newdata = test_data)
+mse &lt;- mean((predictions - test_data$sales_amount)^2)
+</code></pre>
 <p>In this example, we use R to load the sales data dataset, split the data into training and testing sets, build a linear regression model, and evaluate the model on the testing set.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, BI tools are powerful software applications that enable organizations to collect, analyze, and visualize data to make informed decisions. By using BI tools, organizations can identify trends, opportunities, and challenges, and optimize their operations accordingly. To get started with BI tools, follow these next steps:

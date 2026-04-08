@@ -170,17 +170,16 @@
 * Installing a WAF appliance on-premises
 * Using a WAF module on a web server such as Apache or Nginx</p>
 <p>Here is an example of how to configure the OWASP ModSecurity WAF module on an Apache web server:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Load the ModSecurity module</span>
-<span class="nb">LoadModule</span><span class="w"> </span>security2_module<span class="w"> </span>modules/mod_security2.so
+<pre><code class="language-apache"># Load the ModSecurity module
+LoadModule security2_module modules/mod_security2.so
 
-<span class="c"># Configure the ModSecurity rules</span>
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_security2.c</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nb">SecRuleEngine</span><span class="w"> </span><span class="k">On</span>
-<span class="w">    </span><span class="nb">SecRequestBodyAccess</span><span class="w"> </span><span class="k">On</span>
-<span class="w">    </span><span class="nb">SecRule</span><span class="w"> </span>REQUEST_METHOD<span class="w"> </span><span class="s2">&quot;^(GET|POST|PUT|DELETE)$&quot;</span><span class="w"> </span><span class="s2">&quot;t:none,t:urlDecode,t:lowercase&quot;</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+# Configure the ModSecurity rules
+&lt;IfModule mod_security2.c&gt;
+    SecRuleEngine On
+    SecRequestBodyAccess On
+    SecRule REQUEST_METHOD &quot;^(GET|POST|PUT|DELETE)$&quot; &quot;t:none,t:urlDecode,t:lowercase&quot;
+&lt;/IfModule&gt;
+</code></pre>
 <p>This configuration loads the ModSecurity module and enables the rule engine. It also defines a rule that allows only GET, POST, PUT, and DELETE request methods.</p>
 <h2 id="waf-configuration-and-rules">WAF Configuration and Rules</h2>
 <p>A WAF configuration typically consists of a set of rules that define what traffic is allowed or blocked. These rules can be based on various criteria such as:
@@ -189,40 +188,39 @@
 * Request method: blocking traffic based on the request method (e.g. GET, POST, PUT, DELETE)
 * Request headers: blocking traffic based on specific request headers (e.g. Accept, Accept-Language, User-Agent)</p>
 <p>Here is an example of how to configure a WAF rule using the AWS WAF API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS WAF client</span>
-<span class="n">waf</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;waf&#39;</span><span class="p">)</span>
+# Create an AWS WAF client
+waf = boto3.client('waf')
 
-<span class="c1"># Define a rule that blocks traffic from a specific IP address</span>
-<span class="n">rule</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;Block traffic from 192.0.2.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Priority&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;BLOCK&#39;</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;Condition&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;IPMatch&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;IPSetId&#39;</span><span class="p">:</span> <span class="s1">&#39;12345678-1234-1234-1234-123456789012&#39;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+# Define a rule that blocks traffic from a specific IP address
+rule = {
+    'Name': 'Block traffic from 192.0.2.1',
+    'Priority': 1,
+    'Action': {
+        'Type': 'BLOCK'
+    },
+    'Condition': {
+        'Type': 'IPMatch',
+        'IPSetId': '12345678-1234-1234-1234-123456789012'
+    }
+}
 
-<span class="c1"># Create the rule</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">waf</span><span class="o">.</span><span class="n">create_rule</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">],</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">],</span>
-    <span class="n">PredicateList</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;DataId&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Condition&#39;</span><span class="p">][</span><span class="s1">&#39;IPSetId&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;Negated&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;Condition&#39;</span><span class="p">][</span><span class="s1">&#39;Type&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
+# Create the rule
+response = waf.create_rule(
+    Name=rule['Name'],
+    MetricName=rule['Name'],
+    PredicateList=[
+        {
+            'DataId': rule['Condition']['IPSetId'],
+            'Negated': False,
+            'Type': rule['Condition']['Type']
+        }
+    ]
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+print(response)
+</code></pre>
 <p>This code defines a rule that blocks traffic from the IP address 192.0.2.1 and creates the rule using the AWS WAF API.</p>
 <h2 id="waf-performance-and-pricing">WAF Performance and Pricing</h2>
 <p>The performance and pricing of a WAF solution can vary depending on the specific solution and the amount of traffic it needs to handle. Here are some metrics and pricing data for popular WAF solutions:

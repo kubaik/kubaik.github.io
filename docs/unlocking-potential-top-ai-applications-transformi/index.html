@@ -155,32 +155,31 @@
 <li><strong>Model Training:</strong> Use libraries like Scikit-learn or TensorFlow to train your model.</li>
 </ol>
 <p><strong>Sample Code:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;patient_data.csv&#39;</span><span class="p">)</span>
+# Load dataset
+data = pd.read_csv('patient_data.csv')
 
-<span class="c1"># Feature selection</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sepsis&#39;</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sepsis&#39;</span><span class="p">]</span>
+# Feature selection
+X = data.drop(columns=['sepsis'])
+y = data['sepsis']
 
-<span class="c1"># Train-test split</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Model training</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Model training
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
 
-<span class="c1"># Predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Predictions
+predictions = model.predict(X_test)
 
-<span class="c1"># Evaluation</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluation
+print(classification_report(y_test, predictions))
+</code></pre>
 <p><strong>Metrics to Monitor:</strong></p>
 <ul>
 <li><strong>Accuracy:</strong> Aiming for at least 85% accuracy for better predictions.</li>
@@ -205,33 +204,32 @@
 <li><strong>Real-time Monitoring:</strong> Implement the model in a real-time transaction processing system.</li>
 </ol>
 <p><strong>Sample Code:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score
 
-<span class="c1"># Load transaction data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;transactions.csv&#39;</span><span class="p">)</span>
+# Load transaction data
+data = pd.read_csv('transactions.csv')
 
-<span class="c1"># Features and labels</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;is_fraud&#39;</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;is_fraud&#39;</span><span class="p">]</span>
+# Features and labels
+X = data.drop(columns=['is_fraud'])
+y = data['is_fraud']
 
-<span class="c1"># Train-test split</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Model building</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Model building
+model = LogisticRegression()
+model.fit(X_train, y_train)
 
-<span class="c1"># Predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Predictions
+predictions = model.predict(X_test)
 
-<span class="c1"># Evaluation</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: &quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluation
+print(confusion_matrix(y_test, predictions))
+print(&quot;Accuracy: &quot;, accuracy_score(y_test, predictions))
+</code></pre>
 <p><strong>Key Performance Indicators:</strong></p>
 <ul>
 <li><strong>Detection Rate:</strong> Aim for a detection rate above 90%.</li>
@@ -251,31 +249,30 @@
 <li><strong>Model Deployment:</strong> Use platforms like AWS or Google Cloud to deploy your recommendation engine.</li>
 </ol>
 <p><strong>Sample Code:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
 
-<span class="c1"># Load user-item interaction data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;user_item_interaction.csv&#39;</span><span class="p">)</span>
+# Load user-item interaction data
+data = pd.read_csv('user_item_interaction.csv')
 
-<span class="c1"># Create a user-item matrix</span>
-<span class="n">user_item_matrix</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;item_id&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;interaction&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Create a user-item matrix
+user_item_matrix = data.pivot(index='user_id', columns='item_id', values='interaction').fillna(0)
 
-<span class="c1"># Calculate cosine similarity</span>
-<span class="n">similarity</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">user_item_matrix</span><span class="p">)</span>
+# Calculate cosine similarity
+similarity = cosine_similarity(user_item_matrix)
 
-<span class="c1"># Create a DataFrame of similarity</span>
-<span class="n">similarity_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">similarity</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">user_item_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">user_item_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+# Create a DataFrame of similarity
+similarity_df = pd.DataFrame(similarity, index=user_item_matrix.index, columns=user_item_matrix.index)
 
-<span class="c1"># Recommend items</span>
-<span class="k">def</span> <span class="nf">recommend_items</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="n">similar_users</span> <span class="o">=</span> <span class="n">similarity_df</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
-    <span class="n">recommended_items</span> <span class="o">=</span> <span class="n">user_item_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">similar_users</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">recommended_items</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+# Recommend items
+def recommend_items(user_id):
+    similar_users = similarity_df[user_id].nlargest(5).index
+    recommended_items = user_item_matrix.loc[similar_users].mean(axis=0).nlargest(10)
+    return recommended_items.index.tolist()
 
-<span class="c1"># Get recommendations for a specific user</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">recommend_items</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</code></pre></div>
-
+# Get recommendations for a specific user
+print(recommend_items(user_id=1))
+</code></pre>
 <p><strong>Success Metrics:</strong></p>
 <ul>
 <li><strong>Conversion Rate:</strong> Target a conversion rate increase of 10% through personalized recommendations.</li>

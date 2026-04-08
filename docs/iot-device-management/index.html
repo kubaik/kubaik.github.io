@@ -164,39 +164,38 @@
 * <strong>Google Cloud IoT Core</strong>: A fully managed service that securely connects, manages, and analyzes IoT data.</p>
 <h3 id="example-using-aws-iot-to-manage-devices">Example: Using AWS IoT to Manage Devices</h3>
 <p>Here's an example of using AWS IoT to manage devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS IoT client</span>
-<span class="n">iot</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
+# Create an AWS IoT client
+iot = boto3.client('iot')
 
-<span class="c1"># Create a thing (device)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">create_thing</span><span class="p">(</span>
-    <span class="n">thingName</span><span class="o">=</span><span class="s1">&#39;MyDevice&#39;</span>
-<span class="p">)</span>
+# Create a thing (device)
+response = iot.create_thing(
+    thingName='MyDevice'
+)
 
-<span class="c1"># Get the thing&#39;s ID</span>
-<span class="n">thing_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;thingName&#39;</span><span class="p">]</span>
+# Get the thing's ID
+thing_id = response['thingName']
 
-<span class="c1"># Create a certificate and attach it to the thing</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">create_certificate</span><span class="p">(</span>
-    <span class="n">certificateBody</span><span class="o">=</span><span class="s1">&#39;path/to/certificate&#39;</span><span class="p">,</span>
-    <span class="n">privateKey</span><span class="o">=</span><span class="s1">&#39;path/to/private_key&#39;</span>
-<span class="p">)</span>
+# Create a certificate and attach it to the thing
+response = iot.create_certificate(
+    certificateBody='path/to/certificate',
+    privateKey='path/to/private_key'
+)
 
-<span class="n">certificate_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;certificateId&#39;</span><span class="p">]</span>
+certificate_id = response['certificateId']
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">attach_principal_policy</span><span class="p">(</span>
-    <span class="n">policyName</span><span class="o">=</span><span class="s1">&#39;MyPolicy&#39;</span><span class="p">,</span>
-    <span class="n">principal</span><span class="o">=</span><span class="n">certificate_id</span>
-<span class="p">)</span>
+response = iot.attach_principal_policy(
+    policyName='MyPolicy',
+    principal=certificate_id
+)
 
-<span class="c1"># Update the thing&#39;s shadow (state)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">update_thing_shadow</span><span class="p">(</span>
-    <span class="n">thingName</span><span class="o">=</span><span class="n">thing_id</span><span class="p">,</span>
-    <span class="n">payload</span><span class="o">=</span><span class="s1">&#39;{&quot;state&quot;: {&quot;desired&quot;: {&quot;temperature&quot;: 25}}}&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Update the thing's shadow (state)
+response = iot.update_thing_shadow(
+    thingName=thing_id,
+    payload='{&quot;state&quot;: {&quot;desired&quot;: {&quot;temperature&quot;: 25}}}'
+)
+</code></pre>
 <p>This example demonstrates how to create a thing (device), attach a certificate, and update its shadow (state) using AWS IoT.</p>
 <h2 id="security-in-iot-device-management">Security in IoT Device Management</h2>
 <p>Security is a critical aspect of IoT device management. Some best practices for securing IoT devices include:
@@ -206,68 +205,67 @@
 4. <strong>Monitor device activity</strong>: Regularly monitor device activity to detect and respond to potential security threats.</p>
 <h3 id="example-using-ssltls-to-secure-iot-device-communication">Example: Using SSL/TLS to Secure IoT Device Communication</h3>
 <p>Here's an example of using SSL/TLS to secure IoT device communication:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;openssl/ssl.h&gt;</span>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;openssl/ssl.h&gt;
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Create an SSL context</span>
-<span class="w">    </span><span class="n">SSL_CTX</span><span class="o">*</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_CTX_new</span><span class="p">(</span><span class="n">TLS_client_method</span><span class="p">());</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to create SSL context</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+int main() {
+    // Create an SSL context
+    SSL_CTX* ctx = SSL_CTX_new(TLS_client_method());
+    if (!ctx) {
+        printf(&quot;Failed to create SSL context\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="c1">// Load the certificate and private key</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;path/to/certificate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to load certificate</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Load the certificate and private key
+    if (SSL_CTX_use_certificate_file(ctx, &quot;path/to/certificate&quot;, SSL_FILETYPE_PEM) &lt;= 0) {
+        printf(&quot;Failed to load certificate\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SSL_CTX_use_PrivateKey_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;path/to/private_key&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to load private key</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    if (SSL_CTX_use_PrivateKey_file(ctx, &quot;path/to/private_key&quot;, SSL_FILETYPE_PEM) &lt;= 0) {
+        printf(&quot;Failed to load private key\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="c1">// Create an SSL connection</span>
-<span class="w">    </span><span class="n">SSL</span><span class="o">*</span><span class="w"> </span><span class="n">ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_new</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ssl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to create SSL connection</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Create an SSL connection
+    SSL* ssl = SSL_new(ctx);
+    if (!ssl) {
+        printf(&quot;Failed to create SSL connection\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="c1">// Connect to the server</span>
-<span class="w">    </span><span class="n">BIO</span><span class="o">*</span><span class="w"> </span><span class="n">bio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BIO_new_connect</span><span class="p">(</span><span class="s">&quot;example.com:443&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">bio</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to connect to server</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Connect to the server
+    BIO* bio = BIO_new_connect(&quot;example.com:443&quot;);
+    if (!bio) {
+        printf(&quot;Failed to connect to server\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="n">SSL_set_bio</span><span class="p">(</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">bio</span><span class="p">,</span><span class="w"> </span><span class="n">bio</span><span class="p">);</span>
+    SSL_set_bio(ssl, bio, bio);
 
-<span class="w">    </span><span class="c1">// Establish the SSL connection</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">SSL_connect</span><span class="p">(</span><span class="n">ssl</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to establish SSL connection</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Establish the SSL connection
+    if (SSL_connect(ssl) &lt;= 0) {
+        printf(&quot;Failed to establish SSL connection\n&quot;);
+        return 1;
+    }
 
-<span class="w">    </span><span class="c1">// Send and receive data securely</span>
-<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, server!&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">SSL_write</span><span class="p">(</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+    // Send and receive data securely
+    char* data = &quot;Hello, server!&quot;;
+    SSL_write(ssl, data, strlen(data));
 
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">bytes_received</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_read</span><span class="p">(</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Received: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+    char buffer[1024];
+    int bytes_received = SSL_read(ssl, buffer, 1024);
+    printf(&quot;Received: %s\n&quot;, buffer);
 
-<span class="w">    </span><span class="c1">// Close the SSL connection</span>
-<span class="w">    </span><span class="n">SSL_free</span><span class="p">(</span><span class="n">ssl</span><span class="p">);</span>
-<span class="w">    </span><span class="n">SSL_CTX_free</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+    // Close the SSL connection
+    SSL_free(ssl);
+    SSL_CTX_free(ctx);
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    return 0;
+}
+</code></pre>
 <p>This example demonstrates how to use SSL/TLS to secure IoT device communication using the OpenSSL library.</p>
 <h2 id="data-management-in-iot-device-management">Data Management in IoT Device Management</h2>
 <p>IoT devices generate vast amounts of data, which needs to be processed, analyzed, and stored. Some best practices for managing IoT data include:
@@ -276,36 +274,35 @@
 * <strong>Use data analytics tools</strong>: Use data analytics tools to analyze and visualize IoT data.</p>
 <h3 id="example-using-apache-kafka-to-process-iot-data">Example: Using Apache Kafka to Process IoT Data</h3>
 <p>Here's an example of using Apache Kafka to process IoT data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.KafkaProducer</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.ProducerConfig</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.ProducerRecord</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.common.serialization.StringSerializer</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Properties</span><span class="p">;</span>
+import java.util.Properties;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IoTDataProducer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a Kafka producer</span>
-<span class="w">        </span><span class="n">Properties</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
-<span class="w">        </span><span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">KEY_SERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="n">StringSerializer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
-<span class="w">        </span><span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ProducerConfig</span><span class="p">.</span><span class="na">VALUE_SERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="n">StringSerializer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
+public class IoTDataProducer {
+    public static void main(String[] args) {
+        // Create a Kafka producer
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-<span class="w">        </span><span class="n">KafkaProducer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaProducer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
+        KafkaProducer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(props);
 
-<span class="w">        </span><span class="c1">// Send IoT data to Kafka</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">topic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;iot_data&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;device_1&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{\&quot;temperature\&quot;: 25, \&quot;humidity\&quot;: 60}&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="n">ProducerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProducerRecord</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
-<span class="w">        </span><span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+        // Send IoT data to Kafka
+        String topic = &quot;iot_data&quot;;
+        String key = &quot;device_1&quot;;
+        String value = &quot;{\&quot;temperature\&quot;: 25, \&quot;humidity\&quot;: 60}&quot;;
+        ProducerRecord&lt;String, String&gt; record = new ProducerRecord&lt;&gt;(topic, key, value);
+        producer.send(record);
 
-<span class="w">        </span><span class="c1">// Close the producer</span>
-<span class="w">        </span><span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Close the producer
+        producer.close();
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use Apache Kafka to process IoT data by sending it to a Kafka topic.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, IoT device management is a critical aspect of IoT development, ensuring that devices operate efficiently and securely. By using IoT device management platforms, securing devices, and managing data, developers can build robust and scalable IoT applications.</p>

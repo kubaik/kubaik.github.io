@@ -245,22 +245,21 @@
 <p><strong>Build and Deploy a Smart Contract:</strong></p>
 </li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example: Simple Solidity Contract</span>
-<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">// Example: Simple Solidity Contract
+pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">HelloWorld</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">message</span><span class="p">;</span>
+contract HelloWorld {
+    string public message;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>message<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, Blockchain!&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        message = &quot;Hello, Blockchain!&quot;;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">updateMessage</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>newMessage<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>message<span class="w"> </span><span class="o">=</span><span class="w"> </span>newMessage<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function updateMessage(string memory newMessage) public {
+        message = newMessage;
+    }
+}
+</code></pre>
 <ol>
 <li><strong>Test and Deploy:</strong></li>
 <li>Use testnets before deploying to mainnet.</li>

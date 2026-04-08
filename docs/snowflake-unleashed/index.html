@@ -168,29 +168,26 @@
 <p>Snowflake provides a range of tools and features that make it easy to work with data. Here are a few practical examples:</p>
 <h3 id="example-1-loading-data-into-snowflake">Example 1: Loading Data into Snowflake</h3>
 <p>To load data into Snowflake, you can use the <code>COPY INTO</code> command. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">COPY</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;@~/mydata.csv&#39;</span>
-<span class="n">FILE_FORMAT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CSV&#39;</span><span class="w"> </span><span class="n">FIELD_DELIMITER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="n">RECORD_DELIMITER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="n">SKIP_HEADER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-sql">COPY INTO mytable (id, name, email)
+FROM '@~/mydata.csv'
+FILE_FORMAT = (TYPE = 'CSV' FIELD_DELIMITER = ',' RECORD_DELIMITER = '\n' SKIP_HEADER = 1)
+</code></pre>
 <p>This command loads data from a CSV file into a table called <code>mytable</code>.</p>
 <h3 id="example-2-querying-data-in-snowflake">Example 2: Querying Data in Snowflake</h3>
 <p>To query data in Snowflake, you can use standard SQL commands. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mytable</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%@example.com&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM mytable
+WHERE email LIKE '%@example.com'
+</code></pre>
 <p>This command queries the <code>mytable</code> table and returns all rows where the email address ends with <code>@example.com</code>.</p>
 <h3 id="example-3-creating-a-materialized-view-in-snowflake">Example 3: Creating a Materialized View in Snowflake</h3>
 <p>To create a materialized view in Snowflake, you can use the <code>CREATE MATERIALIZED VIEW</code> command. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">myview</span>
-<span class="n">REFRESH</span><span class="w"> </span><span class="n">COMPLETE</span>
-<span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">mytable</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%@example.com&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE MATERIALIZED VIEW myview
+REFRESH COMPLETE
+AS
+SELECT id, name, email
+FROM mytable
+WHERE email LIKE '%@example.com'
+</code></pre>
 <p>This command creates a materialized view called <code>myview</code> that contains all rows from the <code>mytable</code> table where the email address ends with <code>@example.com</code>. The <code>REFRESH COMPLETE</code> clause specifies that the view should be refreshed completely whenever the underlying data changes.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Snowflake is a powerful platform, but it can also be challenging to use, especially for organizations that are new to cloud-based data warehousing. Here are some common problems and solutions:</p>

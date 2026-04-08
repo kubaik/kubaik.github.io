@@ -158,9 +158,8 @@
 * Anomaly-based detection: identifying unusual traffic patterns
 * Rate limiting: limiting the number of requests from a single IP address</p>
 <p>For example, the OWASP ModSecurity Core Rule Set provides a comprehensive set of rules for detecting and preventing common web application attacks. Here's an example of a ModSecurity rule that detects SQL injection attacks:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">SecRule</span><span class="w"> </span>REQUEST_URI<span class="w"> </span><span class="s2">&quot;@contains /select/&quot;</span><span class="w"> </span><span class="s2">&quot;id:100001,phase:1,t:none,log,deny,msg:&#39;SQL Injection Attack&#39;&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-apache">SecRule REQUEST_URI &quot;@contains /select/&quot; &quot;id:100001,phase:1,t:none,log,deny,msg:'SQL Injection Attack'&quot;
+</code></pre>
 <p>This rule checks if the request URI contains the string "/select/", which is a common indicator of SQL injection attacks. If the rule is triggered, the request is denied and a log message is generated.</p>
 <h2 id="choosing-a-waf-solution">Choosing a WAF Solution</h2>
 <p>There are many WAF solutions available, both open-source and commercial. Some popular options include:
@@ -173,13 +172,13 @@
 * <strong>Ease of use</strong>: some WAF solutions are easier to use than others. For example, Cloudflare WAF has a user-friendly interface that makes it easy to configure and manage rules.
 * <strong>Performance</strong>: some WAF solutions can impact the performance of your web application. For example, OWASP ModSecurity can introduce latency of up to 10ms per request.</p>
 <p>Here's an example of how to configure AWS WAF using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>my-web-acl<span class="w"> </span>--metric-name<span class="w"> </span>my-web-acl-metric
-aws<span class="w"> </span>waf<span class="w"> </span>create-rule<span class="w"> </span>--name<span class="w"> </span>my-rule<span class="w"> </span>--metric-name<span class="w"> </span>my-rule-metric
-aws<span class="w"> </span>waf<span class="w"> </span>update-web-acl<span class="w"> </span>--web-acl-id<span class="w"> </span>my-web-acl<span class="w"> </span>--rule-id<span class="w"> </span>my-rule<span class="w"> </span>--action<span class="w"> </span>ALLOW
+<pre><code class="language-bash">aws waf create-web-acl --name my-web-acl --metric-name my-web-acl-metric
+aws waf create-rule --name my-rule --metric-name my-rule-metric
+aws waf update-web-acl --web-acl-id my-web-acl --rule-id my-rule --action ALLOW
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Eloquent<span class="w"> </span>JavaScript<span class="w"> </span>Book&lt;/a&gt;*
-</code></pre></div>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
+</code></pre>
 <p>This example creates a new web ACL, creates a new rule, and updates the web ACL to allow traffic that matches the rule.</p>
 <h2 id="implementing-a-waf">Implementing a WAF</h2>
 <p>Implementing a WAF typically involves the following steps:
@@ -187,27 +186,26 @@ aws<span class="w"> </span>waf<span class="w"> </span>update-web-acl<span class=
 2. <strong>Test the WAF</strong>: test the WAF solution to ensure it's working correctly and not blocking legitimate traffic.
 3. <strong>Monitor the WAF</strong>: monitor the WAF solution to identify potential security issues and optimize its performance.</p>
 <p>For example, here's an example of how to implement a WAF using Cloudflare:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cloudflare</span>
+<pre><code class="language-python">import cloudflare
 
-<span class="c1"># Create a new Cloudflare API object</span>
-<span class="n">cf</span> <span class="o">=</span> <span class="n">cloudflare</span><span class="o">.</span><span class="n">Cloudflare</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s1">&#39;your_email&#39;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your_token&#39;</span><span class="p">)</span>
+# Create a new Cloudflare API object
+cf = cloudflare.Cloudflare(email='your_email', token='your_token')
 
-<span class="c1"># Get the zone ID for your domain</span>
-<span class="n">zone_id</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;your_domain&#39;</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+# Get the zone ID for your domain
+zone_id = cf.zones.get(name='your_domain')['id']
 
-<span class="c1"># Create a new WAF rule</span>
-<span class="n">rule</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">waf</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="n">zone_id</span><span class="o">=</span><span class="n">zone_id</span><span class="p">,</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;block&#39;</span><span class="p">,</span>
-    <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;SQLi&#39;</span><span class="p">,</span>
-    <span class="n">sensitivity</span><span class="o">=</span><span class="s1">&#39;medium&#39;</span><span class="p">,</span>
-    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Block SQL injection attacks&#39;</span>
-<span class="p">)</span>
+# Create a new WAF rule
+rule = cf.waf.rules.post(
+    zone_id=zone_id,
+    mode='block',
+    pattern='SQLi',
+    sensitivity='medium',
+    description='Block SQL injection attacks'
+)
 
-<span class="c1"># Enable the WAF rule</span>
-<span class="n">cf</span><span class="o">.</span><span class="n">waf</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">zone_id</span><span class="o">=</span><span class="n">zone_id</span><span class="p">,</span> <span class="n">rule_id</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+# Enable the WAF rule
+cf.waf.rules.put(zone_id=zone_id, rule_id=rule['id'], enabled=True)
+</code></pre>
 <p>This example creates a new Cloudflare API object, gets the zone ID for your domain, creates a new WAF rule, and enables the rule.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur when implementing a WAF include:

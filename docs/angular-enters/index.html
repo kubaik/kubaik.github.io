@@ -159,56 +159,53 @@
 * <strong>Large Community</strong>: Angular has a large and active community, with numerous resources, libraries, and tools available for developers.</p>
 <h2 id="setting-up-an-angular-enterprise-application">Setting Up an Angular Enterprise Application</h2>
 <p>To set up an Angular enterprise application, you will need to install the Angular CLI, a command-line interface tool that provides a convenient way to create, build, and serve Angular applications. The Angular CLI can be installed using npm by running the following command:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@angular/cli
-</code></pre></div>
-
+<pre><code class="language-bash">npm install -g @angular/cli
+</code></pre>
 <p>Once installed, you can create a new Angular project using the following command:</p>
-<div class="codehilite"><pre><span></span><code>ng<span class="w"> </span>new<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">ng new my-app
+</code></pre>
 <p>This will create a basic Angular application with a set of default configurations and files.</p>
 <h3 id="configuring-the-application">Configuring the Application</h3>
 <p>To configure the application, you will need to modify the <code>angular.json</code> file, which contains the application's metadata and build settings. For example, to enable production mode, you can add the following configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;projects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;my-app&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="err">...</span>
-<span class="w">      </span><span class="nt">&quot;architect&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;build&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="err">...</span>
-<span class="w">          </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;production&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="nt">&quot;fileReplacements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">{</span>
-<span class="w">                  </span><span class="nt">&quot;replace&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src/environments/environment.ts&quot;</span><span class="p">,</span>
-<span class="w">                  </span><span class="nt">&quot;with&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src/environments/environment.prod.ts&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">              </span><span class="p">],</span>
-<span class="w">              </span><span class="nt">&quot;optimization&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;outputHashing&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;sourceMap&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;extractCss&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;namedChunks&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;aot&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;extractLicenses&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;vendorChunk&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;buildOptimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;budgets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">{</span>
-<span class="w">                  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="p">,</span>
-<span class="w">                  </span><span class="nt">&quot;maximumWarning&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2mb&quot;</span><span class="p">,</span>
-<span class="w">                  </span><span class="nt">&quot;maximumError&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5mb&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">              </span><span class="p">]</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;projects&quot;: {
+    &quot;my-app&quot;: {
+      ...
+      &quot;architect&quot;: {
+        &quot;build&quot;: {
+          ...
+          &quot;configurations&quot;: {
+            &quot;production&quot;: {
+              &quot;fileReplacements&quot;: [
+                {
+                  &quot;replace&quot;: &quot;src/environments/environment.ts&quot;,
+                  &quot;with&quot;: &quot;src/environments/environment.prod.ts&quot;
+                }
+              ],
+              &quot;optimization&quot;: true,
+              &quot;outputHashing&quot;: &quot;all&quot;,
+              &quot;sourceMap&quot;: false,
+              &quot;extractCss&quot;: true,
+              &quot;namedChunks&quot;: false,
+              &quot;aot&quot;: true,
+              &quot;extractLicenses&quot;: true,
+              &quot;vendorChunk&quot;: false,
+              &quot;buildOptimizer&quot;: true,
+              &quot;budgets&quot;: [
+                {
+                  &quot;type&quot;: &quot;initial&quot;,
+                  &quot;maximumWarning&quot;: &quot;2mb&quot;,
+                  &quot;maximumError&quot;: &quot;5mb&quot;
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
 <p>This configuration enables production mode, which includes optimizations such as ahead-of-time compilation, tree shaking, and code splitting.</p>
 <h2 id="building-and-deploying-the-application">Building and Deploying the Application</h2>
 <p>To build and deploy the application, you can use a variety of tools and platforms, such as:
@@ -218,27 +215,23 @@
 <p>For example, to deploy an Angular application to Google Cloud Platform, you can use the following steps:
 1. Create a new Google Cloud Platform project.
 2. Install the Google Cloud SDK using the following command:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@google-cloud/cli
-</code></pre></div>
-
+<pre><code class="language-bash">npm install -g @google-cloud/cli
+</code></pre>
 <ol>
 <li>Configure the Google Cloud SDK using the following command:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>gcloud<span class="w"> </span>init
-</code></pre></div>
-
+<pre><code class="language-bash">gcloud init
+</code></pre>
 <ol>
 <li>Build the Angular application using the following command:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>ng<span class="w"> </span>build<span class="w"> </span>--prod
-</code></pre></div>
-
+<pre><code class="language-bash">ng build --prod
+</code></pre>
 <ol>
 <li>Deploy the application to Google Cloud Platform using the following command:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>gcloud<span class="w"> </span>app<span class="w"> </span>deploy
-</code></pre></div>
-
+<pre><code class="language-bash">gcloud app deploy
+</code></pre>
 <p>This will deploy the application to Google Cloud Platform, where it can be accessed by users.</p>
 <h3 id="performance-optimization">Performance Optimization</h3>
 <p>To optimize the performance of the application, you can use a variety of techniques, such as:
@@ -247,23 +240,22 @@
 * <strong>Tree shaking</strong>: Removing unused code from the application.
 * <strong>Ahead-of-time compilation</strong>: Compiling the application code ahead of time, which can improve performance.</p>
 <p>For example, to enable code splitting in an Angular application, you can use the following configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">RouterModule</span><span class="p">,</span><span class="w"> </span><span class="nx">Routes</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/router&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">routes</span><span class="o">:</span><span class="w"> </span><span class="kt">Routes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">loadChildren</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./lazy/lazy.module&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">m</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">LazyModule</span><span class="p">)</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">];</span>
+const routes: Routes = [
+  {
+    path: 'lazy',
+    loadChildren: () =&gt; import('./lazy/lazy.module').then(m =&gt; m.LazyModule)
+  }
+];
 
-<span class="kd">@NgModule</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">RouterModule</span><span class="p">.</span><span class="nx">forRoot</span><span class="p">(</span><span class="nx">routes</span><span class="p">)],</span>
-<span class="w">  </span><span class="nx">exports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">RouterModule</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AppRoutingModule</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
-</code></pre></div>
-
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+</code></pre>
 <p>This configuration enables code splitting for the <code>LazyModule</code>, which can be loaded on demand.</p>
 <h2 id="security-considerations">Security Considerations</h2>
 <p>When building an Angular enterprise application, security is a top priority. Some common security considerations include:
@@ -272,39 +264,38 @@
 * <strong>Data encryption</strong>: Protecting sensitive data, such as passwords and credit card numbers, from unauthorized access.
 * <strong>Input validation</strong>: Validating user input to prevent common web attacks, such as SQL injection and cross-site scripting (XSS).</p>
 <p>For example, to implement authentication in an Angular application, you can use a library such as <strong>Okta</strong>, which provides a set of APIs and tools for authenticating users. Here is an example of how to use Okta to authenticate users:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Injectable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">OktaAuthService</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@okta/okta-angular&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Injectable } from '@angular/core';
+import { OktaAuthService } from '@okta/okta-angular';
 
-<span class="kd">@Injectable</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">providedIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;root&#39;</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AuthService</span><span class="w"> </span><span class="p">{</span>
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">oktaAuth</span><span class="o">:</span><span class="w"> </span><span class="kt">OktaAuthService</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+  constructor(private oktaAuth: OktaAuthService) { }
 
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">login</span><span class="p">(</span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">oktaAuth</span><span class="p">.</span><span class="nx">signInWithCredentials</span><span class="p">({</span>
-<span class="w">        </span><span class="nx">username</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">password</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+  async login(username: string, password: string) {
+    try {
+      const response = await this.oktaAuth.signInWithCredentials({
+        username,
+        password
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">logout</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">oktaAuth</span><span class="p">.</span><span class="nx">signOut</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+  async logout() {
+    try {
+      await this.oktaAuth.signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-<span class="p">}</span>
-</code></pre></div>
-
+}
+</code></pre>
 <p>This code uses the Okta library to authenticate users and provide access to the application.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers may encounter when building Angular enterprise applications include:

@@ -163,16 +163,15 @@
 * <strong>Enhanced Security</strong>: Modern frameworks provide a range of security features, including authentication, authorization, and data encryption. For example, Vue.js provides a built-in authentication system, which can reduce the risk of security breaches by up to 90%.</p>
 <h3 id="code-example-building-a-simple-react-app">Code Example: Building a Simple React App</h3>
 <p>Here is an example of building a simple React app:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">ReactDOM</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React from 'react';
+import ReactDOM from 'react-dom';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Hello</span><span class="w"> </span><span class="nx">World</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;;</span>
-<span class="p">}</span>
+function App() {
+  return &lt;h1&gt;Hello World!&lt;/h1&gt;;
+}
 
-<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(&lt;</span><span class="nt">App</span><span class="w"> </span><span class="p">/&gt;,</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
-</code></pre></div>
-
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
 <p>This code creates a simple React app that renders an <code>&lt;h1&gt;</code> element with the text "Hello World!".</p>
 <h2 id="implementing-modern-frameworks-in-real-world-scenarios">Implementing Modern Frameworks in Real-World Scenarios</h2>
 <p>Modern web development frameworks can be implemented in a wide range of real-world scenarios, including:
@@ -184,16 +183,15 @@
 </ul>
 <h3 id="use-case-building-a-progressive-web-app-with-vuejs">Use Case: Building a Progressive Web App with Vue.js</h3>
 <p>Here is an example of building a progressive web app with Vue.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./App.vue&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import Vue from 'vue';
+import App from './App.vue';
 
-<span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">productionTip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+Vue.config.productionTip = false;
 
-<span class="ow">new</span><span class="w"> </span><span class="nx">Vue</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">render</span><span class="o">:</span><span class="w"> </span><span class="nx">h</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span>
-<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+new Vue({
+  render: h =&gt; h(App)
+}).$mount('#app');
+</code></pre>
 <p>This code creates a new Vue.js app and renders the <code>App</code> component to the <code>#app</code> element.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when using modern web development frameworks include:
@@ -202,27 +200,26 @@
 * <strong>Security Risks</strong>: Modern frameworks can be vulnerable to security risks, which can lead to data breaches and other security issues. Solution: Use security features like authentication, authorization, and data encryption to protect against security risks.</p>
 <h3 id="code-example-optimizing-performance-with-react">Code Example: Optimizing Performance with React</h3>
 <p>Here is an example of optimizing performance with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">setData</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
+function App() {
+  const [data, setData] = useState([]);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/data&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setData</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    fetch('/api/data')
+      .then(response =&gt; response.json())
+      .then(data =&gt; setData(data));
+  }, []);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">))}</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;ul&gt;
+      {data.map(item =&gt; (
+        &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
 <p>This code uses the <code>useState</code> and <code>useEffect</code> hooks to optimize performance by reducing the number of re-renders and improving data fetching.</p>
 <h2 id="tools-and-services-for-modern-web-development">Tools and Services for Modern Web Development</h2>
 <p>Some popular tools and services for modern web development include:

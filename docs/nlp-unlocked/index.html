@@ -165,23 +165,22 @@
 3. <strong>Text Summarization</strong>: Tools like SummarizeBot and AutoSummarize use NLP to summarize long pieces of text into shorter, more digestible versions.</p>
 <h3 id="code-example-sentiment-analysis-using-nltk-and-vader">Code Example: Sentiment Analysis using NLTK and VADER</h3>
 <p>Here is an example of how to use the NLTK library and the VADER sentiment analysis tool to analyze the sentiment of a piece of text:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.sentiment.vader</span> <span class="kn">import</span> <span class="n">SentimentIntensityAnalyzer</span>
+<pre><code class="language-python">import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-<span class="c1"># Download the VADER lexicon</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;vader_lexicon&#39;</span><span class="p">)</span>
+# Download the VADER lexicon
+nltk.download('vader_lexicon')
 
-<span class="c1"># Initialize the SentimentIntensityAnalyzer</span>
-<span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+# Initialize the SentimentIntensityAnalyzer
+sia = SentimentIntensityAnalyzer()
 
-<span class="c1"># Analyze the sentiment of a piece of text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love this product! It&#39;s amazing.&quot;</span>
-<span class="n">sentiment</span> <span class="o">=</span> <span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Analyze the sentiment of a piece of text
+text = &quot;I love this product! It's amazing.&quot;
+sentiment = sia.polarity_scores(text)
 
-<span class="c1"># Print the sentiment scores</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the sentiment scores
+print(sentiment)
+</code></pre>
 <p>This code will output the sentiment scores for the piece of text, including the positive, negative, and neutral scores.</p>
 <h2 id="tools-and-platforms-for-nlp">Tools and Platforms for NLP</h2>
 <p>There are numerous tools and platforms available for NLP, including:
@@ -198,20 +197,19 @@
 * <strong>IBM Watson Natural Language Understanding</strong>: pricing starts at $0.0025 per character, with discounts available for large volumes</p>
 <h3 id="code-example-named-entity-recognition-using-spacy">Code Example: Named Entity Recognition using spaCy</h3>
 <p>Here is an example of how to use the spaCy library to perform named entity recognition:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import spacy
 
-<span class="c1"># Load the English language model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+# Load the English language model
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
 
-<span class="c1"># Process a piece of text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is a technology company based in Cupertino, California.&quot;</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Process a piece of text
+text = &quot;Apple is a technology company based in Cupertino, California.&quot;
+doc = nlp(text)
 
-<span class="c1"># Print the named entities</span>
-<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the named entities
+for entity in doc.ents:
+    print(entity.text, entity.label_)
+</code></pre>
 <p>This code will output the named entities in the piece of text, including the entity text and label.</p>
 <h2 id="common-problems-in-nlp">Common Problems in NLP</h2>
 <p>NLP is a complex field, and there are several common problems that developers and researchers face, including:
@@ -224,29 +222,28 @@
 * <strong>Machine learning</strong>: using machine learning algorithms to learn patterns and relationships in text data</p>
 <h3 id="code-example-text-pre-processing-using-nltk-and-spacy">Code Example: Text Pre-processing using NLTK and spaCy</h3>
 <p>Here is an example of how to use the NLTK and spaCy libraries to pre-process text data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import nltk
+from nltk.tokenize import word_tokenize
+import spacy
 
-<span class="c1"># Load the English language model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+# Load the English language model
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
 
-<span class="c1"># Process a piece of text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is a sample piece of text, with some punctuation and special characters.&quot;</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Process a piece of text
+text = &quot;This is a sample piece of text, with some punctuation and special characters.&quot;
+tokens = word_tokenize(text)
 
-<span class="c1"># Remove stop words and punctuation</span>
-<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+# Remove stop words and punctuation
+stop_words = set(nltk.corpus.stopwords.words(&quot;english&quot;))
+tokens = [token for token in tokens if token.isalpha() and token.lower() not in stop_words]
 
-<span class="c1"># Lemmatize the tokens</span>
-<span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">stem</span><span class="o">.</span><span class="n">WordNetLemmatizer</span><span class="p">()</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+# Lemmatize the tokens
+lemmatizer = nltk.stem.WordNetLemmatizer()
+tokens = [lemmatizer.lemmatize(token) for token in tokens]
 
-<span class="c1"># Print the pre-processed tokens</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the pre-processed tokens
+print(tokens)
+</code></pre>
 <p>This code will output the pre-processed tokens, with stop words and punctuation removed, and the tokens lemmatized to their base form.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>NLP has numerous use cases, including:

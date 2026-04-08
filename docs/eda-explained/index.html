@@ -176,68 +176,65 @@
 <h2 id="implementing-event-driven-architecture">Implementing Event-Driven Architecture</h2>
 <p>To implement EDA, you can use a variety of programming languages and frameworks. Here are a few examples:</p>
 <h3 id="example-1-nodejs-and-apache-kafka">Example 1: Node.js and Apache Kafka</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Producer</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">kafka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;kafka-node&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">Producer</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">KafkaClient</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Producer</span><span class="p">(</span><span class="nx">client</span><span class="p">);</span>
+<pre><code class="language-javascript">// Producer
+const kafka = require('kafka-node');
+const Producer = kafka.Producer;
+const client = new kafka.KafkaClient();
+const producer = new Producer(client);
 
-<span class="nx">producer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;ready&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">producer</span><span class="p">.</span><span class="nx">send</span><span class="p">([{</span><span class="w"> </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;orders&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;OrderPlaced&#39;</span><span class="w"> </span><span class="p">}],</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
+producer.on('ready', () =&gt; {
+  producer.send([{ topic: 'orders', messages: 'OrderPlaced' }], (err, data) =&gt; {
+    if (err) console.log(err);
+    else console.log(data);
+  });
+});
 
-<span class="c1">// Consumer</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">Consumer</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Consumer</span><span class="p">(</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;orders&#39;</span><span class="w"> </span><span class="p">}],</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">autoCommit</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="p">});</span>
+// Consumer
+const Consumer = kafka.Consumer;
+const consumer = new Consumer(client, [{ topic: 'orders' }], {
+  autoCommit: false
+});
 
-<span class="nx">consumer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+consumer.on('message', (message) =&gt; {
+  console.log(message);
+});
+</code></pre>
 <h3 id="example-2-python-and-amazon-kinesis">Example 2: Python and Amazon Kinesis</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Producer</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python"># Producer
+import boto3
+import json
 
-<span class="n">kinesis</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kinesis&#39;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="mi">456</span><span class="p">}</span>
-<span class="n">kinesis</span><span class="o">.</span><span class="n">put_record</span><span class="p">(</span><span class="n">StreamName</span><span class="o">=</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">Data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">PartitionKey</span><span class="o">=</span><span class="s1">&#39;order_id&#39;</span><span class="p">)</span>
+kinesis = boto3.client('kinesis')
+data = {'order_id': 123, 'customer_id': 456}
+kinesis.put_record(StreamName='orders', Data=json.dumps(data), PartitionKey='order_id')
 
-<span class="c1"># Consumer</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+# Consumer
+import boto3
 
-<span class="n">kinesis</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kinesis&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kinesis</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span><span class="n">StreamName</span><span class="o">=</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">ShardIterator</span><span class="o">=</span><span class="s1">&#39;TRIM_HORIZON&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+kinesis = boto3.client('kinesis')
+response = kinesis.get_records(StreamName='orders', ShardIterator='TRIM_HORIZON')
+for record in response['Records']:
+  print(record['Data'])
+</code></pre>
 <h3 id="example-3-java-and-google-cloud-pubsub">Example 3: Java and Google Cloud Pub/Sub</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Producer</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.pubsub.v1.Publisher</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.pubsub.v1.TopicName</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.protobuf.ByteString</span><span class="p">;</span>
+<pre><code class="language-java">// Producer
+import com.google.cloud.pubsub.v1.Publisher;
+import com.google.cloud.pubsub.v1.TopicName;
+import com.google.protobuf.ByteString;
 
-<span class="n">Publisher</span><span class="w"> </span><span class="n">publisher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Publisher</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">(</span><span class="n">TopicName</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;orders&quot;</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
-<span class="n">ByteString</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="s">&quot;OrderPlaced&quot;</span><span class="p">);</span>
-<span class="n">publisher</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+Publisher publisher = Publisher.newBuilder(TopicName.of(&quot;orders&quot;)).build();
+ByteString data = ByteString.copyFromUtf8(&quot;OrderPlaced&quot;);
+publisher.publish(data);
 
-<span class="c1">// Consumer</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.pubsub.v1.Subscriber</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.pubsub.v1.SubscriptionName</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.pubsub.v1.Message</span><span class="p">;</span>
+// Consumer
+import com.google.cloud.pubsub.v1.Subscriber;
+import com.google.cloud.pubsub.v1.SubscriptionName;
+import com.google.cloud.pubsub.v1.Message;
 
-<span class="n">Subscriber</span><span class="w"> </span><span class="n">subscriber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Subscriber</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">(</span><span class="n">SubscriptionName</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;orders&quot;</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
-<span class="n">Message</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subscriber</span><span class="p">.</span><span class="na">pull</span><span class="p">().</span><span class="na">getMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getData</span><span class="p">().</span><span class="na">toStringUtf8</span><span class="p">());</span>
-</code></pre></div>
-
+Subscriber subscriber = Subscriber.newBuilder(SubscriptionName.of(&quot;orders&quot;)).build();
+Message message = subscriber.pull().getMessages(0).get(0);
+System.out.println(message.getData().toStringUtf8());
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered when implementing EDA include:
 * <strong>Event duplication</strong>: This occurs when an event is processed multiple times, resulting in inconsistent data. Solution: Implement idempotent event processing, where each event is processed only once.

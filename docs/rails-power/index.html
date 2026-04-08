@@ -168,21 +168,18 @@
 5. <strong>Run the application</strong>: Use the <code>rails server</code> command to start the application server: <code>rails server</code>.</p>
 <h3 id="example-code-creating-a-new-model">Example Code: Creating a New Model</h3>
 <p>Let's say we want to create a new model for a blog post. We can use the <code>rails generate</code> command to create a new model:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new model for a blog post</span>
-<span class="n">rails</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="no">Post</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="n">string</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="n">text</span>
-</code></pre></div>
-
+<pre><code class="language-ruby"># Create a new model for a blog post
+rails generate model Post title:string content:text
+</code></pre>
 <p>This will create a new file in the <code>app/models</code> directory called <code>post.rb</code>. The file will contain the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># app/models/post.rb</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Post</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationRecord</span>
-<span class="k">end</span>
-</code></pre></div>
-
+<pre><code class="language-ruby"># app/models/post.rb
+class Post &lt; ApplicationRecord
+end
+</code></pre>
 <p>We can then use the <code>rails db:migrate</code> command to create the corresponding database table:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create the database table for the Post model</span>
-<span class="n">rails</span><span class="w"> </span><span class="ss">db</span><span class="p">:</span><span class="n">migrate</span>
-</code></pre></div>
-
+<pre><code class="language-ruby"># Create the database table for the Post model
+rails db:migrate
+</code></pre>
 <h2 id="using-rails-with-other-tools-and-services">Using Rails with Other Tools and Services</h2>
 <p>Rails can be used with a variety of other tools and services to build a complete web application. Here are a few examples:
 * <strong>Database</strong>: Rails supports a variety of databases, including MySQL, PostgreSQL, and SQLite. For example, you can use the <code>mysql2</code> gem to connect to a MySQL database.
@@ -194,31 +191,30 @@
 * <strong>GitHub</strong>: A version control system that provides a simple way to manage and collaborate on code.</p>
 <h3 id="example-code-using-the-mysql2-gem">Example Code: Using the <code>mysql2</code> Gem</h3>
 <p>Here's an example of how you can use the <code>mysql2</code> gem to connect to a MySQL database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># config/database.yml</span>
-<span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="n">default</span>
-<span class="w">  </span><span class="ss">adapter</span><span class="p">:</span><span class="w"> </span><span class="n">mysql2</span>
-<span class="w">  </span><span class="ss">encoding</span><span class="p">:</span><span class="w"> </span><span class="n">utf8mb4</span>
-<span class="w">  </span><span class="ss">pool</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;</span><span class="sx">%= ENV[&#39;DATABASE_USERNAME&#39;] %&gt;</span>
-<span class="sx">  password: &lt;%=</span><span class="w"> </span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;DATABASE_PASSWORD&#39;</span><span class="o">]</span><span class="w"> </span><span class="sx">%&gt;</span>
-<span class="sx">  host: &lt;%= ENV[&#39;DATABASE_HOST&#39;] %&gt;</span>
-<span class="w">  </span><span class="ss">port</span><span class="p">:</span><span class="w"> </span><span class="mi">3306</span>
+<pre><code class="language-ruby"># config/database.yml
+default: &amp;default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: 5
+  username: &lt;%= ENV['DATABASE_USERNAME'] %&gt;
+  password: &lt;%= ENV['DATABASE_PASSWORD'] %&gt;
+  host: &lt;%= ENV['DATABASE_HOST'] %&gt;
+  port: 3306
 
-<span class="ss">development</span><span class="p">:</span>
-<span class="w">  </span><span class="o">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="o">*</span><span class="n">default</span>
-<span class="w">  </span><span class="ss">database</span><span class="p">:</span><span class="w"> </span><span class="n">myapp_development</span>
+development:
+  &lt;&lt;: *default
+  database: myapp_development
 
-<span class="nb">test</span><span class="p">:</span>
-<span class="w">  </span><span class="o">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="o">*</span><span class="n">default</span>
-<span class="w">  </span><span class="ss">database</span><span class="p">:</span><span class="w"> </span><span class="n">myapp_test</span>
+test:
+  &lt;&lt;: *default
+  database: myapp_test
 
-<span class="ss">production</span><span class="p">:</span>
-<span class="w">  </span><span class="o">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="o">*</span><span class="n">default</span>
-<span class="w">  </span><span class="ss">database</span><span class="p">:</span><span class="w"> </span><span class="n">myapp_production</span>
-<span class="w">  </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="n">myapp</span>
-<span class="w">  </span><span class="ss">password</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;%=</span><span class="w"> </span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;DATABASE_PASSWORD&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">%&gt;</span>
-</code></pre></div>
-
+production:
+  &lt;&lt;: *default
+  database: myapp_production
+  username: myapp
+  password: &lt;%= ENV['DATABASE_PASSWORD'] %&gt;
+</code></pre>
 <p>This code defines a database configuration for a MySQL database using the <code>mysql2</code> gem.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are a few common problems that you may encounter when building a Rails application, along with some solutions:
@@ -232,16 +228,15 @@
 * <strong>CPU usage</strong>: The amount of CPU the application is using.</p>
 <h3 id="example-code-using-caching-to-improve-performance">Example Code: Using Caching to Improve Performance</h3>
 <p>Here's an example of how you can use caching to improve performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># app/controllers/posts_controller.rb</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PostsController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationController</span>
-<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">index</span>
-<span class="w">    </span><span class="vi">@posts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Rails</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">do</span>
-<span class="w">      </span><span class="no">Post</span><span class="o">.</span><span class="n">all</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-
+<pre><code class="language-ruby"># app/controllers/posts_controller.rb
+class PostsController &lt; ApplicationController
+  def index
+    @posts = Rails.cache.fetch('posts') do
+      Post.all
+    end
+  end
+end
+</code></pre>
 <p>This code uses the <code>Rails.cache</code> method to cache the result of the <code>Post.all</code> query. This can improve performance by reducing the number of database queries.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are a few real-world use cases for Rails:

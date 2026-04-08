@@ -162,64 +162,61 @@
 <h2 id="practical-example-building-a-restful-api">Practical Example: Building a RESTful API</h2>
 <p>Let’s create a simple RESTful API using Node.js, Express, and MongoDB. Here’s how you can set it up:</p>
 <h3 id="1-setting-up-your-environment">1. Setting Up Your Environment</h3>
-<div class="codehilite"><pre><span></span><code>mkdir<span class="w"> </span>my-api
-<span class="nb">cd</span><span class="w"> </span>my-api
-npm<span class="w"> </span>init<span class="w"> </span>-y
-npm<span class="w"> </span>install<span class="w"> </span>express<span class="w"> </span>mongoose<span class="w"> </span>body-parser
-</code></pre></div>
-
+<pre><code class="language-bash">mkdir my-api
+cd my-api
+npm init -y
+npm install express mongoose body-parser
+</code></pre>
 <h3 id="2-creating-the-server">2. Creating the Server</h3>
 <p>Create a file named <code>server.js</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">mongoose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">bodyParser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span>
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-<span class="c1">// Middleware</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+// Middleware
+app.use(bodyParser.json());
 
-<span class="c1">// MongoDB connection</span>
-<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost/mydb&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNewUrlParser</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">useUnifiedTopology</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+// MongoDB connection
+mongoose.connect('mongodb://localhost/mydb', { useNewUrlParser: true, useUnifiedTopology: true });
 
-<span class="c1">// Define a schema</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">ItemSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">quantity</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="p">,</span>
-<span class="p">});</span>
+// Define a schema
+const ItemSchema = new mongoose.Schema({
+  name: String,
+  quantity: Number,
+});
 
-<span class="c1">// Create a model</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Item&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">ItemSchema</span><span class="p">);</span>
+// Create a model
+const Item = mongoose.model('Item', ItemSchema);
 
-<span class="c1">// CRUD operations</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/items&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">Item</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">items</span><span class="p">);</span>
-<span class="p">});</span>
+// CRUD operations
+app.get('/items', async (req, res) =&gt; {
+  const items = await Item.find();
+  res.json(items);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/items&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">newItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Item</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">newItem</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">newItem</span><span class="p">);</span>
-<span class="p">});</span>
+app.post('/items', async (req, res) =&gt; {
+  const newItem = new Item(req.body);
+  await newItem.save();
+  res.status(201).json(newItem);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server is running on http://localhost:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(PORT, () =&gt; {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+</code></pre>
 <h3 id="3-running-the-server">3. Running the Server</h3>
 <p>Run the server using:</p>
-<div class="codehilite"><pre><span></span><code>node<span class="w"> </span>server.js
-</code></pre></div>
-
+<pre><code class="language-bash">node server.js
+</code></pre>
 <p>You can now test the API using tools like Postman or Curl. For example, to add a new item:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3000/items<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;Apple&quot;, &quot;quantity&quot;: 10}&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">curl -X POST http://localhost:3000/items -H &quot;Content-Type: application/json&quot; -d '{&quot;name&quot;: &quot;Apple&quot;, &quot;quantity&quot;: 10}'
+</code></pre>
 <h3 id="performance-considerations">Performance Considerations</h3>
 <ul>
 <li><strong>Database Connection Pooling</strong>: Use a connection pool to manage multiple simultaneous connections to the database effectively. Mongoose provides built-in support for connection pooling.</li>
@@ -280,41 +277,40 @@ npm<span class="w"> </span>install<span class="w"> </span>express<span class="w"
 <li><strong>Rate Limiting</strong>: Use <code>express-rate-limit</code> to limit the number of requests from a single IP address.</li>
 </ul>
 <p>Example of rate limiting:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rateLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-rate-limit&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const rateLimit = require('express-rate-limit');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">apiLimiter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rateLimit</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">windowMs</span><span class="o">:</span><span class="w"> </span><span class="mf">15</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">,</span><span class="w"> </span><span class="c1">// 15 minutes</span>
-<span class="w">  </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="c1">// limit each IP to 100 requests per windowMs</span>
-<span class="p">});</span>
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/api/&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiLimiter</span><span class="p">);</span>
+app.use('/api/', apiLimiter);
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://digitalocean.com&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">DigitalOcean</span><span class="w"> </span><span class="nx">Cloud</span><span class="w"> </span><span class="nx">Hosting</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
-</code></pre></div>
+*Recommended: &lt;a href=&quot;https://digitalocean.com&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;DigitalOcean Cloud Hosting&lt;/a&gt;*
 
+</code></pre>
 <h3 id="problem-3-deployment-challenges">Problem 3: Deployment Challenges</h3>
 <h4 id="solution-cicd-pipeline">Solution: CI/CD Pipeline</h4>
 <ul>
 <li>Use tools like <strong>GitHub Actions</strong> or <strong>CircleCI</strong> to automate testing and deployment.</li>
 <li>Example GitHub Action for Node.js:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Node.js CI</span>
+<pre><code class="language-yaml">name: Node.js CI
 
-<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+on: [push]
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm test
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering backend architecture involves understanding various components and their interactions. By utilizing the right tools, frameworks, and practices, you can build scalable, secure, and efficient applications.</p>
 <h3 id="actionable-next-steps">Actionable Next Steps</h3>

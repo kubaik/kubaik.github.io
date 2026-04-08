@@ -160,11 +160,10 @@
 * <strong>Easier maintenance</strong>: With utility-first design, you don't have to worry about maintaining a large library of custom components. Instead, you can focus on maintaining a small set of utility classes that can be used throughout your application.</p>
 <h3 id="example-1-creating-a-button-with-tailwind-css">Example 1: Creating a Button with Tailwind CSS</h3>
 <p>Here's an example of how you can create a button using Tailwind CSS:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;button class=&quot;bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;&gt;
   Click me
-<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;/button&gt;
+</code></pre>
 <p>In this example, we're using several utility classes to create the button:
 * <code>bg-blue-500</code> sets the background color to blue
 * <code>hover:bg-blue-700</code> sets the background color to a darker blue on hover
@@ -190,22 +189,21 @@
 * <strong>Progressive web apps</strong>: Utility-first design is a good choice for progressive web apps, where you need to create complex interfaces that work on multiple devices.</p>
 <h3 id="example-2-creating-a-responsive-navigation-menu-with-tailwind-css">Example 2: Creating a Responsive Navigation Menu with Tailwind CSS</h3>
 <p>Here's an example of how you can create a responsive navigation menu using Tailwind CSS:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex justify-between items-center py-4&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-lg font-bold&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;hidden sm:flex items-center&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mr-6&quot;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-lg font-bold&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mr-6&quot;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-lg font-bold&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sm:hidden flex justify-center items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;nav class=&quot;flex justify-between items-center py-4&quot;&gt;
+  &lt;a href=&quot;#&quot; class=&quot;text-lg font-bold&quot;&gt;Home&lt;/a&gt;
+  &lt;ul class=&quot;hidden sm:flex items-center&quot;&gt;
+    &lt;li class=&quot;mr-6&quot;&gt;
+      &lt;a href=&quot;#&quot; class=&quot;text-lg font-bold&quot;&gt;About&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;mr-6&quot;&gt;
+      &lt;a href=&quot;#&quot; class=&quot;text-lg font-bold&quot;&gt;Contact&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button class=&quot;sm:hidden flex justify-center items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;&gt;
     Menu
-  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
-
+  &lt;/button&gt;
+&lt;/nav&gt;
+</code></pre>
 <p>In this example, we're using several utility classes to create the navigation menu:
 * <code>flex</code> sets the display property to flex
 * <code>justify-between</code> sets the justify-content property to space-between
@@ -221,16 +219,15 @@
 * <strong>Improved SEO</strong>: With faster page loads, you can improve your search engine rankings.</p>
 <h3 id="example-3-measuring-the-performance-benefits-of-utility-first-design">Example 3: Measuring the Performance Benefits of Utility-First Design</h3>
 <p>Here's an example of how you can measure the performance benefits of utility-first design using WebPageTest:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Run a test with traditional CSS</span>
-webpagetest<span class="w"> </span>-k<span class="w"> </span>-s<span class="w"> </span>https://example.com<span class="w"> </span>--css-traditional
+<pre><code class="language-bash"># Run a test with traditional CSS
+webpagetest -k -s https://example.com --css-traditional
 
-<span class="c1"># Run a test with utility-first design</span>
-webpagetest<span class="w"> </span>-k<span class="w"> </span>-s<span class="w"> </span>https://example.com<span class="w"> </span>--css-utility-first
+# Run a test with utility-first design
+webpagetest -k -s https://example.com --css-utility-first
 
-<span class="c1"># Compare the results</span>
-webpagetest<span class="w"> </span>-c<span class="w"> </span>--compare<span class="w"> </span>https://example.com<span class="w"> </span>--css-traditional<span class="w"> </span>https://example.com<span class="w"> </span>--css-utility-first
-</code></pre></div>
-
+# Compare the results
+webpagetest -c --compare https://example.com --css-traditional https://example.com --css-utility-first
+</code></pre>
 <p>In this example, we're using WebPageTest to compare the performance of a website using traditional CSS versus utility-first design. The results show that the website using utility-first design has a smaller CSS file size and faster page loads.</p>
 <h2 id="pricing-and-plans-for-tailwind-css">Pricing and Plans for Tailwind CSS</h2>
 <p>Tailwind CSS is free and open-source, which means you can use it for any project without incurring any costs. However, if you want to use some of the advanced features of Tailwind CSS, such as the official IDE extensions, you may need to pay for a subscription. Here are some of the pricing plans for Tailwind CSS:

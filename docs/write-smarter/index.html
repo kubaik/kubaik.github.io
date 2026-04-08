@@ -154,28 +154,27 @@
 <h3 id="understanding-your-audience">Understanding Your Audience</h3>
 <p>Before you start writing, it's essential to understand who your target audience is. Are you writing for developers, end-users, or business stakeholders? Each audience has unique needs and expectations, and your writing style should be tailored accordingly. For instance, when writing API documentation for developers, you should focus on providing detailed technical information, such as code examples, request and response formats, and error handling mechanisms.</p>
 <p>To illustrate this point, consider the following example of API documentation written using the OpenAPI specification:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">openapi</span><span class="o">:</span><span class="w"> </span><span class="mf">3.0</span><span class="o">.</span><span class="mi">0</span>
-<span class="n">info</span><span class="o">:</span>
-<span class="w">  </span><span class="n">title</span><span class="o">:</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">API</span>
-<span class="w">  </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">management</span>
-<span class="w">  </span><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
-<span class="n">paths</span><span class="o">:</span>
-<span class="w">  </span><span class="o">/</span><span class="n">users</span><span class="o">:</span>
-<span class="w">    </span><span class="kd">get</span><span class="o">:</span>
-<span class="w">      </span><span class="n">summary</span><span class="o">:</span><span class="w"> </span><span class="n">Retrieve</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">users</span>
-<span class="w">      </span><span class="n">responses</span><span class="o">:</span>
-<span class="w">        </span><span class="s1">&#39;200&#39;</span><span class="o">:</span>
-<span class="w">          </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">users</span>
-<span class="w">          </span><span class="n">content</span><span class="o">:</span>
-<span class="w">            </span><span class="n">application</span><span class="o">/</span><span class="n">json</span><span class="o">:</span>
-<span class="w">              </span><span class="n">schema</span><span class="o">:</span>
-<span class="w">                </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">array</span>
-<span class="w">                </span><span class="n">items</span><span class="o">:</span>
-<span class="w">                  </span><span class="n">$ref</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#/components/schemas/User&#39;</span>
-<span class="w">        </span><span class="s1">&#39;500&#39;</span><span class="o">:</span>
-<span class="w">          </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">Internal</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">error</span>
-</code></pre></div>
-
+<pre><code class="language-yml">openapi: 3.0.0
+info:
+  title: User API
+  description: API for user management
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Retrieve a list of users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+</code></pre>
 <p>In this example, we define an API endpoint to retrieve a list of users, along with the expected response format and error handling mechanisms.</p>
 <h2 id="essential-tools-for-technical-writing">Essential Tools for Technical Writing</h2>
 <p>As a technical writer, you will need to familiarize yourself with a range of tools and platforms to create, manage, and publish your content. Some popular tools include:</p>
@@ -204,19 +203,18 @@
 <li><strong>Use images and diagrams</strong>: to illustrate complex concepts and make your content more engaging</li>
 </ol>
 <p>To illustrate these best practices, consider the following example of a technical article written using Markdown:</p>
-<div class="codehilite"><pre><span></span><code><span class="gu">### Introduction to API Design</span>
-When designing an API, it&#39;s essential to consider the following factors:
-<span class="k">*</span><span class="w"> </span><span class="gs">**Security**</span>: how will you authenticate and authorize users?
-<span class="k">*</span><span class="w"> </span><span class="gs">**Scalability**</span>: how will you handle increased traffic and usage?
-<span class="k">*</span><span class="w"> </span><span class="gs">**Maintainability**</span>: how will you update and maintain your API over time?
+<pre><code class="language-markdown">### Introduction to API Design
+When designing an API, it's essential to consider the following factors:
+* **Security**: how will you authenticate and authorize users?
+* **Scalability**: how will you handle increased traffic and usage?
+* **Maintainability**: how will you update and maintain your API over time?
 
-<span class="gu">### API Design Principles</span>
+### API Design Principles
 The following principles should guide your API design:
-<span class="k">1.</span> <span class="gs">**Keep it simple**</span>: avoid unnecessary complexity and focus on simplicity and ease of use
-<span class="k">2.</span> <span class="gs">**Use standard protocols**</span>: use standard protocols such as HTTP and JSON to ensure compatibility and interoperability
-<span class="k">3.</span> <span class="gs">**Use clear and concise naming**</span>: use clear and concise naming conventions to make your API easy to understand and use
-</code></pre></div>
-
+1. **Keep it simple**: avoid unnecessary complexity and focus on simplicity and ease of use
+2. **Use standard protocols**: use standard protocols such as HTTP and JSON to ensure compatibility and interoperability
+3. **Use clear and concise naming**: use clear and concise naming conventions to make your API easy to understand and use
+</code></pre>
 <p>In this example, we use clear and simple language, active voice, headings and subheadings, bullet points, and numbered lists to present complex information in a clear and concise manner.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>As a technical writer, you will encounter a range of common problems and challenges. Some common problems include:</p>
@@ -240,31 +238,30 @@ The following principles should guide your API design:
 <li><strong>Technical articles</strong>: technical writers create technical articles to provide in-depth information on technical topics</li>
 </ul>
 <p>To illustrate these use cases, consider the following example of API documentation written using the OpenAPI specification:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">openapi</span><span class="o">:</span><span class="w"> </span><span class="mf">3.0</span><span class="o">.</span><span class="mi">0</span>
-<span class="n">info</span><span class="o">:</span>
-<span class="w">  </span><span class="n">title</span><span class="o">:</span><span class="w"> </span><span class="n">Payment</span><span class="w"> </span><span class="n">API</span>
-<span class="w">  </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">payment</span><span class="w"> </span><span class="n">processing</span>
-<span class="w">  </span><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
-<span class="n">paths</span><span class="o">:</span>
-<span class="w">  </span><span class="o">/</span><span class="n">payments</span><span class="o">:</span>
-<span class="w">    </span><span class="n">post</span><span class="o">:</span>
-<span class="w">      </span><span class="n">summary</span><span class="o">:</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">payment</span>
-<span class="w">      </span><span class="n">responses</span><span class="o">:</span>
-<span class="w">        </span><span class="s1">&#39;201&#39;</span><span class="o">:</span>
-<span class="w">          </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">Payment</span><span class="w"> </span><span class="n">created</span><span class="w"> </span><span class="n">successfully</span>
-<span class="w">          </span><span class="n">content</span><span class="o">:</span>
-<span class="w">            </span><span class="n">application</span><span class="o">/</span><span class="n">json</span><span class="o">:</span>
-<span class="w">              </span><span class="n">schema</span><span class="o">:</span>
-<span class="w">                </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">object</span>
-<span class="w">                </span><span class="n">properties</span><span class="o">:</span>
-<span class="w">                  </span><span class="n">id</span><span class="o">:</span>
-<span class="w">                    </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">integer</span>
-<span class="w">                    </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">Payment</span><span class="w"> </span><span class="n">ID</span>
-<span class="w">                  </span><span class="n">amount</span><span class="o">:</span>
-<span class="w">                    </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">number</span>
-<span class="w">                    </span><span class="n">description</span><span class="o">:</span><span class="w"> </span><span class="n">Payment</span><span class="w"> </span><span class="n">amount</span>
-</code></pre></div>
-
+<pre><code class="language-yml">openapi: 3.0.0
+info:
+  title: Payment API
+  description: API for payment processing
+  version: 1.0.0
+paths:
+  /payments:
+    post:
+      summary: Create a new payment
+      responses:
+        '201':
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Payment ID
+                  amount:
+                    type: number
+                    description: Payment amount
+</code></pre>
 <p>In this example, we define an API endpoint to create a new payment, along with the expected request and response formats.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, technical writing is a highly specialized field that requires a unique blend of technical expertise, writing skills, and attention to detail. By following best practices, using essential tools, and understanding your audience, you can become a proficient technical writer and create high-quality content that engages and informs your audience.</p>

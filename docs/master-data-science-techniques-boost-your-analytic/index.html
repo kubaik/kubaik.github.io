@@ -173,11 +173,10 @@
     ```python
     from scipy import stats
     import numpy as np</p>
-<div class="codehilite"><pre><span></span><code>z_scores = np.abs(stats.zscore(df[&#39;column&#39;]))
+<pre><code>z_scores = np.abs(stats.zscore(df['column']))
 df = df[z_scores &lt; 3]
 ```
-</code></pre></div>
-
+</code></pre>
 <ul>
 <li><strong>Encoding Categorical Variables:</strong></li>
 <li>Use one-hot encoding or label encoding.</li>
@@ -228,15 +227,14 @@ df = df[z_scores &lt; 3]
 <li><strong>Neural Networks</strong> for deep learning tasks.</li>
 </ul>
 <p><strong>Example: Training a Random Forest Classifier</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div>
-
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+</code></pre>
 <h3 id="5-model-evaluation-validation">5. Model Evaluation &amp; Validation</h3>
 <p>Assess your model to prevent overfitting and ensure generalization.</p>
 <p><strong>Common Metrics:</strong>
@@ -245,20 +243,18 @@ df = df[z_scores &lt; 3]
 - <strong>Regression:</strong>
   - Mean Absolute Error (MAE), Mean Squared Error (MSE), R-squared.</p>
 <p><strong>Example: Evaluating a Classifier</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<pre><code class="language-python">from sklearn.metrics import classification_report
 
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))
+</code></pre>
 <p><strong>Cross-Validation:</strong>
 - Use <code>cross_val_score()</code> to validate models.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<pre><code class="language-python">from sklearn.model_selection import cross_val_score
 
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average Accuracy:&#39;</span><span class="p">,</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-</code></pre></div>
-
+scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print('Average Accuracy:', scores.mean())
+</code></pre>
 <hr />
 <h2 id="advanced-techniques-to-boost-your-skills">Advanced Techniques to Boost Your Skills</h2>
 <h3 id="1-ensemble-methods">1. Ensemble Methods</h3>
@@ -271,15 +267,14 @@ df = df[z_scores &lt; 3]
 <p><strong>Practical Advice:</strong>
 - Use libraries like <code>scikit-learn</code>, <code>XGBoost</code>, <code>LightGBM</code>.
 - Example with XGBoost:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+<pre><code class="language-python">import xgboost as xgb
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">XGBClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+model = xgb.XGBClassifier(n_estimators=100, learning_rate=0.1)
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div>
-
+model.fit(X_train, y_train)
+</code></pre>
 <h3 id="2-dimensionality-reduction">2. Dimensionality Reduction</h3>
 <p>Reduce feature space to improve model efficiency.</p>
 <ul>
@@ -302,12 +297,11 @@ df = df[z_scores &lt; 3]
 <li>Word2Vec, GloVe, BERT.</li>
 </ul>
 <p><em>Example: Converting text to features with TF-IDF</em></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
 
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
-<span class="n">X_text</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
-</code></pre></div>
-
+vectorizer = TfidfVectorizer(stop_words='english')
+X_text = vectorizer.fit_transform(corpus)
+</code></pre>
 <h3 id="4-time-series-analysis">4. Time Series Analysis</h3>
 <p>For sequential data, techniques include:</p>
 <ul>
@@ -328,26 +322,25 @@ df = df[z_scores &lt; 3]
 <li><strong>Deployment:</strong> Integrate the model into a web app for real-time predictions.</li>
 </ol>
 <p><strong>Sample code snippet:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Data Cleaning</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<pre><code class="language-python"># Data Cleaning
+df['income'].fillna(df['income'].median(), inplace=True)
 
-<span class="c1"># Feature Engineering</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tenure_years&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tenure_months&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span>
+# Feature Engineering
+df['tenure_years'] = df['tenure_months'] / 12
 
-<span class="c1"># Model Training</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;income&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;tenure_years&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;churn&#39;</span><span class="p">]</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+# Model Training
+X = df[['income', 'age', 'tenure_years']]
+y = df['churn']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluation</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
-<span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ROC-AUC:&#39;</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluation
+from sklearn.metrics import roc_auc_score
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+print('ROC-AUC:', roc_auc_score(y_test, y_pred_proba))
+</code></pre>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering data science techniques is an ongoing journey that combines foundational skills with continuous learning of new methodologies. By understanding and applying core processes like data cleaning, feature engineering, model selection, and evaluation—and by exploring advanced tools such as ensemble methods and NLP—you can significantly enhance your analytics capabilities.</p>

@@ -199,13 +199,12 @@
 </li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Creating an index on the &#39;email&#39; column</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_users_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+<pre><code class="language-sql">-- Creating an index on the 'email' column
+CREATE INDEX idx_users_email ON users(email);
 
-<span class="c1">-- Creating a composite index</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_orders_customer_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">);</span>
-</code></pre></div>
-
+-- Creating a composite index
+CREATE INDEX idx_orders_customer_date ON orders(customer_id, order_date);
+</code></pre>
 <h3 id="3-write-efficient-queries">3. Write Efficient Queries</h3>
 <p>Optimized queries are critical for performance.</p>
 <ul>
@@ -223,13 +222,12 @@
 </li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Poor performance</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<pre><code class="language-sql">-- Poor performance
+SELECT * FROM orders WHERE customer_id = 123;
 
-<span class="c1">-- Better performance</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">total_amount</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+-- Better performance
+SELECT order_id, order_date, total_amount FROM orders WHERE customer_id = 123;
+</code></pre>
 <h3 id="4-leverage-query-execution-plans">4. Leverage Query Execution Plans</h3>
 <p>Use tools to analyze how your database executes queries.</p>
 <ul>
@@ -244,9 +242,8 @@
 </li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM orders WHERE customer_id = 123;
+</code></pre>
 <h3 id="5-regular-maintenance-and-housekeeping">5. Regular Maintenance and Housekeeping</h3>
 <p>Routine maintenance keeps your database healthy.</p>
 <ul>
@@ -264,13 +261,12 @@
 </li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- PostgreSQL</span>
-<span class="k">VACUUM</span><span class="w"> </span><span class="k">ANALYZE</span><span class="p">;</span>
+<pre><code class="language-sql">-- PostgreSQL
+VACUUM ANALYZE;
 
-<span class="c1">-- MySQL</span>
-<span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="p">;</span>
-</code></pre></div>
-
+-- MySQL
+OPTIMIZE TABLE orders;
+</code></pre>
 <h3 id="6-use-caching-strategically">6. Use Caching Strategically</h3>
 <p>Caching reduces the load on your database.</p>
 <ul>
@@ -298,29 +294,27 @@
 </ul>
 <p><strong>Example:</strong></p>
 <p>Partitioning a sales table by year:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">sale_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">    </span><span class="n">amount</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">RANGE</span><span class="w"> </span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">sale_date</span><span class="p">))</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2019</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2020</span><span class="p">),</span>
-<span class="w">    </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2020</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2021</span><span class="p">),</span>
-<span class="w">    </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2021</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2022</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE sales (
+    id INT,
+    sale_date DATE,
+    amount DECIMAL(10, 2)
+) PARTITION BY RANGE (YEAR(sale_date)) (
+    PARTITION p2019 VALUES LESS THAN (2020),
+    PARTITION p2020 VALUES LESS THAN (2021),
+    PARTITION p2021 VALUES LESS THAN (2022)
+);
+</code></pre>
 <h3 id="8-use-materialized-views">8. Use Materialized Views</h3>
 <p>Materialized views store the result of complex queries for quick access, updating periodically or on-demand.</p>
 <ul>
 <li><strong>Ideal for aggregations and joins that are expensive to compute repeatedly.</strong></li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">monthly_sales</span><span class="w"> </span><span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">sale_date</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">month</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_sales</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">sales</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">month</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE MATERIALIZED VIEW monthly_sales AS
+SELECT DATE_TRUNC('month', sale_date) AS month, SUM(amount) AS total_sales
+FROM sales
+GROUP BY month;
+</code></pre>
 <h3 id="9-optimize-hardware-and-configuration">9. Optimize Hardware and Configuration</h3>
 <ul>
 <li><strong>Increase RAM:</strong> Enables larger buffer pools and caches.</li>

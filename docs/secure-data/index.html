@@ -166,61 +166,58 @@
 <p>In this section, we will explore some practical examples of encryption and key management using popular tools and platforms.</p>
 <h3 id="example-1-encrypting-data-with-aws-key-management-service-kms">Example 1: Encrypting Data with AWS Key Management Service (KMS)</h3>
 <p>AWS KMS is a fully managed service that enables you to easily create and control the encryption keys used to encrypt your data. Here is an example of how to use AWS KMS to encrypt data in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
+kms = boto3.client('kms')
 
-<span class="c1"># Create a new encryption key</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My encryption key&#39;</span><span class="p">,</span>
-    <span class="n">KeyUsage</span><span class="o">=</span><span class="s1">&#39;ENCRYPT_DECRYPT&#39;</span>
-<span class="p">)</span>
+# Create a new encryption key
+response = kms.create_key(
+    Description='My encryption key',
+    KeyUsage='ENCRYPT_DECRYPT'
+)
 
-<span class="c1"># Get the key ID and plaintext key</span>
-<span class="n">key_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;KeyMetadata&#39;</span><span class="p">][</span><span class="s1">&#39;KeyId&#39;</span><span class="p">]</span>
-<span class="n">plaintext_key</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Plaintext&#39;</span><span class="p">]</span>
+# Get the key ID and plaintext key
+key_id = response['KeyMetadata']['KeyId']
+plaintext_key = response['Plaintext']
 
-<span class="c1"># Encrypt data using the key</span>
-<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">KeyId</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
-    <span class="n">Plaintext</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span>
-<span class="p">)</span>
+# Encrypt data using the key
+encrypted_data = kms.encrypt(
+    KeyId=key_id,
+    Plaintext='Hello, World!'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">[</span><span class="s1">&#39;CiphertextBlob&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+print(encrypted_data['CiphertextBlob'])
+</code></pre>
 <p>This example demonstrates how to create a new encryption key, encrypt data using the key, and print the encrypted ciphertext.</p>
 <h3 id="example-2-using-openssl-for-asymmetric-encryption">Example 2: Using OpenSSL for Asymmetric Encryption</h3>
 <p>OpenSSL is a popular open-source toolkit for encryption and cryptography. Here is an example of how to use OpenSSL to generate a public-private key pair and encrypt data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Generate a public-private key pair</span>
-openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>private_key.pem<span class="w"> </span><span class="m">2048</span>
-openssl<span class="w"> </span>rsa<span class="w"> </span>-in<span class="w"> </span>private_key.pem<span class="w"> </span>-pubout<span class="w"> </span>-out<span class="w"> </span>public_key.pem
+<pre><code class="language-bash"># Generate a public-private key pair
+openssl genrsa -out private_key.pem 2048
+openssl rsa -in private_key.pem -pubout -out public_key.pem
 
-<span class="c1"># Encrypt data using the public key</span>
-openssl<span class="w"> </span>rsautl<span class="w"> </span>-encrypt<span class="w"> </span>-inkey<span class="w"> </span>public_key.pem<span class="w"> </span>-in<span class="w"> </span>plaintext.txt<span class="w"> </span>-out<span class="w"> </span>encrypted.txt
-</code></pre></div>
-
+# Encrypt data using the public key
+openssl rsautl -encrypt -inkey public_key.pem -in plaintext.txt -out encrypted.txt
+</code></pre>
 <p>This example demonstrates how to generate a public-private key pair using OpenSSL and encrypt data using the public key.</p>
 <h3 id="example-3-implementing-key-rotation-with-hashicorp-vault">Example 3: Implementing Key Rotation with HashiCorp Vault</h3>
 <p>HashiCorp Vault is a popular secrets management platform that provides secure storage and rotation of encryption keys. Here is an example of how to implement key rotation using Vault:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hvac</span>
+<pre><code class="language-python">import hvac
 
-<span class="c1"># Initialize the Vault client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">hvac</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://vault.example.com&#39;</span><span class="p">)</span>
+# Initialize the Vault client
+client = hvac.Client(url='https://vault.example.com')
 
-<span class="c1"># Create a new encryption key</span>
-<span class="n">client</span><span class="o">.</span><span class="n">secrets</span><span class="o">.</span><span class="n">kv</span><span class="o">.</span><span class="n">v2</span><span class="o">.</span><span class="n">create_or_update_secret</span><span class="p">(</span>
-    <span class="n">path</span><span class="o">=</span><span class="s1">&#39;encryption_key&#39;</span><span class="p">,</span>
-    <span class="n">secret</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;my_encryption_key&#39;</span><span class="p">)</span>
-<span class="p">)</span>
+# Create a new encryption key
+client.secrets.kv.v2.create_or_update_secret(
+    path='encryption_key',
+    secret=dict(key='my_encryption_key')
+)
 
-<span class="c1"># Rotate the encryption key</span>
-<span class="n">client</span><span class="o">.</span><span class="n">secrets</span><span class="o">.</span><span class="n">kv</span><span class="o">.</span><span class="n">v2</span><span class="o">.</span><span class="n">rotate_secret_version</span><span class="p">(</span>
-    <span class="n">path</span><span class="o">=</span><span class="s1">&#39;encryption_key&#39;</span><span class="p">,</span>
-    <span class="n">version</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Rotate the encryption key
+client.secrets.kv.v2.rotate_secret_version(
+    path='encryption_key',
+    version=None
+)
+</code></pre>
 <p>This example demonstrates how to create a new encryption key and rotate the key using HashiCorp Vault.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>In this section, we will address some common problems and solutions related to encryption and key management.</p>

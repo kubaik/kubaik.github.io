@@ -161,33 +161,32 @@
 <p>To get started with Terraform, you'll need to install the Terraform CLI on your machine. You can download the latest version of Terraform from the official HashiCorp website. Once installed, you can verify that Terraform is working by running the <code>terraform --version</code> command.</p>
 <h3 id="example-1-provisioning-an-aws-ec2-instance">Example 1: Provisioning an AWS EC2 Instance</h3>
 <p>Here's an example of how to use Terraform to provision an AWS EC2 instance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Create a new EC2 instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="w">  </span><span class="na">vpc_security_group_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.example.id</span><span class="p">]</span>
-<span class="p">}</span>
+# Create a new EC2 instance
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+  vpc_security_group_ids = [aws_security_group.example.id]
+}
 
-<span class="c1"># Create a new security group</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-sg&quot;</span>
-<span class="w">  </span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Example security group&quot;</span>
+# Create a new security group
+resource &quot;aws_security_group&quot; &quot;example&quot; {
+  name        = &quot;example-sg&quot;
+  description = &quot;Example security group&quot;
 
-<span class="c1">  # Allow inbound traffic on port 22</span>
-<span class="w">  </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
-<span class="w">    </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
-<span class="w">    </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
-<span class="w">    </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  # Allow inbound traffic on port 22
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
+</code></pre>
 <p>This example provisions a new EC2 instance with a security group that allows inbound traffic on port 22. You can customize the instance type, AMI, and security group settings to suit your needs.</p>
 <h2 id="terraform-modules-and-reusability">Terraform Modules and Reusability</h2>
 <p>Terraform modules are reusable pieces of infrastructure code that can be used to provision complex resources. Modules can be used to:
@@ -196,67 +195,65 @@
 * <strong>Reduce duplication</strong>: Reuse modules across multiple projects and environments to reduce duplication and improve efficiency.</p>
 <h3 id="example-2-creating-a-terraform-module">Example 2: Creating a Terraform Module</h3>
 <p>Here's an example of how to create a Terraform module for provisioning a load balancer:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># File: modules/loadbalancer/main.tf</span>
-<span class="kr">variable</span><span class="w"> </span><span class="nv">&quot;name&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">string</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># File: modules/loadbalancer/main.tf
+variable &quot;name&quot; {
+  type = string
+}
 
-<span class="kr">variable</span><span class="w"> </span><span class="nv">&quot;port&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">number</span>
-<span class="p">}</span>
+variable &quot;port&quot; {
+  type = number
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_elb&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">var.name</span>
-<span class="w">  </span><span class="na">subnets</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_subnet.example.id</span><span class="p">]</span>
-<span class="w">  </span><span class="na">security_groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.example.id</span><span class="p">]</span>
+resource &quot;aws_elb&quot; &quot;example&quot; {
+  name            = var.name
+  subnets         = [aws_subnet.example.id]
+  security_groups = [aws_security_group.example.id]
 
-<span class="w">  </span><span class="nb">listener</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">instance_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nv">var.port</span>
-<span class="w">    </span><span class="na">instance_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http&quot;</span>
-<span class="w">    </span><span class="na">lb_port</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">lb_protocol</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  listener {
+    instance_port     = var.port
+    instance_protocol = &quot;http&quot;
+    lb_port           = 80
+    lb_protocol       = &quot;http&quot;
+  }
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_subnet&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">cidr_block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.1.0/24&quot;</span>
-<span class="w">  </span><span class="na">vpc_id</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_vpc.example.id</span>
-<span class="p">}</span>
+resource &quot;aws_subnet&quot; &quot;example&quot; {
+  cidr_block = &quot;10.0.1.0/24&quot;
+  vpc_id     = aws_vpc.example.id
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_vpc&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">cidr_block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.0.0/16&quot;</span>
-<span class="p">}</span>
+resource &quot;aws_vpc&quot; &quot;example&quot; {
+  cidr_block = &quot;10.0.0.0/16&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-sg&quot;</span>
-<span class="w">  </span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Example security group&quot;</span>
+resource &quot;aws_security_group&quot; &quot;example&quot; {
+  name        = &quot;example-sg&quot;
+  description = &quot;Example security group&quot;
 
-<span class="c1">  # Allow inbound traffic on port 80</span>
-<span class="w">  </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
-<span class="w">    </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  # Allow inbound traffic on port 80
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
+</code></pre>
 <p>This module provisions a load balancer with a subnet, VPC, and security group. You can customize the module variables to suit your needs.</p>
 <h2 id="terraform-state-and-backend">Terraform State and Backend</h2>
 <p>Terraform state refers to the current state of your infrastructure, including the resources that have been provisioned and their current configuration. Terraform uses a state file to keep track of the current state of your infrastructure.</p>
 <p>By default, Terraform stores the state file locally on your machine. However, this can be problematic in team environments, where multiple users may be working on the same infrastructure configuration. To address this issue, Terraform provides a backend feature that allows you to store the state file remotely.</p>
 <h3 id="example-3-configuring-terraform-backend">Example 3: Configuring Terraform Backend</h3>
 <p>Here's an example of how to configure Terraform to use an AWS S3 bucket as a backend:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS S3 backend</span>
-<span class="nb">terraform</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">backend</span><span class="w"> </span><span class="nv">&quot;s3&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-terraform-state&quot;</span>
-<span class="w">    </span><span class="na">key</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;terraform.tfstate&quot;</span>
-<span class="w">    </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-terraform"># Configure the AWS S3 backend
+terraform {
+  backend &quot;s3&quot; {
+    bucket = &quot;my-terraform-state&quot;
+    key    = &quot;terraform.tfstate&quot;
+    region = &quot;us-west-2&quot;
+  }
+}
+</code></pre>
 <p>This example configures Terraform to store the state file in an AWS S3 bucket named "my-terraform-state". You can customize the bucket name, key, and region to suit your needs.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that you may encounter when using Terraform, along with their solutions:

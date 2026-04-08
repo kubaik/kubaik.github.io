@@ -165,28 +165,27 @@
 * <strong>Recommendation systems</strong>: AutoML can be used to build and deploy recommendation systems, such as those used in e-commerce or music streaming services.</p>
 <h3 id="example-code-using-h2o-automl-to-build-a-classification-model">Example Code: Using H2O AutoML to Build a Classification Model</h3>
 <p>Here is an example of using H2O AutoML to build a classification model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">h2o</span>
-<span class="kn">from</span> <span class="nn">h2o.automl</span> <span class="kn">import</span> <span class="n">H2OAutoML</span>
+<pre><code class="language-python">import h2o
+from h2o.automl import H2OAutoML
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="s2">&quot;path/to/dataset.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+df = h2o.import_file(&quot;path/to/dataset.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">split_frame</span><span class="p">(</span><span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">])</span>
+# Split the data into training and testing sets
+train, test = df.split_frame(ratios=[0.8])
 
-<span class="c1"># Create an AutoML object</span>
-<span class="n">aml</span> <span class="o">=</span> <span class="n">H2OAutoML</span><span class="p">(</span><span class="n">max_runtime_secs</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
+# Create an AutoML object
+aml = H2OAutoML(max_runtime_secs=3600)
 
-<span class="c1"># Train the model</span>
-<span class="n">aml</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">training_frame</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+# Train the model
+aml.train(x=df.columns[:-1], y=df.columns[-1], training_frame=train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">perf</span> <span class="o">=</span> <span class="n">aml</span><span class="o">.</span><span class="n">model_performance</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+# Evaluate the model
+perf = aml.model_performance(test)
 
-<span class="c1"># Print the performance metrics</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the performance metrics
+print(perf)
+</code></pre>
 <p>This code uses the H2O AutoML library to build a classification model on a sample dataset. The <code>H2OAutoML</code> object is created with a maximum runtime of 3600 seconds (1 hour), and the <code>train</code> method is used to train the model on the training data. The <code>model_performance</code> method is then used to evaluate the model on the testing data.</p>
 <h2 id="tools-and-platforms-for-automl-and-nas">Tools and Platforms for AutoML and NAS</h2>
 <p>There are a number of tools and platforms available for AutoML and NAS, including:
@@ -209,31 +208,30 @@
 * <strong>Computational resources</strong>: AutoML and NAS can require significant computational resources, which can be a challenge for users with limited budgets or infrastructure. Solution: Use cloud-based platforms or services that provide scalable and on-demand access to computational resources.</p>
 <h3 id="example-code-using-keras-tuner-to-perform-hyperparameter-tuning">Example Code: Using Keras Tuner to Perform Hyperparameter Tuning</h3>
 <p>Here is an example of using Keras Tuner to perform hyperparameter tuning:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">kerastuner</span> <span class="k">as</span> <span class="nn">kt</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<pre><code class="language-python">import kerastuner as kt
+from tensorflow import keras
 
-<span class="c1"># Define the model architecture</span>
-<span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">hp</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">])),</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;sparse_categorical_crossentropy&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the model architecture
+def build_model(hp):
+    model = keras.Sequential()
+    model.add(keras.layers.Dense(units=hp.Int(&quot;units&quot;, min_value=32, max_value=512, step=32), activation=&quot;relu&quot;))
+    model.add(keras.layers.Dense(10, activation=&quot;softmax&quot;))
+    model.compile(optimizer=keras.optimizers.Adam(hp.Choice(&quot;learning_rate&quot;, [1e-2, 1e-3, 1e-4])), loss=&quot;sparse_categorical_crossentropy&quot;, metrics=[&quot;accuracy&quot;])
+    return model
 
-<span class="c1"># Create a tuner object</span>
-<span class="n">tuner</span> <span class="o">=</span> <span class="n">kt</span><span class="o">.</span><span class="n">Hyperband</span><span class="p">(</span><span class="n">build_model</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;val_accuracy&quot;</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="s2">&quot;my_project&quot;</span><span class="p">)</span>
+# Create a tuner object
+tuner = kt.Hyperband(build_model, objective=&quot;val_accuracy&quot;, max_epochs=10, project_name=&quot;my_project&quot;)
 
-<span class="c1"># Perform hyperparameter tuning</span>
-<span class="n">tuner</span><span class="o">.</span><span class="n">search_space</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">))</span>
+# Perform hyperparameter tuning
+tuner.search_space(x_train, y_train, epochs=10, validation_data=(x_val, y_val))
 
-<span class="c1"># Get the best hyperparameters</span>
-<span class="n">best_hps</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">get_best_hyperparameters</span><span class="p">(</span><span class="n">num_trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+# Get the best hyperparameters
+best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
-<span class="c1"># Train the model with the best hyperparameters</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">hypermodel</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">best_hps</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">))</span>
-</code></pre></div>
-
+# Train the model with the best hyperparameters
+model = tuner.hypermodel.build(best_hps)
+model.fit(x_train, y_train, epochs=10, validation_data=(x_val, y_val))
+</code></pre>
 <p>This code uses the Keras Tuner library to perform hyperparameter tuning for a simple neural network model. The <code>build_model</code> function defines the model architecture, and the <code>Hyperband</code> class is used to create a tuner object. The <code>search_space</code> method is then used to perform hyperparameter tuning, and the <code>get_best_hyperparameters</code> method is used to get the best hyperparameters. Finally, the <code>hypermodel</code> method is used to train the model with the best hyperparameters.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some concrete use cases for AutoML and NAS, along with implementation details:
@@ -251,40 +249,39 @@
     * Use techniques such as matrix factorization and neural collaborative filtering to improve performance</p>
 <h3 id="example-code-using-pytorch-to-implement-a-recommendation-system">Example Code: Using PyTorch to Implement a Recommendation System</h3>
 <p>Here is an example of using PyTorch to implement a recommendation system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
 
-<span class="c1"># Define the model architecture</span>
-<span class="k">class</span> <span class="nc">RecommendationModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">RecommendationModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_users</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">item_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
+# Define the model architecture
+class RecommendationModel(nn.Module):
+    def __init__(self, num_users, num_items, embedding_dim):
+        super(RecommendationModel, self).__init__()
+        self.user_embeddings = nn.Embedding(num_users, embedding_dim)
+        self.item_embeddings = nn.Embedding(num_items, embedding_dim)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_ids</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">):</span>
-        <span class="n">user_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_embeddings</span><span class="p">(</span><span class="n">user_ids</span><span class="p">)</span>
-        <span class="n">item_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_embeddings</span><span class="p">(</span><span class="n">item_ids</span><span class="p">)</span>
-        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">user_embeddings</span><span class="p">,</span> <span class="n">item_embeddings</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">scores</span>
+    def forward(self, user_ids, item_ids):
+        user_embeddings = self.user_embeddings(user_ids)
+        item_embeddings = self.item_embeddings(item_ids)
+        scores = torch.matmul(user_embeddings, item_embeddings.T)
+        return scores
 
-<span class="c1"># Create a model instance</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RecommendationModel</span><span class="p">(</span><span class="n">num_users</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num_items</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+# Create a model instance
+model = RecommendationModel(num_users=1000, num_items=1000, embedding_dim=128)
 
-<span class="c1"># Define the loss function and optimizer</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+# Define the loss function and optimizer
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-<span class="c1"># Train the model</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">)</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">ratings</span><span class="p">)</span>
-    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+for epoch in range(10):
+    optimizer.zero_grad()
+    scores = model(user_ids, item_ids)
+    loss = criterion(scores, ratings)
+    loss.backward()
+    optimizer.step()
+    print(f&quot;Epoch {epoch+1}, Loss: {loss.item()}&quot;)
+</code></pre>
 <p>This code uses the PyTorch library to implement a simple recommendation system. The <code>RecommendationModel</code> class defines the model architecture, and the <code>forward</code> method defines the forward pass. The <code>MSELoss</code> function is used to define the loss function, and the <code>Adam</code> optimizer is used to optimize the model parameters. The model is then trained using a simple loop that iterates over the dataset and updates the model parameters using backpropagation.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, AutoML and NAS are powerful tools for building and deploying machine learning models. By automating the process of model selection, hyperparameter tuning, and neural architecture search, AutoML and NAS can help users achieve state-of-the-art performance on a wide range of tasks. However, there are also challenges and limitations to consider, such as overfitting, underfitting, and computational resources.</p>

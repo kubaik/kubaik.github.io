@@ -174,15 +174,14 @@
 <li><strong>Combine Files:</strong> Merge multiple CSS or JavaScript files into a single file to reduce request count.</li>
 <li><strong>Use CSS Sprites:</strong> Combine multiple small images into a single sprite to reduce image requests.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Example of CSS Sprite usage */</span>
-<span class="p">.</span><span class="nc">icon</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-image</span><span class="p">:</span><span class="w"> </span><span class="nb">url</span><span class="p">(</span><span class="s1">&#39;sprite.png&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">background-position</span><span class="p">:</span><span class="w"> </span><span class="mi">-10</span><span class="kt">px</span><span class="w"> </span><span class="mi">-20</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="c">/* Position of the icon in sprite */</span>
-<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">/* Example of CSS Sprite usage */
+.icon {
+  background-image: url('sprite.png');
+  background-position: -10px -20px; /* Position of the icon in sprite */
+  width: 32px;
+  height: 32px;
+}
+</code></pre>
 <ul>
 <li><strong>Limit External Resources:</strong> Minimize third-party scripts and plugins that add extra requests.</li>
 <li><strong>Inline Critical Resources:</strong> Embed critical CSS directly into HTML to avoid additional requests during initial load.</li>
@@ -197,10 +196,9 @@
 <li><a href="https://github.com/kangax/html-minifier">HTMLMinifier</a></li>
 </ul>
 <h3 id="example">Example:</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Minify JavaScript with UglifyJS</span>
-uglifyjs<span class="w"> </span>main.js<span class="w"> </span>-o<span class="w"> </span>main.min.js
-</code></pre></div>
-
+<pre><code class="language-bash"># Minify JavaScript with UglifyJS
+uglifyjs main.js -o main.min.js
+</code></pre>
 <h3 id="best-practices">Best Practices:</h3>
 <ul>
 <li>Automate minification in your build process.</li>
@@ -213,14 +211,13 @@ uglifyjs<span class="w"> </span>main.js<span class="w"> </span>-o<span class="w"
 <ul>
 <li>Use HTTP headers like <code>Cache-Control</code> and <code>Expires</code> to specify cache durations.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example Apache configuration</span>
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_expires.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">ExpiresActive</span><span class="w"> </span><span class="k">On</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>text/css<span class="w"> </span><span class="s2">&quot;1 week&quot;</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>application/javascript<span class="w"> </span><span class="s2">&quot;1 week&quot;</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache"># Example Apache configuration
+&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresByType text/css &quot;1 week&quot;
+  ExpiresByType application/javascript &quot;1 week&quot;
+&lt;/IfModule&gt;
+</code></pre>
 <ul>
 <li>Set longer cache durations for static assets that rarely change.</li>
 <li>Use versioning in filenames (e.g., <code>style.v1.css</code>) to invalidate caches when assets update.</li>
@@ -242,9 +239,8 @@ uglifyjs<span class="w"> </span>main.js<span class="w"> </span>-o<span class="w"
 </ul>
 <h3 id="action-step">Action Step:</h3>
 <p>Configure your website to serve static assets via CDN URLs:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.example.com/js/app.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script src=&quot;https://cdn.example.com/js/app.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 <hr />
 <h2 id="5-optimize-images-for-web">5. Optimize Images for Web</h2>
 <p>Images can constitute up to 60% of webpage weight. Proper image optimization is crucial.</p>
@@ -261,24 +257,21 @@ uglifyjs<span class="w"> </span>main.js<span class="w"> </span>-o<span class="w"
 </li>
 </ul>
 <p>Use tools like <a href="https://imageoptim.com/">ImageOptim</a>, <a href="https://tinypng.com/">TinyPNG</a>, or command-line tools like <code>imagemagick</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Compress with ImageMagick</span>
-convert<span class="w"> </span>image.jpg<span class="w"> </span>-quality<span class="w"> </span><span class="m">75</span><span class="w"> </span>compressed-image.jpg
-</code></pre></div>
-
+<pre><code class="language-bash"># Compress with ImageMagick
+convert image.jpg -quality 75 compressed-image.jpg
+</code></pre>
 <ul>
 <li><strong>Implement Lazy Loading:</strong></li>
 </ul>
 <p>Load images only when they enter the viewport using the <code>loading</code> attribute:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;photo.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Sample&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;photo.jpg&quot; alt=&quot;Sample&quot; loading=&quot;lazy&quot; /&gt;
+</code></pre>
 <ul>
 <li><strong>Responsive Images:</strong></li>
 </ul>
 <p>Use <code>srcset</code> to serve appropriately sized images:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;small.jpg&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;medium.jpg 600w, large.jpg 1200w&quot;</span> <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 600px) 100vw, 50vw&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Responsive Image&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;small.jpg&quot; srcset=&quot;medium.jpg 600w, large.jpg 1200w&quot; sizes=&quot;(max-width: 600px) 100vw, 50vw&quot; alt=&quot;Responsive Image&quot; /&gt;
+</code></pre>
 <hr />
 <h2 id="6-optimize-css-and-javascript-delivery">6. Optimize CSS and JavaScript Delivery</h2>
 <p>Blocking rendering occurs when CSS and JavaScript are loaded synchronously. Optimizations include:</p>
@@ -286,26 +279,23 @@ convert<span class="w"> </span>image.jpg<span class="w"> </span>-quality<span cl
 <li><strong>Defer and Async Scripts:</strong></li>
 </ul>
 <p>Use <code>defer</code> or <code>async</code> attributes to load scripts without blocking page rendering.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt;
+</code></pre>
 <ul>
 <li><strong>Load Critical CSS Inline:</strong></li>
 </ul>
 <p>Embed critical CSS directly into the <code>&lt;head&gt;</code> to render above-the-fold content faster.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="c">/* Critical CSS here */</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;style&gt;
+  /* Critical CSS here */
+&lt;/style&gt;
+</code></pre>
 <ul>
 <li><strong>Non-Critical CSS:</strong></li>
 </ul>
 <p>Load non-essential CSS asynchronously:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;preload&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css&quot;</span> <span class="na">as</span><span class="o">=</span><span class="s">&quot;style&quot;</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;this.rel=&#39;stylesheet&#39;&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; href=&quot;styles.css&quot; as=&quot;style&quot; onload=&quot;this.rel='stylesheet'&quot;&gt;
+&lt;noscript&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;&lt;/noscript&gt;
+</code></pre>
 <hr />
 <h2 id="7-enable-compression-on-your-server">7. Enable Compression on Your Server</h2>
 <p>Server-side compression reduces the size of files transferred over the network.</p>
@@ -313,17 +303,15 @@ convert<span class="w"> </span>image.jpg<span class="w"> </span>-quality<span cl
 <ul>
 <li><strong>Gzip Compression:</strong> Available on most web servers.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example Apache configuration</span>
-<span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>text/html<span class="w"> </span>text/plain<span class="w"> </span>text/xml<span class="w"> </span>text/css<span class="w"> </span>application/javascript
-</code></pre></div>
-
+<pre><code class="language-apache"># Example Apache configuration
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
+</code></pre>
 <ul>
 <li><strong>Brotli Compression:</strong> Offers better compression rates; supported by modern browsers.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example Brotli setup</span>
-<span class="nb">SetOutputFilter</span><span class="w"> </span>BROTLI_COMPRESS
-</code></pre></div>
-
+<pre><code class="language-apache"># Example Brotli setup
+SetOutputFilter BROTLI_COMPRESS
+</code></pre>
 <h3 id="verify-compression">Verify Compression:</h3>
 <p>Use online tools like <a href="https://gtmetrix.com/">GTmetrix</a> or <a href="https://checkgzipcompression.com/">Check Gzip Compression</a>.</p>
 <hr />

@@ -165,42 +165,40 @@
 4. <strong>Command-Query Separation (CQS)</strong>: Separate commands (actions that modify state) from queries (requests for information).</p>
 <h3 id="example-1-applying-srp-to-a-python-class">Example 1: Applying SRP to a Python Class</h3>
 <p>Consider a Python class that handles user authentication:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Authenticator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+<pre><code class="language-python">class Authenticator:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
-    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Authenticate user using username and password</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
+    def authenticate(self):
+        # Authenticate user using username and password
+        if self.username == &quot;admin&quot; and self.password == &quot;password&quot;:
+            return True
+        else:
+            return False
 
-    <span class="k">def</span> <span class="nf">send_welcome_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Send a welcome email to the user</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome email sent!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+    def send_welcome_email(self):
+        # Send a welcome email to the user
+        print(&quot;Welcome email sent!&quot;)
+</code></pre>
 <p>In this example, the <code>Authenticator</code> class has two responsibilities: authenticating the user and sending a welcome email. To apply the SRP, we can split this into two separate classes:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Authenticator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+<pre><code class="language-python">class Authenticator:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
-    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Authenticate user using username and password</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
+    def authenticate(self):
+        # Authenticate user using username and password
+        if self.username == &quot;admin&quot; and self.password == &quot;password&quot;:
+            return True
+        else:
+            return False
 
-<span class="k">class</span> <span class="nc">EmailService</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">send_welcome_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
-        <span class="c1"># Send a welcome email to the user</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Welcome email sent to </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+class EmailService:
+    def send_welcome_email(self, username):
+        # Send a welcome email to the user
+        print(f&quot;Welcome email sent to {username}!&quot;)
+</code></pre>
 <p>By separating these responsibilities, we make the code more modular and easier to maintain.</p>
 <h2 id="tools-and-platforms-for-clean-code">Tools and Platforms for Clean Code</h2>
 <p>Several tools and platforms can help developers write and maintain clean code. Some popular options include:
@@ -219,21 +217,19 @@ By using SonarQube, developers can identify areas of the codebase that need impr
 * A 20% reduction in code duplication can result in a 30% improvement in performance.</p>
 <h3 id="example-3-optimizing-performance-with-clean-code">Example 3: Optimizing Performance with Clean Code</h3>
 <p>Consider a JavaScript function that calculates the sum of an array of numbers:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateSum</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function calculateSum(arr) {
+    let sum = 0;
+    for (let i = 0; i &lt; arr.length; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+</code></pre>
 <p>This function has a time complexity of O(n), where n is the length of the array. By using a more efficient algorithm, such as the <code>reduce()</code> method, we can improve performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateSum</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">arr</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function calculateSum(arr) {
+    return arr.reduce((a, b) =&gt; a + b, 0);
+}
+</code></pre>
 <p>According to benchmarks using the <code>benchmark</code> library, the optimized function is 25% faster than the original implementation.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when writing clean code include:

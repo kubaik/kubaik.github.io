@@ -164,24 +164,23 @@
 * Docker: Docker is a containerization platform that allows you to package and deploy applications. You can use Docker to deploy multiple versions of your application and switch between them.</p>
 <h3 id="example-code-deploying-a-nodejs-application-with-docker">Example Code: Deploying a Node.js Application with Docker</h3>
 <p>Here's an example of how you can deploy a Node.js application with Docker:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Dockerfile</span>
-<span class="nx">FROM</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="mf">14</span>
+<pre><code class="language-javascript">// Dockerfile
+FROM node:14
 
-<span class="nx">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="nx">app</span>
+WORKDIR /app
 
-<span class="nx">COPY</span><span class="w"> </span><span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span><span class="w"> </span><span class="p">.</span><span class="o">/</span>
+COPY package*.json ./
 
-<span class="nx">RUN</span><span class="w"> </span><span class="nx">npm</span><span class="w"> </span><span class="nx">install</span>
+RUN npm install
 
-<span class="nx">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+COPY . .
 
-<span class="nx">RUN</span><span class="w"> </span><span class="nx">npm</span><span class="w"> </span><span class="nx">run</span><span class="w"> </span><span class="nx">build</span>
+RUN npm run build
 
-<span class="nx">EXPOSE</span><span class="w"> </span><span class="mf">3000</span>
+EXPOSE 3000
 
-<span class="nx">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;npm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="w"> </span><span class="p">]</span>
-</code></pre></div>
-
+CMD [ &quot;npm&quot;, &quot;start&quot; ]
+</code></pre>
 <p>In this example, we're creating a Docker image for a Node.js application. We're copying the <code>package.json</code> file to the <code>/app</code> directory, installing the dependencies, copying the rest of the code, building the application, and exposing port 3000.</p>
 <h2 id="implementation-details">Implementation Details</h2>
 <p>To implement Blue-Green deployment, you'll need to consider the following:
@@ -190,24 +189,23 @@
 * <strong>Load balancer configuration</strong>: You'll need to configure the load balancer to route traffic to the new version of the application.</p>
 <h3 id="example-code-configuring-a-load-balancer-with-nginx">Example Code: Configuring a Load Balancer with NGINX</h3>
 <p>Here's an example of how you can configure a load balancer with NGINX:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">upstream</span><span class="w"> </span><span class="s">backend</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">3001</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    upstream backend {
+        server localhost:3000;
+        server localhost:3001;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+    server {
+        listen 80;
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>In this example, we're configuring a load balancer with NGINX to route traffic to two different versions of the application.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of Blue-Green deployment can vary depending on the specific use case and implementation. However, in general, Blue-Green deployment can reduce downtime by up to 90% and reduce the risk of deploying new code by up to 50%.</p>
@@ -221,21 +219,20 @@
 * <strong>Load balancer configuration</strong>: To handle load balancer configuration, you can use a tool like NGINX or HAProxy to configure the load balancer.</p>
 <h3 id="example-code-handling-database-schema-changes-with-flyway">Example Code: Handling Database Schema Changes with Flyway</h3>
 <p>Here's an example of how you can handle database schema changes with Flyway:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Flyway configuration</span>
-<span class="n">flyway</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">jdbc</span><span class="p">:</span><span class="n">mysql</span><span class="p">:</span><span class="c1">//localhost:3306/mydb&#39;</span>
-<span class="w">    </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">myuser</span><span class="err">&#39;</span>
-<span class="w">    </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">mypassword</span><span class="err">&#39;</span>
-<span class="p">}</span>
+<pre><code class="language-java">// Flyway configuration
+flyway {
+    url = 'jdbc:mysql://localhost:3306/mydb'
+    user = 'myuser'
+    password = 'mypassword'
+}
 
-<span class="c1">// Migration script</span>
-<span class="n">migration</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
-<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">Create</span><span class="w"> </span><span class="n">table</span><span class="err">&#39;</span>
-<span class="w">    </span><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="nf">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="n">INT</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="nf">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">))</span><span class="err">&#39;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Migration script
+migration {
+    version = 1.0
+    description = 'Create table'
+    sql = 'CREATE TABLE mytable (id INT PRIMARY KEY, name VARCHAR(255))'
+}
+</code></pre>
 <p>In this example, we're using Flyway to manage the database schema changes. We're defining a migration script that creates a new table.</p>
 <h2 id="use-cases">Use Cases</h2>
 <p>Here are some concrete use cases for Blue-Green deployment:

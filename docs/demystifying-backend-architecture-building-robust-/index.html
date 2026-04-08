@@ -183,24 +183,23 @@
 </ul>
 <h2 id="example-building-a-restful-api">Example: Building a RESTful API</h2>
 <p>Let's consider an example of building a RESTful API using Node.js and Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Logic to fetch users from the database</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="p">});</span>
-<span class="p">});</span>
+app.get('/api/users', (req, res) =&gt; {
+  // Logic to fetch users from the database
+  res.json({ users: users });
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Logic to create a new user in the database</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;User created successfully&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="p">});</span>
+app.post('/api/users', (req, res) =&gt; {
+  // Logic to create a new user in the database
+  res.json({ message: 'User created successfully' });
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server running on port 3000');
+});
+</code></pre>
 <p>In this example, we have a simple Express application that exposes endpoints to fetch and create users. This is a basic illustration of how you can build a RESTful API using a popular backend framework.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Building a robust backend architecture is essential for ensuring the scalability, security, and performance of your web applications. By following best practices such as separating concerns, designing for scalability, prioritizing security, optimizing performance, and implementing monitoring and logging, you can create a solid foundation for your backend architecture. Remember that a well-designed backend architecture not only improves the user experience but also makes your application easier to maintain and scale in the long run.</p>

@@ -164,59 +164,58 @@
 * <strong>IBM Watson Assistant</strong>: A cloud-based AI platform for building conversational interfaces.</p>
 <h3 id="practical-code-example-building-a-simple-ai-agent">Practical Code Example: Building a Simple AI Agent</h3>
 <p>Here is an example of a simple AI agent built using Python and the <strong>Scikit-learn</strong> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import LinearRegression
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
 
-<span class="c1"># Define the agent&#39;s environment</span>
-<span class="k">class</span> <span class="nc">Environment</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+# Define the agent's environment
+class Environment:
+    def __init__(self):
+        self.state = np.random.rand(1)
 
-    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    def get_state(self):
+        return self.state
 
-    <span class="k">def</span> <span class="nf">take_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">+=</span> <span class="n">action</span>
+    def take_action(self, action):
+        self.state += action
 
-<span class="c1"># Define the agent</span>
-<span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+# Define the agent
+class Agent:
+    def __init__(self):
+        self.model = LinearRegression()
 
-    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+    def learn(self, states, actions, rewards):
+        self.model.fit(states, rewards)
 
-    <span class="k">def</span> <span class="nf">act</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    def act(self, state):
+        return self.model.predict(state)
 
-<span class="c1"># Create the environment and agent</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
-<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">()</span>
+# Create the environment and agent
+env = Environment()
+agent = Agent()
 
-<span class="c1"># Train the agent</span>
-<span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">rewards</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-    <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">env</span><span class="o">.</span><span class="n">take_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-    <span class="n">reward</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-    <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-    <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+# Train the agent
+states = []
+actions = []
+rewards = []
+for i in range(100):
+    state = env.get_state()
+    action = np.random.rand(1)
+    env.take_action(action)
+    reward = np.random.rand(1)
+    states.append(state)
+    actions.append(action)
+    rewards.append(reward)
 
-<span class="n">agent</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+agent.learn(states, actions, rewards)
 
-<span class="c1"># Test the agent</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-<span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the agent
+state = env.get_state()
+action = agent.act(state)
+print(action)
+</code></pre>
 <p>This code defines a simple environment and agent, and trains the agent using a linear regression model.</p>
 <h2 id="implementing-ai-agents-in-real-world-applications">Implementing AI Agents in Real-World Applications</h2>
 <p>AI agents can be implemented in a variety of real-world applications, including:
@@ -249,56 +248,55 @@
 * <strong>Fairness metrics</strong>: Using metrics such as disparity impact ratio and demographic parity to detect and mitigate bias.</p>
 <h3 id="practical-code-example-preventing-overfitting">Practical Code Example: Preventing Overfitting</h3>
 <p>Here is an example of how to prevent overfitting using regularization:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import Ridge
 
-<span class="c1"># Define the agent&#39;s environment</span>
-<span class="k">class</span> <span class="nc">Environment</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+# Define the agent's environment
+class Environment:
+    def __init__(self):
+        self.state = np.random.rand(1)
 
-    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    def get_state(self):
+        return self.state
 
-    <span class="k">def</span> <span class="nf">take_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">+=</span> <span class="n">action</span>
+    def take_action(self, action):
+        self.state += action
 
-<span class="c1"># Define the agent</span>
-<span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+# Define the agent
+class Agent:
+    def __init__(self):
+        self.model = Ridge(alpha=0.1)
 
-    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+    def learn(self, states, actions, rewards):
+        self.model.fit(states, rewards)
 
-    <span class="k">def</span> <span class="nf">act</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    def act(self, state):
+        return self.model.predict(state)
 
-<span class="c1"># Create the environment and agent</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
-<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">()</span>
+# Create the environment and agent
+env = Environment()
+agent = Agent()
 
-<span class="c1"># Train the agent</span>
-<span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">rewards</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-    <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">env</span><span class="o">.</span><span class="n">take_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-    <span class="n">reward</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-    <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-    <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+# Train the agent
+states = []
+actions = []
+rewards = []
+for i in range(100):
+    state = env.get_state()
+    action = np.random.rand(1)
+    env.take_action(action)
+    reward = np.random.rand(1)
+    states.append(state)
+    actions.append(action)
+    rewards.append(reward)
 
-<span class="n">agent</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+agent.learn(states, actions, rewards)
 
-<span class="c1"># Test the agent</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-<span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the agent
+state = env.get_state()
+action = agent.act(state)
+print(action)
+</code></pre>
 <p>This code defines a simple environment and agent, and uses regularization to prevent overfitting.</p>
 <h2 id="advanced-topics-in-ai-agent-development">Advanced Topics in AI Agent Development</h2>
 <p>Some advanced topics in AI agent development include:
@@ -307,47 +305,46 @@
 * <strong>Deep learning</strong>: A type of machine learning that involves using neural networks with multiple layers.</p>
 <h3 id="practical-code-example-building-a-multi-agent-system">Practical Code Example: Building a Multi-Agent System</h3>
 <p>Here is an example of how to build a multi-agent system using the <strong>Pygame</strong> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pygame</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<pre><code class="language-python">import pygame
+import random
 
-<span class="c1"># Define the agent class</span>
-<span class="k">class</span> <span class="nc">Agent</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+# Define the agent class
+class Agent:
+    def __init__(self):
+        self.x = random.randint(0, 800)
+        self.y = random.randint(0, 600)
 
-    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    def move(self):
+        self.x += random.randint(-5, 5)
+        self.y += random.randint(-5, 5)
 
-<span class="c1"># Create the agents</span>
-<span class="n">agents</span> <span class="o">=</span> <span class="p">[</span><span class="n">Agent</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+# Create the agents
+agents = [Agent() for _ in range(10)]
 
-<span class="c1"># Create the Pygame window</span>
-<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-<span class="n">window</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+# Create the Pygame window
+pygame.init()
+window = pygame.display.set_mode((800, 600))
 
-<span class="c1"># Main loop</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
-            <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+# Main loop
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-    <span class="c1"># Move the agents</span>
-    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
-        <span class="n">agent</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+    # Move the agents
+    for agent in agents:
+        agent.move()
 
-    <span class="c1"># Draw the agents</span>
-    <span class="n">window</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
-        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">agent</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+    # Draw the agents
+    window.fill((0, 0, 0))
+    for agent in agents:
+        pygame.draw.circle(window, (255, 255, 255), (agent.x, agent.y), 5)
 
-    <span class="c1"># Update the window</span>
-    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-    <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span>
-</code></pre></div>
-
+    # Update the window
+    pygame.display.update()
+    pygame.time.delay(1000 // 60)
+</code></pre>
 <p>This code defines a simple multi-agent system, where each agent moves randomly around the screen.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, AI agents are software programs that use artificial intelligence to perform tasks that typically require human intelligence. Developing AI agents requires a combination of machine learning, natural language processing, and software development skills. Some popular tools and platforms for developing AI agents include Google Cloud AI Platform, Microsoft Azure Machine Learning, and IBM Watson Assistant.</p>

@@ -162,58 +162,54 @@
 <p>To illustrate the power of low-code and no-code platforms, let's consider a few practical examples.</p>
 <h3 id="example-1-building-a-custom-website-with-webflow">Example 1: Building a Custom Website with Webflow</h3>
 <p>Webflow is a popular design and development platform that allows users to build custom websites using a visual interface. Here's an example of how to use Webflow to build a custom website:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Webflow HTML structure --&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to my website<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a custom website built with Webflow<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c">/* Webflow CSS styles */</span>
-<span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">800</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f7f7f7</span><span class="p">;</span>
-<span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#ddd</span><span class="p">;</span>
-<span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- Webflow HTML structure --&gt;
+&lt;div class=&quot;container&quot;&gt;
+  &lt;h1&gt;Welcome to my website&lt;/h1&gt;
+  &lt;p&gt;This is a custom website built with Webflow&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">/* Webflow CSS styles */
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</code></pre>
 <p>In this example, we're using Webflow's visual interface to build a custom website with a responsive design. We've added a container element with a heading and paragraph of text, and styled it using Webflow's CSS editor.</p>
 <h3 id="example-2-creating-a-mobile-app-with-adalo">Example 2: Creating a Mobile App with Adalo</h3>
 <p>Adalo is a no-code platform that allows users to build custom mobile applications without coding. Here's an example of how to use Adalo to create a mobile app:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Adalo JavaScript code</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AdaloApp</span><span class="p">();</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">setTheme</span><span class="p">(</span><span class="s1">&#39;light&#39;</span><span class="p">);</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">addScreen</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Home&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Welcome to my app&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Adalo JavaScript code
+const app = new AdaloApp();
+app.setTheme('light');
+app.addScreen('home', {
+  title: 'Home',
+  components: [
+    {
+      type: 'text',
+      text: 'Welcome to my app'
+    }
+  ]
+});
+</code></pre>
 <p>In this example, we're using Adalo's visual interface to create a mobile app with a single screen. We've added a text component to the screen and set the app's theme to light.</p>
 <h3 id="example-3-building-a-web-application-with-bubble">Example 3: Building a Web Application with Bubble</h3>
 <p>Bubble is a no-code platform that enables users to create web applications without coding. Here's an example of how to use Bubble to build a web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Bubble JavaScript code</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">BubbleApp</span><span class="p">();</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">setTheme</span><span class="p">(</span><span class="s1">&#39;dark&#39;</span><span class="p">);</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">addPage</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Home&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;button&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Click me&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Bubble JavaScript code
+const app = new BubbleApp();
+app.setTheme('dark');
+app.addPage('home', {
+  title: 'Home',
+  components: [
+    {
+      type: 'button',
+      text: 'Click me'
+    }
+  ]
+});
+</code></pre>
 <p>In this example, we're using Bubble's visual interface to create a web application with a single page. We've added a button component to the page and set the app's theme to dark.</p>
 <h2 id="use-cases-for-low-codeno-code-platforms">Use Cases for Low-Code/No-Code Platforms</h2>
 <p>Low-code and no-code platforms have a wide range of use cases, from building custom websites and mobile applications to creating complex business workflows and integrations. Here are a few examples:</p>

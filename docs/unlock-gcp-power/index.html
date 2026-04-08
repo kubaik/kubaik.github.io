@@ -181,15 +181,14 @@
 3. Deploy the application using the <code>gcloud app deploy</code> command.
 4. Configure the application to use a custom domain name.</p>
 <p>Here is an example of the <code>app.yaml</code> file for a simple web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">runtime</span><span class="o">:</span><span class="w"> </span><span class="n">python37</span>
-<span class="n">instance_class</span><span class="o">:</span><span class="w"> </span><span class="n">F1</span>
-<span class="n">automatic_scaling</span><span class="o">:</span>
-<span class="w">  </span><span class="n">min_instances</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="n">max_instances</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="w">  </span><span class="n">cpu_utilization</span><span class="o">:</span>
-<span class="w">    </span><span class="n">target_utilization</span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span>
-</code></pre></div>
-
+<pre><code class="language-yml">runtime: python37
+instance_class: F1
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  cpu_utilization:
+    target_utilization: 0.5
+</code></pre>
 <p>This file specifies the runtime environment, instance class, and scaling settings for the application.</p>
 <h3 id="example-2-building-a-data-pipeline-with-google-cloud-dataflow">Example 2: Building a Data Pipeline with Google Cloud Dataflow</h3>
 <p>To build a data pipeline with Google Cloud Dataflow, you can use the following steps:
@@ -198,23 +197,22 @@
 3. Deploy the pipeline using the <code>gcloud dataflow</code> command.
 4. Configure the pipeline to read and write data from and to Google Cloud Storage.</p>
 <p>Here is an example of the <code>pipeline.py</code> file for a simple data pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
-<span class="kn">from</span> <span class="nn">apache_beam.options.pipeline_options</span> <span class="kn">import</span> <span class="n">PipelineOptions</span>
+<pre><code class="language-python">import apache_beam as beam
+from apache_beam.options.pipeline_options import PipelineOptions
 
-<span class="n">options</span> <span class="o">=</span> <span class="n">PipelineOptions</span><span class="p">(</span>
-    <span class="n">flags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">runner</span><span class="o">=</span><span class="s1">&#39;DataflowRunner&#39;</span><span class="p">,</span>
-    <span class="n">project</span><span class="o">=</span><span class="s1">&#39;my-project&#39;</span><span class="p">,</span>
-    <span class="n">temp_location</span><span class="o">=</span><span class="s1">&#39;gs://my-bucket/tmp&#39;</span><span class="p">,</span>
-    <span class="n">region</span><span class="o">=</span><span class="s1">&#39;us-central1&#39;</span>
-<span class="p">)</span>
+options = PipelineOptions(
+    flags=None,
+    runner='DataflowRunner',
+    project='my-project',
+    temp_location='gs://my-bucket/tmp',
+    region='us-central1'
+)
 
-<span class="k">with</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">p</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;gs://my-bucket/input.txt&#39;</span><span class="p">)</span>
-    <span class="n">transformed_lines</span> <span class="o">=</span> <span class="n">lines</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-    <span class="n">transformed_lines</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">WriteToText</span><span class="p">(</span><span class="s1">&#39;gs://my-bucket/output.txt&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+with beam.Pipeline(options=options) as p:
+    lines = p | beam.ReadFromText('gs://my-bucket/input.txt')
+    transformed_lines = lines | beam.Map(lambda x: x.upper())
+    transformed_lines | beam.WriteToText('gs://my-bucket/output.txt')
+</code></pre>
 <p>This file defines a pipeline that reads data from a file in Google Cloud Storage, transforms the data using a <code>Map</code> function, and writes the transformed data to another file in Google Cloud Storage.</p>
 <h3 id="example-3-building-a-machine-learning-model-with-google-cloud-ai-platform">Example 3: Building a Machine Learning Model with Google Cloud AI Platform</h3>
 <p>To build a machine learning model with Google Cloud AI Platform, you can use the following steps:
@@ -223,18 +221,17 @@
 3. Train the model using the <code>gcloud ai-platform</code> command.
 4. Deploy the model using the <code>gcloud ai-platform</code> command.</p>
 <p>Here is an example of the <code>model.py</code> file for a simple machine learning model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">784</span><span class="p">,)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(784,)))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+</code></pre>
 <p>This file defines a simple neural network model using the <code>TensorFlow</code> library.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when using GCP:

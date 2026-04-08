@@ -232,26 +232,25 @@
 <h2 id="practical-examples-of-serverless-computing">Practical Examples of Serverless Computing</h2>
 <h3 id="example-1-building-a-rest-api-with-aws-lambda-and-api-gateway">Example 1: Building a REST API with AWS Lambda and API Gateway</h3>
 <p>Suppose you want to create a simple API that returns user data.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// AWS Lambda function in Node.js</span>
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">pathParameters</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Fetch user data from database (mocked here)</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">userId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;john.doe@example.com&quot;</span>
-<span class="w">  </span><span class="p">};</span>
+<pre><code class="language-javascript">// AWS Lambda function in Node.js
+exports.handler = async (event) =&gt; {
+  const userId = event.pathParameters.id;
+  // Fetch user data from database (mocked here)
+  const userData = {
+    id: userId,
+    name: &quot;John Doe&quot;,
+    email: &quot;john.doe@example.com&quot;
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">userData</span><span class="p">),</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  return {
+    statusCode: 200,
+    body: JSON.stringify(userData),
+    headers: {
+      &quot;Content-Type&quot;: &quot;application/json&quot;
+    }
+  };
+};
+</code></pre>
 <p><strong>Deployment steps:</strong></p>
 <ul>
 <li>Create a Lambda function with this code.</li>
@@ -265,27 +264,26 @@
 <li>Function: Resize or compress images.</li>
 <li>Benefits: No need for dedicated servers, scales automatically with uploads.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">resize_image</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">base64</span>
-    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-    <span class="kn">import</span> <span class="nn">io</span>
+<pre><code class="language-python">def resize_image(event, context):
+    import base64
+    from PIL import Image
+    import io
 
-    <span class="n">bucket_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;bucket&#39;</span><span class="p">]</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    bucket_name = event['bucket']
+    file_name = event['name']
 
-    <span class="c1"># Fetch the image from Cloud Storage</span>
-    <span class="c1"># (Implementation omitted for brevity)</span>
+    # Fetch the image from Cloud Storage
+    # (Implementation omitted for brevity)
 
-    <span class="c1"># Resize logic</span>
-    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image_data</span><span class="p">))</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
-        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;JPEG&#39;</span><span class="p">)</span>
-        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="c1"># Save resized image back to storage</span>
-        <span class="c1"># (Implementation omitted)</span>
-</code></pre></div>
-
+    # Resize logic
+    with Image.open(io.BytesIO(image_data)) as img:
+        img = img.resize((800, 600))
+        buffer = io.BytesIO()
+        img.save(buffer, format='JPEG')
+        buffer.seek(0)
+        # Save resized image back to storage
+        # (Implementation omitted)
+</code></pre>
 <hr />
 <h2 id="implementing-serverless-applications-practical-tips">Implementing Serverless Applications: Practical Tips</h2>
 <h3 id="1-design-for-statelessness">1. Design for Statelessness</h3>

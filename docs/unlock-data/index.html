@@ -153,62 +153,59 @@
 <p>Feature engineering is the process of selecting and transforming raw data into features that are more suitable for modeling. It is a critical step in the machine learning pipeline, as the quality of the features can significantly impact the performance of the model. In this article, we will explore various feature engineering techniques, including data preprocessing, feature scaling, and feature transformation.</p>
 <h3 id="data-preprocessing">Data Preprocessing</h3>
 <p>Data preprocessing is the first step in feature engineering. It involves cleaning and preparing the data for modeling. This can include handling missing values, removing duplicates, and encoding categorical variables. For example, let's consider a dataset of customer information, where we have a column for customer ID, name, and address. We can use the <code>pandas</code> library in Python to handle missing values and remove duplicates.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="s1">&#39;Emily&#39;</span><span class="p">,</span> <span class="s1">&#39;Michael&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;123 Main St&#39;</span><span class="p">,</span> <span class="s1">&#39;456 Elm St&#39;</span><span class="p">,</span> <span class="s1">&#39;789 Oak St&#39;</span><span class="p">,</span> <span class="s1">&#39;123 Main St&#39;</span><span class="p">,</span> <span class="s1">&#39;456 Elm St&#39;</span><span class="p">]</span>
-<span class="p">}</span>
+# Create a sample dataset
+data = {
+    'customer_id': [1, 2, 3, 4, 5],
+    'name': ['John', 'Mary', 'David', 'Emily', 'Michael'],
+    'address': ['123 Main St', '456 Elm St', '789 Oak St', '123 Main St', '456 Elm St']
+}
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+df = pd.DataFrame(data)
 
-<span class="c1"># Handle missing values</span>
-<span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;Unknown&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Handle missing values
+df.fillna('Unknown', inplace=True)
 
-<span class="c1"># Remove duplicates</span>
-<span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;customer_id&#39;</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Remove duplicates
+df.drop_duplicates(subset='customer_id', keep='first', inplace=True)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+print(df)
+</code></pre>
 <p>In this example, we create a sample dataset with customer information. We then use the <code>fillna</code> method to handle missing values and the <code>drop_duplicates</code> method to remove duplicates.</p>
 <h2 id="feature-scaling">Feature Scaling</h2>
 <p>Feature scaling is the process of transforming features to have similar scales. This is important because many machine learning algorithms are sensitive to the scale of the features. For example, if one feature has a large range of values and another feature has a small range of values, the algorithm may give more weight to the feature with the large range of values. We can use the <code>StandardScaler</code> from the <code>sklearn.preprocessing</code> library to scale our features.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+import numpy as np
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+# Create a sample dataset
+X = np.array([[1, 2], [3, 4], [5, 6]])
 
-<span class="c1"># Create a StandardScaler object</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+# Create a StandardScaler object
+scaler = StandardScaler()
 
-<span class="c1"># Fit and transform the data</span>
-<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Fit and transform the data
+X_scaled = scaler.fit_transform(X)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-</code></pre></div>
-
+print(X_scaled)
+</code></pre>
 <p>In this example, we create a sample dataset with two features. We then create a <code>StandardScaler</code> object and use the <code>fit_transform</code> method to scale our features.</p>
 <h3 id="feature-transformation">Feature Transformation</h3>
 <p>Feature transformation is the process of transforming features to improve the performance of the model. This can include techniques such as polynomial transformation, log transformation, and one-hot encoding. For example, let's consider a dataset of house prices, where we have a feature for the number of bedrooms. We can use polynomial transformation to create new features, such as the square of the number of bedrooms.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.preprocessing import PolynomialFeatures
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+# Create a sample dataset
+X = np.array([[1], [2], [3]])
 
-<span class="c1"># Create a PolynomialFeatures object</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+# Create a PolynomialFeatures object
+poly = PolynomialFeatures(degree=2)
 
-<span class="c1"># Fit and transform the data</span>
-<span class="n">X_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Fit and transform the data
+X_poly = poly.fit_transform(X)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">X_poly</span><span class="p">)</span>
-</code></pre></div>
-
+print(X_poly)
+</code></pre>
 <p>In this example, we create a sample dataset with one feature. We then create a <code>PolynomialFeatures</code> object and use the <code>fit_transform</code> method to transform our feature.</p>
 <h2 id="tools-and-platforms-for-feature-engineering">Tools and Platforms for Feature Engineering</h2>
 <p>There are several tools and platforms available for feature engineering, including:</p>

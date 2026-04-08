@@ -166,7 +166,7 @@
 <p>Each of these tools and platforms has its own strengths and weaknesses. For example, Istio is known for its flexibility and customizability, while Linkerd is known for its simplicity and ease of use. AWS App Mesh and Google Cloud Service Mesh, on the other hand, offer a managed service mesh experience, which can be attractive to teams who want to focus on building their applications rather than managing their service mesh infrastructure.</p>
 <h3 id="example-using-istio-to-manage-service-communication">Example: Using Istio to Manage Service Communication</h3>
 <p>Here is an example of how you can use Istio to manage service communication:</p>
-<div class="codehilite"><pre><span></span><code># Define a service
+<pre><code class="language-yml"># Define a service
 apiVersion: v1
 kind: Service
 metadata:
@@ -196,8 +196,7 @@ spec:
         host: hello-service
         port:
           number: 80
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we define a service called <code>hello-service</code> and a virtual service that routes traffic to the <code>hello-service</code> service. We can then use Istio's traffic management features to manage the traffic to the <code>hello-service</code> service.</p>
 <h2 id="benefits-of-service-mesh-architecture">Benefits of Service Mesh Architecture</h2>
 <p>Service mesh architecture offers several benefits, including:
@@ -207,32 +206,31 @@ spec:
 * <strong>Better observability</strong>: service mesh architecture provides features like monitoring and tracing, which can help you better understand the behavior of your microservices</p>
 <h3 id="example-using-linkerd-to-monitor-service-interactions">Example: Using Linkerd to Monitor Service Interactions</h3>
 <p>Here is an example of how you can use Linkerd to monitor service interactions:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a service</span>
-<span class="n">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="n">v1</span>
-<span class="n">kind</span><span class="p">:</span><span class="w"> </span><span class="n">Service</span>
-<span class="n">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">service</span>
-<span class="n">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="n">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="n">app</span><span class="p">:</span><span class="w"> </span><span class="n">hello</span>
-<span class="w">  </span><span class="n">ports</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">http</span>
-<span class="w">    </span><span class="n">port</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">    </span><span class="n">targetPort</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span>
+<pre><code class="language-yml"># Define a service
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+spec:
+  selector:
+    app: hello
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
 
-<span class="c1"># Define a Linkerd configuration</span>
-<span class="n">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="n">linkerd</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v1alpha2</span>
-<span class="n">kind</span><span class="p">:</span><span class="w"> </span><span class="n">ServiceProfile</span>
-<span class="n">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">service</span>
-<span class="n">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="n">routes</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">v1</span>
-<span class="w">    </span><span class="n">method</span><span class="p">:</span><span class="w"> </span><span class="n">GET</span>
-<span class="w">    </span><span class="n">loadBalancer</span><span class="p">:</span>
-<span class="w">      </span><span class="n">kind</span><span class="p">:</span><span class="w"> </span><span class="n">roundRobin</span>
-</code></pre></div>
-
+# Define a Linkerd configuration
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: hello-service
+spec:
+  routes:
+  - path: /v1
+    method: GET
+    loadBalancer:
+      kind: roundRobin
+</code></pre>
 <p>In this example, we define a service called <code>hello-service</code> and a Linkerd configuration that monitors the interactions with the <code>hello-service</code> service. We can then use Linkerd's monitoring features to understand the behavior of the <code>hello-service</code> service.</p>
 <h2 id="challenges-of-service-mesh-architecture">Challenges of Service Mesh Architecture</h2>
 <p>Service mesh architecture also presents several challenges, including:
@@ -241,7 +239,7 @@ spec:
 * <strong>Cost</strong>: service mesh architecture can be expensive, especially if you are using a managed service mesh platform</p>
 <h3 id="example-using-aws-app-mesh-to-manage-service-communication">Example: Using AWS App Mesh to Manage Service Communication</h3>
 <p>Here is an example of how you can use AWS App Mesh to manage service communication:</p>
-<div class="codehilite"><pre><span></span><code># Define a service
+<pre><code class="language-yml"># Define a service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -280,8 +278,7 @@ spec:
         host: hello-service
         port:
           number: 8080
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we define a service called <code>hello-service</code> and an AWS App Mesh configuration that manages the communication with the <code>hello-service</code> service. We can then use AWS App Mesh's features to manage the traffic to the <code>hello-service</code> service.</p>
 <h2 id="use-cases-for-service-mesh-architecture">Use Cases for Service Mesh Architecture</h2>
 <p>Service mesh architecture has several use cases, including:

@@ -158,68 +158,65 @@
 <ul>
 <li><strong>Minification</strong>: Minification involves removing unnecessary characters from code, such as whitespace and comments, to reduce the overall file size. This can be done using tools such as Gzip or Brotli. For example, the following JavaScript code:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// add two numbers</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// original code
+function add(a, b) {
+  // add two numbers
+  return a + b;
+}
 
-<span class="c1">// minified code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">;}</span>
-</code></pre></div>
-
+// minified code
+function add(a,b){return a+b;}
+</code></pre>
 <ul>
 <li><strong>Concatenation</strong>: Concatenation involves combining multiple files into a single file to reduce the number of HTTP requests. This can be done using tools such as Webpack or Rollup. For example, the following code:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="c1">// file1.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// original code
+// file1.js
+function add(a, b) {
+  return a + b;
+}
 
-<span class="c1">// file2.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+// file2.js
+function multiply(a, b) {
+  return a * b;
+}
 
-<span class="c1">// concatenated code</span>
-<span class="c1">// bundle.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// concatenated code
+// bundle.js
+function add(a, b) {
+  return a + b;
+}
+function multiply(a, b) {
+  return a * b;
+}
+</code></pre>
 <ul>
 <li><strong>Tree Shaking</strong>: Tree shaking involves removing unused code from a project to reduce the overall file size. This can be done using tools such as Webpack or Rollup. For example, the following code:</li>
 </ul>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="c1">// math.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">subtract</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// original code
+// math.js
+function add(a, b) {
+  return a + b;
+}
+function multiply(a, b) {
+  return a * b;
+}
+function subtract(a, b) {
+  return a - b;
+}
 
-<span class="c1">// used code</span>
-<span class="c1">// main.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./math.js&#39;</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">));</span>
+// used code
+// main.js
+import { add } from './math.js';
+console.log(add(2, 3));
 
-<span class="c1">// tree shaken code</span>
-<span class="c1">// bundle.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// tree shaken code
+// bundle.js
+function add(a, b) {
+  return a + b;
+}
+</code></pre>
 <h2 id="image-optimization-techniques">Image Optimization Techniques</h2>
 <p>Images are often one of the largest contributors to page load time, as they can be very large in terms of file size. Here are a few examples of image optimization techniques:</p>
 <ul>
@@ -235,57 +232,54 @@
 </li>
 <li><strong>Lazy Loading</strong>: Lazy loading involves loading images only when they are needed, rather than loading them all at once. This can be done using tools such as IntersectionObserver or Lazy Load. For example, the following code:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;image.jpg&quot;</span><span class="w"> </span><span class="nx">alt</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="o">&gt;</span>
+<pre><code class="language-javascript">// original code
+&lt;img src=&quot;image.jpg&quot; alt=&quot;image&quot;&gt;
 
-<span class="c1">// lazy loaded code</span>
-<span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;placeholder.jpg&quot;</span><span class="w"> </span><span class="nx">alt</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="w"> </span><span class="nx">data</span><span class="o">-</span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;image.jpg&quot;</span><span class="o">&gt;</span>
-</code></pre></div>
-
+// lazy loaded code
+&lt;img src=&quot;placeholder.jpg&quot; alt=&quot;image&quot; data-src=&quot;image.jpg&quot;&gt;
+</code></pre>
 <h2 id="caching-and-content-delivery-networks-cdns">Caching and Content Delivery Networks (CDNs)</h2>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
 <p>Caching and CDNs are two techniques that can be used to improve page load time by reducing the distance between the user and the server.</p>
 <ul>
 <li><strong>Caching</strong>: Caching involves storing frequently-used resources in memory or on disk, so that they can be quickly retrieved instead of being reloaded from the server. This can be done using tools such as Redis or Memcached. For example, the following code:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="c1">// fetch data from server</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://example.com/data&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<pre><code class="language-javascript">// original code
+// fetch data from server
+fetch('https://example.com/data')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
 
-<span class="c1">// cached code</span>
-<span class="c1">// fetch data from cache</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cachedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cachedData</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cachedData</span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// fetch data from server</span>
-<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://example.com/data&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">);</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// cached code
+// fetch data from cache
+const cachedData = cache.get('data');
+if (cachedData) {
+  console.log(cachedData);
+} else {
+  // fetch data from server
+  fetch('https://example.com/data')
+    .then(response =&gt; response.json())
+    .then(data =&gt; {
+      cache.set('data', data);
+      console.log(data);
+    });
+}
+</code></pre>
 <ul>
 <li><strong>CDNs</strong>: CDNs involve storing resources in multiple locations around the world, so that they can be quickly retrieved by users in different geographic locations. This can be done using tools such as Cloudflare or MaxCDN. For example, the following code:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// original code</span>
-<span class="c1">// fetch data from server</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://example.com/data&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<pre><code class="language-javascript">// original code
+// fetch data from server
+fetch('https://example.com/data')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
 
-<span class="c1">// cdn code</span>
-<span class="c1">// fetch data from cdn</span>
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://cdn.example.com/data&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-</code></pre></div>
-
+// cdn code
+// fetch data from cdn
+fetch('https://cdn.example.com/data')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
+</code></pre>
 <h2 id="real-world-examples-and-case-studies">Real-World Examples and Case Studies</h2>
 <p>Here are a few real-world examples and case studies of companies that have improved their page load time using the techniques described above:</p>
 <ul>

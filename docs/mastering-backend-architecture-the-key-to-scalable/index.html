@@ -224,15 +224,14 @@
           server backend2.example.com;</li>
 </ul>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="err">}</span>
+<pre><code>  }
 
-<span class="w">  </span><span class="nt">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="err">location</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">{</span>
-<span class="w">          </span><span class="err">proxy_pass</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">backend</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">  </span><span class="err">}</span>
-</code></pre></div>
-
+  server {
+      location / {
+          proxy_pass http://backend;
+      }
+  }
+</code></pre>
 <p>}
   ```</p>
 <h3 id="caching-strategies">Caching Strategies</h3>
@@ -245,19 +244,18 @@
 </ul>
 <p>app.get('/products/:id', (req, res) =&gt; {
       const productId = req.params.id;</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nv">client</span>.<span class="nv">get</span><span class="ss">(</span><span class="nv">productId</span>,<span class="w"> </span><span class="ss">(</span><span class="nv">err</span>,<span class="w"> </span><span class="nb">result</span><span class="ss">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>{
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nb">result</span><span class="ss">)</span><span class="w"> </span>{
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="nv">res</span>.<span class="nv">json</span><span class="ss">(</span><span class="nv">JSON</span>.<span class="nv">parse</span><span class="ss">(</span><span class="nb">result</span><span class="ss">))</span><span class="c1">;</span>
-<span class="w">      </span>}<span class="w"> </span><span class="k">else</span><span class="w"> </span>{
-<span class="w">          </span><span class="o">//</span><span class="w"> </span><span class="nv">Fetch</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">database</span>
-<span class="w">          </span><span class="nv">db</span>.<span class="nv">getProduct</span><span class="ss">(</span><span class="nv">productId</span>,<span class="w"> </span><span class="ss">(</span><span class="nv">err</span>,<span class="w"> </span><span class="nv">product</span><span class="ss">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>{
-<span class="w">              </span><span class="nv">client</span>.<span class="nv">setex</span><span class="ss">(</span><span class="nv">productId</span>,<span class="w"> </span><span class="mi">3600</span>,<span class="w"> </span><span class="nv">JSON</span>.<span class="nv">stringify</span><span class="ss">(</span><span class="nv">product</span><span class="ss">))</span><span class="c1">; // Cache for 1 hour</span>
-<span class="w">              </span><span class="nv">res</span>.<span class="nv">json</span><span class="ss">(</span><span class="nv">product</span><span class="ss">)</span><span class="c1">;</span>
-<span class="w">          </span>}<span class="ss">)</span><span class="c1">;</span>
-<span class="w">      </span>}
-<span class="w">  </span>}<span class="ss">)</span><span class="c1">;</span>
-</code></pre></div>
-
+<pre><code>  client.get(productId, (err, result) =&gt; {
+      if (result) {
+          return res.json(JSON.parse(result));
+      } else {
+          // Fetch from database
+          db.getProduct(productId, (err, product) =&gt; {
+              client.setex(productId, 3600, JSON.stringify(product)); // Cache for 1 hour
+              res.json(product);
+          });
+      }
+  });
+</code></pre>
 <p>});
   ```</p>
 <h3 id="database-sharding">Database Sharding</h3>

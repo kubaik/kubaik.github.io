@@ -163,18 +163,16 @@
 </ul>
 <h3 id="practical-example-using-composer-to-manage-dependencies">Practical Example: Using Composer to Manage Dependencies</h3>
 <p>Here is an example of how to use Composer to install and manage dependencies for a PHP project:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// composer.json</span>
-<span class="x">{</span>
-<span class="x">    &quot;require&quot;: {</span>
-<span class="x">        &quot;twig/twig&quot;: &quot;^3.0&quot;</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
-
+<pre><code class="language-php">// composer.json
+{
+    &quot;require&quot;: {
+        &quot;twig/twig&quot;: &quot;^3.0&quot;
+    }
+}
+</code></pre>
 <p>In this example, we define a <code>composer.json</code> file that specifies the dependencies required for our project. We can then run the following command to install the dependencies:</p>
-<div class="codehilite"><pre><span></span><code>composer<span class="w"> </span>install
-</code></pre></div>
-
+<pre><code class="language-bash">composer install
+</code></pre>
 <p>This will install the Twig library and its dependencies, allowing us to use it in our project.</p>
 <h2 id="best-practices-for-modern-php-development">Best Practices for Modern PHP Development</h2>
 <p>Modern PHP development involves following a set of best practices that ensure code quality, maintainability, and scalability. Some of the most important best practices include:</p>
@@ -186,32 +184,30 @@
 </ul>
 <h3 id="practical-example-using-phpunit-to-write-unit-tests">Practical Example: Using PHPUnit to Write Unit Tests</h3>
 <p>Here is an example of how to use PHPUnit to write unit tests for a PHP class:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// User.php</span>
-<span class="x">class User {</span>
-<span class="x">    private $name;</span>
+<pre><code class="language-php">// User.php
+class User {
+    private $name;
 
-<span class="x">    public function __construct($name) {</span>
-<span class="x">        $this-&gt;name = $name;</span>
-<span class="x">    }</span>
+    public function __construct($name) {
+        $this-&gt;name = $name;
+    }
 
-<span class="x">    public function getName() {</span>
-<span class="x">        return $this-&gt;name;</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
-
+    public function getName() {
+        return $this-&gt;name;
+    }
+}
+</code></pre>
 <p>We can then write a unit test for this class using PHPUnit:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// UserTest.php</span>
-<span class="x">use PHPUnit\Framework\TestCase;</span>
+<pre><code class="language-php">// UserTest.php
+use PHPUnit\Framework\TestCase;
 
-<span class="x">class UserTest extends TestCase {</span>
-<span class="x">    public function testGetName() {</span>
-<span class="x">        $user = new User(&#39;John Doe&#39;);</span>
-<span class="x">        $this-&gt;assertEquals(&#39;John Doe&#39;, $user-&gt;getName());</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
-
+class UserTest extends TestCase {
+    public function testGetName() {
+        $user = new User('John Doe');
+        $this-&gt;assertEquals('John Doe', $user-&gt;getName());
+    }
+}
+</code></pre>
 <p>In this example, we define a <code>User</code> class and a <code>UserTest</code> class that contains a unit test for the <code>getName</code> method.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Modern PHP development is not without its challenges. Some common problems and solutions include:</p>
@@ -222,21 +218,20 @@
 </ul>
 <h3 id="practical-example-using-redis-to-improve-performance">Practical Example: Using Redis to Improve Performance</h3>
 <p>Here is an example of how to use Redis to improve performance in a PHP application:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">// cache.php</span>
-<span class="x">$redis = new Redis();</span>
-<span class="x">$redis-&gt;connect(&#39;localhost&#39;, 6379);</span>
+<pre><code class="language-php">// cache.php
+$redis = new Redis();
+$redis-&gt;connect('localhost', 6379);
 
-<span class="x">function getCache($key) {</span>
-<span class="x">    global $redis;</span>
-<span class="x">    return $redis-&gt;get($key);</span>
-<span class="x">}</span>
+function getCache($key) {
+    global $redis;
+    return $redis-&gt;get($key);
+}
 
-<span class="x">function setCache($key, $value) {</span>
-<span class="x">    global $redis;</span>
-<span class="x">    $redis-&gt;set($key, $value);</span>
-<span class="x">}</span>
-</code></pre></div>
-
+function setCache($key, $value) {
+    global $redis;
+    $redis-&gt;set($key, $value);
+}
+</code></pre>
 <p>In this example, we define a <code>cache.php</code> file that provides a simple caching mechanism using Redis. We can then use this mechanism to cache frequently accessed data, reducing the load on our database and improving performance.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Modern PHP development has a wide range of real-world use cases, including:</p>

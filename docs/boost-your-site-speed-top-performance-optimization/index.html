@@ -153,22 +153,19 @@
 <li><strong>Choose the right format:</strong> Use JPEG for photographs, PNG for images requiring transparency, and WebP for superior compression with quality.</li>
 <li><strong>Compress images:</strong> Use tools like <a href="https://tinypng.com/">TinyPNG</a> or <a href="https://imageoptim.com/">ImageOptim</a> to reduce file sizes without compromising quality.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Using ImageOptim CLI</span>
-imageoptim<span class="w"> </span>-q<span class="w"> </span>your-image.png
-</code></pre></div>
-
+<pre><code class="language-bash"># Example: Using ImageOptim CLI
+imageoptim -q your-image.png
+</code></pre>
 <ul>
 <li><strong>Implement lazy loading:</strong> Load images only when they are in the viewport to improve initial load time.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; loading=&quot;lazy&quot; alt=&quot;Description&quot; /&gt;
+</code></pre>
 <ul>
 <li><strong>Use responsive images:</strong> Serve appropriately sized images for different devices with <code>&lt;picture&gt;</code> or <code>srcset</code>.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;small.jpg&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;large.jpg 1024w, medium.jpg 768w, small.jpg 480w&quot;</span> <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 600px) 480px, 800px&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Example&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;small.jpg&quot; srcset=&quot;large.jpg 1024w, medium.jpg 768w, small.jpg 480w&quot; sizes=&quot;(max-width: 600px) 480px, 800px&quot; alt=&quot;Example&quot; /&gt;
+</code></pre>
 <hr />
 <h2 id="2-minify-and-combine-css-javascript-files">2. Minify and Combine CSS &amp; JavaScript Files</h2>
 <p>Unminified and multiple CSS/JS files lead to increased HTTP requests and larger payloads.</p>
@@ -176,33 +173,30 @@ imageoptim<span class="w"> </span>-q<span class="w"> </span>your-image.png
 <ul>
 <li><strong>Minify files:</strong> Remove whitespace, comments, and unnecessary characters.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Using a tool like Terser for JavaScript</span>
-terser<span class="w"> </span>main.js<span class="w"> </span>-o<span class="w"> </span>main.min.js
-</code></pre></div>
-
+<pre><code class="language-bash"># Using a tool like Terser for JavaScript
+terser main.js -o main.min.js
+</code></pre>
 <ul>
 <li><strong>Combine files:</strong> Instead of multiple requests, bundle your CSS and JS into fewer files.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Concatenate files</span>
-cat<span class="w"> </span>style1.css<span class="w"> </span>style2.css<span class="w"> </span>&gt;<span class="w"> </span>combined.css
-</code></pre></div>
-
+<pre><code class="language-bash"># Example: Concatenate files
+cat style1.css style2.css &gt; combined.css
+</code></pre>
 <ul>
 <li><strong>Use build tools:</strong> Automate minification and bundling with tools like <a href="https://webpack.js.org/">Webpack</a>, <a href="https://parceljs.org/">Parcel</a>, or <a href="https://gulpjs.com/">Gulp</a>.</li>
 </ul>
 <h3 id="example-webpack-configuration">Example Webpack Configuration:</h3>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;production&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">entry</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bundle.js&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">minimize</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-js">module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+  },
+  optimization: {
+    minimize: true
+  }
+};
+</code></pre>
 <hr />
 <h2 id="3-leverage-browser-caching">3. Leverage Browser Caching</h2>
 <p>Caching reduces the need for browsers to re-download resources on subsequent visits.</p>
@@ -210,22 +204,20 @@ cat<span class="w"> </span>style1.css<span class="w"> </span>style2.css<span cla
 <ul>
 <li><strong>Set cache headers:</strong> Configure your server to specify caching policies.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example: Apache .htaccess</span>
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_expires.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">ExpiresActive</span><span class="w"> </span><span class="k">On</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>image/jpeg<span class="w"> </span><span class="s2">&quot;access plus 1 year&quot;</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>text/css<span class="w"> </span><span class="s2">&quot;access plus 1 month&quot;</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>application/javascript<span class="w"> </span><span class="s2">&quot;access plus 1 month&quot;</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache"># Example: Apache .htaccess
+&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresByType image/jpeg &quot;access plus 1 year&quot;
+  ExpiresByType text/css &quot;access plus 1 month&quot;
+  ExpiresByType application/javascript &quot;access plus 1 month&quot;
+&lt;/IfModule&gt;
+</code></pre>
 <ul>
 <li><strong>Use versioning:</strong> Append version query strings to static resources to control cache invalidation.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;style.css?v=1.2&quot;</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;app.js?v=1.2&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css?v=1.2&quot; /&gt;
+&lt;script src=&quot;app.js?v=1.2&quot;&gt;&lt;/script&gt;
+</code></pre>
 <ul>
 <li><strong>Implement cache busting strategies:</strong> Automatically update resource URLs when files change.</li>
 </ul>
@@ -258,19 +250,17 @@ cat<span class="w"> </span>style1.css<span class="w"> </span>style2.css<span cla
 <li><strong>Choose a reliable hosting provider:</strong> Opt for providers with optimized infrastructure for speed, such as managed WordPress hosts or VPS providers.</li>
 <li><strong>Enable HTTP/2:</strong> Allows multiplexing, header compression, and faster resource loading.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Enable HTTP/2 in Apache</span>
-<span class="nb">Protocols</span><span class="w"> </span>h2<span class="w"> </span>http/1.1
-</code></pre></div>
-
+<pre><code class="language-apache"># Enable HTTP/2 in Apache
+Protocols h2 http/1.1
+</code></pre>
 <ul>
 <li><strong>Use server-side caching:</strong> Implement server caching solutions like Redis, Memcached, or opcode caches such as OPCache for PHP.</li>
 </ul>
 <h3 id="example-enabling-opcache-in-php">Example: Enabling OPCache in PHP</h3>
-<div class="codehilite"><pre><span></span><code><span class="na">opcache.enable</span><span class="o">=</span><span class="s">1</span>
-<span class="na">opcache.memory_consumption</span><span class="o">=</span><span class="s">128</span>
-<span class="na">opcache.max_accelerated_files</span><span class="o">=</span><span class="s">10000</span>
-</code></pre></div>
-
+<pre><code class="language-ini">opcache.enable=1
+opcache.memory_consumption=128
+opcache.max_accelerated_files=10000
+</code></pre>
 <hr />
 <h2 id="6-minimize-optimize-third-party-scripts">6. Minimize &amp; Optimize Third-Party Scripts</h2>
 <p>Third-party scripts like ads, analytics, and social media widgets can bloat your site.</p>
@@ -279,10 +269,9 @@ cat<span class="w"> </span>style1.css<span class="w"> </span>style2.css<span cla
 <li><strong>Audit your third-party scripts:</strong> Remove or defer non-essential scripts.</li>
 <li><strong>Async or defer loading:</strong> Load scripts asynchronously to prevent blocking page rendering.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://example.com/ads.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">defer</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://analytics.com/analytics.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script async src=&quot;https://example.com/ads.js&quot;&gt;&lt;/script&gt;
+&lt;script defer src=&quot;https://analytics.com/analytics.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 <ul>
 <li><strong>Limit the number of external requests:</strong> Combine or self-host scripts when feasible.</li>
 </ul>
@@ -293,20 +282,18 @@ cat<span class="w"> </span>style1.css<span class="w"> </span>style2.css<span cla
 <ul>
 <li><strong>Inline critical CSS:</strong> Embed essential styles directly into the <code>&lt;head&gt;</code> for faster initial rendering.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="c">/* Critical CSS here */</span>
-<span class="w">  </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;head&gt;
+  &lt;style&gt;
+    /* Critical CSS here */
+  &lt;/style&gt;
+&lt;/head&gt;
+</code></pre>
 <ul>
 <li><strong>Defer non-critical CSS:</strong> Load additional styles asynchronously.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;preload&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css&quot;</span> <span class="na">as</span><span class="o">=</span><span class="s">&quot;style&quot;</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;this.onload=null;this.rel=&#39;stylesheet&#39;&quot;</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; href=&quot;styles.css&quot; as=&quot;style&quot; onload=&quot;this.onload=null;this.rel='stylesheet'&quot; /&gt;
+&lt;noscript&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot; /&gt;&lt;/noscript&gt;
+</code></pre>
 <ul>
 <li><strong>Lazy load images and videos:</strong> Use native <code>loading="lazy"</code> attribute or JavaScript libraries like <a href="https://github.com/ApoorvSaxena/lozad">Lozad.js</a>.</li>
 </ul>

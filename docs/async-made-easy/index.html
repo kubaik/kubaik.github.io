@@ -188,55 +188,53 @@
 <h3 id="basic-rabbitmq-example">Basic RabbitMQ Example</h3>
 <p>Now, let’s create a simple producer-consumer example using Python and the <code>pika</code> library.</p>
 <p><strong>Producer (Sender)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+def send_message(message):
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    channel = connection.channel()
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;task_queue&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    channel.queue_declare(queue='task_queue', durable=True)
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span>
-        <span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;task_queue&#39;</span><span class="p">,</span>
-        <span class="n">body</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
-        <span class="n">properties</span><span class="o">=</span><span class="n">pika</span><span class="o">.</span><span class="n">BasicProperties</span><span class="p">(</span>
-            <span class="n">delivery_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="c1"># Make message persistent</span>
-        <span class="p">))</span>
+    channel.basic_publish(
+        exchange='',
+        routing_key='task_queue',
+        body=message,
+        properties=pika.BasicProperties(
+            delivery_mode=2,  # Make message persistent
+        ))
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    print(f&quot;Sent: {message}&quot;)
+    connection.close()
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    send_message(&quot;Hello World!&quot;)
+</code></pre>
 <p><strong>Consumer (Receiver)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import pika
+import time
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>  <span class="c1"># Simulate work by sleeping</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">basic_ack</span><span class="p">(</span><span class="n">delivery_tag</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="n">delivery_tag</span><span class="p">)</span>
+def callback(ch, method, properties, body):
+    print(f&quot;Received: {body.decode()}&quot;)
+    time.sleep(body.count(b'.'))  # Simulate work by sleeping
+    print(&quot;Done&quot;)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
-<span class="k">def</span> <span class="nf">start_consumer</span><span class="p">():</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+def start_consumer():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    channel = connection.channel()
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;task_queue&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    channel.queue_declare(queue='task_queue', durable=True)
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_qos</span><span class="p">(</span><span class="n">prefetch_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;task_queue&#39;</span><span class="p">,</span> <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='task_queue', on_message_callback=callback)
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for messages. To exit press CTRL+C&#39;</span><span class="p">)</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
+    print('Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">start_consumer</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    start_consumer()
+</code></pre>
 <h3 id="explanation-of-code">Explanation of Code</h3>
 <ul>
 <li><strong>Producer</strong>: The producer script establishes a connection to RabbitMQ, creates a queue called <code>task_queue</code>, and sends a message. The <code>delivery_mode=2</code> option ensures that the message is persistent, meaning it will not be lost if RabbitMQ crashes.</li>
@@ -268,75 +266,73 @@
 <li><strong>Worker</strong>: Process the image and save it to a storage solution like AWS S3.</li>
 </ol>
 <p><strong>Backend Code Example (Flask)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">import</span> <span class="nn">pika</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<pre><code class="language-python">from flask import Flask, request
+import pika
+import os
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+app = Flask(__name__)
 
-<span class="k">def</span> <span class="nf">send_to_queue</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;image_processing&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+def send_to_queue(file_path):
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue='image_processing', durable=True)
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span>
-        <span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;image_processing&#39;</span><span class="p">,</span>
-        <span class="n">body</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
-        <span class="n">properties</span><span class="o">=</span><span class="n">pika</span><span class="o">.</span><span class="n">BasicProperties</span><span class="p">(</span>
-            <span class="n">delivery_mode</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="p">))</span>
-    <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    channel.basic_publish(
+        exchange='',
+        routing_key='image_processing',
+        body=file_path,
+        properties=pika.BasicProperties(
+            delivery_mode=2,
+        ))
+    connection.close()
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">upload_file</span><span class="p">():</span>
-    <span class="k">if</span> <span class="s1">&#39;file&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;No file provided&quot;</span><span class="p">,</span> <span class="mi">400</span>
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return &quot;No file provided&quot;, 400
 
-    <span class="n">file</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    file = request.files['file']
+    file_path = os.path.join('uploads', file.filename)
+    file.save(file_path)
 
-    <span class="n">send_to_queue</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s2">&quot;File uploaded successfully&quot;</span><span class="p">,</span> <span class="mi">200</span>
+    send_to_queue(file_path)
+    return &quot;File uploaded successfully&quot;, 200
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    app.run(port=5000)
+</code></pre>
 <h3 id="worker-code-to-process-images">Worker Code to Process Images</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span> <span class="nn">pika</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<pre><code class="language-python">from PIL import Image
+import pika
+import os
 
-<span class="k">def</span> <span class="nf">process_image</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-    <span class="c1"># Simulate image processing</span>
-    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>  <span class="c1"># Resize example</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>  <span class="c1"># Save processed image</span>
+def process_image(file_path):
+    # Simulate image processing
+    with Image.open(file_path) as img:
+        img = img.resize((200, 200))  # Resize example
+        img.save(file_path)  # Save processed image
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">process_image</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">basic_ack</span><span class="p">(</span><span class="n">delivery_tag</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="n">delivery_tag</span><span class="p">)</span>
+def callback(ch, method, properties, body):
+    file_path = body.decode()
+    print(f&quot;Processing: {file_path}&quot;)
+    process_image(file_path)
+    print(f&quot;Processed: {file_path}&quot;)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
-<span class="k">def</span> <span class="nf">start_worker</span><span class="p">():</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;image_processing&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+def start_worker():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue='image_processing', durable=True)
 
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_qos</span><span class="p">(</span><span class="n">prefetch_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;image_processing&#39;</span><span class="p">,</span> <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='image_processing', on_message_callback=callback)
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for image processing tasks.&#39;</span><span class="p">)</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
+    print('Waiting for image processing tasks.')
+    channel.start_consuming()
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">start_worker</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    start_worker()
+</code></pre>
 <h3 id="metrics-and-performance">Metrics and Performance</h3>
 <p>When implementing this image processing use case, consider these metrics:</p>
 <ul>

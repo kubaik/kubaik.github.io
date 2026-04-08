@@ -163,57 +163,54 @@
 </ul>
 <h2 id="setting-up-a-kotlin-backend-project">Setting Up a Kotlin Backend Project</h2>
 <p>To get started with Kotlin backend development, you'll need to set up a project using a framework such as <a href="https://spring.io/projects/spring-boot">Spring Boot</a> or <a href="https://javalin.io/">Javalin</a>. Here's an example of how to set up a Spring Boot project using Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// build.gradle</span>
-<span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">id</span><span class="p">(</span><span class="s">&quot;org.springframework.boot&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;2.7.3&quot;</span>
-<span class="w">    </span><span class="n">id</span><span class="p">(</span><span class="s">&quot;io.spring.dependency-management&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.0.13.RELEASE&quot;</span>
-<span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;jvm&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.7.20&quot;</span>
-<span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.spring&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.7.20&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-kotlin">// build.gradle
+plugins {
+    id(&quot;org.springframework.boot&quot;) version &quot;2.7.3&quot;
+    id(&quot;io.spring.dependency-management&quot;) version &quot;1.0.13.RELEASE&quot;
+    kotlin(&quot;jvm&quot;) version &quot;1.7.20&quot;
+    kotlin(&quot;plugin.spring&quot;) version &quot;1.7.20&quot;
+}
 
-<span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.example&quot;</span>
-<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;0.0.1-SNAPSHOT&quot;</span>
-<span class="n">sourceCompatibility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;17&quot;</span>
+group = &quot;com.example&quot;
+version = &quot;0.0.1-SNAPSHOT&quot;
+sourceCompatibility = &quot;17&quot;
 
-<span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">mavenCentral</span><span class="p">()</span>
-<span class="p">}</span>
+repositories {
+    mavenCentral()
+}
 
-<span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.springframework.boot:spring-boot-starter-web&quot;</span><span class="p">)</span>
+dependencies {
+    implementation(&quot;org.springframework.boot:spring-boot-starter-web&quot;)
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">a</span><span class="w"> </span><span class="n">href</span><span class="o">=</span><span class="s">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="n">target</span><span class="o">=</span><span class="s">&quot;_blank&quot;</span><span class="w"> </span><span class="n">rel</span><span class="o">=</span><span class="s">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Eloquent</span><span class="w"> </span><span class="n">JavaScript</span><span class="w"> </span><span class="n">Book</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;com.fasterxml.jackson.module:jackson-module-kotlin&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="s">&quot;org.springframework.boot:spring-boot-starter-test&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
+    implementation(&quot;com.fasterxml.jackson.module:jackson-module-kotlin&quot;)
+    testImplementation(&quot;org.springframework.boot:spring-boot-starter-test&quot;)
+}
+</code></pre>
+<pre><code class="language-kotlin">// Application.kt
+@SpringBootApplication
+class Application
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// Application.kt</span>
-<span class="nd">@SpringBootApplication</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">Application</span>
-
-<span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">runApplication</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+fun main() {
+    runApplication&lt;Application&gt;(*args)
+}
+</code></pre>
 <h3 id="using-kotlin-with-spring-boot">Using Kotlin with Spring Boot</h3>
 <p>Spring Boot is a popular framework for building backend applications, and it has excellent support for Kotlin. Here's an example of how to use Kotlin with Spring Boot to build a simple REST API:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// UserController.kt</span>
-<span class="nd">@RestController</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/api/users&quot;</span><span class="p">)</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@GetMapping</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return a list of users</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;johndoe@example.com&quot;</span><span class="p">))</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-kotlin">// UserController.kt
+@RestController
+@RequestMapping(&quot;/api/users&quot;)
+class UserController {
+    @GetMapping
+    fun getUsers(): List&lt;User&gt; {
+        // Return a list of users
+        return listOf(User(&quot;John Doe&quot;, &quot;johndoe@example.com&quot;))
+    }
+}
 
-<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">email</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
-</code></pre></div>
-
+data class User(val name: String, val email: String)
+</code></pre>
 <p>In this example, we define a <code>UserController</code> class that handles GET requests to the <code>/api/users</code> endpoint. The <code>getUsers</code> function returns a list of <code>User</code> objects, which are serialized to JSON using Jackson.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Kotlin's performance is comparable to Java's, thanks to its compilation to bytecode and just-in-time (JIT) compilation. According to a <a href="https://www.techempower.com/benchmarks/">benchmarking study</a> by TechEmpower, a Kotlin-based backend application using the Javalin framework achieved the following performance metrics:</p>

@@ -162,66 +162,63 @@
 <p>Implementing push notifications requires a combination of server-side and client-side code. On the server-side, developers need to set up a push notification service and handle the sending of notifications. On the client-side, developers need to register the app for push notifications and handle the receipt of notifications.</p>
 <h3 id="server-side-implementation">Server-Side Implementation</h3>
 <p>Here is an example of how to send a push notification using FCM and Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">admin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;firebase-admin&#39;</span><span class="p">);</span>
-<span class="nx">admin</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">credential</span><span class="o">:</span><span class="w"> </span><span class="nx">admin</span><span class="p">.</span><span class="nx">credential</span><span class="p">.</span><span class="nx">cert</span><span class="p">(</span><span class="s1">&#39;path/to/serviceAccountKey.json&#39;</span><span class="p">),</span>
-<span class="w">  </span><span class="nx">databaseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your-database-url.firebaseio.com&#39;</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">const admin = require('firebase-admin');
+admin.initializeApp({
+  credential: admin.credential.cert('path/to/serviceAccountKey.json'),
+  databaseURL: 'https://your-database-url.firebaseio.com'
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">messaging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">admin</span><span class="p">.</span><span class="nx">messaging</span><span class="p">();</span>
+const messaging = admin.messaging();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a test notification&#39;</span>
-<span class="p">};</span>
+const notification = {
+  title: 'Hello, World!',
+  body: 'This is a test notification'
+};
 
-<span class="nx">messaging</span><span class="p">.</span><span class="nx">sendToDevice</span><span class="p">(</span><span class="s1">&#39;device-token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">notification</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Notification sent successfully:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error sending notification:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+messaging.sendToDevice('device-token', notification)
+  .then((response) =&gt; {
+    console.log('Notification sent successfully:', response);
+  })
+  .catch((error) =&gt; {
+    console.error('Error sending notification:', error);
+  });
+</code></pre>
 <p>This code initializes the FCM SDK, sets up a notification object, and sends the notification to a device with the specified token.</p>
 <h3 id="client-side-implementation">Client-Side Implementation</h3>
 <p>On the client-side, developers need to register the app for push notifications and handle the receipt of notifications. Here is an example of how to register for push notifications using React Native and the <code>react-native-firebase</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native-firebase&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useEffect } from 'react';
+import { View, Text } from 'react-native';
+import firebase from 'react-native-firebase';
 
-<span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestPermission</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">authorizationStatus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">().</span><span class="nx">requestPermission</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">authorizationStatus</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;authorized&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">().</span><span class="nx">getToken</span><span class="p">();</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Push notification token:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="w">  </span><span class="nx">requestPermission</span><span class="p">();</span>
-<span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+useEffect(() =&gt; {
+  const requestPermission = async () =&gt; {
+    const authorizationStatus = await firebase.messaging().requestPermission();
+    if (authorizationStatus === 'authorized') {
+      const token = await firebase.messaging().getToken();
+      console.log('Push notification token:', token);
+    }
+  };
+  requestPermission();
+}, []);
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="nx">Push</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="nx">example</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/View&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+const App = () =&gt; {
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Push notification example&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
-</code></pre></div>
-
+export default App;
+</code></pre>
 <p>This code requests permission for push notifications, gets the device token, and logs it to the console.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem developers face when implementing push notifications is handling token refreshes. When a user uninstalls and reinstalls an app, the push notification token is refreshed, and the old token becomes invalid. To handle this, developers can use a token refresh listener to update the token on the server-side. Here is an example of how to implement a token refresh listener using FCM:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">messaging</span><span class="p">.</span><span class="nx">onTokenRefresh</span><span class="p">((</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Token refreshed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
-<span class="w">  </span><span class="c1">// Update the token on the server-side</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">messaging.onTokenRefresh((token) =&gt; {
+  console.log('Token refreshed:', token);
+  // Update the token on the server-side
+});
+</code></pre>
 <p>Another common problem is handling notification delivery failures. When a notification fails to deliver, the push notification service will typically return an error code indicating the reason for the failure. Developers can use this error code to diagnose and fix the issue. For example, if the error code indicates that the token is invalid, the developer can remove the token from the server-side database to prevent further failures.</p>
 <h2 id="real-world-examples">Real-World Examples</h2>
 <p>Here are a few real-world examples of successful push notification campaigns:

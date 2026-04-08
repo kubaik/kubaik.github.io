@@ -157,74 +157,69 @@
 <h2 id="custom-elements">Custom Elements</h2>
 <p>Custom Elements are a key part of the Web Components specification. They allow developers to create custom HTML elements that can be used in web pages and web apps. Custom Elements are defined using the <code>customElements</code> API, which provides a set of methods for defining and registering custom elements.</p>
 <p>Here is an example of how to define a custom element using the <code>customElements</code> API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          display: block;</span>
-<span class="sb">          background-color: #f0f0f0;</span>
-<span class="sb">          padding: 10px;</span>
-<span class="sb">          border: 1px solid #ccc;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;h1&gt;Hello World!&lt;/h1&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          display: block;
+          background-color: #f0f0f0;
+          padding: 10px;
+          border: 1px solid #ccc;
+        }
+      &lt;/style&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+    `;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-element', MyElement);
+</code></pre>
 <p>In this example, we define a custom element called <code>my-element</code> that extends the <code>HTMLElement</code> class. We use the <code>attachShadow</code> method to create a shadow DOM for the element, and then set the inner HTML of the shadow DOM to a template string that defines the element's content.</p>
 <h3 id="using-custom-elements">Using Custom Elements</h3>
 <p>Once a custom element has been defined and registered, it can be used in web pages and web apps just like any other HTML element. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;my-element&gt;&lt;/my-element&gt;
+</code></pre>
 <p>This will render the custom element in the web page, with the content defined in the template string.</p>
 <h2 id="html-templates">HTML Templates</h2>
 <p>HTML Templates are another key part of the Web Components specification. They allow developers to define reusable HTML templates that can be used to render dynamic content. HTML Templates are defined using the <code>&lt;template&gt;</code> element, which is a new element that has been added to the HTML specification.</p>
 <p>Here is an example of how to define an HTML template:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my-template&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello World!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a paragraph of text.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;template id=&quot;my-template&quot;&gt;
+  &lt;h1&gt;Hello World!&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+&lt;/template&gt;
+</code></pre>
 <p>In this example, we define an HTML template with the ID <code>my-template</code>. The template contains an <code>&lt;h1&gt;</code> element and a <code>&lt;p&gt;</code> element, which can be used to render dynamic content.</p>
 <h3 id="using-html-templates">Using HTML Templates</h3>
 <p>Once an HTML template has been defined, it can be used to render dynamic content using JavaScript. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;my-template&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">clone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">template</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">clone</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const template = document.getElementById('my-template');
+const clone = template.content.cloneNode(true);
+document.body.appendChild(clone);
+</code></pre>
 <p>In this example, we get a reference to the HTML template using the <code>document.getElementById</code> method, and then clone the template using the <code>cloneNode</code> method. We then append the cloned template to the <code>body</code> element using the <code>appendChild</code> method.</p>
 <h2 id="shadow-dom">Shadow DOM</h2>
 <p>Shadow DOM is a new feature of the Web Components specification that allows developers to create a separate DOM tree for a custom element. This can be useful for encapsulating an element's content and styles, and for improving performance by reducing the number of DOM nodes.</p>
 <p>Here is an example of how to create a shadow DOM for a custom element:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          display: block;</span>
-<span class="sb">          background-color: #f0f0f0;</span>
-<span class="sb">          padding: 10px;</span>
-<span class="sb">          border: 1px solid #ccc;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;h1&gt;Hello World!&lt;/h1&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          display: block;
+          background-color: #f0f0f0;
+          padding: 10px;
+          border: 1px solid #ccc;
+        }
+      &lt;/style&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+    `;
+  }
+}
+</code></pre>
 <p>In this example, we create a shadow DOM for the custom element using the <code>attachShadow</code> method. We then set the inner HTML of the shadow DOM to a template string that defines the element's content.</p>
 <h3 id="benefits-of-shadow-dom">Benefits of Shadow DOM</h3>
 <p>Shadow DOM provides several benefits, including:</p>

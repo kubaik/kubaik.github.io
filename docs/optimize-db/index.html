@@ -167,13 +167,11 @@
 * Query optimization: rewriting queries to reduce complexity and improve execution times</p>
 <h3 id="indexing-example">Indexing Example</h3>
 <p>Consider a simple example using MySQL. Suppose we have a table called <code>orders</code> with a column called <code>customer_id</code>. We can create an index on this column using the following query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_customer_id ON orders (customer_id);
+</code></pre>
 <p>This index will improve the performance of queries that filter on <code>customer_id</code>, such as:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = 123;
+</code></pre>
 <p>By creating an index on <code>customer_id</code>, we can reduce the query execution time from 500ms to 50ms, resulting in a 90% improvement in performance.</p>
 <h2 id="database-optimization-tools">Database Optimization Tools</h2>
 <p>There are several tools available to help with database optimization, including:
@@ -183,17 +181,16 @@
 * New Relic: a monitoring tool for tracking database performance and identifying bottlenecks</p>
 <h3 id="new-relic-example">New Relic Example</h3>
 <p>New Relic is a popular monitoring tool that provides detailed insights into database performance. For example, we can use New Relic to track the performance of a MySQL database, including query execution times, CPU usage, and memory usage. The following screenshot shows an example of a New Relic dashboard for a MySQL database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">  </span><span class="nb">+-----------------------+</span>
-<span class="c">  |  Query Execution Time  |</span>
-<span class="c">  </span><span class="nb">+-----------------------+</span>
-<span class="c">  |  Average: 200ms        |</span>
-<span class="c">  |  95th Percentile: 500ms |</span>
-<span class="c">  </span><span class="nb">+-----------------------+</span>
-<span class="c">  |  CPU Usage: 30%        |</span>
-<span class="c">  |  Memory Usage: 40%     |</span>
-<span class="c">  </span><span class="nb">+-----------------------+</span>
-</code></pre></div>
-
+<pre><code>  +-----------------------+
+  |  Query Execution Time  |
+  +-----------------------+
+  |  Average: 200ms        |
+  |  95th Percentile: 500ms |
+  +-----------------------+
+  |  CPU Usage: 30%        |
+  |  Memory Usage: 40%     |
+  +-----------------------+
+</code></pre>
 <p>By using New Relic, we can quickly identify performance bottlenecks and optimize our database for better performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in database optimization:

@@ -158,28 +158,26 @@
 * Customer collaboration over contract negotiation
 * Responding to change over following a plan</p>
 <p>To illustrate these principles in action, let's consider a real-world example. Suppose we are building a web application using the Scrum framework, a popular Agile methodology. We can use tools like Jira or Asana to manage our workflow and track progress. For instance, we can create a Jira board with the following columns:</p>
-<div class="codehilite"><pre><span></span><code>| Column | Description |
+<pre><code class="language-markdown">| Column | Description |
 | --- | --- |
 | To-Do | New tasks and user stories |
 | In Progress | Tasks being worked on by the development team |
 | Done | Completed tasks and user stories |
-</code></pre></div>
-
+</code></pre>
 <p>We can also use GitHub to manage our codebase and collaborate with team members. For example, we can create a GitHub repository with the following structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Directory structure</span>
-<span class="n">project</span><span class="o">/</span>
-<span class="o">|--</span> <span class="n">src</span><span class="o">/</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">models</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">views</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|--</span> <span class="n">tests</span><span class="o">/</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">test_main</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">test_models</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|</span>   <span class="o">|--</span> <span class="n">test_views</span><span class="o">.</span><span class="n">py</span>
-<span class="o">|--</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-<span class="o">|--</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Directory structure
+project/
+|-- src/
+|   |-- main.py
+|   |-- models.py
+|   |-- views.py
+|-- tests/
+|   |-- test_main.py
+|   |-- test_models.py
+|   |-- test_views.py
+|-- requirements.txt
+|-- README.md
+</code></pre>
 <p>In this example, we are applying the principles of Agile development by prioritizing working software over comprehensive documentation, and responding to change over following a plan.</p>
 <h2 id="agile-methodologies-and-frameworks">Agile Methodologies and Frameworks</h2>
 <p>There are several Agile methodologies and frameworks that teams can use to implement Agile principles. Some popular ones include:
@@ -187,18 +185,17 @@
 * Kanban: Focuses on visualizing work, limiting work in progress, and continuous improvement.
 * Lean: Applies principles from the lean manufacturing system to software development, aiming to minimize waste and maximize value.</p>
 <p>Let's consider a concrete use case for the Scrum framework. Suppose we are building a mobile app with a team of 5 developers, and we want to deliver a working prototype in 6 weeks. We can use the Scrum framework to manage our workflow and track progress. Here's an example of how we can implement Scrum:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Scrum Roles</span>
-<span class="k">*</span><span class="w"> </span>Product Owner: Responsible for defining and prioritizing the product backlog
-<span class="k">*</span><span class="w"> </span>Scrum Master: Responsible for facilitating Scrum events and removing impediments
-<span class="k">*</span><span class="w"> </span>Development Team: Responsible for developing the product increment
+<pre><code class="language-markdown"># Scrum Roles
+* Product Owner: Responsible for defining and prioritizing the product backlog
+* Scrum Master: Responsible for facilitating Scrum events and removing impediments
+* Development Team: Responsible for developing the product increment
 
-<span class="gh"># Scrum Events</span>
-<span class="k">*</span><span class="w"> </span>Sprint Planning: The team plans the work for the upcoming sprint
-<span class="k">*</span><span class="w"> </span>Daily Scrum: The team reviews progress and discusses any impediments
-<span class="k">*</span><span class="w"> </span>Sprint Review: The team reviews the product increment and receives feedback
-<span class="k">*</span><span class="w"> </span>Sprint Retrospective: The team reflects on the sprint and identifies areas for improvement
-</code></pre></div>
-
+# Scrum Events
+* Sprint Planning: The team plans the work for the upcoming sprint
+* Daily Scrum: The team reviews progress and discusses any impediments
+* Sprint Review: The team reviews the product increment and receives feedback
+* Sprint Retrospective: The team reflects on the sprint and identifies areas for improvement
+</code></pre>
 <p>In this example, we are applying the Scrum framework to deliver a working prototype in 6 weeks. We can use tools like Trello or Jira to manage our workflow and track progress.</p>
 <h3 id="implementing-agile-with-tools-and-platforms">Implementing Agile with Tools and Platforms</h3>
 <p>To implement Agile methodologies effectively, teams can use a variety of tools and platforms. Some popular ones include:
@@ -207,26 +204,25 @@
 * Asana: A work management platform that helps teams stay organized and on track
 * GitHub: A version control platform that enables collaboration and code management</p>
 <p>For example, we can use Jira to manage our workflow and track progress. Here's an example of how we can create a Jira board:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a Jira board</span>
-<span class="n">JiraBoard</span><span class="w"> </span><span class="n">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JiraBoard</span><span class="p">();</span>
-<span class="n">board</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;My Board&quot;</span><span class="p">);</span>
-<span class="n">board</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="s">&quot;My board description&quot;</span><span class="p">);</span>
+<pre><code class="language-java">// Create a Jira board
+JiraBoard board = new JiraBoard();
+board.setName(&quot;My Board&quot;);
+board.setDescription(&quot;My board description&quot;);
 
-<span class="c1">// Add columns to the board</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;To-Do&quot;</span><span class="p">));</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;In Progress&quot;</span><span class="p">));</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span><span class="s">&quot;Done&quot;</span><span class="p">));</span>
+// Add columns to the board
+board.addColumn(new Column(&quot;To-Do&quot;));
+board.addColumn(new Column(&quot;In Progress&quot;));
+board.addColumn(new Column(&quot;Done&quot;));
 
-<span class="c1">// Add tasks to the board</span>
-<span class="n">Task</span><span class="w"> </span><span class="n">task1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Task 1&quot;</span><span class="p">);</span>
-<span class="n">task1</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="s">&quot;Task 1 description&quot;</span><span class="p">);</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addTask</span><span class="p">(</span><span class="n">task1</span><span class="p">);</span>
+// Add tasks to the board
+Task task1 = new Task(&quot;Task 1&quot;);
+task1.setDescription(&quot;Task 1 description&quot;);
+board.addTask(task1);
 
-<span class="n">Task</span><span class="w"> </span><span class="n">task2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Task</span><span class="p">(</span><span class="s">&quot;Task 2&quot;</span><span class="p">);</span>
-<span class="n">task2</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="s">&quot;Task 2 description&quot;</span><span class="p">);</span>
-<span class="n">board</span><span class="p">.</span><span class="na">addTask</span><span class="p">(</span><span class="n">task2</span><span class="p">);</span>
-</code></pre></div>
-
+Task task2 = new Task(&quot;Task 2&quot;);
+task2.setDescription(&quot;Task 2 description&quot;);
+board.addTask(task2);
+</code></pre>
 <p>In this example, we are using Jira to manage our workflow and track progress. We can also use other tools like Trello or Asana to achieve similar results.</p>
 <h2 id="overcoming-common-challenges-in-agile-development">Overcoming Common Challenges in Agile Development</h2>
 <p>Agile development is not without its challenges. Some common problems that teams may encounter include:
@@ -238,24 +234,23 @@
 * Establishing clear goals and priorities through regular planning and review sessions
 * Implementing regular feedback and communication mechanisms, such as daily stand-ups and retrospectives</p>
 <p>For example, we can use the following code to implement a daily stand-up meeting:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Daily stand-up meeting</span>
-<span class="k">def</span> <span class="nf">daily_standup</span><span class="p">(</span><span class="n">meeting_time</span><span class="p">):</span>
-    <span class="c1"># Send reminders to team members</span>
-    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">team_members</span><span class="p">:</span>
-        <span class="n">send_reminder</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">meeting_time</span><span class="p">)</span>
+<pre><code class="language-python"># Daily stand-up meeting
+def daily_standup(meeting_time):
+    # Send reminders to team members
+    for member in team_members:
+        send_reminder(member, meeting_time)
 
-    <span class="c1"># Conduct the meeting</span>
-    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">team_members</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">member</span><span class="si">}</span><span class="s2">: What did you work on yesterday?&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">member</span><span class="si">}</span><span class="s2">: What are you working on today?&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">member</span><span class="si">}</span><span class="s2">: Do you have any impediments?&quot;</span><span class="p">)</span>
+    # Conduct the meeting
+    for member in team_members:
+        print(f&quot;{member}: What did you work on yesterday?&quot;)
+        print(f&quot;{member}: What are you working on today?&quot;)
+        print(f&quot;{member}: Do you have any impediments?&quot;)
 
-<span class="c1"># Example usage</span>
-<span class="n">team_members</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">]</span>
-<span class="n">meeting_time</span> <span class="o">=</span> <span class="s2">&quot;10:00 AM&quot;</span>
-<span class="n">daily_standup</span><span class="p">(</span><span class="n">meeting_time</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage
+team_members = [&quot;John&quot;, &quot;Jane&quot;, &quot;Bob&quot;]
+meeting_time = &quot;10:00 AM&quot;
+daily_standup(meeting_time)
+</code></pre>
 <p>In this example, we are using a daily stand-up meeting to facilitate feedback and communication among team members.</p>
 <h2 id="measuring-agile-success">Measuring Agile Success</h2>
 <p>To measure the success of Agile development, teams can use a variety of metrics and benchmarks. Some common ones include:
@@ -278,12 +273,11 @@
 * Google: Uses Agile development to improve the speed and quality of its software development process.
 * Microsoft: Uses Agile development to deliver high-quality software products and services.</p>
 <p>For example, Amazon uses Agile development to deliver new features and products quickly and efficiently. Here's an example of how Amazon implements Agile development:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Amazon&#39;s Agile Development Process</span>
-<span class="k">*</span><span class="w"> </span>Use a combination of Scrum and Kanban to manage workflow and track progress
-<span class="k">*</span><span class="w"> </span>Prioritize features and user stories based on customer feedback and business value
-<span class="k">*</span><span class="w"> </span>Use continuous integration and continuous deployment to deliver software quickly and efficiently
-</code></pre></div>
-
+<pre><code class="language-markdown"># Amazon's Agile Development Process
+* Use a combination of Scrum and Kanban to manage workflow and track progress
+* Prioritize features and user stories based on customer feedback and business value
+* Use continuous integration and continuous deployment to deliver software quickly and efficiently
+</code></pre>
 <p>In this example, Amazon is using Agile development to deliver new features and products quickly and efficiently. We can apply similar principles to our own software development process to achieve similar results.</p>
 <h2 id="best-practices-for-agile-development">Best Practices for Agile Development</h2>
 <p>To get the most out of Agile development, teams can follow some best practices. Some examples include:
@@ -292,34 +286,33 @@
 * Implement regular feedback and communication mechanisms, such as daily stand-ups and retrospectives
 * Provide training and support to help team members adapt to new processes and methodologies</p>
 <p>For example, we can use the following code to implement continuous integration and continuous deployment:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Continuous integration and continuous deployment</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CI_CD</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Build and test the code</span>
-<span class="w">        </span><span class="n">buildCode</span><span class="p">();</span>
-<span class="w">        </span><span class="n">testCode</span><span class="p">();</span>
+<pre><code class="language-java">// Continuous integration and continuous deployment
+public class CI_CD {
+    public static void main(String[] args) {
+        // Build and test the code
+        buildCode();
+        testCode();
 
-<span class="w">        </span><span class="c1">// Deploy the code to production</span>
-<span class="w">        </span><span class="n">deployCode</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+        // Deploy the code to production
+        deployCode();
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">buildCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Build the code using Maven or Gradle</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Building code...&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public static void buildCode() {
+        // Build the code using Maven or Gradle
+        System.out.println(&quot;Building code...&quot;);
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Test the code using JUnit or TestNG</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Testing code...&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public static void testCode() {
+        // Test the code using JUnit or TestNG
+        System.out.println(&quot;Testing code...&quot;);
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deployCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Deploy the code to production using Jenkins or Docker</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Deploying code...&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public static void deployCode() {
+        // Deploy the code to production using Jenkins or Docker
+        System.out.println(&quot;Deploying code...&quot;);
+    }
+}
+</code></pre>
 <p>In this example, we are using continuous integration and continuous deployment to deliver software quickly and efficiently. We can apply similar principles to our own software development process to achieve similar results.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Agile development methodologies offer a powerful approach to software development that emphasizes collaboration, continuous improvement, and flexibility. By following best practices and using the right tools and platforms, teams can deliver high-quality software products quickly and efficiently.</p>

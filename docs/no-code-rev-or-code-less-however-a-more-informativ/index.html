@@ -197,75 +197,72 @@ However, a more informative title under 60 characters could be:
 <p>Let's take a look at some practical examples of low-code development in action.</p>
 <h3 id="example-1-building-a-mobile-app-with-microsoft-power-apps">Example 1: Building a Mobile App with Microsoft Power Apps</h3>
 <p>Microsoft Power Apps is a low-code platform that allows developers to build mobile apps quickly and efficiently. Here's an example of how to build a simple mobile app using Power Apps:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the Power Apps SDK</span>
-<span class="kn">import</span> <span class="nn">powerapps</span>
+<pre><code class="language-python"># Import the Power Apps SDK
+import powerapps
 
-<span class="c1"># Create a new app</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">powerapps</span><span class="o">.</span><span class="n">App</span><span class="p">(</span><span class="s2">&quot;My App&quot;</span><span class="p">)</span>
+# Create a new app
+app = powerapps.App(&quot;My App&quot;)
 
-<span class="c1"># Add a screen to the app</span>
-<span class="n">screen</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">add_screen</span><span class="p">(</span><span class="s2">&quot;Home&quot;</span><span class="p">)</span>
+# Add a screen to the app
+screen = app.add_screen(&quot;Home&quot;)
 
-<span class="c1"># Add a button to the screen</span>
-<span class="n">button</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">add_button</span><span class="p">(</span><span class="s2">&quot;Click me!&quot;</span><span class="p">)</span>
+# Add a button to the screen
+button = screen.add_button(&quot;Click me!&quot;)
 
-<span class="c1"># Add an event handler to the button</span>
-<span class="n">button</span><span class="o">.</span><span class="n">on_click</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button clicked!&quot;</span><span class="p">)</span>
+# Add an event handler to the button
+button.on_click = lambda: print(&quot;Button clicked!&quot;)
 
-<span class="c1"># Save the app</span>
-<span class="n">app</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-</code></pre></div>
-
+# Save the app
+app.save()
+</code></pre>
 <p>This code creates a new mobile app with a single screen and a button. When the button is clicked, it prints a message to the console.</p>
 <h3 id="example-2-building-a-workflow-with-google-app-maker">Example 2: Building a Workflow with Google App Maker</h3>
 <p>Google App Maker is a low-code platform that allows developers to build custom workflows and business processes. Here's an example of how to build a simple workflow using App Maker:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the App Maker SDK</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">appmaker</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the App Maker SDK
+import appmaker;
 
-<span class="c1">// Create a new app</span>
-<span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">appmaker</span><span class="p">.</span><span class="nx">App</span><span class="p">(</span><span class="s2">&quot;My App&quot;</span><span class="p">);</span>
+// Create a new app
+app = appmaker.App(&quot;My App&quot;);
 
-<span class="c1">// Add a workflow to the app</span>
-<span class="nx">workflow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">add_workflow</span><span class="p">(</span><span class="s2">&quot;My Workflow&quot;</span><span class="p">);</span>
+// Add a workflow to the app
+workflow = app.add_workflow(&quot;My Workflow&quot;);
 
-<span class="c1">// Add a step to the workflow</span>
-<span class="nx">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">workflow</span><span class="p">.</span><span class="nx">add_step</span><span class="p">(</span><span class="s2">&quot;Step 1&quot;</span><span class="p">);</span>
+// Add a step to the workflow
+step = workflow.add_step(&quot;Step 1&quot;);
 
-<span class="c1">// Add an action to the step</span>
-<span class="nx">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">step</span><span class="p">.</span><span class="nx">add_action</span><span class="p">(</span><span class="s2">&quot;Send email&quot;</span><span class="p">);</span>
+// Add an action to the step
+action = step.add_action(&quot;Send email&quot;);
 
-<span class="c1">// Configure the action</span>
-<span class="nx">action</span><span class="p">.</span><span class="nx">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;user@example.com&quot;</span><span class="p">;</span>
-<span class="nx">action</span><span class="p">.</span><span class="nx">subject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello from App Maker!&quot;</span><span class="p">;</span>
-<span class="nx">action</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;This is a test email.&quot;</span><span class="p">;</span>
+// Configure the action
+action.to = &quot;user@example.com&quot;;
+action.subject = &quot;Hello from App Maker!&quot;;
+action.body = &quot;This is a test email.&quot;;
 
-<span class="c1">// Save the app</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
-</code></pre></div>
-
+// Save the app
+app.save();
+</code></pre>
 <p>This code creates a new workflow with a single step and an action to send an email.</p>
 <h3 id="example-3-building-a-web-application-with-salesforce-lightning">Example 3: Building a Web Application with Salesforce Lightning</h3>
 <p>Salesforce Lightning is a low-code platform that allows developers to build custom web applications. Here's an example of how to build a simple web application using Lightning:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Lightning SDK</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="p">;</span>
+<pre><code class="language-java">// Import the Lightning SDK
+import lightning;
 
-<span class="c1">// Create a new app</span>
-<span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lightning</span><span class="p">.</span><span class="na">App</span><span class="p">(</span><span class="s">&quot;My App&quot;</span><span class="p">);</span>
+// Create a new app
+app = lightning.App(&quot;My App&quot;);
 
-<span class="c1">// Add a component to the app</span>
-<span class="n">component</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">app</span><span class="p">.</span><span class="na">add_component</span><span class="p">(</span><span class="s">&quot;My Component&quot;</span><span class="p">);</span>
+// Add a component to the app
+component = app.add_component(&quot;My Component&quot;);
 
-<span class="c1">// Add a property to the component</span>
-<span class="n">property</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">component</span><span class="p">.</span><span class="na">add_property</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">);</span>
+// Add a property to the component
+property = component.add_property(&quot;Name&quot;);
 
-<span class="c1">// Configure the property</span>
-<span class="n">property</span><span class="p">.</span><span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
-<span class="n">property</span><span class="p">.</span><span class="na">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Name&quot;</span><span class="p">;</span>
+// Configure the property
+property.type = &quot;text&quot;;
+property.label = &quot;Name&quot;;
 
-<span class="c1">// Save the app</span>
-<span class="n">app</span><span class="p">.</span><span class="na">save</span><span class="p">();</span>
-</code></pre></div>
-
+// Save the app
+app.save();
+</code></pre>
 <p>This code creates a new web application with a single component and a property to store a user's name.</p>
 <h2 id="use-cases-for-low-code-development">Use Cases for Low-Code Development</h2>
 <p>Low-code development has a range of use cases, including:</p>

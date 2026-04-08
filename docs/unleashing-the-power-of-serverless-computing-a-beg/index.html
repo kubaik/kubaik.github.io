@@ -166,15 +166,14 @@
 <p>Popular cloud providers offering serverless platforms include Amazon Web Services (AWS) Lambda, Microsoft Azure Functions, and Google Cloud Functions. Choose a provider based on your familiarity with their services, pricing, and integration options.</p>
 <h3 id="write-your-first-function">Write Your First Function</h3>
 <p>Let's create a simple "Hello World" function using AWS Lambda:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import json
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+def lambda_handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello, World!')
+    }
+</code></pre>
 <h3 id="deploy-and-test-your-function">Deploy and Test Your Function</h3>
 <ol>
 <li>Package your function code along with any dependencies into a zip file.</li>

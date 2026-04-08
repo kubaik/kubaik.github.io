@@ -161,33 +161,32 @@
 * Using JavaScript libraries such as IntersectionObserver or lazyload: These libraries provide a simple and efficient way to implement lazy loading, with minimal code overhead. For example, the IntersectionObserver API provides a way to detect when an element is visible within the viewport, allowing you to load resources only when they are needed.
 * Utilizing CSS techniques such as CSS-only lazy loading: This approach uses CSS to hide and show elements, allowing you to load resources only when they are needed. For example, you can use the <code>:hover</code> pseudo-class to load an image only when the user hovers over it.</p>
 <h3 id="code-example-implementing-lazy-loading-using-intersectionobserver">Code Example: Implementing Lazy Loading using IntersectionObserver</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create an observer instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Loop through the entries</span>
-<span class="w">  </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// If the entry is visible, load the resource</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Load the image</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Stop observing the entry</span>
-<span class="w">      </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Set the threshold to 1.0 (100%)</span>
-<span class="w">  </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create an observer instance
+const observer = new IntersectionObserver((entries) =&gt; {
+  // Loop through the entries
+  entries.forEach((entry) =&gt; {
+    // If the entry is visible, load the resource
+    if (entry.isIntersecting) {
+      // Load the image
+      const img = entry.target;
+      img.src = img.dataset.src;
+      // Stop observing the entry
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  // Set the threshold to 1.0 (100%)
+  threshold: 1.0,
+});
 
-<span class="c1">// Get all images with the lazy class</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
+// Get all images with the lazy class
+const images = document.querySelectorAll('img.lazy');
 
-<span class="c1">// Loop through the images and observe them</span>
-<span class="nx">images</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">img</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Loop through the images and observe them
+images.forEach((img) =&gt; {
+  observer.observe(img);
+});
+</code></pre>
 <p>This code example uses the IntersectionObserver API to implement lazy loading for images. The <code>observer</code> instance is created with a callback function that checks if the entry is visible, and if so, loads the image and stops observing it.</p>
 <h2 id="tools-and-platforms-for-lazy-loading">Tools and Platforms for Lazy Loading</h2>
 <p>There are several tools and platforms available that can help you implement lazy loading, including:
@@ -195,31 +194,30 @@
 * Cloudflare's Lazy Loading feature: This feature provides a simple and efficient way to implement lazy loading for websites hosted on Cloudflare.
 * Google's Chrome Lazy Loading feature: This feature provides a built-in way to implement lazy loading for websites viewed in Google Chrome.</p>
 <h3 id="code-example-implementing-lazy-loading-using-wp-rocket">Code Example: Implementing Lazy Loading using WP Rocket</h3>
-<div class="codehilite"><pre><span></span><code><span class="x">// Enable lazy loading for images</span>
-<span class="x">function wp_rocket_lazy_load_images() {</span>
-<span class="x">  // Add the lazy class to all images</span>
-<span class="x">  add_filter(&#39;wp_image_editors&#39;, &#39;wp_rocket_lazy_load_images_filter&#39;);</span>
-<span class="x">}</span>
-<span class="x">add_action(&#39;init&#39;, &#39;wp_rocket_lazy_load_images&#39;);</span>
+<pre><code class="language-php">// Enable lazy loading for images
+function wp_rocket_lazy_load_images() {
+  // Add the lazy class to all images
+  add_filter('wp_image_editors', 'wp_rocket_lazy_load_images_filter');
+}
+add_action('init', 'wp_rocket_lazy_load_images');
 
-<span class="x">// Filter the image editors to add the lazy class</span>
-<span class="x">function wp_rocket_lazy_load_images_filter($editors) {</span>
-<span class="x">  // Loop through the editors</span>
-<span class="x">  foreach ($editors as $editor) {</span>
-<span class="x">    // Add the lazy class to the editor</span>
-<span class="x">    $editor-&gt;add_filter(&#39;image_output&#39;, &#39;wp_rocket_lazy_load_images_filter_output&#39;);</span>
-<span class="x">  }</span>
-<span class="x">  return $editors;</span>
-<span class="x">}</span>
+// Filter the image editors to add the lazy class
+function wp_rocket_lazy_load_images_filter($editors) {
+  // Loop through the editors
+  foreach ($editors as $editor) {
+    // Add the lazy class to the editor
+    $editor-&gt;add_filter('image_output', 'wp_rocket_lazy_load_images_filter_output');
+  }
+  return $editors;
+}
 
-<span class="x">// Filter the image output to add the lazy class</span>
-<span class="x">function wp_rocket_lazy_load_images_filter_output($output) {</span>
-<span class="x">  // Add the lazy class to the output</span>
-<span class="x">  $output = str_replace(&#39;&lt;img&#39;, &#39;&lt;img class=&quot;lazy&quot;&#39;, $output);</span>
-<span class="x">  return $output;</span>
-<span class="x">}</span>
-</code></pre></div>
-
+// Filter the image output to add the lazy class
+function wp_rocket_lazy_load_images_filter_output($output) {
+  // Add the lazy class to the output
+  $output = str_replace('&lt;img', '&lt;img class=&quot;lazy&quot;', $output);
+  return $output;
+}
+</code></pre>
 <p>This code example uses the WP Rocket plugin to implement lazy loading for images in WordPress. The <code>wp_rocket_lazy_load_images</code> function enables lazy loading for images, and the <code>wp_rocket_lazy_load_images_filter</code> function adds the lazy class to all images.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of lazy loading, there are several common problems that can occur, including:
@@ -227,29 +225,28 @@
 * <strong>SEO issues</strong>: Lazy loading can cause SEO issues, as search engines may not be able to crawl the content that is loaded lazily. Solution: Use a technique called "preload" to load the content before it is needed, allowing search engines to crawl it.
 * <strong>Accessibility issues</strong>: Lazy loading can cause accessibility issues, as screen readers may not be able to read the content that is loaded lazily. Solution: Use a technique called "aria-live" to notify screen readers when the content is loaded.</p>
 <h3 id="code-example-implementing-debouncing-for-infinite-scrolling">Code Example: Implementing Debouncing for Infinite Scrolling</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a debouncing function</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">debounce</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span><span class="w"> </span><span class="nx">wait</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">timeout</span><span class="p">;</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">arguments</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timeout</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="nx">wait</span><span class="p">);</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Create a debouncing function
+function debounce(func, wait) {
+  let timeout;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() =&gt; {
+      func.apply(context, args);
+    }, wait);
+  };
+}
 
-<span class="c1">// Create a scroll event handler</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">scrollHandler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">debounce</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Load the resources</span>
-<span class="w">  </span><span class="nx">loadResources</span><span class="p">();</span>
-<span class="p">},</span><span class="w"> </span><span class="mf">500</span><span class="p">);</span>
+// Create a scroll event handler
+const scrollHandler = debounce(() =&gt; {
+  // Load the resources
+  loadResources();
+}, 500);
 
-<span class="c1">// Add the scroll event handler to the window</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">scrollHandler</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the scroll event handler to the window
+window.addEventListener('scroll', scrollHandler);
+</code></pre>
 <p>This code example uses a debouncing technique to delay the loading of resources until the scroll event has stopped. The <code>debounce</code> function creates a debouncing function that delays the execution of the <code>loadResources</code> function by 500 milliseconds.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Lazy loading can be used in a variety of use cases, including:

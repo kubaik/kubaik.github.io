@@ -163,70 +163,67 @@
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <p>Let's take a look at some practical code examples that demonstrate these techniques:</p>
 <h4 id="example-1-code-optimization">Example 1: Code Optimization</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Original code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">calculateSum</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Original code
+function calculateSum(arr) {
+  let sum = 0;
+  for (let i = 0; i &lt; arr.length; i++) {
+    sum += arr[i];
+  }
+  return sum;
+}
 
-<span class="c1">// Optimized code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">calculateSum</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">3</span><span class="p">];</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">sum</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Optimized code
+function calculateSum(arr) {
+  let sum = 0;
+  for (let i = 0; i &lt; arr.length; i += 4) {
+    sum += arr[i] + arr[i + 1] + arr[i + 2] + arr[i + 3];
+  }
+  return sum;
+}
+</code></pre>
 <p>In this example, we've optimized the <code>calculateSum</code> function by using loop unrolling to reduce the number of iterations. This can result in a significant performance improvement, especially for large arrays.</p>
 <h4 id="example-2-memory-management">Example 2: Memory Management</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Original code</span>
-<span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">malloc</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Allocate memory using the system allocator</span>
-<span class="p">}</span>
+<pre><code class="language-c">// Original code
+void* malloc(size_t size) {
+  // Allocate memory using the system allocator
+}
 
-<span class="c1">// Optimized code</span>
-<span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">malloc</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Use a custom allocator to minimize memory allocation and deallocation</span>
-<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
-<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1024</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">[</span><span class="n">offset</span><span class="p">];</span>
-<span class="w">    </span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Fall back to the system allocator</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Optimized code
+void* malloc(size_t size) {
+  // Use a custom allocator to minimize memory allocation and deallocation
+  static char buffer[1024];
+  static size_t offset = 0;
+  if (offset + size &lt;= 1024) {
+    void* ptr = &amp;buffer[offset];
+    offset += size;
+    return ptr;
+  } else {
+    // Fall back to the system allocator
+    return malloc(size);
+  }
+}
+</code></pre>
 <p>In this example, we've optimized the <code>malloc</code> function by using a custom allocator that minimizes memory allocation and deallocation. This can result in a significant performance improvement, especially for applications that allocate and deallocate memory frequently.</p>
 <h4 id="example-3-caching">Example 3: Caching</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Original code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">fetchData</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Make a request to the server to fetch the data</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Original code
+function fetchData(url) {
+  // Make a request to the server to fetch the data
+}
 
-<span class="c1">// Optimized code</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">fetchData</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Check if the data is cached</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">url</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Make a request to the server to fetch the data</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Cache the data</span>
-<span class="w">    </span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Optimized code
+function fetchData(url) {
+  // Check if the data is cached
+  if (cache.has(url)) {
+    return cache.get(url);
+  } else {
+    // Make a request to the server to fetch the data
+    const data = fetch(url);
+    // Cache the data
+    cache.set(url, data);
+    return data;
+  }
+}
+</code></pre>
 <p>In this example, we've optimized the <code>fetchData</code> function by using caching to reduce the number of requests made to the server. This can result in a significant performance improvement, especially for applications that fetch data frequently.</p>
 <h2 id="tools-and-platforms-for-performance-optimization">Tools and Platforms for Performance Optimization</h2>
 <p>There are several tools and platforms available that can help optimize WASM performance. Here are a few examples:</p>

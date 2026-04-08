@@ -165,88 +165,86 @@
 <p>Let's consider a few practical examples of real-time data processing using these tools.</p>
 <h3 id="example-1-real-time-twitter-sentiment-analysis-using-apache-kafka-and-python">Example 1: Real-Time Twitter Sentiment Analysis using Apache Kafka and Python</h3>
 <p>In this example, we will use Apache Kafka to collect Twitter data, process it in real-time using Python, and analyze the sentiment of tweets. We will use the <code>tweepy</code> library to collect tweets and the <code>textblob</code> library to analyze sentiment.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tweepy</span>
-<span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python">import tweepy
+from textblob import TextBlob
+from kafka import KafkaProducer
 
-<span class="c1"># Kafka producer configuration</span>
-<span class="n">bootstrap_servers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">]</span>
-<span class="n">topic</span> <span class="o">=</span> <span class="s1">&#39;twitter_sentiment&#39;</span>
+# Kafka producer configuration
+bootstrap_servers = ['localhost:9092']
+topic = 'twitter_sentiment'
 
-<span class="c1"># Twitter API credentials</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s1">&#39;your_consumer_key&#39;</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s1">&#39;your_consumer_secret&#39;</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="s1">&#39;your_access_token&#39;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s1">&#39;your_access_token_secret&#39;</span>
+# Twitter API credentials
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
 
-<span class="c1"># Set up Twitter API connection</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
-<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+# Set up Twitter API connection
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
 
-<span class="c1"># Set up Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="n">bootstrap_servers</span><span class="p">)</span>
+# Set up Kafka producer
+producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
-<span class="c1"># Collect tweets and analyze sentiment</span>
-<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="s1">&#39;your_query&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">analysis</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">sentiment</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span>
-    <span class="k">if</span> <span class="n">sentiment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">sentiment_label</span> <span class="o">=</span> <span class="s1">&#39;positive&#39;</span>
-    <span class="k">elif</span> <span class="n">sentiment</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">sentiment_label</span> <span class="o">=</span> <span class="s1">&#39;negative&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">sentiment_label</span> <span class="o">=</span> <span class="s1">&#39;neutral&#39;</span>
-    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tweet&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;sentiment&#39;</span><span class="p">:</span> <span class="n">sentiment_label</span><span class="p">})</span>
-</code></pre></div>
-
+# Collect tweets and analyze sentiment
+for tweet in tweepy.Cursor(api.search, q='your_query').items():
+    analysis = TextBlob(tweet.text)
+    sentiment = analysis.sentiment.polarity
+    if sentiment &gt; 0:
+        sentiment_label = 'positive'
+    elif sentiment &lt; 0:
+        sentiment_label = 'negative'
+    else:
+        sentiment_label = 'neutral'
+    producer.send(topic, value={'tweet': tweet.text, 'sentiment': sentiment_label})
+</code></pre>
 <h3 id="example-2-real-time-iot-sensor-data-processing-using-apache-flink">Example 2: Real-Time IoT Sensor Data Processing using Apache Flink</h3>
 <p>In this example, we will use Apache Flink to process real-time IoT sensor data from a simulated temperature sensor. We will use the <code>flink-iot</code> library to generate sensor data and the <code>flink-table</code> library to process and analyze the data.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.MapFunction</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.common.functions.ReduceFunction</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.api.java.tuple.Tuple2</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.functions.ReduceFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IoTSENSOR</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Set up Flink execution environment</span>
-<span class="w">        </span><span class="n">StreamExecutionEnvironment</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StreamExecutionEnvironment</span><span class="p">.</span><span class="na">getExecutionEnvironment</span><span class="p">();</span>
+public class IoTSENSOR {
+    public static void main(String[] args) throws Exception {
+        // Set up Flink execution environment
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-<span class="w">        </span><span class="c1">// Generate IoT sensor data</span>
-<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">sensorData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="na">addSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">IoTSENSORSource</span><span class="p">());</span>
+        // Generate IoT sensor data
+        DataStream&lt;Tuple2&lt;String, Double&gt;&gt; sensorData = env.addSource(new IoTSENSORSource());
 
-<span class="w">        </span><span class="c1">// Process and analyze sensor data</span>
-<span class="w">        </span><span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">processedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sensorData</span>
-<span class="w">                </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nd">@Override</span>
-<span class="w">                    </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="c1">// Apply temperature threshold</span>
-<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">25.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
-<span class="w">                        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">f0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
-<span class="w">                        </span><span class="p">}</span>
-<span class="w">                    </span><span class="p">}</span>
-<span class="w">                </span><span class="p">})</span>
-<span class="w">                </span><span class="p">.</span><span class="na">keyBy</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">reduce</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ReduceFunction</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nd">@Override</span>
-<span class="w">                    </span><span class="kd">public</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">reduce</span><span class="p">(</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">value1</span><span class="p">,</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">value2</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="c1">// Calculate average temperature</span>
-<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Tuple2</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">value1</span><span class="p">.</span><span class="na">f0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">value1</span><span class="p">.</span><span class="na">f1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value2</span><span class="p">.</span><span class="na">f1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
-<span class="w">                    </span><span class="p">}</span>
-<span class="w">                </span><span class="p">});</span>
+        // Process and analyze sensor data
+        DataStream&lt;Tuple2&lt;String, Double&gt;&gt; processedData = sensorData
+                .map(new MapFunction&lt;Tuple2&lt;String, Double&gt;, Tuple2&lt;String, Double&gt;&gt;() {
+                    @Override
+                    public Tuple2&lt;String, Double&gt; map(Tuple2&lt;String, Double&gt; value) throws Exception {
+                        // Apply temperature threshold
+                        if (value.f1 &gt; 25.0) {
+                            return new Tuple2&lt;&gt;(value.f0, 1.0);
+                        } else {
+                            return new Tuple2&lt;&gt;(value.f0, 0.0);
+                        }
+                    }
+                })
+                .keyBy(0)
+                .reduce(new ReduceFunction&lt;Tuple2&lt;String, Double&gt;&gt;() {
+                    @Override
+                    public Tuple2&lt;String, Double&gt; reduce(Tuple2&lt;String, Double&gt; value1, Tuple2&lt;String, Double&gt; value2) throws Exception {
+                        // Calculate average temperature
+                        return new Tuple2&lt;&gt;(value1.f0, (value1.f1 + value2.f1) / 2.0);
+                    }
+                });
 
-<span class="w">        </span><span class="c1">// Print processed data</span>
-<span class="w">        </span><span class="n">processedData</span><span class="p">.</span><span class="na">print</span><span class="p">();</span>
+        // Print processed data
+        processedData.print();
 
-<span class="w">        </span><span class="c1">// Execute Flink job</span>
-<span class="w">        </span><span class="n">env</span><span class="p">.</span><span class="na">execute</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Execute Flink job
+        env.execute();
+    }
+}
+</code></pre>
 <h2 id="real-world-use-cases-and-implementation-details">Real-World Use Cases and Implementation Details</h2>
 <p>Real-time data processing has numerous applications across various industries, including:
 * <strong>Financial Services</strong>: real-time fraud detection, risk management, and portfolio optimization

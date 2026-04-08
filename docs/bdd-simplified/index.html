@@ -168,13 +168,12 @@
 <li><strong>Integration</strong>: Works well with tools like Selenium for web application testing.</li>
 </ul>
 <p><strong>Example Usage</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> User login</span>
-<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Successful login with valid credentials</span>
-<span class="k">    Given </span><span class="nf">the user is on the login page</span>
-<span class="nf">    </span><span class="k">When </span><span class="nf">the user enters valid username and password</span>
-<span class="nf">    </span><span class="k">Then </span><span class="nf">the user should be redirected to the dashboard</span>
-</code></pre></div>
-
+<pre><code class="language-gherkin">Feature: User login
+  Scenario: Successful login with valid credentials
+    Given the user is on the login page
+    When the user enters valid username and password
+    Then the user should be redirected to the dashboard
+</code></pre>
 <h3 id="2-specflow">2. SpecFlow</h3>
 <ul>
 <li><strong>Platform</strong>: .NET framework.</li>
@@ -182,13 +181,12 @@
 <li><strong>Syntax</strong>: Uses Gherkin language, similar to Cucumber.</li>
 </ul>
 <p><strong>Example Usage</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> User registration</span>
-<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Successful registration with valid data</span>
-<span class="k">    Given </span><span class="nf">the user is on the registration page</span>
-<span class="nf">    </span><span class="k">When </span><span class="nf">the user fills in the registration form with valid data</span>
-<span class="nf">    </span><span class="k">Then </span><span class="nf">the user should receive a confirmation email</span>
-</code></pre></div>
-
+<pre><code class="language-gherkin">Feature: User registration
+  Scenario: Successful registration with valid data
+    Given the user is on the registration page
+    When the user fills in the registration form with valid data
+    Then the user should receive a confirmation email
+</code></pre>
 <h3 id="3-behave">3. Behave</h3>
 <ul>
 <li><strong>Language</strong>: Python.</li>
@@ -196,13 +194,12 @@
 <li><strong>Usage</strong>: Ideal for teams using Python for development.</li>
 </ul>
 <p><strong>Example Usage</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> Shopping cart</span>
-<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Adding an item to the cart</span>
-<span class="k">    Given </span><span class="nf">the user is on the product page</span>
-<span class="nf">    </span><span class="k">When </span><span class="nf">the user clicks on the &quot;</span><span class="s">Add to Cart</span><span class="nf">&quot; button</span>
-<span class="nf">    </span><span class="k">Then </span><span class="nf">the cart should contain one item</span>
-</code></pre></div>
-
+<pre><code class="language-gherkin">Feature: Shopping cart
+  Scenario: Adding an item to the cart
+    Given the user is on the product page
+    When the user clicks on the &quot;Add to Cart&quot; button
+    Then the cart should contain one item
+</code></pre>
 <h2 id="benefits-of-bdd">Benefits of BDD</h2>
 <p>Implementing BDD brings several advantages:</p>
 <ul>
@@ -214,42 +211,38 @@
 <h2 id="implementing-bdd-a-step-by-step-guide">Implementing BDD: A Step-by-Step Guide</h2>
 <h3 id="step-1-define-user-stories">Step 1: Define User Stories</h3>
 <p>The first step in BDD is to gather requirements through user stories. A user story typically follows the format: </p>
-<div class="codehilite"><pre><span></span><code><span class="n">As</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">[</span><span class="n">type</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">user</span><span class="p">],</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="p">[</span><span class="n">some</span><span class="w"> </span><span class="n">goal</span><span class="p">]</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="p">[</span><span class="n">some</span><span class="w"> </span><span class="n">reason</span><span class="p">].</span>
-</code></pre></div>
-
+<pre><code>As a [type of user], I want [some goal] so that [some reason].
+</code></pre>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code>As an online shopper, I want to add items to my cart so that I can purchase them later.
-</code></pre></div>
-
+<pre><code>As an online shopper, I want to add items to my cart so that I can purchase them later.
+</code></pre>
 <h3 id="step-2-write-scenarios">Step 2: Write Scenarios</h3>
 <p>Once user stories are defined, you can write scenarios using the Given-When-Then structure.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> Shopping cart functionality</span>
-<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> User adds item to cart</span>
-<span class="k">    Given </span><span class="nf">the user is on the product page</span>
-<span class="nf">    </span><span class="k">When </span><span class="nf">the user clicks on the &quot;</span><span class="s">Add to Cart</span><span class="nf">&quot; button</span>
-<span class="nf">    </span><span class="k">Then </span><span class="nf">the item should appear in the shopping cart</span>
-</code></pre></div>
-
+<pre><code class="language-gherkin">Feature: Shopping cart functionality
+  Scenario: User adds item to cart
+    Given the user is on the product page
+    When the user clicks on the &quot;Add to Cart&quot; button
+    Then the item should appear in the shopping cart
+</code></pre>
 <h3 id="step-3-implement-step-definitions">Step 3: Implement Step Definitions</h3>
 <p>After defining scenarios, implement step definitions in your preferred programming language.</p>
 <p><strong>Cucumber Example</strong> (in Java):</p>
-<div class="codehilite"><pre><span></span><code><span class="nd">@Given</span><span class="p">(</span><span class="s">&quot;the user is on the product page&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">userIsOnProductPage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Code to navigate to product page</span>
-<span class="p">}</span>
+<pre><code class="language-java">@Given(&quot;the user is on the product page&quot;)
+public void userIsOnProductPage() {
+    // Code to navigate to product page
+}
 
-<span class="nd">@When</span><span class="p">(</span><span class="s">&quot;the user clicks on the {string} button&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">userClicksOnButton</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">button</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Code to simulate button click</span>
-<span class="p">}</span>
+@When(&quot;the user clicks on the {string} button&quot;)
+public void userClicksOnButton(String button) {
+    // Code to simulate button click
+}
 
-<span class="nd">@Then</span><span class="p">(</span><span class="s">&quot;the item should appear in the shopping cart&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">itemShouldAppearInCart</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Code to verify item is in cart</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@Then(&quot;the item should appear in the shopping cart&quot;)
+public void itemShouldAppearInCart() {
+    // Code to verify item is in cart
+}
+</code></pre>
 <h3 id="step-4-run-the-tests">Step 4: Run the Tests</h3>
 <p>With everything in place, run your tests. The BDD tools will execute the scenarios and provide feedback on whether they pass or fail.</p>
 <h3 id="step-5-refactor-and-iterate">Step 5: Refactor and Iterate</h3>

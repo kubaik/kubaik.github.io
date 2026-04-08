@@ -179,32 +179,29 @@
 <h2 id="basic-syntax-and-features-of-swift">Basic Syntax and Features of Swift</h2>
 <h3 id="variables-and-constants">Variables and Constants</h3>
 <p>In Swift, you define variables using <code>var</code> and constants using <code>let</code>. This distinction helps with code clarity.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span> <span class="nv">pi</span> <span class="p">=</span> <span class="mf">3.14159</span> <span class="c1">// Constant</span>
-<span class="kd">var</span> <span class="nv">radius</span> <span class="p">=</span> <span class="mf">5.0</span> <span class="c1">// Variable</span>
-</code></pre></div>
-
+<pre><code class="language-swift">let pi = 3.14159 // Constant
+var radius = 5.0 // Variable
+</code></pre>
 <h3 id="control-flow">Control Flow</h3>
 <p>Swift’s control flow constructs include <code>if</code>, <code>for</code>, <code>while</code>, and <code>switch</code>. Here’s a simple example using a switch statement:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span> <span class="nv">number</span> <span class="p">=</span> <span class="mi">2</span>
-<span class="k">switch</span> <span class="n">number</span> <span class="p">{</span>
-<span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;One&quot;</span><span class="p">)</span>
-<span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Two&quot;</span><span class="p">)</span>
-<span class="k">default</span><span class="p">:</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Not One or Two&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">let number = 2
+switch number {
+case 1:
+    print(&quot;One&quot;)
+case 2:
+    print(&quot;Two&quot;)
+default:
+    print(&quot;Not One or Two&quot;)
+}
+</code></pre>
 <h3 id="functions">Functions</h3>
 <p>Functions in Swift are first-class citizens. You can define and call them easily:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s">&quot;Hello, </span><span class="si">\(</span><span class="n">name</span><span class="si">)</span><span class="s">!&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-swift">func greet(name: String) -&gt; String {
+    return &quot;Hello, \(name)!&quot;
+}
 
-<span class="bp">print</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s">&quot;Alice&quot;</span><span class="p">))</span> <span class="c1">// Output: Hello, Alice!</span>
-</code></pre></div>
-
+print(greet(name: &quot;Alice&quot;)) // Output: Hello, Alice!
+</code></pre>
 <h3 id="practical-example-creating-a-simple-ios-app">Practical Example: Creating a Simple iOS App</h3>
 <p>Now that we have a grasp of basic Swift syntax, let’s create a simple iOS app that displays a greeting message.</p>
 <h4 id="step-1-create-a-new-project">Step 1: Create a New Project</h4>
@@ -242,126 +239,117 @@
 <h2 id="advanced-swift-features">Advanced Swift Features</h2>
 <h3 id="optionals">Optionals</h3>
 <p>Swift introduces optionals to handle the absence of a value. This helps prevent runtime crashes due to nil values.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nv">optionalString</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span> <span class="c1">// This can hold a String or nil</span>
-<span class="n">optionalString</span> <span class="p">=</span> <span class="s">&quot;Hello&quot;</span>
-<span class="bp">print</span><span class="p">(</span><span class="n">optionalString</span><span class="p">)</span> <span class="c1">// Optional(&quot;Hello&quot;)</span>
-</code></pre></div>
-
+<pre><code class="language-swift">var optionalString: String? // This can hold a String or nil
+optionalString = &quot;Hello&quot;
+print(optionalString) // Optional(&quot;Hello&quot;)
+</code></pre>
 <p>Using optionals safely with <code>if let</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="kd">let</span> <span class="nv">safeString</span> <span class="p">=</span> <span class="n">optionalString</span> <span class="p">{</span>
-    <span class="bp">print</span><span class="p">(</span><span class="n">safeString</span><span class="p">)</span> <span class="c1">// Prints &quot;Hello&quot;</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;No value&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">if let safeString = optionalString {
+    print(safeString) // Prints &quot;Hello&quot;
+} else {
+    print(&quot;No value&quot;)
+}
+</code></pre>
 <h3 id="closures">Closures</h3>
 <p>Closures are self-contained blocks of functionality that can be passed around and used in your code. They are similar to lambdas in other languages.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span> <span class="nv">add</span><span class="p">:</span> <span class="p">(</span><span class="nb">Int</span><span class="p">,</span> <span class="nb">Int</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Int</span> <span class="p">=</span> <span class="p">{</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">in</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-<span class="p">}</span>
+<pre><code class="language-swift">let add: (Int, Int) -&gt; Int = { (a, b) in
+    return a + b
+}
 
-<span class="bp">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1">// Output: 8</span>
-</code></pre></div>
-
+print(add(3, 5)) // Output: 8
+</code></pre>
 <h3 id="practical-code-example-fetching-data-from-an-api">Practical Code Example: Fetching Data from an API</h3>
 <p>Let’s create a function that fetches JSON data from a public API and decodes it using Swift’s <code>Codable</code> protocol.</p>
 <h4 id="step-1-define-your-data-model">Step 1: Define Your Data Model</h4>
 <p>Create a struct that conforms to <code>Codable</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span><span class="p">:</span> <span class="n">Codable</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">id</span><span class="p">:</span> <span class="nb">Int</span>
-    <span class="kd">let</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">let</span> <span class="nv">username</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="nb">String</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">struct User: Codable {
+    let id: Int
+    let name: String
+    let username: String
+    let email: String
+}
+</code></pre>
 <h4 id="step-2-fetch-data">Step 2: Fetch Data</h4>
 <p>Implement a function to fetch user data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span> <span class="nf">fetchUsers</span><span class="p">(</span><span class="n">completion</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">([</span><span class="n">User</span><span class="p">]?)</span> <span class="p">-&gt;</span> <span class="nb">Void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">url</span> <span class="p">=</span> <span class="n">URL</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="s">&quot;https://jsonplaceholder.typicode.com/users&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="p">}</span>
+<pre><code class="language-swift">func fetchUsers(completion: @escaping ([User]?) -&gt; Void) {
+    guard let url = URL(string: &quot;https://jsonplaceholder.typicode.com/users&quot;) else {
+        completion(nil)
+        return
+    }
 
-    <span class="kd">let</span> <span class="nv">task</span> <span class="p">=</span> <span class="n">URLSession</span><span class="p">.</span><span class="n">shared</span><span class="p">.</span><span class="n">dataTask</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span> <span class="p">{</span> <span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
-        <span class="k">guard</span> <span class="n">error</span> <span class="p">==</span> <span class="kc">nil</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">\(</span><span class="n">error</span><span class="p">!</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-            <span class="n">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
+    let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        guard error == nil else {
+            print(&quot;Error: \(error!)&quot;)
+            completion(nil)
+            return
+        }
 
-        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">data</span> <span class="p">=</span> <span class="n">data</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
+        guard let data = data else {
+            completion(nil)
+            return
+        }
 
-        <span class="k">do</span> <span class="p">{</span>
-            <span class="kd">let</span> <span class="nv">users</span> <span class="p">=</span> <span class="k">try</span> <span class="n">JSONDecoder</span><span class="p">().</span><span class="n">decode</span><span class="p">([</span><span class="n">User</span><span class="p">].</span><span class="kc">self</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
-            <span class="n">completion</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-            <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Decoding error: </span><span class="si">\(</span><span class="n">error</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-            <span class="n">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+        do {
+            let users = try JSONDecoder().decode([User].self, from: data)
+            completion(users)
+        } catch {
+            print(&quot;Decoding error: \(error)&quot;)
+            completion(nil)
+        }
+    }
 
-    <span class="n">task</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    task.resume()
+}
+</code></pre>
 <h3 id="step-3-call-the-function">Step 3: Call the Function</h3>
 <p>You can call this function and print out the results:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">fetchUsers</span> <span class="p">{</span> <span class="n">users</span> <span class="k">in</span>
-    <span class="k">if</span> <span class="kd">let</span> <span class="nv">users</span> <span class="p">=</span> <span class="n">users</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">user</span> <span class="k">in</span> <span class="n">users</span> <span class="p">{</span>
-            <span class="bp">print</span><span class="p">(</span><span class="s">&quot;User </span><span class="si">\(</span><span class="n">user</span><span class="p">.</span><span class="n">id</span><span class="si">)</span><span class="s">: </span><span class="si">\(</span><span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="si">)</span><span class="s"> - </span><span class="si">\(</span><span class="n">user</span><span class="p">.</span><span class="n">email</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Failed to fetch users.&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">fetchUsers { users in
+    if let users = users {
+        for user in users {
+            print(&quot;User \(user.id): \(user.name) - \(user.email)&quot;)
+        }
+    } else {
+        print(&quot;Failed to fetch users.&quot;)
+    }
+}
+</code></pre>
 <h2 id="common-challenges-and-solutions">Common Challenges and Solutions</h2>
 <h3 id="1-memory-management">1. Memory Management</h3>
 <p>Swift uses Automatic Reference Counting (ARC) for memory management. However, developers must still manage strong reference cycles, especially with closures.</p>
 <p><strong>Solution</strong>: Use <code>[weak self]</code> in closures to avoid retain cycles.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">fetchUsers</span> <span class="p">{</span> <span class="p">[</span><span class="kr">weak</span> <span class="kc">self</span><span class="p">]</span> <span class="n">users</span> <span class="k">in</span>
-    <span class="c1">// self is now weakly captured</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">fetchUsers { [weak self] users in
+    // self is now weakly captured
+}
+</code></pre>
 <h3 id="2-error-handling">2. Error Handling</h3>
 <p>Swift provides robust error handling using <code>do-catch</code> blocks. For instance, when decoding JSON, if something goes wrong, you can catch the error and handle it gracefully.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">do</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">users</span> <span class="p">=</span> <span class="k">try</span> <span class="n">JSONDecoder</span><span class="p">().</span><span class="n">decode</span><span class="p">([</span><span class="n">User</span><span class="p">].</span><span class="kc">self</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Decoding error: </span><span class="si">\(</span><span class="n">error</span><span class="p">.</span><span class="n">localizedDescription</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">do {
+    let users = try JSONDecoder().decode([User].self, from: data)
+} catch {
+    print(&quot;Decoding error: \(error.localizedDescription)&quot;)
+}
+</code></pre>
 <h3 id="3-testing-and-debugging">3. Testing and Debugging</h3>
 <p>Use Xcode’s built-in testing framework (XCTest) to write unit tests. This helps ensure your code functions correctly as you make changes.</p>
 <p><strong>Example Test</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">XCTest</span>
+<pre><code class="language-swift">import XCTest
 
-<span class="kd">class</span> <span class="nc">UserTests</span><span class="p">:</span> <span class="n">XCTestCase</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">testUserDecoding</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">let</span> <span class="nv">jsonData</span> <span class="p">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">        [{&quot;</span><span class="n">id</span><span class="s">&quot;: 1, &quot;</span><span class="n">name</span><span class="s">&quot;: &quot;</span><span class="n">John</span> <span class="n">Doe</span><span class="s">&quot;, &quot;</span><span class="n">username</span><span class="s">&quot;: &quot;</span><span class="n">johndoe</span><span class="s">&quot;, &quot;</span><span class="n">email</span><span class="s">&quot;: &quot;</span><span class="n">john</span><span class="p">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="s">&quot;}]</span>
-<span class="s">        &quot;&quot;&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
+class UserTests: XCTestCase {
+    func testUserDecoding() {
+        let jsonData = &quot;&quot;&quot;
+        [{&quot;id&quot;: 1, &quot;name&quot;: &quot;John Doe&quot;, &quot;username&quot;: &quot;johndoe&quot;, &quot;email&quot;: &quot;john@example.com&quot;}]
+        &quot;&quot;&quot;.data(using: .utf8)!
 
-        <span class="k">do</span> <span class="p">{</span>
-            <span class="kd">let</span> <span class="nv">users</span> <span class="p">=</span> <span class="k">try</span> <span class="n">JSONDecoder</span><span class="p">().</span><span class="n">decode</span><span class="p">([</span><span class="n">User</span><span class="p">].</span><span class="kc">self</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">jsonData</span><span class="p">)</span>
-            <span class="n">XCTAssertEqual</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="bp">count</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">XCTAssertEqual</span><span class="p">(</span><span class="n">users</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;John Doe&quot;</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-            <span class="n">XCTFail</span><span class="p">(</span><span class="s">&quot;Decoding failed: </span><span class="si">\(</span><span class="n">error</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        do {
+            let users = try JSONDecoder().decode([User].self, from: jsonData)
+            XCTAssertEqual(users.count, 1)
+            XCTAssertEqual(users[0].name, &quot;John Doe&quot;)
+        } catch {
+            XCTFail(&quot;Decoding failed: \(error)&quot;)
+        }
+    }
+}
+</code></pre>
 <h2 id="popular-libraries-and-frameworks">Popular Libraries and Frameworks</h2>
 <h3 id="1-alamofire">1. Alamofire</h3>
 <p>Alamofire is a popular Swift-based HTTP networking library. It simplifies network requests and responses, making it easier to interact with APIs.</p>
@@ -389,36 +377,34 @@
 <h3 id="2-swiftui">2. SwiftUI</h3>
 <p>SwiftUI is a modern framework for building user interfaces across all Apple platforms. It uses a declarative syntax that allows developers to build UI components quickly.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">SwiftUI</span>
+<pre><code class="language-swift">import SwiftUI
 
-<span class="kd">struct</span> <span class="nc">ContentView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">Text</span><span class="p">(</span><span class="s">&quot;Hello, SwiftUI!&quot;</span><span class="p">)</span>
-            <span class="p">.</span><span class="n">padding</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+struct ContentView: View {
+    var body: some View {
+        Text(&quot;Hello, SwiftUI!&quot;)
+            .padding()
+    }
+}
 
-<span class="p">@</span><span class="n">main</span>
-<span class="kd">struct</span> <span class="nc">MyApp</span><span class="p">:</span> <span class="n">App</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">Scene</span> <span class="p">{</span>
-        <span class="n">WindowGroup</span> <span class="p">{</span>
-            <span class="n">ContentView</span><span class="p">()</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+</code></pre>
 <h3 id="3-combine">3. Combine</h3>
 <p>Combine is a powerful framework for handling asynchronous events in Swift. It allows developers to work with publishers and subscribers seamlessly.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">Combine</span>
+<pre><code class="language-swift">import Combine
 
-<span class="kd">let</span> <span class="nv">publisher</span> <span class="p">=</span> <span class="n">Just</span><span class="p">(</span><span class="s">&quot;Hello, Combine!&quot;</span><span class="p">)</span>
-<span class="kd">let</span> <span class="nv">cancellable</span> <span class="p">=</span> <span class="n">publisher</span><span class="p">.</span><span class="n">sink</span><span class="p">(</span><span class="n">receiveValue</span><span class="p">:</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-    <span class="bp">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-<span class="p">})</span>
-</code></pre></div>
-
+let publisher = Just(&quot;Hello, Combine!&quot;)
+let cancellable = publisher.sink(receiveValue: { value in
+    print(value)
+})
+</code></pre>
 <h2 id="performance-benchmarking">Performance Benchmarking</h2>
 <p>When considering performance, Swift has shown remarkable improvements in execution speed compared to Objective-C. </p>
 <h3 id="key-metrics">Key Metrics:</h3>

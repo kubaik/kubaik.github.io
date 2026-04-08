@@ -166,31 +166,30 @@
 </ol>
 <h3 id="implementing-cloud-security-best-practices">Implementing Cloud Security Best Practices</h3>
 <p>To implement these best practices, businesses can follow a number of steps. For example, to implement data encryption using AWS KMS, businesses can follow these steps:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS KMS client</span>
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
+# Create an AWS KMS client
+kms = boto3.client('kms')
 
-<span class="c1"># Create a new encryption key</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My encryption key&#39;</span><span class="p">,</span>
-    <span class="n">KeyUsage</span><span class="o">=</span><span class="s1">&#39;ENCRYPT_DECRYPT&#39;</span>
-<span class="p">)</span>
+# Create a new encryption key
+response = kms.create_key(
+    Description='My encryption key',
+    KeyUsage='ENCRYPT_DECRYPT'
+)
 
-<span class="c1"># Get the key ID</span>
-<span class="n">key_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;KeyMetadata&#39;</span><span class="p">][</span><span class="s1">&#39;KeyId&#39;</span><span class="p">]</span>
+# Get the key ID
+key_id = response['KeyMetadata']['KeyId']
 
-<span class="c1"># Encrypt some data</span>
-<span class="n">plaintext</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;Hello, world!&#39;</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">KeyId</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
-    <span class="n">Plaintext</span><span class="o">=</span><span class="n">plaintext</span>
-<span class="p">)</span>
+# Encrypt some data
+plaintext = b'Hello, world!'
+response = kms.encrypt(
+    KeyId=key_id,
+    Plaintext=plaintext
+)
 
-<span class="c1"># Get the encrypted data</span>
-<span class="n">ciphertext</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;CiphertextBlob&#39;</span><span class="p">]</span>
-</code></pre></div>
-
+# Get the encrypted data
+ciphertext = response['CiphertextBlob']
+</code></pre>
 <p>This code creates a new encryption key using AWS KMS, encrypts some data using the key, and then prints out the encrypted data.</p>
 <h2 id="cloud-security-tools-and-platforms">Cloud Security Tools and Platforms</h2>
 <p>There are a number of cloud security tools and platforms available that can help businesses implement cloud security best practices. Some of the most popular tools and platforms include:</p>

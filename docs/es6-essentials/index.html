@@ -156,20 +156,19 @@
 <h3 id="1-let-and-const">1. Let and Const</h3>
 <p>Prior to ES6, JavaScript only had <code>var</code> for variable declarations, which has function-level scope. ES6 introduced <code>let</code> and <code>const</code>, which have block-level scope.</p>
 <h4 id="example">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">exampleFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="c1">// function scope</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20</span><span class="p">;</span><span class="w"> </span><span class="c1">// block scope</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">30</span><span class="p">;</span><span class="w"> </span><span class="c1">// block scope</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// 10</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span><span class="w"> </span><span class="c1">// ReferenceError: y is not defined</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span><span class="w"> </span><span class="c1">// ReferenceError: z is not defined</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">function exampleFunction() {
+    if (true) {
+        var x = 10; // function scope
+        let y = 20; // block scope
+        const z = 30; // block scope
+    }
+    console.log(x); // 10
+    console.log(y); // ReferenceError: y is not defined
+    console.log(z); // ReferenceError: z is not defined
+}
 
-<span class="nx">exampleFunction</span><span class="p">();</span>
-</code></pre></div>
-
+exampleFunction();
+</code></pre>
 <h3 id="use-cases">Use Cases:</h3>
 <ul>
 <li><strong>Let</strong> is ideal for variables that need to be reassigned later, such as counters in loops.</li>
@@ -178,14 +177,13 @@
 <h3 id="2-arrow-functions">2. Arrow Functions</h3>
 <p>Arrow functions provide a concise syntax for writing function expressions and automatically bind the context of <code>this</code> to the surrounding code.</p>
 <h4 id="example_1">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
+<pre><code class="language-javascript">const add = (a, b) =&gt; a + b;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">];</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">doubled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">numbers</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">num</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span><span class="w"> </span><span class="nx">num</span><span class="p">));</span>
+const numbers = [1, 2, 3, 4];
+const doubled = numbers.map(num =&gt; add(num, num));
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doubled</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2, 4, 6, 8]</span>
-</code></pre></div>
-
+console.log(doubled); // [2, 4, 6, 8]
+</code></pre>
 <h3 id="use-cases_1">Use Cases:</h3>
 <ul>
 <li>Arrow functions are beneficial in callbacks, especially when passing functions to methods like <code>map</code>, <code>filter</code>, or <code>reduce</code>.</li>
@@ -193,13 +191,12 @@
 <h3 id="3-template-literals">3. Template Literals</h3>
 <p>Template literals allow for multi-line strings and string interpolation, significantly improving the readability of string manipulation.</p>
 <h4 id="example_2">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">! </span>
-<span class="sb">Welcome to ES6+.`</span><span class="p">;</span>
+<pre><code class="language-javascript">const name = &quot;John&quot;;
+const greeting = `Hello, ${name}! 
+Welcome to ES6+.`;
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">);</span>
-</code></pre></div>
-
+console.log(greeting);
+</code></pre>
 <h3 id="use-cases_2">Use Cases:</h3>
 <ul>
 <li>Use template literals to create dynamic HTML or log messages with variables seamlessly.</li>
@@ -207,17 +204,16 @@
 <h3 id="4-destructuring-assignment">4. Destructuring Assignment</h3>
 <p>Destructuring allows unpacking values from arrays or properties from objects into distinct variables.</p>
 <h4 id="example_3">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">25</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;New York&quot;</span>
-<span class="p">};</span>
+<pre><code class="language-javascript">const user = {
+    name: &quot;Alice&quot;,
+    age: 25,
+    location: &quot;New York&quot;
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">user</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span><span class="w"> </span><span class="c1">// Alice</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">age</span><span class="p">);</span><span class="w"> </span><span class="c1">// 25</span>
-</code></pre></div>
-
+const { name, age } = user;
+console.log(name); // Alice
+console.log(age); // 25
+</code></pre>
 <h3 id="use-cases_3">Use Cases:</h3>
 <ul>
 <li>Destructuring is particularly useful when dealing with complex data structures, such as API responses, making your code cleaner.</li>
@@ -225,14 +221,13 @@
 <h3 id="5-default-parameters">5. Default Parameters</h3>
 <p>Default parameters enable defining default values for function parameters, simplifying function calls.</p>
 <h4 id="example_4">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">function multiply(a, b = 1) {
+    return a * b;
+}
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">multiply</span><span class="p">(</span><span class="mf">5</span><span class="p">));</span><span class="w"> </span><span class="c1">// 5</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">multiply</span><span class="p">(</span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span><span class="w"> </span><span class="c1">// 10</span>
-</code></pre></div>
-
+console.log(multiply(5)); // 5
+console.log(multiply(5, 2)); // 10
+</code></pre>
 <h3 id="use-cases_4">Use Cases:</h3>
 <ul>
 <li>Great for functions that require optional parameters, enhancing code flexibility.</li>
@@ -240,20 +235,19 @@
 <h3 id="6-spread-and-rest-operators">6. Spread and Rest Operators</h3>
 <p>The spread operator (<code>...</code>) allows an iterable (like an array) to be expanded in places where zero or more arguments are expected. The rest operator collects all remaining elements into an array.</p>
 <h4 id="example_5">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Spread operator</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">arr1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">];</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">arr2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="nx">arr1</span><span class="p">];</span>
+<pre><code class="language-javascript">// Spread operator
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, ...arr1];
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr2</span><span class="p">);</span><span class="w"> </span><span class="c1">// [4, 5, 1, 2, 3]</span>
+console.log(arr2); // [4, 5, 1, 2, 3]
 
-<span class="c1">// Rest operator</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">sum</span><span class="p">(...</span><span class="nx">numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">numbers</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">acc</span><span class="p">,</span><span class="w"> </span><span class="nx">curr</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">acc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">curr</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="p">}</span>
+// Rest operator
+function sum(...numbers) {
+    return numbers.reduce((acc, curr) =&gt; acc + curr, 0);
+}
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">));</span><span class="w"> </span><span class="c1">// 10</span>
-</code></pre></div>
-
+console.log(sum(1, 2, 3, 4)); // 10
+</code></pre>
 <h3 id="use-cases_5">Use Cases:</h3>
 <ul>
 <li>The spread operator is useful for merging arrays or objects, while the rest operator is excellent for functions that need to handle variable input lengths.</li>
@@ -262,20 +256,18 @@
 <p>ES6 introduced a module system for better code organization and encapsulation. Modules can be exported and imported, facilitating code reuse.</p>
 <h4 id="example_6">Example:</h4>
 <p><strong>math.js</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">PI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14</span><span class="p">;</span>
+<pre><code class="language-javascript">export const PI = 3.14;
 
-<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+export function add(a, b) {
+    return a + b;
+}
+</code></pre>
 <p><strong>app.js</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PI</span><span class="p">,</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./math.js&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { PI, add } from './math.js';
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">PI</span><span class="p">);</span><span class="w"> </span><span class="c1">// 3.14</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">));</span><span class="w"> </span><span class="c1">// 5</span>
-</code></pre></div>
-
+console.log(PI); // 3.14
+console.log(add(2, 3)); // 5
+</code></pre>
 <h3 id="use-cases_6">Use Cases:</h3>
 <ul>
 <li>Use modules to organize code better, making it easier to manage large codebases by separating functionality into different files.</li>
@@ -283,19 +275,18 @@
 <h3 id="8-promises">8. Promises</h3>
 <p>Promises represent the eventual completion (or failure) of an asynchronous operation and its resulting value. They provide a cleaner alternative to callbacks.</p>
 <h4 id="example_7">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fetchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="nx">reject</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">resolve</span><span class="p">(</span><span class="s2">&quot;Data received!&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">},</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">};</span>
+<pre><code class="language-javascript">const fetchData = () =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+        setTimeout(() =&gt; {
+            resolve(&quot;Data received!&quot;);
+        }, 2000);
+    });
+};
 
-<span class="nx">fetchData</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span><span class="w"> </span><span class="c1">// Data received!</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
-</code></pre></div>
-
+fetchData()
+    .then(data =&gt; console.log(data)) // Data received!
+    .catch(error =&gt; console.error(error));
+</code></pre>
 <h3 id="use-cases_7">Use Cases:</h3>
 <ul>
 <li>Promises are essential for handling asynchronous operations like API calls, improving code readability and maintaining a clear flow of execution.</li>
@@ -303,23 +294,22 @@
 <h3 id="9-asyncawait">9. Async/Await</h3>
 <p>The async/await syntax, built on top of Promises, allows writing asynchronous code that looks synchronous, significantly improving readability.</p>
 <h4 id="example_8">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fetchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">resolve</span><span class="p">(</span><span class="s2">&quot;Data received!&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">},</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="p">};</span>
+<pre><code class="language-javascript">const fetchData = async () =&gt; {
+    const response = await new Promise((resolve) =&gt; {
+        setTimeout(() =&gt; {
+            resolve(&quot;Data received!&quot;);
+        }, 2000);
+    });
+    return response;
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">displayData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchData</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// Data received!</span>
-<span class="p">};</span>
+const displayData = async () =&gt; {
+    const data = await fetchData();
+    console.log(data); // Data received!
+};
 
-<span class="nx">displayData</span><span class="p">();</span>
-</code></pre></div>
-
+displayData();
+</code></pre>
 <h3 id="use-cases_8">Use Cases:</h3>
 <ul>
 <li>Async/await is ideal for scenarios involving multiple asynchronous calls that depend on each other, simplifying error handling and flow control.</li>
@@ -328,26 +318,25 @@
 <p>ES6 introduced class syntax to JavaScript, enabling classical object-oriented programming paradigms.</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
 <h4 id="example_9">Example:</h4>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-javascript">class Animal {
+    constructor(name) {
+        this.name = name;
+    }
 
-<span class="w">    </span><span class="nx">speak</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> makes a noise.`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    speak() {
+        console.log(`${this.name} makes a noise.`);
+    }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">speak</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> barks.`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+class Dog extends Animal {
+    speak() {
+        console.log(`${this.name} barks.`);
+    }
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">dog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Dog</span><span class="p">(</span><span class="s1">&#39;Rex&#39;</span><span class="p">);</span>
-<span class="nx">dog</span><span class="p">.</span><span class="nx">speak</span><span class="p">();</span><span class="w"> </span><span class="c1">// Rex barks.</span>
-</code></pre></div>
-
+const dog = new Dog('Rex');
+dog.speak(); // Rex barks.
+</code></pre>
 <h3 id="use-cases_9">Use Cases:</h3>
 <ul>
 <li>Classes are beneficial for creating complex applications that require structured object-oriented design, making code more organized.</li>
@@ -372,17 +361,16 @@
 <p>Traditional error handling with callbacks can be cumbersome.</p>
 <h4 id="solution-use-trycatch-with-asyncawait">Solution: Use Try/Catch with Async/Await</h4>
 <p>Async/await allows you to use try/catch blocks, simplifying error handling.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fetchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error fetching data:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const fetchData = async () =&gt; {
+    try {
+        const data = await fetch('https://api.example.com/data');
+        const json = await data.json();
+        console.log(json);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+</code></pre>
 <h2 id="tools-and-platforms-to-consider">Tools and Platforms to Consider</h2>
 <p>To get the most out of ES6+, consider using the following tools and platforms:</p>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>

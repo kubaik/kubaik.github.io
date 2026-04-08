@@ -153,80 +153,76 @@
 <p>Python has become the go-to language for data science due to its simplicity, flexibility, and extensive libraries. With popular libraries like NumPy, pandas, and scikit-learn, Python provides an efficient way to handle and analyze large datasets. In this article, we will explore the world of Python for data science, including its applications, tools, and best practices.</p>
 <h3 id="setting-up-the-environment">Setting Up the Environment</h3>
 <p>To get started with Python for data science, you need to set up a suitable environment. This includes installing Python, necessary libraries, and a code editor or IDE. Some popular choices for code editors include PyCharm, Visual Studio Code, and Sublime Text. For libraries, you can use pip, the Python package manager, to install the required packages. For example, to install NumPy and pandas, you can use the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">pandas</span>
-</code></pre></div>
-
+<pre><code class="language-python">pip install numpy pandas
+</code></pre>
 <p>You can also use conda, a package manager for data science, to create and manage environments. conda provides a simple way to install packages and their dependencies.</p>
 <h2 id="data-manipulation-and-analysis">Data Manipulation and Analysis</h2>
 <p>Data manipulation and analysis are critical components of data science. Python provides several libraries to handle these tasks, including pandas and NumPy. pandas is a powerful library for data manipulation and analysis, providing data structures like Series and DataFrames. NumPy, on the other hand, provides support for large, multi-dimensional arrays and matrices.</p>
 <h3 id="example-data-analysis-with-pandas">Example: Data Analysis with pandas</h3>
 <p>Here's an example of using pandas to analyze a dataset:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Anna&#39;</span><span class="p">,</span> <span class="s1">&#39;Peter&#39;</span><span class="p">,</span> <span class="s1">&#39;Linda&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span>
-        <span class="s1">&#39;Country&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;UK&#39;</span><span class="p">,</span> <span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a sample dataset
+data = {'Name': ['John', 'Anna', 'Peter', 'Linda'],
+        'Age': [28, 24, 35, 32],
+        'Country': ['USA', 'UK', 'Australia', 'Germany']}
+df = pd.DataFrame(data)
 
-<span class="c1"># Print the first few rows of the dataset</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+# Print the first few rows of the dataset
+print(df.head())
 
-<span class="c1"># Calculate the mean age</span>
-<span class="n">mean_age</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Age:&quot;</span><span class="p">,</span> <span class="n">mean_age</span><span class="p">)</span>
-</code></pre></div>
-
+# Calculate the mean age
+mean_age = df['Age'].mean()
+print(&quot;Mean Age:&quot;, mean_age)
+</code></pre>
 <p>This code creates a sample dataset, prints the first few rows, and calculates the mean age.</p>
 <h2 id="data-visualization">Data Visualization</h2>
 <p>Data visualization is a critical component of data science, providing a way to communicate insights and findings to stakeholders. Python provides several libraries for data visualization, including Matplotlib and Seaborn. Matplotlib is a popular library for creating static, animated, and interactive visualizations. Seaborn, on the other hand, provides a high-level interface for drawing attractive and informative statistical graphics.</p>
 <h3 id="example-data-visualization-with-matplotlib">Example: Data Visualization with Matplotlib</h3>
 <p>Here's an example of using Matplotlib to create a line chart:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+# Create a sample dataset
+x = [1, 2, 3, 4, 5]
+y = [1, 4, 9, 16, 25]
 
-<span class="c1"># Create a line chart</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Line Chart Example&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X Axis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y Axis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Create a line chart
+plt.plot(x, y)
+plt.title('Line Chart Example')
+plt.xlabel('X Axis')
+plt.ylabel('Y Axis')
+plt.show()
+</code></pre>
 <p>This code creates a sample dataset and uses Matplotlib to create a line chart.</p>
 <h2 id="machine-learning">Machine Learning</h2>
 <p>Machine learning is a key component of data science, providing a way to build models that can make predictions or take actions based on data. Python provides several libraries for machine learning, including scikit-learn and TensorFlow. scikit-learn is a popular library for machine learning, providing a wide range of algorithms for classification, regression, clustering, and more. TensorFlow, on the other hand, is a popular library for deep learning, providing a wide range of tools and APIs for building and training neural networks.</p>
 <h3 id="example-machine-learning-with-scikit-learn">Example: Machine Learning with scikit-learn</h3>
 <p>Here's an example of using scikit-learn to build a simple classifier:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<pre><code class="language-python">from sklearn.datasets import load_iris
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
-<span class="c1"># Load the iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load the iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
 
-<span class="c1"># Split the dataset into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a logistic regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+# Create a logistic regression model
+model = LogisticRegression()
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train the model
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+accuracy = model.score(X_test, y_test)
+print(&quot;Accuracy:&quot;, accuracy)
+</code></pre>
 <p>This code loads the iris dataset, splits it into training and testing sets, builds a logistic regression model, trains the model, and evaluates its accuracy.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in Python for data science:</p>

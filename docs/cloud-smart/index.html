@@ -164,31 +164,30 @@
 * <strong>Terraform</strong>: This is an open-source tool that helps you manage your cloud infrastructure as code.</p>
 <h3 id="example-using-terraform-to-create-a-cloud-infrastructure">Example: Using Terraform to Create a Cloud Infrastructure</h3>
 <p>Here is an example of how you can use Terraform to create a cloud infrastructure:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Create a VPC</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_vpc&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">cidr_block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.0.0/16&quot;</span>
-<span class="p">}</span>
+# Create a VPC
+resource &quot;aws_vpc&quot; &quot;example&quot; {
+  cidr_block = &quot;10.0.0.0/16&quot;
+}
 
-<span class="c1"># Create a subnet</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_subnet&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">vpc_id</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_vpc.example.id</span>
-<span class="w">  </span><span class="na">cidr_block</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;10.0.1.0/24&quot;</span>
-<span class="w">  </span><span class="na">availability_zone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2a&quot;</span>
-<span class="p">}</span>
+# Create a subnet
+resource &quot;aws_subnet&quot; &quot;example&quot; {
+  vpc_id            = aws_vpc.example.id
+  cidr_block        = &quot;10.0.1.0/24&quot;
+  availability_zone = &quot;us-west-2a&quot;
+}
 
-<span class="c1"># Create an EC2 instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-abc123&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="w">  </span><span class="na">subnet_id</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_subnet.example.id</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Create an EC2 instance
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-abc123&quot;
+  instance_type = &quot;t2.micro&quot;
+  subnet_id     = aws_subnet.example.id
+}
+</code></pre>
 <p>This code creates a VPC, a subnet, and an EC2 instance in AWS using Terraform.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Cloud migration can bring significant performance benefits. For example, a study by AWS found that migrating to the cloud can reduce latency by up to 50% and increase throughput by up to 300%. Here are some performance benchmarks for different cloud providers:
@@ -197,18 +196,17 @@
 * <strong>Azure</strong>: 40-120 ms latency, 150-600 MB/s throughput</p>
 <h3 id="example-optimizing-performance-using-azure-cache-for-redis">Example: Optimizing Performance using Azure Cache for Redis</h3>
 <p>Here is an example of how you can use Azure Cache for Redis to optimize performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Create a Redis client</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;your-redis-host&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Create a Redis client
+redis_client = redis.Redis(host='your-redis-host', port=6379, db=0)
 
-<span class="c1"># Set a value in Redis</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+# Set a value in Redis
+redis_client.set('key', 'value')
 
-<span class="c1"># Get a value from Redis</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Get a value from Redis
+value = redis_client.get('key')
+</code></pre>
 <p>This code creates a Redis client and sets and gets a value using Azure Cache for Redis.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>Cloud migration can bring significant cost savings. For example, a study by Gartner found that migrating to the cloud can reduce costs by up to 30%. Here are some pricing data for different cloud providers:
@@ -217,25 +215,24 @@
 * <strong>Azure</strong>: $0.021 per hour for a B1S instance</p>
 <h3 id="example-optimizing-costs-using-aws-cost-explorer">Example: Optimizing Costs using AWS Cost Explorer</h3>
 <p>Here is an example of how you can use AWS Cost Explorer to optimize costs:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a Cost Explorer client</span>
-<span class="n">cost_explorer</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ce&#39;</span><span class="p">)</span>
+# Create a Cost Explorer client
+cost_explorer = boto3.client('ce')
 
-<span class="c1"># Get the current month&#39;s costs</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">cost_explorer</span><span class="o">.</span><span class="n">get_cost_and_usage</span><span class="p">(</span>
-    <span class="n">TimePeriod</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-31&#39;</span>
-    <span class="p">},</span>
-    <span class="n">Granularity</span><span class="o">=</span><span class="s1">&#39;MONTHLY&#39;</span><span class="p">,</span>
-    <span class="n">Metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;UnblendedCost&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+# Get the current month's costs
+response = cost_explorer.get_cost_and_usage(
+    TimePeriod={
+        'Start': '2022-01-01',
+        'End': '2022-01-31'
+    },
+    Granularity='MONTHLY',
+    Metrics=['UnblendedCost']
+)
 
-<span class="c1"># Print the costs</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;ResultsByTime&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Total&#39;</span><span class="p">][</span><span class="s1">&#39;UnblendedCost&#39;</span><span class="p">][</span><span class="s1">&#39;Amount&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the costs
+print(response['ResultsByTime'][0]['Total']['UnblendedCost']['Amount'])
+</code></pre>
 <p>This code creates a Cost Explorer client and gets the current month's costs using AWS Cost Explorer.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions that you may encounter during cloud migration:

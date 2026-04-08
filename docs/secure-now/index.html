@@ -157,16 +157,15 @@
 * OpenVAS, an open-source vulnerability scanner that offers a wide range of plugins and is free to use
 * Qualys, a cloud-based vulnerability scanner that offers a free trial, with pricing starting at $2,495 per year for a 512 IP license</p>
 <p>Here is an example of how to use the OpenVAS scanner to identify vulnerabilities in a Linux system:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install OpenVAS</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>openvas
+<pre><code class="language-bash"># Install OpenVAS
+sudo apt-get install openvas
 
-<span class="c1"># Initialize OpenVAS</span>
-sudo<span class="w"> </span>openvas-setup
+# Initialize OpenVAS
+sudo openvas-setup
 
-<span class="c1"># Scan for vulnerabilities</span>
-sudo<span class="w"> </span>openvas-scan<span class="w"> </span>--target<span class="w"> </span><span class="m">192</span>.168.1.100
-</code></pre></div>
-
+# Scan for vulnerabilities
+sudo openvas-scan --target 192.168.1.100
+</code></pre>
 <p>This code snippet initializes the OpenVAS scanner and scans the target IP address for vulnerabilities.</p>
 <h2 id="prioritization-and-remediation">Prioritization and Remediation</h2>
 <p>Once vulnerabilities have been identified, they need to be prioritized and remediated. This involves classifying vulnerabilities based on their severity and potential impact, and then applying patches or fixes to remediate them. The Common Vulnerability Scoring System (CVSS) is a widely used framework for prioritizing vulnerabilities. CVSS scores range from 0 to 10, with higher scores indicating more severe vulnerabilities.</p>
@@ -190,21 +189,20 @@ sudo<span class="w"> </span>openvas-scan<span class="w"> </span>--target<span cl
 * <strong>Splunk</strong>: A security information and event management (SIEM) platform that offers vulnerability management capabilities, priced at $4,500 per year for a 100 GB license
 * <strong>Tenable.io</strong>: A cloud-based vulnerability management platform that offers automated scanning and remediation, priced at $2,495 per year for a 512 IP license</p>
 <p>Here is an example of how to use Ansible to automate vulnerability remediation:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a playbook to remediate vulnerabilities</span>
-<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Remediate</span> <span class="n">vulnerabilities</span>
-  <span class="n">hosts</span><span class="p">:</span> <span class="n">vulnerable_hosts</span>
-  <span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
-  <span class="n">tasks</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Apply</span> <span class="n">patches</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;{{ item }}&quot;</span>
-      <span class="n">state</span><span class="p">:</span> <span class="n">latest</span>
-    <span class="n">loop</span><span class="p">:</span>
-    <span class="o">-</span> <span class="n">patch1</span>
-    <span class="o">-</span> <span class="n">patch2</span>
-    <span class="o">-</span> <span class="n">patch3</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Define a playbook to remediate vulnerabilities
+- name: Remediate vulnerabilities
+  hosts: vulnerable_hosts
+  become: yes
+  tasks:
+  - name: Apply patches
+    apt:
+      name: &quot;{{ item }}&quot;
+      state: latest
+    loop:
+    - patch1
+    - patch2
+    - patch3
+</code></pre>
 <p>This code snippet defines an Ansible playbook that applies patches to vulnerable hosts.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that organizations face in vulnerability management include:

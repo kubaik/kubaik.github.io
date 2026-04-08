@@ -165,27 +165,24 @@
 * <strong>Loop unrolling</strong>: Unrolling loops to reduce the number of iterations and improve performance.</p>
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <p>Let's take a look at some practical code examples that demonstrate the optimization techniques mentioned above. For example, consider the following C code that calculates the sum of an array of integers:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-c">int sum(int* arr, int len) {
+    int sum = 0;
+    for (int i = 0; i &lt; len; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+</code></pre>
 <p>This code can be compiled to WASM using <code>emscripten</code> and optimized using <code>wasm-opt</code>. The optimized code can be viewed using the <code>wasm-dis</code> tool, which disassembles the WASM binary into a human-readable format.</p>
 <h3 id="using-wasm-opt-for-optimization">Using wasm-opt for Optimization</h3>
 <p><code>wasm-opt</code> is a powerful tool for optimizing WASM binaries. It provides a range of optimization passes that can be applied to the code, including dead code elimination, constant folding, and loop unrolling. For example, the following command can be used to optimize the WASM binary generated from the C code above:</p>
-<div class="codehilite"><pre><span></span><code>wasm-opt<span class="w"> </span>-O2<span class="w"> </span>-o<span class="w"> </span>optimized.wasm<span class="w"> </span>input.wasm
-</code></pre></div>
-
+<pre><code class="language-bash">wasm-opt -O2 -o optimized.wasm input.wasm
+</code></pre>
 <p>This command applies the <code>-O2</code> optimization level, which enables a range of optimization passes, including dead code elimination and constant folding.</p>
 <h3 id="using-binaryen-for-optimization">Using binaryen for Optimization</h3>
 <p><code>binaryen</code> is another popular tool for optimizing WASM binaries. It provides a range of optimization passes, including loop unrolling and register allocation. For example, the following command can be used to optimize the WASM binary generated from the C code above:</p>
-<div class="codehilite"><pre><span></span><code>binaryen<span class="w"> </span>optimize<span class="w"> </span>-o<span class="w"> </span>optimized.wasm<span class="w"> </span>input.wasm
-</code></pre></div>
-
+<pre><code class="language-bash">binaryen optimize -o optimized.wasm input.wasm
+</code></pre>
 <p>This command applies a range of optimization passes, including loop unrolling and register allocation.</p>
 <h3 id="measuring-performance">Measuring Performance</h3>
 <p>Measuring performance is critical to understanding the effectiveness of optimization techniques. There are several tools and platforms that can be used to measure the performance of WASM code, including:

@@ -166,54 +166,51 @@
 * Implementing incident response and disaster recovery plans to respond to security incidents and minimize downtime</p>
 <h3 id="implementing-iam-policies">Implementing IAM Policies</h3>
 <p>One of the most effective ways to secure cloud resources is to implement IAM policies. IAM policies define the rules and permissions that govern access to cloud resources, such as virtual machines, storage buckets, and databases. For example, an organization can use Amazon Web Services (AWS) IAM to create policies that restrict access to sensitive data and resources. Here is an example of an IAM policy that grants read-only access to a specific S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReadOnlyAccess&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;s3:ListBucket&quot;</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::my-bucket&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Sid&quot;: &quot;ReadOnlyAccess&quot;,
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;s3:GetObject&quot;,
+        &quot;s3:ListBucket&quot;
+      ],
+      &quot;Resource&quot;: &quot;arn:aws:s3:::my-bucket&quot;
+    }
+  ]
+}
+</code></pre>
 <p>This policy can be attached to a user or role to grant them read-only access to the specified S3 bucket.</p>
 <h3 id="configuring-cloud-storage">Configuring Cloud Storage</h3>
 <p>Another important aspect of cloud security is configuring cloud storage to ensure data encryption and access controls. For example, an organization can use Google Cloud Storage (GCS) to store sensitive data, and configure the storage bucket to use server-side encryption. Here is an example of how to configure a GCS bucket to use server-side encryption using the <code>gsutil</code> command-line tool:</p>
-<div class="codehilite"><pre><span></span><code>gsutil<span class="w"> </span>cors<span class="w"> </span><span class="nb">set</span><span class="w"> </span>cors-json-file.json<span class="w"> </span>gs://my-bucket
-</code></pre></div>
-
+<pre><code class="language-bash">gsutil cors set cors-json-file.json gs://my-bucket
+</code></pre>
 <p>This command sets the CORS configuration for the specified bucket, which includes the encryption settings.</p>
 <h3 id="deploying-security-tools-and-services">Deploying Security Tools and Services</h3>
 <p>Organizations can also deploy security tools and services to monitor and protect their cloud infrastructure. For example, an organization can use a cloud-based SIEM system, such as Splunk Cloud, to monitor and analyze security logs and events. Here is an example of how to configure Splunk Cloud to collect logs from an AWS EC2 instance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">splunk</span>
+<pre><code class="language-python">import boto3
+import splunk
 
-<span class="c1"># Create an AWS EC2 client</span>
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+# Create an AWS EC2 client
+ec2 = boto3.client('ec2')
 
-<span class="c1"># Create a Splunk Cloud client</span>
-<span class="n">splunk_client</span> <span class="o">=</span> <span class="n">splunk</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+# Create a Splunk Cloud client
+splunk_client = splunk.Client()
 
-<span class="c1"># Define the EC2 instance ID and log group name</span>
-<span class="n">instance_id</span> <span class="o">=</span> <span class="s1">&#39;i-0123456789abcdef0&#39;</span>
-<span class="n">log_group_name</span> <span class="o">=</span> <span class="s1">&#39;my-log-group&#39;</span>
+# Define the EC2 instance ID and log group name
+instance_id = 'i-0123456789abcdef0'
+log_group_name = 'my-log-group'
 
-<span class="c1"># Configure Splunk Cloud to collect logs from the EC2 instance</span>
-<span class="n">splunk_client</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span>
-    <span class="s1">&#39;aws&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ec2&#39;</span><span class="p">,</span>
-    <span class="n">instance_id</span><span class="p">,</span>
-    <span class="n">log_group_name</span><span class="p">,</span>
-    <span class="s1">&#39;my-index&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure Splunk Cloud to collect logs from the EC2 instance
+splunk_client.create_input(
+    'aws',
+    'ec2',
+    instance_id,
+    log_group_name,
+    'my-index'
+)
+</code></pre>
 <p>This code configures Splunk Cloud to collect logs from the specified EC2 instance and log group, and indexes the logs in the specified index.</p>
 <h2 id="common-cloud-security-problems-and-solutions">Common Cloud Security Problems and Solutions</h2>
 <p>Despite following best practices, organizations may still encounter common cloud security problems. Here are some examples of common problems and solutions:

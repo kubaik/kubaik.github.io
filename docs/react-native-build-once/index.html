@@ -167,103 +167,100 @@
 <h2 id="practical-examples-and-code-snippets">Practical Examples and Code Snippets</h2>
 <p>Here are a few practical examples of React Native in action:</p>
 <h3 id="example-1-todo-list-app">Example 1: Todo List App</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TextInput</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">TodoList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">setTodos</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="nx">setText</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+const TodoList = () =&gt; {
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState('');
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleAddTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">setTodos</span><span class="p">([...</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="p">]);</span>
-<span class="w">    </span><span class="nx">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleAddTodo = () =&gt; {
+    setTodos([...todos, text]);
+    setText('');
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">TextInput</span>
-<span class="w">        </span><span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Enter todo item&quot;</span>
-<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">}</span>
-<span class="w">        </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{</span><span class="nx">setText</span><span class="p">}</span>
-<span class="w">      </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Add Todo&quot;</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handleAddTodo</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}&gt;{</span><span class="nx">todo</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">))}</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View&gt;
+      &lt;TextInput
+        placeholder=&quot;Enter todo item&quot;
+        value={text}
+        onChangeText={setText}
+      /&gt;
+      &lt;Button title=&quot;Add Todo&quot; onPress={handleAddTodo} /&gt;
+      &lt;View&gt;
+        {todos.map((todo, index) =&gt; (
+          &lt;Text key={index}&gt;{todo}&lt;/Text&gt;
+        ))}
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">TodoList</span><span class="p">;</span>
-</code></pre></div>
-
+export default TodoList;
+</code></pre>
 <p>This example demonstrates a simple todo list app, with features like text input, button press, and todo item rendering.</p>
 <h3 id="example-2-image-gallery-app">Example 2: Image Gallery App</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Image</span><span class="p">,</span><span class="w"> </span><span class="nx">FlatList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Image, FlatList } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">ImageGallery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">images</span><span class="p">,</span><span class="w"> </span><span class="nx">setImages</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/image1.jpg&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/image2.jpg&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/image3.jpg&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">]);</span>
+const ImageGallery = () =&gt; {
+  const [images, setImages] = useState([
+    { id: 1, uri: 'https://example.com/image1.jpg' },
+    { id: 2, uri: 'https://example.com/image2.jpg' },
+    { id: 3, uri: 'https://example.com/image3.jpg' },
+  ]);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">FlatList</span>
-<span class="w">        </span><span class="na">data</span><span class="o">=</span><span class="p">{</span><span class="nx">images</span><span class="p">}</span>
-<span class="w">        </span><span class="na">renderItem</span><span class="o">=</span><span class="p">{({</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">Image</span><span class="w"> </span><span class="na">source</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">uri</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">        </span><span class="p">)}</span>
-<span class="w">        </span><span class="na">keyExtractor</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">toString</span><span class="p">()}</span>
-<span class="w">      </span><span class="p">/&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View&gt;
+      &lt;FlatList
+        data={images}
+        renderItem={({ item }) =&gt; (
+          &lt;Image source={{ uri: item.uri }} style={{ width: 100, height: 100 }} /&gt;
+        )}
+        keyExtractor={item =&gt; item.id.toString()}
+      /&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">ImageGallery</span><span class="p">;</span>
-</code></pre></div>
-
+export default ImageGallery;
+</code></pre>
 <p>This example demonstrates a simple image gallery app, with features like image rendering and scrolling.</p>
 <h3 id="example-3-authentication-app">Example 3: Authentication App</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TextInput</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">auth</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+import { auth } from 'firebase';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Authentication</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">setEmail</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">password</span><span class="p">,</span><span class="w"> </span><span class="nx">setPassword</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+const Authentication = () =&gt; {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">auth</span><span class="p">.</span><span class="nx">signInWithEmailAndPassword</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Logged in successfully&#39;</span><span class="p">))</span>
-<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleLogin = () =&gt; {
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() =&gt; console.log('Logged in successfully'))
+      .catch(error =&gt; console.error(error));
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">TextInput</span>
-<span class="w">        </span><span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Enter email&quot;</span>
-<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">email</span><span class="p">}</span>
-<span class="w">        </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{</span><span class="nx">setEmail</span><span class="p">}</span>
-<span class="w">      </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">TextInput</span>
-<span class="w">        </span><span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Enter password&quot;</span>
-<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">password</span><span class="p">}</span>
-<span class="w">        </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{</span><span class="nx">setPassword</span><span class="p">}</span>
-<span class="w">        </span><span class="na">secureTextEntry</span>
-<span class="w">      </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Login&quot;</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handleLogin</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View&gt;
+      &lt;TextInput
+        placeholder=&quot;Enter email&quot;
+        value={email}
+        onChangeText={setEmail}
+      /&gt;
+      &lt;TextInput
+        placeholder=&quot;Enter password&quot;
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      /&gt;
+      &lt;Button title=&quot;Login&quot; onPress={handleLogin} /&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Authentication</span><span class="p">;</span>
-</code></pre></div>
-
+export default Authentication;
+</code></pre>
 <p>This example demonstrates a simple authentication app, with features like email and password input, and login button press.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>React Native has its share of common problems and challenges, but most of them can be solved with the right approach and tools. Here are a few examples:

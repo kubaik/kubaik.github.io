@@ -158,24 +158,23 @@
 * Increased reliability and uptime</p>
 <p>To illustrate the concept, let's consider a simple example. Suppose we have an e-commerce application that requires a scalable web server, a database, and a messaging queue. We can use Amazon Web Services (AWS) for the web server, Google Cloud Platform (GCP) for the database, and Microsoft Azure for the messaging queue.</p>
 <h3 id="example-code-deploying-a-web-server-on-aws">Example Code: Deploying a Web Server on AWS</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an EC2 instance on AWS</span>
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">run_instances</span><span class="p">(</span>
-    <span class="n">ImageId</span><span class="o">=</span><span class="s1">&#39;ami-0c94855ba95c71c99&#39;</span><span class="p">,</span>
-    <span class="n">InstanceType</span><span class="o">=</span><span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">MinCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxCount</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
+# Create an EC2 instance on AWS
+ec2 = boto3.client('ec2')
+response = ec2.run_instances(
+    ImageId='ami-0c94855ba95c71c99',
+    InstanceType='t2.micro',
+    MinCount=1,
+    MaxCount=1
+)
 
-<span class="c1"># Get the instance ID</span>
-<span class="n">instance_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Instances&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">]</span>
+# Get the instance ID
+instance_id = response['Instances'][0]['InstanceId']
 
-<span class="c1"># Print the instance ID</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">instance_id</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the instance ID
+print(instance_id)
+</code></pre>
 <p>This code snippet uses the Boto3 library to create an EC2 instance on AWS. We can use a similar approach to deploy the database on GCP and the messaging queue on Azure.</p>
 <h2 id="designing-a-multi-cloud-architecture">Designing a Multi-Cloud Architecture</h2>
 <p>Designing a multi-cloud architecture requires careful planning and consideration of several factors, including:
@@ -188,25 +187,24 @@
 * <strong>AWS CloudFormation</strong>: A service that allows you to create and manage cloud resources using templates.
 * <strong>Google Cloud Deployment Manager</strong>: A service that allows you to create and manage cloud resources using templates.</p>
 <h3 id="example-code-defining-a-cloud-infrastructure-using-terraform">Example Code: Defining a Cloud Infrastructure using Terraform</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Create an EC2 instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="p">}</span>
+# Create an EC2 instance
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+}
 
-<span class="c1"># Create a GCP database instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_sql_database_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-db&quot;</span>
-<span class="w">  </span><span class="na">database_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;POSTGRES_11&quot;</span>
-<span class="w">  </span><span class="na">region</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-central1&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Create a GCP database instance
+resource &quot;google_sql_database_instance&quot; &quot;example&quot; {
+  name                = &quot;example-db&quot;
+  database_version = &quot;POSTGRES_11&quot;
+  region              = &quot;us-central1&quot;
+}
+</code></pre>
 <p>This code snippet uses Terraform to define a cloud infrastructure that includes an EC2 instance on AWS and a database instance on GCP.</p>
 <h2 id="implementing-a-multi-cloud-architecture">Implementing a Multi-Cloud Architecture</h2>
 <p>Implementing a multi-cloud architecture requires careful planning and execution. Some common challenges include:
@@ -222,43 +220,42 @@
 * <strong>Content delivery</strong>: Use multiple cloud services to create a content delivery network that provides fast and reliable access to content.
 * <strong>Big data analytics</strong>: Use multiple cloud services to create a big data analytics platform that provides insights and intelligence.</p>
 <h3 id="example-code-implementing-a-disaster-recovery-plan-using-aws-and-gcp">Example Code: Implementing a Disaster Recovery Plan using AWS and GCP</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<pre><code class="language-python">import boto3
+from googleapiclient.discovery import build
 
-<span class="c1"># Create an AWS S3 bucket</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">create_bucket</span><span class="p">(</span>
-    <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;example-bucket&#39;</span><span class="p">,</span>
-    <span class="n">CreateBucketConfiguration</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;LocationConstraint&#39;</span><span class="p">:</span> <span class="s1">&#39;us-west-2&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create an AWS S3 bucket
+s3 = boto3.client('s3')
+response = s3.create_bucket(
+    Bucket='example-bucket',
+    CreateBucketConfiguration={
+        'LocationConstraint': 'us-west-2'
+    }
+)
 
-<span class="c1"># Create a GCP Cloud Storage bucket</span>
-<span class="n">storage</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;storage&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">buckets</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;example-bucket&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+# Create a GCP Cloud Storage bucket
+storage = build('storage', 'v1')
+response = storage.buckets().insert(
+    body={
+        'name': 'example-bucket'
+    }
+).execute()
 
-<span class="c1"># Replicate data between AWS S3 and GCP Cloud Storage</span>
-<span class="k">def</span> <span class="nf">replicate_data</span><span class="p">():</span>
-    <span class="c1"># Get the list of objects in the AWS S3 bucket</span>
-    <span class="n">objects</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">list_objects</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;example-bucket&#39;</span><span class="p">)</span>
+# Replicate data between AWS S3 and GCP Cloud Storage
+def replicate_data():
+    # Get the list of objects in the AWS S3 bucket
+    objects = s3.list_objects(Bucket='example-bucket')
 
-    <span class="c1"># Copy the objects to the GCP Cloud Storage bucket</span>
-    <span class="k">for</span> <span class="nb">object</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Contents&#39;</span><span class="p">]:</span>
-        <span class="n">s3</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="s1">&#39;example-bucket&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">],</span> <span class="s1">&#39;/tmp/&#39;</span> <span class="o">+</span> <span class="nb">object</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">])</span>
-        <span class="n">storage</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
-            <span class="n">bucket</span><span class="o">=</span><span class="s1">&#39;example-bucket&#39;</span><span class="p">,</span>
-            <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="nb">object</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span>
-            <span class="p">},</span>
-            <span class="n">media_body</span><span class="o">=</span><span class="s1">&#39;/tmp/&#39;</span> <span class="o">+</span> <span class="nb">object</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-</code></pre></div>
-
+    # Copy the objects to the GCP Cloud Storage bucket
+    for object in objects['Contents']:
+        s3.download_file('example-bucket', object['Key'], '/tmp/' + object['Key'])
+        storage.objects().insert(
+            bucket='example-bucket',
+            body={
+                'name': object['Key']
+            },
+            media_body='/tmp/' + object['Key']
+        ).execute()
+</code></pre>
 <p>This code snippet uses AWS S3 and GCP Cloud Storage to implement a disaster recovery plan that replicates data between the two cloud services.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>When evaluating cloud services for a multi-cloud architecture, it's essential to consider performance benchmarks and pricing data. Some popular performance benchmarks include:

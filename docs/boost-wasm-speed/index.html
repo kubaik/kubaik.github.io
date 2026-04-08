@@ -164,20 +164,18 @@
 * <strong>Reduce memory allocation</strong>: Minimize memory allocation by using stack-based allocation instead of heap-based allocation. This can be achieved by using languages like Rust, which provide built-in support for stack-based allocation.</p>
 <h3 id="example-1-optimizing-wasm-code-with-wasm-opt">Example 1: Optimizing Wasm Code with wasm-opt</h3>
 <p>Let's take a look at an example of how to use <code>wasm-opt</code> to optimize Wasm code. Suppose we have a simple Wasm module that adds two numbers:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="n">module</span>
-<span class="w">  </span><span class="p">(</span><span class="k">func</span><span class="w"> </span><span class="o">$</span><span class="n">add</span><span class="w"> </span><span class="p">(</span><span class="n">param</span><span class="w"> </span><span class="o">$</span><span class="n">a</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">param</span><span class="w"> </span><span class="o">$</span><span class="n">b</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span>
-<span class="w">    </span><span class="n">local</span><span class="o">.</span><span class="n">get</span><span class="w"> </span><span class="o">$</span><span class="n">a</span>
-<span class="w">    </span><span class="n">local</span><span class="o">.</span><span class="n">get</span><span class="w"> </span><span class="o">$</span><span class="n">b</span>
-<span class="w">    </span><span class="n">i32</span><span class="o">.</span><span class="n">add</span>
-<span class="w">  </span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">export</span><span class="w"> </span><span class="s2">&quot;add&quot;</span><span class="w"> </span><span class="p">(</span><span class="k">func</span><span class="w"> </span><span class="o">$</span><span class="n">add</span><span class="p">))</span>
-<span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-wasm">(module
+  (func $add (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.add
+  )
+  (export &quot;add&quot; (func $add))
+)
+</code></pre>
 <p>We can use <code>wasm-opt</code> to optimize this code and reduce its size:</p>
-<div class="codehilite"><pre><span></span><code>wasm-opt<span class="w"> </span>-Oz<span class="w"> </span>add.wasm<span class="w"> </span>-o<span class="w"> </span>add.opt.wasm
-</code></pre></div>
-
+<pre><code class="language-bash">wasm-opt -Oz add.wasm -o add.opt.wasm
+</code></pre>
 <p>This will generate an optimized version of the Wasm module, reducing its size by approximately 30%.</p>
 <h2 id="leveraging-caching-mechanisms">Leveraging Caching Mechanisms</h2>
 <p>Caching mechanisms can significantly improve the performance of Wasm applications by reducing the number of times the Wasm code needs to be loaded and executed. Here are some caching mechanisms you can leverage:
@@ -185,47 +183,45 @@
 * <strong>Service worker caching</strong>: Use service workers to cache Wasm modules, allowing for offline access and reducing the number of network requests.</p>
 <h3 id="example-2-implementing-service-worker-caching">Example 2: Implementing Service Worker Caching</h3>
 <p>Let's take a look at an example of how to implement service worker caching for Wasm modules. Suppose we have a web application that loads a Wasm module called <code>add.wasm</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Register the service worker</span>
-<span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;sw.js&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Load the Wasm module</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;add.wasm&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">arrayBuffer</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">buffer</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Instantiate the Wasm module</span>
-<span class="w">        </span><span class="nx">WebAssembly</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
-<span class="w">          </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">instance</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Use the Wasm module</span>
-<span class="w">            </span><span class="nx">instance</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
-<span class="w">          </span><span class="p">});</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Register the service worker
+navigator.serviceWorker.register('sw.js')
+  .then(registration =&gt; {
+    // Load the Wasm module
+    fetch('add.wasm')
+      .then(response =&gt; response.arrayBuffer())
+      .then(buffer =&gt; {
+        // Instantiate the Wasm module
+        WebAssembly.instantiate(buffer, {})
+          .then(instance =&gt; {
+            // Use the Wasm module
+            instance.exports.add(2, 3);
+          });
+      });
+  });
+</code></pre>
 <p>We can modify the service worker to cache the Wasm module:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// sw.js</span>
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;add.wasm&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Cache the Wasm module</span>
-<span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">      </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;wasm-cache&#39;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">))</span>
-<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">              </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">cache</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">clone</span><span class="p">());</span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="w">              </span><span class="p">});</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">})</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// sw.js
+self.addEventListener('fetch', event =&gt; {
+  if (event.request.url.endsWith('add.wasm')) {
+    // Cache the Wasm module
+    event.respondWith(
+      caches.open('wasm-cache')
+        .then(cache =&gt; cache.match(event.request))
+        .then(response =&gt; {
+          if (response) {
+            return response;
+          } else {
+            return fetch(event.request)
+              .then(response =&gt; {
+                cache.put(event.request, response.clone());
+                return response;
+              });
+          }
+        })
+    );
+  }
+});
+</code></pre>
 <p>This will cache the Wasm module, reducing the number of network requests and improving performance.</p>
 <h2 id="using-webassembly-threads">Using WebAssembly Threads</h2>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
@@ -234,50 +230,47 @@
 * <strong>Better responsiveness</strong>: Improve responsiveness by running Wasm code in the background, reducing the load on the main thread.</p>
 <h3 id="example-3-using-webassembly-threads">Example 3: Using WebAssembly Threads</h3>
 <p>Let's take a look at an example of how to use WebAssembly threads to run Wasm code in parallel. Suppose we have a Wasm module that performs a computationally intensive task:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="n">module</span>
-<span class="w">  </span><span class="p">(</span><span class="k">func</span><span class="w"> </span><span class="o">$</span><span class="n">compute</span><span class="w"> </span><span class="p">(</span><span class="n">param</span><span class="w"> </span><span class="o">$</span><span class="n">a</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">param</span><span class="w"> </span><span class="o">$</span><span class="n">b</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="n">i32</span><span class="p">)</span>
-<span class="w">    </span><span class="n">local</span><span class="o">.</span><span class="n">get</span><span class="w"> </span><span class="o">$</span><span class="n">a</span>
-<span class="w">    </span><span class="n">local</span><span class="o">.</span><span class="n">get</span><span class="w"> </span><span class="o">$</span><span class="n">b</span>
-<span class="w">    </span><span class="n">i32</span><span class="o">.</span><span class="n">mul</span>
-<span class="w">    </span><span class="n">i32</span><span class="o">.</span><span class="n">add</span>
-<span class="w">  </span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">export</span><span class="w"> </span><span class="s2">&quot;compute&quot;</span><span class="w"> </span><span class="p">(</span><span class="k">func</span><span class="w"> </span><span class="o">$</span><span class="n">compute</span><span class="p">))</span>
-<span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-wasm">(module
+  (func $compute (param $a i32) (param $b i32) (result i32)
+    local.get $a
+    local.get $b
+    i32.mul
+    i32.add
+  )
+  (export &quot;compute&quot; (func $compute))
+)
+</code></pre>
 <p>We can use WebAssembly threads to run this code in parallel:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new worker</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">worker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;worker.js&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Create a new worker
+const worker = new Worker('worker.js');
 
-<span class="c1">// Post a message to the worker</span>
-<span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;compute&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="p">});</span>
+// Post a message to the worker
+worker.postMessage({ type: 'compute', a: 2, b: 3 });
 
-<span class="c1">// Handle the response</span>
-<span class="nx">worker</span><span class="p">.</span><span class="nx">onmessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;result&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+// Handle the response
+worker.onmessage = event =&gt; {
+  if (event.data.type === 'result') {
+    console.log(event.data.result);
+  }
+};
+</code></pre>
 <p>The worker can then run the Wasm code in parallel:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// worker.js</span>
-<span class="nx">self</span><span class="p">.</span><span class="nx">onmessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;compute&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Instantiate the Wasm module</span>
-<span class="w">    </span><span class="nx">WebAssembly</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">(</span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;compute.wasm&#39;</span><span class="p">))</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">instance</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Run the Wasm code in parallel</span>
-<span class="w">        </span><span class="nx">instance</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">compute</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">b</span><span class="p">)</span>
-<span class="w">          </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Post the result back to the main thread</span>
-<span class="w">            </span><span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;result&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="p">});</span>
-<span class="w">          </span><span class="p">});</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// worker.js
+self.onmessage = event =&gt; {
+  if (event.data.type === 'compute') {
+    // Instantiate the Wasm module
+    WebAssembly.instantiate(fetch('compute.wasm'))
+      .then(instance =&gt; {
+        // Run the Wasm code in parallel
+        instance.exports.compute(event.data.a, event.data.b)
+          .then(result =&gt; {
+            // Post the result back to the main thread
+            self.postMessage({ type: 'result', result });
+          });
+      });
+  }
+};
+</code></pre>
 <p>This will run the Wasm code in parallel, improving performance and responsiveness.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when working with Wasm performance optimization:

@@ -155,72 +155,69 @@
 <p>A Vue component is a self-contained piece of code that represents a part of the user interface. It consists of a template, a script, and a style section. The template defines the HTML structure, the script defines the JavaScript logic, and the style section defines the CSS styles. Vue components can be reused throughout an application, making it easier to maintain and update the codebase.</p>
 <h2 id="creating-a-vue-component">Creating a Vue Component</h2>
 <p>To create a Vue component, you need to define a new Vue instance and pass an options object to it. The options object should contain the template, script, and style sections. Here is an example of a simple Vue component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// MyComponent.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// MyComponent.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ title }}&lt;/h1&gt;
+    &lt;p&gt;{{ message }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a sample message&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      title: 'Hello World',
+      message: 'This is a sample message'
+    }
+  }
+}
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
-<span class="nx">h1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="mo">006</span><span class="mf">98</span><span class="nx">f</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/style&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+h1 {
+  color: #00698f;
+}
+&lt;/style&gt;
+</code></pre>
 <p>In this example, we define a Vue component called <code>MyComponent</code>. The template section defines the HTML structure, which includes an <code>h1</code> tag and a <code>p</code> tag. The script section defines the JavaScript logic, which includes a <code>data</code> function that returns an object with two properties: <code>title</code> and <code>message</code>. The style section defines the CSS styles, which include a style for the <code>h1</code> tag.</p>
 <h2 id="using-vue-components">Using Vue Components</h2>
 <p>To use a Vue component, you need to import it into your main application file and register it. Here is an example of how to use the <code>MyComponent</code> component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// main.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./MyComponent.vue&#39;</span>
+<pre><code class="language-javascript">// main.js
+import Vue from 'vue'
+import MyComponent from './MyComponent.vue'
 
-<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="s1">&#39;my-component&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">)</span>
+Vue.component('my-component', MyComponent)
 
-<span class="ow">new</span><span class="w"> </span><span class="nx">Vue</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;div&gt;&lt;my-component /&gt;&lt;/div&gt;&#39;</span>
-<span class="p">})</span>
-</code></pre></div>
-
+new Vue({
+  el: '#app',
+  template: '&lt;div&gt;&lt;my-component /&gt;&lt;/div&gt;'
+})
+</code></pre>
 <p>In this example, we import the <code>MyComponent</code> component and register it with the Vue instance using the <code>Vue.component</code> method. We then create a new Vue instance and define a template that includes the <code>my-component</code> tag.</p>
 <h2 id="props-and-events">Props and Events</h2>
 <p>Vue components can accept props and emit events. Props are used to pass data from a parent component to a child component, while events are used to communicate from a child component to a parent component. Here is an example of how to use props and events:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// MyComponent.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;$emit(&#39;click&#39;, message)&quot;</span><span class="o">&gt;</span><span class="nx">Click</span><span class="w"> </span><span class="nx">me</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// MyComponent.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ title }}&lt;/h1&gt;
+    &lt;button @click=&quot;$emit('click', message)&quot;&gt;Click me&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a sample message&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
-</code></pre></div>
-
+&lt;script&gt;
+export default {
+  props: {
+    title: String
+  },
+  data() {
+    return {
+      message: 'This is a sample message'
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
 <p>In this example, we define a Vue component that accepts a <code>title</code> prop and emits a <code>click</code> event when the button is clicked. The <code>click</code> event includes the <code>message</code> data as an argument.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Vue components can be optimized for performance by using techniques such as lazy loading and caching. Lazy loading involves loading components only when they are needed, while caching involves storing frequently accessed data in memory. According to a benchmark by Vue.js, using lazy loading can improve performance by up to 30%. Here are some metrics:

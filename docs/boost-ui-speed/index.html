@@ -160,67 +160,65 @@
 <p>These metrics can be measured using tools like Google Chrome DevTools, Lighthouse, or WebPageTest. For example, according to Google, a TTFP of less than 1 second and a TTI of less than 2 seconds are considered good thresholds for a fast UI.</p>
 <h2 id="optimizing-ui-code">Optimizing UI Code</h2>
 <p>One of the most effective ways to boost UI speed is to optimize the UI code. This includes minimizing the use of unnecessary libraries, reducing the number of DOM elements, and using efficient rendering algorithms. Here's an example of how to optimize a simple React component:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Before optimization</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// Before optimization
+import React, { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+function Counter() {
+  const [count, setCount] = useState(0);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">intervalId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalId</span><span class="p">);</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+  useEffect(() =&gt; {
+    const intervalId = setInterval(() =&gt; {
+      setCount(count + 1);
+    }, 1000);
+    return () =&gt; clearInterval(intervalId);
+  }, [count]);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="c1">// After optimization</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+// After optimization
+import React, { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+function Counter() {
+  const [count, setCount] = useState(0);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">intervalId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">setCount</span><span class="p">((</span><span class="nx">prevCount</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">prevCount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalId</span><span class="p">);</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    const intervalId = setInterval(() =&gt; {
+      setCount((prevCount) =&gt; prevCount + 1);
+    }, 1000);
+    return () =&gt; clearInterval(intervalId);
+  }, []);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">((</span><span class="nx">prevCount</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">prevCount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount((prevCount) =&gt; prevCount + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <p>In this example, we've optimized the <code>Counter</code> component by using the <code>useState</code> hook with a functional update, which reduces the number of re-renders and improves performance.</p>
 <h3 id="using-efficient-rendering-algorithms">Using Efficient Rendering Algorithms</h3>
 <p>Another way to optimize UI code is to use efficient rendering algorithms. For example, instead of using a simple <code>for</code> loop to render a list of items, you can use a library like <code>react-virtualized</code>, which uses a virtualized list to render only the visible items. Here's an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">FixedSizeList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-window&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import { FixedSizeList } from 'react-window';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">ListView</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">1000</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mf">0</span><span class="p">).</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`Item </span><span class="si">${</span><span class="nx">index</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+function ListView() {
+  const items = Array(1000).fill(0).map((_, index) =&gt; `Item ${index}`);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">FixedSizeList</span><span class="w"> </span><span class="na">height</span><span class="o">=</span><span class="p">{</span><span class="mf">300</span><span class="p">}</span><span class="w"> </span><span class="na">width</span><span class="o">=</span><span class="p">{</span><span class="mf">300</span><span class="p">}</span><span class="w"> </span><span class="na">itemSize</span><span class="o">=</span><span class="p">{</span><span class="mf">50</span><span class="p">}&gt;</span>
-<span class="w">      </span><span class="p">{({</span><span class="w"> </span><span class="nx">index</span><span class="p">,</span><span class="w"> </span><span class="nx">style</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">style</span><span class="p">}&gt;{</span><span class="nx">items</span><span class="p">[</span><span class="nx">index</span><span class="p">]}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">)}</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">FixedSizeList</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;FixedSizeList height={300} width={300} itemSize={50}&gt;
+      {({ index, style }) =&gt; (
+        &lt;div style={style}&gt;{items[index]}&lt;/div&gt;
+      )}
+    &lt;/FixedSizeList&gt;
+  );
+}
+</code></pre>
 <p>In this example, we've used the <code>FixedSizeList</code> component from <code>react-window</code> to render a list of 1000 items. The <code>FixedSizeList</code> component uses a virtualized list to render only the visible items, which improves performance and reduces memory usage.</p>
 <h2 id="leveraging-browser-caching">Leveraging Browser Caching</h2>
 <p>Browser caching is another effective way to boost UI speed. By caching frequently-used resources, such as images, scripts, and stylesheets, you can reduce the number of requests made to the server and improve page load times. Here are some best practices for leveraging browser caching:</p>
@@ -231,9 +229,8 @@
 <li>Use a Content Delivery Network (CDN) to cache resources at the edge of the network.</li>
 </ul>
 <p>For example, you can use the <code>Cache-Control</code> header to specify a maximum age for a resource:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">Cache-Control: max-age=31536000</span>
-</code></pre></div>
-
+<pre><code class="language-http">Cache-Control: max-age=31536000
+</code></pre>
 <p>This sets the maximum age to 1 year, which means that the resource will be cached for up to 1 year.</p>
 <h3 id="using-a-cdn">Using a CDN</h3>
 <p>Using a CDN is another effective way to leverage browser caching. A CDN caches resources at the edge of the network, which reduces the latency and improves page load times. Some popular CDNs include:
@@ -247,36 +244,35 @@
 * Use responsive images to ensure that images are scaled correctly for different screen sizes.
 * Use lazy loading to load images only when they are visible in the viewport.</p>
 <p>For example, you can use the <code>image-webpack-loader</code> plugin to compress images in your Webpack configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="w">  </span><span class="nx">module</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">rules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/\.(jpg|png|gif)$/</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">use</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">loader</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;image-webpack-loader&#39;</span><span class="p">,</span>
+<pre><code class="language-javascript">module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          {
+            loader: 'image-webpack-loader',
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="w">            </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="nx">mozjpeg</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">progressive</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">                </span><span class="nx">quality</span><span class="o">:</span><span class="w"> </span><span class="mf">65</span><span class="p">,</span>
-<span class="w">              </span><span class="p">},</span>
-<span class="w">              </span><span class="c1">// the webp option will enable WEBP</span>
-<span class="w">              </span><span class="nx">webp</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">quality</span><span class="o">:</span><span class="w"> </span><span class="mf">75</span><span class="p">,</span>
-<span class="w">              </span><span class="p">},</span>
-<span class="w">            </span><span class="p">},</span>
-<span class="w">          </span><span class="p">},</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75,
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+</code></pre>
 <p>In this example, we've used the <code>image-webpack-loader</code> plugin to compress images using the WebP algorithm. We've also specified the quality of the compressed images, which allows us to balance the file size with the image quality.</p>
 <h2 id="best-practices-for-frontend-performance-tuning">Best Practices for Frontend Performance Tuning</h2>
 <p>Here are some best practices for frontend performance tuning:

@@ -186,10 +186,9 @@
 </ul>
 <p><strong>Practical Example:</strong></p>
 <p>Build a blog with Next.js, fetching content from a headless CMS like Contentful or Sanity. This setup allows for dynamic content updates with static site benefits.</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-blog
-<span class="c1"># Integrate with a headless CMS via API</span>
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-blog
+# Integrate with a headless CMS via API
+</code></pre>
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Evaluate your project needs—static sites are ideal for marketing pages, documentation, and blogs.</li>
@@ -212,14 +211,13 @@
 <li>Design responsive, mobile-first interfaces.</li>
 </ul>
 <p><strong>Example:</strong> An e-commerce PWA that allows users to browse products and add items to the cart even without an internet connection.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Register service worker in your main JS file</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/sw.js&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registered&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registration failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">));</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Register service worker in your main JS file
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration =&gt; console.log('Service Worker registered'))
+    .catch(error =&gt; console.log('Service Worker registration failed:', error));
+}
+</code></pre>
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Audit your website’s PWA capabilities using Lighthouse.</li>
@@ -236,16 +234,15 @@
 </ul>
 <h3 id="practical-example">Practical Example:</h3>
 <p>Integrate a Rust module into your web app for performance-critical features.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">init</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">heavyComputation</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./pkg/my_rust_module.js&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import init, { heavyComputation } from './pkg/my_rust_module.js';
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">init</span><span class="p">();</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">heavyComputation</span><span class="p">(</span><span class="mf">42</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="nx">run</span><span class="p">();</span>
-</code></pre></div>
-
+async function run() {
+  await init();
+  const result = heavyComputation(42);
+  console.log(result);
+}
+run();
+</code></pre>
 <p><strong>Advice:</strong></p>
 <ul>
 <li>Use WebAssembly for features that are too slow with JavaScript.</li>
@@ -266,9 +263,8 @@
 <li>Regularly audit your sites with tools like Axe, WAVE, or Lighthouse.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Close menu&quot;</span><span class="p">&gt;</span>X<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button aria-label=&quot;Close menu&quot;&gt;X&lt;/button&gt;
+</code></pre>
 <p><strong>Actionable Advice:</strong></p>
 <ul>
 <li>Educate your team on accessibility standards like WCAG 2.1.</li>
@@ -289,10 +285,9 @@
 <li>Use secure, modern authentication protocols.</li>
 </ul>
 <p><strong>Example:</strong> Implement WebAuthn for passwordless login:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Pseudocode for WebAuthn registration</span>
-<span class="nx">navigator</span><span class="p">.</span><span class="nx">credentials</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span><span class="w"> </span><span class="nx">publicKey</span><span class="o">:</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Pseudocode for WebAuthn registration
+navigator.credentials.create({ publicKey: ... });
+</code></pre>
 <h2 id="7-low-code-and-no-code-development-tools">7. Low-Code and No-Code Development Tools</h2>
 <p>The democratization of web development continues with low-code/no-code platforms, enabling non-developers to build functional websites and apps.</p>
 <h3 id="popular-platforms">Popular Platforms</h3>

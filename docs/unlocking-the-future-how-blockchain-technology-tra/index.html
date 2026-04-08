@@ -162,23 +162,22 @@
 <li><strong>Tools</strong>: Hyperledger Fabric (permissioned blockchain)</li>
 <li><strong>Metrics</strong>: Companies using IBM Food Trust report up to a 50% reduction in time spent on tracing products.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a Hyperledger Fabric chaincode to create a product</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Contract</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-contract-api&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Example of a Hyperledger Fabric chaincode to create a product
+const { Contract } = require('fabric-contract-api');
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">SupplyChainContract</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Contract</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="nx">createProduct</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">productId</span><span class="p">,</span><span class="w"> </span><span class="nx">productName</span><span class="p">,</span><span class="w"> </span><span class="nx">origin</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">product</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">productId</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">productName</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">origin</span><span class="o">:</span><span class="w"> </span><span class="nx">origin</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">createdAt</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">(),</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">stub</span><span class="p">.</span><span class="nx">putState</span><span class="p">(</span><span class="nx">productId</span><span class="p">,</span><span class="w"> </span><span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">product</span><span class="p">)));</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">product</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class SupplyChainContract extends Contract {
+    async createProduct(ctx, productId, productName, origin) {
+        const product = {
+            id: productId,
+            name: productName,
+            origin: origin,
+            createdAt: new Date().toISOString(),
+        };
+        await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
+        return product;
+    }
+}
+</code></pre>
 <h3 id="2-financial-services">2. Financial Services</h3>
 <h4 id="problem_1">Problem</h4>
 <p>Traditional banking systems are slow and costly, often taking days to settle transactions across borders. The average cost of international money transfers is around 6.5% of the transaction amount.</p>
@@ -189,39 +188,38 @@
 <li><strong>Tools</strong>: RippleNet for cross-border payments</li>
 <li><strong>Metrics</strong>: Ripple claims financial institutions can save over $3 billion annually in payment processing.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of using Ripple&#39;s SDK to send funds</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">ripple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ripple-lib&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">RippleAPI</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ripple</span><span class="p">;</span>
+<pre><code class="language-javascript">// Example of using Ripple's SDK to send funds
+const ripple = require('ripple-lib');
+const { RippleAPI } = ripple;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RippleAPI</span><span class="p">({</span><span class="w"> </span><span class="nx">server</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;wss://s2.ripple.com&#39;</span><span class="w"> </span><span class="p">});</span>
+const api = new RippleAPI({ server: 'wss://s2.ripple.com' });
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">sendPayment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">payment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rXXXXXXX&#39;</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">maxAmount</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;10.00&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="nx">currency</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;USD&#39;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nx">destination</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rYYYYYYY&#39;</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;10.00&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="nx">currency</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;USD&#39;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">};</span>
+async function sendPayment() {
+    const payment = {
+        source: {
+            address: 'rXXXXXXX',
+            maxAmount: {
+                value: '10.00',
+                currency: 'USD'
+            }
+        },
+        destination: {
+            address: 'rYYYYYYY',
+            amount: {
+                value: '10.00',
+                currency: 'USD'
+            }
+        }
+    };
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">prepared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">preparePayment</span><span class="p">(</span><span class="s1">&#39;rXXXXXXX&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">payment</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">signed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">prepared</span><span class="p">.</span><span class="nx">txJSON</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;YOUR_SECRET&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">signed</span><span class="p">.</span><span class="nx">signedTransaction</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="p">}</span>
+    const prepared = await api.preparePayment('rXXXXXXX', payment);
+    const signed = api.sign(prepared.txJSON, 'YOUR_SECRET');
+    const result = await api.submit(signed.signedTransaction);
+    console.log(result);
+}
 
-<span class="nx">sendPayment</span><span class="p">();</span>
-</code></pre></div>
-
+sendPayment();
+</code></pre>
 <h3 id="3-healthcare-data-management">3. Healthcare Data Management</h3>
 <h4 id="problem_2">Problem</h4>
 <p>Patient data is often stored in siloed systems, leading to inefficiencies, errors, and potential breaches of privacy. The average cost of a data breach in healthcare is approximately $7.13 million.</p>
@@ -232,32 +230,31 @@
 <li><strong>Tools</strong>: Ethereum for smart contracts</li>
 <li><strong>Metrics</strong>: MedRec aims to reduce data breach risks and improve patient privacy while giving patients control over their own data.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a smart contract to manage patient records</span>
-<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">// Example of a smart contract to manage patient records
+pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">PatientRecords</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Record</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">patientName</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">dataHash</span><span class="p">;</span><span class="w"> </span><span class="c1">// hash of the actual medical data</span>
-<span class="w">        </span><span class="kt">address</span><span class="p">[]</span><span class="w"> </span>authorizedProviders<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+contract PatientRecords {
+    struct Record {
+        string patientName;
+        string dataHash; // hash of the actual medical data
+        address[] authorizedProviders;
+    }
 
-<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>Record<span class="p">)</span><span class="w"> </span>records<span class="p">;</span>
+    mapping(address =&gt; Record) records;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">storeRecord</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>patientName<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>dataHash<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>records<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Record<span class="p">(</span>patientName<span class="p">,</span><span class="w"> </span>dataHash<span class="p">,</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span><span class="kt">address</span><span class="p">[](</span><span class="m m-Decimal">0</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
+    function storeRecord(string memory patientName, string memory dataHash) public {
+        records[msg.sender] = Record(patientName, dataHash, new address[](0));
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">authorizeProvider</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">provider</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>records<span class="p">[</span><span class="k">msg.sender</span><span class="p">].</span>authorizedProviders<span class="p">.</span>push<span class="p">(</span>provider<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    function authorizeProvider(address provider) public {
+        records[msg.sender].authorizedProviders.push(provider);
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getRecord</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span>records<span class="p">[</span><span class="k">msg.sender</span><span class="p">].</span>patientName<span class="p">,</span><span class="w"> </span>records<span class="p">[</span><span class="k">msg.sender</span><span class="p">].</span>dataHash<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getRecord() public view returns (string memory, string memory) {
+        return (records[msg.sender].patientName, records[msg.sender].dataHash);
+    }
+}
+</code></pre>
 <h2 id="addressing-common-problems-in-blockchain-implementation">Addressing Common Problems in Blockchain Implementation</h2>
 <h3 id="1-scalability">1. Scalability</h3>
 <h4 id="problem_3">Problem</h4>

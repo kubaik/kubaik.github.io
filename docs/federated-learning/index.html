@@ -158,43 +158,42 @@
 * <strong>Model</strong>: The model is the machine learning model that is being trained. The model is typically a neural network, but it can be any other type of machine learning model.</p>
 <h2 id="implementing-federated-learning">Implementing Federated Learning</h2>
 <p>Implementing federated learning requires a deep understanding of the underlying architecture and the communication protocols between the client and the server. Here is an example of how to implement federated learning using the TensorFlow Federated (TFF) framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_federated</span> <span class="k">as</span> <span class="nn">tff</span>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_federated as tff
 
-<span class="c1"># Define the client model</span>
-<span class="k">def</span> <span class="nf">client_model</span><span class="p">():</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
-    <span class="p">])</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the client model
+def client_model():
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.Dense(10, activation='relu', input_shape=(10,)),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+    return model
 
-<span class="c1"># Define the server model</span>
-<span class="k">def</span> <span class="nf">server_model</span><span class="p">():</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
-    <span class="p">])</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Define the server model
+def server_model():
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.Dense(10, activation='relu', input_shape=(10,)),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+    return model
 
-<span class="c1"># Define the federated averaging process</span>
-<span class="k">def</span> <span class="nf">federated_average</span><span class="p">(</span><span class="n">client_models</span><span class="p">):</span>
-    <span class="n">server_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
-    <span class="p">])</span>
-    <span class="n">server_model</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">client_models</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">server_model</span>
+# Define the federated averaging process
+def federated_average(client_models):
+    server_model = tf.keras.models.Sequential([
+        tf.keras.layers.Dense(10, activation='relu', input_shape=(10,)),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+    server_model.set_weights(tf.reduce_mean([model.get_weights() for model in client_models], axis=0))
+    return server_model
 
-<span class="c1"># Create a federated learning process</span>
-<span class="n">process</span> <span class="o">=</span> <span class="n">tff</span><span class="o">.</span><span class="n">learning</span><span class="o">.</span><span class="n">build_federated_averaging_process</span><span class="p">(</span>
-    <span class="n">client_model_fn</span><span class="o">=</span><span class="n">client_model</span><span class="p">,</span>
-    <span class="n">server_model_fn</span><span class="o">=</span><span class="n">server_model</span><span class="p">,</span>
-    <span class="n">client_optimizer_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
-    <span class="n">server_optimizer_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a federated learning process
+process = tff.learning.build_federated_averaging_process(
+    client_model_fn=client_model,
+    server_model_fn=server_model,
+    client_optimizer_fn=lambda: tf.keras.optimizers.SGD(learning_rate=0.01),
+    server_optimizer_fn=lambda: tf.keras.optimizers.SGD(learning_rate=0.01)
+)
+</code></pre>
 <p>This code example demonstrates how to define a client model, a server model, and a federated averaging process using the TFF framework. The <code>client_model</code> function defines a simple neural network with two dense layers, while the <code>server_model</code> function defines a similar neural network. The <code>federated_average</code> function defines the federated averaging process, which takes a list of client models as input and returns a single server model.</p>
 <h3 id="tools-and-platforms-for-federated-learning">Tools and Platforms for Federated Learning</h3>
 <p>There are several tools and platforms that can be used to implement federated learning, including:

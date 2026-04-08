@@ -182,28 +182,27 @@
 </ol>
 <h2 id="example-of-a-cicd-pipeline">Example of a CI/CD Pipeline</h2>
 <p>Below is an example of a simple CI/CD pipeline using Jenkins:</p>
-<div class="codehilite"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">pipeline {</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">agent any</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">stages {</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">stage(&#39;Build&#39;) {</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">steps {</span>
-<span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">sh &#39;mvn clean package&#39;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">stage(&#39;Test&#39;) {</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">steps {</span>
-<span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">sh &#39;mvn test&#39;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">stage(&#39;Deploy&#39;) {</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">steps {</span>
-<span class="w">                </span><span class="l l-Scalar l-Scalar-Plain">sh &#39;kubectl apply -f deployment.yaml&#39;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="l l-Scalar l-Scalar-Plain">}</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+}
+</code></pre>
 <p>In this pipeline:
 - The <code>Build</code> stage compiles the code.
 - The <code>Test</code> stage runs automated tests.

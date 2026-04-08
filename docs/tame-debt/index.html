@@ -158,16 +158,15 @@
 * Code smell metrics, such as the number of duplicated code blocks and dead code
 * Dependency metrics, such as the number of outdated dependencies and vulnerabilities</p>
 <p>For example, a team can use tools like SonarQube to measure code complexity and coverage. SonarQube provides a comprehensive set of metrics, including cyclomatic complexity, halstead complexity, and code coverage. The following code snippet shows how to configure SonarQube to analyze a Java project:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">sonar</span><span class="p">.</span><span class="na">host</span><span class="p">.</span><span class="na">url</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="c1">//localhost:9000</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">projectKey</span><span class="o">=</span><span class="n">myproject</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">projectName</span><span class="o">=</span><span class="n">My</span><span class="w"> </span><span class="n">Project</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">projectVersion</span><span class="o">=</span><span class="mf">1.0</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">binaries</span><span class="o">=</span><span class="n">target</span><span class="o">/</span><span class="n">classes</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">libraries</span><span class="o">=</span><span class="n">lib</span><span class="o">/*</span><span class="p">.</span><span class="na">jar</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">test</span><span class="p">.</span><span class="na">binaries</span><span class="o">=</span><span class="n">target</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">classes</span>
-<span class="n">sonar</span><span class="p">.</span><span class="na">java</span><span class="p">.</span><span class="na">test</span><span class="p">.</span><span class="na">libraries</span><span class="o">=</span><span class="n">lib</span><span class="o">/*</span><span class="p">.</span><span class="na">jar</span>
-</code></pre></div>
-
+<pre><code class="language-java">sonar.host.url=http://localhost:9000
+sonar.projectKey=myproject
+sonar.projectName=My Project
+sonar.projectVersion=1.0
+sonar.java.binaries=target/classes
+sonar.java.libraries=lib/*.jar
+sonar.java.test.binaries=target/test-classes
+sonar.java.test.libraries=lib/*.jar
+</code></pre>
 <p>This configuration tells SonarQube to analyze the Java project, including its binaries, libraries, test binaries, and test libraries.</p>
 <h2 id="prioritizing-technical-debt">Prioritizing Technical Debt</h2>
 <p>Prioritizing technical debt is critical to ensuring that the most critical issues are addressed first. There are several factors that can be used to prioritize technical debt, including:
@@ -195,9 +194,9 @@
 4. <strong>Assign ownership</strong>: Assign ownership of each technical debt issue to a developer or team.
 5. <strong>Schedule regular reviews</strong>: Schedule regular reviews of the technical debt backlog to ensure that issues are being addressed.</p>
 <p>For example, a team can use Jira to manage their technical debt backlog. Jira provides a comprehensive set of features, including issue tracking, project management, and agile development. The following screenshot shows an example of how to configure Jira to manage technical debt:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">*</span><span class="w"> </span>Project: Technical Debt
-<span class="k">*</span><span class="w"> </span>Issue Type: Technical Debt
-<span class="k">*</span><span class="w"> </span>Fields:
+<pre><code class="language-markdown">* Project: Technical Debt
+* Issue Type: Technical Debt
+* Fields:
     + Summary
     + Description
     + Business Value
@@ -207,8 +206,7 @@
     + Priority
     + Assignee
     + Estimated Time
-</code></pre></div>
-
+</code></pre>
 <p>This configuration tells Jira to create a new project for technical debt, including a custom issue type and fields for business value, risk, effort, urgency, priority, assignee, and estimated time.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>The following are some common problems and solutions related to technical debt management:
@@ -217,13 +215,12 @@
 * <strong>Inadequate prioritization</strong>: Use a scoring system to prioritize technical debt based on business value, risk, effort, and urgency.
 * <strong>Inconsistent implementation</strong>: Establish a consistent implementation process, including regular reviews and updates.</p>
 <p>For example, a team can use GitHub to manage their codebase and track technical debt. GitHub provides a comprehensive set of features, including version control, issue tracking, and project management. The following code snippet shows an example of how to use GitHub to track technical debt:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>init
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
-git<span class="w"> </span>branch<span class="w"> </span>technical-debt
-git<span class="w"> </span>checkout<span class="w"> </span>technical-debt
-</code></pre></div>
-
+<pre><code class="language-bash">git init
+git add .
+git commit -m &quot;Initial commit&quot;
+git branch technical-debt
+git checkout technical-debt
+</code></pre>
 <p>This configuration tells GitHub to create a new repository, including a new branch for technical debt.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>The following are some use cases and implementation details related to technical debt management:
@@ -231,34 +228,33 @@ git<span class="w"> </span>checkout<span class="w"> </span>technical-debt
 * <strong>Updating outdated dependencies</strong>: Use tools like Maven to update outdated dependencies.
 * <strong>Improving code coverage</strong>: Use tools like JUnit to improve code coverage.</p>
 <p>For example, a team can use the following code snippet to refactor duplicated code using Resharper:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Before refactoring</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method1</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// duplicated code</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">// Before refactoring
+public void Method1()
+{
+    // duplicated code
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method2</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// duplicated code</span>
-<span class="p">}</span>
+public void Method2()
+{
+    // duplicated code
+}
 
-<span class="c1">// After refactoring</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// refactored code</span>
-<span class="p">}</span>
+// After refactoring
+public void Method()
+{
+    // refactored code
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method1</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">Method</span><span class="p">();</span>
-<span class="p">}</span>
+public void Method1()
+{
+    Method();
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Method2</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">Method</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public void Method2()
+{
+    Method();
+}
+</code></pre>
 <p>This configuration tells Resharper to refactor the duplicated code into a single method.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>The following are some performance benchmarks and pricing data related to technical debt management tools:

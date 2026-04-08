@@ -174,48 +174,46 @@
 <p>Imagine a retail store that wants to improve its online shopping experience. A PWA can load quickly, provide offline access to products, and send push notifications for abandoned carts, driving users back to complete their purchases.</p>
 <p><strong>Implementation Example</strong>:</p>
 <p>To create a basic PWA for an e-commerce site, you can start by setting up a Service Worker to cache assets:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// sw.js - Service Worker</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">CACHE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;v1&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">urlsToCache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/script.js&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<pre><code class="language-javascript">// sw.js - Service Worker
+const CACHE_NAME = 'v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/script.js',
+];
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">CACHE_NAME</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">cache</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">(</span><span class="nx">urlsToCache</span><span class="p">))</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+self.addEventListener('install', (event) =&gt; {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) =&gt; cache.addAll(urlsToCache))
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', (event) =&gt; {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) =&gt; {
+        return response || fetch(event.request);
+      })
+  );
+});
+</code></pre>
 <h3 id="2-news-websites">2. News Websites</h3>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
 <p>News organizations can leverage PWAs to ensure their content is accessible even when users are offline. Features like offline reading and push notifications for breaking news can enhance user experience.</p>
 <p><strong>Example Code for Push Notifications</strong>:</p>
 <p>You can implement push notifications in your PWA using the Push API:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Registering for push notifications</span>
-<span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">ready</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">registration</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">pushManager</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">userVisibleOnly</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">applicationServerKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;Your-Public-VAPID-Key&gt;&#39;</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">subscription</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Send subscription to your server</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Registering for push notifications
+navigator.serviceWorker.ready.then((registration) =&gt; {
+  return registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: '&lt;Your-Public-VAPID-Key&gt;'
+  });
+}).then((subscription) =&gt; {
+  // Send subscription to your server
+});
+</code></pre>
 <h3 id="3-educational-platforms">3. Educational Platforms</h3>
 <p>Educational platforms can provide students with offline access to materials, which is especially useful for those with limited internet access. A PWA can host video content that can be cached and accessed offline.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
@@ -225,17 +223,16 @@
 <h3 id="problem-2-service-worker-complexity">Problem 2: Service Worker Complexity</h3>
 <p>Service Workers can be complex for developers unfamiliar with them.</p>
 <p><strong>Solution</strong>: Use libraries like Workbox, which simplifies Service Worker implementation and offers built-in caching strategies.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerRoute</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-routing&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">StaleWhileRevalidate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-strategies&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 
-<span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">  </span><span class="p">({</span><span class="w"> </span><span class="nx">request</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">destination</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">StaleWhileRevalidate</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;images&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="p">);</span>
-</code></pre></div>
-
+registerRoute(
+  ({ request }) =&gt; request.destination === 'image',
+  new StaleWhileRevalidate({
+    cacheName: 'images',
+  })
+);
+</code></pre>
 <h3 id="problem-3-app-store-visibility">Problem 3: App Store Visibility</h3>
 <p>PWAs are not listed in app stores, which can limit their visibility compared to native apps.</p>
 <p><strong>Solution</strong>: Promote your PWA through social media, SEO, and email marketing, and ensure you provide a clear call-to-action for users to install it on their home screens.</p>

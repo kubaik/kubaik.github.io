@@ -158,28 +158,27 @@
 * Using relative units (e.g., percentages, ems) instead of absolute units (e.g., pixels) for sizing elements
 * Ensuring that images and other media are optimized for different devices and screen sizes</p>
 <p>For example, let's consider a simple layout with a header, main content area, and footer. We can use CSS media queries to apply different styles based on screen size:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Default styles for large screens */</span>
-<span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">1200</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Default styles for large screens */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-<span class="c">/* Styles for medium screens (e.g., tablets) */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="kt">%</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+/* Styles for medium screens (e.g., tablets) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+}
 
-<span class="c">/* Styles for small screens (e.g., mobile devices) */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">480px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+/* Styles for small screens (e.g., mobile devices) */
+@media (max-width: 480px) {
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+</code></pre>
 <p>In this example, we're using media queries to apply different styles to the <code>.container</code> element based on screen size. On large screens, the container has a maximum width of 1200px. On medium screens (e.g., tablets), the container has a maximum width of 90% of the screen width. On small screens (e.g., mobile devices), the container takes up the full screen width and has no padding.</p>
 <h2 id="tools-and-platforms-for-responsive-web-design">Tools and Platforms for Responsive Web Design</h2>
 <p>There are several tools and platforms that can help you create responsive websites. Some popular options include:
@@ -188,48 +187,46 @@
 * Bootstrap: A popular front-end framework that includes pre-built responsive components and layouts
 * WordPress: A content management system that includes responsive themes and plugins to help you create responsive websites</p>
 <p>For example, let's consider using Bootstrap to create a responsive navigation menu. We can use the following HTML and CSS code:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar navbar-expand-lg navbar-light bg-light&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-brand&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Menu<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-toggler&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;collapse&quot;</span> <span class="na">data-target</span><span class="o">=</span><span class="s">&quot;#navbarSupportedContent&quot;</span> <span class="na">aria-controls</span><span class="o">=</span><span class="s">&quot;navbarSupportedContent&quot;</span> <span class="na">aria-expanded</span><span class="o">=</span><span class="s">&quot;false&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Toggle navigation&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-toggler-icon&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-   <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;collapse navbar-collapse&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;navbarSupportedContent&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-nav mr-auto&quot;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav-item active&quot;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav-link&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sr-only&quot;</span><span class="p">&gt;</span>(current)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav-item&quot;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav-link&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
+<pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
+  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Menu&lt;/a&gt;
+  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarSupportedContent&quot; aria-controls=&quot;navbarSupportedContent&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
+    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+   &lt;/button&gt;
+  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarSupportedContent&quot;&gt;
+    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+      &lt;li class=&quot;nav-item active&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
+<pre><code class="language-css">/* Bootstrap CSS */
+.navbar {
+  padding: 1rem;
+}
 
-<div class="codehilite"><pre><span></span><code><span class="c">/* Bootstrap CSS */</span>
-<span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">rem</span><span class="p">;</span>
-<span class="p">}</span>
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+}
 
-<span class="p">.</span><span class="nc">navbar-toggler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">rem</span><span class="p">;</span>
-<span class="p">}</span>
+.navbar-toggler-icon {
+  background-image: url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e&quot;);
+}
 
-<span class="p">.</span><span class="nc">navbar-toggler-icon</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-image</span><span class="p">:</span><span class="w"> </span><span class="nb">url</span><span class="p">(</span><span class="s2">&quot;data:image/svg+xml,%3csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;30&#39; height=&#39;30&#39; viewBox=&#39;0 0 30 30&#39;%3e%3cpath stroke=&#39;rgba%280, 0, 0, 0.5%29&#39; stroke-linecap=&#39;round&#39; stroke-miterlimit=&#39;10&#39; d=&#39;M4 7h22M4 15h22M4 23h22&#39;/%3e%3c/svg%3e&quot;</span><span class="p">);</span>
-<span class="p">}</span>
+/* Custom CSS */
+.navbar-brand {
+  font-size: 1.5rem;
+}
 
-<span class="c">/* Custom CSS */</span>
-<span class="p">.</span><span class="nc">navbar-brand</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="kt">rem</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="p">.</span><span class="nc">nav-link</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">rem</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+.nav-link {
+  font-size: 1rem;
+}
+</code></pre>
 <p>In this example, we're using Bootstrap's pre-built navigation components to create a responsive navigation menu. The menu is collapsed on small screens and expanded on large screens.</p>
 <h2 id="performance-optimization-for-responsive-websites">Performance Optimization for Responsive Websites</h2>
 <p>Performance is a critical aspect of responsive web design. A slow-loading website can lead to high bounce rates and poor user experience. Here are some tips to optimize the performance of your responsive website:</p>
@@ -253,9 +250,8 @@ Solution: Use a responsive navigation menu framework like Bootstrap or Foundatio
 * <strong>Problem: Content is not readable on small screens</strong>
 Solution: Use a responsive typography framework like Typekit or Google Fonts to ensure that content is readable on small screens. You can also use the <code>font-size</code> property to adjust font sizes based on screen size.</p>
 <p>For example, let's consider using the <code>srcset</code> attribute to specify different image sizes for different devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;image-small.jpg 480w, image-medium.jpg 768w, image-large.jpg 1200w&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; srcset=&quot;image-small.jpg 480w, image-medium.jpg 768w, image-large.jpg 1200w&quot; alt=&quot;Image&quot;&gt;
+</code></pre>
 <p>In this example, we're using the <code>srcset</code> attribute to specify different image sizes for different devices. The <code>480w</code> value specifies the image size for small screens (e.g., mobile devices), the <code>768w</code> value specifies the image size for medium screens (e.g., tablets), and the <code>1200w</code> value specifies the image size for large screens (e.g., desktops).</p>
 <h2 id="real-world-examples-and-use-cases">Real-World Examples and Use Cases</h2>
 <p>Here are some real-world examples and use cases for responsive web design:

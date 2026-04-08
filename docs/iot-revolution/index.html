@@ -160,49 +160,47 @@
 <h2 id="practical-examples-of-iot">Practical Examples of IoT</h2>
 <p>Here are a few practical examples of IoT in action:
 1. <strong>Smart Home Automation</strong>: A smart thermostat can be programmed to adjust the temperature based on the time of day, the weather outside, and the occupants' preferences. For example, the Nest Learning Thermostat can be controlled using the Nest API, which provides a simple and secure way to interact with the device.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set the API endpoint and authentication token</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://developer-api.nest.com/devices/thermostats&quot;</span>
-<span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_AUTH_TOKEN&quot;</span>
+# Set the API endpoint and authentication token
+endpoint = &quot;https://developer-api.nest.com/devices/thermostats&quot;
+token = &quot;YOUR_AUTH_TOKEN&quot;
 
-<span class="c1"># Set the target temperature</span>
-<span class="n">target_temperature</span> <span class="o">=</span> <span class="mi">22</span>
+# Set the target temperature
+target_temperature = 22
 
-<span class="c1"># Send a POST request to the API endpoint</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;target_temperature&quot;</span><span class="p">:</span> <span class="n">target_temperature</span><span class="p">})</span>
+# Send a POST request to the API endpoint
+response = requests.post(endpoint, headers={&quot;Authorization&quot;: f&quot;Bearer {token}&quot;}, json={&quot;target_temperature&quot;: target_temperature})
 
-<span class="c1"># Print the response</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the response
+print(response.json())
+</code></pre>
 <ol>
 <li><strong>Industrial Automation</strong>: IoT can be used to monitor and control industrial equipment, such as pumps, valves, and motors. For example, the Siemens MindSphere platform provides a cloud-based IoT operating system that enables companies to collect and analyze data from industrial devices.</li>
 <li><strong>Wearables</strong>: Wearable devices, such as smartwatches and fitness trackers, can collect data on the user's physical activity, heart rate, and other health metrics. For example, the Fitbit API provides a way to access data from Fitbit devices, which can be used to develop custom applications and services.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.BufferedReader</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.InputStreamReader</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.HttpURLConnection</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.net.URL</span><span class="p">;</span>
+<pre><code class="language-java">import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-<span class="c1">// Set the API endpoint and authentication token</span>
-<span class="n">String</span><span class="w"> </span><span class="n">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://api.fitbit.com/1/user/-/activities.json&quot;</span><span class="p">;</span>
-<span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;YOUR_AUTH_TOKEN&quot;</span><span class="p">;</span>
+// Set the API endpoint and authentication token
+String endpoint = &quot;https://api.fitbit.com/1/user/-/activities.json&quot;;
+String token = &quot;YOUR_AUTH_TOKEN&quot;;
 
-<span class="c1">// Set up the HTTP connection</span>
-<span class="n">URL</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">URL</span><span class="p">(</span><span class="n">endpoint</span><span class="p">);</span>
-<span class="n">HttpURLConnection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">HttpURLConnection</span><span class="p">)</span><span class="w"> </span><span class="n">url</span><span class="p">.</span><span class="na">openConnection</span><span class="p">();</span>
-<span class="n">connection</span><span class="p">.</span><span class="na">setRequestMethod</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">);</span>
-<span class="n">connection</span><span class="p">.</span><span class="na">setRequestProperty</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">token</span><span class="p">);</span>
+// Set up the HTTP connection
+URL url = new URL(endpoint);
+HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+connection.setRequestMethod(&quot;GET&quot;);
+connection.setRequestProperty(&quot;Authorization&quot;, &quot;Bearer &quot; + token);
 
-<span class="c1">// Read the response</span>
-<span class="n">BufferedReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputStreamReader</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">()));</span>
-<span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">;</span>
-<span class="k">while</span><span class="w"> </span><span class="p">((</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Read the response
+BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+String line;
+while ((line = reader.readLine()) != null) {
+    System.out.println(line);
+}
+</code></pre>
 <h2 id="tools-and-platforms-for-iot-development">Tools and Platforms for IoT Development</h2>
 <p>There are several tools and platforms available for IoT development, including:
 * <strong>AWS IoT</strong>: A cloud-based platform that provides a managed cloud service for connected devices.
@@ -212,27 +210,26 @@
 * <strong>Raspberry Pi</strong>: A small and affordable computer that can be used to develop IoT projects.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems in IoT development is <strong>security</strong>, as connected devices can be vulnerable to hacking and data breaches. To address this issue, developers can use secure communication protocols, such as TLS and SSL, and implement encryption and authentication mechanisms.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of secure communication using TLS</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tls.h&gt;</span>
+<pre><code class="language-c">// Example of secure communication using TLS
+#include &lt;tls.h&gt;
 
-<span class="c1">// Set up the TLS context</span>
-<span class="n">tls_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tls_client</span><span class="p">();</span>
-<span class="n">tls_config</span><span class="w"> </span><span class="o">*</span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tls_config_new</span><span class="p">();</span>
+// Set up the TLS context
+tls_context *ctx = tls_client();
+tls_config *config = tls_config_new();
 
-<span class="c1">// Set the certificate and private key</span>
-<span class="n">tls_config_set_cert_file</span><span class="p">(</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;certificate.pem&quot;</span><span class="p">);</span>
-<span class="n">tls_config_set_key_file</span><span class="p">(</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;private_key.pem&quot;</span><span class="p">);</span>
+// Set the certificate and private key
+tls_config_set_cert_file(config, &quot;certificate.pem&quot;);
+tls_config_set_key_file(config, &quot;private_key.pem&quot;);
 
-<span class="c1">// Connect to the server</span>
-<span class="n">tls_connect</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;example.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">443</span><span class="p">);</span>
+// Connect to the server
+tls_connect(ctx, &quot;example.com&quot;, 443);
 
-<span class="c1">// Send and receive data</span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, server!&quot;</span><span class="p">;</span>
-<span class="n">tls_write</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
-<span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
-<span class="n">tls_read</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
-</code></pre></div>
-
+// Send and receive data
+char *data = &quot;Hello, server!&quot;;
+tls_write(ctx, data, strlen(data));
+char buffer[1024];
+tls_read(ctx, buffer, 1024);
+</code></pre>
 <p>Another common problem is <strong>data analysis</strong>, as IoT devices can generate large amounts of data that need to be processed and analyzed. To address this issue, developers can use data analytics tools, such as Apache Spark and Hadoop, and machine learning algorithms, such as TensorFlow and scikit-learn.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are a few concrete use cases for IoT, along with implementation details:

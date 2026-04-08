@@ -163,97 +163,94 @@
 <p>Python is a popular language for building AI agents due to its simplicity, flexibility, and extensive libraries. One of the most popular libraries for building AI agents in Python is the <strong>Gym</strong> library, which provides a simple and consistent interface for building and testing AI agents.</p>
 <h3 id="example-1-building-a-simple-ai-agent-with-gym">Example 1: Building a Simple AI Agent with Gym</h3>
 <p>Here is an example of how to build a simple AI agent using the Gym library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">gym</span>
+<pre><code class="language-python">import gym
 
-<span class="c1"># Create a new environment</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
+# Create a new environment
+env = gym.make('CartPole-v1')
 
-<span class="c1"># Define a simple agent that takes random actions</span>
-<span class="k">def</span> <span class="nf">agent</span><span class="p">(</span><span class="n">obs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+# Define a simple agent that takes random actions
+def agent(obs):
+    return env.action_space.sample()
 
-<span class="c1"># Run the agent for 100 episodes</span>
-<span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">obs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-        <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Reward: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Run the agent for 100 episodes
+for episode in range(100):
+    obs = env.reset()
+    done = False
+    rewards = 0.0
+    while not done:
+        action = agent(obs)
+        obs, reward, done, _ = env.step(action)
+        rewards += reward
+    print(f'Episode {episode+1}, Reward: {rewards}')
+</code></pre>
 <p>This code defines a simple agent that takes random actions in the CartPole environment. The agent is run for 100 episodes, and the total reward is printed at the end of each episode.</p>
 <h2 id="using-deep-learning-to-build-ai-agents">Using Deep Learning to Build AI Agents</h2>
 <p>Deep learning is a powerful technique for building AI agents that can learn complex patterns and relationships in data. One of the most popular deep learning libraries for building AI agents is <strong>TensorFlow</strong>, which provides a wide range of tools and techniques for building and training neural networks.</p>
 <h3 id="example-2-building-a-deep-learning-ai-agent-with-tensorflow">Example 2: Building a Deep Learning AI Agent with TensorFlow</h3>
 <p>Here is an example of how to build a deep learning AI agent using TensorFlow:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">gym</span> <span class="kn">import</span> <span class="n">wrappers</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+from gym import wrappers
 
-<span class="c1"># Create a new environment</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>
+# Create a new environment
+env = gym.make('CartPole-v1')
 
-<span class="c1"># Define a deep neural network that takes observations as input and outputs actions</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,)),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
-<span class="p">])</span>
+# Define a deep neural network that takes observations as input and outputs actions
+model = keras.Sequential([
+    keras.layers.Dense(64, activation='relu', input_shape=(4,)),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(2, activation='softmax')
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Define a function to train the model</span>
-<span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">episodes</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">episodes</span><span class="p">):</span>
-        <span class="n">obs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">rewards</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-            <span class="n">action</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
-            <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-            <span class="n">rewards</span> <span class="o">+=</span> <span class="n">reward</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Episode </span><span class="si">{</span><span class="n">episode</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Reward: </span><span class="si">{</span><span class="n">rewards</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+# Define a function to train the model
+def train_model(model, env, episodes):
+    for episode in range(episodes):
+        obs = env.reset()
+        done = False
+        rewards = 0.0
+        while not done:
+            action = tf.argmax(model.predict(obs.reshape(1, 4)))
+            obs, reward, done, _ = env.step(action)
+            rewards += reward
+        print(f'Episode {episode+1}, Reward: {rewards}')
 
-<span class="c1"># Train the model for 100 episodes</span>
-<span class="n">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model for 100 episodes
+train_model(model, env, 100)
+</code></pre>
 <p>This code defines a deep neural network that takes observations as input and outputs actions. The model is trained using the Adam optimizer and categorical cross-entropy loss.</p>
 <h2 id="deploying-ai-agents-to-the-cloud">Deploying AI Agents to the Cloud</h2>
 <p>Once an AI agent has been built and trained, it can be deployed to the cloud using a variety of platforms and services. One of the most popular platforms for deploying AI agents is <strong>AWS SageMaker</strong>, which provides a fully managed service for building, training, and deploying machine learning models.</p>
 <h3 id="example-3-deploying-an-ai-agent-to-aws-sagemaker">Example 3: Deploying an AI Agent to AWS SageMaker</h3>
 <p>Here is an example of how to deploy an AI agent to AWS SageMaker:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">sagemaker</span>
-<span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+<pre><code class="language-python">import sagemaker
+from sagemaker.tensorflow import TensorFlow
 
-<span class="c1"># Create a new SageMaker session</span>
-<span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+# Create a new SageMaker session
+sagemaker_session = sagemaker.Session()
 
-<span class="c1"># Define a TensorFlow estimator</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
-    <span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;agent.py&#39;</span><span class="p">,</span>
-    <span class="n">role</span><span class="o">=</span><span class="s1">&#39;sagemaker-execution-role&#39;</span><span class="p">,</span>
-    <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;2.3.1&#39;</span><span class="p">,</span>
-    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span>
-<span class="p">)</span>
+# Define a TensorFlow estimator
+estimator = TensorFlow(
+    entry_point='agent.py',
+    role='sagemaker-execution-role',
+    framework_version='2.3.1',
+    instance_count=1,
+    instance_type='ml.m5.xlarge'
+)
 
-<span class="c1"># Deploy the model to SageMaker</span>
-<span class="n">deploy_instance</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
-    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span>
-<span class="p">)</span>
+# Deploy the model to SageMaker
+deploy_instance = estimator.deploy(
+    initial_instance_count=1,
+    instance_type='ml.m5.xlarge'
+)
 
-<span class="c1"># Test the deployed model</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]])</span>
-<span class="n">prediction</span> <span class="o">=</span> <span class="n">deploy_instance</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the deployed model
+test_data = np.array([[0.1, 0.2, 0.3, 0.4]])
+prediction = deploy_instance.predict(test_data)
+print(prediction)
+</code></pre>
 <p>This code defines a SageMaker estimator that uses the TensorFlow framework to deploy an AI agent. The model is deployed to a single instance of type <code>ml.m5.xlarge</code>, and tested using a sample input.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur when building AI agents, along with specific solutions:

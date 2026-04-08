@@ -171,44 +171,42 @@
 <h3 id="advanced-encryption-standard-aes">Advanced Encryption Standard (AES)</h3>
 <p>AES is one of the most widely used encryption standards. It supports key sizes of 128, 192, and 256 bits. The larger the key size, the stronger the encryption.</p>
 <h4 id="example-encrypting-data-with-aes-in-python">Example: Encrypting Data with AES in Python</h4>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
-<span class="kn">from</span> <span class="nn">Crypto.Random</span> <span class="kn">import</span> <span class="n">get_random_bytes</span>
-<span class="kn">import</span> <span class="nn">base64</span>
+<pre><code class="language-python">from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+import base64
 
-<span class="k">def</span> <span class="nf">encrypt_aes</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_GCM</span><span class="p">)</span>
-    <span class="n">ciphertext</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt_and_digest</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-    <span class="n">nonce</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">nonce</span>
-    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">nonce</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="n">ciphertext</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+def encrypt_aes(key, data):
+    cipher = AES.new(key, AES.MODE_GCM)
+    ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
+    nonce = cipher.nonce
+    return base64.b64encode(nonce + tag + ciphertext).decode('utf-8')
 
-<span class="n">key</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>  <span class="c1"># AES-128</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;Sensitive Data&quot;</span>
-<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">encrypt_aes</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Data: </span><span class="si">{</span><span class="n">encrypted_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+key = get_random_bytes(16)  # AES-128
+data = &quot;Sensitive Data&quot;
+encrypted_data = encrypt_aes(key, data)
+print(f&quot;Encrypted Data: {encrypted_data}&quot;)
+</code></pre>
 <h3 id="rsa-encryption">RSA Encryption</h3>
 <p>RSA is widely used for secure data transmission. It relies on the mathematical properties of large prime numbers.</p>
 <h4 id="example-encrypting-data-with-rsa-in-python">Example: Encrypting Data with RSA in Python</h4>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Crypto.PublicKey</span> <span class="kn">import</span> <span class="n">RSA</span>
-<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">PKCS1_OAEP</span>
-<span class="kn">import</span> <span class="nn">base64</span>
+<pre><code class="language-python">from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+import base64
 
-<span class="c1"># Generate RSA keys</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
-<span class="n">private_key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">export_key</span><span class="p">()</span>
-<span class="n">public_key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">publickey</span><span class="p">()</span><span class="o">.</span><span class="n">export_key</span><span class="p">()</span>
+# Generate RSA keys
+key = RSA.generate(2048)
+private_key = key.export_key()
+public_key = key.publickey().export_key()
 
-<span class="k">def</span> <span class="nf">encrypt_rsa</span><span class="p">(</span><span class="n">public_key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="n">cipher</span> <span class="o">=</span> <span class="n">PKCS1_OAEP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">RSA</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">public_key</span><span class="p">))</span>
-    <span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+def encrypt_rsa(public_key, data):
+    cipher = PKCS1_OAEP.new(RSA.import_key(public_key))
+    encrypted_data = cipher.encrypt(data.encode('utf-8'))
+    return base64.b64encode(encrypted_data).decode('utf-8')
 
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;Sensitive Data&quot;</span>
-<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">encrypt_rsa</span><span class="p">(</span><span class="n">public_key</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Data: </span><span class="si">{</span><span class="n">encrypted_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+data = &quot;Sensitive Data&quot;
+encrypted_data = encrypt_rsa(public_key, data)
+print(f&quot;Encrypted Data: {encrypted_data}&quot;)
+</code></pre>
 <h2 id="key-management-solutions">Key Management Solutions</h2>
 <h3 id="aws-key-management-service-kms">AWS Key Management Service (KMS)</h3>
 <p>AWS KMS is a managed service that makes it easy to create and control cryptographic keys. It provides a centralized way to manage keys across various AWS services.</p>

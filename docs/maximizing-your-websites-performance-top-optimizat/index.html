@@ -151,20 +151,18 @@
 <li>Specify image dimensions to prevent layout shifts.</li>
 </ul>
 <p>Example of specifying image dimensions in HTML:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;300&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;200&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;Image&quot; width=&quot;300&quot; height=&quot;200&quot;&gt;
+</code></pre>
 <h2 id="2-minify-css-and-javascript">2. Minify CSS and JavaScript</h2>
 <p>Minifying CSS and JavaScript files removes unnecessary characters like comments, whitespace, and formatting, reducing file sizes and improving loading times. Use tools like UglifyJS or CSSNano to minify your code efficiently.</p>
 <h2 id="3-leverage-browser-caching">3. Leverage Browser Caching</h2>
 <p>Enabling browser caching allows web browsers to store static resources locally, reducing the need to re-download them on subsequent visits. Set appropriate cache-control headers to specify how long browsers should cache resources.</p>
 <p>Example of setting cache-control headers in Apache:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_expires.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">ExpiresActive</span><span class="w"> </span><span class="k">On</span>
-<span class="w">  </span><span class="nb">ExpiresByType</span><span class="w"> </span>image/jpeg<span class="w"> </span><span class="s2">&quot;access plus 1 year&quot;</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache">&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresByType image/jpeg &quot;access plus 1 year&quot;
+&lt;/IfModule&gt;
+</code></pre>
 <h2 id="4-implement-content-delivery-network-cdn">4. Implement Content Delivery Network (CDN)</h2>
 <p>A CDN distributes your website's static content across multiple servers worldwide, reducing latency and improving loading speeds for users globally. Integrate a CDN like Cloudflare or Akamai to deliver content more efficiently.</p>
 <h2 id="5-reduce-server-response-time">5. Reduce Server Response Time</h2>
@@ -172,11 +170,10 @@
 <h2 id="6-enable-gzip-compression">6. Enable GZIP Compression</h2>
 <p>Compressing your website's assets using GZIP compression can significantly reduce file sizes and speed up page loading times. Configure your server to enable GZIP compression for text-based resources like HTML, CSS, and JavaScript files.</p>
 <p>Example of enabling GZIP compression in Apache:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_deflate.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>text/html
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache">&lt;IfModule mod_deflate.c&gt;
+  AddOutputFilterByType DEFLATE text/html
+&lt;/IfModule&gt;
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Optimizing your website's performance is a continuous process that requires attention to detail and regular monitoring. By implementing the optimization tips discussed in this blog post, you can enhance your website's speed, responsiveness, and user experience. Remember, a fast-loading website not only improves user satisfaction but also boosts your search engine rankings and conversions. Stay proactive in optimizing your website to stay ahead in the competitive online landscape.</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">

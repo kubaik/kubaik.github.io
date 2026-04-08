@@ -167,37 +167,36 @@
 <li>When the callback function is executed, load the necessary resources and update the element's content.</li>
 </ol>
 <p>Here is an example of how to implement lazy loading using IntersectionObserver:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create an instance of the IntersectionObserver class</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Loop through the observed elements</span>
-<span class="w">  </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Check if the element is intersecting with the viewport</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Load the necessary resources and update the element&#39;s content</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">imageUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-image-url&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span>
-<span class="w">      </span><span class="nx">image</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
-<span class="w">      </span><span class="p">};</span>
-<span class="w">      </span><span class="nx">image</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">imageUrl</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Stop observing the element</span>
-<span class="w">      </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Set the threshold to 1.0, which means the element must be fully visible</span>
-<span class="w">  </span><span class="c1">// to trigger the callback function</span>
-<span class="w">  </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create an instance of the IntersectionObserver class
+const observer = new IntersectionObserver((entries) =&gt; {
+  // Loop through the observed elements
+  entries.forEach((entry) =&gt; {
+    // Check if the element is intersecting with the viewport
+    if (entry.isIntersecting) {
+      // Load the necessary resources and update the element's content
+      const imageUrl = entry.target.getAttribute('data-image-url');
+      const image = new Image();
+      image.onload = () =&gt; {
+        entry.target.innerHTML = '';
+        entry.target.appendChild(image);
+      };
+      image.src = imageUrl;
+      // Stop observing the element
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  // Set the threshold to 1.0, which means the element must be fully visible
+  // to trigger the callback function
+  threshold: 1.0,
+});
 
-<span class="c1">// Observe the elements that should be lazy loaded</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">lazyLoadElements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.lazy-load&#39;</span><span class="p">);</span>
-<span class="nx">lazyLoadElements</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">element</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Observe the elements that should be lazy loaded
+const lazyLoadElements = document.querySelectorAll('.lazy-load');
+lazyLoadElements.forEach((element) =&gt; {
+  observer.observe(element);
+});
+</code></pre>
 <p>This example demonstrates how to use IntersectionObserver to lazy load images. The <code>observe</code> method is used to observe the elements with the class <code>lazy-load</code>, and the callback function is executed when the observed element intersects with the viewport. The callback function loads the necessary resources and updates the element's content.</p>
 <h3 id="using-lozadjs-for-lazy-loading">Using Lozad.js for Lazy Loading</h3>
 <p>Lozad.js is a lightweight JavaScript library that provides a simple and efficient way to lazy load images, videos, and other media. To use Lozad.js, developers can follow these steps:</p>
@@ -207,13 +206,12 @@
 <li>Use the <code>data-src</code> attribute to specify the URL of the resource that should be loaded.</li>
 </ol>
 <p>Here is an example of how to use Lozad.js to lazy load images:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Include the Lozad.js library --&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/lozad.js@1.15.0/dist/lozad.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;!-- Include the Lozad.js library --&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/lozad.js@1.15.0/dist/lozad.min.js&quot;&gt;&lt;/script&gt;
 
-<span class="cm">&lt;!-- Add the lozad class to the elements that should be lazy loaded --&gt;</span>
-<span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lozad&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+&lt;!-- Add the lozad class to the elements that should be lazy loaded --&gt;
+&lt;img class=&quot;lozad&quot; data-src=&quot;image.jpg&quot; /&gt;
+</code></pre>
 <p>This example demonstrates how to use Lozad.js to lazy load an image. The <code>lozad</code> class is added to the <code>img</code> element, and the <code>data-src</code> attribute is used to specify the URL of the image that should be loaded.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To demonstrate the performance benefits of lazy loading, let's consider a real-world example. Suppose we have a web page with 10 images, each with a size of 100KB. Without lazy loading, the page would load all 10 images simultaneously, resulting in a total data transfer of 1MB. With lazy loading, the page would load only the images that are visible in the viewport, resulting in a significant reduction in data transfer.</p>

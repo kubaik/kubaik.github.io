@@ -153,18 +153,17 @@
 - <strong>pytest</strong> (for Python)</p>
 <h4 id="example-unit-testing-with-junit">Example: Unit Testing with JUnit</h4>
 <p>Here's a simple example of a unit test in Java using JUnit:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.Assert.assertEquals</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.Test</span><span class="p">;</span>
+<pre><code class="language-java">import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CalculatorTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAdd</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Calculator</span><span class="w"> </span><span class="n">calculator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Calculator</span><span class="p">();</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">calculator</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class CalculatorTest {
+    @Test
+    public void testAdd() {
+        Calculator calculator = new Calculator();
+        assertEquals(5, calculator.add(2, 3));
+    }
+}
+</code></pre>
 <p>In this example, we define a test for a method <code>add</code> in a <code>Calculator</code> class. The <code>assertEquals</code> function checks if the output matches the expected value. Running this test helps ensure that the <code>add</code> method works correctly.</p>
 <p><strong>Metrics</strong>: Aim for a unit test coverage of at least 80%. Tools like <strong>JaCoCo</strong> can help visualize code coverage.</p>
 <h3 id="2-integration-testing">2. Integration Testing</h3>
@@ -178,15 +177,14 @@
 <li>Create a new request in Postman to test the endpoint <code>GET /users</code>.</li>
 <li>Under the "Tests" tab, you can add the following JavaScript code:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nx">pm</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;Status code is 200&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">pm</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">pm.test(&quot;Status code is 200&quot;, function () {
+    pm.response.to.have.status(200);
+});
 
-<span class="nx">pm</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;Response contains users array&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">pm</span><span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="nx">pm</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">().</span><span class="nx">users</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">be</span><span class="p">.</span><span class="nx">an</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+pm.test(&quot;Response contains users array&quot;, function () {
+    pm.expect(pm.response.json().users).to.be.an('array');
+});
+</code></pre>
 <p>In this example, we validate the response status and ensure that the response body contains an array of users. This makes integration testing effective by confirming that various components work well together.</p>
 <p><strong>Metrics</strong>: Keep track of response times and the rate of successful responses. Aim for a response time of under 200ms for APIs.</p>
 <h3 id="3-functional-testing">3. Functional Testing</h3>
@@ -196,27 +194,26 @@
 - <strong>Cypress</strong> (for end-to-end testing)</p>
 <h4 id="example-functional-testing-with-selenium">Example: Functional Testing with Selenium</h4>
 <p>Here's how you can use Selenium with Java to automate a functional test on a web application.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.openqa.selenium.By</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.openqa.selenium.WebDriver</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.openqa.selenium.chrome.ChromeDriver</span><span class="p">;</span>
+<pre><code class="language-java">import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">GoogleSearchTest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;path/to/chromedriver&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">WebDriver</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChromeDriver</span><span class="p">();</span>
-<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="p">);</span>
+public class GoogleSearchTest {
+    public static void main(String[] args) {
+        System.setProperty(&quot;webdriver.chrome.driver&quot;, &quot;path/to/chromedriver&quot;);
+        WebDriver driver = new ChromeDriver();
+        driver.get(&quot;http://www.google.com&quot;);
 
-<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">)).</span><span class="na">sendKeys</span><span class="p">(</span><span class="s">&quot;Selenium&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;btnK&quot;</span><span class="p">)).</span><span class="na">click</span><span class="p">();</span>
+        driver.findElement(By.name(&quot;q&quot;)).sendKeys(&quot;Selenium&quot;);
+        driver.findElement(By.name(&quot;btnK&quot;)).click();
 
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">getTitle</span><span class="p">();</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Title: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">title</span><span class="p">);</span>
+        String title = driver.getTitle();
+        System.out.println(&quot;Title: &quot; + title);
 
-<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">quit</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        driver.quit();
+    }
+}
+</code></pre>
 <p>In this example, we automate a search operation on Google. The script opens the browser, enters a search term, and clicks the search button. Finally, it retrieves and prints the title of the resulting page.</p>
 <p><strong>Metrics</strong>: Monitor the pass/fail rate of your functional tests. A healthy rate is above 90%.</p>
 <h3 id="4-performance-testing">4. Performance Testing</h3>
@@ -239,9 +236,8 @@
 - <strong>Burp Suite</strong></p>
 <h4 id="example-security-testing-with-owasp-zap">Example: Security Testing with OWASP ZAP</h4>
 <p>To automate security testing with OWASP ZAP, you can use the following command to scan a web application:</p>
-<div class="codehilite"><pre><span></span><code>zap.sh<span class="w"> </span>-cmd<span class="w"> </span>-quickurl<span class="w"> </span>http://example.com<span class="w"> </span>-quickout<span class="w"> </span>report.html
-</code></pre></div>
-
+<pre><code class="language-bash">zap.sh -cmd -quickurl http://example.com -quickout report.html
+</code></pre>
 <p>This command runs a quick scan on the specified URL and generates an HTML report of the findings. Regularly running security tests can help identify potential vulnerabilities before release.</p>
 <p><strong>Metrics</strong>: Track the number of vulnerabilities found and their severity levels. Aim to reduce high-severity vulnerabilities to zero before deployment.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>

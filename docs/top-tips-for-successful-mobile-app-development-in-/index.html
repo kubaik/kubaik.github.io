@@ -193,20 +193,19 @@
 </ul>
 <h3 id="practical-example">Practical Example:</h3>
 <p>Implement <strong>pagination</strong> for large lists to load data incrementally instead of all at once, reducing memory consumption.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example in Flutter for infinite scrolling:</span>
-<span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-<span class="w">  </span><span class="nl">itemCount:</span><span class="w"> </span><span class="n">items</span><span class="p">.</span><span class="n">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">items</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Load more data</span>
-<span class="w">      </span><span class="n">loadMoreItems</span><span class="p">();</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">CircularProgressIndicator</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ListTile</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">]));</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-dart">// Example in Flutter for infinite scrolling:
+ListView.builder(
+  itemCount: items.length + 1,
+  itemBuilder: (context, index) {
+    if (index == items.length) {
+      // Load more data
+      loadMoreItems();
+      return CircularProgressIndicator();
+    }
+    return ListTile(title: Text(items[index]));
+  },
+);
+</code></pre>
 <hr />
 <h2 id="4-prioritize-security-and-privacy">4. Prioritize Security and Privacy</h2>
 <h3 id="why-security-is-non-negotiable">Why Security Is Non-Negotiable</h3>
@@ -232,16 +231,15 @@
 </ul>
 <h3 id="practical-approach">Practical Approach:</h3>
 <p>Leverage cloud-based AI services like <strong>Google Cloud AI</strong>, <strong>Azure Cognitive Services</strong>, or <strong>AWS AI</strong> to integrate AI functionalities without building models from scratch.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Using Google Cloud Vision API for image analysis</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">vision</span>
+<pre><code class="language-python"># Example: Using Google Cloud Vision API for image analysis
+from google.cloud import vision
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageAnnotatorClient</span><span class="p">()</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">label_detection</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">vision</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">vision</span><span class="o">.</span><span class="n">ImageSource</span><span class="p">(</span><span class="n">image_uri</span><span class="o">=</span><span class="s1">&#39;gs://your-bucket/image.jpg&#39;</span><span class="p">)))</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">label_annotations</span>
-<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-</code></pre></div>
-
+client = vision.ImageAnnotatorClient()
+response = client.label_detection(image=vision.Image(source=vision.ImageSource(image_uri='gs://your-bucket/image.jpg')))
+labels = response.label_annotations
+for label in labels:
+    print(label.description)
+</code></pre>
 <hr />
 <h2 id="6-implement-robust-testing-strategies">6. Implement Robust Testing Strategies</h2>
 <h3 id="types-of-testing">Types of Testing</h3>

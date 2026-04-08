@@ -165,21 +165,20 @@
 4. <strong>Report Development</strong>: Develop reports and dashboards that provide insights into key performance indicators (KPIs) and business outcomes.</p>
 <h3 id="example-creating-a-sales-dashboard-with-tableau">Example: Creating a Sales Dashboard with Tableau</h3>
 <p>Tableau is a popular data visualization tool that allows users to connect to various data sources, create interactive dashboards, and share insights with stakeholders. Here's an example of creating a sales dashboard with Tableau:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to a sample sales database</span>
-<span class="n">CONNECT</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="s">&quot;Sales Database&quot;</span>
+<pre><code class="language-tableau">// Connect to a sample sales database
+CONNECT TO &quot;Sales Database&quot;
 
-<span class="c1">// Create a calculated field for sales revenue</span>
-<span class="n">CALCULATED</span><span class="w"> </span><span class="n">FIELD</span><span class="w"> </span><span class="s">&quot;Sales Revenue&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SUM</span><span class="p">([</span><span class="n">Sales</span><span class="w"> </span><span class="n">Amount</span><span class="p">])</span>
+// Create a calculated field for sales revenue
+CALCULATED FIELD &quot;Sales Revenue&quot; = SUM([Sales Amount])
 
-<span class="c1">// Create a bar chart to display sales revenue by region</span>
-<span class="n">BAR</span><span class="w"> </span><span class="n">CHART</span><span class="w"> </span><span class="s">&quot;Sales Revenue by Region&quot;</span>
-<span class="w">  </span><span class="n">DIMENSION</span><span class="w"> </span><span class="s">&quot;Region&quot;</span>
-<span class="w">  </span><span class="n">MEASURE</span><span class="w"> </span><span class="s">&quot;Sales Revenue&quot;</span>
+// Create a bar chart to display sales revenue by region
+BAR CHART &quot;Sales Revenue by Region&quot;
+  DIMENSION &quot;Region&quot;
+  MEASURE &quot;Sales Revenue&quot;
 
-<span class="c1">// Add a filter to select specific regions</span>
-<span class="n">FILTER</span><span class="w"> </span><span class="s">&quot;Region&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;North&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;South&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;East&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;West&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+// Add a filter to select specific regions
+FILTER &quot;Region&quot; = [&quot;North&quot;, &quot;South&quot;, &quot;East&quot;, &quot;West&quot;]
+</code></pre>
 <p>This code snippet connects to a sample sales database, creates a calculated field for sales revenue, and creates a bar chart to display sales revenue by region. The filter allows users to select specific regions to analyze.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>BI tools have numerous use cases across various industries. Here are a few examples:
@@ -188,26 +187,25 @@
 * <strong>Healthcare</strong>: Analyzing patient outcomes, optimizing resource allocation, and identifying trends in disease diagnosis.</p>
 <h3 id="example-predicting-customer-churn-with-python-and-scikit-learn">Example: Predicting Customer Churn with Python and Scikit-Learn</h3>
 <p>Customer churn is a significant problem in the telecommunications industry, with an estimated 30% of customers switching providers every year. Here's an example of using Python and Scikit-Learn to predict customer churn:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import necessary libraries</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python"># Import necessary libraries
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load customer data</span>
-<span class="n">customer_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customer_data.csv&quot;</span><span class="p">)</span>
+# Load customer data
+customer_data = pd.read_csv(&quot;customer_data.csv&quot;)
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">customer_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;churn&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">customer_data</span><span class="p">[</span><span class="s2">&quot;churn&quot;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(customer_data.drop(&quot;churn&quot;, axis=1), customer_data[&quot;churn&quot;], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">rfc</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+rfc = RandomForestClassifier(n_estimators=100, random_state=42)
+rfc.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+y_pred = rfc.predict(X_test)
+print(&quot;Accuracy:&quot;, accuracy_score(y_test, y_pred))
+</code></pre>
 <p>This code snippet loads customer data, splits it into training and testing sets, trains a random forest classifier, and evaluates its performance using accuracy score.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>BI tools can encounter several challenges during implementation, including:
@@ -220,7 +218,7 @@
 * <strong>Choose Scalable Tools</strong>: Select BI tools that can handle large volumes of data and user traffic, such as cloud-based solutions.</p>
 <h3 id="example-implementing-data-governance-with-apache-nifi">Example: Implementing Data Governance with Apache NiFi</h3>
 <p>Apache NiFi is an open-source data governance tool that allows organizations to manage data flows, validate data quality, and enforce data security policies. Here's an example of implementing data governance with Apache NiFi:</p>
-<div class="codehilite"><pre><span></span><code># Create a data flow to collect customer data
+<pre><code class="language-nifi"># Create a data flow to collect customer data
 DATA FLOW &quot;Customer Data&quot;
   SOURCE &quot;Customer Database&quot;
   TRANSFORM &quot;Data Validation&quot;
@@ -233,8 +231,7 @@ VALIDATION RULE &quot;Customer Name&quot; = IS NOT EMPTY
 # Enforce data security policies
 SECURITY POLICY &quot;Data Encryption&quot; = ENABLED
 SECURITY POLICY &quot;Access Control&quot; = ENABLED
-</code></pre></div>
-
+</code></pre>
 <p>This code snippet creates a data flow to collect customer data, defines data validation rules, and enforces data security policies using Apache NiFi.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, BI tools are essential for organizations to make data-driven decisions and gain a competitive edge. By understanding the different types of BI tools, implementing them effectively, and addressing common challenges, organizations can unlock the full potential of their data. To get started, follow these next steps:

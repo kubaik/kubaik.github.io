@@ -162,31 +162,28 @@
 <p>A data lakehouse is a centralized repository that stores raw, unprocessed data in its native format. It provides a single source of truth for all data and allows for the creation of a unified view of the data. Delta Lake is well-suited for building a data lakehouse because it provides a scalable and reliable storage layer that can handle large amounts of data.</p>
 <p>To build a data lakehouse with Delta Lake, you need to follow these steps:
 1. <strong>Create a Delta Lake table</strong>: You can create a Delta Lake table using the <code>CREATE TABLE</code> statement in Apache Spark SQL. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
 
-<span class="c1"># Create a Delta Lake table</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CREATE TABLE delta_table (id INT, name STRING) USING delta LOCATION &#39;/path/to/delta/table&#39;&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Create a Delta Lake table
+spark.sql(&quot;CREATE TABLE delta_table (id INT, name STRING) USING delta LOCATION '/path/to/delta/table'&quot;)
+</code></pre>
 <ol>
 <li><strong>Load data into the Delta Lake table</strong>: You can load data into the Delta Lake table using the <code>INSERT INTO</code> statement in Apache Spark SQL. For example:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Load data into the Delta Lake table</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Mary&quot;</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;append&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/path/to/delta/table&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Load data into the Delta Lake table
+data = spark.createDataFrame([(1, &quot;John&quot;), (2, &quot;Mary&quot;)], [&quot;id&quot;, &quot;name&quot;])
+data.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;/path/to/delta/table&quot;)
+</code></pre>
 <ol>
 <li><strong>Query the Delta Lake table</strong>: You can query the Delta Lake table using the <code>SELECT</code> statement in Apache Spark SQL. For example:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Query the Delta Lake table</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM delta_table&quot;</span><span class="p">)</span>
-<span class="n">results</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Query the Delta Lake table
+results = spark.sql(&quot;SELECT * FROM delta_table&quot;)
+results.show()
+</code></pre>
 <h3 id="integrating-delta-lake-with-other-tools-and-services">Integrating Delta Lake with Other Tools and Services</h3>
 <p>Delta Lake can be integrated with a variety of tools and services, including:
 * <strong>Apache Spark</strong>: Delta Lake is tightly integrated with Apache Spark, which provides a powerful engine for processing and analyzing data.

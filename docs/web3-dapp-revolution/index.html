@@ -170,58 +170,56 @@
 <h3 id="example-building-a-simple-dapp-with-ethereum-and-solidity">Example: Building a Simple DApp with Ethereum and Solidity</h3>
 <p>Let's build a simple DApp that allows users to store and retrieve data on the Ethereum blockchain. We'll use Solidity to write the smart contract and React to build the front-end.</p>
 <p>Here's an example of the smart contract code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">DataStore</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>data<span class="p">;</span>
+contract DataStore {
+    mapping (address =&gt; string) public data;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">setData</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_data<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>data<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>_data<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function setData(string memory _data) public {
+        data[msg.sender] = _data;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getData</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>data<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getData() public view returns (string memory) {
+        return data[msg.sender];
+    }
+}
+</code></pre>
 <p>And here's an example of the React code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;web3&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import Web3 from 'web3';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">setData</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">account</span><span class="p">,</span><span class="w"> </span><span class="nx">setAccount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+const App = () =&gt; {
+    const [data, setData] = useState('');
+    const [account, setAccount] = useState('');
 
-<span class="w">    </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">ethereum</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">address</span><span class="p">);</span>
+    useEffect(() =&gt; {
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(abi, address);
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
 
-<span class="w">        </span><span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getData</span><span class="p">().</span><span class="nx">call</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">setData</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+        contract.methods.getData().call().then((result) =&gt; {
+            setData(result);
+        });
+    }, []);
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleSetData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">ethereum</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">address</span><span class="p">);</span>
+    const handleSetData = () =&gt; {
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(abi, address);
 
-<span class="w">        </span><span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">setData</span><span class="p">(</span><span class="nx">data</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">};</span>
+        contract.methods.setData(data).send({ from: account });
+    };
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">input</span><span class="w"> </span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="w"> </span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span><span class="w"> </span><span class="nx">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setData</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleSetData</span><span class="p">}</span><span class="o">&gt;</span><span class="nb">Set</span><span class="w"> </span><span class="nx">Data</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">data</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+    return (
+        &lt;div&gt;
+            &lt;input type=&quot;text&quot; value={data} onChange={(e) =&gt; setData(e.target.value)} /&gt;
+            &lt;button onClick={handleSetData}&gt;Set Data&lt;/button&gt;
+            &lt;p&gt;Data: {data}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+};
+</code></pre>
 <p>This code creates a simple DApp that allows users to store and retrieve data on the Ethereum blockchain. The smart contract uses a mapping to store the data, and the React code uses the Web3 library to interact with the contract.</p>
 <h2 id="deploying-dapps">Deploying DApps</h2>
 <p>Once the DApp is built, it needs to be deployed on a blockchain network. Here are some popular deployment options:</p>
@@ -233,33 +231,31 @@
 <h3 id="example-deploying-a-dapp-on-binance-smart-chain">Example: Deploying a DApp on Binance Smart Chain</h3>
 <p>Let's deploy the simple DApp we built earlier on Binance Smart Chain. We'll use the Truffle Suite to compile and deploy the smart contract, and IPFS to store and serve the front-end.</p>
 <p>Here's an example of the Truffle configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">networks</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">bsc</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">provider</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://data-seed-prebsc-1-s1.binance.org:8545&#39;</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">network_id</span><span class="o">:</span><span class="w"> </span><span class="mf">97</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">gas</span><span class="o">:</span><span class="w"> </span><span class="mf">2000000</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">gasPrice</span><span class="o">:</span><span class="w"> </span><span class="mf">20000000000</span><span class="p">,</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+    networks: {
+        bsc: {
+            provider: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+            network_id: 97,
+            gas: 2000000,
+            gasPrice: 20000000000,
+        },
+    },
+};
+</code></pre>
 <p>And here's an example of the IPFS configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">ipfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ipfs-http-client&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const ipfs = require('ipfs-http-client');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ipfs</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;ipfs.infura.io&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">5001</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">protocol</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+const client = ipfs.create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">deploy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;path/to/front-end&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Deployed to IPFS: </span><span class="si">${</span><span class="nx">cid</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const deploy = async () =&gt; {
+    const cid = await client.add('path/to/front-end');
+    console.log(`Deployed to IPFS: ${cid}`);
+};
+</code></pre>
 <p>This code deploys the DApp on Binance Smart Chain using Truffle, and stores and serves the front-end using IPFS.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when building and deploying DApps:</p>

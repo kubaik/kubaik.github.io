@@ -158,64 +158,60 @@
 * <strong>Compatibility with existing JavaScript code</strong>: TypeScript is fully compatible with existing JavaScript code, making it easy to integrate into existing projects.</p>
 <h2 id="setting-up-a-typescript-project">Setting Up a TypeScript Project</h2>
 <p>To get started with TypeScript, you'll need to set up a new project. Here's an example of how to create a new TypeScript project using the <code>create-react-app</code> tool:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-react-app<span class="w"> </span>my-app<span class="w"> </span>--template<span class="w"> </span>typescript
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-react-app my-app --template typescript
+</code></pre>
 <p>This will create a new React application with TypeScript configured out of the box. You can then start writing TypeScript code in the <code>src</code> directory.</p>
 <h3 id="configuring-the-typescript-compiler">Configuring the TypeScript Compiler</h3>
 <p>The TypeScript compiler is highly configurable, allowing you to customize its behavior to suit your needs. Here's an example of a <code>tsconfig.json</code> file that configures the compiler to use the <code>strict</code> mode:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es5&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;lib&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dom&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dom.iterable&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;esnext&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;allowJs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;skipLibCheck&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;esModuleInterop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;allowSyntheticDefaultImports&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;strict&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;forceConsistentCasingInFileNames&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;noFallthroughCasesInSwitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;esnext&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;moduleResolution&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;resolveJsonModule&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;outDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;jsx&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;react&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;include&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;src/**/*&quot;</span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;lib&quot;: [&quot;dom&quot;, &quot;dom.iterable&quot;, &quot;esnext&quot;],
+    &quot;allowJs&quot;: true,
+    &quot;skipLibCheck&quot;: true,
+    &quot;esModuleInterop&quot;: true,
+    &quot;allowSyntheticDefaultImports&quot;: true,
+    &quot;strict&quot;: true,
+    &quot;forceConsistentCasingInFileNames&quot;: true,
+    &quot;noFallthroughCasesInSwitch&quot;: true,
+    &quot;module&quot;: &quot;esnext&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;resolveJsonModule&quot;: true,
+    &quot;outDir&quot;: &quot;build&quot;,
+    &quot;jsx&quot;: &quot;react&quot;
+  },
+  &quot;include&quot;: [&quot;src/**/*&quot;]
+}
+</code></pre>
 <p>This configuration tells the compiler to use the <code>strict</code> mode, which enables a number of features that help catch errors early in the development process.</p>
 <h2 id="using-typescript-with-popular-frameworks-and-libraries">Using TypeScript with Popular Frameworks and Libraries</h2>
 <p>TypeScript is compatible with a wide range of popular frameworks and libraries, including React, Angular, and Vue.js. Here's an example of how to use TypeScript with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/components/HelloWorld.tsx</span>
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// src/components/HelloWorld.tsx
+import * as React from 'react';
 
-<span class="kd">interface</span><span class="w"> </span><span class="nx">Props</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+interface Props {
+  name: string;
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">HelloWorld</span><span class="o">:</span><span class="w"> </span><span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">!&lt;</span><span class="err">/div&gt;;</span>
-<span class="p">};</span>
+const HelloWorld: React.FC&lt;Props&gt; = ({ name }) =&gt; {
+  return &lt;div&gt;Hello, {name}!&lt;/div&gt;;
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HelloWorld</span><span class="p">;</span>
-</code></pre></div>
-
+export default HelloWorld;
+</code></pre>
 <p>This code defines a <code>HelloWorld</code> component that takes a <code>name</code> prop and renders a greeting message.</p>
 <h3 id="integrating-with-state-management-libraries">Integrating with State Management Libraries</h3>
 <p>TypeScript is also compatible with popular state management libraries like Redux and MobX. Here's an example of how to use TypeScript with Redux:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/reducers/index.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">combineReducers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;redux&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">counterReducer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./counterReducer&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// src/reducers/index.ts
+import { combineReducers } from 'redux';
+import { counterReducer } from './counterReducer';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">rootReducer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">combineReducers</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">counter</span><span class="o">:</span><span class="w"> </span><span class="kt">counterReducer</span><span class="p">,</span>
-<span class="p">});</span>
+const rootReducer = combineReducers({
+  counter: counterReducer,
+});
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">rootReducer</span><span class="p">;</span>
-</code></pre></div>
-
+export default rootReducer;
+</code></pre>
 <p>This code defines a root reducer that combines multiple reducers into a single reducer.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working with TypeScript, you may encounter a number of common problems. Here are some solutions to these problems:
@@ -232,26 +228,25 @@
 * <strong>Airbnb</strong>: Airbnb uses TypeScript in its web application, which is built using React and Redux.</p>
 <h3 id="implementing-a-real-world-example">Implementing a Real-World Example</h3>
 <p>Here's an example of how to implement a real-world application using TypeScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/api.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;axios&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// src/api.ts
+import axios from 'axios';
 
-<span class="kd">interface</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+interface User {
+  id: number;
+  name: string;
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">baseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://api.example.com&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+const api = axios.create({
+  baseURL: 'https://api.example.com',
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">getUsers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">User</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-<span class="p">};</span>
+const getUsers = async (): Promise&lt;User[]&gt; =&gt; {
+  const response = await api.get('/users');
+  return response.data;
+};
 
-<span class="k">export</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getUsers</span><span class="w"> </span><span class="p">};</span>
-</code></pre></div>
-
+export { getUsers };
+</code></pre>
 <p>This code defines an API client that uses the <code>axios</code> library to make requests to a RESTful API. The <code>getUsers</code> function returns a promise that resolves to an array of <code>User</code> objects.</p>
 <h2 id="tools-and-services">Tools and Services</h2>
 <p>There are a number of tools and services available that can help you work with TypeScript, including:

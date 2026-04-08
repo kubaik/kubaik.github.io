@@ -162,107 +162,105 @@
 <p>Let's take a look at some practical examples of MBaaS in action. We will use the Firebase MBaaS platform as an example, as it is one of the most popular and widely used MBaaS platforms.</p>
 <h3 id="example-1-data-storage-with-firebase-realtime-database">Example 1: Data Storage with Firebase Realtime Database</h3>
 <p>The following code snippet demonstrates how to use the Firebase Realtime Database to store and retrieve data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/database&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Firebase library
+import firebase from 'firebase/app';
+import 'firebase/database';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">databaseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_DATABASE_URL&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+  databaseURL: 'YOUR_DATABASE_URL',
+});
 
-<span class="c1">// Get a reference to the Realtime Database</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">database</span><span class="p">();</span>
+// Get a reference to the Realtime Database
+const db = firebase.database();
 
-<span class="c1">// Store data in the Realtime Database</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;users/&#39;</span><span class="p">).</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Store data in the Realtime Database
+db.ref('users/').push({
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+});
 
-<span class="c1">// Retrieve data from the Realtime Database</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;users/&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">snapshot</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">val</span><span class="p">());</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Retrieve data from the Realtime Database
+db.ref('users/').on('value', (snapshot) =&gt; {
+  console.log(snapshot.val());
+});
+</code></pre>
 <p>In this example, we use the Firebase Realtime Database to store and retrieve user data. We initialize the Firebase app, get a reference to the Realtime Database, and then store and retrieve data using the <code>push()</code> and <code>on()</code> methods.</p>
 <h3 id="example-2-authentication-with-firebase-authentication">Example 2: Authentication with Firebase Authentication</h3>
 <p>The following code snippet demonstrates how to use Firebase Authentication to authenticate users:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/auth&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Firebase library
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+});
 
-<span class="c1">// Get a reference to the Firebase Authentication instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">();</span>
+// Get a reference to the Firebase Authentication instance
+const auth = firebase.auth();
 
-<span class="c1">// Authenticate a user with email and password</span>
-<span class="nx">auth</span><span class="p">.</span><span class="nx">createUserWithEmailAndPassword</span><span class="p">(</span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password123&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User created:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating user:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
+// Authenticate a user with email and password
+auth.createUserWithEmailAndPassword('john.doe@example.com', 'password123')
+  .then((user) =&gt; {
+    console.log('User created:', user);
+  })
+  .catch((error) =&gt; {
+    console.error('Error creating user:', error);
+  });
 
-<span class="c1">// Authenticate a user with Facebook</span>
-<span class="nx">auth</span><span class="p">.</span><span class="nx">signInWithPopup</span><span class="p">(</span><span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">FacebookAuthProvider</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User authenticated:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error authenticating user:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Authenticate a user with Facebook
+auth.signInWithPopup(firebase.auth.FacebookAuthProvider)
+  .then((result) =&gt; {
+    console.log('User authenticated:', result);
+  })
+  .catch((error) =&gt; {
+    console.error('Error authenticating user:', error);
+  });
+</code></pre>
 <p>In this example, we use Firebase Authentication to authenticate users with email and password, as well as with Facebook. We initialize the Firebase app, get a reference to the Firebase Authentication instance, and then use the <code>createUserWithEmailAndPassword()</code> and <code>signInWithPopup()</code> methods to authenticate users.</p>
 <h3 id="example-3-push-notifications-with-firebase-cloud-messaging">Example 3: Push Notifications with Firebase Cloud Messaging</h3>
 <p>The following code snippet demonstrates how to use Firebase Cloud Messaging (FCM) to send push notifications:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+<pre><code class="language-javascript">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="c1">// Import the Firebase library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/messaging&#39;</span><span class="p">;</span>
+// Import the Firebase library
+import firebase from 'firebase/app';
+import 'firebase/messaging';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">messagingSenderId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_MESSAGING_SENDER_ID&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+});
 
-<span class="c1">// Get a reference to the Firebase Cloud Messaging instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">messaging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">();</span>
+// Get a reference to the Firebase Cloud Messaging instance
+const messaging = firebase.messaging();
 
-<span class="c1">// Request permission to send push notifications</span>
-<span class="nx">Notification</span><span class="p">.</span><span class="nx">requestPermission</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">permission</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">permission</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;granted&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Permission granted&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Permission denied&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
+// Request permission to send push notifications
+Notification.requestPermission()
+  .then((permission) =&gt; {
+    if (permission === 'granted') {
+      console.log('Permission granted');
+    } else {
+      console.log('Permission denied');
+    }
+  });
 
-<span class="c1">// Send a push notification</span>
-<span class="nx">messaging</span><span class="p">.</span><span class="nx">getToken</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Token:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Send the token to your server to send push notifications</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error getting token:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Send a push notification
+messaging.getToken()
+  .then((token) =&gt; {
+    console.log('Token:', token);
+    // Send the token to your server to send push notifications
+  })
+  .catch((error) =&gt; {
+    console.error('Error getting token:', error);
+  });
+</code></pre>
 <p>In this example, we use Firebase Cloud Messaging to send push notifications. We initialize the Firebase app, get a reference to the Firebase Cloud Messaging instance, and then request permission to send push notifications using the <code>requestPermission()</code> method. We then get a token using the <code>getToken()</code> method, which can be sent to our server to send push notifications.</p>
 <h2 id="use-cases-for-mbaas">Use Cases for MBaaS</h2>
 <p>MBaaS platforms have a wide range of use cases, including:

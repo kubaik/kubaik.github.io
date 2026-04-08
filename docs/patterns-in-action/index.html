@@ -160,95 +160,92 @@
 <p>Let's take a look at some practical code examples that demonstrate the use of design patterns in real-world applications.</p>
 <h3 id="example-1-singleton-pattern">Example 1: Singleton Pattern</h3>
 <p>The Singleton pattern is a creational pattern that ensures only one instance of a class is created. Here's an example implementation in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
-    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+<pre><code class="language-python">class Singleton:
+    _instance = None
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
 
-<span class="c1"># Usage</span>
-<span class="n">singleton1</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">()</span>
-<span class="n">singleton2</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">()</span>
+# Usage
+singleton1 = Singleton()
+singleton2 = Singleton()
 
-<span class="nb">print</span><span class="p">(</span><span class="n">singleton1</span> <span class="ow">is</span> <span class="n">singleton2</span><span class="p">)</span>  <span class="c1"># Output: True</span>
-</code></pre></div>
-
+print(singleton1 is singleton2)  # Output: True
+</code></pre>
 <p>In this example, the <code>Singleton</code> class ensures that only one instance is created, regardless of how many times the class is instantiated.</p>
 <h3 id="example-2-factory-pattern">Example 2: Factory Pattern</h3>
 <p>The Factory pattern is a creational pattern that provides a way to create objects without specifying the exact class of object that will be created. Here's an example implementation in Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sound</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code class="language-java">public abstract class Animal {
+    public abstract void sound();
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Dog</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sound</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Woof!&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class Dog extends Animal {
+    @Override
+    public void sound() {
+        System.out.println(&quot;Woof!&quot;);
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Cat</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sound</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Meow!&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class Cat extends Animal {
+    @Override
+    public void sound() {
+        System.out.println(&quot;Meow!&quot;);
+    }
+}
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AnimalFactory</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Animal</span><span class="w"> </span><span class="nf">createAnimal</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;dog&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dog</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Cat</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="s">&quot;Unsupported animal type&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+public class AnimalFactory {
+    public static Animal createAnimal(String type) {
+        if (type.equals(&quot;dog&quot;)) {
+            return new Dog();
+        } else if (type.equals(&quot;cat&quot;)) {
+            return new Cat();
+        } else {
+            throw new UnsupportedOperationException(&quot;Unsupported animal type&quot;);
+        }
+    }
+}
 
-<span class="c1">// Usage</span>
-<span class="n">Animal</span><span class="w"> </span><span class="n">animal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AnimalFactory</span><span class="p">.</span><span class="na">createAnimal</span><span class="p">(</span><span class="s">&quot;dog&quot;</span><span class="p">);</span>
-<span class="n">animal</span><span class="p">.</span><span class="na">sound</span><span class="p">();</span><span class="w">  </span><span class="c1">// Output: Woof!</span>
-</code></pre></div>
-
+// Usage
+Animal animal = AnimalFactory.createAnimal(&quot;dog&quot;);
+animal.sound();  // Output: Woof!
+</code></pre>
 <p>In this example, the <code>AnimalFactory</code> class provides a way to create <code>Animal</code> objects without specifying the exact class of animal that will be created.</p>
 <h3 id="example-3-observer-pattern">Example 3: Observer Pattern</h3>
 <p>The Observer pattern is a behavioral pattern that defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. Here's an example implementation in JavaScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">Subject</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">observers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-javascript">class Subject {
+    constructor() {
+        this.observers = [];
+    }
 
-<span class="w">    </span><span class="nx">registerObserver</span><span class="p">(</span><span class="nx">observer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">observers</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">observer</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    registerObserver(observer) {
+        this.observers.push(observer);
+    }
 
-<span class="w">    </span><span class="nx">notifyObservers</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">observers</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">observer</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">observer</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    notifyObservers(data) {
+        this.observers.forEach((observer) =&gt; {
+            observer.update(data);
+        });
+    }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">Observer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Received data: </span><span class="si">${</span><span class="nx">data</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+class Observer {
+    update(data) {
+        console.log(`Received data: ${data}`);
+    }
+}
 
-<span class="c1">// Usage</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">subject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Subject</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Observer</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Observer</span><span class="p">();</span>
+// Usage
+const subject = new Subject();
+const observer1 = new Observer();
+const observer2 = new Observer();
 
-<span class="nx">subject</span><span class="p">.</span><span class="nx">registerObserver</span><span class="p">(</span><span class="nx">observer1</span><span class="p">);</span>
-<span class="nx">subject</span><span class="p">.</span><span class="nx">registerObserver</span><span class="p">(</span><span class="nx">observer2</span><span class="p">);</span>
+subject.registerObserver(observer1);
+subject.registerObserver(observer2);
 
-<span class="nx">subject</span><span class="p">.</span><span class="nx">notifyObservers</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// Output: Received data: Hello, world! (twice)</span>
-</code></pre></div>
-
+subject.notifyObservers(&quot;Hello, world!&quot;);  // Output: Received data: Hello, world! (twice)
+</code></pre>
 <p>In this example, the <code>Subject</code> class maintains a list of observers and notifies them when its state changes.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms support the implementation of design patterns, including:

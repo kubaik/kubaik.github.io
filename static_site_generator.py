@@ -104,7 +104,7 @@ class StaticSiteGenerator:
         for post in posts:
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
-            markdown_converter = md.Markdown(extensions=['extra', 'codehilite', 'toc'])
+            markdown_converter = md.Markdown(extensions=['extra', 'fenced_code', 'toc'])
             content_html = markdown_converter.convert(post.content)
             post_dict = post.to_dict()
             post_dict['content_html'] = content_html

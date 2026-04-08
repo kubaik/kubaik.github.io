@@ -167,36 +167,35 @@
 3. <strong>Use Caching</strong>: Caching allows you to store frequently accessed data in memory, reducing the number of requests to your database or application and improving performance.</p>
 <h3 id="example-deploying-a-scalable-web-application-on-aws">Example: Deploying a Scalable Web Application on AWS</h3>
 <p>Here is an example of deploying a scalable web application on AWS:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an Auto Scaling group</span>
-<span class="n">asg</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;autoscaling&#39;</span><span class="p">)</span>
-<span class="n">asg</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
-    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;my-asg&#39;</span><span class="p">,</span>
-    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;my-lc&#39;</span><span class="p">,</span>
-    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">DesiredCapacity</span><span class="o">=</span><span class="mi">5</span>
-<span class="p">)</span>
+# Create an Auto Scaling group
+asg = boto3.client('autoscaling')
+asg.create_auto_scaling_group(
+    AutoScalingGroupName='my-asg',
+    LaunchConfigurationName='my-lc',
+    MinSize=1,
+    MaxSize=10,
+    DesiredCapacity=5
+)
 
-<span class="c1"># Create a Load Balancer</span>
-<span class="n">elb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elbv2&#39;</span><span class="p">)</span>
-<span class="n">elb</span><span class="o">.</span><span class="n">create_load_balancer</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;my-elb&#39;</span><span class="p">,</span>
-    <span class="n">Subnets</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subnet-12345678&#39;</span><span class="p">],</span>
-    <span class="n">SecurityGroups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sg-12345678&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+# Create a Load Balancer
+elb = boto3.client('elbv2')
+elb.create_load_balancer(
+    Name='my-elb',
+    Subnets=['subnet-12345678'],
+    SecurityGroups=['sg-12345678']
+)
 
-<span class="c1"># Create a Cache Cluster</span>
-<span class="n">elasticache</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elasticache&#39;</span><span class="p">)</span>
-<span class="n">elasticache</span><span class="o">.</span><span class="n">create_cache_cluster</span><span class="p">(</span>
-    <span class="n">CacheClusterId</span><span class="o">=</span><span class="s1">&#39;my-cache&#39;</span><span class="p">,</span>
-    <span class="n">Engine</span><span class="o">=</span><span class="s1">&#39;memcached&#39;</span><span class="p">,</span>
-    <span class="n">CacheNodeType</span><span class="o">=</span><span class="s1">&#39;cache.t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">NumCacheNodes</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a Cache Cluster
+elasticache = boto3.client('elasticache')
+elasticache.create_cache_cluster(
+    CacheClusterId='my-cache',
+    Engine='memcached',
+    CacheNodeType='cache.t2.micro',
+    NumCacheNodes=1
+)
+</code></pre>
 <p>In this example, we create an Auto Scaling group, a Load Balancer, and a Cache Cluster using the AWS SDK for Python (Boto3). We then configure the Auto Scaling group to launch instances based on demand, the Load Balancer to distribute traffic across multiple instances, and the Cache Cluster to store frequently accessed data in memory.</p>
 <h2 id="securing-aws-cloud-architectures">Securing AWS Cloud Architectures</h2>
 <p>Securing AWS cloud architectures requires a deep understanding of the key components, best practices, and real-world examples of securing applications and workloads on AWS. Here are some best practices for securing AWS cloud architectures:
@@ -205,50 +204,49 @@
 * <strong>Use Monitoring and Logging</strong>: Monitoring and logging provide a way to detect and respond to security incidents.</p>
 <h3 id="example-securing-an-aws-cloud-architecture-with-iam-roles-and-encryption">Example: Securing an AWS Cloud Architecture with IAM Roles and Encryption</h3>
 <p>Here is an example of securing an AWS cloud architecture with IAM roles and encryption:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an IAM Role</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;my-role&#39;</span><span class="p">,</span>
-    <span class="n">AssumeRolePolicyDocument</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Principal&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;Service&#39;</span><span class="p">:</span> <span class="s1">&#39;ec2.amazonaws.com&#39;</span>
-                <span class="p">},</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;sts:AssumeRole&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create an IAM Role
+iam = boto3.client('iam')
+iam.create_role(
+    RoleName='my-role',
+    AssumeRolePolicyDocument={
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Effect': 'Allow',
+                'Principal': {
+                    'Service': 'ec2.amazonaws.com'
+                },
+                'Action': 'sts:AssumeRole'
+            }
+        ]
+    }
+)
 
-<span class="c1"># Create an Encryption Key</span>
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
-<span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My encryption key&#39;</span><span class="p">,</span>
-    <span class="n">KeyUsage</span><span class="o">=</span><span class="s1">&#39;ENCRYPT_DECRYPT&#39;</span>
-<span class="p">)</span>
+# Create an Encryption Key
+kms = boto3.client('kms')
+kms.create_key(
+    Description='My encryption key',
+    KeyUsage='ENCRYPT_DECRYPT'
+)
 
-<span class="c1"># Encrypt a Bucket</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
-<span class="n">s3</span><span class="o">.</span><span class="n">put_bucket_encryption</span><span class="p">(</span>
-    <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span>
-    <span class="n">ServerSideEncryptionConfiguration</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Rules&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;ApplyServerSideEncryptionByDefault&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;SSEAlgorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;aws:kms&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;KMSMasterKeyID&#39;</span><span class="p">:</span> <span class="s1">&#39;arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012&#39;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Encrypt a Bucket
+s3 = boto3.client('s3')
+s3.put_bucket_encryption(
+    Bucket='my-bucket',
+    ServerSideEncryptionConfiguration={
+        'Rules': [
+            {
+                'ApplyServerSideEncryptionByDefault': {
+                    'SSEAlgorithm': 'aws:kms',
+                    'KMSMasterKeyID': 'arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012'
+                }
+            }
+        ]
+    }
+)
+</code></pre>
 <p>In this example, we create an IAM role, an encryption key, and encrypt a bucket using the AWS SDK for Python (Boto3). We then configure the IAM role to grant access to resources, the encryption key to protect data, and the bucket to use server-side encryption.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when designing and deploying AWS cloud architectures:
@@ -257,39 +255,38 @@
 * <strong>Problem: Security Incidents</strong>: Solution: Use IAM roles, encryption, and monitoring and logging to detect and respond to security incidents.</p>
 <h3 id="example-optimizing-costs-with-reserved-instances-and-auto-scaling">Example: Optimizing Costs with Reserved Instances and Auto Scaling</h3>
 <p>Here is an example of optimizing costs with Reserved Instances and Auto Scaling:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a Reserved Instance</span>
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
-<span class="n">ec2</span><span class="o">.</span><span class="n">purchase_reserved_instances_offering</span><span class="p">(</span>
-    <span class="n">InstanceType</span><span class="o">=</span><span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">InstanceCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">OfferingType</span><span class="o">=</span><span class="s1">&#39;Partial Upfront&#39;</span><span class="p">,</span>
-    <span class="n">ReservedInstancesOfferingId</span><span class="o">=</span><span class="s1">&#39;12345678-1234-1234-1234-123456789012&#39;</span>
-<span class="p">)</span>
+# Create a Reserved Instance
+ec2 = boto3.client('ec2')
+ec2.purchase_reserved_instances_offering(
+    InstanceType='t2.micro',
+    InstanceCount=1,
+    OfferingType='Partial Upfront',
+    ReservedInstancesOfferingId='12345678-1234-1234-1234-123456789012'
+)
 
-<span class="c1"># Create an Auto Scaling group</span>
-<span class="n">asg</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;autoscaling&#39;</span><span class="p">)</span>
-<span class="n">asg</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
-    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;my-asg&#39;</span><span class="p">,</span>
-    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;my-lc&#39;</span><span class="p">,</span>
-    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">DesiredCapacity</span><span class="o">=</span><span class="mi">5</span>
-<span class="p">)</span>
+# Create an Auto Scaling group
+asg = boto3.client('autoscaling')
+asg.create_auto_scaling_group(
+    AutoScalingGroupName='my-asg',
+    LaunchConfigurationName='my-lc',
+    MinSize=1,
+    MaxSize=10,
+    DesiredCapacity=5
+)
 
-<span class="c1"># Configure Auto Scaling to use Reserved Instances</span>
-<span class="n">asg</span><span class="o">.</span><span class="n">create_or_update_tags</span><span class="p">(</span>
-    <span class="n">Tags</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;aws:ec2:ri:instance-type&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;PropagateAtLaunch&#39;</span><span class="p">:</span> <span class="kc">True</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure Auto Scaling to use Reserved Instances
+asg.create_or_update_tags(
+    Tags=[
+        {
+            'Key': 'aws:ec2:ri:instance-type',
+            'Value': 't2.micro',
+            'PropagateAtLaunch': True
+        }
+    ]
+)
+</code></pre>
 <p>In this example, we create a Reserved Instance, an Auto Scaling group, and configure Auto Scaling to use Reserved Instances using the AWS SDK for Python (Boto3). We then optimize costs by using Reserved Instances and Auto Scaling to reduce waste and improve efficiency.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, designing and deploying scalable and secure AWS cloud architectures requires a deep understanding of the key components, best practices, and real-world examples of deploying applications and workloads on AWS. By following the best practices outlined in this article, you can design and deploy scalable and secure AWS cloud architectures that meet the needs of your organization.</p>

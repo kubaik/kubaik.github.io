@@ -157,33 +157,32 @@
 * GitLab CI/CD: A built-in CI/CD tool that integrates seamlessly with the GitLab version control system.
 * CircleCI: A cloud-based CI/CD platform that offers fast and scalable builds, with a free plan available for small projects.</p>
 <p>For example, let's consider a Node.js project hosted on GitHub. We can use GitHub Actions to automate the build and deployment process. Here's an example <code>.yml</code> file that defines a simple CI/CD pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Node</span><span class="o">.</span><span class="na">js</span><span class="w"> </span><span class="n">CI</span>
+<pre><code class="language-yml">name: Node.js CI
 
-<span class="n">on</span><span class="o">:</span>
-<span class="w">  </span><span class="n">push</span><span class="o">:</span>
-<span class="w">    </span><span class="n">branches</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">build</span><span class="o">:</span>
-<span class="w">    </span><span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="o">:</span><span class="w"> </span><span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Install</span><span class="w"> </span><span class="n">dependencies</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">tests</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">test</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Deploy</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">production</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">appleboy</span><span class="o">/</span><span class="n">scp</span><span class="o">-</span><span class="n">action</span><span class="err">@</span><span class="n">master</span>
-<span class="w">        </span><span class="k">with</span><span class="o">:</span>
-<span class="w">          </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">$</span><span class="o">{{</span><span class="w"> </span><span class="n">secrets</span><span class="o">.</span><span class="na">HOST</span><span class="w"> </span><span class="o">}}</span>
-<span class="w">          </span><span class="n">username</span><span class="o">:</span><span class="w"> </span><span class="n">$</span><span class="o">{{</span><span class="w"> </span><span class="n">secrets</span><span class="o">.</span><span class="na">USERNAME</span><span class="w"> </span><span class="o">}}</span>
-<span class="w">          </span><span class="n">password</span><span class="o">:</span><span class="w"> </span><span class="n">$</span><span class="o">{{</span><span class="w"> </span><span class="n">secrets</span><span class="o">.</span><span class="na">PASSWORD</span><span class="w"> </span><span class="o">}}</span>
-<span class="w">          </span><span class="n">source</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./&#39;</span>
-<span class="w">          </span><span class="n">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/var/www/html&#39;</span>
-</code></pre></div>
-
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - name: Deploy to production
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          source: './'
+          target: '/var/www/html'
+</code></pre>
 <p>This pipeline is triggered on every push to the <code>main</code> branch, and it automates the following steps:
 1. Checks out the code from the repository.
 2. Installs the dependencies using <code>npm install</code>.
@@ -195,26 +194,25 @@
 * New Relic: A comprehensive monitoring platform that provides detailed metrics on application performance, with a free trial available for 30 days.
 * Prometheus: An open-source monitoring system that offers customizable metrics and alerts, with a free and open-source license.</p>
 <p>For example, let's consider a pipeline that builds and deploys a Java application. We can use Datadog to monitor the build time and test coverage, and set up alerts when these metrics exceed certain thresholds. Here's an example of how to configure Datadog to monitor a Java pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">io.datadog.api.Client</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io.datadog.api.ClientBuilder</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io.datadog.api.Event</span><span class="p">;</span>
+<pre><code class="language-java">import io.datadog.api.Client;
+import io.datadog.api.ClientBuilder;
+import io.datadog.api.Event;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PipelineMonitor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Client</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ClientBuilder</span><span class="p">()</span>
-<span class="w">      </span><span class="p">.</span><span class="na">apiKey</span><span class="p">(</span><span class="s">&quot;YOUR_API_KEY&quot;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">appKey</span><span class="p">(</span><span class="s">&quot;YOUR_APP_KEY&quot;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+public class PipelineMonitor {
+  public static void main(String[] args) {
+    Client client = new ClientBuilder()
+      .apiKey(&quot;YOUR_API_KEY&quot;)
+      .appKey(&quot;YOUR_APP_KEY&quot;)
+      .build();
 
-<span class="w">    </span><span class="n">Event</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Event</span><span class="p">(</span><span class="s">&quot;Pipeline build&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Build completed&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">event</span><span class="p">.</span><span class="na">setMetric</span><span class="p">(</span><span class="s">&quot;build_time&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
-<span class="w">    </span><span class="n">event</span><span class="p">.</span><span class="na">setMetric</span><span class="p">(</span><span class="s">&quot;test_coverage&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">);</span>
+    Event event = new Event(&quot;Pipeline build&quot;, &quot;Build completed&quot;);
+    event.setMetric(&quot;build_time&quot;, 10);
+    event.setMetric(&quot;test_coverage&quot;, 0.8);
 
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="na">sendEvent</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    client.sendEvent(event);
+  }
+}
+</code></pre>
 <p>This code sends an event to Datadog with the build time and test coverage metrics, which can be used to monitor pipeline performance and set up alerts.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>One common problem with CI/CD pipelines is the "flakey test" issue, where tests fail intermittently due to external factors such as network connectivity or database availability. To solve this problem, we can use techniques such as:
@@ -222,15 +220,14 @@
 * Test isolation: Isolate tests from external factors by using mock objects or test doubles.
 * Test parallelization: Run tests in parallel to reduce the overall test time and minimize the impact of flakey tests.</p>
 <p>For example, let's consider a pipeline that runs a suite of tests using Jest. We can use the <code>jest-retry</code> package to implement a retry mechanism that re-runs failed tests up to 3 times before marking them as failed. Here's an example of how to configure <code>jest-retry</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jestRetry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jest-retry&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jestRetry = require('jest-retry');
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">retry</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">timeout</span><span class="o">:</span><span class="w"> </span><span class="mf">10000</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">reporters</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;jest-html-reporters&#39;</span><span class="p">],</span>
-<span class="p">};</span>
-</code></pre></div>
-
+module.exports = {
+  retry: 3,
+  timeout: 10000,
+  reporters: ['default', 'jest-html-reporters'],
+};
+</code></pre>
 <p>This configuration tells Jest to re-run failed tests up to 3 times before marking them as failed, with a timeout of 10 seconds between retries.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>CI/CD pipelines can be used in a variety of real-world scenarios, such as:
@@ -242,31 +239,30 @@
 2. Run automated tests using Appium.
 3. Deploy the application to the App Store using Fastlane.</p>
 <p>Here's an example of how to configure a CI/CD pipeline for mobile application deployment:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Mobile</span><span class="w"> </span><span class="n">App</span><span class="w"> </span><span class="n">Deployment</span>
+<pre><code class="language-yml">name: Mobile App Deployment
 
-<span class="n">on</span><span class="o">:</span>
-<span class="w">  </span><span class="n">push</span><span class="o">:</span>
-<span class="w">    </span><span class="n">branches</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">build</span><span class="o">:</span>
-<span class="w">    </span><span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="o">:</span><span class="w"> </span><span class="n">macos</span><span class="o">-</span><span class="n">latest</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Build</span><span class="w"> </span><span class="n">app</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">xcodebuild</span><span class="w"> </span><span class="o">-</span><span class="n">scheme</span><span class="w"> </span><span class="n">MyApp</span><span class="w"> </span><span class="o">-</span><span class="n">configuration</span><span class="w"> </span><span class="n">Release</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">tests</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">appium</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">tests</span><span class="o">/</span><span class="n">appium</span><span class="o">.</span><span class="na">txt</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Deploy</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">App</span><span class="w"> </span><span class="n">Store</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">fastlane</span><span class="o">-</span><span class="n">action</span><span class="err">@</span><span class="n">v1</span>
-<span class="w">        </span><span class="k">with</span><span class="o">:</span>
-<span class="w">          </span><span class="n">apple_id</span><span class="o">:</span><span class="w"> </span><span class="n">$</span><span class="o">{{</span><span class="w"> </span><span class="n">secrets</span><span class="o">.</span><span class="na">APPLE_ID</span><span class="w"> </span><span class="o">}}</span>
-<span class="w">          </span><span class="n">apple_password</span><span class="o">:</span><span class="w"> </span><span class="n">$</span><span class="o">{{</span><span class="w"> </span><span class="n">secrets</span><span class="o">.</span><span class="na">APPLE_PASSWORD</span><span class="w"> </span><span class="o">}}</span>
-<span class="w">          </span><span class="n">ipa</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./MyApp.ipa&#39;</span>
-</code></pre></div>
-
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build app
+        run: xcodebuild -scheme MyApp -configuration Release
+      - name: Run tests
+        run: appium -e tests/appium.txt
+      - name: Deploy to App Store
+        uses: fastlane-action@v1
+        with:
+          apple_id: ${{ secrets.APPLE_ID }}
+          apple_password: ${{ secrets.APPLE_PASSWORD }}
+          ipa: './MyApp.ipa'
+</code></pre>
 <p>This pipeline is triggered on every push to the <code>main</code> branch, and it automates the build, test, and deployment process for the mobile application.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>To measure the performance of a CI/CD pipeline, we can use metrics such as:

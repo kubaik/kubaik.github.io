@@ -159,31 +159,28 @@
 * <strong>PurgeCSS integration</strong>: Tailwind CSS can be integrated with PurgeCSS to remove unused CSS classes, resulting in smaller CSS files and faster page loads.</p>
 <h2 id="setting-up-tailwind-css">Setting Up Tailwind CSS</h2>
 <p>To get started with Tailwind CSS, you'll need to install it using npm or yarn. Here's an example of how to install Tailwind CSS using npm:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>tailwindcss
-</code></pre></div>
-
+<pre><code class="language-bash">npm install tailwindcss
+</code></pre>
 <p>Once installed, you can create a new Tailwind CSS configuration file using the following command:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>tailwindcss<span class="w"> </span>init<span class="w"> </span>-p
-</code></pre></div>
-
+<pre><code class="language-bash">npx tailwindcss init -p
+</code></pre>
 <p>This will create a new file called <code>tailwind.config.js</code> in your project root, which you can use to customize Tailwind CSS.</p>
 <h3 id="customizing-tailwind-css">Customizing Tailwind CSS</h3>
 <p>The <code>tailwind.config.js</code> file is where you can customize Tailwind CSS to fit your project's specific needs. For example, you can change the default colors, fonts, and spacing by modifying the <code>theme</code> section of the configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">theme</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">extend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">colors</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="s1">&#39;primary&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#3498db&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;secondary&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#f1c40f&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nx">fontFamily</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="s1">&#39;sans&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Open Sans&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sans-serif&#39;</span><span class="p">],</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#3498db',
+        'secondary': '#f1c40f',
+      },
+      fontFamily: {
+        'sans': ['Open Sans', 'sans-serif'],
+      },
+    }
+  }
+}
+</code></pre>
 <p>In this example, we're adding two custom colors (<code>primary</code> and <code>secondary</code>) and a custom font family (<code>sans</code>).</p>
 <h2 id="using-tailwind-css-utility-classes">Using Tailwind CSS Utility Classes</h2>
 <p>Tailwind CSS provides a wide range of utility classes that can be used to style HTML elements. Here are a few examples:
@@ -191,11 +188,10 @@
 * <code>bg-primary</code>: sets the background color to the primary color defined in the configuration file
 * <code>flex justify-center</code>: sets the display property to flex and justifies the content to the center</p>
 <p>Here's an example of how you can use these utility classes to create a custom button component:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-primary text-lg text-white py-2 px-4 rounded&quot;</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;button class=&quot;bg-primary text-lg text-white py-2 px-4 rounded&quot;&gt;
   Click me
-<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;/button&gt;
+</code></pre>
 <p>In this example, we're using the <code>bg-primary</code> class to set the background color to the primary color, <code>text-lg</code> to set the font size to large, and <code>py-2</code> and <code>px-4</code> to add padding to the button.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Tailwind CSS is widely used in production environments due to its flexibility and customization capabilities. Here are a few examples of companies that use Tailwind CSS:
@@ -214,15 +210,14 @@
 * <strong>CSS file size</strong>: 12KB (compared to 30KB for Bootstrap and 40KB for Materialize)</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem that developers face when using Tailwind CSS is the lack of pre-designed components. To overcome this, you can use a combination of utility classes to create custom components. For example, you can use the <code>flex</code> and <code>justify-center</code> classes to create a custom navigation bar:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex justify-center bg-primary text-white py-2&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mr-4&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mr-4&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mr-4&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;nav class=&quot;flex justify-center bg-primary text-white py-2&quot;&gt;
+  &lt;ul&gt;
+    &lt;li class=&quot;mr-4&quot;&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;mr-4&quot;&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;mr-4&quot;&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
 <p>Another common problem is the difficulty of customizing the configuration file. To overcome this, you can use the official Tailwind CSS documentation, which provides a comprehensive guide to configuring the framework.</p>
 <h2 id="tools-and-integrations">Tools and Integrations</h2>
 <p>Tailwind CSS integrates seamlessly with a wide range of tools and platforms, including:

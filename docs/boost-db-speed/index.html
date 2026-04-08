@@ -159,9 +159,8 @@
 * CPU utilization: The percentage of CPU resources used by the database, measured as a percentage.
 * Memory usage: The amount of memory used by the database, measured in megabytes or gigabytes.</p>
 <p>For example, let's consider a database that executes 100 queries per second, with an average query execution time of 50 milliseconds, and a latency of 20 milliseconds. To optimize this database, we can use tools like PostgreSQL's <code>EXPLAIN</code> statement to analyze query execution plans and identify bottlenecks.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="p">(</span><span class="k">ANALYZE</span><span class="p">)</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN (ANALYZE) SELECT * FROM customers WHERE country='USA';
+</code></pre>
 <p>This query will provide detailed information about the query execution plan, including the number of rows scanned, the index used, and the execution time.</p>
 <h2 id="indexing-and-query-optimization">Indexing and Query Optimization</h2>
 <p>Indexing is a critical aspect of database optimization, as it can significantly improve query performance by reducing the number of rows that need to be scanned. There are several types of indexes, including:
@@ -169,14 +168,12 @@
 * Hash indexes: Suitable for equality queries.
 * Full-text indexes: Suitable for text search queries.</p>
 <p>To create an index in MySQL, we can use the following query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_country</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">country</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_country ON customers (country);
+</code></pre>
 <p>This query will create a B-tree index on the <code>country</code> column of the <code>customers</code> table.</p>
 <p>Query optimization involves modifying queries to use indexes efficiently and reduce the number of rows that need to be scanned. For example, we can use the <code>EXISTS</code> clause instead of <code>IN</code> to reduce the number of rows that need to be scanned:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customers</span><span class="p">.</span><span class="n">id</span><span class="o">=</span><span class="n">orders</span><span class="p">.</span><span class="n">customer_id</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM customers WHERE EXISTS (SELECT 1 FROM orders WHERE customers.id=orders.customer_id);
+</code></pre>
 <p>This query will use the index on the <code>customer_id</code> column of the <code>orders</code> table to reduce the number of rows that need to be scanned.</p>
 <h2 id="caching-and-buffer-pool-optimization">Caching and Buffer Pool Optimization</h2>
 <p>Caching involves storing frequently accessed data in memory to reduce the number of disk I/O operations. There are several caching strategies, including:
@@ -184,23 +181,22 @@
 * Read-through: The application reads data from the cache and updates the cache when the data changes.
 * Write-through: The application writes data to the cache and the database simultaneously.</p>
 <p>To implement caching in a Node.js application using Redis, we can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
 
-<span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;customers&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Fetch data from the database and cache it</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">customers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fetchCustomersFromDatabase</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;customers&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">customers</span><span class="p">));</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">customers</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+client.get('customers', (err, data) =&gt; {
+  if (err) {
+    console.error(err);
+  } else if (data) {
+    console.log(data);
+  } else {
+    // Fetch data from the database and cache it
+    const customers = fetchCustomersFromDatabase();
+    client.set('customers', JSON.stringify(customers));
+    console.log(customers);
+  }
+});
+</code></pre>
 <p>This code will fetch data from the cache and update the cache when the data changes.</p>
 <p>Buffer pool optimization involves configuring the buffer pool to optimize memory usage and reduce disk I/O operations. The buffer pool is a cache that stores data in memory to reduce the number of disk I/O operations. To optimize the buffer pool in MySQL, we can use the following configuration options:</p>
 <ul>
@@ -208,10 +204,9 @@
 <li><code>innodb_buffer_pool_instances</code>: The number of buffer pool instances.</li>
 </ul>
 <p>For example, we can configure the buffer pool to use 16 GB of memory and 4 instances:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">innodb_buffer_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>16G
-<span class="nv">innodb_buffer_pool_instances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span>
-</code></pre></div>
-
+<pre><code class="language-bash">innodb_buffer_pool_size = 16G
+innodb_buffer_pool_instances = 4
+</code></pre>
 <p>This configuration will optimize the buffer pool to reduce disk I/O operations and improve query performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can affect database performance, including:
@@ -224,41 +219,40 @@
 * Use caching to reduce disk I/O operations.
 * Use connection pooling to reduce the number of connections to the database.</p>
 <p>For example, we can use transactions to reduce lock contention and deadlocks in a Node.js application using MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">mysql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mysql&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mysql</span><span class="p">.</span><span class="nx">createConnection</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;username&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">database</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;database&#39;</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'username',
+  password: 'password',
+  database: 'database'
+});
 
-<span class="nx">connection</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">connection</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;INSERT INTO customers SET ?&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">results</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">connection</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;INSERT INTO orders SET ?&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">customer_id</span><span class="o">:</span><span class="w"> </span><span class="nx">results</span><span class="p">.</span><span class="nx">insertId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">results</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">connection</span><span class="p">.</span><span class="nx">commit</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">              </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Transaction committed&#39;</span><span class="p">);</span>
-<span class="w">              </span><span class="p">}</span>
-<span class="w">            </span><span class="p">});</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+connection.beginTransaction((err) =&gt; {
+  if (err) {
+    console.error(err);
+  } else {
+    connection.query('INSERT INTO customers SET ?', { name: 'John Doe' }, (err, results) =&gt; {
+      if (err) {
+        console.error(err);
+      } else {
+        connection.query('INSERT INTO orders SET ?', { customer_id: results.insertId }, (err, results) =&gt; {
+          if (err) {
+            console.error(err);
+          } else {
+            connection.commit((err) =&gt; {
+              if (err) {
+                console.error(err);
+              } else {
+                console.log('Transaction committed');
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+});
+</code></pre>
 <p>This code will use transactions to reduce lock contention and deadlocks.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>There are several real-world use cases for database optimization, including:
@@ -276,9 +270,8 @@
 * TPC-H: A benchmark for decision support systems.
 * SysBench: A benchmark for database performance.</p>
 <p>For example, let's consider a database that uses MySQL as the database management system. To measure the performance of the database, we can use the SysBench benchmark:</p>
-<div class="codehilite"><pre><span></span><code>sysbench<span class="w"> </span>--test<span class="o">=</span>oltp<span class="w"> </span>--oltp-table-size<span class="o">=</span><span class="m">1000000</span><span class="w"> </span>--oltp-read-only<span class="o">=</span>on<span class="w"> </span>--max-time<span class="o">=</span><span class="m">60</span><span class="w"> </span>--max-requests<span class="o">=</span><span class="m">0</span><span class="w"> </span>--num-threads<span class="o">=</span><span class="m">16</span><span class="w"> </span>run
-</code></pre></div>
-
+<pre><code class="language-bash">sysbench --test=oltp --oltp-table-size=1000000 --oltp-read-only=on --max-time=60 --max-requests=0 --num-threads=16 run
+</code></pre>
 <p>This command will run the SysBench benchmark for 60 seconds, using 16 threads, and measure the performance of the database.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>To optimize the cost of a database, we can use various pricing models, including:

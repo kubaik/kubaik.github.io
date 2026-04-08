@@ -170,148 +170,141 @@
 <h3 id="1-meaningful-naming">1. Meaningful Naming</h3>
 <p>Choosing meaningful names for variables, functions, and classes helps convey the purpose of the code at a glance. Avoid ambiguous names like <code>temp</code> or <code>data</code>.</p>
 <h4 id="example">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Poor Naming</span>
-<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<pre><code class="language-python"># Poor Naming
+def calc(a, b):
+    return a / b
 
-<span class="c1"># Better Naming</span>
-<span class="k">def</span> <span class="nf">calculate_division</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Denominator cannot be zero.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
-</code></pre></div>
-
+# Better Naming
+def calculate_division(numerator, denominator):
+    if denominator == 0:
+        raise ValueError(&quot;Denominator cannot be zero.&quot;)
+    return numerator / denominator
+</code></pre>
 <p>In the second example, the function <code>calculate_division</code> immediately tells the reader what operation it performs, while the error handling adds robustness.</p>
 <h3 id="2-single-responsibility-principle-srp">2. Single Responsibility Principle (SRP)</h3>
 <p>Each function or class should have one responsibility. This makes the code easier to understand and test.</p>
 <h4 id="example_1">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Violating SRP</span>
-<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+<pre><code class="language-python"># Violating SRP
+class User:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
 
-    <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="c1"># Code to send email</span>
-        <span class="k">pass</span>
+    def send_email(self, message):
+        # Code to send email
+        pass
 
-<span class="c1"># Following SRP</span>
-<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+# Following SRP
+class User:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
 
-<span class="k">class</span> <span class="nc">EmailService</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="c1"># Code to send email</span>
-        <span class="k">pass</span>
-</code></pre></div>
-
+class EmailService:
+    def send_email(self, user, message):
+        # Code to send email
+        pass
+</code></pre>
 <p>Here, the <code>User</code> class is solely responsible for user data, while the <code>EmailService</code> handles email functionality. This separation simplifies testing and maintenance.</p>
 <h3 id="3-dry-dont-repeat-yourself">3. DRY (Don't Repeat Yourself)</h3>
 <p>Duplication can lead to inconsistencies and maintenance headaches. The DRY principle encourages you to abstract common code into reusable components.</p>
 <h4 id="example_2">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Violating DRY</span>
-<span class="k">def</span> <span class="nf">calculate_area_circle</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span>
+<pre><code class="language-python"># Violating DRY
+def calculate_area_circle(radius):
+    return 3.14 * radius * radius
 
-<span class="k">def</span> <span class="nf">calculate_area_square</span><span class="p">(</span><span class="n">side</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">side</span> <span class="o">*</span> <span class="n">side</span>
+def calculate_area_square(side):
+    return side * side
 
-<span class="c1"># Following DRY</span>
-<span class="k">def</span> <span class="nf">calculate_area_circle</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span>
+# Following DRY
+def calculate_area_circle(radius):
+    return 3.14 * radius * radius
 
-<span class="k">def</span> <span class="nf">calculate_area_square</span><span class="p">(</span><span class="n">side</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">side</span> <span class="o">*</span> <span class="n">side</span>
+def calculate_area_square(side):
+    return side * side
 
-<span class="k">def</span> <span class="nf">calculate_area</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dimension</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="s1">&#39;circle&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">calculate_area_circle</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">shape</span> <span class="o">==</span> <span class="s1">&#39;square&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">calculate_area_square</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span>
-</code></pre></div>
-
+def calculate_area(shape, dimension):
+    if shape == 'circle':
+        return calculate_area_circle(dimension)
+    elif shape == 'square':
+        return calculate_area_square(dimension)
+</code></pre>
 <p>Instead of duplicating logic, the <code>calculate_area</code> function centralizes the area calculation process, making it easier to modify in the future.</p>
 <h3 id="4-kiss-keep-it-simple-stupid">4. KISS (Keep It Simple, Stupid)</h3>
 <p>Complexity should be avoided. Choose straightforward solutions and avoid over-engineering.</p>
 <h4 id="example_3">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Overly complex</span>
-<span class="k">def</span> <span class="nf">get_user_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="c1"># Complex logic to retrieve user data</span>
-    <span class="k">if</span> <span class="n">user_id</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">user</span>
-    <span class="k">return</span> <span class="kc">None</span>
+<pre><code class="language-python"># Overly complex
+def get_user_data(user_id):
+    # Complex logic to retrieve user data
+    if user_id in database:
+        user = database[user_id]
+        return user
+    return None
 
-<span class="c1"># Simpler approach</span>
-<span class="k">def</span> <span class="nf">get_user_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-
+# Simpler approach
+def get_user_data(user_id):
+    return database.get(user_id, None)
+</code></pre>
 <p>The second example simplifies the retrieval of user data, making it more readable and maintainable.</p>
 <h3 id="5-yagni-you-arent-gonna-need-it">5. YAGNI (You Aren't Gonna Need It)</h3>
 <p>This principle discourages adding functionality that is not currently needed. Premature optimization can lead to unnecessary complexity.</p>
 <h4 id="example_4">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Premature optimization</span>
-<span class="k">def</span> <span class="nf">calculate_tax</span><span class="p">(</span><span class="n">income</span><span class="p">,</span> <span class="n">deductions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">deductions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">deductions</span> <span class="o">=</span> <span class="p">[]</span>
+<pre><code class="language-python"># Premature optimization
+def calculate_tax(income, deductions=None):
+    if deductions is None:
+        deductions = []
 
-    <span class="c1"># Complex tax calculation logic</span>
-    <span class="c1"># ...</span>
+    # Complex tax calculation logic
+    # ...
 
-<span class="c1"># More straightforward approach</span>
-<span class="k">def</span> <span class="nf">calculate_tax</span><span class="p">(</span><span class="n">income</span><span class="p">):</span>
-    <span class="c1"># Basic tax calculation logic</span>
-    <span class="c1"># ...</span>
-</code></pre></div>
-
+# More straightforward approach
+def calculate_tax(income):
+    # Basic tax calculation logic
+    # ...
+</code></pre>
 <p>By removing the parameters and logic that aren't immediately needed, you keep the function focused and simpler.</p>
 <h3 id="common-clean-code-problems-and-solutions">Common Clean Code Problems and Solutions</h3>
 <h4 id="problem-1-long-functions">Problem 1: Long Functions</h4>
 <p><strong>Issue</strong>: Functions that exceed 20-30 lines can be hard to read and maintain.</p>
 <p><strong>Solution</strong>: Break long functions into smaller, clearly defined functions.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Long function example</span>
-<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Step 1: Clean data</span>
-    <span class="c1"># Step 2: Transform data</span>
-    <span class="c1"># Step 3: Load data</span>
-    <span class="k">pass</span>
+<pre><code class="language-python"># Long function example
+def process_data(data):
+    # Step 1: Clean data
+    # Step 2: Transform data
+    # Step 3: Load data
+    pass
 
-<span class="c1"># Refactored</span>
-<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Cleaning logic</span>
-    <span class="k">pass</span>
+# Refactored
+def clean_data(data):
+    # Cleaning logic
+    pass
 
-<span class="k">def</span> <span class="nf">transform_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Transformation logic</span>
-    <span class="k">pass</span>
+def transform_data(data):
+    # Transformation logic
+    pass
 
-<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Loading logic</span>
-    <span class="k">pass</span>
+def load_data(data):
+    # Loading logic
+    pass
 
-<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">transformed</span> <span class="o">=</span> <span class="n">transform_data</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
-    <span class="n">load_data</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
-</code></pre></div>
-
+def process_data(data):
+    cleaned = clean_data(data)
+    transformed = transform_data(cleaned)
+    load_data(transformed)
+</code></pre>
 <h4 id="problem-2-magic-numbers">Problem 2: Magic Numbers</h4>
 <p><strong>Issue</strong>: Using hard-coded values makes the code hard to understand.</p>
 <p><strong>Solution</strong>: Use named constants instead.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Using magic numbers</span>
-<span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">price</span> <span class="o">*</span> <span class="mf">0.1</span>
+<pre><code class="language-python"># Using magic numbers
+def calculate_discount(price):
+    return price * 0.1
 
-<span class="c1"># Using constants</span>
-<span class="n">DISCOUNT_RATE</span> <span class="o">=</span> <span class="mf">0.1</span>
+# Using constants
+DISCOUNT_RATE = 0.1
 
-<span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">price</span> <span class="o">*</span> <span class="n">DISCOUNT_RATE</span>
-</code></pre></div>
-
+def calculate_discount(price):
+    return price * DISCOUNT_RATE
+</code></pre>
 <h3 id="tools-for-writing-clean-code">Tools for Writing Clean Code</h3>
 <ol>
 <li><strong>Linters and Formatters</strong></li>

@@ -154,30 +154,29 @@
 <h3 id="understanding-vue-components">Understanding Vue Components</h3>
 <p>A Vue component is a self-contained piece of code that represents a portion of your application's UI. It consists of three main parts: template, script, and style. The template defines the component's HTML structure, the script defines its behavior, and the style defines its visual appearance. Vue components can be used to build everything from simple buttons to complex data visualizations.</p>
 <p>To give you a better understanding of how Vue components work, let's consider a simple example. Suppose we want to build a todo list application, and we want to create a component that represents a single todo item. We can define this component as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// TodoItem.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">input</span><span class="w"> </span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="w"> </span><span class="nx">v</span><span class="o">-</span><span class="nx">model</span><span class="o">=</span><span class="s2">&quot;completed&quot;</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">span</span><span class="w"> </span><span class="o">:</span><span class="kd">class</span><span class="o">=</span><span class="s2">&quot;{ completed: completed }&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// TodoItem.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;completed&quot; /&gt;
+    &lt;span :class=&quot;{ completed: completed }&quot;&gt;{{ title }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
+&lt;script&gt;
+export default {
+  props: {
+    title: String,
+    completed: Boolean
+  }
+}
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
-<span class="p">.</span><span class="nx">completed</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">text</span><span class="o">-</span><span class="nx">decoration</span><span class="o">:</span><span class="w"> </span><span class="nx">line</span><span class="o">-</span><span class="nx">through</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/style&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+.completed {
+  text-decoration: line-through;
+}
+&lt;/style&gt;
+</code></pre>
 <p>This component accepts two props: <code>title</code> and <code>completed</code>, which are used to display the todo item's title and completion status.</p>
 <h2 id="building-reusable-components">Building Reusable Components</h2>
 <p>One of the key benefits of Vue components is that they can be reused throughout your application. To build reusable components, you need to follow a set of best practices:</p>
@@ -188,86 +187,84 @@
 <li><strong>Use lifecycle hooks</strong>: Use lifecycle hooks to perform tasks at specific points in a component's life cycle.</li>
 </ul>
 <p>For example, let's build a reusable <code>Button</code> component that can be used throughout our application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Button.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="o">:</span><span class="kd">class</span><span class="o">=</span><span class="s2">&quot;classes&quot;</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;handleClick&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">label</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// Button.vue
+&lt;template&gt;
+  &lt;button :class=&quot;classes&quot; @click=&quot;handleClick&quot;&gt;{{ label }}&lt;/button&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">primary</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">computed</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">classes</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="s1">&#39;btn-primary&#39;</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">primary</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;btn-secondary&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">primary</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">handleClick</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
+&lt;script&gt;
+export default {
+  props: {
+    label: String,
+    primary: Boolean
+  },
+  computed: {
+    classes() {
+      return {
+        'btn-primary': this.primary,
+        'btn-secondary': !this.primary
+      }
+    }
+  },
+  methods: {
+    handleClick() {
+      this.$emit('click')
+    }
+  }
+}
+&lt;/script&gt;
 
-<span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
-<span class="p">.</span><span class="nx">btn</span><span class="o">-</span><span class="nx">primary</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="mf">4</span><span class="nx">CAF50</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="nx">fff</span><span class="p">;</span>
-<span class="p">}</span>
+&lt;style&gt;
+.btn-primary {
+  background-color: #4CAF50;
+  color: #fff;
+}
 
-<span class="p">.</span><span class="nx">btn</span><span class="o">-</span><span class="nx">secondary</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="nx">fff</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="err">#</span><span class="mf">4</span><span class="nx">CAF50</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/style&gt;</span>
-</code></pre></div>
-
+.btn-secondary {
+  background-color: #fff;
+  color: #4CAF50;
+}
+&lt;/style&gt;
+</code></pre>
 <p>This component accepts two props: <code>label</code> and <code>primary</code>, which are used to display the button's label and style. We can use this component in our todo list application as follows:</p>
-<div class="codehilite"><pre><span></span><code>// TodoList.vue
-<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;addTodo&quot;</span><span class="p">&gt;</span>Add Todo<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&quot;todo in todos&quot;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&quot;todo.id&quot;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">todo-item</span> <span class="na">:title</span><span class="o">=</span><span class="s">&quot;todo.title&quot;</span> <span class="na">:completed</span><span class="o">=</span><span class="s">&quot;todo.completed&quot;</span> <span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre><code class="language-html">// TodoList.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;addTodo&quot;&gt;Add Todo&lt;/button&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;
+        &lt;todo-item :title=&quot;todo.title&quot; :completed=&quot;todo.completed&quot; /&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">TodoItem</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./TodoItem.vue&#39;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./Button.vue&#39;</span>
+&lt;script&gt;
+import TodoItem from './TodoItem.vue'
+import Button from './Button.vue'
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">TodoItem</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">Button</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">todos</span><span class="o">:</span><span class="w"> </span><span class="p">[]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">addTodo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
-<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">(),</span>
-<span class="w">        </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;New Todo&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+export default {
+  components: {
+    TodoItem,
+    Button
+  },
+  data() {
+    return {
+      todos: []
+    }
+  },
+  methods: {
+    addTodo() {
+      this.todos.push({
+        id: Math.random(),
+        title: 'New Todo',
+        completed: false
+      })
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
 <p>In this example, we use the <code>Button</code> component to render a button that adds new todos to the list.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Performance optimization is critical when building complex applications with Vue. Here are some tips to help you optimize your components:</p>
@@ -278,19 +275,18 @@
 <li><strong>Use Vue's built-in optimization tools</strong>: Vue provides a range of optimization tools, including the Vue Devtools and the <code>vue- optimize</code> package.</li>
 </ul>
 <p>For example, let's optimize our todo list application by using <code>v-show</code> instead of <code>v-if</code>:</p>
-<div class="codehilite"><pre><span></span><code>// TodoList.vue
-<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;addTodo&quot;</span><span class="p">&gt;</span>Add Todo<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&quot;todo in todos&quot;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&quot;todo.id&quot;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">todo-item</span> <span class="na">:title</span><span class="o">=</span><span class="s">&quot;todo.title&quot;</span> <span class="na">:completed</span><span class="o">=</span><span class="s">&quot;todo.completed&quot;</span> <span class="na">v-show</span><span class="o">=</span><span class="s">&quot;!todo.completed&quot;</span> <span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">// TodoList.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;addTodo&quot;&gt;Add Todo&lt;/button&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;
+        &lt;todo-item :title=&quot;todo.title&quot; :completed=&quot;todo.completed&quot; v-show=&quot;!todo.completed&quot; /&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
 <p>In this example, we use <code>v-show</code> to toggle the visibility of each todo item based on its completion status.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems you may encounter when building Vue components, along with their solutions:</p>
@@ -311,9 +307,8 @@ Solution: Check if you are using excessive re-renders, or if you are not using <
 <li><strong>Netlify</strong>: A platform that provides a range of tools and services for building, deploying, and optimizing web applications.</li>
 </ul>
 <p>For example, let's use Vue Devtools to debug our todo list application:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@vue/devtools
-</code></pre></div>
-
+<pre><code class="language-bash">npm install -g @vue/devtools
+</code></pre>
 <p>Once installed, we can use Vue Devtools to inspect and debug our components.</p>
 <h2 id="metrics-and-pricing">Metrics and Pricing</h2>
 <p>Here are some metrics and pricing data to consider when building and optimizing your Vue components:</p>
@@ -325,10 +320,9 @@ Solution: Check if you are using excessive re-renders, or if you are not using <
 <li><strong>AWS</strong>: $0.0055/hour (lambda), $0.10/GB (s3)</li>
 </ul>
 <p>For example, let's use Netlify to deploy and optimize our todo list application:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>netlify-cli
-netlify<span class="w"> </span>deploy
-</code></pre></div>
-
+<pre><code class="language-bash">npm install -g netlify-cli
+netlify deploy
+</code></pre>
 <p>Once deployed, we can use Netlify's optimization tools to improve our application's performance.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, building and optimizing Vue components requires a range of skills and knowledge. By following the best practices outlined in this article, you can build scalable and efficient applications that meet your users' needs. Remember to use reusable components, optimize performance, and leverage tools and services to streamline your development process.</p>

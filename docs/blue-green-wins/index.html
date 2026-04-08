@@ -164,95 +164,92 @@
 <h2 id="implementing-blue-green-deployment">Implementing Blue-Green Deployment</h2>
 <p>To implement blue-green deployment, we need to set up two identical production environments, known as blue and green. We then need to configure a router to direct traffic to the blue environment. When we want to deploy a new version of the application, we deploy it to the green environment and then use the router to direct a small percentage of traffic to the green environment.</p>
 <p>Here is an example of how we can implement blue-green deployment using AWS CodeDeploy and Amazon Route 53:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS CodeDeploy client</span>
-<span class="n">codedeploy</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;codedeploy&#39;</span><span class="p">)</span>
+# Create an AWS CodeDeploy client
+codedeploy = boto3.client('codedeploy')
 
-<span class="c1"># Create a new deployment group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">codedeploy</span><span class="o">.</span><span class="n">create_deployment_group</span><span class="p">(</span>
-    <span class="n">applicationName</span><span class="o">=</span><span class="s1">&#39;my-app&#39;</span><span class="p">,</span>
-    <span class="n">deploymentGroupName</span><span class="o">=</span><span class="s1">&#39;my-deployment-group&#39;</span><span class="p">,</span>
-    <span class="n">serviceRoleArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/CodeDeployServiceRole&#39;</span><span class="p">,</span>
-    <span class="n">deploymentConfigName</span><span class="o">=</span><span class="s1">&#39;CodeDeployDefault.OneAtATime&#39;</span>
-<span class="p">)</span>
+# Create a new deployment group
+response = codedeploy.create_deployment_group(
+    applicationName='my-app',
+    deploymentGroupName='my-deployment-group',
+    serviceRoleArn='arn:aws:iam::123456789012:role/CodeDeployServiceRole',
+    deploymentConfigName='CodeDeployDefault.OneAtATime'
+)
 
-<span class="c1"># Create a new deployment</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">codedeploy</span><span class="o">.</span><span class="n">create_deployment</span><span class="p">(</span>
-    <span class="n">applicationName</span><span class="o">=</span><span class="s1">&#39;my-app&#39;</span><span class="p">,</span>
-    <span class="n">deploymentGroupName</span><span class="o">=</span><span class="s1">&#39;my-deployment-group&#39;</span><span class="p">,</span>
-    <span class="n">revision</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;revisionType&#39;</span><span class="p">:</span> <span class="s1">&#39;S3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;s3Location&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;bucket&#39;</span><span class="p">:</span> <span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;my-key&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bundleType&#39;</span><span class="p">:</span> <span class="s1">&#39;zip&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a new deployment
+response = codedeploy.create_deployment(
+    applicationName='my-app',
+    deploymentGroupName='my-deployment-group',
+    revision={
+        'revisionType': 'S3',
+        's3Location': {
+            'bucket': 'my-bucket',
+            'key': 'my-key',
+            'bundleType': 'zip'
+        }
+    }
+)
+</code></pre>
 <p>In this example, we create a new deployment group and deployment using the AWS CodeDeploy client. We then deploy the new version of the application to the green environment.</p>
 <h3 id="configuring-the-router">Configuring the Router</h3>
 <p>To direct traffic to the blue and green environments, we need to configure a router. One popular option is Amazon Route 53. Here is an example of how we can configure Amazon Route 53 to direct traffic to the blue and green environments:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an Amazon Route 53 client</span>
-<span class="n">route53</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;route53&#39;</span><span class="p">)</span>
+# Create an Amazon Route 53 client
+route53 = boto3.client('route53')
 
-<span class="c1"># Create a new hosted zone</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">route53</span><span class="o">.</span><span class="n">create_hosted_zone</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span>
-    <span class="n">CallerReference</span><span class="o">=</span><span class="s1">&#39;123456789012&#39;</span>
-<span class="p">)</span>
+# Create a new hosted zone
+response = route53.create_hosted_zone(
+    Name='example.com',
+    CallerReference='123456789012'
+)
 
-<span class="c1"># Create a new record set</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">route53</span><span class="o">.</span><span class="n">change_resource_record_sets</span><span class="p">(</span>
-    <span class="n">HostedZoneId</span><span class="o">=</span><span class="s1">&#39;Z123456789012&#39;</span><span class="p">,</span>
-    <span class="n">ChangeBatch</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Changes&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;CREATE&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;ResourceRecordSet&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;example.com&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;AliasTarget&#39;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s1">&#39;DNSName&#39;</span><span class="p">:</span> <span class="s1">&#39;my-blue-elb-123456789012.us-east-1.elb.amazonaws.com&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;HostedZoneId&#39;</span><span class="p">:</span> <span class="s1">&#39;Z123456789012&#39;</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a new record set
+response = route53.change_resource_record_sets(
+    HostedZoneId='Z123456789012',
+    ChangeBatch={
+        'Changes': [
+            {
+                'Action': 'CREATE',
+                'ResourceRecordSet': {
+                    'Name': 'example.com',
+                    'Type': 'A',
+                    'AliasTarget': {
+                        'DNSName': 'my-blue-elb-123456789012.us-east-1.elb.amazonaws.com',
+                        'HostedZoneId': 'Z123456789012'
+                    }
+                }
+            }
+        ]
+    }
+)
+</code></pre>
 <p>In this example, we create a new hosted zone and record set using the Amazon Route 53 client. We then configure the record set to direct traffic to the blue environment.</p>
 <h2 id="monitoring-and-rolling-back">Monitoring and Rolling Back</h2>
 <p>To monitor the new version of the application, we can use metrics such as request latency, error rate, and throughput. One popular option is Amazon CloudWatch. Here is an example of how we can use Amazon CloudWatch to monitor the new version of the application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an Amazon CloudWatch client</span>
-<span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
+# Create an Amazon CloudWatch client
+cloudwatch = boto3.client('cloudwatch')
 
-<span class="c1"># Get the metrics for the new version of the application</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">get_metric_statistics</span><span class="p">(</span>
-    <span class="n">Namespace</span><span class="o">=</span><span class="s1">&#39;AWS/EC2&#39;</span><span class="p">,</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;RequestLatency&#39;</span><span class="p">,</span>
-    <span class="n">Dimensions</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;InstanceId&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;i-123456789012&#39;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">StartTime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
-    <span class="n">EndTime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-    <span class="n">Period</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">Statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">],</span>
-    <span class="n">Unit</span><span class="o">=</span><span class="s1">&#39;Seconds&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Get the metrics for the new version of the application
+response = cloudwatch.get_metric_statistics(
+    Namespace='AWS/EC2',
+    MetricName='RequestLatency',
+    Dimensions=[
+        {
+            'Name': 'InstanceId',
+            'Value': 'i-123456789012'
+        }
+    ],
+    StartTime=datetime.datetime.now() - datetime.timedelta(minutes=10),
+    EndTime=datetime.datetime.now(),
+    Period=300,
+    Statistics=['Average'],
+    Unit='Seconds'
+)
+</code></pre>
 <p>In this example, we create an Amazon CloudWatch client and get the metrics for the new version of the application. We can then use these metrics to determine if the new version is working as expected.</p>
 <p>If something goes wrong with the new version, we can quickly roll back to the previous version. Here are the steps to roll back:
 1. Direct all traffic back to the blue environment.

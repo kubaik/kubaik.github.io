@@ -157,24 +157,23 @@
 * <strong>Google Benchmark</strong>: A microbenchmarking framework that provides a simple way to measure the execution time of small code segments.
 * <strong>Intel VTune Amplifier</strong>: A commercial profiling tool that provides detailed information about the performance of CPU-bound applications.</p>
 <p>For example, to use Google Benchmark to measure the execution time of a simple function, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;benchmark/benchmark.h&gt;</span>
+<pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">myFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Code to be benchmarked</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Do something</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+void myFunction() {
+    // Code to be benchmarked
+    for (int i = 0; i &lt; 1000000; i++) {
+        // Do something
+    }
+}
 
-<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">BM_MyFunction</span><span class="p">(</span><span class="n">benchmark</span><span class="o">::</span><span class="n">State</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">myFunction</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="n">BENCHMARK</span><span class="p">(</span><span class="n">BM_MyFunction</span><span class="p">);</span>
-<span class="n">BENCHMARK_MAIN</span><span class="p">();</span>
-</code></pre></div>
-
+static void BM_MyFunction(benchmark::State&amp; state) {
+    for (auto _ : state) {
+        myFunction();
+    }
+}
+BENCHMARK(BM_MyFunction);
+BENCHMARK_MAIN();
+</code></pre>
 <p>This code defines a benchmark for the <code>myFunction</code> function, which is then executed repeatedly to measure its execution time.</p>
 <h3 id="benchmarking-methodologies">Benchmarking Methodologies</h3>
 <p>There are several benchmarking methodologies that can be used to measure the performance of software applications. Some common approaches include:
@@ -186,54 +185,53 @@
 * <strong>HTTP Request</strong>: Defines the URL and parameters for the request.
 * <strong>Response Assertion</strong>: Defines the expected response from the server.</p>
 <p>Here is an example of how to use Apache JMeter to perform a microbenchmark of a simple web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;jmeterTestPlan</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.2&quot;</span><span class="w"> </span><span class="na">properties=</span><span class="s">&quot;5.0&quot;</span><span class="w"> </span><span class="na">jmeter=</span><span class="s">&quot;5.4&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;TestPlan</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;TestPlanGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;TestPlan&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Test Plan&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;collectionProp&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.test_classpath&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/TestPlan&gt;</span>
-<span class="w">        </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ThreadGroup</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;ThreadGroupGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ThreadGroup&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Thread Group&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.main_controller&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;LoopController&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;continue_forever&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;loops&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.num_threads&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.ramp_time&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.scheduler&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.duration&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.delay&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/ThreadGroup&gt;</span>
-<span class="w">            </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">                </span><span class="nt">&lt;HTTPSamplerProxy</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;HttpTestSampleGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;HTTPSamplerProxy&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;HTTP Request&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.Arguments&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;Arguments&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Arguments.arguments&quot;</span><span class="nt">/&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.protocol&quot;</span><span class="nt">&gt;</span>http<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.domain&quot;</span><span class="nt">&gt;</span>example.com<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.port&quot;</span><span class="nt">&gt;</span>80<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.path&quot;</span><span class="nt">&gt;</span>/path/to/resource<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.method&quot;</span><span class="nt">&gt;</span>GET<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/HTTPSamplerProxy&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">                </span><span class="nt">&lt;ResponseAssertion</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;AssertionGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ResponseAssertion&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Response Assertion&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Asserion.test_strings&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;30177&quot;</span><span class="nt">&gt;</span>OK<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/collectionProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_field&quot;</span><span class="nt">&gt;</span>response_code<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.assume_success&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;intProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_type&quot;</span><span class="nt">&gt;</span>6<span class="nt">&lt;/intProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/ResponseAssertion&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="nt">&lt;/jmeterTestPlan&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;jmeterTestPlan version=&quot;1.2&quot; properties=&quot;5.0&quot; jmeter=&quot;5.4&quot;&gt;
+    &lt;hashTree&gt;
+        &lt;TestPlan guiclass=&quot;TestPlanGui&quot; testclass=&quot;TestPlan&quot; testname=&quot;Test Plan&quot; enabled=&quot;true&quot;&gt;
+            &lt;elementProp name=&quot;TestPlan.user_define_classpath&quot; elementType=&quot;collectionProp&quot;&gt;
+                &lt;collectionProp name=&quot;TestPlan.user_define_classpath&quot;/&gt;
+            &lt;/elementProp&gt;
+            &lt;stringProp name=&quot;TestPlan.test_classpath&quot;&gt;&lt;/stringProp&gt;
+        &lt;/TestPlan&gt;
+        &lt;hashTree&gt;
+            &lt;ThreadGroup guiclass=&quot;ThreadGroupGui&quot; testclass=&quot;ThreadGroup&quot; testname=&quot;Thread Group&quot; enabled=&quot;true&quot;&gt;
+                &lt;elementProp name=&quot;ThreadGroup.main_controller&quot; elementType=&quot;LoopController&quot;&gt;
+                    &lt;boolProp name=&quot;continue_forever&quot;&gt;false&lt;/boolProp&gt;
+                    &lt;stringProp name=&quot;loops&quot;&gt;1&lt;/stringProp&gt;
+                &lt;/elementProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.num_threads&quot;&gt;10&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.ramp_time&quot;&gt;1&lt;/stringProp&gt;
+                &lt;boolProp name=&quot;ThreadGroup.scheduler&quot;&gt;false&lt;/boolProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.duration&quot;&gt;&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.delay&quot;&gt;&lt;/stringProp&gt;
+            &lt;/ThreadGroup&gt;
+            &lt;hashTree&gt;
+                &lt;HTTPSamplerProxy guiclass=&quot;HttpTestSampleGui&quot; testclass=&quot;HTTPSamplerProxy&quot; testname=&quot;HTTP Request&quot; enabled=&quot;true&quot;&gt;
+                    &lt;elementProp name=&quot;HTTPSampler.Arguments&quot; elementType=&quot;Arguments&quot;&gt;
+                        &lt;collectionProp name=&quot;Arguments.arguments&quot;/&gt;
+                    &lt;/elementProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.protocol&quot;&gt;http&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.domain&quot;&gt;example.com&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.port&quot;&gt;80&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.path&quot;&gt;/path/to/resource&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.method&quot;&gt;GET&lt;/stringProp&gt;
+                &lt;/HTTPSamplerProxy&gt;
+                &lt;hashTree/&gt;
+                &lt;ResponseAssertion guiclass=&quot;AssertionGui&quot; testclass=&quot;ResponseAssertion&quot; testname=&quot;Response Assertion&quot; enabled=&quot;true&quot;&gt;
+                    &lt;collectionProp name=&quot;Asserion.test_strings&quot;&gt;
+                        &lt;stringProp name=&quot;30177&quot;&gt;OK&lt;/stringProp&gt;
+                    &lt;/collectionProp&gt;
+                    &lt;stringProp name=&quot;Assertion.test_field&quot;&gt;response_code&lt;/stringProp&gt;
+                    &lt;boolProp name=&quot;Assertion.assume_success&quot;&gt;true&lt;/boolProp&gt;
+                    &lt;intProp name=&quot;Assertion.test_type&quot;&gt;6&lt;/intProp&gt;
+                &lt;/ResponseAssertion&gt;
+                &lt;hashTree/&gt;
+            &lt;/hashTree&gt;
+        &lt;/hashTree&gt;
+    &lt;/hashTree&gt;
+&lt;/jmeterTestPlan&gt;
+</code></pre>
 <p>This test plan defines a thread group with 10 threads, each of which sends a GET request to the specified URL. The response assertion checks that the response code is OK (200).</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>There are several common problems that can occur when profiling and benchmarking software applications. Some examples include:
@@ -245,9 +243,8 @@
 * Collect sufficient data to ensure accurate results.
 * Minimize interference from other processes by running the benchmarking process in isolation.</p>
 <p>For example, to minimize interference from other processes when running a benchmark using Google Benchmark, you can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>taskset<span class="w"> </span>-c<span class="w"> </span><span class="m">0</span><span class="w"> </span>./my_benchmark
-</code></pre></div>
-
+<pre><code class="language-bash">taskset -c 0 ./my_benchmark
+</code></pre>
 <p>This command runs the benchmark on a single CPU core (core 0), minimizing interference from other processes.</p>
 <h3 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h3>
 <p>There are many use cases for profiling and benchmarking, including:
@@ -259,53 +256,52 @@
 * <strong>JDBC Request</strong>: Defines the database query to execute.
 * <strong>Response Assertion</strong>: Defines the expected response from the database.</p>
 <p>Here is an example of how to use Apache JMeter to optimize database queries:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;jmeterTestPlan</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.2&quot;</span><span class="w"> </span><span class="na">properties=</span><span class="s">&quot;5.0&quot;</span><span class="w"> </span><span class="na">jmeter=</span><span class="s">&quot;5.4&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;TestPlan</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;TestPlanGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;TestPlan&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Test Plan&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;collectionProp&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.test_classpath&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/TestPlan&gt;</span>
-<span class="w">        </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ThreadGroup</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;ThreadGroupGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ThreadGroup&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Thread Group&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.main_controller&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;LoopController&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;continue_forever&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;loops&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.num_threads&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.ramp_time&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.scheduler&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.duration&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.delay&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/ThreadGroup&gt;</span>
-<span class="w">            </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">                </span><span class="nt">&lt;JDBCRequest</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;JDBCRequestGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;JDBCRequest&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;JDBC Request&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCRequest.test_classname&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;JDBCTestElement&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCTestElement.databaseURL&quot;</span><span class="nt">&gt;</span>jdbc:mysql://localhost:3306/mydb<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCTestElement.driver&quot;</span><span class="nt">&gt;</span>com.mysql.cj.jdbc.Driver<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCTestElement.username&quot;</span><span class="nt">&gt;</span>myuser<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCTestElement.password&quot;</span><span class="nt">&gt;</span>mypassword<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;JDBCRequest.query&quot;</span><span class="nt">&gt;</span>SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span>mytable<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/JDBCRequest&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">                </span><span class="nt">&lt;ResponseAssertion</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;AssertionGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ResponseAssertion&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Response Assertion&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Asserion.test_strings&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;30177&quot;</span><span class="nt">&gt;</span>OK<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/collectionProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_field&quot;</span><span class="nt">&gt;</span>response_code<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.assume_success&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;intProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_type&quot;</span><span class="nt">&gt;</span>6<span class="nt">&lt;/intProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/ResponseAssertion&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="nt">&lt;/jmeterTestPlan&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;jmeterTestPlan version=&quot;1.2&quot; properties=&quot;5.0&quot; jmeter=&quot;5.4&quot;&gt;
+    &lt;hashTree&gt;
+        &lt;TestPlan guiclass=&quot;TestPlanGui&quot; testclass=&quot;TestPlan&quot; testname=&quot;Test Plan&quot; enabled=&quot;true&quot;&gt;
+            &lt;elementProp name=&quot;TestPlan.user_define_classpath&quot; elementType=&quot;collectionProp&quot;&gt;
+                &lt;collectionProp name=&quot;TestPlan.user_define_classpath&quot;/&gt;
+            &lt;/elementProp&gt;
+            &lt;stringProp name=&quot;TestPlan.test_classpath&quot;&gt;&lt;/stringProp&gt;
+        &lt;/TestPlan&gt;
+        &lt;hashTree&gt;
+            &lt;ThreadGroup guiclass=&quot;ThreadGroupGui&quot; testclass=&quot;ThreadGroup&quot; testname=&quot;Thread Group&quot; enabled=&quot;true&quot;&gt;
+                &lt;elementProp name=&quot;ThreadGroup.main_controller&quot; elementType=&quot;LoopController&quot;&gt;
+                    &lt;boolProp name=&quot;continue_forever&quot;&gt;false&lt;/boolProp&gt;
+                    &lt;stringProp name=&quot;loops&quot;&gt;1&lt;/stringProp&gt;
+                &lt;/elementProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.num_threads&quot;&gt;10&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.ramp_time&quot;&gt;1&lt;/stringProp&gt;
+                &lt;boolProp name=&quot;ThreadGroup.scheduler&quot;&gt;false&lt;/boolProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.duration&quot;&gt;&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.delay&quot;&gt;&lt;/stringProp&gt;
+            &lt;/ThreadGroup&gt;
+            &lt;hashTree&gt;
+                &lt;JDBCRequest guiclass=&quot;JDBCRequestGui&quot; testclass=&quot;JDBCRequest&quot; testname=&quot;JDBC Request&quot; enabled=&quot;true&quot;&gt;
+                    &lt;elementProp name=&quot;JDBCRequest.test_classname&quot; elementType=&quot;JDBCTestElement&quot;&gt;
+                        &lt;stringProp name=&quot;JDBCTestElement.databaseURL&quot;&gt;jdbc:mysql://localhost:3306/mydb&lt;/stringProp&gt;
+                        &lt;stringProp name=&quot;JDBCTestElement.driver&quot;&gt;com.mysql.cj.jdbc.Driver&lt;/stringProp&gt;
+                        &lt;stringProp name=&quot;JDBCTestElement.username&quot;&gt;myuser&lt;/stringProp&gt;
+                        &lt;stringProp name=&quot;JDBCTestElement.password&quot;&gt;mypassword&lt;/stringProp&gt;
+                    &lt;/elementProp&gt;
+                    &lt;stringProp name=&quot;JDBCRequest.query&quot;&gt;SELECT * FROM mytable&lt;/stringProp&gt;
+                &lt;/JDBCRequest&gt;
+                &lt;hashTree/&gt;
+                &lt;ResponseAssertion guiclass=&quot;AssertionGui&quot; testclass=&quot;ResponseAssertion&quot; testname=&quot;Response Assertion&quot; enabled=&quot;true&quot;&gt;
+                    &lt;collectionProp name=&quot;Asserion.test_strings&quot;&gt;
+                        &lt;stringProp name=&quot;30177&quot;&gt;OK&lt;/stringProp&gt;
+                    &lt;/collectionProp&gt;
+                    &lt;stringProp name=&quot;Assertion.test_field&quot;&gt;response_code&lt;/stringProp&gt;
+                    &lt;boolProp name=&quot;Assertion.assume_success&quot;&gt;true&lt;/boolProp&gt;
+                    &lt;intProp name=&quot;Assertion.test_type&quot;&gt;6&lt;/intProp&gt;
+                &lt;/ResponseAssertion&gt;
+                &lt;hashTree/&gt;
+            &lt;/hashTree&gt;
+        &lt;/hashTree&gt;
+    &lt;/hashTree&gt;
+&lt;/jmeterTestPlan&gt;
+</code></pre>
 <p>This test plan defines a thread group with 10 threads, each of which executes a JDBC request to the specified database. The response assertion checks that the response code is OK (200).</p>
 <h3 id="performance-metrics-and-benchmarks">Performance Metrics and Benchmarks</h3>
 <p>There are many performance metrics and benchmarks that can be used to evaluate the performance of software applications. Some examples include:
@@ -316,54 +312,53 @@
 * <strong>Average response time</strong>: The average time it takes for the application to respond to a request.
 * <strong>95th percentile response time</strong>: The time it takes for the application to respond to 95% of requests.</p>
 <p>Here is an example of how to use Apache JMeter to measure the response time of a web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;jmeterTestPlan</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.2&quot;</span><span class="w"> </span><span class="na">properties=</span><span class="s">&quot;5.0&quot;</span><span class="w"> </span><span class="na">jmeter=</span><span class="s">&quot;5.4&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;TestPlan</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;TestPlanGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;TestPlan&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Test Plan&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;collectionProp&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.user_define_classpath&quot;</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;TestPlan.test_classpath&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/TestPlan&gt;</span>
-<span class="w">        </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ThreadGroup</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;ThreadGroupGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ThreadGroup&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Thread Group&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.main_controller&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;LoopController&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;continue_forever&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;loops&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.num_threads&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.ramp_time&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.scheduler&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.duration&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ThreadGroup.delay&quot;</span><span class="nt">&gt;&lt;/stringProp&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/ThreadGroup&gt;</span>
-<span class="w">            </span><span class="nt">&lt;hashTree&gt;</span>
-<span class="w">                </span><span class="nt">&lt;HTTPSamplerProxy</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;HttpTestSampleGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;HTTPSamplerProxy&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;HTTP Request&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;elementProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.Arguments&quot;</span><span class="w"> </span><span class="na">elementType=</span><span class="s">&quot;Arguments&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Arguments.arguments&quot;</span><span class="nt">/&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/elementProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.protocol&quot;</span><span class="nt">&gt;</span>http<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.domain&quot;</span><span class="nt">&gt;</span>example.com<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.port&quot;</span><span class="nt">&gt;</span>80<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.path&quot;</span><span class="nt">&gt;</span>/path/to/resource<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HTTPSampler.method&quot;</span><span class="nt">&gt;</span>GET<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/HTTPSamplerProxy&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">                </span><span class="nt">&lt;ResponseAssertion</span><span class="w"> </span><span class="na">guiclass=</span><span class="s">&quot;AssertionGui&quot;</span><span class="w"> </span><span class="na">testclass=</span><span class="s">&quot;ResponseAssertion&quot;</span><span class="w"> </span><span class="na">testname=</span><span class="s">&quot;Response Assertion&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;collectionProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Asserion.test_strings&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;30177&quot;</span><span class="nt">&gt;</span>OK<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/collectionProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;stringProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_field&quot;</span><span class="nt">&gt;</span>response_code<span class="nt">&lt;/stringProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;boolProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.assume_success&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/boolProp&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;intProp</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Assertion.test_type&quot;</span><span class="nt">&gt;</span>6<span class="nt">&lt;/intProp&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/ResponseAssertion&gt;</span>
-<span class="w">                </span><span class="nt">&lt;hashTree/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/hashTree&gt;</span>
-<span class="nt">&lt;/jmeterTestPlan&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;jmeterTestPlan version=&quot;1.2&quot; properties=&quot;5.0&quot; jmeter=&quot;5.4&quot;&gt;
+    &lt;hashTree&gt;
+        &lt;TestPlan guiclass=&quot;TestPlanGui&quot; testclass=&quot;TestPlan&quot; testname=&quot;Test Plan&quot; enabled=&quot;true&quot;&gt;
+            &lt;elementProp name=&quot;TestPlan.user_define_classpath&quot; elementType=&quot;collectionProp&quot;&gt;
+                &lt;collectionProp name=&quot;TestPlan.user_define_classpath&quot;/&gt;
+            &lt;/elementProp&gt;
+            &lt;stringProp name=&quot;TestPlan.test_classpath&quot;&gt;&lt;/stringProp&gt;
+        &lt;/TestPlan&gt;
+        &lt;hashTree&gt;
+            &lt;ThreadGroup guiclass=&quot;ThreadGroupGui&quot; testclass=&quot;ThreadGroup&quot; testname=&quot;Thread Group&quot; enabled=&quot;true&quot;&gt;
+                &lt;elementProp name=&quot;ThreadGroup.main_controller&quot; elementType=&quot;LoopController&quot;&gt;
+                    &lt;boolProp name=&quot;continue_forever&quot;&gt;false&lt;/boolProp&gt;
+                    &lt;stringProp name=&quot;loops&quot;&gt;1&lt;/stringProp&gt;
+                &lt;/elementProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.num_threads&quot;&gt;10&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.ramp_time&quot;&gt;1&lt;/stringProp&gt;
+                &lt;boolProp name=&quot;ThreadGroup.scheduler&quot;&gt;false&lt;/boolProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.duration&quot;&gt;&lt;/stringProp&gt;
+                &lt;stringProp name=&quot;ThreadGroup.delay&quot;&gt;&lt;/stringProp&gt;
+            &lt;/ThreadGroup&gt;
+            &lt;hashTree&gt;
+                &lt;HTTPSamplerProxy guiclass=&quot;HttpTestSampleGui&quot; testclass=&quot;HTTPSamplerProxy&quot; testname=&quot;HTTP Request&quot; enabled=&quot;true&quot;&gt;
+                    &lt;elementProp name=&quot;HTTPSampler.Arguments&quot; elementType=&quot;Arguments&quot;&gt;
+                        &lt;collectionProp name=&quot;Arguments.arguments&quot;/&gt;
+                    &lt;/elementProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.protocol&quot;&gt;http&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.domain&quot;&gt;example.com&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.port&quot;&gt;80&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.path&quot;&gt;/path/to/resource&lt;/stringProp&gt;
+                    &lt;stringProp name=&quot;HTTPSampler.method&quot;&gt;GET&lt;/stringProp&gt;
+                &lt;/HTTPSamplerProxy&gt;
+                &lt;hashTree/&gt;
+                &lt;ResponseAssertion guiclass=&quot;AssertionGui&quot; testclass=&quot;ResponseAssertion&quot; testname=&quot;Response Assertion&quot; enabled=&quot;true&quot;&gt;
+                    &lt;collectionProp name=&quot;Asserion.test_strings&quot;&gt;
+                        &lt;stringProp name=&quot;30177&quot;&gt;OK&lt;/stringProp&gt;
+                    &lt;/collectionProp&gt;
+                    &lt;stringProp name=&quot;Assertion.test_field&quot;&gt;response_code&lt;/stringProp&gt;
+                    &lt;boolProp name=&quot;Assertion.assume_success&quot;&gt;true&lt;/boolProp&gt;
+                    &lt;intProp name=&quot;Assertion.test_type&quot;&gt;6&lt;/intProp&gt;
+                &lt;/ResponseAssertion&gt;
+                &lt;hashTree/&gt;
+            &lt;/hashTree&gt;
+        &lt;/hashTree&gt;
+    &lt;/hashTree&gt;
+&lt;/jmeterTestPlan&gt;
+</code></pre>
 <p>This test plan defines a thread group with 10 threads, each of which sends a GET request to the specified URL. The response assertion checks that the response code is OK (200).</p>
 <h3 id="pricing-and-cost">Pricing and Cost</h3>
 <p>The cost of profiling and benchmarking tools can vary widely, depending on the specific tool and the level of support required. Some examples of pricing for</p>

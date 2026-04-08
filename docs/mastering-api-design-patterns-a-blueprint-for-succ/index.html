@@ -187,21 +187,20 @@
 </ul>
 <h2 id="practical-examples">Practical Examples</h2>
 <p>Let's look at a practical example of implementing a RESTful API using Node.js and Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Define a simple RESTful API endpoint</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Retrieve a list of users from the database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Define a simple RESTful API endpoint
+app.get('/api/users', (req, res) =&gt; {
+  // Retrieve a list of users from the database
+  const users = User.findAll();
+  res.json(users);
+});
 
-<span class="c1">// Define a POST endpoint for creating a new user</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/api/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Create a new user based on the request body</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">newUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Define a POST endpoint for creating a new user
+app.post('/api/users', (req, res) =&gt; {
+  // Create a new user based on the request body
+  const newUser = User.create(req.body);
+  res.status(201).json(newUser);
+});
+</code></pre>
 <p>In this example, we have defined two RESTful endpoints for retrieving a list of users and creating a new user. By following RESTful design principles, we ensure that our API is intuitive and easy to use.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering API design patterns is essential for building high-quality APIs that meet the needs of developers and users alike. By following established design patterns, best practices, and practical examples, you can create APIs that are efficient, scalable, and developer-friendly. Remember to document your APIs thoroughly, version them appropriately, and handle errors gracefully. With a solid understanding of API design patterns, you can elevate your API development skills and deliver exceptional APIs that stand the test of time. Happy designing!</p>

@@ -162,51 +162,48 @@
 <p>Here are some practical optimization techniques that you can apply to your applications:</p>
 <h3 id="1-minifying-and-compressing-code">1. Minifying and Compressing Code</h3>
 <p>Minifying and compressing code can significantly reduce the size of your application's codebase, resulting in faster load times. For example, using a tool like Gzip can compress CSS and JavaScript files by up to 90%. Here's an example of how to use Gzip with Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">compression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;compression&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const compression = require('compression');
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">compression</span><span class="p">());</span>
-</code></pre></div>
-
+app.use(compression());
+</code></pre>
 <p>In this example, we're using the <code>compression</code> middleware to enable Gzip compression for all routes.</p>
 <h3 id="2-using-caching-mechanisms">2. Using Caching Mechanisms</h3>
 <p>Caching mechanisms can help reduce the number of requests made to your application, resulting in faster load times. For example, using a caching library like Redis can cache frequently accessed data, reducing the need for database queries. Here's an example of how to use Redis with Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const redis = require('redis');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">6379</span>
-<span class="p">});</span>
+const client = redis.createClient({
+  host: 'localhost',
+  port: 6379
+});
 
-<span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">reply</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reply</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+client.set('key', 'value', (err, reply) =&gt; {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(reply);
+  }
+});
+</code></pre>
 <p>In this example, we're using the <code>redis</code> library to create a Redis client and set a key-value pair.</p>
 <h3 id="3-optimizing-images">3. Optimizing Images</h3>
 <p>Optimizing images can significantly reduce the size of your application's assets, resulting in faster load times. For example, using a tool like ImageOptim can compress images by up to 90%. Here's an example of how to use ImageOptim with Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">imageOptim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;image-optim&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const imageOptim = require('image-optim');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;path/to/image.jpg&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;jpg&#39;</span><span class="p">]</span>
-<span class="p">};</span>
+const image = 'path/to/image.jpg';
+const options = {
+  plugins: ['jpg']
+};
 
-<span class="nx">imageOptim</span><span class="p">(</span><span class="nx">image</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+imageOptim(image, options, (err, data) =&gt; {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(data);
+  }
+});
+</code></pre>
 <p>In this example, we're using the <code>image-optim</code> library to compress an image using the <code>jpg</code> plugin.</p>
 <h2 id="tools-and-platforms-for-optimization">Tools and Platforms for Optimization</h2>
 <p>There are several tools and platforms available to help you optimize your applications. Some popular options include:

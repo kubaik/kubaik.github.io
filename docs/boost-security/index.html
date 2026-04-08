@@ -177,29 +177,28 @@
 3. <strong>Alerting and notification</strong>: Configure the SIEM system to generate alerts and notifications when potential security threats are detected. Determine the notification channels, such as email, SMS, or phone calls.
 4. <strong>Incident response</strong>: Develop incident response plans and procedures, and ensure that the SIEM system provides the necessary tools and capabilities to respond to security incidents.</p>
 <p>Here is an example of a SIEM system configuration using Splunk:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure data collection</span>
-<span class="n">inputs</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
-  <span class="p">[</span><span class="n">tcp</span><span class="p">:</span><span class="o">//</span><span class="mi">514</span><span class="p">]</span>
-  <span class="n">sourcetype</span> <span class="o">=</span> <span class="n">syslog</span>
-  <span class="n">index</span> <span class="o">=</span> <span class="n">security</span>
+<pre><code class="language-python"># Configure data collection
+inputs.conf:
+  [tcp://514]
+  sourcetype = syslog
+  index = security
 
-<span class="c1"># Configure data analysis</span>
-<span class="n">props</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
-  <span class="p">[</span><span class="n">syslog</span><span class="p">]</span>
-  <span class="n">REPORT</span><span class="o">-</span><span class="n">syslog</span> <span class="o">=</span> <span class="n">syslog</span><span class="o">-</span><span class="n">extractions</span>
+# Configure data analysis
+props.conf:
+  [syslog]
+  REPORT-syslog = syslog-extractions
 
-<span class="c1"># Configure alerting and notification</span>
-<span class="n">alert_actions</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
-  <span class="p">[</span><span class="n">email</span><span class="p">]</span>
-  <span class="n">action</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">security</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
-  <span class="n">action</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">Security</span> <span class="n">Alert</span><span class="p">:</span> <span class="err">$</span><span class="n">name</span><span class="err">$</span>
+# Configure alerting and notification
+alert_actions.conf:
+  [email]
+  action.email.to = security@example.com
+  action.email.subject = Security Alert: $name$
 
-<span class="c1"># Configure incident response</span>
-<span class="n">incident_response</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
-  <span class="p">[</span><span class="n">security</span><span class="p">]</span>
-  <span class="n">incident_response_plan</span> <span class="o">=</span> <span class="n">security</span><span class="o">-</span><span class="n">incident</span><span class="o">-</span><span class="n">response</span>
-</code></pre></div>
-
+# Configure incident response
+incident_response.conf:
+  [security]
+  incident_response_plan = security-incident-response
+</code></pre>
 <p>This example configuration collects syslog data from a network device, analyzes the data using a custom extraction, generates an alert when a potential security threat is detected, and sends an email notification to the security team.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when implementing a SIEM system:
@@ -221,19 +220,18 @@
 * <strong>Incident response</strong>: 10 incidents per hour</p>
 <p>According to a study by Gartner, the average SIEM system can handle around 10,000 events per second, while the average query performance is around 1,000 queries per second. By implementing a high-performance SIEM system, organizations can improve the effectiveness of their security monitoring and incident response capabilities.</p>
 <p>Here is an example of a SIEM system performance benchmark using LogRhythm:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure performance benchmark</span>
-<span class="n">benchmark</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
-  <span class="p">[</span><span class="n">data_ingestion</span><span class="p">]</span>
-  <span class="n">events_per_second</span> <span class="o">=</span> <span class="mi">10000</span>
-  <span class="n">data_size</span> <span class="o">=</span> <span class="mi">100</span><span class="n">GB</span>
+<pre><code class="language-python"># Configure performance benchmark
+benchmark.conf:
+  [data_ingestion]
+  events_per_second = 10000
+  data_size = 100GB
 
-<span class="c1"># Run performance benchmark</span>
-<span class="n">benchmark</span><span class="o">.</span><span class="n">py</span><span class="p">:</span>
-  <span class="kn">import</span> <span class="nn">logrhythm</span>
-  <span class="n">lr</span> <span class="o">=</span> <span class="n">logrhythm</span><span class="o">.</span><span class="n">LogRhythm</span><span class="p">()</span>
-  <span class="n">lr</span><span class="o">.</span><span class="n">benchmark</span><span class="p">(</span><span class="n">data_ingestion</span><span class="p">)</span>
-</code></pre></div>
-
+# Run performance benchmark
+benchmark.py:
+  import logrhythm
+  lr = logrhythm.LogRhythm()
+  lr.benchmark(data_ingestion)
+</code></pre>
 <p>This example configuration runs a performance benchmark on the LogRhythm SIEM system, measuring the data ingestion rate and query performance.</p>
 <h2 id="pricing-and-cost">Pricing and Cost</h2>
 <p>Here are some pricing and cost details for SIEM systems:
@@ -244,20 +242,19 @@
 * <strong>ArcSight</strong>: $15,000 per year (basic license)</p>
 <p>According to a study by Forrester, the average cost of a SIEM system is around $10,000 per year. By implementing a cost-effective SIEM system, organizations can improve the effectiveness of their security monitoring and incident response capabilities, while reducing costs.</p>
 <p>Here is an example of a SIEM system cost calculation using a Python script:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define cost parameters</span>
-<span class="n">cost_per_year</span> <span class="o">=</span> <span class="mi">10000</span>
-<span class="n">num_years</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">discount_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<pre><code class="language-python"># Define cost parameters
+cost_per_year = 10000
+num_years = 5
+discount_rate = 0.1
 
-<span class="c1"># Calculate total cost</span>
-<span class="n">total_cost</span> <span class="o">=</span> <span class="n">cost_per_year</span> <span class="o">*</span> <span class="n">num_years</span>
-<span class="n">discounted_cost</span> <span class="o">=</span> <span class="n">total_cost</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">discount_rate</span><span class="p">)</span>
+# Calculate total cost
+total_cost = cost_per_year * num_years
+discounted_cost = total_cost * (1 - discount_rate)
 
-<span class="c1"># Print cost calculation</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total cost: $&quot;</span><span class="p">,</span> <span class="n">total_cost</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Discounted cost: $&quot;</span><span class="p">,</span> <span class="n">discounted_cost</span><span class="p">)</span>
-</code></pre></div>
-
+# Print cost calculation
+print(&quot;Total cost: $&quot;, total_cost)
+print(&quot;Discounted cost: $&quot;, discounted_cost)
+</code></pre>
 <p>This example script calculates the total cost and discounted cost of a SIEM system, using a cost per year, number of years, and discount rate.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, security monitoring and SIEM systems are essential components of a comprehensive security strategy. By implementing a SIEM system, organizations can improve the effectiveness of their security monitoring and incident response capabilities, while reducing costs. Here are some actionable next steps:

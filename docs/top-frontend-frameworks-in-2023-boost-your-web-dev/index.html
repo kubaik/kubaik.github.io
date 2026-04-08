@@ -154,23 +154,22 @@
 </ul>
 <h3 id="code-example-basic-counter-app">Code Example: Basic Counter App</h3>
 <p>Here's a simple example of a counter application using React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+const Counter = () =&gt; {
+  const [count, setCount] = useState(0);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Increment</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Decrement</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Count: {count}&lt;/h1&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(count - 1)}&gt;Decrement&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Counter</span><span class="p">;</span>
-</code></pre></div>
-
+export default Counter;
+</code></pre>
 <h3 id="performance-metrics">Performance Metrics</h3>
 <p>According to a 2023 performance benchmark, React 18 boasts a rendering speed improvement of 50% when compared to its predecessor, React 17, primarily due to the new concurrent rendering capabilities.</p>
 <h3 id="use-cases">Use Cases</h3>
@@ -190,42 +189,41 @@
 </ul>
 <h3 id="code-example-simple-todo-app">Code Example: Simple Todo App</h3>
 <p>Here’s how you can create a basic Todo app using Vue:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>My Todo List<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&quot;newTodo&quot;</span> <span class="err">@</span><span class="na">keyup</span><span class="err">.</span><span class="na">enter</span><span class="o">=</span><span class="s">&quot;addTodo&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Add a todo&quot;</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&quot;todo in todos&quot;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&quot;todo.id&quot;</span><span class="p">&gt;</span>{{ todo.text }}<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;My Todo List&lt;/h1&gt;
+    &lt;input v-model=&quot;newTodo&quot; @keyup.enter=&quot;addTodo&quot; placeholder=&quot;Add a todo&quot; /&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;{{ todo.text }}&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">newTodo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">todos</span><span class="o">:</span><span class="w"> </span><span class="p">[]</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">addTodo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="w"> </span><span class="p">});</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      newTodo: '',
+      todos: []
+    };
+  },
+  methods: {
+    addTodo() {
+      if (this.newTodo) {
+        this.todos.push({ id: Date.now(), text: this.newTodo });
+        this.newTodo = '';
+      }
+    }
+  }
+};
+&lt;/script&gt;
 
-<span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
-<span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#42b983</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;style scoped&gt;
+h1 {
+  color: #42b983;
+}
+&lt;/style&gt;
+</code></pre>
 <h3 id="performance-metrics_1">Performance Metrics</h3>
 <p>In a recent comparison, Vue 3 showed a rendering performance that is 50% faster than Vue 2, thanks to its rewritten virtual DOM and optimization strategies.</p>
 <h3 id="use-cases_1">Use Cases</h3>
@@ -245,29 +243,28 @@
 </ul>
 <h3 id="code-example-basic-form-handling">Code Example: Basic Form Handling</h3>
 <p>Here's a simple Angular form example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Component } from '@angular/core';
 
-<span class="kd">@Component</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-root&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;form (ngSubmit)=&quot;onSubmit()&quot; #myForm=&quot;ngForm&quot;&gt;</span>
-<span class="sb">      &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;</span>
-<span class="sb">      &lt;input type=&quot;text&quot; id=&quot;name&quot; required [(ngModel)]=&quot;name&quot; name=&quot;name&quot; /&gt;</span>
-<span class="sb">      &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;</span>
-<span class="sb">    &lt;/form&gt;</span>
-<span class="sb">    &lt;p *ngIf=&quot;submitted&quot;&gt;Hello, {{ name }}!&lt;/p&gt;</span>
-<span class="sb">  `</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AppComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">submitted</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+@Component({
+  selector: 'app-root',
+  template: `
+    &lt;form (ngSubmit)=&quot;onSubmit()&quot; #myForm=&quot;ngForm&quot;&gt;
+      &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;name&quot; required [(ngModel)]=&quot;name&quot; name=&quot;name&quot; /&gt;
+      &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;p *ngIf=&quot;submitted&quot;&gt;Hello, {{ name }}!&lt;/p&gt;
+  `
+})
+export class AppComponent {
+  name: string = '';
+  submitted: boolean = false;
 
-<span class="w">  </span><span class="nx">onSubmit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">submitted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  onSubmit() {
+    this.submitted = true;
+  }
+}
+</code></pre>
 <h3 id="performance-metrics_2">Performance Metrics</h3>
 <p>Angular 13 introduced significant performance improvements, with lazy loading features that can reduce initial load times by up to 30%.</p>
 <h3 id="use-cases_2">Use Cases</h3>
@@ -288,23 +285,22 @@
 </ul>
 <h3 id="code-example-basic-counter-app_1">Code Example: Basic Counter App</h3>
 <p>Here’s a counter application using Svelte:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<pre><code class="language-html">&lt;script&gt;
+  let count = 0;
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  function increment() {
+    count += 1;
+  }
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">decrement</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">count</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  function decrement() {
+    count -= 1;
+  }
+&lt;/script&gt;
 
-<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Count: {count}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">button</span> <span class="na">on:click</span><span class="o">=</span><span class="s">{increment}</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">button</span> <span class="na">on:click</span><span class="o">=</span><span class="s">{decrement}</span><span class="p">&gt;</span>Decrement<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;h1&gt;Count: {count}&lt;/h1&gt;
+&lt;button on:click={increment}&gt;Increment&lt;/button&gt;
+&lt;button on:click={decrement}&gt;Decrement&lt;/button&gt;
+</code></pre>
 <h3 id="performance-metrics_3">Performance Metrics</h3>
 <p>Svelte applications have shown to be around 10x smaller in bundle size and 3x faster in performance compared to similar applications built with React and Vue.</p>
 <h3 id="use-cases_3">Use Cases</h3>

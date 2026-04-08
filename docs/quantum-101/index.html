@@ -168,28 +168,27 @@
 <h2 id="practical-quantum-computing-with-qiskit">Practical Quantum Computing with Qiskit</h2>
 <p>Qiskit is an open-source quantum development environment developed by IBM. It provides a comprehensive set of tools and resources for quantum computing, including a simulator, a compiler, and a variety of pre-built quantum circuits.</p>
 <p>Here's an example of a simple quantum circuit written in Qiskit:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">execute</span>
+<pre><code class="language-python">from qiskit import QuantumCircuit, execute
 
-<span class="c1"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
-<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+# Create a quantum circuit with 2 qubits and 2 classical bits
+qc = QuantumCircuit(2, 2)
 
-<span class="c1"># Add a Hadamard gate to the first qubit</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Add a Hadamard gate to the first qubit
+qc.h(0)
 
-<span class="c1"># Add a CNOT gate between the first and second qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Add a CNOT gate between the first and second qubits
+qc.cx(0, 1)
 
-<span class="c1"># Measure the qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+# Measure the qubits
+qc.measure([0, 1], [0, 1])
 
-<span class="c1"># Execute the circuit on the Qiskit simulator</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;qasm_simulator&#39;</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+# Execute the circuit on the Qiskit simulator
+job = execute(qc, backend='qasm_simulator')
+result = job.result()
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the results
+print(result.get_counts())
+</code></pre>
 <p>This code creates a quantum circuit with 2 qubits and 2 classical bits, applies a Hadamard gate to the first qubit, and then applies a CNOT gate between the first and second qubits. The qubits are then measured, and the results are printed.</p>
 <h3 id="quantum-circuit-optimization">Quantum Circuit Optimization</h3>
 <p>One of the key challenges in quantum computing is optimizing quantum circuits to minimize the number of gates and reduce the computational time. Qiskit provides a variety of tools and techniques for optimizing quantum circuits, including:</p>
@@ -199,54 +198,52 @@
 <li><strong>Circuit synthesis</strong>: Generating a quantum circuit from a given function or algorithm.</li>
 </ul>
 <p>For example, consider the following quantum circuit:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">execute</span>
+<pre><code class="language-python">from qiskit import QuantumCircuit, execute
 
-<span class="c1"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
-<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+# Create a quantum circuit with 2 qubits and 2 classical bits
+qc = QuantumCircuit(2, 2)
 
-<span class="c1"># Add a Hadamard gate to the first qubit</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Add a Hadamard gate to the first qubit
+qc.h(0)
 
-<span class="c1"># Add a CNOT gate between the first and second qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Add a CNOT gate between the first and second qubits
+qc.cx(0, 1)
 
-<span class="c1"># Add a CNOT gate between the second and first qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+# Add a CNOT gate between the second and first qubits
+qc.cx(1, 0)
 
-<span class="c1"># Measure the qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+# Measure the qubits
+qc.measure([0, 1], [0, 1])
 
-<span class="c1"># Execute the circuit on the Qiskit simulator</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;qasm_simulator&#39;</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+# Execute the circuit on the Qiskit simulator
+job = execute(qc, backend='qasm_simulator')
+result = job.result()
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the results
+print(result.get_counts())
+</code></pre>
 <p>This circuit can be optimized by removing the second CNOT gate, which is unnecessary. The optimized circuit would be:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">execute</span>
+<pre><code class="language-python">from qiskit import QuantumCircuit, execute
 
-<span class="c1"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
-<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+# Create a quantum circuit with 2 qubits and 2 classical bits
+qc = QuantumCircuit(2, 2)
 
-<span class="c1"># Add a Hadamard gate to the first qubit</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Add a Hadamard gate to the first qubit
+qc.h(0)
 
-<span class="c1"># Add a CNOT gate between the first and second qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Add a CNOT gate between the first and second qubits
+qc.cx(0, 1)
 
-<span class="c1"># Measure the qubits</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+# Measure the qubits
+qc.measure([0, 1], [0, 1])
 
-<span class="c1"># Execute the circuit on the Qiskit simulator</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;qasm_simulator&#39;</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+# Execute the circuit on the Qiskit simulator
+job = execute(qc, backend='qasm_simulator')
+result = job.result()
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the results
+print(result.get_counts())
+</code></pre>
 <p>This optimized circuit reduces the number of gates from 4 to 3, resulting in a significant reduction in computational time.</p>
 <h2 id="quantum-computing-use-cases">Quantum Computing Use Cases</h2>
 <p>Quantum computing has a wide range of potential use cases, including:</p>

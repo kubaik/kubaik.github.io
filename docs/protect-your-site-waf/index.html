@@ -164,55 +164,51 @@
 <p>Here are a few examples of how to implement a WAF in a real-world scenario:</p>
 <h3 id="example-1-using-aws-waf-to-protect-a-web-application">Example 1: Using AWS WAF to Protect a Web Application</h3>
 <p>To use AWS WAF to protect a web application, you would first need to create a WAF instance and associate it with your web application. You can do this using the AWS Management Console or the AWS CLI. For example, to create a WAF instance using the AWS CLI, you would use the following command:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>MyWebACL<span class="w"> </span>--metric-name<span class="w"> </span>MyWebACLMetric
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-web-acl --name MyWebACL --metric-name MyWebACLMetric
+</code></pre>
 <p>You would then need to configure the WAF instance to block certain types of traffic. For example, to block SQL injection attacks, you would use the following command:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>update-web-acl<span class="w"> </span>--web-acl-id<span class="w"> </span>&lt;web-acl-id&gt;<span class="w"> </span>--change-token<span class="w"> </span>&lt;change-token&gt;<span class="w"> </span>--updates<span class="w"> </span><span class="s1">&#39;[{&quot;Action&quot;: &quot;INSERT&quot;, &quot;ActivatedRule&quot;: {&quot;Priority&quot;: 1, &quot;RuleId&quot;: &quot;SQLInjectionRule&quot;}}]&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf update-web-acl --web-acl-id &lt;web-acl-id&gt; --change-token &lt;change-token&gt; --updates '[{&quot;Action&quot;: &quot;INSERT&quot;, &quot;ActivatedRule&quot;: {&quot;Priority&quot;: 1, &quot;RuleId&quot;: &quot;SQLInjectionRule&quot;}}]'
+</code></pre>
 <h3 id="example-2-using-cloudflare-waf-to-protect-a-web-application">Example 2: Using Cloudflare WAF to Protect a Web Application</h3>
 <p>To use Cloudflare WAF to protect a web application, you would first need to sign up for a Cloudflare account and enable the WAF feature. You can then configure the WAF to block certain types of traffic using the Cloudflare dashboard. For example, to block cross-site scripting (XSS) attacks, you would use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cloudflare</span>
+<pre><code class="language-python">import cloudflare
 
-<span class="c1"># Create a Cloudflare API client</span>
-<span class="n">cf</span> <span class="o">=</span> <span class="n">cloudflare</span><span class="o">.</span><span class="n">Cloudflare</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s1">&#39;your_email&#39;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your_token&#39;</span><span class="p">)</span>
+# Create a Cloudflare API client
+cf = cloudflare.Cloudflare(email='your_email', token='your_token')
 
-<span class="c1"># Get the zone ID for your domain</span>
-<span class="n">zone_id</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;your_domain.com&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+# Get the zone ID for your domain
+zone_id = cf.zones.get(name='your_domain.com')[0]['id']
 
-<span class="c1"># Enable the WAF for your domain</span>
-<span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">waf</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">zone_id</span><span class="p">)</span>
+# Enable the WAF for your domain
+cf.zones.waf.enable(zone_id)
 
-<span class="c1"># Configure the WAF to block XSS attacks</span>
-<span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">waf</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">zone_id</span><span class="p">,</span>
-    <span class="p">{</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Block XSS attacks&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;block&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="s1">&#39;(http.request.body contains &quot;script&quot;) or (http.request.uri.query contains &quot;script&quot;)&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;sensitivity&#39;</span><span class="p">:</span> <span class="s1">&#39;high&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure the WAF to block XSS attacks
+cf.zones.waf.rules.create(
+    zone_id,
+    {
+        'description': 'Block XSS attacks',
+        'enabled': True,
+        'action': 'block',
+        'filter': {
+            'expression': '(http.request.body contains &quot;script&quot;) or (http.request.uri.query contains &quot;script&quot;)',
+            'sensitivity': 'high'
+        }
+    }
+)
+</code></pre>
 <h3 id="example-3-using-owasp-modsecurity-core-rule-set-to-protect-a-web-application">Example 3: Using OWASP ModSecurity Core Rule Set to Protect a Web Application</h3>
 <p>To use the OWASP ModSecurity Core Rule Set to protect a web application, you would first need to install ModSecurity on your web server. You can then configure ModSecurity to use the OWASP ModSecurity Core Rule Set. For example, to configure ModSecurity on an Apache web server, you would use the following code:</p>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install ModSecurity</span>
-apt-get<span class="w"> </span>install<span class="w"> </span>libapache2-modsecurity
+<pre><code class="language-bash"># Install ModSecurity
+apt-get install libapache2-modsecurity
 
-<span class="c1"># Configure ModSecurity to use the OWASP ModSecurity Core Rule Set</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Include /etc/modsecurity/crs-setup.conf&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/apache2/conf.d/modsecurity.conf
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Include /etc/modsecurity/crs-rules.conf&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/apache2/conf.d/modsecurity.conf
+# Configure ModSecurity to use the OWASP ModSecurity Core Rule Set
+echo 'Include /etc/modsecurity/crs-setup.conf' &gt;&gt; /etc/apache2/conf.d/modsecurity.conf
+echo 'Include /etc/modsecurity/crs-rules.conf' &gt;&gt; /etc/apache2/conf.d/modsecurity.conf
 
-<span class="c1"># Restart the Apache web server</span>
-service<span class="w"> </span>apache2<span class="w"> </span>restart
-</code></pre></div>
-
+# Restart the Apache web server
+service apache2 restart
+</code></pre>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of a WAF can vary depending on the specific solution and configuration. However, here are some general performance benchmarks for popular WAF solutions:
 * AWS WAF: According to AWS, the average latency introduced by AWS WAF is around 1-2 milliseconds.

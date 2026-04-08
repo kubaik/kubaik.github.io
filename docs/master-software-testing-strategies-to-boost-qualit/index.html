@@ -172,15 +172,14 @@
 - Encourage developers to write and run tests as they code.
 - Use Continuous Integration (CI) pipelines to automate tests on code commits.</p>
 <p><strong>Practical Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example of a CI pipeline step for running tests early</span>
+<pre><code class="language-bash"># Example of a CI pipeline step for running tests early
 jobs:
-<span class="w">  </span>build:
-<span class="w">    </span>steps:
-<span class="w">      </span>-<span class="w"> </span>checkout
-<span class="w">      </span>-<span class="w"> </span>run:<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span>
-<span class="w">      </span>-<span class="w"> </span>deploy:<span class="w"> </span>...
-</code></pre></div>
-
+  build:
+    steps:
+      - checkout
+      - run: ./gradlew test
+      - deploy: ...
+</code></pre>
 <h3 id="2-test-automation">2. Test Automation</h3>
 <p><strong>Definition:</strong> Automating repetitive and regression tests to speed up testing cycles.</p>
 <p><strong>Benefits:</strong>
@@ -205,12 +204,11 @@ jobs:
 3. Refactor code for readability and efficiency.
 4. Repeat for subsequent features.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_add_user</span><span class="p">():</span>
-    <span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">user_service</span><span class="o">.</span><span class="n">add_user</span><span class="p">(</span><span class="s1">&#39;john_doe&#39;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;User added successfully&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-python">def test_add_user():
+    user_service = UserService()
+    result = user_service.add_user('john_doe')
+    assert result == 'User added successfully'
+</code></pre>
 <h3 id="4-behavior-driven-development-bdd">4. Behavior-Driven Development (BDD)</h3>
 <p><strong>Definition:</strong> Collaborating with stakeholders to define behaviors in plain language, then automating tests based on those behaviors.</p>
 <p><strong>Tools:</strong> Cucumber, SpecFlow, Behat.</p>
@@ -218,13 +216,12 @@ jobs:
 - Improved communication.
 - Tests reflect real user scenarios.</p>
 <p><strong>Sample Scenario:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">Feature:</span><span class="nf"> User login</span>
-<span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Successful login</span>
-<span class="k">    Given </span><span class="nf">the user is on the login page</span>
-<span class="nf">    </span><span class="k">When </span><span class="nf">they enter valid credentials</span>
-<span class="nf">    </span><span class="k">Then </span><span class="nf">they should be redirected to the dashboard</span>
-</code></pre></div>
-
+<pre><code class="language-gherkin">Feature: User login
+  Scenario: Successful login
+    Given the user is on the login page
+    When they enter valid credentials
+    Then they should be redirected to the dashboard
+</code></pre>
 <h3 id="5-risk-based-testing">5. Risk-Based Testing</h3>
 <p><strong>Definition:</strong> Prioritizing testing efforts based on risk assessment.</p>
 <p><strong>Approach:</strong>
@@ -273,16 +270,15 @@ jobs:
 <h3 id="2-mocking-stubbing">2. Mocking &amp; Stubbing</h3>
 <p>Simulate external systems or dependencies to isolate units under test.</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+<pre><code class="language-python">import unittest
+from unittest.mock import patch
 
-<span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;external_service.get_data&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_process_data</span><span class="p">(</span><span class="n">mock_get_data</span><span class="p">):</span>
-    <span class="n">mock_get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">expected_result</span>
-</code></pre></div>
-
+@patch('external_service.get_data')
+def test_process_data(mock_get_data):
+    mock_get_data.return_value = {'key': 'value'}
+    result = process_data()
+    assert result == expected_result
+</code></pre>
 <h3 id="3-performance-security-testing">3. Performance &amp; Security Testing</h3>
 <ul>
 <li>Conduct load testing with tools like JMeter or LoadRunner.</li>

@@ -161,58 +161,57 @@
 <li>Regularly monitoring and evaluating the effectiveness of controls and making adjustments as needed</li>
 </ul>
 <p>For example, to implement multi-factor authentication, you can use a tool like Auth0, which provides a cloud-based authentication platform that supports multiple authentication factors, including passwords, biometrics, and one-time passwords. Here is an example of how to use Auth0 to implement multi-factor authentication in a Node.js application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">auth0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;auth0&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const auth0 = require('auth0');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_id&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_secret&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_domain&#39;</span><span class="p">;</span>
+app.get('/login', (req, res) =&gt; {
+  const clientId = 'your_client_id';
+  const clientSecret = 'your_client_secret';
+  const domain = 'your_domain';
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">auth0Client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">auth0</span><span class="p">.</span><span class="nx">WebAuth</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">domain</span><span class="o">:</span><span class="w"> </span><span class="nx">domain</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">redirectUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">audience</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your_domain/userinfo&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;openid profile email&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">responseType</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;code&#39;</span>
-<span class="w">  </span><span class="p">});</span>
+  const auth0Client = new auth0.WebAuth({
+    domain: domain,
+    clientId: clientId,
+    redirectUri: 'http://localhost:3000/callback',
+    audience: 'https://your_domain/userinfo',
+    scope: 'openid profile email',
+    responseType: 'code'
+  });
 
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">auth0Client</span><span class="p">.</span><span class="nx">getAuthorizeUrl</span><span class="p">());</span>
-<span class="p">});</span>
+  res.redirect(auth0Client.getAuthorizeUrl());
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/callback&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">clientId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_id&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">clientSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_client_secret&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;your_domain&#39;</span><span class="p">;</span>
+app.get('/callback', (req, res) =&gt; {
+  const code = req.query.code;
+  const clientId = 'your_client_id';
+  const clientSecret = 'your_client_secret';
+  const domain = 'your_domain';
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">auth0Client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">auth0</span><span class="p">.</span><span class="nx">WebAuth</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">domain</span><span class="o">:</span><span class="w"> </span><span class="nx">domain</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="nx">clientId</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">clientSecret</span><span class="o">:</span><span class="w"> </span><span class="nx">clientSecret</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">redirectUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://localhost:3000/callback&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">audience</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your_domain/userinfo&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;openid profile email&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">responseType</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;code&#39;</span>
-<span class="w">  </span><span class="p">});</span>
+  const auth0Client = new auth0.WebAuth({
+    domain: domain,
+    clientId: clientId,
+    clientSecret: clientSecret,
+    redirectUri: 'http://localhost:3000/callback',
+    audience: 'https://your_domain/userinfo',
+    scope: 'openid profile email',
+    responseType: 'code'
+  });
 
-<span class="w">  </span><span class="nx">auth0Client</span><span class="p">.</span><span class="nx">getToken</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">tokens</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">idToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">idToken</span><span class="p">;</span>
+  auth0Client.getToken(code, (err, tokens) =&gt; {
+    if (err) {
+      console.log(err);
+    } else {
+      const accessToken = tokens.accessToken;
+      const idToken = tokens.idToken;
 
-<span class="w">      </span><span class="c1">// Use the access token and id token to authenticate the user</span>
-<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/protected&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+      // Use the access token and id token to authenticate the user
+      res.redirect('/protected');
+    }
+  });
+});
+</code></pre>
 <p>This code example demonstrates how to use Auth0 to implement multi-factor authentication in a Node.js application.</p>
 <h3 id="iso-27001-compliance">ISO 27001 Compliance</h3>
 <p>To achieve ISO 27001 compliance, an organization must implement an ISMS that meets the requirements of the standard. The following are some of the key requirements for ISO 27001 compliance:</p>
@@ -223,34 +222,33 @@
 <li>Regularly monitoring and evaluating the effectiveness of controls and making adjustments as needed</li>
 </ul>
 <p>For example, to implement access controls, you can use a tool like Okta, which provides a cloud-based identity and access management platform that supports multiple authentication factors, including passwords, biometrics, and one-time passwords. Here is an example of how to use Okta to implement access controls in a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">okta</span>
+<pre><code class="language-python">import okta
 
-<span class="c1"># Initialize the Okta client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">okta</span><span class="o">.</span><span class="n">Client</span><span class="p">({</span>
-  <span class="s1">&#39;orgUrl&#39;</span><span class="p">:</span> <span class="s1">&#39;https://your_domain.okta.com&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="s1">&#39;your_api_token&#39;</span>
-<span class="p">})</span>
+# Initialize the Okta client
+client = okta.Client({
+  'orgUrl': 'https://your_domain.okta.com',
+  'token': 'your_api_token'
+})
 
-<span class="c1"># Define a function to authenticate a user</span>
-<span class="k">def</span> <span class="nf">authenticate_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-  <span class="k">try</span><span class="p">:</span>
-    <span class="c1"># Authenticate the user using Okta</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">authenticate_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">user</span>
-  <span class="k">except</span> <span class="n">okta</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">OktaError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+# Define a function to authenticate a user
+def authenticate_user(username, password):
+  try:
+    # Authenticate the user using Okta
+    user = client.authenticate_user(username, password)
+    return user
+  except okta.errors.OktaError as e:
+    print(e)
 
-<span class="c1"># Define a function to authorize a user</span>
-<span class="k">def</span> <span class="nf">authorize_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
-  <span class="k">try</span><span class="p">:</span>
-    <span class="c1"># Authorize the user to access the resource using Okta</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">authorize_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">True</span>
-  <span class="k">except</span> <span class="n">okta</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">OktaError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">False</span>
-</code></pre></div>
-
+# Define a function to authorize a user
+def authorize_user(user, resource):
+  try:
+    # Authorize the user to access the resource using Okta
+    client.authorize_user(user, resource)
+    return True
+  except okta.errors.OktaError as e:
+    print(e)
+    return False
+</code></pre>
 <p>This code example demonstrates how to use Okta to implement access controls in a Python application.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>One common problem that organizations face when implementing SOC 2 and ISO 27001 compliance is the lack of resources and expertise. To address this problem, organizations can use cloud-based compliance platforms, such as Compliance.ai or Hypercompliance, which provide pre-built compliance frameworks and tools to simplify the compliance process.</p>

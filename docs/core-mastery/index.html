@@ -159,13 +159,11 @@
 * <strong>High-performance</strong>: .NET Core is designed to be fast and efficient, with a focus on high-performance applications.</p>
 <h2 id="setting-up-a-net-core-project">Setting Up a .NET Core Project</h2>
 <p>To get started with .NET Core, you'll need to set up a new project. This can be done using the .NET Core CLI, which is a command-line interface for building, running, and managing .NET Core applications. Here's an example of how to create a new .NET Core project:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">dotnet</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">console</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">MyConsoleApp</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">dotnet new console -o MyConsoleApp
+</code></pre>
 <p>This will create a new console application called <code>MyConsoleApp</code> in a directory with the same name. You can then navigate to the project directory and run the application using the following command:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">dotnet</span><span class="w"> </span><span class="n">run</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">dotnet run
+</code></pre>
 <p>This will compile and run the application, displaying the output in the console.</p>
 <h3 id="using-visual-studio-code">Using Visual Studio Code</h3>
 <p>While the .NET Core CLI is a powerful tool for building and managing .NET Core applications, it's often more convenient to use an integrated development environment (IDE) like Visual Studio Code. Visual Studio Code is a lightweight, open-source code editor that supports a wide range of programming languages, including C# and .NET Core.</p>
@@ -177,66 +175,65 @@
 <h2 id="building-a-restful-api-with-net-core">Building a RESTful API with .NET Core</h2>
 <p>One of the most common use cases for .NET Core is building RESTful APIs. A RESTful API is an API that uses HTTP requests to interact with a web service, and .NET Core provides a wide range of tools and features for building high-performance, scalable APIs.</p>
 <p>Here's an example of how to build a simple RESTful API using .NET Core:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">MyApi</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[ApiController]</span>
-<span class="w">    </span><span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ValuesController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// GET api/values</span>
-<span class="w">        </span><span class="na">[HttpGet]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Get</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+namespace MyApi
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class ValuesController : ControllerBase
+    {
+        // GET api/values
+        [HttpGet]
+        public ActionResult&lt;string&gt; Get()
+        {
+            return &quot;Hello World!&quot;;
+        }
 
-<span class="w">        </span><span class="c1">// GET api/values/5</span>
-<span class="w">        </span><span class="na">[HttpGet(&quot;{id}&quot;)]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Get</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello World! &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        // GET api/values/5
+        [HttpGet(&quot;{id}&quot;)]
+        public ActionResult&lt;string&gt; Get(int id)
+        {
+            return &quot;Hello World! &quot; + id;
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Startup</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span><span class="w"> </span><span class="n">services</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">services</span><span class="p">.</span><span class="n">AddMvc</span><span class="p">().</span><span class="n">SetCompatibilityVersion</span><span class="p">(</span><span class="n">CompatibilityVersion</span><span class="p">.</span><span class="n">Version_2_2</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IWebHostEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseRouting</span><span class="p">();</span>
-<span class="w">            </span><span class="n">app</span><span class="p">.</span><span class="n">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span><span class="w"> </span><span class="o">=&gt;</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="n">endpoints</span><span class="p">.</span><span class="n">MapControllers</span><span class="p">();</span>
-<span class="w">            </span><span class="p">});</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints =&gt;
+            {
+                endpoints.MapControllers();
+            });
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">CreateHostBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">).</span><span class="n">Build</span><span class="p">().</span><span class="n">Run</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">IHostBuilder</span><span class="w"> </span><span class="nf">CreateHostBuilder</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
-<span class="w">            </span><span class="n">Host</span><span class="p">.</span><span class="n">CreateDefaultBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="n">ConfigureWebHostDefaults</span><span class="p">(</span><span class="n">webBuilder</span><span class="w"> </span><span class="o">=&gt;</span>
-<span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="n">webBuilder</span><span class="p">.</span><span class="n">UseStartup</span><span class="o">&lt;</span><span class="n">Startup</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">                </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        public static IHostBuilder CreateHostBuilder(string[] args) =&gt;
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =&gt;
+                {
+                    webBuilder.UseStartup&lt;Startup&gt;();
+                });
+    }
+}
+</code></pre>
 <p>This example demonstrates how to build a simple RESTful API using .NET Core, with two endpoints: one for retrieving a list of values, and another for retrieving a single value by ID.</p>
 <h3 id="using-azure-services">Using Azure Services</h3>
 <p>One of the benefits of using .NET Core is its tight integration with Azure services, such as Azure App Service, Azure Storage, and Azure Cosmos DB. These services provide a wide range of features and tools for building scalable, high-performance applications.</p>

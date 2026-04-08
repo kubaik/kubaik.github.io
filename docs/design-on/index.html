@@ -161,44 +161,42 @@
 * 1024px for desktop computers
 * 1280px for large desktop computers</p>
 <p>For example, the following code snippet uses media queries to apply different styles to a website based on screen size:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Default styles for desktop computers */</span>
-<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Default styles for desktop computers */
+body {
+  font-size: 16px;
+}
 
-<span class="c">/* Styles for tablets */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+/* Styles for tablets */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
 
-<span class="c">/* Styles for mobile devices */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">480px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+/* Styles for mobile devices */
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+}
+</code></pre>
 <p>In this example, the font size of the website changes based on the screen size, with larger font sizes used for desktop computers and smaller font sizes used for mobile devices.</p>
 <h2 id="flexible-grids-and-images">Flexible Grids and Images</h2>
 <p>Flexible grids and images are essential components of responsive web design, allowing the layout and content of the website to adapt to different screen sizes. Flexible grids can be created using CSS Grid or Flexbox, while flexible images can be created using the <code>max-width</code> property and the <code>img</code> tag.</p>
 <p>For example, the following code snippet uses CSS Grid to create a flexible grid layout:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Create a flexible grid container */</span>
-<span class="p">.</span><span class="nc">grid-container</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
-<span class="w">  </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
-<span class="w">  </span><span class="n">grid-gap</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Create a flexible grid container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
 
-<span class="c">/* Create flexible grid items */</span>
-<span class="p">.</span><span class="nc">grid-item</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#ccc</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+/* Create flexible grid items */
+.grid-item {
+  background-color: #ccc;
+  padding: 20px;
+}
+</code></pre>
 <p>In this example, the grid container is divided into three equal columns, with a 10px gap between each column. The grid items are then placed within the grid container, with each item taking up an equal amount of space.</p>
 <h2 id="tools-and-platforms-for-responsive-web-design">Tools and Platforms for Responsive Web Design</h2>
 <p>There are many tools and platforms available to help developers implement responsive web design, including:
@@ -212,13 +210,12 @@
 * Code splitting: Splitting large code files into smaller files to improve loading times.
 * Caching: Storing frequently-used resources in the browser's cache to improve loading times.</p>
 <p>For example, the following code snippet uses the <code>picture</code> tag to compress images and improve loading times:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">picture</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">media</span><span class="o">=</span><span class="s">&quot;(max-width: 480px)&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;image-small.jpg&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">media</span><span class="o">=</span><span class="s">&quot;(max-width: 768px)&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;image-medium.jpg&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image-large.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Image&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">picture</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;picture&gt;
+  &lt;source media=&quot;(max-width: 480px)&quot; srcset=&quot;image-small.jpg&quot;&gt;
+  &lt;source media=&quot;(max-width: 768px)&quot; srcset=&quot;image-medium.jpg&quot;&gt;
+  &lt;img src=&quot;image-large.jpg&quot; alt=&quot;Image&quot;&gt;
+&lt;/picture&gt;
+</code></pre>
 <p>In this example, the <code>picture</code> tag is used to provide different image sources based on screen size, with smaller images used for mobile devices and larger images used for desktop computers.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Responsive web design can be applied to a wide range of use cases, including:

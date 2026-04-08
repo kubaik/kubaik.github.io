@@ -171,45 +171,44 @@
 * Kubeflow: an open-source platform for building, deploying, and managing machine learning workflows
 * TensorFlow Extended (TFX): a set of libraries and tools for building, deploying, and managing machine learning pipelines</p>
 <p>For example, let's consider a simple ML pipeline that uses Apache Airflow to automate the process of building, deploying, and managing a machine learning model. Here's an example code snippet that defines a DAG (directed acyclic graph) for this pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.bash_operator</span> <span class="kn">import</span> <span class="n">BashOperator</span>
+<pre><code class="language-python">from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
 
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;depends_on_past&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>
-    <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;retry_delay&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-<span class="p">}</span>
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2023, 3, 21),
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-    <span class="s1">&#39;ml_pipeline&#39;</span><span class="p">,</span>
-    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-    <span class="n">schedule_interval</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">)</span>
+dag = DAG(
+    'ml_pipeline',
+    default_args=default_args,
+    schedule_interval=timedelta(days=1),
+)
 
-<span class="n">task1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;data_ingestion&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python data_ingestion.py&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+task1 = BashOperator(
+    task_id='data_ingestion',
+    bash_command='python data_ingestion.py',
+    dag=dag,
+)
 
-<span class="n">task2</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;model_training&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python model_training.py&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+task2 = BashOperator(
+    task_id='model_training',
+    bash_command='python model_training.py',
+    dag=dag,
+)
 
-<span class="n">task3</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;model_deployment&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;python model_deployment.py&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+task3 = BashOperator(
+    task_id='model_deployment',
+    bash_command='python model_deployment.py',
+    dag=dag,
+)
 
-<span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">task2</span> <span class="o">&gt;&gt;</span> <span class="n">task3</span>
-</code></pre></div>
-
+task1 &gt;&gt; task2 &gt;&gt; task3
+</code></pre>
 <p>This code snippet defines a DAG that consists of three tasks: data ingestion, model training, and model deployment. The <code>data_ingestion</code> task runs a Python script that ingests data from a database, the <code>model_training</code> task runs a Python script that trains a machine learning model using this data, and the <code>model_deployment</code> task runs a Python script that deploys the trained model to a production environment.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Let's consider a few real-world use cases for MLOps and ML pipeline automation.</p>
@@ -221,56 +220,55 @@
 4. Model deployment: deploy the trained model to a production environment
 5. Model monitoring: monitor the performance of the model and retrain it as necessary</p>
 <p>Here's an example code snippet that defines this pipeline using Kubeflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">kfp</span>
-<span class="kn">from</span> <span class="nn">kfp.components</span> <span class="kn">import</span> <span class="n">InputPath</span><span class="p">,</span> <span class="n">OutputPath</span>
+<pre><code class="language-python">import kfp
+from kfp.components import InputPath, OutputPath
 
-<span class="nd">@kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;customer_churn_pipeline&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="k">def</span> <span class="nf">customer_churn_pipeline</span><span class="p">():</span>
-    <span class="c1"># Step 1: data ingestion</span>
-    <span class="n">data_ingestion</span> <span class="o">=</span> <span class="n">kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">ContainerOp</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data_ingestion&#39;</span><span class="p">,</span>
-        <span class="n">image</span><span class="o">=</span><span class="s1">&#39;data_ingestion:latest&#39;</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;data_ingestion.py&#39;</span><span class="p">],</span>
-        <span class="n">file_outputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;/data/output.csv&#39;</span><span class="p">},</span>
-    <span class="p">)</span>
+@kfp.dsl.pipeline(
+    name='customer_churn_pipeline',
+)
+def customer_churn_pipeline():
+    # Step 1: data ingestion
+    data_ingestion = kfp.dsl.ContainerOp(
+        name='data_ingestion',
+        image='data_ingestion:latest',
+        command=['python', 'data_ingestion.py'],
+        file_outputs={'data': '/data/output.csv'},
+    )
 
-    <span class="c1"># Step 2: data preprocessing</span>
-    <span class="n">data_preprocessing</span> <span class="o">=</span> <span class="n">kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">ContainerOp</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data_preprocessing&#39;</span><span class="p">,</span>
-        <span class="n">image</span><span class="o">=</span><span class="s1">&#39;data_preprocessing:latest&#39;</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;data_preprocessing.py&#39;</span><span class="p">],</span>
-        <span class="n">file_inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">data_ingestion</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]},</span>
-        <span class="n">file_outputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;preprocessed_data&#39;</span><span class="p">:</span> <span class="s1">&#39;/data/preprocessed.csv&#39;</span><span class="p">},</span>
-    <span class="p">)</span>
+    # Step 2: data preprocessing
+    data_preprocessing = kfp.dsl.ContainerOp(
+        name='data_preprocessing',
+        image='data_preprocessing:latest',
+        command=['python', 'data_preprocessing.py'],
+        file_inputs={'data': data_ingestion.outputs['data']},
+        file_outputs={'preprocessed_data': '/data/preprocessed.csv'},
+    )
 
-    <span class="c1"># Step 3: model training</span>
-    <span class="n">model_training</span> <span class="o">=</span> <span class="n">kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">ContainerOp</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;model_training&#39;</span><span class="p">,</span>
-        <span class="n">image</span><span class="o">=</span><span class="s1">&#39;model_training:latest&#39;</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;model_training.py&#39;</span><span class="p">],</span>
-        <span class="n">file_inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;preprocessed_data&#39;</span><span class="p">:</span> <span class="n">data_preprocessing</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;preprocessed_data&#39;</span><span class="p">]},</span>
-        <span class="n">file_outputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;/model/model.pkl&#39;</span><span class="p">},</span>
-    <span class="p">)</span>
+    # Step 3: model training
+    model_training = kfp.dsl.ContainerOp(
+        name='model_training',
+        image='model_training:latest',
+        command=['python', 'model_training.py'],
+        file_inputs={'preprocessed_data': data_preprocessing.outputs['preprocessed_data']},
+        file_outputs={'model': '/model/model.pkl'},
+    )
 
-    <span class="c1"># Step 4: model deployment</span>
-    <span class="n">model_deployment</span> <span class="o">=</span> <span class="n">kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">ContainerOp</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;model_deployment&#39;</span><span class="p">,</span>
-        <span class="n">image</span><span class="o">=</span><span class="s1">&#39;model_deployment:latest&#39;</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;model_deployment.py&#39;</span><span class="p">],</span>
-        <span class="n">file_inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">model_training</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]},</span>
-    <span class="p">)</span>
+    # Step 4: model deployment
+    model_deployment = kfp.dsl.ContainerOp(
+        name='model_deployment',
+        image='model_deployment:latest',
+        command=['python', 'model_deployment.py'],
+        file_inputs={'model': model_training.outputs['model']},
+    )
 
-    <span class="c1"># Step 5: model monitoring</span>
-    <span class="n">model_monitoring</span> <span class="o">=</span> <span class="n">kfp</span><span class="o">.</span><span class="n">dsl</span><span class="o">.</span><span class="n">ContainerOp</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;model_monitoring&#39;</span><span class="p">,</span>
-        <span class="n">image</span><span class="o">=</span><span class="s1">&#39;model_monitoring:latest&#39;</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;model_monitoring.py&#39;</span><span class="p">],</span>
-        <span class="n">file_inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">model_training</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]},</span>
-    <span class="p">)</span>
-</code></pre></div>
-
+    # Step 5: model monitoring
+    model_monitoring = kfp.dsl.ContainerOp(
+        name='model_monitoring',
+        image='model_monitoring:latest',
+        command=['python', 'model_monitoring.py'],
+        file_inputs={'model': model_training.outputs['model']},
+    )
+</code></pre>
 <p>This code snippet defines a pipeline that consists of five steps: data ingestion, data preprocessing, model training, model deployment, and model monitoring. Each step is defined as a container operation that runs a Python script using a specific Docker image.</p>
 <h3 id="use-case-2-image-classification">Use Case 2: Image Classification</h3>
 <p>A retail company wants to build a machine learning model that classifies images of products into different categories. The company has a large dataset of images and wants to automate the process of building, deploying, and managing this model. Using TensorFlow Extended (TFX), the company can define a pipeline that consists of the following steps:
@@ -280,60 +278,59 @@
 4. Model deployment: deploy the trained model to a production environment
 5. Model monitoring: monitor the performance of the model and retrain it as necessary</p>
 <p>Here's an example code snippet that defines this pipeline using TFX:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tfx</span> <span class="kn">import</span> <span class="n">components</span>
+<pre><code class="language-python">import tensorflow as tf
+from tfx import components
 
-<span class="c1"># Step 1: data ingestion</span>
-<span class="n">data_ingestion</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">ExampleGen</span><span class="p">(</span>
-    <span class="n">input_base</span><span class="o">=</span><span class="s1">&#39;data/input&#39;</span><span class="p">,</span>
-    <span class="n">output_config</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">ExampleGenOutput</span><span class="p">(</span>
-        <span class="n">split_config</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">SplitConfig</span><span class="p">(</span>
-            <span class="n">train</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
-            <span class="nb">eval</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">,</span>
-        <span class="p">),</span>
-    <span class="p">),</span>
-<span class="p">)</span>
+# Step 1: data ingestion
+data_ingestion = components.ExampleGen(
+    input_base='data/input',
+    output_config=components.ExampleGenOutput(
+        split_config=components.SplitConfig(
+            train='train',
+            eval='eval',
+        ),
+    ),
+)
 
-<span class="c1"># Step 2: data preprocessing</span>
-<span class="n">data_preprocessing</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">data_ingestion</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">examples</span><span class="p">,</span>
-    <span class="n">module_file</span><span class="o">=</span><span class="s1">&#39;data_preprocessing.py&#39;</span><span class="p">,</span>
-<span class="p">)</span>
+# Step 2: data preprocessing
+data_preprocessing = components.Transform(
+    input_data=data_ingestion.outputs.examples,
+    module_file='data_preprocessing.py',
+)
 
-<span class="c1"># Step 3: model training</span>
-<span class="n">model_training</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">data_preprocessing</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">transformed_examples</span><span class="p">,</span>
-    <span class="n">module_file</span><span class="o">=</span><span class="s1">&#39;model_training.py&#39;</span><span class="p">,</span>
-    <span class="n">train_args</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">TrainArgs</span><span class="p">(</span>
-        <span class="n">num_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="p">),</span>
-    <span class="n">eval_args</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">EvalArgs</span><span class="p">(</span>
-        <span class="n">num_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="p">),</span>
-<span class="p">)</span>
+# Step 3: model training
+model_training = components.Trainer(
+    input_data=data_preprocessing.outputs.transformed_examples,
+    module_file='model_training.py',
+    train_args=components.TrainArgs(
+        num_steps=1000,
+    ),
+    eval_args=components.EvalArgs(
+        num_steps=500,
+    ),
+)
 
-<span class="c1"># Step 4: model deployment</span>
-<span class="n">model_deployment</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Pusher</span><span class="p">(</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">model_training</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-    <span class="n">push_destination</span><span class="o">=</span><span class="s1">&#39;model/deployment&#39;</span><span class="p">,</span>
-<span class="p">)</span>
+# Step 4: model deployment
+model_deployment = components.Pusher(
+    input_data=model_training.outputs.model,
+    push_destination='model/deployment',
+)
 
-<span class="c1"># Step 5: model monitoring</span>
-<span class="n">model_monitoring</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">Evaluator</span><span class="p">(</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">model_training</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-    <span class="n">eval_config</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">EvalConfig</span><span class="p">(</span>
-        <span class="n">metrics</span><span class="o">=</span><span class="n">components</span><span class="o">.</span><span class="n">MetricsConfig</span><span class="p">(</span>
-            <span class="n">metric_configs</span><span class="o">=</span><span class="p">[</span>
-                <span class="n">components</span><span class="o">.</span><span class="n">MetricConfig</span><span class="p">(</span>
-                    <span class="n">metric_name</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
-                    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-                <span class="p">),</span>
-            <span class="p">],</span>
-        <span class="p">),</span>
-    <span class="p">),</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Step 5: model monitoring
+model_monitoring = components.Evaluator(
+    input_data=model_training.outputs.model,
+    eval_config=components.EvalConfig(
+        metrics=components.MetricsConfig(
+            metric_configs=[
+                components.MetricConfig(
+                    metric_name='accuracy',
+                    threshold=0.8,
+                ),
+            ],
+        ),
+    ),
+)
+</code></pre>
 <p>This code snippet defines a pipeline that consists of five steps: data ingestion, data preprocessing, model training, model deployment, and model monitoring. Each step is defined as a component that runs a specific task using a specific module file.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems in MLOps is the lack of standardization and consistency across different machine learning models and pipelines. This can make it difficult to compare and contrast different models, and to reproduce results. To address this problem, it's essential to establish a set of standards and best practices for building, deploying, and managing machine learning models.</p>

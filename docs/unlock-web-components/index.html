@@ -161,47 +161,45 @@
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
 <h2 id="creating-custom-elements">Creating Custom Elements</h2>
 <p>To create a custom element, you need to define a class that extends the <code>HTMLElement</code> class and defines the behavior and appearance of the element. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyButton</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          background-color: #ccc;</span>
-<span class="sb">          border: none;</span>
-<span class="sb">          padding: 10px;</span>
-<span class="sb">          border-radius: 5px;</span>
-<span class="sb">          cursor: pointer;</span>
-<span class="sb">        }</span>
-<span class="sb">        :host:hover {</span>
-<span class="sb">          background-color: #aaa;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;button&gt;</span>
-<span class="sb">        &lt;slot&gt;&lt;/slot&gt;</span>
-<span class="sb">      &lt;/button&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+<pre><code class="language-javascript">class MyButton extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          background-color: #ccc;
+          border: none;
+          padding: 10px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        :host:hover {
+          background-color: #aaa;
+        }
+      &lt;/style&gt;
+      &lt;button&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+      &lt;/button&gt;
+    `;
+  }
 
-<span class="w">  </span><span class="nx">connectedCallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Button clicked!&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  connectedCallback() {
+    this.addEventListener('click', () =&gt; {
+      console.log('Button clicked!');
+    });
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-button&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyButton</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-button', MyButton);
+</code></pre>
 <p>This code defines a custom element called <code>&lt;my-button&gt;</code> that has a specific style and behavior. The <code>connectedCallback</code> method is called when the element is inserted into the DOM, and it adds an event listener to the element that logs a message to the console when the element is clicked.</p>
 <h3 id="real-world-example">Real-World Example</h3>
 <p>A real-world example of using custom elements is the Google Maps API, which provides a set of custom elements for displaying maps and markers. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">google-map</span> <span class="na">latitude</span><span class="o">=</span><span class="s">&quot;37.7749&quot;</span> <span class="na">longitude</span><span class="o">=</span><span class="s">&quot;-122.4194&quot;</span> <span class="na">zoom</span><span class="o">=</span><span class="s">&quot;12&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">google-map-marker</span> <span class="na">latitude</span><span class="o">=</span><span class="s">&quot;37.7858&quot;</span> <span class="na">longitude</span><span class="o">=</span><span class="s">&quot;-122.4364&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;San Francisco&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">google-map-marker</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">google-map</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;google-map latitude=&quot;37.7749&quot; longitude=&quot;-122.4194&quot; zoom=&quot;12&quot;&gt;
+  &lt;google-map-marker latitude=&quot;37.7858&quot; longitude=&quot;-122.4364&quot; title=&quot;San Francisco&quot;&gt;&lt;/google-map-marker&gt;
+&lt;/google-map&gt;
+</code></pre>
 <p>This code uses the <code>google-map</code> and <code>google-map-marker</code> custom elements to display a map with a marker.</p>
 <h2 id="benefits-of-web-components">Benefits of Web Components</h2>
 <p>Web Components provide several benefits, including:
@@ -212,15 +210,14 @@
 <p>Web Components can provide significant performance improvements, especially when used with frameworks like React or Angular. For example, a study by the Chrome team found that using Web Components with React can improve rendering performance by up to 30%. Another study by the Mozilla team found that using Web Components with Angular can improve rendering performance by up to 25%.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem with Web Components is that they can be difficult to style, especially when using Shadow DOM. A solution to this problem is to use the <code>::part</code> pseudo-element, which allows you to style specific parts of a custom element. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">my-button</span><span class="p">::</span><span class="nd">part</span><span class="o">(</span><span class="nt">button</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#ccc</span><span class="p">;</span>
-<span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">cursor</span><span class="p">:</span><span class="w"> </span><span class="kc">pointer</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">my-button::part(button) {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</code></pre>
 <p>This code styles the <code>button</code> part of the <code>my-button</code> custom element.</p>
 <p>Another common problem with Web Components is that they can be difficult to test, especially when using frameworks like React or Angular. A solution to this problem is to use a testing library like Jest or Mocha, which provides a set of tools and features for testing custom elements.</p>
 <h2 id="use-cases">Use Cases</h2>
@@ -231,49 +228,48 @@
 <h3 id="implementation-details">Implementation Details</h3>
 <p>To implement Web Components, you need to define a class that extends the <code>HTMLElement</code> class and defines the behavior and appearance of the element. You also need to define a template for the element, which can be done using HTML Templates or Shadow DOM.</p>
 <p>For example, you can use the following code to define a custom element called <code>&lt;my-calendar&gt;</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyCalendar</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          display: block;</span>
-<span class="sb">          padding: 10px;</span>
-<span class="sb">          border: 1px solid #ccc;</span>
-<span class="sb">          border-radius: 5px;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;div&gt;</span>
-<span class="sb">        &lt;h2&gt;Calendar&lt;/h2&gt;</span>
-<span class="sb">        &lt;table&gt;</span>
-<span class="sb">          &lt;thead&gt;</span>
-<span class="sb">            &lt;tr&gt;</span>
-<span class="sb">              &lt;th&gt;Monday&lt;/th&gt;</span>
-<span class="sb">              &lt;th&gt;Tuesday&lt;/th&gt;</span>
-<span class="sb">              &lt;th&gt;Wednesday&lt;/th&gt;</span>
-<span class="sb">              &lt;th&gt;Thursday&lt;/th&gt;</span>
-<span class="sb">              &lt;th&gt;Friday&lt;/th&gt;</span>
-<span class="sb">            &lt;/tr&gt;</span>
-<span class="sb">          &lt;/thead&gt;</span>
-<span class="sb">          &lt;tbody&gt;</span>
-<span class="sb">            &lt;tr&gt;</span>
-<span class="sb">              &lt;td&gt;1&lt;/td&gt;</span>
-<span class="sb">              &lt;td&gt;2&lt;/td&gt;</span>
-<span class="sb">              &lt;td&gt;3&lt;/td&gt;</span>
-<span class="sb">              &lt;td&gt;4&lt;/td&gt;</span>
-<span class="sb">              &lt;td&gt;5&lt;/td&gt;</span>
-<span class="sb">            &lt;/tr&gt;</span>
-<span class="sb">          &lt;/tbody&gt;</span>
-<span class="sb">        &lt;/table&gt;</span>
-<span class="sb">      &lt;/div&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class MyCalendar extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          display: block;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+      &lt;/style&gt;
+      &lt;div&gt;
+        &lt;h2&gt;Calendar&lt;/h2&gt;
+        &lt;table&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Monday&lt;/th&gt;
+              &lt;th&gt;Tuesday&lt;/th&gt;
+              &lt;th&gt;Wednesday&lt;/th&gt;
+              &lt;th&gt;Thursday&lt;/th&gt;
+              &lt;th&gt;Friday&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            &lt;tr&gt;
+              &lt;td&gt;1&lt;/td&gt;
+              &lt;td&gt;2&lt;/td&gt;
+              &lt;td&gt;3&lt;/td&gt;
+              &lt;td&gt;4&lt;/td&gt;
+              &lt;td&gt;5&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+    `;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-calendar&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyCalendar</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-calendar', MyCalendar);
+</code></pre>
 <p>This code defines a custom element called <code>&lt;my-calendar&gt;</code> that displays a calendar.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Web Components provide a powerful way to create custom, reusable, and encapsulated HTML tags. They provide several benefits, including reusability, encapsulation, and interoperability. However, they can also be difficult to style and test, especially when using frameworks like React or Angular.</p>

@@ -175,77 +175,75 @@ Some popular tools for analyzing code quality include:
 * Remove Duplicate Code: removing duplicate code or functionality to reduce maintenance effort</p>
 <h3 id="example-1-extract-method">Example 1: Extract Method</h3>
 <p>Consider the following example of a long, complex method in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ProcessOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Validate order details</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">Customer</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="n">Customer</span><span class="p">.</span><span class="n">Address</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Order details are invalid&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-csharp">public void ProcessOrder(Order order)
+{
+    // Validate order details
+    if (order.Customer == null || order.Customer.Address == null)
+    {
+        throw new InvalidOperationException(&quot;Order details are invalid&quot;);
+    }
 
-<span class="w">    </span><span class="c1">// Calculate order total</span>
-<span class="w">    </span><span class="kt">decimal</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="n">Items</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Calculate order total
+    decimal total = 0;
+    foreach (var item in order.Items)
+    {
+        total += item.Price * item.Quantity;
+    }
 
-<span class="w">    </span><span class="c1">// Save order to database</span>
-<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DbContext</span><span class="p">())</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">Orders</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    // Save order to database
+    using (var context = new DbContext())
+    {
+        context.Orders.Add(order);
+        context.SaveChanges();
+    }
 
-<span class="w">    </span><span class="c1">// Send confirmation email</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">emailService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EmailService</span><span class="p">();</span>
-<span class="w">    </span><span class="n">emailService</span><span class="p">.</span><span class="n">SendConfirmationEmail</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Send confirmation email
+    var emailService = new EmailService();
+    emailService.SendConfirmationEmail(order);
+}
+</code></pre>
 <p>This method can be refactored using the Extract Method technique to break it down into smaller, more manageable pieces:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ProcessOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">ValidateOrderDetails</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">    </span><span class="n">CalculateOrderTotal</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">    </span><span class="n">SaveOrderToDatabase</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">    </span><span class="n">SendConfirmationEmail</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">public void ProcessOrder(Order order)
+{
+    ValidateOrderDetails(order);
+    CalculateOrderTotal(order);
+    SaveOrderToDatabase(order);
+    SendConfirmationEmail(order);
+}
 
-<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ValidateOrderDetails</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">Customer</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="n">Customer</span><span class="p">.</span><span class="n">Address</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Order details are invalid&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+private void ValidateOrderDetails(Order order)
+{
+    if (order.Customer == null || order.Customer.Address == null)
+    {
+        throw new InvalidOperationException(&quot;Order details are invalid&quot;);
+    }
+}
 
-<span class="k">private</span><span class="w"> </span><span class="kt">decimal</span><span class="w"> </span><span class="nf">CalculateOrderTotal</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">decimal</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="n">Items</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
-<span class="p">}</span>
+private decimal CalculateOrderTotal(Order order)
+{
+    decimal total = 0;
+    foreach (var item in order.Items)
+    {
+        total += item.Price * item.Quantity;
+    }
+    return total;
+}
 
-<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SaveOrderToDatabase</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DbContext</span><span class="p">())</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">Orders</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">SaveChanges</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+private void SaveOrderToDatabase(Order order)
+{
+    using (var context = new DbContext())
+    {
+        context.Orders.Add(order);
+        context.SaveChanges();
+    }
+}
 
-<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SendConfirmationEmail</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">emailService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EmailService</span><span class="p">();</span>
-<span class="w">    </span><span class="n">emailService</span><span class="p">.</span><span class="n">SendConfirmationEmail</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+private void SendConfirmationEmail(Order order)
+{
+    var emailService = new EmailService();
+    emailService.SendConfirmationEmail(order);
+}
+</code></pre>
 <p>This refactored version of the method is easier to understand and maintain, with each method having a single responsibility.</p>
 <h2 id="tools-and-platforms-for-refactoring">Tools and Platforms for Refactoring</h2>
 <p>There are several tools and platforms that can aid in the refactoring process. Some popular options include:
@@ -255,33 +253,31 @@ Some popular tools for analyzing code quality include:
 * GitHub, a web-based platform for version control and collaboration, with built-in code review and refactoring tools</p>
 <h3 id="example-2-using-resharper-to-refactor-code">Example 2: Using Resharper to Refactor Code</h3>
 <p>Consider the following example of using Resharper to refactor a piece of code in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Order</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Customer</span><span class="w"> </span><span class="n">Customer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Items</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<pre><code class="language-csharp">public class Order
+{
+    public Customer Customer { get; set; }
+    public List&lt;OrderItem&gt; Items { get; set; }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">decimal</span><span class="w"> </span><span class="nf">CalculateTotal</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">decimal</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Items</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public decimal CalculateTotal()
+    {
+        decimal total = 0;
+        foreach (var item in Items)
+        {
+            total += item.Price * item.Quantity;
+        }
+        return total;
+    }
+}
+</code></pre>
 <p>Using Resharper, we can refactor this code to make it more efficient and readable:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Order</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Customer</span><span class="w"> </span><span class="n">Customer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">OrderItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Items</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<pre><code class="language-csharp">public class Order
+{
+    public Customer Customer { get; set; }
+    public List&lt;OrderItem&gt; Items { get; set; }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">decimal</span><span class="w"> </span><span class="nf">CalculateTotal</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Items</span><span class="p">.</span><span class="n">Sum</span><span class="p">(</span><span class="n">item</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public decimal CalculateTotal() =&gt; Items.Sum(item =&gt; item.Price * item.Quantity);
+}
+</code></pre>
 <p>This refactored version of the code uses the <code>Sum</code> method from LINQ to calculate the total, making it more concise and efficient.</p>
 <h2 id="performance-metrics-and-benchmarks">Performance Metrics and Benchmarks</h2>
 <p>Refactoring code can have a significant impact on performance, with some refactoring techniques resulting in significant improvements in execution time or memory usage. Some common performance metrics include:
@@ -290,18 +286,17 @@ Some popular tools for analyzing code quality include:
 * CPU usage: the amount of CPU resources used by a piece of code</p>
 <h3 id="example-3-measuring-performance-improvement">Example 3: Measuring Performance Improvement</h3>
 <p>Consider the following example of measuring the performance improvement of a refactored piece of code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">OrderProcessor</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ProcessOrders</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span><span class="w"> </span><span class="n">orders</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">orders</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Process order</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">public class OrderProcessor
+{
+    public void ProcessOrders(List&lt;Order&gt; orders)
+    {
+        foreach (var order in orders)
+        {
+            // Process order
+        }
+    }
+}
+</code></pre>
 <p>Using a profiling tool such as dotTrace, we can measure the execution time of this code before and after refactoring:
 | Refactoring Technique | Execution Time (ms) |
 | --- | --- |

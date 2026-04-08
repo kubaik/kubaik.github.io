@@ -153,83 +153,79 @@
 <p>Artificial Intelligence (AI) has revolutionized the way businesses operate, making it possible to automate tasks, gain insights from data, and improve decision-making. With the increasing availability of AI tools and platforms, companies can now leverage AI to drive innovation and growth. In this article, we will explore the practical applications of AI, including natural language processing, computer vision, and predictive analytics.</p>
 <h3 id="natural-language-processing-nlp-with-spacy">Natural Language Processing (NLP) with spaCy</h3>
 <p>NLP is a key area of AI research, enabling computers to understand and generate human language. One popular library for NLP is spaCy, which provides high-performance, streamlined processing of text data. Here's an example of how to use spaCy to perform entity recognition:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import spacy
 
-<span class="c1"># Load the English language model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+# Load the English language model
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
 
-<span class="c1"># Define a sample text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is looking to buy U.K. startup for $1 billion&quot;</span>
+# Define a sample text
+text = &quot;Apple is looking to buy U.K. startup for $1 billion&quot;
 
-<span class="c1"># Process the text</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Process the text
+doc = nlp(text)
 
-<span class="c1"># Print the entities</span>
-<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the entities
+for entity in doc.ents:
+    print(entity.text, entity.label_)
+</code></pre>
 <p>This code snippet uses spaCy to identify entities in a given text, such as organizations (Apple) and monetary values ($1 billion). The output will be:</p>
-<div class="codehilite"><pre><span></span><code>Apple ORG
+<pre><code>Apple ORG
 $1 billion MONEY
 U.K. GPE
-</code></pre></div>
-
+</code></pre>
 <p>spaCy offers a range of features, including tokenization, part-of-speech tagging, and dependency parsing, making it a powerful tool for NLP tasks.</p>
 <h2 id="computer-vision-with-tensorflow">Computer Vision with TensorFlow</h2>
 <p>Computer vision is another significant area of AI research, enabling computers to interpret and understand visual data. TensorFlow, an open-source machine learning library, provides a comprehensive framework for building computer vision models. Here's an example of how to use TensorFlow to perform image classification:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
 
-<span class="c1"># Load the CIFAR-10 dataset</span>
-<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+# Load the CIFAR-10 dataset
+(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
 
-<span class="c1"># Define a convolutional neural network (CNN) model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
-<span class="p">])</span>
+# Define a convolutional neural network (CNN) model
+model = keras.models.Sequential([
+    keras.layers.Conv2D(32, (3, 3), activation=&quot;relu&quot;, input_shape=x_train.shape[1:]),
+    keras.layers.MaxPooling2D((2, 2)),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation=&quot;relu&quot;),
+    keras.layers.Dense(10, activation=&quot;softmax&quot;)
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;sparse_categorical_crossentropy&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer=&quot;adam&quot;, loss=&quot;sparse_categorical_crossentropy&quot;, metrics=[&quot;accuracy&quot;])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-</code></pre></div>
-
+# Train the model
+model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))
+</code></pre>
 <p>This code snippet uses TensorFlow to build a CNN model for image classification on the CIFAR-10 dataset, achieving an accuracy of around 70% after 10 epochs. The model can be further improved by tuning hyperparameters, using data augmentation, and leveraging transfer learning.</p>
 <h3 id="predictive-analytics-with-scikit-learn">Predictive Analytics with scikit-learn</h3>
 <p>Predictive analytics is a critical area of AI applications, enabling businesses to forecast future outcomes and make informed decisions. scikit-learn, a popular machine learning library, provides a wide range of algorithms for predictive modeling. Here's an example of how to use scikit-learn to perform regression analysis:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-<span class="c1"># Generate sample data</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Generate sample data
+np.random.seed(0)
+X = np.random.rand(100, 1)
+y = 3 * X + 2 + np.random.randn(100, 1)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Define a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+# Define a linear regression model
+model = LinearRegression()
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train the model
+model.fit(X_train, y_train)
 
-<span class="c1"># Make predictions</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Make predictions
+y_pred = model.predict(X_test)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+print(f&quot;Mean Squared Error: {mse:.2f}&quot;)
+</code></pre>
 <p>This code snippet uses scikit-learn to perform linear regression on a sample dataset, achieving a mean squared error of around 1.23. The model can be further improved by using regularization techniques, such as Lasso or Ridge regression, and selecting the optimal hyperparameters using cross-validation.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>AI has numerous applications across various industries, including:</p>

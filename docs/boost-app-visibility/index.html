@@ -157,20 +157,19 @@
 * Google Keyword Planner: provides insights into search terms and trends in the Google Play Store
 * Ahrefs: provides insights into search terms and trends across multiple app stores</p>
 <p>For example, let's say we're developing a fitness app and want to optimize it for the keyword "workout routine". Using Ahrefs, we can identify the search volume and competition for this keyword:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">ahrefs</span>
+<pre><code class="language-python">import ahrefs
 
-<span class="c1"># Set up Ahrefs API credentials</span>
-<span class="n">ahrefs_api</span> <span class="o">=</span> <span class="n">ahrefs</span><span class="o">.</span><span class="n">AhrefsAPI</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;YOUR_CLIENT_ID&quot;</span><span class="p">,</span> <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;YOUR_CLIENT_SECRET&quot;</span><span class="p">)</span>
+# Set up Ahrefs API credentials
+ahrefs_api = ahrefs.AhrefsAPI(client_id=&quot;YOUR_CLIENT_ID&quot;, client_secret=&quot;YOUR_CLIENT_SECRET&quot;)
 
-<span class="c1"># Search for keyword &quot;workout routine&quot;</span>
-<span class="n">keyword</span> <span class="o">=</span> <span class="s2">&quot;workout routine&quot;</span>
-<span class="n">search_volume</span> <span class="o">=</span> <span class="n">ahrefs_api</span><span class="o">.</span><span class="n">get_search_volume</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span>
-<span class="n">competition</span> <span class="o">=</span> <span class="n">ahrefs_api</span><span class="o">.</span><span class="n">get_competition</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span>
+# Search for keyword &quot;workout routine&quot;
+keyword = &quot;workout routine&quot;
+search_volume = ahrefs_api.get_search_volume(keyword)
+competition = ahrefs_api.get_competition(keyword)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Search volume for &#39;</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">search_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Competition for &#39;</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">competition</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Search volume for '{keyword}': {search_volume}&quot;)
+print(f&quot;Competition for '{keyword}': {competition}&quot;)
+</code></pre>
 <p>This code snippet uses the Ahrefs API to retrieve the search volume and competition for the keyword "workout routine".</p>
 <h3 id="optimization-of-app-metadata">Optimization of App Metadata</h3>
 <p>Once we have identified our target keywords, we need to optimize our app's metadata to improve its visibility in search results. This includes:
@@ -213,20 +212,19 @@
 * <strong>Sensor Tower</strong>: provides insights into app performance, including downloads, revenue, and ratings
 * <strong>Google Play Console</strong>: provides insights into app performance, including downloads, revenue, and ratings</p>
 <p>For example, let's say we're developing a music streaming app and want to track its performance in the Google Play Store. We can use the Google Play Console to track its downloads, revenue, and ratings:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.play.console.PlayConsoleAPI</span><span class="p">;</span>
+<pre><code class="language-java">import com.google.play.console.PlayConsoleAPI;
 
-<span class="c1">// Set up Google Play Console API credentials</span>
-<span class="n">PlayConsoleAPI</span><span class="w"> </span><span class="n">playConsoleApi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayConsoleAPI</span><span class="p">(</span><span class="s">&quot;YOUR_CLIENT_ID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;YOUR_CLIENT_SECRET&quot;</span><span class="p">);</span>
+// Set up Google Play Console API credentials
+PlayConsoleAPI playConsoleApi = new PlayConsoleAPI(&quot;YOUR_CLIENT_ID&quot;, &quot;YOUR_CLIENT_SECRET&quot;);
 
-<span class="c1">// Get app performance data</span>
-<span class="n">AppPerformanceData</span><span class="w"> </span><span class="n">appPerformanceData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">playConsoleApi</span><span class="p">.</span><span class="na">getAppPerformanceData</span><span class="p">(</span><span class="s">&quot;YOUR_APP_ID&quot;</span><span class="p">);</span>
+// Get app performance data
+AppPerformanceData appPerformanceData = playConsoleApi.getAppPerformanceData(&quot;YOUR_APP_ID&quot;);
 
-<span class="c1">// Print app performance data</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Downloads: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">appPerformanceData</span><span class="p">.</span><span class="na">getDownloads</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Revenue: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">appPerformanceData</span><span class="p">.</span><span class="na">getRevenue</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Ratings: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">appPerformanceData</span><span class="p">.</span><span class="na">getRatings</span><span class="p">());</span>
-</code></pre></div>
-
+// Print app performance data
+System.out.println(&quot;Downloads: &quot; + appPerformanceData.getDownloads());
+System.out.println(&quot;Revenue: &quot; + appPerformanceData.getRevenue());
+System.out.println(&quot;Ratings: &quot; + appPerformanceData.getRatings());
+</code></pre>
 <p>This code snippet uses the Google Play Console API to retrieve the app's performance data, including downloads, revenue, and ratings.</p>
 <h3 id="real-world-examples-of-aso-success">Real-World Examples of ASO Success</h3>
 <p>There are several real-world examples of ASO success, including:

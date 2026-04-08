@@ -161,64 +161,61 @@
 <p>Here are a few practical code examples of how database management tools can be used:</p>
 <h3 id="example-1-using-sql-server-management-studio-to-optimize-queries">Example 1: Using SQL Server Management Studio to Optimize Queries</h3>
 <p>SQL Server Management Studio is a comprehensive database management tool that provides a range of features to optimize database performance. Here's an example of how to use SQL Server Management Studio to optimize a query:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a sample table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">CustomerID</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
-<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="n">Email</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Create a sample table
+CREATE TABLE Customers (
+    CustomerID int,
+    Name varchar(255),
+    Email varchar(255)
+);
 
-<span class="c1">-- Insert some sample data</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="p">(</span><span class="n">CustomerID</span><span class="p">,</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">Email</span><span class="p">)</span>
-<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">),</span>
-<span class="w">       </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;jane.doe@example.com&#39;</span><span class="p">),</span>
-<span class="w">       </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Bob Smith&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob.smith@example.com&#39;</span><span class="p">);</span>
+-- Insert some sample data
+INSERT INTO Customers (CustomerID, Name, Email)
+VALUES (1, 'John Doe', 'john.doe@example.com'),
+       (2, 'Jane Doe', 'jane.doe@example.com'),
+       (3, 'Bob Smith', 'bob.smith@example.com');
 
-<span class="c1">-- Use the Database Engine Tuning Advisor to optimize a query</span>
-<span class="k">EXEC</span><span class="w"> </span><span class="n">sp_helpindex</span><span class="w"> </span><span class="s1">&#39;Customers&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Use the Database Engine Tuning Advisor to optimize a query
+EXEC sp_helpindex 'Customers';
+</code></pre>
 <p>This code creates a sample table, inserts some sample data, and uses the Database Engine Tuning Advisor to optimize a query.</p>
 <h3 id="example-2-using-mongodb-atlas-to-monitor-database-performance">Example 2: Using MongoDB Atlas to Monitor Database Performance</h3>
 <p>MongoDB Atlas is a cloud-based database management platform that provides real-time monitoring of database performance. Here's an example of how to use MongoDB Atlas to monitor database performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Connect to the MongoDB Atlas API</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">MongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mongodb+srv://username:password@cluster-name.mongodb.net/&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dbName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mydatabase&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Connect to the MongoDB Atlas API
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb+srv://username:password@cluster-name.mongodb.net/';
+const dbName = 'mydatabase';
 
-<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to MongoDB Atlas&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">db</span><span class="p">(</span><span class="nx">dbName</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">collection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;mycollection&#39;</span><span class="p">);</span>
+MongoClient.connect(url, function(err, client) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connected to MongoDB Atlas');
+        const db = client.db(dbName);
+        const collection = db.collection('mycollection');
 
-<span class="w">        </span><span class="c1">// Use the MongoDB Atlas API to monitor database performance</span>
-<span class="w">        </span><span class="nx">collection</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">docs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+        // Use the MongoDB Atlas API to monitor database performance
+        collection.find().toArray(function(err, docs) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(docs);
+            }
+        });
+    }
+});
+</code></pre>
 <p>This code connects to the MongoDB Atlas API, selects a database and collection, and uses the MongoDB Atlas API to monitor database performance.</p>
 <h3 id="example-3-using-pgbadger-to-analyze-postgresql-logs">Example 3: Using pgBadger to Analyze PostgreSQL Logs</h3>
 <p>pgBadger is a PostgreSQL log analysis tool that provides detailed insights into database performance. Here's an example of how to use pgBadger to analyze PostgreSQL logs:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install pgBadger</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>pgbadger
+<pre><code class="language-bash"># Install pgBadger
+sudo apt-get install pgbadger
 
-<span class="c1"># Configure pgBadger to analyze PostgreSQL logs</span>
-sudo<span class="w"> </span>pgbadger<span class="w"> </span>-f<span class="w"> </span>/var/log/postgresql/postgres.log<span class="w"> </span>-o<span class="w"> </span>/var/www/html/pgbadger
+# Configure pgBadger to analyze PostgreSQL logs
+sudo pgbadger -f /var/log/postgresql/postgres.log -o /var/www/html/pgbadger
 
-<span class="c1"># Access the pgBadger web interface</span>
+# Access the pgBadger web interface
 http://localhost/pgbadger
-</code></pre></div>
-
+</code></pre>
 <p>This code installs pgBadger, configures it to analyze PostgreSQL logs, and accesses the pgBadger web interface.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that database administrators face, along with specific solutions:</p>

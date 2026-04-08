@@ -165,55 +165,53 @@
 3. <strong>Create a New Project</strong>: Create a new Android project in Android Studio, and select "Kotlin" as the programming language.</p>
 <h3 id="example-hello-world-app-in-kotlin">Example: Hello World App in Kotlin</h3>
 <p>Here is an example of a simple "Hello World" app in Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">androidx.appcompat.app.AppCompatActivity</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.widget.TextView</span>
+<pre><code class="language-kotlin">import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">textView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextView</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-<span class="w">        </span><span class="n">textView</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, World!&quot;</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val textView = TextView(this)
+        textView.text = &quot;Hello, World!&quot;
+        setContentView(textView)
+    }
+}
+</code></pre>
 <p>This code creates a simple Android app with a single activity that displays the text "Hello, World!".</p>
 <h2 id="building-a-real-world-app-with-kotlin">Building a Real-World App with Kotlin</h2>
 <p>Let's build a real-world app using Kotlin. We will create a simple weather app that displays the current weather for a given location. We will use the OpenWeatherMap API to fetch the weather data.</p>
 <h3 id="example-weather-app-in-kotlin">Example: Weather App in Kotlin</h3>
 <p>Here is an example of how you can use the OpenWeatherMap API to fetch the weather data in Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Call</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Callback</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">retrofit2.Response</span>
+<pre><code class="language-kotlin">import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">WeatherService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Retrofit</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="na">baseUrl</span><span class="p">(</span><span class="s">&quot;https://api.openweathermap.org/&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="p">.</span><span class="na">addConverterFactory</span><span class="p">(</span><span class="n">GsonConverterFactory</span><span class="p">.</span><span class="na">create</span><span class="p">())</span>
-<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">OpenWeatherMapApi</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
+class WeatherService {
+    private val api = Retrofit.Builder()
+        .baseUrl(&quot;https://api.openweathermap.org/&quot;)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(OpenWeatherMapApi::class.java)
 
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getWeather</span><span class="p">(</span><span class="n">lat</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">callback</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">WeatherResponse</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">api</span><span class="p">.</span><span class="na">getWeather</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;units=metric&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;appid=YOUR_API_KEY&quot;</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="na">enqueue</span><span class="p">(</span><span class="k">object</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Callback</span><span class="o">&lt;</span><span class="n">WeatherResponse</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onResponse</span><span class="p">(</span><span class="n">call</span><span class="p">:</span><span class="w"> </span><span class="n">Call</span><span class="o">&lt;</span><span class="n">WeatherResponse</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">:</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">WeatherResponse</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">isSuccessful</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="n">callback</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="p">()</span><span class="o">!!</span><span class="p">)</span>
-<span class="w">                    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="c1">// handle error</span>
-<span class="w">                    </span><span class="p">}</span>
-<span class="w">                </span><span class="p">}</span>
+    fun getWeather(lat: Double, lon: Double, callback: (WeatherResponse) -&gt; Unit) {
+        api.getWeather(lat, lon, &quot;units=metric&quot;, &quot;appid=YOUR_API_KEY&quot;)
+            .enqueue(object : Callback&lt;WeatherResponse&gt; {
+                override fun onResponse(call: Call&lt;WeatherResponse&gt;, response: Response&lt;WeatherResponse&gt;) {
+                    if (response.isSuccessful) {
+                        callback(response.body()!!)
+                    } else {
+                        // handle error
+                    }
+                }
 
-<span class="w">                </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onFailure</span><span class="p">(</span><span class="n">call</span><span class="p">:</span><span class="w"> </span><span class="n">Call</span><span class="o">&lt;</span><span class="n">WeatherResponse</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">:</span><span class="w"> </span><span class="n">Throwable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="c1">// handle error</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">})</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+                override fun onFailure(call: Call&lt;WeatherResponse&gt;, t: Throwable) {
+                    // handle error
+                }
+            })
+    }
+}
+</code></pre>
 <p>This code uses the Retrofit library to make a GET request to the OpenWeatherMap API and fetch the weather data for a given location.</p>
 <h2 id="handling-common-problems">Handling Common Problems</h2>
 <p>When building Android apps with Kotlin, you may encounter some common problems. Here are some solutions to these problems:

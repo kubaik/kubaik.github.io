@@ -154,34 +154,33 @@
 <h3 id="pattern-1-api-composition">Pattern 1: API Composition</h3>
 <p>API composition involves breaking down a complex request into smaller, simpler requests that can be handled by individual microservices. This pattern is useful when a client needs to retrieve data from multiple services. For example, in an e-commerce application, a client may request the details of an order, which includes information about the customer, products, and shipping. The API gateway can compose this request by calling the customer service, product service, and shipping service, and then aggregate the responses.</p>
 <p>To implement API composition, you can use a tool like NGINX, which supports Lua scripting for complex logic. Here's an example of how you can use Lua to compose an API request:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">http</span> <span class="p">{</span>
-    <span class="p">...</span>
-    <span class="n">server</span> <span class="p">{</span>
-        <span class="n">listen</span> <span class="mi">80</span><span class="p">;</span>
-        <span class="n">location</span> <span class="o">/</span><span class="n">orders</span> <span class="p">{</span>
-            <span class="n">content_by_lua_block</span> <span class="p">{</span>
-                <span class="kd">local</span> <span class="n">order_id</span> <span class="o">=</span> <span class="n">ngx</span><span class="p">.</span><span class="n">var</span><span class="p">.</span><span class="n">arg_order_id</span>
-                <span class="kd">local</span> <span class="n">customer_service</span> <span class="o">=</span> <span class="s2">&quot;http://customer-service:8080/customers/&quot;</span>
-                <span class="kd">local</span> <span class="n">product_service</span> <span class="o">=</span> <span class="s2">&quot;http://product-service:8080/products/&quot;</span>
-                <span class="kd">local</span> <span class="n">shipping_service</span> <span class="o">=</span> <span class="s2">&quot;http://shipping-service:8080/shipping/&quot;</span>
+<pre><code class="language-lua">http {
+    ...
+    server {
+        listen 80;
+        location /orders {
+            content_by_lua_block {
+                local order_id = ngx.var.arg_order_id
+                local customer_service = &quot;http://customer-service:8080/customers/&quot;
+                local product_service = &quot;http://product-service:8080/products/&quot;
+                local shipping_service = &quot;http://shipping-service:8080/shipping/&quot;
 
-                <span class="kd">local</span> <span class="n">customer_response</span> <span class="o">=</span> <span class="n">ngx</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span><span class="n">customer_service</span> <span class="o">..</span> <span class="n">order_id</span><span class="p">)</span>
-                <span class="kd">local</span> <span class="n">product_response</span> <span class="o">=</span> <span class="n">ngx</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span><span class="n">product_service</span> <span class="o">..</span> <span class="n">order_id</span><span class="p">)</span>
-                <span class="kd">local</span> <span class="n">shipping_response</span> <span class="o">=</span> <span class="n">ngx</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span><span class="n">shipping_service</span> <span class="o">..</span> <span class="n">order_id</span><span class="p">)</span>
+                local customer_response = ngx.location.capture(customer_service .. order_id)
+                local product_response = ngx.location.capture(product_service .. order_id)
+                local shipping_response = ngx.location.capture(shipping_service .. order_id)
 
-                <span class="kd">local</span> <span class="n">response</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="n">customer</span> <span class="o">=</span> <span class="n">customer_response</span><span class="p">.</span><span class="n">body</span><span class="p">,</span>
-                    <span class="n">products</span> <span class="o">=</span> <span class="n">product_response</span><span class="p">.</span><span class="n">body</span><span class="p">,</span>
-                    <span class="n">shipping</span> <span class="o">=</span> <span class="n">shipping_response</span><span class="p">.</span><span class="n">body</span>
-                <span class="p">}</span>
+                local response = {
+                    customer = customer_response.body,
+                    products = product_response.body,
+                    shipping = shipping_response.body
+                }
 
-                <span class="n">ngx</span><span class="p">.</span><span class="n">say</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+                ngx.say(response)
+            }
+        }
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use NGINX and Lua to compose an API request by calling multiple microservices and aggregating the responses.</p>
 <h3 id="pattern-2-service-discovery">Pattern 2: Service Discovery</h3>
 <p>Service discovery is the process of locating and connecting to available service instances. In a microservices architecture, services are often deployed in containers or on cloud platforms, which can lead to dynamic IP addresses and ports. The API gateway needs to be able to discover the available service instances and route requests to them. There are several service discovery mechanisms, including:</p>
@@ -191,21 +190,20 @@
 <li>API-based service discovery (e.g., Kubernetes API)</li>
 </ul>
 <p>For example, you can use Consul, a popular service discovery tool, to manage your microservices. Consul provides a DNS interface for service discovery, which can be used by the API gateway to locate available service instances. Here's an example of how you can use Consul with NGINX:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">resolver</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">8600</span><span class="w"> </span><span class="s">ipv6=off</span><span class="p">;</span>
+<pre><code class="language-nginx">http {
+    ...
+    resolver 127.0.0.1:8600 ipv6=off;
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/customers</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://customer-service.service.consul:8080</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    server {
+        listen 80;
+        location /customers {
+            proxy_pass http://customer-service.service.consul:8080;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use Consul and NGINX to discover available service instances and route requests to them.</p>
 <h3 id="pattern-3-rate-limiting">Pattern 3: Rate Limiting</h3>
 <p>Rate limiting is a crucial pattern for preventing abuse and ensuring the scalability of your API gateway. It involves limiting the number of requests that can be made to the API within a certain time frame. There are several rate limiting algorithms, including:</p>
@@ -215,22 +213,21 @@
 <li>Fixed window algorithm</li>
 </ul>
 <p>For example, you can use NGINX to implement rate limiting using the token bucket algorithm. Here's an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=one:10m</span><span class="w"> </span><span class="s">rate=5r/s</span><span class="p">;</span>
+<pre><code class="language-nginx">http {
+    ...
+    limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=one</span><span class="w"> </span><span class="s">burst=10</span><span class="w"> </span><span class="s">nodelay</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    server {
+        listen 80;
+        location / {
+            limit_req zone=one burst=10 nodelay;
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use NGINX to limit the number of requests to 5 requests per second, with a burst size of 10 requests.</p>
 <h3 id="pattern-4-caching">Pattern 4: Caching</h3>
 <p>Caching is a powerful pattern for improving the performance of your API gateway. It involves storing frequently accessed data in a cache layer, which can reduce the number of requests made to the backend services. There are several caching mechanisms, including:</p>
@@ -240,30 +237,29 @@
 <li>Write-through caching</li>
 </ul>
 <p>For example, you can use Redis, a popular caching tool, to cache frequently accessed data. Here's an example of how you can use Redis with NGINX:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">upstream</span><span class="w"> </span><span class="s">redis</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">6379</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    ...
+    upstream redis {
+        server localhost:6379;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">set</span><span class="w"> </span><span class="nv">$cache_key</span><span class="w"> </span><span class="nv">$uri</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">redis_pass</span><span class="w"> </span><span class="s">redis</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">redis_timeout</span><span class="w"> </span><span class="s">1s</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">error_page</span><span class="w"> </span><span class="mi">404</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">@fallback</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+    server {
+        listen 80;
+        location / {
+            set $cache_key $uri;
+            redis_pass redis;
+            redis_timeout 1s;
+            error_page 404 = @fallback;
+        }
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">@fallback</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://backend</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        location @fallback {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use Redis and NGINX to cache frequently accessed data.</p>
 <h3 id="pattern-5-security">Pattern 5: Security</h3>
 <p>Security is a critical pattern for protecting your API gateway from unauthorized access and malicious attacks. It involves implementing authentication and authorization mechanisms, such as:</p>
@@ -273,34 +269,33 @@
 <li>Basic authentication</li>
 </ul>
 <p>For example, you can use OAuth 2.0 to secure your API gateway. Here's an example of how you can use OAuth 2.0 with NGINX:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">upstream</span><span class="w"> </span><span class="s">auth-server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">server</span><span class="w"> </span><span class="n">localhost</span><span class="p">:</span><span class="mi">8080</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+<pre><code class="language-nginx">http {
+    ...
+    upstream auth-server {
+        server localhost:8080;
+    }
 
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">auth_request</span><span class="w"> </span><span class="s">/auth</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">error_page</span><span class="w"> </span><span class="mi">401</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">@unauthorized</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+    server {
+        listen 80;
+        location / {
+            auth_request /auth;
+            error_page 401 = @unauthorized;
+        }
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/auth</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">internal</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://auth-server</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_pass_request_body</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Content-Length</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">            </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Original-URI</span><span class="w"> </span><span class="nv">$request_uri</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+        location /auth {
+            internal;
+            proxy_pass http://auth-server;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length 0;
+            proxy_set_header X-Original-URI $request_uri;
+        }
 
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">@unauthorized</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">return</span><span class="w"> </span><span class="mi">401</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        location @unauthorized {
+            return 401;
+        }
+    }
+}
+</code></pre>
 <p>This example demonstrates how to use OAuth 2.0 and NGINX to secure your API gateway.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing these patterns, you may encounter several common problems, such as:</p>

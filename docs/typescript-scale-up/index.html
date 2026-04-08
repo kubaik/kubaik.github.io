@@ -159,66 +159,62 @@
 * <strong>Scalability</strong>: TypeScript's modular design makes it easy to manage large codebases.</p>
 <h2 id="setting-up-a-typescript-project">Setting Up a TypeScript Project</h2>
 <p>To get started with TypeScript, you'll need to set up a new project. Here's an example of how to create a new TypeScript project using the <code>create-react-app</code> tool:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-react-app<span class="w"> </span>my-app<span class="w"> </span>--template<span class="w"> </span>typescript
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-react-app my-app --template typescript
+</code></pre>
 <p>This will create a new React application with TypeScript configured out of the box.</p>
 <h3 id="configuring-the-typescript-compiler">Configuring the TypeScript Compiler</h3>
 <p>The TypeScript compiler, <code>tsc</code>, is responsible for compiling your TypeScript code into JavaScript. You can configure the compiler using the <code>tsconfig.json</code> file. Here's an example <code>tsconfig.json</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es5&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;lib&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dom&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dom.iterable&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;esnext&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;allowJs&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;skipLibCheck&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;esModuleInterop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;allowSyntheticDefaultImports&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;strict&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;forceConsistentCasingInFileNames&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;noFallthroughCasesInSwitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;esnext&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;moduleResolution&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;resolveJsonModule&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isolatedModules&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;jsx&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;react&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;lib&quot;: [&quot;dom&quot;, &quot;dom.iterable&quot;, &quot;esnext&quot;],
+    &quot;allowJs&quot;: true,
+    &quot;skipLibCheck&quot;: true,
+    &quot;esModuleInterop&quot;: true,
+    &quot;allowSyntheticDefaultImports&quot;: true,
+    &quot;strict&quot;: true,
+    &quot;forceConsistentCasingInFileNames&quot;: true,
+    &quot;noFallthroughCasesInSwitch&quot;: true,
+    &quot;module&quot;: &quot;esnext&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;resolveJsonModule&quot;: true,
+    &quot;isolatedModules&quot;: true,
+    &quot;jsx&quot;: &quot;react&quot;
+  }
+}
+</code></pre>
 <p>This configuration tells the compiler to target ES5, use the DOM and DOM iterable libraries, and enable strict type checking.</p>
 <h2 id="using-typescript-with-popular-frameworks">Using TypeScript with Popular Frameworks</h2>
 <p>TypeScript can be used with a variety of popular frameworks, including React, Angular, and Vue. Here's an example of how to use TypeScript with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/App.tsx</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// src/App.tsx
+import React from 'react';
 
-<span class="kd">interface</span><span class="w"> </span><span class="nx">Props</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+interface Props {
+  name: string;
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="o">:</span><span class="w"> </span><span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">!&lt;</span><span class="err">/div&gt;;</span>
-<span class="p">};</span>
+const App: React.FC&lt;Props&gt; = ({ name }) =&gt; {
+  return &lt;div&gt;Hello, {name}!&lt;/div&gt;;
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
-</code></pre></div>
-
+export default App;
+</code></pre>
 <p>This example defines a React component that takes a <code>name</code> prop and renders a greeting message.</p>
 <h3 id="using-typescript-with-nodejs">Using TypeScript with Node.js</h3>
 <p>TypeScript can also be used with Node.js to build server-side applications. Here's an example of how to use TypeScript with Express.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/server.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">Response</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// src/server.ts
+import express, { Request, Response } from 'express';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="kt">Request</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="kt">Response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/', (req: Request, res: Response) =&gt; {
+  res.send('Hello, World!');
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server started on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server started on port 3000');
+});
+</code></pre>
 <p>This example defines an Express.js server that listens on port 3000 and responds to GET requests to the root URL.</p>
 <h2 id="managing-dependencies-with-typescript">Managing Dependencies with TypeScript</h2>
 <p>Managing dependencies is crucial in large-scale applications. TypeScript provides several tools to help manage dependencies, including:
@@ -226,30 +222,28 @@
 * <strong>yarn</strong>: Yarn is an alternative package manager that provides faster installation times and improved security.
 * <strong>pnpm</strong>: pnpm is a package manager that uses a content-addressable storage system to reduce disk usage.</p>
 <p>Here's an example of how to manage dependencies using npm:</p>
-<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>express<span class="w"> </span>typescript<span class="w"> </span>--save
-</code></pre></div>
-
+<pre><code class="language-bash">npm install express typescript --save
+</code></pre>
 <p>This command installs the Express.js framework and the TypeScript compiler, and saves them to the <code>package.json</code> file.</p>
 <h3 id="using-typescript-with-docker">Using TypeScript with Docker</h3>
 <p>Docker is a popular containerization platform that provides a consistent and reliable way to deploy applications. Here's an example of how to use TypeScript with Docker:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># Dockerfile
+FROM node:14
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+WORKDIR /app
 
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+COPY package*.json ./
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+RUN npm install
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">RUN</span><span class="w"> </span>tsc
+RUN tsc
 
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+EXPOSE 3000
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;server.js&quot;</span><span class="w"> </span><span class="p">]</span>
-</code></pre></div>
-
+CMD [ &quot;node&quot;, &quot;server.js&quot; ]
+</code></pre>
 <p>This Dockerfile installs the Node.js 14 image, copies the <code>package.json</code> file, installs the dependencies, copies the application code, compiles the TypeScript code, exposes port 3000, and sets the command to run the server.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>TypeScript provides several performance benefits, including:

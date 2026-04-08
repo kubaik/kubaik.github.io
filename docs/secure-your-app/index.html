@@ -177,39 +177,37 @@
 <li><strong>Multi-Factor Authentication (MFA)</strong>: Require users to provide two or more verification factors to gain access to an app.</li>
 </ul>
 <p><strong>Example Code for MFA using Firebase Authentication:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getAuth</span><span class="p">,</span><span class="w"> </span><span class="nx">signInWithEmailAndPassword</span><span class="p">,</span><span class="w"> </span><span class="nx">sendSignInLinkToEmail</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;firebase/auth&quot;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { getAuth, signInWithEmailAndPassword, sendSignInLinkToEmail } from &quot;firebase/auth&quot;;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getAuth</span><span class="p">();</span>
+const auth = getAuth();
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">sendMFAEmail</span><span class="p">(</span><span class="nx">email</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">actionCodeSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://yourapp.com/finishSignUp?cartId=1234&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">handleCodeInApp</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">sendSignInLinkToEmail</span><span class="p">(</span><span class="nx">auth</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">actionCodeSettings</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+async function sendMFAEmail(email) {
+    const actionCodeSettings = {
+        url: 'https://yourapp.com/finishSignUp?cartId=1234',
+        handleCodeInApp: true,
+    };
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+}
+</code></pre>
 <h3 id="2-encrypt-sensitive-data">2. Encrypt Sensitive Data</h3>
 <p>Data encryption is crucial for protecting sensitive information, both in transit and at rest.</p>
 <ul>
 <li><strong>Use AES-256 Encryption</strong>: This is a strong encryption standard and is widely used.</li>
 </ul>
 <p><strong>Example Code for AES Encryption in JavaScript:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">CryptoJS</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;crypto-js&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import CryptoJS from 'crypto-js';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">encryptData</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">ciphertext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">AES</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ciphertext</span><span class="p">;</span>
-<span class="p">}</span>
+function encryptData(data, secretKey) {
+    const ciphertext = CryptoJS.AES.encrypt(data, secretKey).toString();
+    return ciphertext;
+}
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">decryptData</span><span class="p">(</span><span class="nx">ciphertext</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">AES</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">ciphertext</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">originalData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bytes</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Utf8</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">originalData</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function decryptData(ciphertext, secretKey) {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+    const originalData = bytes.toString(CryptoJS.enc.Utf8);
+    return originalData;
+}
+</code></pre>
 <h3 id="3-secure-apis">3. Secure APIs</h3>
 <p>APIs are often the backbone of mobile applications. Here’s how to secure them:</p>
 <ul>
@@ -217,20 +215,19 @@
 <li><strong>Rate Limiting</strong>: Protect your APIs from abuse by implementing rate limiting.</li>
 </ul>
 <p><strong>Example of Rate Limiting in Node.js:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">rateLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-rate-limit&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const rateLimit = require('express-rate-limit');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="c1">// Apply rate limiting to all requests</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">limiter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rateLimit</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">windowMs</span><span class="o">:</span><span class="w"> </span><span class="mf">15</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">,</span><span class="w"> </span><span class="c1">// 15 minutes</span>
-<span class="w">    </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="w"> </span><span class="c1">// Limit each IP to 100 requests per windowMs</span>
-<span class="p">});</span>
+// Apply rate limiting to all requests
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // Limit each IP to 100 requests per windowMs
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">limiter</span><span class="p">);</span>
-</code></pre></div>
-
+app.use(limiter);
+</code></pre>
 <h3 id="4-secure-data-storage">4. Secure Data Storage</h3>
 <p>Storing sensitive information securely is vital. Use secure storage solutions rather than local storage.</p>
 <ul>

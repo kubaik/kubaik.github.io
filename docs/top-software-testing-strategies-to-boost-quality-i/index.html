@@ -166,11 +166,10 @@
 </ul>
 <p><strong>Example:</strong><br />
 A developer writes a unit test using a framework like Jest (for JavaScript):</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;calculateTotal adds correct amounts&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">expect</span><span class="p">(</span><span class="nx">calculateTotal</span><span class="p">([</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="mf">30</span><span class="p">])).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">60</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">test('calculateTotal adds correct amounts', () =&gt; {
+  expect(calculateTotal([10, 20, 30])).toBe(60);
+});
+</code></pre>
 <p><strong>Actionable tip:</strong> Incorporate Continuous Integration (CI) pipelines to run tests automatically on each commit, catching issues early.</p>
 <hr />
 <h3 id="2-automation-of-regression-testing">2. Automation of Regression Testing</h3>
@@ -190,18 +189,17 @@ A developer writes a unit test using a framework like Jest (for JavaScript):</p>
 </ul>
 <p><strong>Example:</strong><br />
 Automating login functionality in Selenium (Python):</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<pre><code class="language-python">from selenium import webdriver
 
-<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://example.com/login&quot;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;testuser&quot;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;password123&quot;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">&quot;loginBtn&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+driver = webdriver.Chrome()
+driver.get(&quot;https://example.com/login&quot;)
+driver.find_element_by_id(&quot;username&quot;).send_keys(&quot;testuser&quot;)
+driver.find_element_by_id(&quot;password&quot;).send_keys(&quot;password123&quot;)
+driver.find_element_by_id(&quot;loginBtn&quot;).click()
 
-<span class="k">assert</span> <span class="s2">&quot;Dashboard&quot;</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">page_source</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-</code></pre></div>
-
+assert &quot;Dashboard&quot; in driver.page_source
+driver.quit()
+</code></pre>
 <p><strong>Actionable tip:</strong> Maintain a comprehensive test suite and integrate it into your CI/CD pipeline to run tests on every pull request.</p>
 <hr />
 <h3 id="3-exploratory-testing">3. Exploratory Testing</h3>
@@ -237,26 +235,25 @@ A tester explores a new feature like a file upload modal, trying unusual file ty
 </ul>
 <p><strong>Example:</strong><br />
 Integrate testing with Jenkins or GitHub Actions to run a suite of tests whenever code is pushed:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI/CD Pipeline</span>
+<pre><code class="language-yaml">name: CI/CD Pipeline
 
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm test
+</code></pre>
 <p><strong>Actionable tip:</strong> Use dashboards to monitor test results and identify flaky tests for quicker resolution.</p>
 <hr />
 <h3 id="5-security-testing-devsecops">5. Security Testing (DevSecOps)</h3>
@@ -275,9 +272,8 @@ Integrate testing with Jenkins or GitHub Actions to run a suite of tests wheneve
 </ul>
 <p><strong>Example:</strong><br />
 Running Snyk to scan dependencies:</p>
-<div class="codehilite"><pre><span></span><code>snyk<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--all-projects
-</code></pre></div>
-
+<pre><code class="language-bash">snyk test --all-projects
+</code></pre>
 <p><strong>Actionable tip:</strong> Make security testing an integral part of your CI/CD pipeline, and regularly update your vulnerability databases.</p>
 <hr />
 <h3 id="6-ai-driven-testing">6. AI-Driven Testing</h3>

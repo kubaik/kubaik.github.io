@@ -166,54 +166,51 @@
 5. <strong>Incident post-incident activities</strong>: The team would conduct a post-incident review to identify the root cause of the incident, update the incident response plan, and implement measures to prevent similar incidents in the future.</p>
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <p>To demonstrate the implementation of incident response planning, let's consider a few practical code examples. For instance, we can use Python to automate the incident response process. Here's an example code snippet that uses the <code>requests</code> library to send an alert to a incident response team:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="k">def</span> <span class="nf">send_alert</span><span class="p">(</span><span class="n">incident_id</span><span class="p">,</span> <span class="n">incident_name</span><span class="p">,</span> <span class="n">incident_severity</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/incident-alert&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;incident_id&quot;</span><span class="p">:</span> <span class="n">incident_id</span><span class="p">,</span>
-        <span class="s2">&quot;incident_name&quot;</span><span class="p">:</span> <span class="n">incident_name</span><span class="p">,</span>
-        <span class="s2">&quot;incident_severity&quot;</span><span class="p">:</span> <span class="n">incident_severity</span>
-    <span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Alert sent successfully&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to send alert&quot;</span><span class="p">)</span>
+def send_alert(incident_id, incident_name, incident_severity):
+    url = &quot;https://example.com/incident-alert&quot;
+    payload = {
+        &quot;incident_id&quot;: incident_id,
+        &quot;incident_name&quot;: incident_name,
+        &quot;incident_severity&quot;: incident_severity
+    }
+    response = requests.post(url, json=payload)
+    if response.status_code == 200:
+        print(&quot;Alert sent successfully&quot;)
+    else:
+        print(&quot;Failed to send alert&quot;)
 
-<span class="c1"># Example usage</span>
-<span class="n">send_alert</span><span class="p">(</span><span class="s2">&quot;INC-001&quot;</span><span class="p">,</span> <span class="s2">&quot;Ransomware Attack&quot;</span><span class="p">,</span> <span class="s2">&quot;High&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage
+send_alert(&quot;INC-001&quot;, &quot;Ransomware Attack&quot;, &quot;High&quot;)
+</code></pre>
 <p>Another example is using the <code>paramiko</code> library to automate the process of isolating affected systems:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">paramiko</span>
+<pre><code class="language-python">import paramiko
 
-<span class="k">def</span> <span class="nf">isolate_systems</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="n">ssh</span> <span class="o">=</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
-    <span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
-    <span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
-    <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;sudo shutdown -h now&quot;</span><span class="p">)</span>
-    <span class="n">ssh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+def isolate_systems(hostname, username, password):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(hostname, username=username, password=password)
+    stdin, stdout, stderr = ssh.exec_command(&quot;sudo shutdown -h now&quot;)
+    ssh.close()
 
-<span class="c1"># Example usage</span>
-<span class="n">isolate_systems</span><span class="p">(</span><span class="s2">&quot;affected-system&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;password123&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Example usage
+isolate_systems(&quot;affected-system&quot;, &quot;admin&quot;, &quot;password123&quot;)
+</code></pre>
 <p>We can also use the <code>schedule</code> library to automate the process of running regular security audits:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">schedule</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import schedule
+import time
 
-<span class="k">def</span> <span class="nf">run_security_audit</span><span class="p">():</span>
-    <span class="c1"># Code to run security audit</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Security audit completed&quot;</span><span class="p">)</span>
+def run_security_audit():
+    # Code to run security audit
+    print(&quot;Security audit completed&quot;)
 
-<span class="n">schedule</span><span class="o">.</span><span class="n">every</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;08:00&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">run_security_audit</span><span class="p">)</span>  <span class="c1"># Run security audit daily at 8am</span>
+schedule.every(1).day.at(&quot;08:00&quot;).do(run_security_audit)  # Run security audit daily at 8am
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">schedule</span><span class="o">.</span><span class="n">run_pending</span><span class="p">()</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+</code></pre>
 <p>These code examples demonstrate how automation can be used to streamline the incident response process and reduce the time it takes to respond to security incidents.</p>
 <h3 id="tools-and-platforms">Tools and Platforms</h3>
 <p>There are several tools and platforms that can be used to support incident response planning, including:

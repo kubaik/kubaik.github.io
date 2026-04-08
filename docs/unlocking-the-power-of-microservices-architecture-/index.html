@@ -252,27 +252,24 @@
 <ol>
 <li><strong>Design APIs</strong> for each service, e.g., REST endpoints:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /posts</span>
-<span class="err">POST /posts</span>
-<span class="err">GET /comments/{postId}</span>
-<span class="err">POST /comments</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /posts
+POST /posts
+GET /comments/{postId}
+POST /comments
+</code></pre>
 <ol>
 <li><strong>Containerize each service</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example Dockerfile for Post Service</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">openjdk:17-jdk</span>
-<span class="k">COPY</span><span class="w"> </span>target/post-service.jar<span class="w"> </span>post-service.jar
-<span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-jar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;post-service.jar&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-dockerfile"># Example Dockerfile for Post Service
+FROM openjdk:17-jdk
+COPY target/post-service.jar post-service.jar
+ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;, &quot;post-service.jar&quot;]
+</code></pre>
 <ol>
 <li><strong>Set up service discovery</strong> with Consul:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>consul<span class="w"> </span>agent<span class="w"> </span>-dev
-</code></pre></div>
-
+<pre><code class="language-bash">consul agent -dev
+</code></pre>
 <ol>
 <li>
 <p><strong>Deploy services</strong> on Kubernetes, configuring <strong>Horizontal Pod Autoscaler</strong> for dynamic scaling based on CPU utilization.</p>

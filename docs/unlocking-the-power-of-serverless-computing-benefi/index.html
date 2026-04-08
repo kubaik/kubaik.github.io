@@ -243,9 +243,8 @@
 <li><strong>Function:</strong> An AWS Lambda function processes the image, resizes it, and stores it in a different S3 bucket.</li>
 <li><strong>Workflow:</strong></li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="n">S3</span><span class="w"> </span><span class="n">Upload</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">Lambda</span><span class="w"> </span><span class="n">Trigger</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">Processing</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">Resized</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">Storage</span>
-</code></pre></div>
-
+<pre><code class="language-plaintext">S3 Upload --&gt; Lambda Trigger --&gt; Image Processing --&gt; Resized Image Storage
+</code></pre>
 <h3 id="implementation-steps">Implementation Steps:</h3>
 <ol>
 <li>
@@ -261,34 +260,33 @@
 <p><strong>Write the Lambda Function:</strong></p>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span> <span class="nn">io</span>
+<pre><code class="language-python">import boto3
+from PIL import Image
+import io
 
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+s3 = boto3.client('s3')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the object from the event</span>
-    <span class="n">bucket_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-    <span class="n">object_key</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+def lambda_handler(event, context):
+    # Get the object from the event
+    bucket_name = event['Records'][0]['s3']['bucket']['name']
+    object_key = event['Records'][0]['s3']['object']['key']
 
-    <span class="c1"># Download image from S3</span>
-    <span class="n">image_obj</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">)</span>
-    <span class="n">image_data</span> <span class="o">=</span> <span class="n">image_obj</span><span class="p">[</span><span class="s1">&#39;Body&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    # Download image from S3
+    image_obj = s3.get_object(Bucket=bucket_name, Key=object_key)
+    image_data = image_obj['Body'].read()
 
-    <span class="c1"># Resize image</span>
-    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image_data</span><span class="p">))</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
-        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s1">&#39;JPEG&#39;</span><span class="p">)</span>
-        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    # Resize image
+    with Image.open(io.BytesIO(image_data)) as img:
+        img = img.resize((100, 100))
+        buffer = io.BytesIO()
+        img.save(buffer, 'JPEG')
+        buffer.seek(0)
 
-    <span class="c1"># Upload resized image</span>
-    <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;resized-images&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span> <span class="n">Body</span><span class="o">=</span><span class="n">buffer</span><span class="p">,</span> <span class="n">ContentType</span><span class="o">=</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">)</span>
+    # Upload resized image
+    s3.put_object(Bucket='resized-images', Key=object_key, Body=buffer, ContentType='image/jpeg')
 
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Image resized and stored&#39;</span><span class="p">}</span>
-</code></pre></div>
-
+    return {'status': 'Image resized and stored'}
+</code></pre>
 <ol>
 <li>
 <p><strong>Configure Trigger:</strong></p>

@@ -160,172 +160,169 @@
 <p>Implementing Zero Trust requires a combination of technology, processes, and policies. Here are a few practical examples of how to implement Zero Trust using popular tools and platforms:</p>
 <h3 id="example-1-implementing-zero-trust-with-aws-iam">Example 1: Implementing Zero Trust with AWS IAM</h3>
 <p>Amazon Web Services (AWS) provides a range of tools and services to implement Zero Trust, including AWS Identity and Access Management (IAM). Here is an example of how to use AWS IAM to implement Zero Trust:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an IAM client</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+# Create an IAM client
+iam = boto3.client('iam')
 
-<span class="c1"># Define a policy that denies all access by default</span>
-<span class="n">default_deny_policy</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Sid&#39;</span><span class="p">:</span> <span class="s1">&#39;DefaultDeny&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Deny&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;NotAction&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Resource&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+# Define a policy that denies all access by default
+default_deny_policy = {
+    'Version': '2012-10-17',
+    'Statement': [
+        {
+            'Sid': 'DefaultDeny',
+            'Effect': 'Deny',
+            'NotAction': '*',
+            'Resource': '*'
+        }
+    ]
+}
 
-<span class="c1"># Create a new IAM policy</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span>
-    <span class="n">PolicyName</span><span class="o">=</span><span class="s1">&#39;DefaultDenyPolicy&#39;</span><span class="p">,</span>
-    <span class="n">PolicyDocument</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default_deny_policy</span><span class="p">)</span>
-<span class="p">)</span>
+# Create a new IAM policy
+iam.create_policy(
+    PolicyName='DefaultDenyPolicy',
+    PolicyDocument=json.dumps(default_deny_policy)
+)
 
-<span class="c1"># Attach the policy to a new IAM role</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;ZeroTrustRole&#39;</span><span class="p">,</span>
-    <span class="n">AssumeRolePolicyDocument</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Sid&#39;</span><span class="p">:</span> <span class="s1">&#39;AllowAssumeRole&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Principal&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;AWS&#39;</span><span class="p">:</span> <span class="s1">&#39;arn:aws:iam::123456789012:root&#39;</span>
-                <span class="p">},</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;sts:AssumeRole&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">})</span>
-<span class="p">)</span>
+# Attach the policy to a new IAM role
+iam.create_role(
+    RoleName='ZeroTrustRole',
+    AssumeRolePolicyDocument=json.dumps({
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Sid': 'AllowAssumeRole',
+                'Effect': 'Allow',
+                'Principal': {
+                    'AWS': 'arn:aws:iam::123456789012:root'
+                },
+                'Action': 'sts:AssumeRole'
+            }
+        ]
+    })
+)
 
-<span class="c1"># Attach the DefaultDenyPolicy to the ZeroTrustRole</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">attach_role_policy</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;ZeroTrustRole&#39;</span><span class="p">,</span>
-    <span class="n">PolicyArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:policy/DefaultDenyPolicy&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Attach the DefaultDenyPolicy to the ZeroTrustRole
+iam.attach_role_policy(
+    RoleName='ZeroTrustRole',
+    PolicyArn='arn:aws:iam::123456789012:policy/DefaultDenyPolicy'
+)
+</code></pre>
 <p>This example creates a new IAM policy that denies all access by default, and then attaches it to a new IAM role. This ensures that any users or services that assume this role will be denied access to all resources by default.</p>
 <h3 id="example-2-implementing-zero-trust-with-google-cloud-iam">Example 2: Implementing Zero Trust with Google Cloud IAM</h3>
 <p>Google Cloud provides a range of tools and services to implement Zero Trust, including Google Cloud Identity and Access Management (IAM). Here is an example of how to use Google Cloud IAM to implement Zero Trust:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="kn">import</span> <span class="n">service_account</span>
-<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<pre><code class="language-python">from google.oauth2 import service_account
+from googleapiclient.discovery import build
 
-<span class="c1"># Create credentials from a service account file</span>
-<span class="n">credentials</span> <span class="o">=</span> <span class="n">service_account</span><span class="o">.</span><span class="n">Credentials</span><span class="o">.</span><span class="n">from_service_account_file</span><span class="p">(</span>
-    <span class="s1">&#39;path/to/service_account_key.json&#39;</span><span class="p">,</span>
-    <span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;https://www.googleapis.com/auth/iam&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+# Create credentials from a service account file
+credentials = service_account.Credentials.from_service_account_file(
+    'path/to/service_account_key.json',
+    scopes=['https://www.googleapis.com/auth/iam']
+)
 
-<span class="c1"># Create a new IAM client</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="n">credentials</span><span class="p">)</span>
+# Create a new IAM client
+iam = build('iam', 'v1', credentials=credentials)
 
-<span class="c1"># Define a policy that denies all access by default</span>
-<span class="n">default_deny_policy</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;bindings&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;members&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;roles/denied&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+# Define a policy that denies all access by default
+default_deny_policy = {
+    'bindings': [
+        {
+            'members': ['*'],
+            'role': 'roles/denied'
+        }
+    ]
+}
 
-<span class="c1"># Create a new IAM policy</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">policies</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;policy&#39;</span><span class="p">:</span> <span class="n">default_deny_policy</span>
-    <span class="p">}</span>
-<span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+# Create a new IAM policy
+iam.policies().create(
+    body={
+        'policy': default_deny_policy
+    }
+).execute()
 
-<span class="c1"># Attach the policy to a new IAM role</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">roles</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;ZeroTrustRole&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;includedPermissions&#39;</span><span class="p">:</span> <span class="p">[]</span>
-    <span class="p">}</span>
-<span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+# Attach the policy to a new IAM role
+iam.roles().create(
+    body={
+        'role': 'ZeroTrustRole',
+        'includedPermissions': []
+    }
+).execute()
 
-<span class="c1"># Attach the DefaultDenyPolicy to the ZeroTrustRole</span>
-<span class="n">iam</span><span class="o">.</span><span class="n">roles</span><span class="p">()</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;roles/ZeroTrustRole&#39;</span><span class="p">,</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;bindings&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;members&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;roles/denied&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-</code></pre></div>
-
+# Attach the DefaultDenyPolicy to the ZeroTrustRole
+iam.roles().patch(
+    name='roles/ZeroTrustRole',
+    body={
+        'bindings': [
+            {
+                'members': ['*'],
+                'role': 'roles/denied'
+            }
+        ]
+    }
+).execute()
+</code></pre>
 <p>This example creates a new IAM policy that denies all access by default, and then attaches it to a new IAM role. This ensures that any users or services that assume this role will be denied access to all resources by default.</p>
 <h3 id="example-3-implementing-zero-trust-with-azure-active-directory-aad">Example 3: Implementing Zero Trust with Azure Active Directory (AAD)</h3>
 <p>Azure Active Directory (AAD) provides a range of tools and services to implement Zero Trust, including Azure AD Conditional Access. Here is an example of how to use Azure AD Conditional Access to implement Zero Trust:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">msal</span>
+<pre><code class="language-python">import msal
 
-<span class="c1"># Create an MSAL client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">msal</span><span class="o">.</span><span class="n">ConfidentialClientApplication</span><span class="p">(</span>
-    <span class="n">client_id</span><span class="o">=</span><span class="s1">&#39;client_id&#39;</span><span class="p">,</span>
-    <span class="n">client_credential</span><span class="o">=</span><span class="s1">&#39;client_secret&#39;</span><span class="p">,</span>
-    <span class="n">authority</span><span class="o">=</span><span class="s1">&#39;https://login.microsoftonline.com/tenant_id&#39;</span>
-<span class="p">)</span>
+# Create an MSAL client
+client = msal.ConfidentialClientApplication(
+    client_id='client_id',
+    client_credential='client_secret',
+    authority='https://login.microsoftonline.com/tenant_id'
+)
 
-<span class="c1"># Define a conditional access policy that denies all access by default</span>
-<span class="n">default_deny_policy</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;displayName&#39;</span><span class="p">:</span> <span class="s1">&#39;Default Deny Policy&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="s1">&#39;enabled&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;conditions&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;includeUsers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;controls&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;grantControls&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="s1">&#39;OR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;builtInControls&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;block&#39;</span><span class="p">]</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+# Define a conditional access policy that denies all access by default
+default_deny_policy = {
+    'displayName': 'Default Deny Policy',
+    'state': 'enabled',
+    'conditions': {
+        'users': {
+            'includeUsers': ['*']
+        }
+    },
+    'controls': {
+        'grantControls': [
+            {
+                'operator': 'OR',
+                'builtInControls': ['block']
+            }
+        ]
+    }
+}
 
-<span class="c1"># Create a new conditional access policy</span>
-<span class="n">client</span><span class="o">.</span><span class="n">create_conditional_access_policy</span><span class="p">(</span>
-    <span class="n">body</span><span class="o">=</span><span class="n">default_deny_policy</span>
-<span class="p">)</span>
+# Create a new conditional access policy
+client.create_conditional_access_policy(
+    body=default_deny_policy
+)
 
-<span class="c1"># Attach the policy to a new Azure AD role</span>
-<span class="n">client</span><span class="o">.</span><span class="n">create_role_definition</span><span class="p">(</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;roleDefinitionId&#39;</span><span class="p">:</span> <span class="s1">&#39;role_id&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;displayName&#39;</span><span class="p">:</span> <span class="s1">&#39;ZeroTrustRole&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Zero Trust Role&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;permissions&#39;</span><span class="p">:</span> <span class="p">[]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Attach the policy to a new Azure AD role
+client.create_role_definition(
+    body={
+        'roleDefinitionId': 'role_id',
+        'displayName': 'ZeroTrustRole',
+        'description': 'Zero Trust Role',
+        'permissions': []
+    }
+)
 
-<span class="c1"># Attach the DefaultDenyPolicy to the ZeroTrustRole</span>
-<span class="n">client</span><span class="o">.</span><span class="n">update_role_definition</span><span class="p">(</span>
-    <span class="n">role_definition_id</span><span class="o">=</span><span class="s1">&#39;role_id&#39;</span><span class="p">,</span>
-    <span class="n">body</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;roleDefinitionId&#39;</span><span class="p">:</span> <span class="s1">&#39;role_id&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;displayName&#39;</span><span class="p">:</span> <span class="s1">&#39;ZeroTrustRole&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Zero Trust Role&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;permissions&#39;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s1">&#39;conditionalAccessPolicies&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;policy_id&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Attach the DefaultDenyPolicy to the ZeroTrustRole
+client.update_role_definition(
+    role_definition_id='role_id',
+    body={
+        'roleDefinitionId': 'role_id',
+        'displayName': 'ZeroTrustRole',
+        'description': 'Zero Trust Role',
+        'permissions': [],
+        'conditionalAccessPolicies': [
+            {
+                'id': 'policy_id'
+            }
+        ]
+    }
+)
+</code></pre>
 <p>This example creates a new conditional access policy that denies all access by default, and then attaches it to a new Azure AD role. This ensures that any users or services that assume this role will be denied access to all resources by default.</p>
 <h2 id="benefits-of-zero-trust-security-architecture">Benefits of Zero Trust Security Architecture</h2>
 <p>The benefits of Zero Trust Security Architecture are numerous. Here are a few key benefits:

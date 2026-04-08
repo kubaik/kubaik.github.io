@@ -220,21 +220,19 @@
 <ul>
 <li><strong>TDD Example:</strong> Using pytest in Python:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_add_item_to_cart</span><span class="p">():</span>
-    <span class="n">cart</span> <span class="o">=</span> <span class="n">ShoppingCart</span><span class="p">()</span>
-    <span class="n">cart</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;item1&#39;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="s1">&#39;item1&#39;</span> <span class="ow">in</span> <span class="n">cart</span><span class="o">.</span><span class="n">items</span>
-</code></pre></div>
-
+<pre><code class="language-python">def test_add_item_to_cart():
+    cart = ShoppingCart()
+    cart.add('item1')
+    assert 'item1' in cart.items
+</code></pre>
 <ul>
 <li><strong>BDD Scenario:</strong></li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="n">Scenario</span><span class="o">:</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">adds</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">cart</span>
-<span class="w">  </span><span class="n">Given</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">page</span>
-<span class="w">  </span><span class="n">When</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">clicks</span><span class="w"> </span><span class="s2">&quot;Add to Cart&quot;</span>
-<span class="w">  </span><span class="n">Then</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">appear</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">shopping</span><span class="w"> </span><span class="n">cart</span>
-</code></pre></div>
-
+<pre><code>Scenario: User adds an item to the cart
+  Given the user is on the product page
+  When the user clicks &quot;Add to Cart&quot;
+  Then the item should appear in the shopping cart
+</code></pre>
 <h3 id="actionable-advice_2">Actionable Advice</h3>
 <ul>
 <li>Promote TDD/BDD practices within your team.</li>

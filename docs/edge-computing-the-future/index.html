@@ -163,39 +163,38 @@
 * <strong>Healthcare</strong>: Edge computing can be used to analyze medical images, monitor patient vital signs, and provide personalized medicine.</p>
 <h3 id="example-1-industrial-automation-with-edge-computing">Example 1: Industrial Automation with Edge Computing</h3>
 <p>In industrial automation, edge computing can be used to monitor and control equipment in real-time. For example, a manufacturing plant can use edge computing to monitor the temperature and vibration of equipment, and automatically shut down the equipment if it exceeds a certain threshold. Here is an example code snippet in Python using the <strong>AWS IoT</strong> platform:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import boto3
+import json
 
-<span class="c1"># Create an AWS IoT client</span>
-<span class="n">iot</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
+# Create an AWS IoT client
+iot = boto3.client('iot')
 
-<span class="c1"># Define the equipment ID and threshold values</span>
-<span class="n">equipment_id</span> <span class="o">=</span> <span class="s1">&#39;equipment-1&#39;</span>
-<span class="n">temperature_threshold</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">vibration_threshold</span> <span class="o">=</span> <span class="mi">10</span>
+# Define the equipment ID and threshold values
+equipment_id = 'equipment-1'
+temperature_threshold = 100
+vibration_threshold = 10
 
-<span class="c1"># Define the lambda function to process the data</span>
-<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1"># Get the current temperature and vibration values</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span>
-    <span class="n">vibration</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;vibration&#39;</span><span class="p">]</span>
+# Define the lambda function to process the data
+def process_data(event):
+    # Get the current temperature and vibration values
+    temperature = event['temperature']
+    vibration = event['vibration']
 
-    <span class="c1"># Check if the values exceed the threshold</span>
-    <span class="k">if</span> <span class="n">temperature</span> <span class="o">&gt;</span> <span class="n">temperature_threshold</span> <span class="ow">or</span> <span class="n">vibration</span> <span class="o">&gt;</span> <span class="n">vibration_threshold</span><span class="p">:</span>
-        <span class="c1"># Shut down the equipment</span>
-        <span class="n">iot</span><span class="o">.</span><span class="n">update_thing_shadow</span><span class="p">(</span><span class="n">thingName</span><span class="o">=</span><span class="n">equipment_id</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="s1">&#39;off&#39;</span><span class="p">}))</span>
+    # Check if the values exceed the threshold
+    if temperature &gt; temperature_threshold or vibration &gt; vibration_threshold:
+        # Shut down the equipment
+        iot.update_thing_shadow(thingName=equipment_id, payload=json.dumps({'state': 'off'}))
 
-<span class="c1"># Create a lambda function to process the data</span>
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;process-data&#39;</span><span class="p">,</span>
-    <span class="n">Runtime</span><span class="o">=</span><span class="s1">&#39;python3.8&#39;</span><span class="p">,</span>
-    <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/lambda-execution-role&#39;</span><span class="p">,</span>
-    <span class="n">Handler</span><span class="o">=</span><span class="s1">&#39;index.process_data&#39;</span><span class="p">,</span>
-    <span class="n">Code</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ZipFile&#39;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;lambda_function_code&#39;</span><span class="p">)}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a lambda function to process the data
+lambda_client = boto3.client('lambda')
+lambda_client.create_function(
+    FunctionName='process-data',
+    Runtime='python3.8',
+    Role='arn:aws:iam::123456789012:role/lambda-execution-role',
+    Handler='index.process_data',
+    Code={'ZipFile': bytes(b'lambda_function_code')}
+)
+</code></pre>
 <p>This code snippet uses the <strong>AWS IoT</strong> platform to monitor the temperature and vibration of equipment and shut it down if it exceeds a certain threshold.</p>
 <h2 id="edge-computing-platforms-and-tools">Edge Computing Platforms and Tools</h2>
 <p>There are several edge computing platforms and tools available, including:
@@ -205,35 +204,34 @@
 * <strong>EdgeX Foundry</strong>: An open-source edge computing platform that provides a framework for developing edge computing applications.</p>
 <h3 id="example-2-using-edgex-foundry-to-develop-an-edge-computing-application">Example 2: Using EdgeX Foundry to Develop an Edge Computing Application</h3>
 <p>EdgeX Foundry is an open-source edge computing platform that provides a framework for developing edge computing applications. Here is an example code snippet in Go using EdgeX Foundry:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+<pre><code class="language-go">package main
 
-<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
-<span class="w">    </span><span class="s">&quot;github.com/edgexfoundry/edgex-go/core/data/models&quot;</span>
-<span class="p">)</span>
+import (
+    &quot;fmt&quot;
+    &quot;github.com/edgexfoundry/edgex-go/core/data/models&quot;
+)
 
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Create an EdgeX Foundry client</span>
-<span class="w">    </span><span class="nx">client</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NewClient</span><span class="p">()</span>
+func main() {
+    // Create an EdgeX Foundry client
+    client := models.NewClient()
 
-<span class="w">    </span><span class="c1">// Define the device ID and reading values</span>
-<span class="w">    </span><span class="nx">device_id</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;device-1&quot;</span>
-<span class="w">    </span><span class="nx">reading_values</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nx">models</span><span class="p">.</span><span class="nx">Reading</span><span class="p">{</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;temperature&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;humidity&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="mf">60.0</span><span class="p">},</span>
-<span class="w">    </span><span class="p">}</span>
+    // Define the device ID and reading values
+    device_id := &quot;device-1&quot;
+    reading_values := []models.Reading{
+        {Name: &quot;temperature&quot;, Value: 25.0},
+        {Name: &quot;humidity&quot;, Value: 60.0},
+    }
 
-<span class="w">    </span><span class="c1">// Create a new event</span>
-<span class="w">    </span><span class="nx">event</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">models</span><span class="p">.</span><span class="nx">NewEvent</span><span class="p">(</span><span class="nx">device_id</span><span class="p">,</span><span class="w"> </span><span class="nx">reading_values</span><span class="p">)</span>
+    // Create a new event
+    event := models.NewEvent(device_id, reading_values)
 
-<span class="w">    </span><span class="c1">// Send the event to the EdgeX Foundry server</span>
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">SendEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
+    // Send the event to the EdgeX Foundry server
+    client.SendEvent(event)
 
-<span class="w">    </span><span class="c1">// Print the response</span>
-<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Event sent successfully&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Print the response
+    fmt.Println(&quot;Event sent successfully&quot;)
+}
+</code></pre>
 <p>This code snippet uses EdgeX Foundry to create a new event and send it to the EdgeX Foundry server.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Edge computing can provide significant performance improvements compared to traditional cloud computing. For example, a study by <strong>Gartner</strong> found that edge computing can reduce latency by up to 90% and improve real-time processing capabilities by up to 50%. Here are some performance benchmarks for edge computing:
@@ -242,25 +240,24 @@
 * <strong>Response time</strong>: Edge computing can reduce response time by up to 70% compared to traditional cloud computing.</p>
 <h3 id="example-3-measuring-the-performance-of-an-edge-computing-application">Example 3: Measuring the Performance of an Edge Computing Application</h3>
 <p>To measure the performance of an edge computing application, you can use tools such as <strong>Apache JMeter</strong> or <strong>Grafana</strong>. Here is an example code snippet in Python using Apache JMeter:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
+<pre><code class="language-python">import os
+import subprocess
 
-<span class="c1"># Define the JMeter script</span>
-<span class="n">jmeter_script</span> <span class="o">=</span> <span class="s1">&#39;jmeter_script.jmx&#39;</span>
+# Define the JMeter script
+jmeter_script = 'jmeter_script.jmx'
 
-<span class="c1"># Define the JMeter results file</span>
-<span class="n">jmeter_results</span> <span class="o">=</span> <span class="s1">&#39;jmeter_results.csv&#39;</span>
+# Define the JMeter results file
+jmeter_results = 'jmeter_results.csv'
 
-<span class="c1"># Run the JMeter script</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;jmeter&#39;</span><span class="p">,</span> <span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="n">jmeter_script</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="n">jmeter_results</span><span class="p">])</span>
+# Run the JMeter script
+subprocess.run(['jmeter', '-n', '-t', jmeter_script, '-l', jmeter_results])
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JMeter results:&quot;</span><span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">jmeter_results</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the results
+print(&quot;JMeter results:&quot;)
+with open(jmeter_results, 'r') as f:
+    for line in f:
+        print(line.strip())
+</code></pre>
 <p>This code snippet uses Apache JMeter to measure the performance of an edge computing application and prints the results.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when developing edge computing applications, including:

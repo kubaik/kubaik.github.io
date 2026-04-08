@@ -161,73 +161,70 @@
 <p>To illustrate the implementation of Data Mesh, let's consider a real-world example using Apache Kafka, Apache Spark, and AWS S3. Suppose we have an e-commerce company with multiple business domains, such as order management, customer management, and product management. Each domain has its own data pipeline, and we want to implement a Data Mesh architecture to enable greater autonomy and scalability.</p>
 <h3 id="example-1-data-ingestion-with-apache-kafka">Example 1: Data Ingestion with Apache Kafka</h3>
 <p>We can use Apache Kafka to ingest data from various sources, such as databases, logs, and APIs. Here's an example of how we can use Kafka to ingest order data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
-<span class="kn">from</span> <span class="nn">kafka.errors</span> <span class="kn">import</span> <span class="n">NoBrokersAvailable</span>
+<pre><code class="language-python">from kafka import KafkaProducer
+from kafka.errors import NoBrokersAvailable
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">])</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
-<span class="c1"># Define the order data</span>
-<span class="n">order_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="mi">456</span><span class="p">,</span> <span class="s1">&#39;order_date&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">}</span>
+# Define the order data
+order_data = {'order_id': 123, 'customer_id': 456, 'order_date': '2022-01-01'}
 
-<span class="c1"># Send the order data to Kafka</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">order_data</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">NoBrokersAvailable</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No Kafka brokers available&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send the order data to Kafka
+try:
+    producer.send('orders', value=order_data)
+except NoBrokersAvailable:
+    print(&quot;No Kafka brokers available&quot;)
+</code></pre>
 <p>In this example, we create a Kafka producer and send the order data to the <code>orders</code> topic. This data can then be consumed by other domains or services, enabling a more decentralized and scalable data architecture.</p>
 <h3 id="example-2-data-processing-with-apache-spark">Example 2: Data Processing with Apache Spark</h3>
 <p>Once we have ingested the data into Kafka, we can use Apache Spark to process and transform the data. Here's an example of how we can use Spark to process the order data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">col</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+from pyspark.sql.functions import from_json, col
 
-<span class="c1"># Create a Spark session</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Order Processing&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a Spark session
+spark = SparkSession.builder.appName(&quot;Order Processing&quot;).getOrCreate()
 
-<span class="c1"># Define the order schema</span>
-<span class="n">order_schema</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;order_schema.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">schema</span>
+# Define the order schema
+order_schema = spark.read.json(&quot;order_schema.json&quot;).schema
 
-<span class="c1"># Read the order data from Kafka</span>
-<span class="n">orders</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;kafka&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;kafka.bootstrap.servers&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost:9092&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;subscribe&quot;</span><span class="p">,</span> <span class="s2">&quot;orders&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+# Read the order data from Kafka
+orders = spark.readStream.format(&quot;kafka&quot;).option(&quot;kafka.bootstrap.servers&quot;, &quot;localhost:9092&quot;).option(&quot;subscribe&quot;, &quot;orders&quot;).load()
 
-<span class="c1"># Process the order data</span>
-<span class="n">processed_orders</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">from_json</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">),</span> <span class="n">order_schema</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;order.*&quot;</span><span class="p">)</span>
+# Process the order data
+processed_orders = orders.select(from_json(col(&quot;value&quot;).cast(&quot;string&quot;), order_schema).alias(&quot;order&quot;)).select(&quot;order.*&quot;)
 
-<span class="c1"># Write the processed order data to S3</span>
-<span class="n">processed_orders</span><span class="o">.</span><span class="n">writeStream</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;s3a://orders/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;checkpointLocation&quot;</span><span class="p">,</span> <span class="s2">&quot;s3a://orders/checkpoint&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</code></pre></div>
-
+# Write the processed order data to S3
+processed_orders.writeStream.format(&quot;parquet&quot;).option(&quot;path&quot;, &quot;s3a://orders/&quot;).option(&quot;checkpointLocation&quot;, &quot;s3a://orders/checkpoint&quot;).start()
+</code></pre>
 <p>In this example, we create a Spark session and define the order schema. We then read the order data from Kafka, process the data using Spark's built-in functions, and write the processed data to S3.</p>
 <h3 id="example-3-data-serving-with-aws-s3">Example 3: Data Serving with AWS S3</h3>
 <p>Once we have processed the data, we can use AWS S3 to serve the data to various downstream applications. Here's an example of how we can use S3 to serve the processed order data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">from</span> <span class="nn">botocore.exceptions</span> <span class="kn">import</span> <span class="n">ClientError</span>
+<pre><code class="language-python">import boto3
+from botocore.exceptions import ClientError
 
-<span class="c1"># Create an S3 client</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;s3&quot;</span><span class="p">)</span>
+# Create an S3 client
+s3 = boto3.client(&quot;s3&quot;)
 
-<span class="c1"># Define the S3 bucket and key</span>
-<span class="n">bucket</span> <span class="o">=</span> <span class="s2">&quot;orders&quot;</span>
-<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;2022/01/01/orders.parquet&quot;</span>
+# Define the S3 bucket and key
+bucket = &quot;orders&quot;
+key = &quot;2022/01/01/orders.parquet&quot;
 
-<span class="c1"># Get the S3 object</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">obj</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">ClientError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error getting S3 object:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+# Get the S3 object
+try:
+    obj = s3.get_object(Bucket=bucket, Key=key)
+except ClientError as e:
+    print(&quot;Error getting S3 object:&quot;, e)
 
-<span class="c1"># Read the S3 object</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+# Read the S3 object
+data = obj[&quot;Body&quot;].read()
 
-<span class="c1"># Process the data</span>
-<span class="n">processed_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+# Process the data
+processed_data = data.decode(&quot;utf-8&quot;)
 
-<span class="c1"># Print the processed data</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the processed data
+print(processed_data)
+</code></pre>
 <p>In this example, we create an S3 client and define the S3 bucket and key. We then get the S3 object, read the object, and process the data.</p>
 <h2 id="benefits-of-data-mesh-architecture">Benefits of Data Mesh Architecture</h2>
 <p>The Data Mesh architecture offers several benefits, including:

@@ -163,54 +163,51 @@
 * <strong>NIST (National Institute of Standards and Technology) Cybersecurity Framework</strong>: This methodology provides a framework for managing and reducing cybersecurity risk, including penetration testing and vulnerability assessment.</p>
 <h3 id="practical-example-network-penetration-testing-with-nmap">Practical Example: Network Penetration Testing with Nmap</h3>
 <p>Nmap is a popular network scanning tool used by security professionals to identify open ports and services on a network. Here is an example of how to use Nmap to conduct a network penetration test:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Nmap on Ubuntu</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>nmap
+<pre><code class="language-bash"># Install Nmap on Ubuntu
+sudo apt-get install nmap
 
-<span class="c1"># Scan a network for open ports</span>
-nmap<span class="w"> </span>-sS<span class="w"> </span><span class="m">192</span>.168.1.0/24
-</code></pre></div>
-
+# Scan a network for open ports
+nmap -sS 192.168.1.0/24
+</code></pre>
 <p>This command scans the network <code>192.168.1.0/24</code> for open ports and services, providing a list of potential vulnerabilities that an attacker could exploit.</p>
 <h3 id="practical-example-web-application-penetration-testing-with-burp-suite">Practical Example: Web Application Penetration Testing with Burp Suite</h3>
 <p>Burp Suite is a popular web application testing tool used by security professionals to identify vulnerabilities in web applications. Here is an example of how to use Burp Suite to conduct a web application penetration test:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import Burp Suite library</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">burp.*</span><span class="p">;</span>
+<pre><code class="language-java">// Import Burp Suite library
+import burp.*;
 
-<span class="c1">// Define a function to send a request to a web application</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sendRequest</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Create a new request</span>
-<span class="w">    </span><span class="n">HttpRequest</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpRequest</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+// Define a function to send a request to a web application
+public void sendRequest(String url) {
+    // Create a new request
+    HttpRequest request = new HttpRequest(url);
 
-<span class="w">    </span><span class="c1">// Send the request</span>
-<span class="w">    </span><span class="n">HttpResponse</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BurpSuite</span><span class="p">.</span><span class="na">sendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+    // Send the request
+    HttpResponse response = BurpSuite.sendRequest(request);
 
-<span class="w">    </span><span class="c1">// Print the response</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Print the response
+    System.out.println(response.toString());
+}
+</code></pre>
 <p>This code defines a function to send a request to a web application using Burp Suite, allowing security professionals to test and identify vulnerabilities in the application.</p>
 <h3 id="practical-example-cloud-penetration-testing-with-aws-cli">Practical Example: Cloud Penetration Testing with AWS CLI</h3>
 <p>AWS CLI is a command-line tool used by security professionals to interact with Amazon Web Services (AWS). Here is an example of how to use AWS CLI to conduct a cloud penetration test:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import AWS CLI library</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python"># Import AWS CLI library
+import boto3
 
-<span class="c1"># Define a function to list all S3 buckets</span>
-<span class="k">def</span> <span class="nf">list_buckets</span><span class="p">():</span>
-    <span class="c1"># Create a new S3 client</span>
-    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+# Define a function to list all S3 buckets
+def list_buckets():
+    # Create a new S3 client
+    s3 = boto3.client('s3')
 
-    <span class="c1"># List all S3 buckets</span>
-    <span class="n">buckets</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">list_buckets</span><span class="p">()</span>
+    # List all S3 buckets
+    buckets = s3.list_buckets()
 
-    <span class="c1"># Print the buckets</span>
-    <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">buckets</span><span class="p">[</span><span class="s1">&#39;Buckets&#39;</span><span class="p">]:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">bucket</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">])</span>
+    # Print the buckets
+    for bucket in buckets['Buckets']:
+        print(bucket['Name'])
 
-<span class="c1"># Call the function</span>
-<span class="n">list_buckets</span><span class="p">()</span>
-</code></pre></div>
-
+# Call the function
+list_buckets()
+</code></pre>
 <p>This code defines a function to list all S3 buckets using AWS CLI, allowing security professionals to test and identify vulnerabilities in the cloud infrastructure.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered during penetration testing include:

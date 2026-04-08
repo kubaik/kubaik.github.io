@@ -206,183 +206,172 @@
 </ol>
 <h4 id="project-structure">Project Structure</h4>
 <p>Your generated project will have the following structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">my-spring-boot-app</span>
-<span class="n"> ├── src</span>
-<span class="n"> │   ├── main</span>
-<span class="n"> │   │   ├── java</span>
-<span class="n"> │   │   │   └── com</span>
-<span class="n"> │   │   │       └── example</span>
-<span class="n"> │   │   │           └── myspringbootapp</span>
-<span class="n"> │   │   │               ├── MySpringBootApp.java</span>
-<span class="n"> │   │   │               └── controller</span>
-<span class="n"> │   │   │                   └── HelloController.java</span>
-<span class="n"> │   │   └── resources</span>
-<span class="n"> │   │       └── application.properties</span>
-<span class="n"> └── pom.xml</span>
-</code></pre></div>
-
+<pre><code>my-spring-boot-app
+ ├── src
+ │   ├── main
+ │   │   ├── java
+ │   │   │   └── com
+ │   │   │       └── example
+ │   │   │           └── myspringbootapp
+ │   │   │               ├── MySpringBootApp.java
+ │   │   │               └── controller
+ │   │   │                   └── HelloController.java
+ │   │   └── resources
+ │   │       └── application.properties
+ └── pom.xml
+</code></pre>
 <h3 id="building-a-simple-restful-api">Building a Simple RESTful API</h3>
 <p>Let's create a simple RESTful API that responds with a greeting message.</p>
 <h4 id="step-1-create-the-controller">Step 1: Create the Controller</h4>
 <p>Create a new Java class in the <code>controller</code> package named <code>HelloController.java</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.controller</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp.controller;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-<span class="nd">@RestController</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+@RestController
+public class HelloController {
 
-<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello, Spring Boot!&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @GetMapping(&quot;/hello&quot;)
+    public String sayHello() {
+        return &quot;Hello, Spring Boot!&quot;;
+    }
+}
+</code></pre>
 <h4 id="step-2-run-the-application">Step 2: Run the Application</h4>
 <p>Modify <code>MySpringBootApp.java</code> to include a <code>main</code> method if it's not already present:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-<span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MySpringBootApp</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MySpringBootApp</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@SpringBootApplication
+public class MySpringBootApp {
+    public static void main(String[] args) {
+        SpringApplication.run(MySpringBootApp.class, args);
+    }
+}
+</code></pre>
 <h4 id="step-3-start-the-application">Step 3: Start the Application</h4>
 <p>Run your application using Maven:</p>
-<div class="codehilite"><pre><span></span><code>mvn<span class="w"> </span>spring-boot:run
-</code></pre></div>
-
+<pre><code class="language-bash">mvn spring-boot:run
+</code></pre>
 <p>You can now access your API at <code>http://localhost:8080/hello</code>, which should return:</p>
-<div class="codehilite"><pre><span></span><code>Hello, Spring Boot!
-</code></pre></div>
-
+<pre><code>Hello, Spring Boot!
+</code></pre>
 <h3 id="connecting-to-a-database">Connecting to a Database</h3>
 <p>In many applications, you will need to interact with a database. Spring Boot simplifies this process through Spring Data JPA.</p>
 <h4 id="step-1-add-dependencies">Step 1: Add Dependencies</h4>
 <p>Add the following dependencies to your <code>pom.xml</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependencies&gt;</span>
-<span class="w">    </span><span class="cm">&lt;!-- Other dependencies --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>com.h2database<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>h2<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- Other dependencies --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+        &lt;artifactId&gt;h2&lt;/artifactId&gt;
+        &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
 <h4 id="step-2-configure-database-properties">Step 2: Configure Database Properties</h4>
 <p>In <code>src/main/resources/application.properties</code>, add the following configuration for the H2 database:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">spring.datasource.url</span><span class="o">=</span><span class="s">jdbc:h2:mem:testdb</span>
-<span class="na">spring.datasource.driverClassName</span><span class="o">=</span><span class="s">org.h2.Driver</span>
-<span class="na">spring.datasource.username</span><span class="o">=</span><span class="s">sa</span>
-<span class="na">spring.datasource.password</span><span class="o">=</span><span class="s">password</span>
-<span class="na">spring.h2.console.enabled</span><span class="o">=</span><span class="s">true</span>
-<span class="na">spring.jpa.hibernate.ddl-auto</span><span class="o">=</span><span class="s">update</span>
-</code></pre></div>
-
+<pre><code class="language-properties">spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.h2.console.enabled=true
+spring.jpa.hibernate.ddl-auto=update
+</code></pre>
 <h4 id="step-3-create-an-entity">Step 3: Create an Entity</h4>
 <p>Create an entity class representing a <code>User</code> in the <code>model</code> package:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.model</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp.model;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.Entity</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.GeneratedValue</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.GenerationType</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.Id</span><span class="p">;</span>
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-<span class="nd">@Entity</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+@Entity
+public class User {
 
-<span class="w">    </span><span class="nd">@Id</span>
-<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
-<span class="w">    </span><span class="c1">// Getters and Setters</span>
-<span class="w">    </span><span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Getters and Setters
+    // ...
+}
+</code></pre>
 <h4 id="step-4-create-a-repository">Step 4: Create a Repository</h4>
 <p>Create a repository interface for the <code>User</code> entity:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.repository</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp.repository;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.model.User</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="p">;</span>
+import com.example.myspringbootapp.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserRepository</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+}
+</code></pre>
 <h4 id="step-5-create-a-service">Step 5: Create a Service</h4>
 <p>Create a service class to handle user-related operations:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.service</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp.service;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.model.User</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.repository.UserRepository</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+import com.example.myspringbootapp.model.User;
+import com.example.myspringbootapp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+import java.util.List;
 
-<span class="nd">@Service</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span>
+@Service
+public class UserService {
 
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserRepository</span><span class="w"> </span><span class="n">userRepository</span><span class="p">;</span>
+    @Autowired
+    private UserRepository userRepository;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    public List&lt;User&gt; findAll() {
+        return userRepository.findAll();
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+}
+</code></pre>
 <h4 id="step-6-create-a-user-controller">Step 6: Create a User Controller</h4>
 <p>Finally, create a controller to expose user-related endpoints:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.controller</span><span class="p">;</span>
+<pre><code class="language-java">package com.example.myspringbootapp.controller;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.model.User</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.example.myspringbootapp.service.UserService</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.*</span><span class="p">;</span>
+import com.example.myspringbootapp.model.User;
+import com.example.myspringbootapp.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+import java.util.List;
 
-<span class="nd">@RestController</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/users&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+@RestController
+@RequestMapping(&quot;/users&quot;)
+public class UserController {
 
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+    @Autowired
+    private UserService userService;
 
-<span class="w">    </span><span class="nd">@GetMapping</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    @GetMapping
+    public List&lt;User&gt; getAllUsers() {
+        return userService.findAll();
+    }
 
-<span class="w">    </span><span class="nd">@PostMapping</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">createUser</span><span class="p">(</span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.save(user);
+    }
+}
+</code></pre>
 <h3 id="testing-the-application">Testing the Application</h3>
 <ol>
 <li>Run the application again using:
@@ -410,39 +399,36 @@
 <h4 id="problem-3-cors-issues">Problem 3: CORS Issues</h4>
 <p>If your application is accessed from a different domain, you might face Cross-Origin Resource Sharing (CORS) issues.</p>
 <p><strong>Solution</strong>: Add the following configuration to allow CORS:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.CorsRegistry</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-<span class="nd">@Configuration</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebMvcConfigurer</span><span class="w"> </span><span class="p">{</span>
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addCorsMappings</span><span class="p">(</span><span class="n">CorsRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addMapping</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">).</span><span class="na">allowedOrigins</span><span class="p">(</span><span class="s">&quot;http://localhost:3000&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping(&quot;/**&quot;).allowedOrigins(&quot;http://localhost:3000&quot;);
+    }
+}
+</code></pre>
 <h3 id="advanced-features-of-spring-boot">Advanced Features of Spring Boot</h3>
 <h4 id="1-spring-boot-actuator">1. Spring Boot Actuator</h4>
 <p>Spring Boot Actuator provides built-in endpoints to monitor and manage your application. You can track performance metrics, application health, and more.</p>
 <ul>
 <li>Add the dependency:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
 <ul>
 <li>Enable endpoints in <code>application.properties</code>:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="na">management.endpoints.web.exposure.include</span><span class="o">=</span><span class="s">*</span>
-</code></pre></div>
-
+<pre><code class="language-properties">management.endpoints.web.exposure.include=*
+</code></pre>
 <ul>
 <li>Access metrics at <code>http://localhost:8080/actuator/metrics</code>.</li>
 </ul>
@@ -451,32 +437,30 @@
 <ul>
 <li>Add the dependency:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
 <ul>
 <li>Secure your endpoints:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.security.config.annotation.web.configuration.EnableWebSecurity</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-<span class="nd">@EnableWebSecurity</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SecurityConfig</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">WebSecurityConfigurerAdapter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span><span class="w"> </span><span class="n">http</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">http</span>
-<span class="w">            </span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
-<span class="w">                </span><span class="p">.</span><span class="na">anyRequest</span><span class="p">().</span><span class="na">authenticated</span><span class="p">()</span>
-<span class="w">                </span><span class="p">.</span><span class="na">and</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="na">httpBasic</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+            .httpBasic();
+    }
+}
+</code></pre>
 <h3 id="deployment-options">Deployment Options</h3>
 <h4 id="1-cloud-deployment">1. Cloud Deployment</h4>
 <p>Spring Boot applications can be easily deployed on cloud platforms like AWS, Google Cloud, or Heroku.</p>
@@ -495,23 +479,20 @@
 <ul>
 <li>Create a <code>Dockerfile</code>:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">openjdk:11-jre-slim</span>
-<span class="k">COPY</span><span class="w"> </span>target/myspringbootapp-0.0.1-SNAPSHOT.jar<span class="w"> </span>app.jar
-<span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-jar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/app.jar&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-dockerfile">FROM openjdk:11-jre-slim
+COPY target/myspringbootapp-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;, &quot;/app.jar&quot;]
+</code></pre>
 <ul>
 <li>Build the Docker image:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-spring-boot-app<span class="w"> </span>.
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-spring-boot-app .
+</code></pre>
 <ul>
 <li>Run the container:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span>my-spring-boot-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -p 8080:8080 my-spring-boot-app
+</code></pre>
 <h3 id="conclusion">Conclusion</h3>
 <p>Spring Boot allows developers to create and deploy applications with speed and efficiency. Its features—such as auto-configuration, embedded servers, and Actuator—make it a robust choice for modern web applications and microservices.</p>
 <h3 id="actionable-next-steps">Actionable Next Steps</h3>

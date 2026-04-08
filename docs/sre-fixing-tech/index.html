@@ -162,19 +162,18 @@
 * <strong>Automation</strong>: Automate repetitive tasks to improve efficiency and reduce errors.</p>
 <h3 id="example-implementing-reliability-with-circuit-breakers">Example: Implementing Reliability with Circuit Breakers</h3>
 <p>One way to implement reliability in SRE is by using circuit breakers. A circuit breaker is a design pattern that detects when a service is not responding and prevents further requests from being sent to it until it becomes available again. Here is an example of how to implement a circuit breaker in Python using the <code>pybreaker</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pybreaker</span>
+<pre><code class="language-python">import pybreaker
 
-<span class="c1"># Create a circuit breaker with a timeout of 5 seconds</span>
-<span class="n">breaker</span> <span class="o">=</span> <span class="n">pybreaker</span><span class="o">.</span><span class="n">CircuitBreaker</span><span class="p">(</span><span class="n">fail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">reset_timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+# Create a circuit breaker with a timeout of 5 seconds
+breaker = pybreaker.CircuitBreaker(fail_max=5, reset_timeout=5)
 
-<span class="c1"># Use the circuit breaker to call a service</span>
-<span class="nd">@breaker</span>
-<span class="k">def</span> <span class="nf">call_service</span><span class="p">():</span>
-    <span class="c1"># Call the service</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://example.com/service&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre></div>
-
+# Use the circuit breaker to call a service
+@breaker
+def call_service():
+    # Call the service
+    response = requests.get('https://example.com/service')
+    return response.json()
+</code></pre>
 <p>In this example, the <code>call_service</code> function is wrapped with the <code>@breaker</code> decorator. If the service is not responding, the circuit breaker will detect the failure and prevent further requests from being sent to it until it becomes available again.</p>
 <h2 id="sre-tools-and-platforms">SRE Tools and Platforms</h2>
 <p>There are many tools and platforms available to support SRE practices. Some popular ones include:
@@ -184,18 +183,17 @@
 * <strong>AWS Lambda</strong>: A serverless computing platform that provides event-driven computing and automated scaling.</p>
 <h3 id="example-monitoring-with-prometheus">Example: Monitoring with Prometheus</h3>
 <p>Prometheus is a popular monitoring system that provides real-time metrics and alerts. Here is an example of how to use Prometheus to monitor a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">prometheus_client</span>
+<pre><code class="language-python">import prometheus_client
 
-<span class="c1"># Create a Prometheus metric</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">prometheus_client</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;requests_total&#39;</span><span class="p">,</span> <span class="s1">&#39;Total number of requests&#39;</span><span class="p">)</span>
+# Create a Prometheus metric
+metric = prometheus_client.Counter('requests_total', 'Total number of requests')
 
-<span class="c1"># Increment the metric for each request</span>
-<span class="k">def</span> <span class="nf">handle_request</span><span class="p">():</span>
-    <span class="n">metric</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
-    <span class="c1"># Handle the request</span>
-    <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span>
-</code></pre></div>
-
+# Increment the metric for each request
+def handle_request():
+    metric.inc()
+    # Handle the request
+    return 'Hello World!'
+</code></pre>
 <p>In this example, the <code>handle_request</code> function increments the <code>requests_total</code> metric for each request. The metric can be scraped by Prometheus and visualized in Grafana.</p>
 <h2 id="sre-best-practices">SRE Best Practices</h2>
 <p>Here are some SRE best practices to follow:
@@ -206,27 +204,26 @@
 5. <strong>Continuously improve</strong>: Continuously improve your system and processes to ensure they are aligned with business goals.</p>
 <h3 id="example-automating-deployment-with-kubernetes">Example: Automating Deployment with Kubernetes</h3>
 <p>Kubernetes is a popular container orchestration platform that provides automated deployment and scaling of containers. Here is an example of how to use Kubernetes to automate deployment of a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="o">-</span><span class="n">app</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">template</span><span class="o">:</span>
-<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
-<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
-<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="o">-</span><span class="n">app</span>
-<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
-<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="o">-</span><span class="n">app</span>
-<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">python</span><span class="o">:</span><span class="mf">3.9</span>
-<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: python:3.9
+        ports:
+        - containerPort: 80
+</code></pre>
 <p>In this example, the Kubernetes deployment YAML file defines a deployment with 3 replicas of the <code>python-app</code> container. The deployment can be automated using Kubernetes, ensuring that the application is always available and scalable.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in SRE:
@@ -235,24 +232,23 @@
 * <strong>Problem: Insufficient capacity</strong>: Solution: Scale up or out, use load balancing, and optimize system configuration.</p>
 <h3 id="use-case-implementing-load-balancing-with-haproxy">Use Case: Implementing Load Balancing with HAProxy</h3>
 <p>HAProxy is a popular load balancing platform that provides automated distribution of traffic across multiple servers. Here is an example of how to use HAProxy to implement load balancing for a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install HAProxy</span>
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>haproxy
+<pre><code class="language-bash"># Install HAProxy
+sudo apt-get install haproxy
 
-<span class="c1"># Configure HAProxy</span>
-sudo<span class="w"> </span>nano<span class="w"> </span>/etc/haproxy/haproxy.cfg
+# Configure HAProxy
+sudo nano /etc/haproxy/haproxy.cfg
 
-<span class="c1"># Add the following configuration</span>
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">    </span>default_backend<span class="w"> </span>python-app
+# Add the following configuration
+frontend http
+    bind *:80
+    default_backend python-app
 
-backend<span class="w"> </span>python-app
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>python-app-1<span class="w"> </span><span class="m">10</span>.0.0.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>python-app-2<span class="w"> </span><span class="m">10</span>.0.0.2:80<span class="w"> </span>check
-</code></pre></div>
-
+backend python-app
+    mode http
+    balance roundrobin
+    server python-app-1 10.0.0.1:80 check
+    server python-app-2 10.0.0.2:80 check
+</code></pre>
 <p>In this example, the HAProxy configuration file defines a frontend that listens on port 80 and a backend that distributes traffic across two Python application servers using round-robin load balancing.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, SRE is a discipline that focuses on ensuring the reliability and performance of complex systems. By following SRE principles and practices, you can create systems that are highly available, scalable, and maintainable. To get started with SRE, follow these next steps:
