@@ -170,5 +170,6 @@
   "Refactoring Legacy Code",
   "Event-Driven Architecture",
   "Cybersecurity Fundamentals",
-  "Android Development with Kotlin"
+  "Android Development with Kotlin",
+  "Caching Strategies (Redis, Memcached)"
 ]
