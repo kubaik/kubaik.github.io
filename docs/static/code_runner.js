@@ -85,7 +85,15 @@
         outputEl.textContent = display;
         outputEl.className = "cr-output cr-success";
       } catch (e) {
-        outputEl.textContent = "❌ " + e.message;
+        const msg = e.message || '';
+        const match = msg.match(/ModuleNotFoundError: No module named '(\S+)'/);
+        if (match) {
+          outputEl.textContent =
+            `⚠ '${match[1]}' is not available in the browser runtime.\n` +
+            `This example requires a real Python environment to run.`;
+        } else {
+          outputEl.textContent = "❌ " + msg;
+        }
         outputEl.className = "cr-output cr-error";
       } finally {
         runBtn.disabled = false;
