@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 18:04:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 18:27:57 +0000</lastBuildDate>
+    <item>
+      <title>BDD Simplified...</title>
+      <link>https://kubaik.github.io/bdd-simplified/</link>
+      <description>Learn BDD basics &amp; simplify your testing process with our expert guide to Behavior-Driven Development.</description>
+      <pubDate>Wed, 08 Apr 2026 18:27:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/bdd-simplified/</guid>
+    </item>
     <item>
       <title>SRE Simplified...</title>
       <link>https://kubaik.github.io/sre-simplified/</link>
@@ -138,13 +145,6 @@
       <description>Unlock AI&apos;s writing potential with Generative AI &amp; Large Language Models.</description>
       <pubDate>Wed, 08 Apr 2026 11:49:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-wordsmiths/</guid>
-    </item>
-    <item>
-      <title>Boost Insights: DW Solutions</title>
-      <link>https://kubaik.github.io/boost-insights-dw-solutions/</link>
-      <description>Unlock data insights with expert DW solutions, boosting business intelligence and growth.</description>
-      <pubDate>Wed, 08 Apr 2026 11:46:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-insights-dw-solutions/</guid>
     </item>
   </channel>
 </rss>
