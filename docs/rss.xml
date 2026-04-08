@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 21:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 21:38:02 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Agile: Transform Your Development Process Today!</title>
+      <link>https://kubaik.github.io/mastering-agile-transform-your-development-process/</link>
+      <description>Unlock efficient development with Agile methodologies. Discover how to transform your process today!</description>
+      <pubDate>Wed, 08 Apr 2026 21:37:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-agile-transform-your-development-process/</guid>
+    </item>
     <item>
       <title>Build Fast with .NET Core</title>
       <link>https://kubaik.github.io/build-fast-with-net-core/</link>
@@ -138,13 +145,6 @@
       <description>Boost your mobile app&apos;s speed &amp; efficiency with expert performance optimization tips.</description>
       <pubDate>Wed, 08 Apr 2026 12:36:31 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-your-mobile-app-essential-performance-optimi/</guid>
-    </item>
-    <item>
-      <title>Design to Impress</title>
-      <link>https://kubaik.github.io/design-to-impress/</link>
-      <description>Master your system design interview with expert tips in &apos;Design to Impress.&apos; Boost your confidence and ace your next tech interview!</description>
-      <pubDate>Wed, 08 Apr 2026 12:26:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-to-impress/</guid>
     </item>
   </channel>
 </rss>
