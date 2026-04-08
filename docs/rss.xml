@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 00:08:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 01:04:35 +0000</lastBuildDate>
+    <item>
+      <title>Boost Speed: Redis vs Memcached</title>
+      <link>https://kubaik.github.io/boost-speed-redis-vs-memcached/</link>
+      <description>Discover the best caching strategies with our in-depth comparison of Redis vs Memcached. Boost your application speed and performance today!</description>
+      <pubDate>Wed, 08 Apr 2026 01:04:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/boost-speed-redis-vs-memcached/</guid>
+    </item>
     <item>
       <title>Kotlin Android Dev</title>
       <link>https://kubaik.github.io/kotlin-android-dev/</link>
@@ -138,13 +145,6 @@
       <description>Act swiftly in a crisis with a solid incident response plan. Learn how to respond fast and minimize damage.</description>
       <pubDate>Tue, 07 Apr 2026 14:13:34 +0000</pubDate>
       <guid>https://kubaik.github.io/respond-fast/</guid>
-    </item>
-    <item>
-      <title>Boost Speed with SSG</title>
-      <link>https://kubaik.github.io/boost-speed-with-ssg/</link>
-      <description>Boost website speed with Static Site Generation (SSG). Learn how to improve performance and user experience.</description>
-      <pubDate>Tue, 07 Apr 2026 14:00:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
     </item>
   </channel>
 </rss>
