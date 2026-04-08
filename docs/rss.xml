@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 12:07:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 12:10:07 +0000</lastBuildDate>
+    <item>
+      <title>Forecast Future</title>
+      <link>https://kubaik.github.io/forecast-future/</link>
+      <description>Unlock future insights with AI-driven time series forecasting. Learn how to predict trends and make data-driven decisions.</description>
+      <pubDate>Wed, 08 Apr 2026 12:10:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/forecast-future/</guid>
+    </item>
     <item>
       <title>Query Smarter</title>
       <link>https://kubaik.github.io/query-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Learn effective DDoS protection strategies to safeguard your website from cyber threats.</description>
       <pubDate>Wed, 08 Apr 2026 07:08:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ddos-defense/</guid>
-    </item>
-    <item>
-      <title>BI Essentials</title>
-      <link>https://kubaik.github.io/bi-essentials/</link>
-      <description>Unlock data insights with top Business Intelligence tools &amp; strategies.</description>
-      <pubDate>Wed, 08 Apr 2026 06:18:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/bi-essentials/</guid>
     </item>
   </channel>
 </rss>
