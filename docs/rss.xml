@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 11:49:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 11:51:28 +0000</lastBuildDate>
+    <item>
+      <title>DevOps Done Right (04/26)</title>
+      <link>https://kubaik.github.io/devops-done-right-0426/</link>
+      <description>Unlock DevOps success with expert best practices and cultural tips.</description>
+      <pubDate>Wed, 08 Apr 2026 11:51:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/devops-done-right-0426/</guid>
+    </item>
     <item>
       <title>AI Wordsmiths</title>
       <link>https://kubaik.github.io/ai-wordsmiths/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation on-the-go.</description>
       <pubDate>Wed, 08 Apr 2026 06:11:15 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-on-the-go/</guid>
-    </item>
-    <item>
-      <title>Web Components Simplified</title>
-      <link>https://kubaik.github.io/web-components-simplified/</link>
-      <description>Discover the power of Web Components and Custom Elements in our simplified guide. Unlock reusable, modular web design with ease and efficiency!</description>
-      <pubDate>Wed, 08 Apr 2026 04:33:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/web-components-simplified/</guid>
     </item>
   </channel>
 </rss>
