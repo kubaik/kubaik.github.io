@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 22:23:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 22:34:02 +0000</lastBuildDate>
+    <item>
+      <title>WASM Turbo</title>
+      <link>https://kubaik.github.io/wasm-turbo/</link>
+      <description>Boost WebAssembly performance with WASM Turbo, expert tips and tricks inside.</description>
+      <pubDate>Wed, 08 Apr 2026 22:33:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/wasm-turbo/</guid>
+    </item>
     <item>
       <title>Shift Smooth</title>
       <link>https://kubaik.github.io/shift-smooth/</link>
@@ -138,13 +145,6 @@
       <description>Learn database design &amp; normalization best practices for efficient data management.</description>
       <pubDate>Wed, 08 Apr 2026 13:07:30 +0000</pubDate>
       <guid>https://kubaik.github.io/data-harmony/</guid>
-    </item>
-    <item>
-      <title>Crypto Unlocked</title>
-      <link>https://kubaik.github.io/crypto-unlocked/</link>
-      <description>Unlock the world of crypto &amp; blockchain. Discover trends, insights, and innovations shaping the future of finance.</description>
-      <pubDate>Wed, 08 Apr 2026 12:40:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/crypto-unlocked/</guid>
     </item>
   </channel>
 </rss>
