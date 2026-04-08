@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 14:09:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 14:14:53 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Application Security: SAST vs. DAST Explained</title>
+      <link>https://kubaik.github.io/mastering-application-security-sast-vs-dast-explai/</link>
+      <description>Learn the difference between SAST &amp; DAST in app security testing.</description>
+      <pubDate>Wed, 08 Apr 2026 14:14:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-application-security-sast-vs-dast-explai/</guid>
+    </item>
     <item>
       <title>Secure Your App...</title>
       <link>https://kubaik.github.io/secure-your-app/</link>
@@ -138,13 +145,6 @@
       <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
       <pubDate>Wed, 08 Apr 2026 09:36:37 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-hacks/</guid>
-    </item>
-    <item>
-      <title>Scale Smarter</title>
-      <link>https://kubaik.github.io/scale-smarter/</link>
-      <description>Boost performance with database replication &amp; sharding strategies.</description>
-      <pubDate>Wed, 08 Apr 2026 08:39:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/scale-smarter/</guid>
     </item>
   </channel>
 </rss>
