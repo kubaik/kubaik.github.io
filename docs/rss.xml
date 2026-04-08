@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 03:35:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 03:43:29 +0000</lastBuildDate>
+    <item>
+      <title>Secure Containers</title>
+      <link>https://kubaik.github.io/secure-containers/</link>
+      <description>Discover essential best practices for container security in our latest blog post. Protect your applications and data with expert tips for secure containers!</description>
+      <pubDate>Wed, 08 Apr 2026 03:43:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-containers/</guid>
+    </item>
     <item>
       <title>Automate Code</title>
       <link>https://kubaik.github.io/automate-code/</link>
@@ -138,13 +145,6 @@
       <description>Learn Rust&apos;s memory safety features and best practices.</description>
       <pubDate>Tue, 07 Apr 2026 16:49:43 +0000</pubDate>
       <guid>https://kubaik.github.io/rust-safe-memory/</guid>
-    </item>
-    <item>
-      <title>NFT Tech</title>
-      <link>https://kubaik.github.io/nft-tech/</link>
-      <description>Unlock NFT tech &amp; its innovative use cases, revolutionizing digital ownership.</description>
-      <pubDate>Tue, 07 Apr 2026 15:48:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/nft-tech/</guid>
     </item>
   </channel>
 </rss>
