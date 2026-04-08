@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 08:39:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 09:36:45 +0000</lastBuildDate>
+    <item>
+      <title>LLM Hacks</title>
+      <link>https://kubaik.github.io/llm-hacks/</link>
+      <description>Unlock LLM potential with expert prompt engineering hacks and techniques.</description>
+      <pubDate>Wed, 08 Apr 2026 09:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-hacks/</guid>
+    </item>
     <item>
       <title>Scale Smarter</title>
       <link>https://kubaik.github.io/scale-smarter/</link>
@@ -138,13 +145,6 @@
       <description>Improve code quality &amp; reduce bugs: learn when to refactor legacy code</description>
       <pubDate>Tue, 07 Apr 2026 22:33:15 +0000</pubDate>
       <guid>https://kubaik.github.io/refactor-now/</guid>
-    </item>
-    <item>
-      <title>Cut Cloud Costs</title>
-      <link>https://kubaik.github.io/cut-cloud-costs/</link>
-      <description>Reduce cloud expenses with expert optimization tips and strategies.</description>
-      <pubDate>Tue, 07 Apr 2026 22:10:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cloud-costs/</guid>
     </item>
   </channel>
 </rss>
