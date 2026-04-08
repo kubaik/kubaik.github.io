@@ -199,27 +199,20 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
-    align-items: stretch;   /* all cards in a row grow to the tallest */
 }
 
-/* ── Clickable card wrapper ── */
-.post-card-link {
-    display: flex;          /* flex so the inner article can stretch to fill */
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
+.post-card {
     border: 1px solid #e9ecef;
     border-radius: 12px;
+    padding: 2rem;
     background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
-    height: 100%;           /* fill the grid cell so equal-height rows work */
 }
 
-.post-card-link::before {
+.post-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -231,30 +224,22 @@ main {
     transition: transform 0.3s ease;
 }
 
-.post-card-link:hover::before {
+.post-card:hover::before {
     transform: scaleX(1);
 }
 
-.post-card-link:hover {
+.post-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-    color: inherit;
-}
-
-/* The inner card content — stretches to fill the <a> wrapper height */
-.post-card {
-    padding: 2rem;
-    flex: 1;                /* grow to fill remaining height inside the flex link */
 }
 
 .post-card h3 {
     margin-bottom: 1rem;
     font-size: 1.4rem;
-    color: #2c3e50;
-    transition: color 0.3s ease;
 }
 
-.post-card-link:hover .post-card h3 {
+.post-card h3 a:hover,
+.post-card .post-excerpt a:hover {
     color: #667eea;
 }
 
@@ -262,11 +247,6 @@ main {
     color: #6c757d;
     margin-bottom: 1.5rem;
     line-height: 1.6;
-    transition: color 0.3s ease;
-}
-
-.post-card-link:hover .post-excerpt {
-    color: #555;
 }
 
 .post-meta {
@@ -275,6 +255,42 @@ main {
     align-items: center;
     color: #6c757d;
     font-size: 0.9rem;
+}
+
+.post-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.post-content a:hover {
+    border-bottom-color: #764ba2;
+}
+
+.post-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-card .post-excerpt a,
+.post-card .post-excerpt a:hover,
+.post-card .post-excerpt a:focus,
+.post-card .post-excerpt a:active {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.post-card-link:hover .post-excerpt {
+    color: #667eea;
+}
+
+.post-card-link:hover h3 {
+    color: #667eea;
+}
+
+.post-card h3,
+.post-card .post-excerpt {
+    transition: color 0.3s ease;
 }
 
 /* Tags on post cards */
@@ -481,14 +497,6 @@ a[rel*="sponsored"]:hover {
     margin: 30px 0;
     font-size: 0.9rem;
     color: #856404;
-}
-
-/* ============================================
-   POST CONTENT LINKS (inside blog posts)
-   ============================================ */
-
-.post-content a:hover {
-    border-bottom-color: #764ba2;
 }
 
 /* ============================================
@@ -856,7 +864,7 @@ footer {
    ============================================ */
 
 @media (prefers-contrast: high) {
-    .post-card-link {
+    .post-card {
         border: 2px solid #000;
     }
 
@@ -884,7 +892,7 @@ footer {
         transition-duration: 0.01ms !important;
     }
 
-    .post-card-link:hover,
+    .post-card:hover,
     .load-more-button:hover,
     .back-to-top:hover,
     nav a:hover {
