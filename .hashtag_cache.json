@@ -1291,14 +1291,14 @@
     "topic": "Natural Language Processing Techniques"
   },
   "ddos_protection_strategies": {
-    "timestamp": "2026-04-02T22:40:24.609252",
+    "timestamp": "2026-04-08T07:08:00.641708",
     "hashtags": [
       "CyberSecurity",
-      "DDoSMitigation",
-      "CloudProtection",
-      "NetworkSafety",
+      "DDoSProtection",
+      "CloudDefense",
+      "NetworkSecurity",
       "ArtificialIntelligence",
-      "ThreatDetection",
+      "ThreatIntelligence",
       "ZeroTrust"
     ],
     "topic": "DDoS Protection Strategies"
