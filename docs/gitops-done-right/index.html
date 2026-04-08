@@ -165,7 +165,7 @@
 4. <strong>Monitoring and logging</strong>: Set up monitoring and logging tools like Prometheus, Grafana, or New Relic to track the system's performance and identify issues.</p>
 <h3 id="example-code-deploying-a-kubernetes-application-using-argo-cd">Example Code: Deploying a Kubernetes Application using Argo CD</h3>
 <p>Here is an example of deploying a Kubernetes application using Argo CD:</p>
-<div class="codehilite"><pre><span></span><code># application.yaml
+<pre><code class="language-yml"># application.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -173,18 +173,16 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: &#39;https://github.com/example/example-app.git&#39;
+    repoURL: 'https://github.com/example/example-app.git'
     targetRevision: main
   destination:
     namespace: example-ns
-    server: &#39;https://kubernetes.default.svc&#39;
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1"># deploy.sh</span>
-argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>example-app<span class="w"> </span>--spec<span class="w"> </span>application.yaml
-argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>example-app
-</code></pre></div>
-
+    server: 'https://kubernetes.default.svc'
+</code></pre>
+<pre><code class="language-bash"># deploy.sh
+argocd app create example-app --spec application.yaml
+argocd app sync example-app
+</code></pre>
 <p>This code defines an Argo CD application that deploys a Kubernetes application from a Git repository. The <code>deploy.sh</code> script creates the application and synchronizes it with the Git repository.</p>
 <h2 id="tools-and-platforms-for-gitops">Tools and Platforms for GitOps</h2>
 <p>Several tools and platforms are available to support a GitOps workflow, including:
@@ -212,27 +210,25 @@ argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </
 * <strong>Continuous monitoring and security scanning</strong>: Use tools like Prometheus or New Relic to continuously monitor the system's performance and identify security vulnerabilities.</p>
 <h3 id="example-code-automating-configuration-validation-using-terraform">Example Code: Automating Configuration Validation using Terraform</h3>
 <p>Here is an example of automating configuration validation using Terraform:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># main.tf</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># main.tf
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-abc123&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="p">}</span>
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-abc123&quot;
+  instance_type = &quot;t2.micro&quot;
+}
 
-<span class="kr">output</span><span class="w"> </span><span class="nv">&quot;instance_id&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_instance.example.id</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1"># validate.sh</span>
-terraform<span class="w"> </span>init
-terraform<span class="w"> </span>validate
-terraform<span class="w"> </span>apply<span class="w"> </span>--auto-approve
-</code></pre></div>
-
+output &quot;instance_id&quot; {
+  value = aws_instance.example.id
+}
+</code></pre>
+<pre><code class="language-bash"># validate.sh
+terraform init
+terraform validate
+terraform apply --auto-approve
+</code></pre>
 <p>This code defines a Terraform configuration that creates an AWS instance. The <code>validate.sh</code> script initializes the Terraform configuration, validates it, and applies it to the AWS environment.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Several use cases are available for implementing a GitOps workflow, including:

@@ -155,10 +155,9 @@
 <p>WAFs can be configured to operate in two primary modes: detection mode and prevention mode. In detection mode, the WAF identifies potential threats and logs them for further analysis. In prevention mode, the WAF not only identifies threats but also takes action to block them. This can include blocking traffic from specific IP addresses, filtering out malicious content, or even redirecting users to a safe page.</p>
 <h2 id="practical-implementation-of-waf">Practical Implementation of WAF</h2>
 <p>Implementing a WAF can be done in various ways, including using cloud-based services, on-premises appliances, or software solutions. For example, Amazon Web Services (AWS) offers AWS WAF, a fully managed service that helps protect web applications from common web exploits. Here's an example of how to configure AWS WAF using AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>MyWebACL<span class="w"> </span>--metric-name<span class="w"> </span>MyWebACL
-aws<span class="w"> </span>waf<span class="w"> </span>update-web-acl<span class="w"> </span>--web-acl-id<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--change-token<span class="w"> </span>&lt;token&gt;<span class="w"> </span>--updates<span class="w"> </span><span class="s1">&#39;[{&quot;Action&quot;:&quot;INSERT&quot;,&quot;ActivatedRule&quot;:{&quot;Priority&quot;:1,&quot;RuleId&quot;:&quot;&lt;rule-id&gt;&quot;,&quot;Action&quot;:{&quot;Type&quot;:&quot;BLOCK&quot;}}}]&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-web-acl --name MyWebACL --metric-name MyWebACL
+aws waf update-web-acl --web-acl-id &lt;id&gt; --change-token &lt;token&gt; --updates '[{&quot;Action&quot;:&quot;INSERT&quot;,&quot;ActivatedRule&quot;:{&quot;Priority&quot;:1,&quot;RuleId&quot;:&quot;&lt;rule-id&gt;&quot;,&quot;Action&quot;:{&quot;Type&quot;:&quot;BLOCK&quot;}}}]'
+</code></pre>
 <p>This code snippet creates a new web ACL (Access Control List) and updates it with a new rule that blocks traffic based on a specific condition.</p>
 <h3 id="example-use-cases">Example Use Cases</h3>
 <p>Here are some concrete use cases for WAF implementation:</p>
@@ -203,70 +202,67 @@ aws<span class="w"> </span>waf<span class="w"> </span>update-web-acl<span class=
 <h3 id="example-1-configuring-owasp-modsecurity-core-rule-set">Example 1: Configuring OWASP ModSecurity Core Rule Set</h3>
 <p>OWASP ModSecurity Core Rule Set is a popular open-source WAF solution that can be used to protect web applications from common web exploits. Here's an example of how to configure OWASP ModSecurity Core Rule Set using Apache:</p>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
-<div class="codehilite"><pre><span></span><code>&lt;VirtualHost<span class="w"> </span>*:80&gt;
-<span class="w">    </span>ServerName<span class="w"> </span>example.com
-<span class="w">    </span>DocumentRoot<span class="w"> </span>/var/www/html
+<pre><code class="language-bash">&lt;VirtualHost *:80&gt;
+    ServerName example.com
+    DocumentRoot /var/www/html
 
-<span class="w">    </span>&lt;IfModule<span class="w"> </span>mod_security2.c&gt;
-<span class="w">        </span>Include<span class="w"> </span>modsecurity.conf
-<span class="w">        </span>Include<span class="w"> </span>owasp-modsecurity-crs.conf
-<span class="w">    </span>&lt;/IfModule&gt;
+    &lt;IfModule mod_security2.c&gt;
+        Include modsecurity.conf
+        Include owasp-modsecurity-crs.conf
+    &lt;/IfModule&gt;
 &lt;/VirtualHost&gt;
-</code></pre></div>
-
+</code></pre>
 <p>This code snippet configures Apache to use OWASP ModSecurity Core Rule Set and includes the necessary configuration files.</p>
 <h3 id="example-2-implementing-waf-using-nodejs-and-express">Example 2: Implementing WAF using Node.js and Express</h3>
 <p>Node.js and Express can be used to implement a WAF solution using JavaScript. Here's an example of how to implement a simple WAF solution using Node.js and Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;user-agent&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;Malicious Bot&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">403</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Forbidden&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">next</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">});</span>
+app.use((req, res, next) =&gt; {
+    if (req.headers['user-agent'] === 'Malicious Bot') {
+        res.status(403).send('Forbidden');
+    } else {
+        next();
+    }
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/', (req, res) =&gt; {
+    res.send('Hello World!');
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+    console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This code snippet implements a simple WAF solution that blocks traffic from a specific user agent.</p>
 <h3 id="example-3-configuring-aws-waf-using-aws-sdk">Example 3: Configuring AWS WAF using AWS SDK</h3>
 <p>AWS SDK can be used to configure AWS WAF programmatically. Here's an example of how to configure AWS WAF using AWS SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">waf</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;waf&#39;</span><span class="p">)</span>
+waf = boto3.client('waf')
 
-<span class="n">waf</span><span class="o">.</span><span class="n">create_web_acl</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;MyWebACL&#39;</span><span class="p">,</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;MyWebACL&#39;</span>
-<span class="p">)</span>
+waf.create_web_acl(
+    Name='MyWebACL',
+    MetricName='MyWebACL'
+)
 
-<span class="n">waf</span><span class="o">.</span><span class="n">update_web_acl</span><span class="p">(</span>
-    <span class="n">WebACLId</span><span class="o">=</span><span class="s1">&#39;12345678-1234-1234-1234-123456789012&#39;</span><span class="p">,</span>
-    <span class="n">ChangeToken</span><span class="o">=</span><span class="s1">&#39;12345678-1234-1234-1234-123456789012&#39;</span><span class="p">,</span>
-    <span class="n">Updates</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;INSERT&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;ActivatedRule&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;Priority&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="s1">&#39;RuleId&#39;</span><span class="p">:</span> <span class="s1">&#39;12345678-1234-1234-1234-123456789012&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;BLOCK&#39;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+waf.update_web_acl(
+    WebACLId='12345678-1234-1234-1234-123456789012',
+    ChangeToken='12345678-1234-1234-1234-123456789012',
+    Updates=[
+        {
+            'Action': 'INSERT',
+            'ActivatedRule': {
+                'Priority': 1,
+                'RuleId': '12345678-1234-1234-1234-123456789012',
+                'Action': {
+                    'Type': 'BLOCK'
+                }
+            }
+        }
+    ]
+)
+</code></pre>
 <p>This code snippet configures AWS WAF using AWS SDK for Python and creates a new web ACL with a single rule.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, a WAF is a critical security solution that can help protect web applications from common web exploits. By choosing the right WAF solution and implementing it correctly, you can help ensure the security and availability of your web application. Here are some actionable next steps to consider:</p>

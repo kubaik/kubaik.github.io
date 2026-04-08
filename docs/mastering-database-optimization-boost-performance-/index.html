@@ -167,9 +167,8 @@
 <li><strong>Logs &amp; Slow Query Logs</strong>: Enable slow query logs to identify queries that take longer than expected.</li>
 </ul>
 <h3 id="example-using-explain-in-mysql">Example: Using <code>EXPLAIN</code> in MySQL</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM orders WHERE customer_id = 12345;
+</code></pre>
 <p>This command reveals how MySQL executes the query, highlighting potential inefficiencies like full table scans or inefficient joins.</p>
 <hr />
 <h2 id="indexing-the-foundation-of-speed">Indexing: The Foundation of Speed</h2>
@@ -183,14 +182,12 @@
 </ul>
 <h3 id="practical-example">Practical Example</h3>
 <p>Suppose you frequently query the <code>orders</code> table by <code>customer_id</code> and <code>order_date</code>. You can create a composite index:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_order_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_customer_order_date ON orders (customer_id, order_date);
+</code></pre>
 <h3 id="monitoring-index-usage">Monitoring Index Usage</h3>
 <p>Regularly review index utilization with commands like:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SHOW</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SHOW INDEX FROM orders;
+</code></pre>
 <p>and analyze whether certain indexes are unused or redundant.</p>
 <hr />
 <h2 id="query-optimization-techniques">Query Optimization Techniques</h2>
@@ -201,13 +198,12 @@
 <li><strong>Avoid N+1 Query Problem</strong>: Fetch related data in a single query with JOINs instead of multiple queries.</li>
 </ul>
 <h3 id="example-optimized-query">Example: Optimized Query</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Less efficient</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span><span class="p">;</span>
+<pre><code class="language-sql">-- Less efficient
+SELECT * FROM orders WHERE customer_id = 12345;
 
-<span class="c1">-- More efficient</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">total_amount</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-</code></pre></div>
-
+-- More efficient
+SELECT order_id, order_date, total_amount FROM orders WHERE customer_id = 12345 LIMIT 100;
+</code></pre>
 <h3 id="using-query-caching">Using Query Caching</h3>
 <p>Some databases support query caching, which stores the result of frequently executed queries to reduce load times. Enable and configure caching appropriately.</p>
 <hr />
@@ -235,9 +231,8 @@
 </ul>
 <h3 id="updating-statistics">Updating Statistics</h3>
 <p>Keep the database's query planner informed:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">ANALYZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">ANALYZE TABLE table_name;
+</code></pre>
 <h3 id="data-archiving">Data Archiving</h3>
 <p>Remove or archive outdated data to keep tables manageable and queries faster.</p>
 <hr />
@@ -257,20 +252,17 @@
 <h2 id="practical-example-step-by-step-optimization">Practical Example: Step-by-Step Optimization</h2>
 <p>Suppose you have a slow e-commerce database, and the <code>orders</code> table is experiencing sluggish performance.</p>
 <h3 id="step-1-analyze-queries">Step 1: Analyze Queries</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">98765</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM orders WHERE customer_id = 98765;
+</code></pre>
 <h3 id="step-2-add-indexes">Step 2: Add Indexes</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_customer_id ON orders (customer_id);
+</code></pre>
 <h3 id="step-3-review-schema">Step 3: Review Schema</h3>
 <p>Ensure <code>customer_id</code> is stored with an appropriate data type, e.g., <code>INT</code>.</p>
 <h3 id="step-4-optimize-queries">Step 4: Optimize Queries</h3>
 <p>Replace <code>SELECT *</code> with specific columns:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">total_amount</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">98765</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT order_id, order_date, total_amount FROM orders WHERE customer_id = 98765;
+</code></pre>
 <h3 id="step-5-schedule-maintenance">Step 5: Schedule Maintenance</h3>
 <p>Set up regular vacuuming and analyze your database.</p>
 <h3 id="step-6-hardware-checks">Step 6: Hardware Checks</h3>

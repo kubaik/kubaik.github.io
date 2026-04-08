@@ -157,24 +157,23 @@
 * GitLab CI/CD: A part of the GitLab platform, offering a comprehensive CI/CD solution with automated testing, code quality analysis, and deployment capabilities.
 * CircleCI: A cloud-based CI/CD platform that provides fast and scalable automation for software development teams.</p>
 <p>For example, let's consider a scenario where we want to automate the build and deployment of a Node.js application using Jenkins. We can create a Jenkinsfile that defines the pipeline:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
-<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm install&#39;</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm run build&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm run deploy&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'npm run deploy'
+            }
+        }
+    }
+}
+</code></pre>
 <p>This Jenkinsfile defines a pipeline with two stages: Build and Deploy. In the Build stage, we install dependencies and run the build script. In the Deploy stage, we run the deployment script.</p>
 <h3 id="measuring-pipeline-performance">Measuring Pipeline Performance</h3>
 <p>To ensure the effectiveness of our CI/CD pipeline, we need to measure its performance. This can be done using various metrics, such as:
@@ -184,26 +183,25 @@
 <p>According to a study by Puppet, teams that implement CI/CD pipelines experience a 50% reduction in deployment time and a 30% increase in deployment frequency. Additionally, a survey by CircleCI found that 75% of teams that use CI/CD pipelines report a significant reduction in errors and bugs.</p>
 <h3 id="integrating-with-version-control-systems">Integrating with Version Control Systems</h3>
 <p>Version control systems (VCS) are an essential part of the CI/CD pipeline. By integrating our pipeline with a VCS like GitHub or GitLab, we can automate the build, test, and deployment process whenever code changes are pushed to the repository. For instance, we can use GitHub Actions to automate the deployment of a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Deploy</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">Production</span>
-<span class="n">on</span><span class="o">:</span>
-<span class="w">  </span><span class="n">push</span><span class="o">:</span>
-<span class="w">    </span><span class="n">branches</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">main</span>
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">deploy</span><span class="o">:</span>
-<span class="w">    </span><span class="n">runs</span><span class="o">-</span><span class="n">on</span><span class="o">:</span><span class="w"> </span><span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="n">code</span>
-<span class="w">        </span><span class="n">uses</span><span class="o">:</span><span class="w"> </span><span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="err">@</span><span class="n">v2</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Install</span><span class="w"> </span><span class="n">dependencies</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="o">|</span>
-<span class="w">          </span><span class="n">python</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">--</span><span class="n">upgrade</span><span class="w"> </span><span class="n">pip</span>
-<span class="w">          </span><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="o">.</span><span class="na">txt</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">Deploy</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">production</span>
-<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="o">|</span>
-<span class="w">          </span><span class="n">python</span><span class="w"> </span><span class="n">deploy</span><span class="o">.</span><span class="na">py</span>
-</code></pre></div>
-
+<pre><code class="language-yml">name: Deploy to Production
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Deploy to production
+        run: |
+          python deploy.py
+</code></pre>
 <p>This GitHub Actions workflow defines a job that runs on an Ubuntu environment and deploys the application to production whenever code changes are pushed to the main branch.</p>
 <h3 id="handling-common-problems">Handling Common Problems</h3>
 <p>Despite the benefits of CI/CD pipelines, there are common problems that can arise during implementation. Some of these problems include:
@@ -220,24 +218,23 @@
 * <strong>Vulnerability scanning</strong>: Scanning dependencies and code for vulnerabilities using tools like OWASP's Dependency-Check or Snyk.
 * <strong>Compliance monitoring</strong>: Monitoring compliance with regulatory requirements, such as GDPR or HIPAA, using tools like Compliance.ai or Reciprocity.</p>
 <p>For example, we can use the OWASP Dependency-Check plugin in Jenkins to scan our dependencies for vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
-<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm install&#39;</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;npm run build&#39;</span>
-<span class="w">                </span><span class="n">dependencyCheck</span><span class="o">(</span>
-<span class="w">                    </span><span class="nl">scan:</span><span class="w"> </span><span class="kc">true</span><span class="o">,</span>
-<span class="w">                    </span><span class="nl">format:</span><span class="w"> </span><span class="s1">&#39;JSON&#39;</span><span class="o">,</span>
-<span class="w">                    </span><span class="nl">out:</span><span class="w"> </span><span class="s1">&#39;dependency-check-report.json&#39;</span>
-<span class="w">                </span><span class="o">)</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+                dependencyCheck(
+                    scan: true,
+                    format: 'JSON',
+                    out: 'dependency-check-report.json'
+                )
+            }
+        }
+    }
+}
+</code></pre>
 <p>This pipeline stage runs the Dependency-Check plugin to scan our dependencies for vulnerabilities and generates a report in JSON format.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>CI/CD pipelines have numerous real-world use cases across various industries. Some examples include:

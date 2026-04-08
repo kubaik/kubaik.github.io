@@ -164,17 +164,16 @@
 * <strong>Machine learning</strong>: FP can be used to write machine learning algorithms that are more efficient and scalable. For example, the <code>TensorFlow</code> library in Python can be used to write machine learning models that are more efficient and scalable.</p>
 <h3 id="example-1-using-map-and-filter-to-process-data">Example 1: Using Map and Filter to Process Data</h3>
 <p>The following example demonstrates how to use the <code>map()</code> and <code>filter()</code> functions to process an array of data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">];</span>
+<pre><code class="language-javascript">const data = [1, 2, 3, 4, 5];
 
-<span class="c1">// Use map to double each number</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">doubledData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doubledData</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2, 4, 6, 8, 10]</span>
+// Use map to double each number
+const doubledData = data.map(x =&gt; x * 2);
+console.log(doubledData); // [2, 4, 6, 8, 10]
 
-<span class="c1">// Use filter to filter out odd numbers</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">evenData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evenData</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2, 4]</span>
-</code></pre></div>
-
+// Use filter to filter out odd numbers
+const evenData = data.filter(x =&gt; x % 2 === 0);
+console.log(evenData); // [2, 4]
+</code></pre>
 <p>In this example, the <code>map()</code> function is used to double each number in the array, while the <code>filter()</code> function is used to filter out the odd numbers.</p>
 <h2 id="tools-and-platforms-for-functional-programming">Tools and Platforms for Functional Programming</h2>
 <p>There are several tools and platforms that support functional programming, including:
@@ -184,42 +183,41 @@
 * <strong>AWS Lambda</strong>: A serverless computing platform that supports functional programming through its event-driven architecture.</p>
 <h3 id="example-2-using-aws-lambda-to-process-data">Example 2: Using AWS Lambda to Process Data</h3>
 <p>The following example demonstrates how to use AWS Lambda to process data in a functional programming style:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Define a lambda function that processes data</span>
-<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the data from the event</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+# Define a lambda function that processes data
+def process_data(event, context):
+    # Get the data from the event
+    data = event['data']
 
-    <span class="c1"># Use map to double each number</span>
-    <span class="n">doubled_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+    # Use map to double each number
+    doubled_data = list(map(lambda x: x * 2, data))
 
-    <span class="c1"># Return the processed data</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">doubled_data</span><span class="p">}</span>
+    # Return the processed data
+    return {'data': doubled_data}
 
-<span class="c1"># Create an AWS Lambda client</span>
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
+# Create an AWS Lambda client
+lambda_client = boto3.client('lambda')
 
-<span class="c1"># Create a lambda function</span>
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;process_data&#39;</span><span class="p">,</span>
-    <span class="n">Runtime</span><span class="o">=</span><span class="s1">&#39;python3.8&#39;</span><span class="p">,</span>
-    <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/lambda-execution-role&#39;</span><span class="p">,</span>
-    <span class="n">Handler</span><span class="o">=</span><span class="s1">&#39;index.process_data&#39;</span><span class="p">,</span>
-    <span class="n">Code</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ZipFile&#39;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;import boto3</span><span class="se">\n\n</span><span class="s1"># Define a lambda function that processes data</span><span class="se">\n</span><span class="s1">def process_data(event, context):</span><span class="se">\n</span><span class="s1">    # Get the data from the event</span><span class="se">\n</span><span class="s1">    data = event[</span><span class="se">\&#39;</span><span class="s1">data</span><span class="se">\&#39;</span><span class="s1">]</span><span class="se">\n\n</span><span class="s1">    # Use map to double each number</span><span class="se">\n</span><span class="s1">    doubled_data = list(map(lambda x: x * 2, data))</span><span class="se">\n\n</span><span class="s1">    # Return the processed data</span><span class="se">\n</span><span class="s1">    return {</span><span class="se">\&#39;</span><span class="s1">data</span><span class="se">\&#39;</span><span class="s1">: doubled_data}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)}</span>
-<span class="p">)</span>
+# Create a lambda function
+lambda_client.create_function(
+    FunctionName='process_data',
+    Runtime='python3.8',
+    Role='arn:aws:iam::123456789012:role/lambda-execution-role',
+    Handler='index.process_data',
+    Code={'ZipFile': bytes(b'import boto3\n\n# Define a lambda function that processes data\ndef process_data(event, context):\n    # Get the data from the event\n    data = event[\'data\']\n\n    # Use map to double each number\n    doubled_data = list(map(lambda x: x * 2, data))\n\n    # Return the processed data\n    return {\'data\': doubled_data}\n')}
+)
 
-<span class="c1"># Invoke the lambda function</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">lambda_client</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;process_data&#39;</span><span class="p">,</span>
-    <span class="n">InvocationType</span><span class="o">=</span><span class="s1">&#39;RequestResponse&#39;</span><span class="p">,</span>
-    <span class="n">Payload</span><span class="o">=</span><span class="s1">&#39;{&quot;data&quot;: [1, 2, 3, 4, 5]}&#39;</span>
-<span class="p">)</span>
+# Invoke the lambda function
+response = lambda_client.invoke(
+    FunctionName='process_data',
+    InvocationType='RequestResponse',
+    Payload='{&quot;data&quot;: [1, 2, 3, 4, 5]}'
+)
 
-<span class="c1"># Print the response</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Payload&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>  <span class="c1"># {&quot;data&quot;: [2, 4, 6, 8, 10]}</span>
-</code></pre></div>
-
+# Print the response
+print(response['Payload'].read().decode('utf-8'))  # {&quot;data&quot;: [2, 4, 6, 8, 10]}
+</code></pre>
 <p>In this example, an AWS Lambda function is created that processes data in a functional programming style. The lambda function uses the <code>map()</code> function to double each number in the input data.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Functional programming can be challenging to learn and apply, especially for developers who are used to imperative programming. Some common problems and solutions include:
@@ -228,21 +226,20 @@
 * <strong>Memory usage</strong>: Functional programming can use more memory than imperative programming, since it requires more data structures and function calls. Solution: Use a garbage collector, such as the <code>V8</code> engine in Node.js, to manage memory usage and reduce the risk of memory leaks.</p>
 <h3 id="example-3-using-ramda-to-optimize-performance">Example 3: Using Ramda to Optimize Performance</h3>
 <p>The following example demonstrates how to use the <code>Ramda</code> library to optimize the performance of functional programming code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ramda&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const R = require('ramda');
 
-<span class="c1">// Define a function that doubles each number in an array</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">doubleNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">R</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+// Define a function that doubles each number in an array
+const doubleNumbers = R.map(x =&gt; x * 2);
 
-<span class="c1">// Create a large array of numbers</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">1000000</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mf">0</span><span class="p">).</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">i</span><span class="p">);</span>
+// Create a large array of numbers
+const numbers = Array(1000000).fill(0).map((x, i) =&gt; i);
 
-<span class="c1">// Use the doubleNumbers function to double each number</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">doubledNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">doubleNumbers</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span>
+// Use the doubleNumbers function to double each number
+const doubledNumbers = doubleNumbers(numbers);
 
-<span class="c1">// Print the result</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doubledNumbers</span><span class="p">);</span>
-</code></pre></div>
-
+// Print the result
+console.log(doubledNumbers);
+</code></pre>
 <p>In this example, the <code>Ramda</code> library is used to define a function that doubles each number in an array. The <code>Ramda</code> library provides a number of optimized functions for common data processing tasks, which can help to improve the performance of functional programming code.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Functional programming is a powerful paradigm that can simplify code, reduce bugs, and improve scalability. By applying the concepts and techniques outlined in this article, developers can write more efficient and effective code. Some next steps to consider include:

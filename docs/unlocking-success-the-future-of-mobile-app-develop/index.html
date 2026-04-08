@@ -157,29 +157,28 @@
 </ul>
 <p><strong>Example: Basic Flutter App Setup</strong></p>
 <p>Here’s a simple Flutter app that displays "Hello, World!" on the screen:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
+void main() {
+  runApp(MyApp());
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Hello World App&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="nl">body:</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">child:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Hello World App'),
+        ),
+        body: Center(
+          child: Text('Hello, World!'),
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
 <p><strong>Explanation</strong>: 
 - This code initializes a Flutter application, sets up a basic Material app with an AppBar, and displays a centered "Hello, World!" message.
 - To run this code, ensure you have Flutter installed and run <code>flutter run</code> in your terminal.</p>
@@ -193,28 +192,27 @@
 </ul>
 <p><strong>Example: TensorFlow Lite Image Classification</strong></p>
 <p>Here’s how you can implement a basic image classification model using TensorFlow Lite:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Load TFLite model and allocate tensors.</span>
-<span class="n">interpreter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;model.tflite&quot;</span><span class="p">)</span>
-<span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+# Load TFLite model and allocate tensors.
+interpreter = tf.lite.Interpreter(model_path=&quot;model.tflite&quot;)
+interpreter.allocate_tensors()
 
-<span class="c1"># Get input and output tensors.</span>
-<span class="n">input_details</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_input_details</span><span class="p">()</span>
-<span class="n">output_details</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_output_details</span><span class="p">()</span>
+# Get input and output tensors.
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
-<span class="c1"># Prepare input data</span>
-<span class="n">input_shape</span> <span class="o">=</span> <span class="n">input_details</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;shape&#39;</span><span class="p">]</span>
-<span class="n">input_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(</span><span class="n">input_shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+# Prepare input data
+input_shape = input_details[0]['shape']
+input_data = np.array(np.random.random_sample(input_shape), dtype=np.float32)
 
-<span class="c1"># Run inference</span>
-<span class="n">interpreter</span><span class="o">.</span><span class="n">set_tensor</span><span class="p">(</span><span class="n">input_details</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">input_data</span><span class="p">)</span>
-<span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+# Run inference
+interpreter.set_tensor(input_details[0]['index'], input_data)
+interpreter.invoke()
 
-<span class="c1"># Get results</span>
-<span class="n">output_data</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_tensor</span><span class="p">(</span><span class="n">output_details</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Get results
+output_data = interpreter.get_tensor(output_details[0]['index'])
+</code></pre>
 <p><strong>Explanation</strong>:
 - The code loads a pre-trained TensorFlow Lite model and performs inference on random input data.
 - Replace <code>"model.tflite"</code> with your model file to classify actual images.</p>
@@ -228,16 +226,15 @@
 </ul>
 <p><strong>Implementation Tool</strong>: Use <strong>Workbox</strong> to manage service workers and caching.</p>
 <p><strong>Example: Basic PWA Setup</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Register the service worker</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/service-worker.js&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ServiceWorker registered with scope:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">scope</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Register the service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =&gt; {
+    navigator.serviceWorker.register('/service-worker.js').then(registration =&gt; {
+      console.log('ServiceWorker registered with scope:', registration.scope);
+    });
+  });
+}
+</code></pre>
 <p><strong>Explanation</strong>:
 - This JavaScript code registers a service worker, enabling the PWA to cache assets and work offline.</p>
 <h2 id="challenges-and-solutions">Challenges and Solutions</h2>

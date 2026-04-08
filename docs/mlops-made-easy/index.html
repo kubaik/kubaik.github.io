@@ -169,21 +169,20 @@
 * <strong>AWS SageMaker</strong>: A fully managed service for building, training, and deploying ML models, providing a range of tools and features for ML pipeline automation.</p>
 <h3 id="example-automating-data-ingestion-with-apache-beam">Example: Automating Data Ingestion with Apache Beam</h3>
 <p>Here's an example of automating data ingestion using Apache Beam:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
+<pre><code class="language-python">import apache_beam as beam
 
-<span class="c1"># Define the data pipeline</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span>
+# Define the data pipeline
+pipeline = beam.Pipeline()
 
-<span class="c1"># Read data from a CSV file</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Read data from a CSV file
+data = pipeline | beam.io.ReadFromText('data.csv')
 
-<span class="c1"># Transform the data</span>
-<span class="n">transformed_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+# Transform the data
+transformed_data = data | beam.Map(lambda x: x.split(','))
 
-<span class="c1"># Write the transformed data to a BigQuery table</span>
-<span class="n">transformed_data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">WriteToBigQuery</span><span class="p">(</span><span class="s1">&#39;my_project:my_dataset.my_table&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Write the transformed data to a BigQuery table
+transformed_data | beam.io.WriteToBigQuery('my_project:my_dataset.my_table')
+</code></pre>
 <p>This example demonstrates how to use Apache Beam to automate data ingestion from a CSV file, transform the data, and write it to a BigQuery table.</p>
 <h2 id="model-deployment-and-monitoring">Model Deployment and Monitoring</h2>
 <p>Once the ML pipeline is automated, the next step is to deploy and monitor the models. This involves deploying the models to a production environment, monitoring their performance, and retraining them as necessary.</p>
@@ -194,21 +193,20 @@
 * <strong>New Relic</strong>: A monitoring and analytics platform for tracking application performance, including ML model performance.</p>
 <h3 id="example-deploying-a-model-with-tensorflow-serving">Example: Deploying a Model with TensorFlow Serving</h3>
 <p>Here's an example of deploying a model using TensorFlow Serving:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Load the trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;my_model.h5&#39;</span><span class="p">)</span>
+# Load the trained model
+model = tf.keras.models.load_model('my_model.h5')
 
-<span class="c1"># Create a TensorFlow Serving signature</span>
-<span class="n">signature</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">signature_def_utils</span><span class="o">.</span><span class="n">predict_signature_def</span><span class="p">(</span>
-    <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">input</span><span class="p">},</span>
-    <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">output</span><span class="p">}</span>
-<span class="p">)</span>
+# Create a TensorFlow Serving signature
+signature = tf.saved_model.signature_def_utils.predict_signature_def(
+    inputs={'input': model.input},
+    outputs={'output': model.output}
+)
 
-<span class="c1"># Export the model to a SavedModel</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;my_model&#39;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
-</code></pre></div>
-
+# Export the model to a SavedModel
+tf.saved_model.save(model, 'my_model', signatures=signature)
+</code></pre>
 <p>This example demonstrates how to deploy a trained model using TensorFlow Serving, creating a signature for the model and exporting it to a SavedModel.</p>
 <h2 id="model-retraining-and-updating">Model Retraining and Updating</h2>
 <p>As the model is deployed and monitored, it's essential to retrain and update the model periodically to maintain its performance and accuracy. This involves retraining the model on new data, updating the model architecture, and redeploying the model.</p>
@@ -219,24 +217,23 @@
 * <strong>H2O AutoML</strong>: An automated machine learning platform for building and deploying ML models, providing a range of tools and features for model retraining and updating.</p>
 <h3 id="example-retraining-a-model-with-apache-spark">Example: Retraining a Model with Apache Spark</h3>
 <p>Here's an example of retraining a model using Apache Spark:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">HashingTF</span><span class="p">,</span> <span class="n">Tokenizer</span>
+<pre><code class="language-python">from pyspark.ml import Pipeline
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.feature import HashingTF, Tokenizer
 
-<span class="c1"># Load the new data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;header&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;new_data.csv&#39;</span><span class="p">)</span>
+# Load the new data
+data = spark.read.format('csv').option('header', 'true').load('new_data.csv')
 
-<span class="c1"># Create a pipeline for retraining the model</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span>
-    <span class="n">Tokenizer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s1">&#39;words&#39;</span><span class="p">),</span>
-    <span class="n">HashingTF</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s1">&#39;words&#39;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">labelCol</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">featuresCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
-<span class="p">])</span>
+# Create a pipeline for retraining the model
+pipeline = Pipeline(stages=[
+    Tokenizer(inputCol='text', outputCol='words'),
+    HashingTF(inputCol='words', outputCol='features'),
+    LogisticRegression(labelCol='label', featuresCol='features')
+])
 
-<span class="c1"># Retrain the model on the new data</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+# Retrain the model on the new data
+model = pipeline.fit(data)
+</code></pre>
 <p>This example demonstrates how to retrain a model using Apache Spark, creating a pipeline for retraining the model and fitting the pipeline to the new data.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered in MLOps include:</p>

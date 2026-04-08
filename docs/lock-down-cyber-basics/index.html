@@ -168,14 +168,12 @@
 <h3 id="implementing-cybersecurity-measures">Implementing Cybersecurity Measures</h3>
 <p>One of the most effective ways to protect against threats is to implement a layered security approach. This involves using multiple security controls to protect against different types of threats. For example, we can use a firewall to block incoming traffic, an IDS to detect and alert on suspicious activity, and encryption to protect sensitive data.</p>
 <p>Here's an example of how we can use the <code>iptables</code> command in Linux to block incoming traffic on a specific port:</p>
-<div class="codehilite"><pre><span></span><code>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">22</span><span class="w"> </span>-j<span class="w"> </span>DROP
-</code></pre></div>
-
+<pre><code class="language-bash">iptables -A INPUT -p tcp --dport 22 -j DROP
+</code></pre>
 <p>This command blocks incoming traffic on port 22, which is the default port for SSH.</p>
 <p>We can also use tools like <code>nmap</code> to scan for open ports and identify potential vulnerabilities. For example:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sT<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>-1024<span class="w"> </span>example.com
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sT -p 1-1024 example.com
+</code></pre>
 <p>This command scans the first 1024 ports on the <code>example.com</code> domain and reports on any open ports.</p>
 <h3 id="using-encryption-to-protect-data">Using Encryption to Protect Data</h3>
 <p>Encryption is a critical component of any cybersecurity strategy. By converting plaintext data into unreadable ciphertext, we can protect sensitive information from unauthorized access. There are many types of encryption algorithms, including:</p>
@@ -184,9 +182,8 @@
 <li>RSA (Rivest-Shamir-Adleman): an asymmetric-key algorithm that is commonly used for encrypting data in transit</li>
 </ul>
 <p>Here's an example of how we can use the <code>openssl</code> command in Linux to encrypt a file using AES:</p>
-<div class="codehilite"><pre><span></span><code>openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-in<span class="w"> </span>example.txt<span class="w"> </span>-out<span class="w"> </span>example.enc
-</code></pre></div>
-
+<pre><code class="language-bash">openssl enc -aes-256-cbc -in example.txt -out example.enc
+</code></pre>
 <p>This command encrypts the <code>example.txt</code> file using AES-256-CBC and saves the encrypted data to a new file called <code>example.enc</code>.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Cybersecurity fundamentals are essential for any organization that handles sensitive data. Here are a few real-world use cases:</p>

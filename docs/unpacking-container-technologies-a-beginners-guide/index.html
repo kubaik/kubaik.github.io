@@ -178,13 +178,12 @@
 </ol>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h3 id="creating-your-first-container">Creating Your First Container:</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Pull a basic Ubuntu image</span>
-docker<span class="w"> </span>pull<span class="w"> </span>ubuntu
+<pre><code class="language-bash"># Pull a basic Ubuntu image
+docker pull ubuntu
 
-<span class="c1"># Run a container based on the Ubuntu image</span>
-docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
-</code></pre></div>
-
+# Run a container based on the Ubuntu image
+docker run -it ubuntu bash
+</code></pre>
 <h3 id="exploring-docker-hub">Exploring Docker Hub:</h3>
 <ul>
 <li>Visit Docker Hub (https://hub.docker.com/) to discover pre-built Docker images for various applications and services.</li>

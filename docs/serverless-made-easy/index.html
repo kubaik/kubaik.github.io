@@ -169,99 +169,96 @@
 * File uploads
 * Scheduled tasks</p>
 <p>For example, using AWS Lambda, we can create a serverless function that triggers when a new file is uploaded to an S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+s3 = boto3.client('s3')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the uploaded file</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
-    <span class="n">file_content</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">file_name</span><span class="p">)</span>
+def lambda_handler(event, context):
+    # Get the uploaded file
+    file_name = event['Records'][0]['s3']['object']['key']
+    file_content = s3.get_object(Bucket='my-bucket', Key=file_name)
 
-    <span class="c1"># Process the file</span>
-    <span class="c1"># ...</span>
+    # Process the file
+    # ...
 
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;File processed successfully!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    return {
+        'statusCode': 200,
+        'body': 'File processed successfully!'
+    }
+</code></pre>
 <p>This function can be triggered by an S3 event, and will process the uploaded file accordingly.</p>
 <h2 id="api-based-architecture">API-Based Architecture</h2>
 <p>In an API-based architecture, serverless functions handle API requests and responses. For example, using AWS API Gateway and Lambda, we can create a RESTful API that handles CRUD operations:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">dynamodb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;dynamodb&#39;</span><span class="p">)</span>
-<span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;my-table&#39;</span>
+dynamodb = boto3.resource('dynamodb')
+table_name = 'my-table'
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the request method</span>
-    <span class="n">method</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;httpMethod&#39;</span><span class="p">]</span>
+def lambda_handler(event, context):
+    # Get the request method
+    method = event['httpMethod']
 
-    <span class="c1"># Handle CRUD operations</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-        <span class="c1"># Get all items</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">items</span><span class="p">[</span><span class="s1">&#39;Items&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-        <span class="c1"># Create a new item</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">]</span>
-        <span class="n">table</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">Item</span><span class="o">=</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">201</span><span class="p">,</span>
-            <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Item created successfully!&#39;</span>
-        <span class="p">}</span>
-    <span class="c1"># ...</span>
+    # Handle CRUD operations
+    if method == 'GET':
+        # Get all items
+        items = table.scan()
+        return {
+            'statusCode': 200,
+            'body': items['Items']
+        }
+    elif method == 'POST':
+        # Create a new item
+        item = event['body']
+        table.put_item(Item=item)
+        return {
+            'statusCode': 201,
+            'body': 'Item created successfully!'
+        }
+    # ...
 
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid request method!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    return {
+        'statusCode': 400,
+        'body': 'Invalid request method!'
+    }
+</code></pre>
 <p>This function can be triggered by an API Gateway event, and will handle the CRUD operations accordingly.</p>
 <h2 id="data-processing-architecture">Data Processing Architecture</h2>
 <p>In a data processing architecture, serverless functions process and transform data in real-time. For example, using Google Cloud Dataflow and Cloud Functions, we can create a pipeline that processes log data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.dataflow.sdk.Pipeline</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.dataflow.sdk.transforms.DoFn</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.dataflow.sdk.transforms.ParDo</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.dataflow.sdk.values.PCollection</span><span class="p">;</span>
+<pre><code class="language-java">import com.google.cloud.dataflow.sdk.Pipeline;
+import com.google.cloud.dataflow.sdk.transforms.DoFn;
+import com.google.cloud.dataflow.sdk.transforms.ParDo;
+import com.google.cloud.dataflow.sdk.values.PCollection;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LogProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a pipeline</span>
-<span class="w">        </span><span class="n">Pipeline</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pipeline</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+public class LogProcessor {
+    public static void main(String[] args) {
+        // Create a pipeline
+        Pipeline pipeline = Pipeline.create();
 
-<span class="w">        </span><span class="c1">// Read log data from a file</span>
-<span class="w">        </span><span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pipeline</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">TextIO</span><span class="p">.</span><span class="na">read</span><span class="p">().</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;gs://my-bucket/logs.txt&quot;</span><span class="p">));</span>
+        // Read log data from a file
+        PCollection&lt;String&gt; logs = pipeline.apply(TextIO.read().from(&quot;gs://my-bucket/logs.txt&quot;));
 
-<span class="w">        </span><span class="c1">// Process log data</span>
-<span class="w">        </span><span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">processedLogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logs</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">ParDo</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LogProcessorFn</span><span class="p">()));</span>
+        // Process log data
+        PCollection&lt;String&gt; processedLogs = logs.apply(ParDo.of(new LogProcessorFn()));
 
-<span class="w">        </span><span class="c1">// Write processed log data to a file</span>
-<span class="w">        </span><span class="n">processedLogs</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">TextIO</span><span class="p">.</span><span class="na">write</span><span class="p">().</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;gs://my-bucket/processed-logs.txt&quot;</span><span class="p">));</span>
+        // Write processed log data to a file
+        processedLogs.apply(TextIO.write().to(&quot;gs://my-bucket/processed-logs.txt&quot;));
 
-<span class="w">        </span><span class="c1">// Run the pipeline</span>
-<span class="w">        </span><span class="n">pipeline</span><span class="p">.</span><span class="na">run</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+        // Run the pipeline
+        pipeline.run();
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LogProcessorFn</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">DoFn</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nd">@ProcessElement</span>
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processElement</span><span class="p">(</span><span class="n">ProcessContext</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Process log data</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">element</span><span class="p">();</span>
-<span class="w">            </span><span class="c1">// ...</span>
+    public static class LogProcessorFn extends DoFn&lt;String, String&gt; {
+        @ProcessElement
+        public void processElement(ProcessContext c) {
+            // Process log data
+            String log = c.element();
+            // ...
 
-<span class="w">            </span><span class="n">c</span><span class="p">.</span><span class="na">output</span><span class="p">(</span><span class="n">processedLog</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            c.output(processedLog);
+        }
+    }
+}
+</code></pre>
 <p>This pipeline can be triggered by a Cloud Functions event, and will process the log data accordingly.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems in serverless architecture include:

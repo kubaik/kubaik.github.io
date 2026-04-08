@@ -178,57 +178,54 @@
 <li>Support for multiple programming languages</li>
 </ul>
 <p>For example, Cucumber provides a simple and intuitive API for writing scenarios, and it supports multiple programming languages, including Java, Ruby, and Python. Here is an example of a scenario written in Cucumber:</p>
-<div class="codehilite"><pre><span></span><code><span class="nl">Feature</span><span class="p">:</span><span class="w"> </span><span class="n">Login</span><span class="w"> </span><span class="n">functionality</span>
-<span class="w">  </span><span class="n">As</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">user</span>
-<span class="w">  </span><span class="n">I</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">able</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">system</span>
-<span class="w">  </span><span class="n">So</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">system</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">functionality</span>
+<pre><code class="language-java">Feature: Login functionality
+  As a user
+  I want to be able to login to the system
+  So that I can access the system's functionality
 
-<span class="w">  </span><span class="nl">Scenario</span><span class="p">:</span><span class="w"> </span><span class="n">Successful</span><span class="w"> </span><span class="n">login</span>
-<span class="w">    </span><span class="n">Given</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">am</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">page</span>
-<span class="w">    </span><span class="n">When</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">enter</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">password</span>
-<span class="w">    </span><span class="n">Then</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">logged</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">system</span>
-</code></pre></div>
-
+  Scenario: Successful login
+    Given I am on the login page
+    When I enter my username and password
+    Then I should be logged in to the system
+</code></pre>
 <p>This scenario can be used to generate an automated test that validates the login functionality of the system.</p>
 <h3 id="example-use-case-implementing-bdd-for-a-web-application">Example Use Case: Implementing BDD for a Web Application</h3>
 <p>Let's consider an example of implementing BDD for a web application. Suppose we have a web application that allows users to create and manage their profiles. We want to implement a feature that allows users to update their profile information.</p>
 <p>Here is an example of a scenario written in Cucumber:</p>
-<div class="codehilite"><pre><span></span><code><span class="nl">Feature</span><span class="p">:</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">information</span>
-<span class="w">  </span><span class="n">As</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">user</span>
-<span class="w">  </span><span class="n">I</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">able</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">information</span>
-<span class="w">  </span><span class="n">So</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">up</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">date</span>
+<pre><code class="language-java">Feature: Update profile information
+  As a user
+  I want to be able to update my profile information
+  So that I can keep my profile up-to-date
 
-<span class="w">  </span><span class="nl">Scenario</span><span class="p">:</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">successfully</span>
-<span class="w">    </span><span class="n">Given</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">am</span><span class="w"> </span><span class="n">logged</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">system</span>
-<span class="w">    </span><span class="n">When</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">click</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="s">&quot;Update Profile&quot;</span><span class="w"> </span><span class="n">button</span>
-<span class="w">    </span><span class="n">And</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">enter</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">information</span>
-<span class="w">    </span><span class="n">Then</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">confirmation</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="n">indicating</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">updated</span>
-</code></pre></div>
-
+  Scenario: Update profile information successfully
+    Given I am logged in to the system
+    When I click on the &quot;Update Profile&quot; button
+    And I enter my new profile information
+    Then I should see a confirmation message indicating that my profile has been updated
+</code></pre>
 <p>This scenario can be used to generate an automated test that validates the update profile information feature of the system.</p>
 <p>To implement this scenario, we can use a BDD framework such as Cucumber or SpecFlow. We can write step definitions that map to the steps in the scenario, and we can use a programming language such as Java or C# to implement the logic for each step.</p>
 <p>For example, here is an example of a step definition written in Java using Cucumber:</p>
-<div class="codehilite"><pre><span></span><code><span class="nd">@Given</span><span class="p">(</span><span class="s">&quot;I am logged in to the system&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_am_logged_in_to_the_system</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Implement logic to login to the system</span>
-<span class="p">}</span>
+<pre><code class="language-java">@Given(&quot;I am logged in to the system&quot;)
+public void i_am_logged_in_to_the_system() {
+  // Implement logic to login to the system
+}
 
-<span class="nd">@When</span><span class="p">(</span><span class="s">&quot;I click on the {string} button&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_click_on_the_button</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">buttonName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Implement logic to click on the button</span>
-<span class="p">}</span>
+@When(&quot;I click on the {string} button&quot;)
+public void i_click_on_the_button(String buttonName) {
+  // Implement logic to click on the button
+}
 
-<span class="nd">@And</span><span class="p">(</span><span class="s">&quot;I enter my new profile information&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_enter_my_new_profile_information</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Implement logic to enter new profile information</span>
-<span class="p">}</span>
+@And(&quot;I enter my new profile information&quot;)
+public void i_enter_my_new_profile_information() {
+  // Implement logic to enter new profile information
+}
 
-<span class="nd">@Then</span><span class="p">(</span><span class="s">&quot;I should see a confirmation message indicating that my profile has been updated&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">i_should_see_a_confirmation_message</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Implement logic to verify the confirmation message</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@Then(&quot;I should see a confirmation message indicating that my profile has been updated&quot;)
+public void i_should_see_a_confirmation_message() {
+  // Implement logic to verify the confirmation message
+}
+</code></pre>
 <p>This step definition can be used to generate an automated test that validates the update profile information feature of the system.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem with BDD is that it can be time-consuming to write and maintain scenarios. To address this problem, it's essential to keep scenarios concise and focused on the desired behavior of the system. Additionally, it's crucial to use a consistent naming convention and to avoid duplication of scenarios.</p>

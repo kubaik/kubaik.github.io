@@ -168,32 +168,31 @@
 3. <strong>Creating a smart contract</strong>: Users need to create a smart contract that defines the terms of the NFT, including its name, description, and ownership.
 4. <strong>Minting the NFT</strong>: Once the smart contract is created, users can mint the NFT, which involves deploying the contract to the blockchain and paying the required gas fees.</p>
 <p>Here is an example of how to create an NFT using the OpenZeppelin library in Solidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Mapping of NFTs to their owners</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">))</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>nftOwners<span class="p">;</span>
+contract MyNFT {
+    // Mapping of NFTs to their owners
+    mapping (address =&gt; mapping (uint256 =&gt; uint256)) public nftOwners;
 
-<span class="w">    </span><span class="c1">// Function to create a new NFT</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createNFT</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_description<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new NFT with a unique ID</span>
-<span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">nftId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span>_name<span class="p">,</span><span class="w"> </span>_description<span class="p">)));</span>
-<span class="w">        </span>nftOwners<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>nftId<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>nftId<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    // Function to create a new NFT
+    function createNFT(string memory _name, string memory _description) public {
+        // Create a new NFT with a unique ID
+        uint256 nftId = uint256(keccak256(abi.encodePacked(_name, _description)));
+        nftOwners[msg.sender][nftId] = nftId;
+    }
 
-<span class="w">    </span><span class="c1">// Function to transfer an NFT to a new owner</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_nftId</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Check if the sender is the owner of the NFT</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>nftOwners<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>_nftId<span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>_nftId<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Sender is not the owner of the NFT&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// Transfer the NFT to the new owner</span>
-<span class="w">        </span>nftOwners<span class="p">[</span>_to<span class="p">][</span>_nftId<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>_nftId<span class="p">;</span>
-<span class="w">        </span>nftOwners<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>_nftId<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Function to transfer an NFT to a new owner
+    function transferNFT(address _to, uint256 _nftId) public {
+        // Check if the sender is the owner of the NFT
+        require(nftOwners[msg.sender][_nftId] == _nftId, &quot;Sender is not the owner of the NFT&quot;);
+        // Transfer the NFT to the new owner
+        nftOwners[_to][_nftId] = _nftId;
+        nftOwners[msg.sender][_nftId] = 0;
+    }
+}
+</code></pre>
 <p>This contract defines a simple NFT that can be created and transferred between owners.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems with NFT technology is the high gas fees associated with creating and trading NFTs on the Ethereum blockchain. To solve this problem, several solutions have been proposed, including:</p>
@@ -203,31 +202,30 @@
 <li><strong>Token standards</strong>: These are standardized protocols for creating and trading NFTs, which can help to reduce the complexity and cost of NFT transactions.</li>
 </ul>
 <p>For example, the token standard ERC-721 is widely used for creating and trading NFTs on the Ethereum blockchain. Here is an example of how to use the ERC-721 standard to create an NFT:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="kt">is</span><span class="w"> </span>ERC721<span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Mapping of NFTs to their owners</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">))</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>nftOwners<span class="p">;</span>
+contract MyNFT is ERC721 {
+    // Mapping of NFTs to their owners
+    mapping (address =&gt; mapping (uint256 =&gt; uint256)) public nftOwners;
 
-<span class="w">    </span><span class="c1">// Function to create a new NFT</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createNFT</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_description<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new NFT with a unique ID</span>
-<span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">nftId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span>_name<span class="p">,</span><span class="w"> </span>_description<span class="p">)));</span>
-<span class="w">        </span>_mint<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>nftId<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    // Function to create a new NFT
+    function createNFT(string memory _name, string memory _description) public {
+        // Create a new NFT with a unique ID
+        uint256 nftId = uint256(keccak256(abi.encodePacked(_name, _description)));
+        _mint(msg.sender, nftId);
+    }
 
-<span class="w">    </span><span class="c1">// Function to transfer an NFT to a new owner</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_nftId</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Check if the sender is the owner of the NFT</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>ownerOf<span class="p">(</span>_nftId<span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Sender is not the owner of the NFT&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// Transfer the NFT to the new owner</span>
-<span class="w">        </span>_transfer<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>_to<span class="p">,</span><span class="w"> </span>_nftId<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Function to transfer an NFT to a new owner
+    function transferNFT(address _to, uint256 _nftId) public {
+        // Check if the sender is the owner of the NFT
+        require(ownerOf(_nftId) == msg.sender, &quot;Sender is not the owner of the NFT&quot;);
+        // Transfer the NFT to the new owner
+        _transfer(msg.sender, _to, _nftId);
+    }
+}
+</code></pre>
 <p>This contract uses the ERC-721 standard to create and manage NFTs, which can help to reduce the complexity and cost of NFT transactions.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of NFT technology can vary depending on the specific use case and implementation. However, here are some general performance benchmarks for NFT transactions on the Ethereum blockchain:</p>
@@ -242,30 +240,29 @@
 <li><strong>Off-chain transactions</strong>: This involves processing transactions off of the main Ethereum blockchain and then settling them on the blockchain, which can help to reduce the load on the blockchain and improve performance.</li>
 </ul>
 <p>For example, the platform Polygon (formerly Matic Network) uses a combination of sharding and off-chain transactions to improve the performance of NFT transactions. Here is an example of how to use the Polygon platform to create and trade NFTs:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ethers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ethers&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ethers } = require('ethers');
 
-<span class="c1">// Set up the Polygon provider</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">JsonRpcProvider</span><span class="p">(</span><span class="s1">&#39;https://matic-mainnet-full-rpc.bwarelabs.com&#39;</span><span class="p">);</span>
+// Set up the Polygon provider
+const provider = new ethers.providers.JsonRpcProvider('https://matic-mainnet-full-rpc.bwarelabs.com');
 
-<span class="c1">// Set up the NFT contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ethers</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="s1">&#39;0x...NFT contract address...&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="s1">&#39;function createNFT(string memory _name, string memory _description) public&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;function transferNFT(address _to, uint256 _nftId) public&#39;</span><span class="p">,</span>
-<span class="p">]);</span>
+// Set up the NFT contract
+const nftContract = new ethers.Contract('0x...NFT contract address...', [
+  'function createNFT(string memory _name, string memory _description) public',
+  'function transferNFT(address _to, uint256 _nftId) public',
+]);
 
-<span class="c1">// Create a new NFT</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">createNFT</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">description</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">createNFT</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">description</span><span class="p">);</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span>
-<span class="p">}</span>
+// Create a new NFT
+async function createNFT(name, description) {
+  const tx = await nftContract.createNFT(name, description);
+  await tx.wait();
+}
 
-<span class="c1">// Transfer an NFT to a new owner</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">transferNFT</span><span class="p">(</span><span class="nx">to</span><span class="p">,</span><span class="w"> </span><span class="nx">nftId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">nftContract</span><span class="p">.</span><span class="nx">transferNFT</span><span class="p">(</span><span class="nx">to</span><span class="p">,</span><span class="w"> </span><span class="nx">nftId</span><span class="p">);</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">tx</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Transfer an NFT to a new owner
+async function transferNFT(to, nftId) {
+  const tx = await nftContract.transferNFT(to, nftId);
+  await tx.wait();
+}
+</code></pre>
 <p>This code uses the Polygon platform to create and trade NFTs, which can help to improve the performance of NFT transactions.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, NFT technology has the potential to revolutionize the way we create, trade, and own digital assets. With its unique combination of blockchain technology and smart contracts, NFTs can provide a secure, transparent, and efficient way to manage digital ownership. However, there are still several challenges that need to be addressed, including high gas fees, scalability issues, and regulatory uncertainty.</p>

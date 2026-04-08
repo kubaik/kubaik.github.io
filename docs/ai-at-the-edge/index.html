@@ -165,49 +165,48 @@
 * <strong>Autonomous Vehicles</strong>: Companies like Tesla and Waymo are using edge-based AI to power their autonomous vehicles, enabling real-time object detection, tracking, and decision-making.</p>
 <h3 id="code-example-edge-based-object-detection">Code Example: Edge-Based Object Detection</h3>
 <p>The following code example demonstrates how to use the OpenCV library to perform object detection at the edge using a Raspberry Pi and a camera module:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import cv2
+import numpy as np
 
-<span class="c1"># Load the object detection model</span>
-<span class="n">net</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dnn</span><span class="o">.</span><span class="n">readNetFromCaffe</span><span class="p">(</span><span class="s2">&quot;MobileNetSSD_deploy.prototxt.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;MobileNetSSD_deploy.caffemodel&quot;</span><span class="p">)</span>
+# Load the object detection model
+net = cv2.dnn.readNetFromCaffe(&quot;MobileNetSSD_deploy.prototxt.txt&quot;, &quot;MobileNetSSD_deploy.caffemodel&quot;)
 
-<span class="c1"># Initialize the camera</span>
-<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Initialize the camera
+cap = cv2.VideoCapture(0)
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Read a frame from the camera</span>
-    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+while True:
+    # Read a frame from the camera
+    ret, frame = cap.read()
 
-    <span class="c1"># Convert the frame to a blob</span>
-    <span class="n">blob</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dnn</span><span class="o">.</span><span class="n">blobFromImage</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mf">0.007843</span><span class="p">,</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mf">127.5</span><span class="p">)</span>
+    # Convert the frame to a blob
+    blob = cv2.dnn.blobFromImage(frame, 0.007843, (300, 300), 127.5)
 
-    <span class="c1"># Pass the blob through the object detection model</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">setInput</span><span class="p">(</span><span class="n">blob</span><span class="p">)</span>
-    <span class="n">detections</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">forward</span><span class="p">()</span>
+    # Pass the blob through the object detection model
+    net.setInput(blob)
+    detections = net.forward()
 
-    <span class="c1"># Loop through the detections and draw bounding boxes</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">detections</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-        <span class="n">confidence</span> <span class="o">=</span> <span class="n">detections</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">detections</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-            <span class="n">box</span> <span class="o">=</span> <span class="n">detections</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
-            <span class="p">(</span><span class="n">startX</span><span class="p">,</span> <span class="n">startY</span><span class="p">,</span> <span class="n">endX</span><span class="p">,</span> <span class="n">endY</span><span class="p">)</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">CLASSES</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">confidence</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">startX</span><span class="p">,</span> <span class="n">startY</span><span class="p">),</span> <span class="p">(</span><span class="n">endX</span><span class="p">,</span> <span class="n">endY</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">startX</span><span class="p">,</span> <span class="n">startY</span> <span class="o">-</span> <span class="mi">15</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    # Loop through the detections and draw bounding boxes
+    for i in np.arange(0, detections.shape[2]):
+        confidence = detections[0, 0, i, 2]
+        if confidence &gt; 0.2:
+            idx = int(detections[0, 0, i, 1])
+            box = detections[0, 0, i, 3:7] * np.array([frame.shape[1], frame.shape[0], frame.shape[1], frame.shape[0]])
+            (startX, startY, endX, endY) = box.astype(&quot;int&quot;)
+            label = &quot;{}: {:.2f}%&quot;.format(CLASSES[idx], confidence * 100)
+            cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+            cv2.putText(frame, label, (startX, startY - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-    <span class="c1"># Display the output</span>
-    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Frame&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+    # Display the output
+    cv2.imshow(&quot;Frame&quot;, frame)
 
-    <span class="c1"># Exit on key press</span>
-    <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">):</span>
-        <span class="k">break</span>
+    # Exit on key press
+    if cv2.waitKey(1) &amp; 0xFF == ord(&quot;q&quot;):
+        break
 
-<span class="c1"># Release the camera and close the window</span>
-<span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
-</code></pre></div>
-
+# Release the camera and close the window
+cap.release()
+cv2.destroyAllWindows()
+</code></pre>
 <p>This code example uses the OpenCV library to load an object detection model, capture frames from a camera, and perform object detection in real-time. The output is displayed on the screen, with bounding boxes drawn around detected objects.</p>
 <h2 id="tools-and-platforms-for-ai-at-the-edge">Tools and Platforms for AI at the Edge</h2>
 <p>Several tools and platforms are available to support the development and deployment of AI at the edge, including:
@@ -237,46 +236,45 @@
     * Solution: Use power-efficient hardware, optimized software, and thermal management techniques to minimize power consumption and heat.</p>
 <h3 id="code-example-model-pruning">Code Example: Model Pruning</h3>
 <p>The following code example demonstrates how to use the TensorFlow framework to prune a pre-trained model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Load the pre-trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;model.h5&quot;</span><span class="p">)</span>
+# Load the pre-trained model
+model = tf.keras.models.load_model(&quot;model.h5&quot;)
 
-<span class="c1"># Define the pruning parameters</span>
-<span class="n">pruning_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;pruning_schedule&quot;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">pruning</span><span class="o">.</span><span class="n">PolynomialDecay</span><span class="p">(</span>
-        <span class="n">initial_sparsity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">final_sparsity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">begin_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">end_step</span><span class="o">=</span><span class="mi">10000</span>
-    <span class="p">)</span>
-<span class="p">}</span>
+# Define the pruning parameters
+pruning_params = {
+    &quot;pruning_schedule&quot;: tf.keras.pruning.PolynomialDecay(
+        initial_sparsity=0.0,
+        final_sparsity=0.5,
+        begin_step=0,
+        end_step=10000
+    )
+}
 
-<span class="c1"># Create a pruned model</span>
-<span class="n">pruned_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span>
-    <span class="n">clone_function</span><span class="o">=</span><span class="k">lambda</span> <span class="n">layer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PrunableLayer</span><span class="p">(</span>
-        <span class="n">layer</span><span class="p">,</span>
-        <span class="n">pruning_params</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+# Create a pruned model
+pruned_model = tf.keras.models.clone_model(
+    model,
+    clone_function=lambda layer: tf.keras.layers.PrunableLayer(
+        layer,
+        pruning_params
+    )
+)
 
-<span class="c1"># Compile the pruned model</span>
-<span class="n">pruned_model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span>
-    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
-<span class="p">)</span>
+# Compile the pruned model
+pruned_model.compile(
+    loss=&quot;categorical_crossentropy&quot;,
+    optimizer=&quot;adam&quot;,
+    metrics=[&quot;accuracy&quot;]
+)
 
-<span class="c1"># Train the pruned model</span>
-<span class="n">pruned_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">train_data</span><span class="p">,</span>
-    <span class="n">train_labels</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">val_data</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Train the pruned model
+pruned_model.fit(
+    train_data,
+    train_labels,
+    epochs=10,
+    validation_data=(val_data, val_labels)
+)
+</code></pre>
 <p>This code example uses the TensorFlow framework to load a pre-trained model, define pruning parameters, create a pruned model, compile the pruned model, and train the pruned model.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>AI at the edge is a rapidly growing field that offers several benefits, including reduced latency, improved security, and increased efficiency. To get started with AI at the edge, follow these next steps:

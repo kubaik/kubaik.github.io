@@ -198,21 +198,20 @@
 </tbody>
 </table>
 <p>This table is not normalized, as it contains redundant data. For example, the customer name is repeated for each order. To normalize this table, we can split it into two tables: one for customers and one for orders.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">CustomerID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">CustomerName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE Customers (
+  CustomerID INT PRIMARY KEY,
+  CustomerName VARCHAR(255)
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">OrderID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">CustomerID</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">OrderDate</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">ProductName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">Quantity</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Customers</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE Orders (
+  OrderID INT PRIMARY KEY,
+  CustomerID INT,
+  OrderDate DATE,
+  ProductName VARCHAR(255),
+  Quantity INT,
+  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+</code></pre>
 <h2 id="benefits-of-normalization">Benefits of Normalization</h2>
 <p>Normalization provides several benefits, including:
 * <strong>Improved data integrity</strong>: Normalization helps to ensure that data is consistent and accurate.

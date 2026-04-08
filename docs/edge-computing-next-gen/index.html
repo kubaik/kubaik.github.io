@@ -163,31 +163,30 @@
 * <strong>Healthcare</strong>: Edge computing can be used to analyze medical images, monitor patient vital signs, and optimize treatment plans.</p>
 <h3 id="example-1-industrial-automation-with-edge-computing">Example 1: Industrial Automation with Edge Computing</h3>
 <p>In industrial automation, edge computing can be used to monitor and control equipment in real-time. For example, a manufacturing plant can use edge computing to monitor the temperature and pressure of equipment, predicting when maintenance is required. Here is an example of how this can be implemented using Python and the EdgeX Foundry platform:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">edgexfoundry</span> <span class="kn">import</span> <span class="n">client</span>
+<pre><code class="language-python">import random
+from edgexfoundry import client
 
-<span class="c1"># Create an EdgeX Foundry client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">EdgeXClient</span><span class="p">(</span><span class="s2">&quot;http://localhost:48080&quot;</span><span class="p">)</span>
+# Create an EdgeX Foundry client
+client = client.EdgeXClient(&quot;http://localhost:48080&quot;)
 
-<span class="c1"># Define a function to monitor equipment temperature</span>
-<span class="k">def</span> <span class="nf">monitor_temperature</span><span class="p">():</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+# Define a function to monitor equipment temperature
+def monitor_temperature():
+    temperature = random.uniform(0, 100)
+    client.add_event(&quot;temperature&quot;, temperature)
 
-<span class="c1"># Define a function to predict maintenance</span>
-<span class="k">def</span> <span class="nf">predict_maintenance</span><span class="p">(</span><span class="n">temperature</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">temperature</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
+# Define a function to predict maintenance
+def predict_maintenance(temperature):
+    if temperature &gt; 80:
+        return True
+    else:
+        return False
 
-<span class="c1"># Monitor equipment temperature and predict maintenance</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="n">monitor_temperature</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">predict_maintenance</span><span class="p">(</span><span class="n">temperature</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maintenance required&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Monitor equipment temperature and predict maintenance
+while True:
+    temperature = monitor_temperature()
+    if predict_maintenance(temperature):
+        print(&quot;Maintenance required&quot;)
+</code></pre>
 <p>In this example, the EdgeX Foundry platform is used to create an edge computing application that monitors equipment temperature and predicts when maintenance is required.</p>
 <h2 id="edge-computing-platforms-and-tools">Edge Computing Platforms and Tools</h2>
 <p>Several platforms and tools are available for building edge computing applications, including:
@@ -196,20 +195,19 @@
 * <strong>Google Cloud IoT Core</strong>: A fully managed service that securely connects, manages, and analyzes IoT data.</p>
 <h3 id="example-2-building-an-edge-computing-application-with-aws-iot-greengrass">Example 2: Building an Edge Computing Application with AWS IoT Greengrass</h3>
 <p>AWS IoT Greengrass provides a cloud-based edge computing platform that enables local compute, messaging, and data caching for IoT devices. Here is an example of how to build an edge computing application using AWS IoT Greengrass and Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">awsiot</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import awsiot
+import json
 
-<span class="c1"># Create an AWS IoT Greengrass client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">awsiot</span><span class="o">.</span><span class="n">greengrass</span><span class="o">.</span><span class="n">GreengrassClient</span><span class="p">(</span><span class="s2">&quot;https://greengrass-ats.iot.us-east-1.amazonaws.com&quot;</span><span class="p">)</span>
+# Create an AWS IoT Greengrass client
+client = awsiot.greengrass.GreengrassClient(&quot;https://greengrass-ats.iot.us-east-1.amazonaws.com&quot;)
 
-<span class="c1"># Define a function to handle incoming messages</span>
-<span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+# Define a function to handle incoming messages
+def handle_message(message):
+    print(json.loads(message))
 
-<span class="c1"># Subscribe to incoming messages</span>
-<span class="n">client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">handle_message</span><span class="p">)</span>
-</code></pre></div>
-
+# Subscribe to incoming messages
+client.subscribe(&quot;topic&quot;, handle_message)
+</code></pre>
 <p>In this example, the AWS IoT Greengrass client is used to subscribe to incoming messages and handle them using a Python function.</p>
 <h2 id="performance-metrics-and-pricing">Performance Metrics and Pricing</h2>
 <p>Edge computing platforms and tools have different performance metrics and pricing models, including:
@@ -218,21 +216,20 @@
 * <strong>EdgeX Foundry</strong>: Open-source and free to use, with optional support and services available.</p>
 <h3 id="example-3-optimizing-edge-computing-performance-with-google-cloud-iot-core">Example 3: Optimizing Edge Computing Performance with Google Cloud IoT Core</h3>
 <p>Google Cloud IoT Core provides a fully managed service that securely connects, manages, and analyzes IoT data. To optimize edge computing performance with Google Cloud IoT Core, you can use the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">google.cloud.iot</span>
+<pre><code class="language-python">import google.cloud.iot
 
-<span class="c1"># Create a Google Cloud IoT Core client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">cloud</span><span class="o">.</span><span class="n">iot</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+# Create a Google Cloud IoT Core client
+client = google.cloud.iot.Client()
 
-<span class="c1"># Define a function to optimize device configuration</span>
-<span class="k">def</span> <span class="nf">optimize_device_config</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
-    <span class="n">device</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">update_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+# Define a function to optimize device configuration
+def optimize_device_config(device):
+    device.config = {&quot;temperature&quot;: 25, &quot;humidity&quot;: 50}
+    client.update_device(device)
 
-<span class="c1"># Optimize device configuration</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_device</span><span class="p">(</span><span class="s2">&quot;device-id&quot;</span><span class="p">)</span>
-<span class="n">optimize_device_config</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-</code></pre></div>
-
+# Optimize device configuration
+device = client.get_device(&quot;device-id&quot;)
+optimize_device_config(device)
+</code></pre>
 <p>In this example, the Google Cloud IoT Core client is used to optimize device configuration and improve edge computing performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Edge computing applications can face several common problems, including:

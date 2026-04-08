@@ -160,13 +160,12 @@
 * Inconsistent naming conventions
 * Lack of comments or documentation</p>
 <p>For example, let's consider a simple Python function that calculates the area of a rectangle:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_area</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-</code></pre></div>
-
+<pre><code class="language-python">def calculate_area(length, width):
+    if length &gt; 0 and width &gt; 0:
+        return length * width
+    else:
+        return 0
+</code></pre>
 <p>This function is simple and easy to understand, but it can be improved by adding error handling and input validation. We can use a library like <code>pylint</code> to analyze the code and identify areas for improvement.</p>
 <h2 id="tools-and-techniques-for-refactoring-legacy-code">Tools and Techniques for Refactoring Legacy Code</h2>
 <p>There are several tools and techniques that can aid in the refactoring process, including:
@@ -186,33 +185,31 @@
 3. <strong>Remove Duplicate Code</strong>: Remove duplicate code and replace it with a single, reusable function.
 4. <strong>Simplify Conditional Statements</strong>: Simplify complex conditional statements using techniques like guard clauses.</p>
 <p>For example, let's consider a JavaScript function that calculates the total cost of an order:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateTotalCost</span><span class="p">(</span><span class="nx">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">totalCost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">quantity</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">totalCost</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">quantity</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">totalCost</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">function calculateTotalCost(order) {
+    let totalCost = 0;
+    for (let i = 0; i &lt; order.items.length; i++) {
+        if (order.items[i].quantity &gt; 0) {
+            totalCost += order.items[i].price * order.items[i].quantity;
+        }
+    }
+    return totalCost;
+}
+</code></pre>
 <p>We can refactor this function using the <strong>Extract Method</strong> technique:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateItemCost</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">price</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">quantity</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">function calculateItemCost(item) {
+    return item.price * item.quantity;
+}
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">calculateTotalCost</span><span class="p">(</span><span class="nx">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">totalCost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">quantity</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">totalCost</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">calculateItemCost</span><span class="p">(</span><span class="nx">order</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">totalCost</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function calculateTotalCost(order) {
+    let totalCost = 0;
+    for (let i = 0; i &lt; order.items.length; i++) {
+        if (order.items[i].quantity &gt; 0) {
+            totalCost += calculateItemCost(order.items[i]);
+        }
+    }
+    return totalCost;
+}
+</code></pre>
 <p>This refactored function is more modular and easier to maintain.</p>
 <h2 id="common-challenges-and-solutions">Common Challenges and Solutions</h2>
 <p>Refactoring legacy code can be challenging, especially when dealing with complex systems or outdated technologies. Some common challenges include:

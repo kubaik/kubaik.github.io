@@ -164,36 +164,35 @@
 * Blue Prism: Blue Prism is a UK-based RPA platform that offers a range of tools and features for automating business processes. Pricing for Blue Prism starts at $10,000 per year for the Standard version, with the Enterprise version costing $25,000 per year.</p>
 <h3 id="practical-example-automating-a-simple-task-with-uipath">Practical Example: Automating a Simple Task with UiPath</h3>
 <p>Here is an example of how to automate a simple task using UiPath:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary namespaces</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Text</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UiPath.Core</span><span class="p">;</span>
+<pre><code class="language-csharp">// Import the necessary namespaces
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UiPath.Core;
 
-<span class="c1">// Create a new UiPath robot</span>
-<span class="n">Robot</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Robot</span><span class="p">();</span>
+// Create a new UiPath robot
+Robot robot = new Robot();
 
-<span class="c1">// Define the task to be automated</span>
-<span class="kt">string</span><span class="w"> </span><span class="n">taskName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Automate Excel Task&quot;</span><span class="p">;</span>
+// Define the task to be automated
+string taskName = &quot;Automate Excel Task&quot;;
 
-<span class="c1">// Create a new Excel application object</span>
-<span class="n">Excel</span><span class="p">.</span><span class="n">Application</span><span class="w"> </span><span class="n">excelApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Excel</span><span class="p">.</span><span class="n">Application</span><span class="p">();</span>
+// Create a new Excel application object
+Excel.Application excelApp = new Excel.Application();
 
-<span class="c1">// Open the Excel workbook</span>
-<span class="n">excelApp</span><span class="p">.</span><span class="n">Workbooks</span><span class="p">.</span><span class="n">Open</span><span class="p">(</span><span class="s">&quot;C:\\example.xlsx&quot;</span><span class="p">);</span>
+// Open the Excel workbook
+excelApp.Workbooks.Open(&quot;C:\\example.xlsx&quot;);
 
-<span class="c1">// Perform the task</span>
-<span class="n">excelApp</span><span class="p">.</span><span class="n">Range</span><span class="p">[</span><span class="s">&quot;A1&quot;</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">;</span>
+// Perform the task
+excelApp.Range[&quot;A1&quot;].Value = &quot;Hello World&quot;;
 
-<span class="c1">// Save the Excel workbook</span>
-<span class="n">excelApp</span><span class="p">.</span><span class="n">Workbooks</span><span class="p">.</span><span class="n">Save</span><span class="p">();</span>
+// Save the Excel workbook
+excelApp.Workbooks.Save();
 
-<span class="c1">// Close the Excel application</span>
-<span class="n">excelApp</span><span class="p">.</span><span class="n">Quit</span><span class="p">();</span>
-</code></pre></div>
-
+// Close the Excel application
+excelApp.Quit();
+</code></pre>
 <p>This code example demonstrates how to automate a simple task using UiPath. In this example, we create a new UiPath robot and define the task to be automated. We then create a new Excel application object and open the Excel workbook. We perform the task by setting the value of a cell in the workbook, and then save and close the workbook.</p>
 <h2 id="rpa-implementation-best-practices-and-common-challenges">RPA Implementation: Best Practices and Common Challenges</h2>
 <p>Implementing RPA can be a complex and challenging process, but there are a number of best practices that can help to ensure success. Some of the most important best practices include:
@@ -207,24 +206,23 @@
 * <strong>Security risks</strong>: RPA systems can pose security risks if they are not properly configured and managed. It is essential to ensure that the RPA system is secure and that access is restricted to authorized personnel.</p>
 <h3 id="practical-example-handling-exceptions-with-automation-anywhere">Practical Example: Handling Exceptions with Automation Anywhere</h3>
 <p>Here is an example of how to handle exceptions using Automation Anywhere:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">automationanywhere</span>
+<pre><code class="language-python"># Import the necessary libraries
+import automationanywhere
 
-<span class="c1"># Define the task to be automated</span>
-<span class="n">task_name</span> <span class="o">=</span> <span class="s2">&quot;Automate Task&quot;</span>
+# Define the task to be automated
+task_name = &quot;Automate Task&quot;
 
-<span class="c1"># Create a new Automation Anywhere bot</span>
-<span class="n">bot</span> <span class="o">=</span> <span class="n">automationanywhere</span><span class="o">.</span><span class="n">Bot</span><span class="p">()</span>
+# Create a new Automation Anywhere bot
+bot = automationanywhere.Bot()
 
-<span class="c1"># Try to perform the task</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="c1"># Perform the task</span>
-    <span class="n">bot</span><span class="o">.</span><span class="n">click</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">automationanywhere</span><span class="o">.</span><span class="n">BotException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="c1"># Handle the exception</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An error occurred: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-</code></pre></div>
-
+# Try to perform the task
+try:
+    # Perform the task
+    bot.click(&quot;OK&quot;)
+except automationanywhere.BotException as e:
+    # Handle the exception
+    print(&quot;An error occurred: &quot; + str(e))
+</code></pre>
 <p>This code example demonstrates how to handle exceptions using Automation Anywhere. In this example, we define the task to be automated and create a new Automation Anywhere bot. We then try to perform the task, and if an exception occurs, we handle it by printing an error message.</p>
 <h2 id="rpa-performance-metrics-and-benchmarks">RPA Performance Metrics and Benchmarks</h2>
 <p>Measuring the performance of an RPA system is essential for ensuring that it is operating effectively and efficiently. Some common performance metrics and benchmarks include:
@@ -238,25 +236,24 @@
 * <strong>Blue Prism</strong>: Blue Prism has reported that its RPA platform can automate up to 70% of repetitive tasks, with an accuracy rate of 99%.</p>
 <h3 id="practical-example-monitoring-rpa-performance-with-blue-prism">Practical Example: Monitoring RPA Performance with Blue Prism</h3>
 <p>Here is an example of how to monitor RPA performance using Blue Prism:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">blueprism</span>
+<pre><code class="language-python"># Import the necessary libraries
+import blueprism
 
-<span class="c1"># Define the RPA process to be monitored</span>
-<span class="n">process_name</span> <span class="o">=</span> <span class="s2">&quot;Automate Process&quot;</span>
+# Define the RPA process to be monitored
+process_name = &quot;Automate Process&quot;
 
-<span class="c1"># Create a new Blue Prism connection</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">blueprism</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+# Create a new Blue Prism connection
+connection = blueprism.Connection()
 
-<span class="c1"># Get the process metrics</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">get_process_metrics</span><span class="p">(</span><span class="n">process_name</span><span class="p">)</span>
+# Get the process metrics
+metrics = connection.get_process_metrics(process_name)
 
-<span class="c1"># Print the metrics</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Throughput: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;throughput&quot;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Uptime: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;uptime&quot;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Response time: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;response_time&quot;</span><span class="p">]))</span>
-</code></pre></div>
-
+# Print the metrics
+print(&quot;Throughput: &quot; + str(metrics[&quot;throughput&quot;]))
+print(&quot;Accuracy: &quot; + str(metrics[&quot;accuracy&quot;]))
+print(&quot;Uptime: &quot; + str(metrics[&quot;uptime&quot;]))
+print(&quot;Response time: &quot; + str(metrics[&quot;response_time&quot;]))
+</code></pre>
 <p>This code example demonstrates how to monitor RPA performance using Blue Prism. In this example, we define the RPA process to be monitored and create a new Blue Prism connection. We then get the process metrics and print them to the console.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, RPA is a powerful technology that can help organizations to automate repetitive tasks and improve operational efficiency. By following best practices and using the right tools and platforms, organizations can ensure the success of their RPA implementation. Some actionable next steps include:

@@ -164,12 +164,11 @@
 <li>Use of status codes for error handling</li>
 </ul>
 <p>Example of a RESTful API endpoint:</p>
-<div class="codehilite"><pre><span></span><code>GET /api/users
+<pre><code class="language-markdown">GET /api/users
 POST /api/users
 PUT /api/users/{id}
 DELETE /api/users/{id}
-</code></pre></div>
-
+</code></pre>
 <h3 id="graphql-api-design">GraphQL API Design</h3>
 <p>GraphQL is a query language for APIs that allows clients to request only the data they need. Unlike traditional REST APIs, GraphQL APIs enable clients to specify the structure of the response, reducing over-fetching and under-fetching of data. Key features of GraphQL include:</p>
 <ul>
@@ -179,14 +178,13 @@ DELETE /api/users/{id}
 <li>Introspection for querying schema information</li>
 </ul>
 <p>Example of a GraphQL query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">name</span>
-<span class="w">    </span><span class="n">email</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-graphql">query {
+  user(id: &quot;123&quot;) {
+    name
+    email
+  }
+}
+</code></pre>
 <h3 id="versioning-apis">Versioning APIs</h3>
 <p>Versioning APIs is essential to ensure backward compatibility and provide a smooth transition for clients when introducing changes to the API. There are different strategies for versioning APIs, including:</p>
 <ul>

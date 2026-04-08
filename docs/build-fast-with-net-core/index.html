@@ -170,50 +170,49 @@
 * <strong>SignalR</strong>: ASP.NET Core provides built-in support for SignalR, which makes it easy to build real-time web applications.</p>
 <h3 id="example-building-a-simple-web-api-with-aspnet-core">Example: Building a Simple Web API with ASP.NET Core</h3>
 <p>Here is an example of how to build a simple web API with ASP.NET Core:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">MyApi.Controllers</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[ApiController]</span>
-<span class="w">    </span><span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ValuesController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// GET api/values</span>
-<span class="w">        </span><span class="na">[HttpGet]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="o">&lt;</span><span class="n">IEnumerable</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">Get</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;value1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;value2&quot;</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="p">}</span>
+namespace MyApi.Controllers
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class ValuesController : ControllerBase
+    {
+        // GET api/values
+        [HttpGet]
+        public ActionResult&lt;IEnumerable&lt;string&gt;&gt; Get()
+        {
+            return new string[] { &quot;value1&quot;, &quot;value2&quot; };
+        }
 
-<span class="w">        </span><span class="c1">// GET api/values/5</span>
-<span class="w">        </span><span class="na">[HttpGet(&quot;{id}&quot;)]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Get</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+        // GET api/values/5
+        [HttpGet(&quot;{id}&quot;)]
+        public ActionResult&lt;string&gt; Get(int id)
+        {
+            return &quot;value&quot;;
+        }
 
-<span class="w">        </span><span class="c1">// POST api/values</span>
-<span class="w">        </span><span class="na">[HttpPost]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Post</span><span class="p">([</span><span class="n">FromBody</span><span class="p">]</span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">        </span><span class="p">}</span>
+        // POST api/values
+        [HttpPost]
+        public void Post([FromBody]string value)
+        {
+        }
 
-<span class="w">        </span><span class="c1">// PUT api/values/5</span>
-<span class="w">        </span><span class="na">[HttpPut(&quot;{id}&quot;)]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Put</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">FromBody</span><span class="p">]</span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">        </span><span class="p">}</span>
+        // PUT api/values/5
+        [HttpPut(&quot;{id}&quot;)]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
 
-<span class="w">        </span><span class="c1">// DELETE api/values/5</span>
-<span class="w">        </span><span class="na">[HttpDelete(&quot;{id}&quot;)]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // DELETE api/values/5
+        [HttpDelete(&quot;{id}&quot;)]
+        public void Delete(int id)
+        {
+        }
+    }
+}
+</code></pre>
 <p>This example shows how to create a simple web API with ASP.NET Core, using the <code>[ApiController]</code> attribute to enable API-specific features, and the <code>[Route]</code> attribute to specify the route for the API.</p>
 <h2 id="building-microservices-with-net-core">Building Microservices with .NET Core</h2>
 <p>.NET Core provides a range of tools and frameworks for building microservices, including:
@@ -222,32 +221,31 @@
 * <strong>gRPC</strong>: .NET Core provides built-in support for gRPC, which makes it easy to build high-performance microservices.</p>
 <h3 id="example-building-a-simple-microservice-with-grpc">Example: Building a Simple Microservice with gRPC</h3>
 <p>Here is an example of how to build a simple microservice with gRPC:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Grpc.Core</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<pre><code class="language-csharp">using Grpc.Core;
+using System.Threading.Tasks;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">MyMicroservice</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyService</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MyServiceBase</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">MyResponse</span><span class="o">&gt;</span><span class="w"> </span><span class="n">MyMethod</span><span class="p">(</span><span class="n">MyRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">ServerCallContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Implement the logic for the method here</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyResponse</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, world!&quot;</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+namespace MyMicroservice
+{
+    public class MyService : MyServiceBase
+    {
+        public override async Task&lt;MyResponse&gt; MyMethod(MyRequest request, ServerCallContext context)
+        {
+            // Implement the logic for the method here
+            return new MyResponse { Message = &quot;Hello, world!&quot; };
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyRequest</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    public class MyRequest
+    {
+        public string Name { get; set; }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyResponse</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Message</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public class MyResponse
+    {
+        public string Message { get; set; }
+    }
+}
+</code></pre>
 <p>This example shows how to create a simple microservice with gRPC, using the <code>MyService</code> class to define the service, and the <code>MyRequest</code> and <code>MyResponse</code> classes to define the request and response messages.</p>
 <h2 id="performance-optimization-with-net-core">Performance Optimization with .NET Core</h2>
 <p>.NET Core provides a range of tools and frameworks for performance optimization, including:
@@ -256,35 +254,34 @@
 * <strong>Redis</strong>: .NET Core provides built-in support for Redis, which makes it easy to cache and optimize application performance.</p>
 <h3 id="example-optimizing-application-performance-with-benchmarkdotnet">Example: Optimizing Application Performance with BenchmarkDotNet</h3>
 <p>Here is an example of how to optimize application performance with BenchmarkDotNet:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">BenchmarkDotNet.Attributes</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">BenchmarkDotNet.Running</span><span class="p">;</span>
+<pre><code class="language-csharp">using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">MyBenchmark</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[MemoryDiagnoser]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyBenchmark</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="na">[Benchmark]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">MyMethod</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Implement the logic for the method here</span>
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Do something here</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+namespace MyBenchmark
+{
+    [MemoryDiagnoser]
+    public class MyBenchmark
+    {
+        [Benchmark]
+        public void MyMethod()
+        {
+            // Implement the logic for the method here
+            for (int i = 0; i &lt; 1000; i++)
+            {
+                // Do something here
+            }
+        }
+    }
 
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BenchmarkRunner</span><span class="p">.</span><span class="n">Run</span><span class="o">&lt;</span><span class="n">MyBenchmark</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var summary = BenchmarkRunner.Run&lt;MyBenchmark&gt;();
+        }
+    }
+}
+</code></pre>
 <p>This example shows how to create a simple benchmark with BenchmarkDotNet, using the <code>MyBenchmark</code> class to define the benchmark, and the <code>Benchmark</code> attribute to specify the method to be benchmarked.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when building .NET Core applications:

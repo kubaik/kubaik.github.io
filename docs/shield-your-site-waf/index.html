@@ -160,13 +160,11 @@
 <p>To illustrate the implementation of a WAF, let's consider an example using the AWS WAF. AWS WAF provides a managed service that can be integrated with AWS resources, such as Amazon CloudFront or Amazon API Gateway.</p>
 <h3 id="example-1-configuring-aws-waf">Example 1: Configuring AWS WAF</h3>
 <p>To configure AWS WAF, you need to create a web ACL (Access Control List) and define the rules for traffic filtering. Here's an example of how to create a web ACL using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>MyWebACL<span class="w"> </span>--metric-name<span class="w"> </span>MyWebACL
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-web-acl --name MyWebACL --metric-name MyWebACL
+</code></pre>
 <p>You can then define rules for the web ACL using the <code>aws waf create-rule</code> command. For example:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-rule<span class="w"> </span>--name<span class="w"> </span>MyRule<span class="w"> </span>--metric-name<span class="w"> </span>MyRule<span class="w"> </span>--predicate-list<span class="w"> </span><span class="s2">&quot;[{DataId=&#39;IPMatchSet&#39;,Negated=false}]&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-rule --name MyRule --metric-name MyRule --predicate-list &quot;[{DataId='IPMatchSet',Negated=false}]&quot;
+</code></pre>
 <p>This rule will block traffic from IP addresses that match the specified IP match set.</p>
 <h2 id="performance-and-pricing">Performance and Pricing</h2>
 <p>The performance and pricing of WAFs can vary significantly depending on the vendor and deployment model. Here are some examples of WAF pricing:
@@ -208,64 +206,62 @@
     + Implement a whitelist for trusted CDN origins and edge locations</p>
 <h3 id="example-2-implementing-a-waf-with-nodejs">Example 2: Implementing a WAF with Node.js</h3>
 <p>To illustrate the implementation of a WAF using Node.js, let's consider an example using the <code>express</code> framework and the <code>waf</code> middleware. Here's an example of how to create a simple WAF using Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">waf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;waf&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const waf = require('waf');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">waf</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">rules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;ip&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">ip</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;192.168.1.100&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;block&#39;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}));</span>
+app.use(waf({
+  rules: [
+    {
+      type: 'ip',
+      ip: '192.168.1.100',
+      action: 'block'
+    }
+  ]
+}));
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!');
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This example creates a simple WAF that blocks traffic from the IP address <code>192.168.1.100</code>.</p>
 <h3 id="example-3-integrating-a-waf-with-kubernetes">Example 3: Integrating a WAF with Kubernetes</h3>
 <p>To illustrate the integration of a WAF with Kubernetes, let's consider an example using the <code>nginx</code> ingress controller and the <code>waf</code> annotation. Here's an example of how to create a Kubernetes deployment with a WAF:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">deployment</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">template</span><span class="o">:</span>
-<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
-<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
-<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">app</span>
-<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
-<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">container</span>
-<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">my</span><span class="o">-</span><span class="n">image</span>
-<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">      </span><span class="n">annotations</span><span class="o">:</span>
-<span class="w">        </span><span class="n">waf</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">          &quot;rules&quot;: [</span>
-<span class="s1">            {</span>
-<span class="s1">              &quot;type&quot;: &quot;ip&quot;,</span>
-<span class="s1">              &quot;ip&quot;: &quot;192.168.1.100&quot;,</span>
-<span class="s1">              &quot;action&quot;: &quot;block&quot;</span>
-<span class="s1">            }</span>
-<span class="s1">          ]</span>
-<span class="s1">        }&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image
+        ports:
+        - containerPort: 80
+      annotations:
+        waf: '{
+          &quot;rules&quot;: [
+            {
+              &quot;type&quot;: &quot;ip&quot;,
+              &quot;ip&quot;: &quot;192.168.1.100&quot;,
+              &quot;action&quot;: &quot;block&quot;
+            }
+          ]
+        }'
+</code></pre>
 <p>This example creates a Kubernetes deployment with a WAF that blocks traffic from the IP address <code>192.168.1.100</code>.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, WAFs are a critical component of web application security, providing protection against various types of attacks and vulnerabilities. By understanding the benefits, implementation, and best practices of WAFs, you can shield your site from malicious traffic and ensure a secure user experience.</p>

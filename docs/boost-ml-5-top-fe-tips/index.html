@@ -161,21 +161,20 @@
 <li>Deletion: removing rows or columns with missing values</li>
 </ul>
 <p>Here is an example of how to handle missing values using Python and the pandas library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
 
-<span class="c1"># create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-        <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# create a sample dataset
+data = {'A': [1, 2, np.nan, 4],
+        'B': [5, np.nan, 7, 8]}
+df = pd.DataFrame(data)
 
-<span class="c1"># impute missing values with mean</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+# impute missing values with mean
+df['A'] = df['A'].fillna(df['A'].mean())
+df['B'] = df['B'].fillna(df['B'].mean())
 
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+print(df)
+</code></pre>
 <p>In this example, we create a sample dataset with missing values and impute them with the mean of the respective columns. The resulting dataset is:</p>
 <table>
 <thead>
@@ -210,19 +209,18 @@
 <li>Normalization: scaling features to a range between 0 and 1</li>
 </ul>
 <p>Here is an example of how to scale features using Python and the scikit-learn library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+import numpy as np
 
-<span class="c1"># create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+# create a sample dataset
+data = np.array([[1, 2], [3, 4], [5, 6]])
 
-<span class="c1"># scale features using standardization</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# scale features using standardization
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(data)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span>
-</code></pre></div>
-
+print(scaled_data)
+</code></pre>
 <p>In this example, we create a sample dataset and scale the features using standardization. The resulting dataset is:</p>
 <table>
 <thead>
@@ -253,18 +251,17 @@
 <li>Label encoding: assigning a numerical value to each category</li>
 </ul>
 <p>Here is an example of how to encode categorical variables using Python and the pandas library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# create a sample dataset
+data = {'Color': ['Red', 'Green', 'Blue', 'Red', 'Green']}
+df = pd.DataFrame(data)
 
-<span class="c1"># one-hot encode categorical variable</span>
-<span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">])</span>
+# one-hot encode categorical variable
+encoded_df = pd.get_dummies(df, columns=['Color'])
 
-<span class="nb">print</span><span class="p">(</span><span class="n">encoded_df</span><span class="p">)</span>
-</code></pre></div>
-
+print(encoded_df)
+</code></pre>
 <p>In this example, we create a sample dataset with a categorical variable and one-hot encode it. The resulting dataset is:</p>
 <table>
 <thead>

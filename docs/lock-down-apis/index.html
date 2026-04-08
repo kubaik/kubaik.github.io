@@ -154,98 +154,95 @@
 <h3 id="authentication-and-authorization">Authentication and Authorization</h3>
 <p>Authentication and authorization are the first lines of defense for API security. Authentication verifies the identity of the user or system making the API request, while authorization determines what actions the authenticated user or system can perform. There are several authentication protocols to choose from, including OAuth 2.0, OpenID Connect, and JWT (JSON Web Tokens).</p>
 <p>For example, let's consider an API that uses OAuth 2.0 for authentication. Here's an example of how to implement OAuth 2.0 using the <code>requests</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client ID and client secret</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Client ID and client secret
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Authorization URL</span>
-<span class="n">auth_url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/oauth/authorize&quot;</span>
+# Authorization URL
+auth_url = &quot;https://example.com/oauth/authorize&quot;
 
-<span class="c1"># Redirect URI</span>
-<span class="n">redirect_uri</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/callback&quot;</span>
+# Redirect URI
+redirect_uri = &quot;https://example.com/callback&quot;
 
-<span class="c1"># Scope</span>
-<span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;read_write&quot;</span>
+# Scope
+scope = &quot;read_write&quot;
 
-<span class="c1"># State</span>
-<span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
+# State
+state = &quot;1234567890&quot;
 
-<span class="c1"># Authorization request</span>
-<span class="n">auth_request</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span>
-    <span class="s2">&quot;response_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">,</span>
-    <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">scope</span><span class="p">,</span>
-    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">state</span>
-<span class="p">}</span>
+# Authorization request
+auth_request = {
+    &quot;client_id&quot;: client_id,
+    &quot;response_type&quot;: &quot;code&quot;,
+    &quot;redirect_uri&quot;: redirect_uri,
+    &quot;scope&quot;: scope,
+    &quot;state&quot;: state
+}
 
-<span class="c1"># Send authorization request</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">auth_request</span><span class="p">)</span>
+# Send authorization request
+response = requests.get(auth_url, params=auth_request)
 
-<span class="c1"># Get authorization code</span>
-<span class="n">auth_code</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;code&quot;</span><span class="p">]</span>
+# Get authorization code
+auth_code = response.json()[&quot;code&quot;]
 
-<span class="c1"># Token request</span>
-<span class="n">token_request</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">auth_code</span><span class="p">,</span>
-    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">,</span>
-    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span>
-    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span>
-<span class="p">}</span>
+# Token request
+token_request = {
+    &quot;grant_type&quot;: &quot;authorization_code&quot;,
+    &quot;code&quot;: auth_code,
+    &quot;redirect_uri&quot;: redirect_uri,
+    &quot;client_id&quot;: client_id,
+    &quot;client_secret&quot;: client_secret
+}
 
-<span class="c1"># Send token request</span>
-<span class="n">token_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;https://example.com/oauth/token&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">token_request</span><span class="p">)</span>
+# Send token request
+token_response = requests.post(&quot;https://example.com/oauth/token&quot;, data=token_request)
 
-<span class="c1"># Get access token</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="n">token_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+# Get access token
+access_token = token_response.json()[&quot;access_token&quot;]
+</code></pre>
 <p>This example demonstrates how to obtain an access token using the OAuth 2.0 authorization code flow. The access token can then be used to authenticate subsequent API requests.</p>
 <h3 id="encryption">Encryption</h3>
 <p>Encryption is another critical aspect of API security. Encryption ensures that data in transit is protected from eavesdropping and tampering. There are several encryption protocols to choose from, including TLS (Transport Layer Security) and SSL (Secure Sockets Layer).</p>
 <p>For example, let's consider an API that uses TLS for encryption. Here's an example of how to implement TLS using the <code>flask</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">import</span> <span class="nn">ssl</span>
+<pre><code class="language-python">from flask import Flask, request
+import ssl
 
-<span class="c1"># Create Flask app</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+# Create Flask app
+app = Flask(__name__)
 
-<span class="c1"># Load TLS certificate and private key</span>
-<span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">SSLContext</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLSv1_2</span><span class="p">)</span>
-<span class="n">context</span><span class="o">.</span><span class="n">load_cert_chain</span><span class="p">(</span><span class="s2">&quot;path/to/cert.pem&quot;</span><span class="p">,</span> <span class="s2">&quot;path/to/key.pem&quot;</span><span class="p">)</span>
+# Load TLS certificate and private key
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain(&quot;path/to/cert.pem&quot;, &quot;path/to/key.pem&quot;)
 
-<span class="c1"># Define API endpoint</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/endpoint&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">api_endpoint</span><span class="p">():</span>
-    <span class="c1"># Handle API request</span>
-    <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
+# Define API endpoint
+@app.route(&quot;/api/endpoint&quot;, methods=[&quot;GET&quot;])
+def api_endpoint():
+    # Handle API request
+    return &quot;Hello, World!&quot;
 
-<span class="c1"># Run Flask app with TLS</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">443</span><span class="p">,</span> <span class="n">ssl_context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
-</code></pre></div>
-
+# Run Flask app with TLS
+if __name__ == &quot;__main__&quot;:
+    app.run(host=&quot;localhost&quot;, port=443, ssl_context=context)
+</code></pre>
 <p>This example demonstrates how to implement TLS encryption using the <code>flask</code> library in Python. The <code>ssl</code> library is used to load the TLS certificate and private key, and the <code>Flask</code> app is run with the TLS context.</p>
 <h3 id="rate-limiting">Rate Limiting</h3>
 <p>Rate limiting is a technique used to prevent API abuse by limiting the number of requests that can be made within a certain time period. There are several rate limiting algorithms to choose from, including token bucket and leaky bucket.</p>
 <p>For example, let's consider an API that uses the token bucket algorithm for rate limiting. Here's an example of how to implement rate limiting using the <code>django-ratelimit</code> library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">ratelimit</span> <span class="kn">import</span> <span class="n">limits</span><span class="p">,</span> <span class="n">sleep_and_retry</span>
+<pre><code class="language-python">from ratelimit import limits, sleep_and_retry
 
-<span class="c1"># Define rate limit</span>
-<span class="n">ONE_MINUTE</span> <span class="o">=</span> <span class="mi">60</span>
-<span class="n">MAX_CALLS</span> <span class="o">=</span> <span class="mi">100</span>
+# Define rate limit
+ONE_MINUTE = 60
+MAX_CALLS = 100
 
-<span class="c1"># Define API endpoint</span>
-<span class="nd">@sleep_and_retry</span>
-<span class="nd">@limits</span><span class="p">(</span><span class="n">calls</span><span class="o">=</span><span class="n">MAX_CALLS</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">ONE_MINUTE</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">api_endpoint</span><span class="p">():</span>
-    <span class="c1"># Handle API request</span>
-    <span class="k">return</span> <span class="s2">&quot;Hello, World!&quot;</span>
-</code></pre></div>
-
+# Define API endpoint
+@sleep_and_retry
+@limits(calls=MAX_CALLS, period=ONE_MINUTE)
+def api_endpoint():
+    # Handle API request
+    return &quot;Hello, World!&quot;
+</code></pre>
 <p>This example demonstrates how to implement rate limiting using the <code>django-ratelimit</code> library in Python. The <code>@limits</code> decorator is used to define the rate limit, and the <code>@sleep_and_retry</code> decorator is used to handle rate limit errors.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur when securing APIs. Here are some solutions to these problems:</p>

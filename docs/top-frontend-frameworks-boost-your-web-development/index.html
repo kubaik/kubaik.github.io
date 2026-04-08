@@ -158,23 +158,22 @@
 <p>React is ideal for single-page applications (SPAs) where a seamless user experience is paramount. For instance, Facebook and Instagram leverage React's capabilities for their interfaces.</p>
 <h3 id="code-example-simple-counter-component">Code Example: Simple Counter Component</h3>
 <p>Here’s a basic implementation of a counter component:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+const Counter = () =&gt; {
+    const [count, setCount] = useState(0);
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Increment</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">            </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">Decrement</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">};</span>
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;{count}&lt;/h1&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+            &lt;button onClick={() =&gt; setCount(count - 1)}&gt;Decrement&lt;/button&gt;
+        &lt;/div&gt;
+    );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Counter</span><span class="p">;</span>
-</code></pre></div>
-
+export default Counter;
+</code></pre>
 <h3 id="performance-metrics">Performance Metrics</h3>
 <ul>
 <li><strong>Initial Load Time</strong>: React can achieve an initial load time of under 300 milliseconds when optimized with tools like Webpack and Babel.</li>
@@ -193,39 +192,38 @@
 <p>Vue is often used in projects that require rapid development cycles. For example, Alibaba's website utilizes Vue for its dynamic user interface.</p>
 <h3 id="code-example-vue-component-for-a-todo-app">Code Example: Vue Component for a Todo App</h3>
 <p>Below is a simple implementation of a todo app using Vue.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&quot;newTodo&quot;</span> <span class="err">@</span><span class="na">keyup</span><span class="err">.</span><span class="na">enter</span><span class="o">=</span><span class="s">&quot;addTodo&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Add a todo&quot;</span> <span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&quot;todo in todos&quot;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&quot;todo.id&quot;</span><span class="p">&gt;</span>{{ todo.text }}<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;input v-model=&quot;newTodo&quot; @keyup.enter=&quot;addTodo&quot; placeholder=&quot;Add a todo&quot; /&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;{{ todo.text }}&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">newTodo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">todos</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">addTodo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="p">.</span><span class="nx">trim</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="w"> </span><span class="p">});</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">newTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      newTodo: '',
+      todos: [],
+    };
+  },
+  methods: {
+    addTodo() {
+      if (this.newTodo.trim()) {
+        this.todos.push({ id: Date.now(), text: this.newTodo });
+        this.newTodo = '';
+      }
+    },
+  },
+};
+&lt;/script&gt;
 
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="c">/* Add your styles here */</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;style&gt;
+/* Add your styles here */
+&lt;/style&gt;
+</code></pre>
 <h3 id="performance-metrics_1">Performance Metrics</h3>
 <ul>
 <li><strong>Small Size</strong>: Vue.js is only about 20KB when gzipped, making it one of the lightweight frameworks available.</li>
@@ -244,24 +242,23 @@
 <p>Angular is often used for enterprise-level applications where scalability and maintainability are key. Google Cloud Console is a prime example of Angular's application in a large-scale environment.</p>
 <h3 id="code-example-angular-service-for-fetching-data">Code Example: Angular Service for Fetching Data</h3>
 <p>Here’s how to set up a service for fetching data using Angular:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Injectable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">HttpClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/common/http&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Observable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;rxjs&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-<span class="kd">@Injectable</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">providedIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;root&#39;</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">DataService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">apiUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">;</span>
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private apiUrl = 'https://api.example.com/data';
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">http</span><span class="o">:</span><span class="w"> </span><span class="kt">HttpClient</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+  constructor(private http: HttpClient) {}
 
-<span class="w">  </span><span class="nx">getData</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nx">Observable</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">get</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">apiUrl</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  getData(): Observable&lt;any&gt; {
+    return this.http.get&lt;any&gt;(this.apiUrl);
+  }
+}
+</code></pre>
 <h3 id="performance-metrics_2">Performance Metrics</h3>
 <ul>
 <li><strong>AOT Compilation</strong>: Angular's Ahead-of-Time (AOT) compilation can reduce the application size by up to 60%.</li>
@@ -280,23 +277,22 @@
 <p>Svelte excels in applications where performance is critical, such as real-time data applications. The New York Times uses Svelte for various interactive features on its website.</p>
 <h3 id="code-example-svelte-reactive-counter">Code Example: Svelte Reactive Counter</h3>
 <p>Here’s how a simple counter would look in Svelte:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<pre><code class="language-html">&lt;script&gt;
+  let count = 0;
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  function increment() {
+    count += 1;
+  }
 
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">decrement</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">count</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  function decrement() {
+    count -= 1;
+  }
+&lt;/script&gt;
 
-<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{count}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">button</span> <span class="na">on:click</span><span class="o">=</span><span class="s">{increment}</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">button</span> <span class="na">on:click</span><span class="o">=</span><span class="s">{decrement}</span><span class="p">&gt;</span>Decrement<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;h1&gt;{count}&lt;/h1&gt;
+&lt;button on:click={increment}&gt;Increment&lt;/button&gt;
+&lt;button on:click={decrement}&gt;Decrement&lt;/button&gt;
+</code></pre>
 <h3 id="performance-metrics_3">Performance Metrics</h3>
 <ul>
 <li><strong>Bundle Size</strong>: Svelte applications can be as small as 3KB after minification, making them extremely lightweight.</li>

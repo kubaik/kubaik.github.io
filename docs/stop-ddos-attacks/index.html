@@ -169,56 +169,53 @@
 </ul>
 <h3 id="implementing-traffic-filtering-using-iptables">Implementing Traffic Filtering using iptables</h3>
 <p>Iptables is a popular tool for implementing traffic filtering on Linux systems. The following code example shows how to block traffic from a specific IP address using iptables:</p>
-<div class="codehilite"><pre><span></span><code>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-s<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span>-j<span class="w"> </span>DROP
-</code></pre></div>
-
+<pre><code class="language-bash">iptables -A INPUT -s 192.168.1.100 -j DROP
+</code></pre>
 <p>This code adds a rule to the INPUT chain to drop all traffic from the IP address 192.168.1.100.</p>
 <h3 id="implementing-rate-limiting-using-nginx">Implementing Rate Limiting using NGINX</h3>
 <p>NGINX is a popular web server that can be used to implement rate limiting. The following code example shows how to limit the number of requests from a single IP address using NGINX:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=limit:10m</span><span class="w"> </span><span class="s">rate=10r/s</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kn">...</span>
-<span class="w">        </span><span class="s">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=limit</span><span class="w"> </span><span class="s">burst=20</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-nginx">http {
+    ...
+    limit_req_zone $binary_remote_addr zone=limit:10m rate=10r/s;
+    ...
+    server {
+        ...
+        location / {
+            limit_req zone=limit burst=20;
+        }
+    }
+}
+</code></pre>
 <p>This code creates a rate limiting zone called "limit" and sets the rate to 10 requests per second. The <code>burst</code> parameter allows for a burst of 20 requests.</p>
 <h3 id="implementing-ip-blocking-using-cloudflare">Implementing IP Blocking using Cloudflare</h3>
 <p>Cloudflare is a popular CDN that offers IP blocking features. The following code example shows how to block traffic from a specific IP address using Cloudflare's API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_API_KEY&quot;</span>
-<span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;YOUR_EMAIL&quot;</span>
-<span class="n">ip_address</span> <span class="o">=</span> <span class="s2">&quot;192.168.1.100&quot;</span>
+api_key = &quot;YOUR_API_KEY&quot;
+email = &quot;YOUR_EMAIL&quot;
+ip_address = &quot;192.168.1.100&quot;
 
-<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.cloudflare.com/client/v4/zones/</span><span class="si">{</span><span class="n">zone_id</span><span class="si">}</span><span class="s2">/firewall/access_rules/rules&quot;</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;X-Auth-Email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
-    <span class="s2">&quot;X-Auth-Key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
-    <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span>
-<span class="p">}</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;ip&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">ip_address</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+url = f&quot;https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/access_rules/rules&quot;
+headers = {
+    &quot;X-Auth-Email&quot;: email,
+    &quot;X-Auth-Key&quot;: api_key,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+}
+data = {
+    &quot;mode&quot;: &quot;block&quot;,
+    &quot;configuration&quot;: {
+        &quot;target&quot;: &quot;ip&quot;,
+        &quot;value&quot;: ip_address
+    }
+}
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+response = requests.post(url, headers=headers, json=data)
 
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IP address blocked successfully&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error blocking IP address&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+if response.status_code == 200:
+    print(&quot;IP address blocked successfully&quot;)
+else:
+    print(&quot;Error blocking IP address&quot;)
+</code></pre>
 <p>This code uses the Cloudflare API to block traffic from the IP address 192.168.1.100.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>DDoS protection strategies can be applied in various real-world use cases, including:</p>

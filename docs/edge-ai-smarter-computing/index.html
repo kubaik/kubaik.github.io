@@ -161,28 +161,27 @@
 <h2 id="practical-implementation-of-edge-ai">Practical Implementation of Edge AI</h2>
 <p>To demonstrate the practical implementation of Edge AI, let's consider a simple example using TensorFlow Lite and a Raspberry Pi device. In this example, we'll build a basic image classification model that can detect objects in real-time using a camera module.</p>
 <h3 id="code-example-1-image-classification-using-tensorflow-lite">Code Example 1: Image Classification using TensorFlow Lite</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+from PIL import Image
+import numpy as np
 
-<span class="c1"># Load the pre-trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.tflite&#39;</span><span class="p">)</span>
+# Load the pre-trained model
+model = tf.keras.models.load_model('model.tflite')
 
-<span class="c1"># Load the image</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">)</span>
+# Load the image
+img = Image.open('image.jpg')
 
-<span class="c1"># Preprocess the image</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+# Preprocess the image
+img = img.resize((224, 224))
+img = np.array(img) / 255.0
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+# Make predictions
+predictions = model.predict(img)
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the results
+print(predictions)
+</code></pre>
 <p>In this example, we load a pre-trained image classification model using TensorFlow Lite, load an image, preprocess it, and make predictions using the model. The output will be a probability distribution over the possible classes.</p>
 <h2 id="edge-ai-platforms-and-tools">Edge AI Platforms and Tools</h2>
 <p>Several platforms and tools are available to support the development and deployment of Edge AI applications. Some popular options include:</p>
@@ -222,34 +221,33 @@
 </li>
 </ol>
 <h3 id="code-example-2-model-pruning-using-tensorflow">Code Example 2: Model Pruning using TensorFlow</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="c1"># Load the pre-trained model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
+# Load the pre-trained model
+model = tf.keras.models.load_model('model.h5')
 
-<span class="c1"># Define the pruning parameters</span>
-<span class="n">pruning_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;pruning_schedule&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">pruning</span><span class="o">.</span><span class="n">PolynomialDecay</span><span class="p">(</span>
-        <span class="n">initial_sparsity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">final_sparsity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">begin_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">end_step</span><span class="o">=</span><span class="mi">10000</span>
-    <span class="p">)</span>
-<span class="p">}</span>
+# Define the pruning parameters
+pruning_params = {
+    'pruning_schedule': tf.keras.pruning.PolynomialDecay(
+        initial_sparsity=0.0,
+        final_sparsity=0.5,
+        begin_step=0,
+        end_step=10000
+    )
+}
 
-<span class="c1"># Apply pruning to the model</span>
-<span class="n">pruned_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span>
-    <span class="n">clone_function</span><span class="o">=</span><span class="k">lambda</span> <span class="n">layer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PruneLowMagnitude</span><span class="p">(</span>
-        <span class="n">layer</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">pruning_params</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+# Apply pruning to the model
+pruned_model = tf.keras.models.clone_model(
+    model,
+    clone_function=lambda layer: tf.keras.layers.PruneLowMagnitude(
+        layer,
+        **pruning_params
+    )
+)
 
-<span class="c1"># Save the pruned model</span>
-<span class="n">pruned_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;pruned_model.h5&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the pruned model
+pruned_model.save('pruned_model.h5')
+</code></pre>
 <p>In this example, we load a pre-trained model, define the pruning parameters, and apply pruning to the model using the <code>PruneLowMagnitude</code> layer. The resulting pruned model can be deployed on edge devices with limited computational resources.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Edge AI has numerous real-world applications, including:</p>
@@ -260,33 +258,32 @@
 </ul>
 <p>For instance, a company like <strong>Cisco</strong> uses Edge AI to improve predictive maintenance in industrial settings, reducing downtime by 50% and increasing overall equipment effectiveness by 20%.</p>
 <h3 id="code-example-3-anomaly-detection-using-scikit-learn">Code Example 3: Anomaly Detection using scikit-learn</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">IsolationForest</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
 
-<span class="c1"># Generate sample data</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+# Generate sample data
+np.random.seed(0)
+data = np.random.normal(size=(100, 2))
 
-<span class="c1"># Add anomalies to the data</span>
-<span class="n">anomalies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="n">anomalies</span><span class="p">))</span>
+# Add anomalies to the data
+anomalies = np.random.normal(loc=5, scale=2, size=(10, 2))
+data = np.concatenate((data, anomalies))
 
-<span class="c1"># Scale the data</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">data_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Scale the data
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
 
-<span class="c1"># Train the Isolation Forest model</span>
-<span class="n">iforest</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">iforest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">)</span>
+# Train the Isolation Forest model
+iforest = IsolationForest(contamination=0.1)
+iforest.fit(data_scaled)
 
-<span class="c1"># Predict anomalies</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">iforest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">)</span>
+# Predict anomalies
+predictions = iforest.predict(data_scaled)
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the results
+print(predictions)
+</code></pre>
 <p>In this example, we generate sample data, add anomalies, scale the data, and train an Isolation Forest model to detect anomalies. The output will be a list of predictions, where -1 indicates an anomaly.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Edge AI is a rapidly evolving field that combines the strengths of artificial intelligence and edge computing to deliver smarter computing. By leveraging frameworks like TensorFlow Lite, OpenVINO, or Edge ML, developers can build, deploy, and manage AI models on edge devices, enabling real-time decision-making and improving efficiency.</p>

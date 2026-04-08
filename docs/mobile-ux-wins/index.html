@@ -167,53 +167,50 @@
 * <strong>Test for usability</strong>: Conduct user testing and gather feedback to identify areas for improvement.</p>
 <h3 id="practical-example-building-a-mobile-friendly-navigation-menu">Practical Example: Building a Mobile-Friendly Navigation Menu</h3>
 <p>One common challenge in mobile UX is designing an effective navigation menu. Here's an example of how to build a mobile-friendly navigation menu using HTML, CSS, and JavaScript:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- HTML --&gt;</span>
-<span class="p">&lt;</span><span class="nt">nav</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;mobile-nav&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
+<pre><code class="language-html">&lt;!-- HTML --&gt;
+&lt;nav id=&quot;mobile-nav&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<pre><code class="language-css">/* CSS */
+#mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 10px;
+}
 
-<div class="codehilite"><pre><span></span><code><span class="c">/* CSS */</span>
-<span class="p">#</span><span class="nn">mobile-nav</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">fixed</span><span class="p">;</span>
-<span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+#mobile-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-<span class="p">#</span><span class="nn">mobile-nav</span><span class="w"> </span><span class="nt">ul</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+#mobile-nav li {
+  display: block;
+  margin-bottom: 10px;
+}
 
-<span class="p">#</span><span class="nn">mobile-nav</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
-<span class="w">  </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+#mobile-nav a {
+  color: #fff;
+  text-decoration: none;
+}
+</code></pre>
+<pre><code class="language-javascript">// JavaScript
+const mobileNav = document.getElementById('mobile-nav');
+const toggleButton = document.getElementById('toggle-button');
 
-<span class="p">#</span><span class="nn">mobile-nav</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#fff</span><span class="p">;</span>
-<span class="w">  </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1">// JavaScript</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">mobileNav</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;mobile-nav&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">toggleButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;toggle-button&#39;</span><span class="p">);</span>
-
-<span class="nx">toggleButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">mobileNav</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mobileNav</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+toggleButton.addEventListener('click', () =&gt; {
+  mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
+});
+</code></pre>
 <p>In this example, we're using HTML to define the navigation menu structure, CSS to style the menu, and JavaScript to toggle the menu on and off. This is just one example of how to build a mobile-friendly navigation menu, but the key takeaway is to keep it simple, intuitive, and easy to use.</p>
 <h2 id="mobile-ux-tools-and-platforms">Mobile UX Tools and Platforms</h2>
 <p>There are many tools and platforms available to help you design and build a great mobile UX. Some popular options include:

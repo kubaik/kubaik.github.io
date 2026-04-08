@@ -186,16 +186,15 @@
 <li>Push images to a registry like Docker Hub.</li>
 <li>Use Kubernetes to deploy, scale, and manage the services seamlessly.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example Dockerfile for a Node.js backend</span>
-FROM<span class="w"> </span>node:14
-WORKDIR<span class="w"> </span>/app
-COPY<span class="w"> </span>package*.json<span class="w"> </span>./
-RUN<span class="w"> </span>npm<span class="w"> </span>install
-COPY<span class="w"> </span>.<span class="w"> </span>.
-EXPOSE<span class="w"> </span><span class="m">3000</span>
-CMD<span class="w"> </span><span class="o">[</span><span class="s2">&quot;node&quot;</span>,<span class="w"> </span><span class="s2">&quot;server.js&quot;</span><span class="o">]</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Example Dockerfile for a Node.js backend
+FROM node:14
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
 <h2 id="emerging-trends-and-advancements">Emerging Trends and Advancements</h2>
 <h3 id="1-container-security-enhancements">1. Container Security Enhancements</h3>
 <p>Security remains a top concern. Future developments focus on:</p>

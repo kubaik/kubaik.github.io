@@ -164,23 +164,22 @@
 * <strong>Resource</strong>: This section defines the infrastructure resources that Terraform will manage.
 * <strong>Output</strong>: This section defines the output values that Terraform will return after applying the configuration.</p>
 <p>Here is an example of a simple Terraform configuration file that defines an AWS EC2 instance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Define an EC2 instance</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="p">}</span>
+# Define an EC2 instance
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+}
 
-<span class="c1"># Output the ID of the EC2 instance</span>
-<span class="kr">output</span><span class="w"> </span><span class="nv">&quot;instance_id&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_instance.example.id</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# Output the ID of the EC2 instance
+output &quot;instance_id&quot; {
+  value = aws_instance.example.id
+}
+</code></pre>
 <p>This configuration file defines an AWS provider, an EC2 instance, and an output value that returns the ID of the EC2 instance.</p>
 <h3 id="terraform-command-line-interface">Terraform Command-Line Interface</h3>
 <p>Terraform provides a command-line interface (CLI) that can be used to manage and apply Terraform configurations. Some of the most commonly used Terraform CLI commands include:
@@ -195,33 +194,32 @@
 * <strong>Disaster recovery</strong>: Terraform can be used to create disaster recovery environments, which can be used to recover infrastructure resources in the event of a disaster.
 * <strong>Continuous integration and continuous deployment (CI/CD)</strong>: Terraform can be used to automate the deployment of infrastructure resources as part of a CI/CD pipeline.</p>
 <p>Here is an example of how Terraform can be used to provision a Kubernetes cluster on AWS:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Configure the AWS provider</span>
-<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform"># Configure the AWS provider
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="c1"># Define a Kubernetes cluster</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_eks_cluster&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-cluster&quot;</span>
-<span class="w">  </span><span class="na">role_arn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_iam_role.example.arn</span>
+# Define a Kubernetes cluster
+resource &quot;aws_eks_cluster&quot; &quot;example&quot; {
+  name     = &quot;example-cluster&quot;
+  role_arn = aws_iam_role.example.arn
 
-<span class="c1">  # Use an existing VPC and subnets</span>
-<span class="w">  </span><span class="na">vpc_id</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_vpc.example.id</span>
-<span class="w">  </span><span class="na">subnets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_subnet.example</span><span class="p">.</span><span class="err">*</span><span class="p">.</span><span class="err">id</span>
-<span class="p">}</span>
+  # Use an existing VPC and subnets
+  vpc_id  = aws_vpc.example.id
+  subnets = aws_subnet.example.*.id
+}
 
-<span class="c1"># Define a Kubernetes node group</span>
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_eks_node_group&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">cluster_name</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_eks_cluster.example.name</span>
-<span class="w">  </span><span class="na">node_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-node-group&quot;</span>
-<span class="w">  </span><span class="na">node_role_arn</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_iam_role.example.arn</span>
+# Define a Kubernetes node group
+resource &quot;aws_eks_node_group&quot; &quot;example&quot; {
+  cluster_name    = aws_eks_cluster.example.name
+  node_group_name = &quot;example-node-group&quot;
+  node_role_arn   = aws_iam_role.example.arn
 
-<span class="c1">  # Use an existing instance type and AMI</span>
-<span class="w">  </span><span class="na">instance_types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;t2.medium&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="na">ami_type</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AL2_x86_64&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  # Use an existing instance type and AMI
+  instance_types = [&quot;t2.medium&quot;]
+  ami_type       = &quot;AL2_x86_64&quot;
+}
+</code></pre>
 <p>This configuration file defines an AWS provider, a Kubernetes cluster, and a Kubernetes node group.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>Terraform has been shown to perform well in a wide range of scenarios, including large-scale infrastructure deployments. According to a benchmarking study by HashiCorp, Terraform can deploy up to 1,000 infrastructure resources in under 10 minutes, with an average deployment time of 2.5 minutes per resource.</p>

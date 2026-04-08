@@ -160,58 +160,55 @@
 <p>There are several ways to implement lazy loading, depending on the type of resource and the desired level of complexity. Here are a few examples:</p>
 <h3 id="1-image-lazy-loading-using-intersectionobserver">1. Image Lazy Loading using IntersectionObserver</h3>
 <p>The IntersectionObserver API is a powerful tool for lazy loading images. It allows you to observe the visibility of an element and load the image only when it comes into view.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create an observer instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// If the image is visible, load it</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entries</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entries</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Options for the observer</span>
-<span class="w">  </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create an observer instance
+const observer = new IntersectionObserver((entries) =&gt; {
+  // If the image is visible, load it
+  if (entries[0].isIntersecting) {
+    const img = entries[0].target;
+    img.src = img.dataset.src;
+    observer.unobserve(img);
+  }
+}, {
+  // Options for the observer
+  threshold: 1.0,
+});
 
-<span class="c1">// Observe all images with the class &quot;lazy&quot;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
-<span class="nx">images</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">img</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Observe all images with the class &quot;lazy&quot;
+const images = document.querySelectorAll('img.lazy');
+images.forEach((img) =&gt; {
+  observer.observe(img);
+});
+</code></pre>
 <p>In this example, we create an IntersectionObserver instance and observe all images with the class "lazy". When an image comes into view, the observer loads the image by setting its <code>src</code> attribute to the value stored in the <code>data-src</code> attribute.</p>
 <h3 id="2-video-lazy-loading-using-youtube-iframe-api">2. Video Lazy Loading using YouTube Iframe API</h3>
 <p>For videos, we can use the YouTube Iframe API to lazy load videos. The API provides a <code>player</code> object that can be used to load the video only when it is played.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a YouTube player instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">YT</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span><span class="s1">&#39;video-player&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">videoId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;VIDEO_ID&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">events</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s1">&#39;onReady&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">onPlayerReady</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create a YouTube player instance
+const player = new YT.Player('video-player', {
+  videoId: 'VIDEO_ID',
+  events: {
+    'onReady': onPlayerReady,
+  },
+});
 
-<span class="c1">// Load the video only when it is played</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">onPlayerReady</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">playVideo</span><span class="p">();</span>
-<span class="p">}</span>
+// Load the video only when it is played
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
 
-<span class="c1">// Load the YouTube Iframe API script only when the video is played</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-<span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://www.youtube.com/iframe_api&#39;</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
-</code></pre></div>
-
+// Load the YouTube Iframe API script only when the video is played
+const script = document.createElement('script');
+script.src = 'https://www.youtube.com/iframe_api';
+document.head.appendChild(script);
+</code></pre>
 <p>In this example, we create a YouTube player instance and load the video only when it is played. We also load the YouTube Iframe API script only when the video is played, reducing the initial page load time.</p>
 <h3 id="3-script-lazy-loading-using-requirejs">3. Script Lazy Loading using RequireJS</h3>
 <p>For scripts, we can use a library like RequireJS to lazy load them. RequireJS provides a <code>require</code> function that can be used to load scripts only when they are needed.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Load the script only when it is needed</span>
-<span class="nx">require</span><span class="p">([</span><span class="s1">&#39;script&#39;</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="nx">script</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Use the script</span>
-<span class="w">  </span><span class="nx">script</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Load the script only when it is needed
+require(['script'], (script) =&gt; {
+  // Use the script
+  script.init();
+});
+</code></pre>
 <p>In this example, we use the <code>require</code> function to load the script only when it is needed. The <code>script</code> parameter is a callback function that is executed when the script is loaded.</p>
 <h2 id="tools-and-platforms-for-lazy-loading">Tools and Platforms for Lazy Loading</h2>
 <p>There are several tools and platforms that can help with lazy loading, including:

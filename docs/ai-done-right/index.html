@@ -158,27 +158,26 @@
 * <strong>Accountability</strong>: AI systems should be designed to take responsibility for their actions and decisions.
 * <strong>Privacy</strong>: AI systems should protect individual privacy and maintain confidentiality.</p>
 <p>To illustrate these principles, let's consider a concrete example. Suppose we are building a machine learning model to predict creditworthiness. We can use the popular open-source library, scikit-learn, to implement a fair and transparent model. Here's an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('credit_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('creditworthy', axis=1), df['creditworthy'], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model on the test set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classification Report:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model on the test set
+y_pred = rf.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('Classification Report:')
+print(classification_report(y_test, y_pred))
+</code></pre>
 <p>This code snippet demonstrates how to train a fair and transparent machine learning model using scikit-learn. We split the data into training and testing sets, train a random forest classifier, and evaluate its performance on the test set.</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h2 id="challenges-in-implementing-ai-ethics">Challenges in Implementing AI Ethics</h2>
@@ -187,28 +186,28 @@
 2. <strong>Lack of transparency</strong>: Complex AI systems can be difficult to interpret, making it challenging to understand their decision-making processes.
 3. <strong>Regulatory frameworks</strong>: The regulatory landscape for AI is still evolving, making it difficult to ensure compliance.</p>
 <p>To address these challenges, we can use tools like IBM's AI Fairness 360, which provides a comprehensive framework for detecting and mitigating bias in AI systems. For example, we can use the AI Fairness 360 library to analyze the bias in our creditworthiness model:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">aif360.algorithms.preprocessing</span> <span class="kn">import</span> <span class="n">Reweighing</span>
-<span class="kn">from</span> <span class="nn">aif360.datasets</span> <span class="kn">import</span> <span class="n">BinaryLabelDataset</span>
-<span class="kn">from</span> <span class="nn">aif360.metrics</span> <span class="kn">import</span> <span class="n">BinaryLabelDatasetMetric</span>
+from aif360.algorithms.preprocessing import Reweighing
+from aif360.datasets import BinaryLabelDataset
+from aif360.metrics import BinaryLabelDatasetMetric
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('credit_data.csv')
 
-<span class="c1"># Convert the dataset to a BinaryLabelDataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">BinaryLabelDataset</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">label_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">],</span> <span class="n">protected_attribute_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+# Convert the dataset to a BinaryLabelDataset
+dataset = BinaryLabelDataset(df, label_names=['creditworthy'], protected_attribute_names=['age'])
 
-<span class="c1"># Calculate the bias metrics</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">BinaryLabelDatasetMetric</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Disparate impact:&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="o">.</span><span class="n">disparate_impact</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Statistical parity difference:&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="o">.</span><span class="n">statistical_parity_difference</span><span class="p">())</span>
+# Calculate the bias metrics
+metric = BinaryLabelDatasetMetric(dataset)
+print('Disparate impact:', metric.disparate_impact())
+print('Statistical parity difference:', metric.statistical_parity_difference())
 
-<span class="c1"># Mitigate the bias using reweighing</span>
-<span class="n">rw</span> <span class="o">=</span> <span class="n">Reweighing</span><span class="p">(</span><span class="n">unprivileged_groups</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}],</span> <span class="n">privileged_groups</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">)])</span>
-<span class="n">transformed_dataset</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</code></pre></div>
-
+# Mitigate the bias using reweighing
+rw = Reweighing(unprivileged_groups=[{'age': 1}], privileged_groups=[{'age': 0)])
+transformed_dataset = rw.fit_transform(dataset)
+</code></pre>
 <p>This code snippet demonstrates how to use the AI Fairness 360 library to analyze and mitigate bias in our creditworthiness model. We load the dataset, convert it to a BinaryLabelDataset, calculate the bias metrics, and mitigate the bias using reweighing.</p>
 <h3 id="best-practices-for-implementing-responsible-ai">Best Practices for Implementing Responsible AI</h3>
 <p>To implement responsible AI, we can follow these best practices:
@@ -217,37 +216,36 @@
 * <strong>Monitor and audit AI systems</strong>: Regularly monitor and audit AI systems to detect and mitigate bias.
 * <strong>Provide human oversight</strong>: Provide human oversight and review to ensure that AI systems are functioning as intended.</p>
 <p>For example, we can use the popular cloud-based platform, Google Cloud AI Platform, to implement responsible AI. Google Cloud AI Platform provides a range of tools and services for building, deploying, and managing AI systems, including AutoML, AI Hub, and Explainable AI. Here's an example of how to use Google Cloud AI Platform to deploy a responsible AI model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
+<pre><code class="language-python">from google.cloud import aiplatform
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">gapic</span><span class="o">.</span><span class="n">ModelServiceClient</span><span class="p">()</span>
+# Create a client instance
+client = aiplatform.gapic.ModelServiceClient()
 
-<span class="c1"># Deploy the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;projects/your-project/locations/us-central1&#39;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creditworthiness Model&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A machine learning model for predicting creditworthiness&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Deploy the model
+model = client.create_model(
+    parent='projects/your-project/locations/us-central1',
+    model={
+        'display_name': 'Creditworthiness Model',
+        'description': 'A machine learning model for predicting creditworthiness'
+    }
+)
 
-<span class="c1"># Create an endpoint</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_endpoint</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;projects/your-project/locations/us-central1&#39;</span><span class="p">,</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creditworthiness Endpoint&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;An endpoint for predicting creditworthiness&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create an endpoint
+endpoint = client.create_endpoint(
+    parent='projects/your-project/locations/us-central1',
+    endpoint={
+        'display_name': 'Creditworthiness Endpoint',
+        'description': 'An endpoint for predicting creditworthiness'
+    }
+)
 
-<span class="c1"># Deploy the model to the endpoint</span>
-<span class="n">client</span><span class="o">.</span><span class="n">deploy_model</span><span class="p">(</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="n">endpoint</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-    <span class="n">traffic_split</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Deploy the model to the endpoint
+client.deploy_model(
+    endpoint=endpoint.name,
+    model=model.name,
+    traffic_split={'0': 100}
+)
+</code></pre>
 <p>This code snippet demonstrates how to use Google Cloud AI Platform to deploy a responsible AI model. We create a client instance, deploy the model, create an endpoint, and deploy the model to the endpoint.</p>
 <h2 id="concrete-use-cases">Concrete Use Cases</h2>
 <p>Responsible AI has numerous applications across industries. Here are some concrete use cases:
@@ -255,28 +253,27 @@
 * <strong>Finance</strong>: AI can be used to predict creditworthiness, detect fraud, and optimize investment portfolios.
 * <strong>Education</strong>: AI can be used to personalize learning experiences, predict student outcomes, and optimize educational resources.</p>
 <p>For example, we can use the popular open-source library, TensorFlow, to build a responsible AI model for predicting patient outcomes in healthcare. Here's an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
+<pre><code class="language-python">from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;patient_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('patient_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;outcome&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('outcome', axis=1), df['outcome'], test_size=0.2, random_state=42)
 
-<span class="c1"># Build a neural network model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+# Build a neural network model
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(X_train.shape[1],)))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-</code></pre></div>
-
+# Train the model
+model.fit(X_train, y_train, epochs=10, batch_size=128, validation_data=(X_test, y_test))
+</code></pre>
 <p>This code snippet demonstrates how to use TensorFlow to build a responsible AI model for predicting patient outcomes in healthcare. We load the dataset, split the data into training and testing sets, build a neural network model, compile the model, and train the model.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Common problems in implementing responsible AI include:
@@ -284,19 +281,18 @@
 * <strong>Lack of transparency</strong>: Use techniques like feature importance, partial dependence plots, and model interpretability to provide insights into the decision-making process.
 * <strong>Regulatory compliance</strong>: Use frameworks like GDPR, HIPAA, and CCPA to ensure regulatory compliance.</p>
 <p>For example, we can use the popular cloud-based platform, Amazon SageMaker, to address bias in data. Amazon SageMaker provides a range of tools and services for building, deploying, and managing AI systems, including data preprocessing, feature engineering, and bias mitigation. Here's an example of how to use Amazon SageMaker to address bias in data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sagemaker</span> <span class="kn">import</span> <span class="n">get_execution_role</span>
-<span class="kn">from</span> <span class="nn">sagemaker.bias</span> <span class="kn">import</span> <span class="n">DataBiasDetector</span>
+<pre><code class="language-python">from sagemaker import get_execution_role
+from sagemaker.bias import DataBiasDetector
 
-<span class="c1"># Create a DataBiasDetector instance</span>
-<span class="n">detector</span> <span class="o">=</span> <span class="n">DataBiasDetector</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">get_execution_role</span><span class="p">())</span>
+# Create a DataBiasDetector instance
+detector = DataBiasDetector(role=get_execution_role())
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('credit_data.csv')
 
-<span class="c1"># Detect bias in the dataset</span>
-<span class="n">detector</span><span class="o">.</span><span class="n">detect_bias</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+# Detect bias in the dataset
+detector.detect_bias(df)
+</code></pre>
 <p>This code snippet demonstrates how to use Amazon SageMaker to address bias in data. We create a DataBiasDetector instance, load the dataset, and detect bias in the dataset.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Responsible AI can have significant performance benefits, including:
@@ -304,27 +300,26 @@
 * <strong>Increased transparency</strong>: Responsible AI can provide insights into the decision-making process, increasing transparency and trust.
 * <strong>Reduced risk</strong>: Responsible AI can reduce the risk of AI systems by ensuring regulatory compliance and addressing potential biases.</p>
 <p>For example, we can use the popular open-source library, scikit-learn, to evaluate the performance of a responsible AI model. Here's an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;credit_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('credit_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;creditworthy&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('creditworthy', axis=1), df['creditworthy'], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a random forest classifier</span>
-<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model on the test set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classification Report:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model on the test set
+y_pred = rf.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('Classification Report:')
+print(classification_report(y_test, y_pred))
+</code></pre>
 <p>This code snippet demonstrates how to use scikit-learn to evaluate the performance of a responsible AI model. We load the dataset, split the data into training and testing sets, train a random forest classifier, and evaluate the model on the test set.</p>
 <h2 id="pricing-and-cost">Pricing and Cost</h2>
 <p>The cost of implementing responsible AI can vary depending on the specific use case and requirements. However, some common pricing models include:
@@ -332,21 +327,20 @@
 * <strong>Open-source libraries</strong>: Open-source libraries like scikit-learn, TensorFlow, and PyTorch are free to use and provide a range of tools and services for building and deploying AI systems.
 * <strong>Custom solutions</strong>: Custom solutions can be more expensive, but provide tailored support and services for specific use cases and requirements.</p>
 <p>For example, we can use the popular cloud-based platform, Google Cloud AI Platform, to estimate the cost of implementing responsible AI. Here's an example of how to estimate the cost:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">aiplatform</span>
+<pre><code class="language-python">from google.cloud import aiplatform
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">aiplatform</span><span class="o">.</span><span class="n">gapic</span><span class="o">.</span><span class="n">ModelServiceClient</span><span class="p">()</span>
+# Create a client instance
+client = aiplatform.gapic.ModelServiceClient()
 
-<span class="c1"># Estimate the cost of deploying a model</span>
-<span class="n">cost</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">estimate_model_cost</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;your-model&#39;</span><span class="p">,</span>
-    <span class="n">region</span><span class="o">=</span><span class="s1">&#39;us-central1&#39;</span><span class="p">,</span>
-    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;n1-standard-8&#39;</span>
-<span class="p">)</span>
+# Estimate the cost of deploying a model
+cost = client.estimate_model_cost(
+    model='your-model',
+    region='us-central1',
+    instance_type='n1-standard-8'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimated cost:&#39;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
-</code></pre></div>
-
+print('Estimated cost:', cost)
+</code></pre>
 <p>This code snippet demonstrates how to use Google Cloud AI Platform to estimate the cost of implementing responsible AI. We create a client instance and estimate the cost of deploying a model.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, responsible AI is a critical aspect of ensuring that AI systems are fair, transparent, and accountable. By following best practices, using tools and services like Google Cloud AI Platform, Amazon SageMaker, and scikit-learn, and addressing common problems like bias and lack of transparency, we can implement responsible AI that provides significant benefits, including improved accuracy, increased transparency, and reduced risk.</p>

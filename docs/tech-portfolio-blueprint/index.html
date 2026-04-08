@@ -175,19 +175,18 @@
 <p>For example, GitHub offers a free plan with unlimited public repositories, making it an ideal choice for developers who want to showcase their open-source projects. On the other hand, Netlify offers a free plan with limited features, but its paid plans start at $19/month and offer advanced features such as SSL encryption and automated deployments.</p>
 <h3 id="example-code-building-a-simple-website-with-github-pages">Example Code: Building a Simple Website with GitHub Pages</h3>
 <p>Here's an example of how to build a simple website using GitHub Pages:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- index.html --&gt;</span>
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My Tech Portfolio<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to my tech portfolio<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This is a simple website built using GitHub Pages<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Tech Portfolio&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to my tech portfolio&lt;/h1&gt;
+  &lt;p&gt;This is a simple website built using GitHub Pages&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>To deploy this website, create a new repository on GitHub and add the above code to a file named <code>index.html</code>. Then, go to the repository settings and click on "GitHub Pages" to enable it. Finally, click on the "Save" button to deploy the website.</p>
 <h2 id="building-a-personal-project">Building a Personal Project</h2>
 <p>A personal project is a great way to demonstrate skills and experience, and can be a valuable addition to a tech portfolio. Here are some steps to follow when building a personal project:
@@ -199,32 +198,31 @@
 <p>For example, let's say you want to build a personal project that uses machine learning to predict stock prices. You can use a library such as TensorFlow or PyTorch to build the model, and a platform such as Google Colab or AWS SageMaker to deploy and train the model.</p>
 <h3 id="example-code-building-a-simple-machine-learning-model-with-tensorflow">Example Code: Building a Simple Machine Learning Model with TensorFlow</h3>
 <p>Here's an example of how to build a simple machine learning model using TensorFlow:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># stock_price_predictor.py</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python"># stock_price_predictor.py
+import pandas as pd
+import numpy as np
+import tensorflow as tf
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;stock_prices.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('stock_prices.csv')
 
-<span class="c1"># Preprocess the data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+# Preprocess the data
+X = df.drop('price', axis=1)
+y = df['price']
 
-<span class="c1"># Build the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-  <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)),</span>
-  <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-  <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">])</span>
+# Build the model
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Dense(64, activation='relu', input_shape=(X.shape[1],)),
+  tf.keras.layers.Dense(32, activation='relu'),
+  tf.keras.layers.Dense(1)
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mean_squared_error&#39;</span><span class="p">)</span>
+# Compile the model
+model.compile(optimizer='adam', loss='mean_squared_error')
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+model.fit(X, y, epochs=100, batch_size=32)
+</code></pre>
 <p>To train this model, you can use a dataset of historical stock prices and a library such as pandas to load and preprocess the data.</p>
 <h2 id="contributing-to-open-source-projects">Contributing to Open-Source Projects</h2>
 <p>Contributing to open-source projects is a great way to gain experience, build your network, and demonstrate your skills. Here are some steps to follow when contributing to open-source projects:
@@ -236,21 +234,20 @@
 <p>For example, let's say you want to contribute to the TensorFlow project. You can start by reading the documentation and guidelines for contributing, and then finding an issue or feature that you want to work on. You can use a tool such as GitHub Issues to find open issues and submit a pull request.</p>
 <h3 id="example-code-contributing-to-the-tensorflow-project">Example Code: Contributing to the TensorFlow Project</h3>
 <p>Here's an example of how to contribute to the TensorFlow project:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># tensorflow/contrib/keras/layers.py</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python"># tensorflow/contrib/keras/layers.py
+import tensorflow as tf
 
-<span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">MyLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
+class MyLayer(tf.keras.layers.Layer):
+  def __init__(self, units):
+    super(MyLayer, self).__init__()
+    self.units = units
 
-  <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">])</span>
+  def build(self, input_shape):
+    self.kernel = self.add_variable('kernel', [input_shape[-1], self.units])
 
-  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">)</span>
-</code></pre></div>
-
+  def call(self, inputs):
+    return tf.matmul(inputs, self.kernel)
+</code></pre>
 <p>To contribute this code, you can submit a pull request to the TensorFlow repository and wait for feedback from the maintainers.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions that you may encounter when building a tech portfolio:

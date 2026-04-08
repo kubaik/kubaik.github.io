@@ -192,44 +192,42 @@
 <p>In this example, we will create a simple multi-modal model that classifies images based on accompanying text descriptions using PyTorch.</p>
 <h3 id="setup">Setup</h3>
 <p>First, install the required libraries:</p>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>transformers
-</code></pre></div>
-
+<pre><code class="language-bash">pip install torch torchvision transformers
+</code></pre>
 <h3 id="code">Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertModel</span><span class="p">,</span> <span class="n">BertTokenizer</span>
+<pre><code class="language-python">import torch
+from torch import nn
+from torchvision import models, transforms
+from transformers import BertModel, BertTokenizer
 
-<span class="k">class</span> <span class="nc">MultiModalClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MultiModalClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_model</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>  <span class="c1"># Reduce output size</span>
+class MultiModalClassifier(nn.Module):
+    def __init__(self):
+        super(MultiModalClassifier, self).__init__()
+        self.image_model = models.resnet50(pretrained=True)
+        self.image_model.fc = nn.Linear(self.image_model.fc.in_features, 256)  # Reduce output size
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>  <span class="c1"># Reduce output size</span>
+        self.text_model = BertModel.from_pretrained('bert-base-uncased')
+        self.text_fc = nn.Linear(self.text_model.config.hidden_size, 256)  # Reduce output size
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Assume 10 classes</span>
+        self.classifier = nn.Linear(512, 10)  # Assume 10 classes
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">texts</span><span class="p">):</span>
-        <span class="n">image_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
-        <span class="n">text_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_model</span><span class="p">(</span><span class="n">texts</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Get the pooled output</span>
-        <span class="n">text_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_fc</span><span class="p">(</span><span class="n">text_features</span><span class="p">)</span>
+    def forward(self, images, texts):
+        image_features = self.image_model(images)
+        text_features = self.text_model(texts)[1]  # Get the pooled output
+        text_features = self.text_fc(text_features)
 
-        <span class="n">combined</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">image_features</span><span class="p">,</span> <span class="n">text_features</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+        combined = torch.cat((image_features, text_features), dim=1)
+        return self.classifier(combined)
 
-<span class="c1"># Example input</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>  <span class="c1"># Random image tensor</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot;A cat sitting on a fence.&quot;</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span><span class="p">)[</span><span class="s1">&#39;input_ids&#39;</span><span class="p">]</span>
+# Example input
+image = torch.rand(1, 3, 224, 224)  # Random image tensor
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+text = tokenizer(&quot;A cat sitting on a fence.&quot;, return_tensors='pt')['input_ids']
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">MultiModalClassifier</span><span class="p">()</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-</code></pre></div>
-
+model = MultiModalClassifier()
+output = model(image, text)
+print(output)
+</code></pre>
 <h3 id="explanation">Explanation</h3>
 <ul>
 <li><strong>Image Model</strong>: We utilize a pre-trained ResNet50 model to extract features from images. The final fully connected layer is adjusted to output 256 features.</li>
@@ -279,37 +277,35 @@
 <p>In this example, we will build a basic model that transcribes speech to text and categorizes the transcriptions.</p>
 <h3 id="setup_1">Setup</h3>
 <p>First, install the required libraries:</p>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>SpeechRecognition<span class="w"> </span>torch<span class="w"> </span>transformers
-</code></pre></div>
-
+<pre><code class="language-bash">pip install SpeechRecognition torch transformers
+</code></pre>
 <h3 id="code_1">Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Wav2Vec2ForCTC</span><span class="p">,</span> <span class="n">Wav2Vec2Tokenizer</span>
-<span class="kn">import</span> <span class="nn">speech_recognition</span> <span class="k">as</span> <span class="nn">sr</span>
+<pre><code class="language-python">import torch
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
+import speech_recognition as sr
 
-<span class="c1"># Load the pre-trained model and tokenizer</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Wav2Vec2Tokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/wav2vec2-base-960h&quot;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Wav2Vec2ForCTC</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/wav2vec2-base-960h&quot;</span><span class="p">)</span>
+# Load the pre-trained model and tokenizer
+tokenizer = Wav2Vec2Tokenizer.from_pretrained(&quot;facebook/wav2vec2-base-960h&quot;)
+model = Wav2Vec2ForCTC.from_pretrained(&quot;facebook/wav2vec2-base-960h&quot;)
 
-<span class="k">def</span> <span class="nf">transcribe_audio</span><span class="p">(</span><span class="n">audio_file</span><span class="p">):</span>
-    <span class="n">recognizer</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">Recognizer</span><span class="p">()</span>
-    <span class="k">with</span> <span class="n">sr</span><span class="o">.</span><span class="n">AudioFile</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
-        <span class="n">audio_data</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">audio_data</span>
+def transcribe_audio(audio_file):
+    recognizer = sr.Recognizer()
+    with sr.AudioFile(audio_file) as source:
+        audio_data = recognizer.record(source)
+    return audio_data
 
-<span class="k">def</span> <span class="nf">predict_text</span><span class="p">(</span><span class="n">audio_file</span><span class="p">):</span>
-    <span class="n">audio_input</span> <span class="o">=</span> <span class="n">transcribe_audio</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
-    <span class="n">input_values</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">audio_input</span><span class="o">.</span><span class="n">get_raw_data</span><span class="p">(),</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_values</span>
-    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-        <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_values</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
-    <span class="n">predicted_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">predicted_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+def predict_text(audio_file):
+    audio_input = transcribe_audio(audio_file)
+    input_values = tokenizer(audio_input.get_raw_data(), return_tensors=&quot;pt&quot;).input_values
+    with torch.no_grad():
+        logits = model(input_values).logits
+    predicted_ids = torch.argmax(logits, dim=-1)
+    return tokenizer.decode(predicted_ids[0])
 
-<span class="n">audio_file</span> <span class="o">=</span> <span class="s2">&quot;path/to/audio/file.wav&quot;</span>
-<span class="n">text_prediction</span> <span class="o">=</span> <span class="n">predict_text</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transcribed Text: </span><span class="si">{</span><span class="n">text_prediction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+audio_file = &quot;path/to/audio/file.wav&quot;
+text_prediction = predict_text(audio_file)
+print(f&quot;Transcribed Text: {text_prediction}&quot;)
+</code></pre>
 <h3 id="explanation_1">Explanation</h3>
 <ul>
 <li><strong>Audio Input</strong>: We use the SpeechRecognition library to read audio files.</li>

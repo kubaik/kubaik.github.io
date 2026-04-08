@@ -169,25 +169,24 @@
 * <strong>Smart energy management</strong>: Edge computing is used to analyze energy consumption patterns, optimizing energy usage and reducing waste.</p>
 <h3 id="implementing-edge-computing-with-aws-iot-greengrass">Implementing Edge Computing with AWS IoT Greengrass</h3>
 <p>AWS IoT Greengrass is a service that extends AWS IoT Core to the edge, allowing developers to run AWS IoT Core functionality on edge devices. Here is an example of how to implement edge computing using AWS IoT Greengrass:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">greengrasssdk</span>
+<pre><code class="language-python">import greengrasssdk
 
-<span class="c1"># Create a Greengrass client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">greengrasssdk</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
+# Create a Greengrass client
+client = greengrasssdk.client('iot')
 
-<span class="c1"># Define a function to handle incoming messages</span>
-<span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="c1"># Process the message</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Received message: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+# Define a function to handle incoming messages
+def handle_message(message):
+    # Process the message
+    print('Received message: {}'.format(message))
 
-<span class="c1"># Define a function to send messages to the cloud</span>
-<span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="c1"># Send the message to the cloud</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+# Define a function to send messages to the cloud
+def send_message(message):
+    # Send the message to the cloud
+    client.publish(topic='my_topic', payload=message)
 
-<span class="c1"># Register the handle_message function to handle incoming messages</span>
-<span class="n">client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">handle_message</span><span class="p">)</span>
-</code></pre></div>
-
+# Register the handle_message function to handle incoming messages
+client.subscribe(topic='my_topic', callback=handle_message)
+</code></pre>
 <p>This code snippet demonstrates how to create a Greengrass client, define a function to handle incoming messages, and register the function to handle incoming messages.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Edge computing can significantly improve the performance of applications by reducing latency and improving real-time processing capabilities. Here are some performance benchmarks for edge computing:
@@ -197,25 +196,24 @@
 <p>For example, a study by Cisco found that edge computing can reduce latency by up to 90% in industrial automation applications. Another study by Intel found that edge computing can increase throughput by up to 50% in retail applications.</p>
 <h3 id="edge-computing-with-azure-iot-edge">Edge Computing with Azure IoT Edge</h3>
 <p>Azure IoT Edge is a service that allows developers to deploy cloud intelligence to edge devices. Here is an example of how to implement edge computing using Azure IoT Edge:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.Devices.Edge</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.Azure.Devices.Edge;
 
-<span class="c1">// Create an Edge client</span>
-<span class="n">EdgeClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EdgeClient</span><span class="p">();</span>
+// Create an Edge client
+EdgeClient client = new EdgeClient();
 
-<span class="c1">// Define a function to handle incoming messages</span>
-<span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">HandleMessage</span><span class="p">(</span><span class="n">Message</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Process the message</span>
-<span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;Received message: {message}&quot;</span><span class="p">);</span>
+// Define a function to handle incoming messages
+async Task HandleMessage(Message message)
+{
+    // Process the message
+    Console.WriteLine($&quot;Received message: {message}&quot;);
 
-<span class="w">    </span><span class="c1">// Send a response back to the cloud</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">SendEventAsync</span><span class="p">(</span><span class="s">&quot;my_topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
-<span class="p">}</span>
+    // Send a response back to the cloud
+    await client.SendEventAsync(&quot;my_topic&quot;, message);
+}
 
-<span class="c1">// Register the HandleMessage function to handle incoming messages</span>
-<span class="n">client</span><span class="p">.</span><span class="n">SetMessageHandler</span><span class="p">(</span><span class="n">HandleMessage</span><span class="p">);</span>
-</code></pre></div>
-
+// Register the HandleMessage function to handle incoming messages
+client.SetMessageHandler(HandleMessage);
+</code></pre>
 <p>This code snippet demonstrates how to create an Edge client, define a function to handle incoming messages, and register the function to handle incoming messages.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Edge computing can pose several challenges, including:
@@ -229,25 +227,24 @@
 <p>For example, a study by Gartner found that using encryption can reduce the risk of security breaches by up to 70%. Another study by Forrester found that using containerization can simplify edge application management by up to 50%.</p>
 <h3 id="implementing-edge-computing-with-google-cloud-iot-core">Implementing Edge Computing with Google Cloud IoT Core</h3>
 <p>Google Cloud IoT Core is a service that allows developers to manage and analyze IoT data. Here is an example of how to implement edge computing using Google Cloud IoT Core:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.iotcore.DeviceManagerClient</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.cloud.iotcore.DeviceManagerSettings</span><span class="p">;</span>
+<pre><code class="language-java">import com.google.cloud.iotcore.DeviceManagerClient;
+import com.google.cloud.iotcore.DeviceManagerSettings;
 
-<span class="c1">// Create a Device Manager client</span>
-<span class="n">DeviceManagerClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DeviceManagerClient</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+// Create a Device Manager client
+DeviceManagerClient client = DeviceManagerClient.create();
 
-<span class="c1">// Define a function to handle incoming messages</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">handleMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Process the message</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Received message: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
+// Define a function to handle incoming messages
+void handleMessage(String message) {
+    // Process the message
+    System.out.println(&quot;Received message: &quot; + message);
 
-<span class="w">    </span><span class="c1">// Send a response back to the cloud</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="s">&quot;my_topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
-<span class="p">}</span>
+    // Send a response back to the cloud
+    client.publish(&quot;my_topic&quot;, message);
+}
 
-<span class="c1">// Register the handleMessage function to handle incoming messages</span>
-<span class="n">client</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="s">&quot;my_topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">handleMessage</span><span class="p">);</span>
-</code></pre></div>
-
+// Register the handleMessage function to handle incoming messages
+client.subscribe(&quot;my_topic&quot;, handleMessage);
+</code></pre>
 <p>This code snippet demonstrates how to create a Device Manager client, define a function to handle incoming messages, and register the function to handle incoming messages.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Edge computing has a wide range of real-world use cases, including:

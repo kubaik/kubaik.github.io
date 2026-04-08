@@ -218,20 +218,19 @@
 <h2 id="practical-examples-of-serverless-applications">Practical Examples of Serverless Applications</h2>
 <h3 id="example-1-building-a-rest-api-with-aws-lambda-and-api-gateway">Example 1: Building a REST API with AWS Lambda and API Gateway</h3>
 <p>Suppose you want to create a simple REST API for a task management app.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Lambda function to handle GET requests</span>
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Buy groceries&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Complete project&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
+<pre><code class="language-javascript">// Lambda function to handle GET requests
+exports.handler = async (event) =&gt; {
+  const tasks = [
+    { id: 1, name: &quot;Buy groceries&quot; },
+    { id: 2, name: &quot;Complete project&quot; },
+  ];
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">tasks</span><span class="p">),</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  return {
+    statusCode: 200,
+    body: JSON.stringify(tasks),
+  };
+};
+</code></pre>
 <ul>
 <li><strong>Setup:</strong> Deploy this function via AWS Lambda.</li>
 <li><strong>API Gateway:</strong> Create a REST API endpoint that triggers this Lambda.</li>
@@ -246,13 +245,12 @@
 </ul>
 <h3 id="example-3-scheduled-tasks-with-azure-functions">Example 3: Scheduled Tasks with Azure Functions</h3>
 <p>Automate routine jobs like sending daily reports or cleaning databases.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">Run</span><span class="p">(</span><span class="n">TimerInfo</span><span class="w"> </span><span class="n">myTimer</span><span class="p">,</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">log</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">log</span><span class="p">.</span><span class="n">LogInformation</span><span class="p">(</span><span class="s">$&quot;Scheduled task executed at: {DateTime.Now}&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Insert task logic here</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">public static async Task Run(TimerInfo myTimer, ILogger log)
+{
+    log.LogInformation($&quot;Scheduled task executed at: {DateTime.Now}&quot;);
+    // Insert task logic here
+}
+</code></pre>
 <ul>
 <li>Use timers to trigger functions at specified intervals.</li>
 <li>Remove the need for dedicated servers for periodic tasks.</li>

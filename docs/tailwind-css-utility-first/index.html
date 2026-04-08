@@ -155,24 +155,23 @@
 <h3 id="how-tailwind-css-works">How Tailwind CSS Works</h3>
 <p>Tailwind CSS is built around a set of pre-defined CSS classes that can be used to style elements. These classes are generated using a set of configuration files that define the design tokens for the application. For example, the <code>tailwind.config.js</code> file defines the color palette, typography, and spacing for the application.</p>
 <p>Here is an example of a <code>tailwind.config.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">theme</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">colors</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">primary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#3498db&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">secondary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#f1c40f&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">fontFamily</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">sans</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sans-serif&#39;</span><span class="p">],</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">spacing</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">sm</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;8px&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">md</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;16px&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">lg</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;24px&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  theme: {
+    colors: {
+      primary: '#3498db',
+      secondary: '#f1c40f',
+    },
+    fontFamily: {
+      sans: ['Helvetica', 'Arial', 'sans-serif'],
+    },
+    spacing: {
+      sm: '8px',
+      md: '16px',
+      lg: '24px',
+    },
+  },
+}
+</code></pre>
 <p>This configuration file defines a color palette with two colors, a font family, and a set of spacing values. These design tokens can then be used to generate the CSS classes for the application.</p>
 <h3 id="utility-classes-in-tailwind-css">Utility Classes in Tailwind CSS</h3>
 <p>Tailwind CSS provides a wide range of utility classes that can be used to style elements. These classes include:</p>
@@ -183,34 +182,31 @@
 <li><code>m-*</code> classes for margin, such as <code>m-sm</code> or <code>m-md</code></li>
 </ul>
 <p>Here is an example of using utility classes to style a button:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-primary text-white p-md m-sm rounded-lg&quot;</span><span class="p">&gt;</span>Click me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button class=&quot;bg-primary text-white p-md m-sm rounded-lg&quot;&gt;Click me&lt;/button&gt;
+</code></pre>
 <p>This code uses the <code>bg-primary</code> class to set the background color, <code>text-white</code> to set the text color, <code>p-md</code> to set the padding, <code>m-sm</code> to set the margin, and <code>rounded-lg</code> to set the border radius.</p>
 <h3 id="customizing-tailwind-css">Customizing Tailwind CSS</h3>
 <p>One of the key benefits of Tailwind CSS is its high degree of customizability. The framework provides a wide range of configuration options that can be used to customize the design tokens and utility classes.</p>
 <p>For example, you can customize the color palette by adding new colors to the <code>tailwind.config.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">theme</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">colors</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">primary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#3498db&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">secondary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#f1c40f&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#2ecc71&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">danger</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#e74c3c&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  theme: {
+    colors: {
+      primary: '#3498db',
+      secondary: '#f1c40f',
+      success: '#2ecc71',
+      danger: '#e74c3c',
+    },
+  },
+}
+</code></pre>
 <p>This code adds two new colors to the color palette, <code>success</code> and <code>danger</code>, which can then be used in the application.</p>
 <h3 id="performance-optimization">Performance Optimization</h3>
 <p>Tailwind CSS provides a number of features to optimize the performance of the application. One of the key features is the ability to purge unused CSS classes, which can significantly reduce the size of the CSS file.</p>
 <p>For example, you can use the <code>purge</code> option in the <code>tailwind.config.js</code> file to specify the files that should be scanned for unused classes:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">purge</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;./src/**/*.html&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;./src/**/*.js&#39;</span><span class="p">],</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  purge: ['./src/**/*.html', './src/**/*.js'],
+}
+</code></pre>
 <p>This code tells Tailwind CSS to scan all HTML and JavaScript files in the <code>src</code> directory for unused classes.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Tailwind CSS is widely used in production environments, and its utility-first design approach has been adopted by a number of high-profile companies. For example, the GitHub website uses Tailwind CSS to style its UI components.</p>

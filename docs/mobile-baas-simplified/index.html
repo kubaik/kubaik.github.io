@@ -168,86 +168,84 @@
 <h2 id="implementing-user-authentication-with-mobile-baas">Implementing User Authentication with Mobile BaaS</h2>
 <p>One of the most critical features of Mobile BaaS is user authentication. Most platforms provide pre-built authentication mechanisms, such as email/password, social media login, and phone number verification. For example, Firebase Authentication provides a simple and secure way to authenticate users in your mobile app.</p>
 <p>Here is an example of how to implement user authentication using Firebase Authentication in a React Native app:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TextInput</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">auth</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+import { auth } from 'firebase';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">setEmail</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">password</span><span class="p">,</span><span class="w"> </span><span class="nx">setPassword</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+const App = () =&gt; {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">auth</span><span class="p">.</span><span class="nx">signInWithEmailAndPassword</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User logged in:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error logging in:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleLogin = () =&gt; {
+    auth.signInWithEmailAndPassword(email, password)
+      .then((user) =&gt; {
+        console.log('User logged in:', user);
+      })
+      .catch((error) =&gt; {
+        console.error('Error logging in:', error);
+      });
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">TextInput</span>
-<span class="w">        </span><span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Email&quot;</span>
-<span class="w">        </span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">email</span><span class="p">}</span>
-<span class="w">        </span><span class="nx">onChangeText</span><span class="o">=</span><span class="p">{(</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setEmail</span><span class="p">(</span><span class="nx">text</span><span class="p">)}</span>
-<span class="w">      </span><span class="o">/&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">TextInput</span>
-<span class="w">        </span><span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Password&quot;</span>
-<span class="w">        </span><span class="nx">secureTextEntry</span>
-<span class="w">        </span><span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">password</span><span class="p">}</span>
-<span class="w">        </span><span class="nx">onChangeText</span><span class="o">=</span><span class="p">{(</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setPassword</span><span class="p">(</span><span class="nx">text</span><span class="p">)}</span>
-<span class="w">      </span><span class="o">/&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">Button</span><span class="w"> </span><span class="nx">title</span><span class="o">=</span><span class="s2">&quot;Login&quot;</span><span class="w"> </span><span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handleLogin</span><span class="p">}</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/View&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  return (
+    &lt;View&gt;
+      &lt;TextInput
+        placeholder=&quot;Email&quot;
+        value={email}
+        onChangeText={(text) =&gt; setEmail(text)}
+      /&gt;
+      &lt;TextInput
+        placeholder=&quot;Password&quot;
+        secureTextEntry
+        value={password}
+        onChangeText={(text) =&gt; setPassword(text)}
+      /&gt;
+      &lt;Button title=&quot;Login&quot; onPress={handleLogin} /&gt;
+    &lt;/View&gt;
+  );
+};
+</code></pre>
 <p>In this example, we use the <code>auth</code> object from the Firebase SDK to authenticate the user using their email and password.</p>
 <h2 id="data-storage-and-management-with-mobile-baas">Data Storage and Management with Mobile BaaS</h2>
 <p>Another essential feature of Mobile BaaS is data storage and management. Most platforms provide a cloud-based NoSQL database that allows you to store and manage data in a flexible and scalable way. For example, AWS Amplify provides a powerful data storage solution called Amazon DynamoDB.</p>
 <p>Here is an example of how to use AWS Amplify to store and retrieve data in a React Native app:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Amplify</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;aws-amplify&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">DataStore</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;aws-amplify&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import Amplify from 'aws-amplify';
+import { DataStore } from 'aws-amplify';
 
-<span class="nx">Amplify</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">aws_project_region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">aws_cognito_region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">aws_user_pools_id</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_USER_POOL_ID&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">aws_user_pools_web_client_id</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_WEB_CLIENT_ID&#39;</span><span class="p">,</span>
+Amplify.configure({
+  aws_project_region: 'us-east-1',
+  aws_cognito_region: 'us-east-1',
+  aws_user_pools_id: 'YOUR_USER_POOL_ID',
+  aws_user_pools_web_client_id: 'YOUR_WEB_CLIENT_ID',
 
-<span class="o">*</span><span class="nx">Recommended</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nx">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="nx">Eloquent</span><span class="w"> </span><span class="nx">JavaScript</span><span class="w"> </span><span class="nx">Book</span><span class="o">&lt;</span><span class="err">/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Eloquent JavaScript Book&lt;/a&gt;*
 
-<span class="w">  </span><span class="nx">aws_appsync_graphqlEndpoint</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://YOUR_GRAPHQL_ENDPOINT.appsync-api.us-east-1.amazonaws.com/graphql&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">aws_appsync_region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">aws_appsync_authenticationType</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AMAZON_COGNITO_USER_POOLS&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+  aws_appsync_graphqlEndpoint: 'https://YOUR_GRAPHQL_ENDPOINT.appsync-api.us-east-1.amazonaws.com/graphql',
+  aws_appsync_region: 'us-east-1',
+  aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">Todo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;123&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="p">};</span>
+const Todo = {
+  id: '123',
+  title: 'Buy milk',
+  completed: false,
+};
 
-<span class="nx">DataStore</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">Todo</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">todo</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Todo saved:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">todo</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error saving todo:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
+DataStore.save(Todo)
+  .then((todo) =&gt; {
+    console.log('Todo saved:', todo);
+  })
+  .catch((error) =&gt; {
+    console.error('Error saving todo:', error);
+  });
 
-<span class="nx">DataStore</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="nx">Todo</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">todos</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Todos retrieved:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">todos</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error retrieving todos:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+DataStore.query(Todo)
+  .then((todos) =&gt; {
+    console.log('Todos retrieved:', todos);
+  })
+  .catch((error) =&gt; {
+    console.error('Error retrieving todos:', error);
+  });
+</code></pre>
 <p>In this example, we use the <code>DataStore</code> object from the AWS Amplify SDK to store and retrieve data in a DynamoDB table.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>When choosing a Mobile BaaS platform, it's essential to consider performance benchmarks and pricing. Here are some metrics to consider:

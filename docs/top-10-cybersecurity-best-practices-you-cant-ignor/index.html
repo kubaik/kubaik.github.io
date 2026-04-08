@@ -156,21 +156,20 @@
 </ul>
 <h3 id="example">Example:</h3>
 <p>Here’s a sample password policy implemented in a configuration file for a web application using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">re</span>
+<pre><code class="language-python">import re
 
-<span class="k">def</span> <span class="nf">is_strong_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-    <span class="c1"># Check length</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="c1"># Check for uppercase, lowercase, digits, and special characters</span>
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Z]&quot;</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[a-z]&quot;</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]&quot;</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[!@#$%^&amp;*()_+]&quot;</span><span class="p">,</span> <span class="n">password</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
-</code></pre></div>
-
+def is_strong_password(password):
+    # Check length
+    if len(password) &lt; 12:
+        return False
+    # Check for uppercase, lowercase, digits, and special characters
+    if (not re.search(r&quot;[A-Z]&quot;, password) or
+            not re.search(r&quot;[a-z]&quot;, password) or
+            not re.search(r&quot;[0-9]&quot;, password) or
+            not re.search(r&quot;[!@#$%^&amp;*()_+]&quot;, password)):
+        return False
+    return True
+</code></pre>
 <h2 id="2-enable-two-factor-authentication-2fa">2. Enable Two-Factor Authentication (2FA)</h2>
 <p>Adding an extra layer of security through 2FA significantly reduces the risk of unauthorized access. A 2023 study by Google showed that 2FA can block 99.9% of automated bot attacks.</p>
 <h3 id="best-practices_1">Best Practices:</h3>
@@ -189,13 +188,11 @@
 </ul>
 <h3 id="example_1">Example:</h3>
 <p>Here’s how you can automate updates for a Debian-based Linux system:</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
-</code></pre></div>
-
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
 <p>You can schedule this command in a cron job to run weekly:</p>
-<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span><span class="m">1</span><span class="w"> </span>/usr/bin/apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>/usr/bin/apt<span class="w"> </span>upgrade<span class="w"> </span>-y
-</code></pre></div>
-
+<pre><code class="language-bash">0 3 * * 1 /usr/bin/apt update &amp;&amp; /usr/bin/apt upgrade -y
+</code></pre>
 <h2 id="4-secure-your-network">4. Secure Your Network</h2>
 <p>Network security is foundational. Poorly configured networks can lead to significant vulnerabilities, as evidenced by the 2022 Cisco Cybersecurity Report, which indicated that 70% of organizations experienced network attacks.</p>
 <h3 id="best-practices_3">Best Practices:</h3>
@@ -216,9 +213,8 @@
 </ul>
 <h3 id="example_2">Example:</h3>
 <p>You can schedule a Nessus scan using the command line:</p>
-<div class="codehilite"><pre><span></span><code>/opt/nessus/sbin/nessuscli<span class="w"> </span>scan<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Monthly Security Audit&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">/opt/nessus/sbin/nessuscli scan launch --name &quot;Monthly Security Audit&quot;
+</code></pre>
 <h2 id="6-train-employees-on-cybersecurity-awareness">6. Train Employees on Cybersecurity Awareness</h2>
 <p>Human error is a leading cause of security breaches. A study by the Ponemon Institute found that 95% of cybersecurity breaches are due to human error.</p>
 <h3 id="best-practices_5">Best Practices:</h3>
@@ -237,9 +233,8 @@
 </ul>
 <h3 id="example_3">Example:</h3>
 <p>A simple command for backing up a MySQL database to an S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code>mysqldump<span class="w"> </span>-u<span class="w"> </span>username<span class="w"> </span>-p<span class="w"> </span>database_name<span class="w"> </span><span class="p">|</span><span class="w"> </span>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span>-<span class="w"> </span>s3://yourbucket/backup.sql
-</code></pre></div>
-
+<pre><code class="language-bash">mysqldump -u username -p database_name | aws s3 cp - s3://yourbucket/backup.sql
+</code></pre>
 <h2 id="8-use-encryption">8. Use Encryption</h2>
 <p>Data encryption protects sensitive information from unauthorized access. According to a report by McAfee, 95% of organizations that implement encryption experience reduced data breaches.</p>
 <h3 id="best-practices_7">Best Practices:</h3>
@@ -249,10 +244,9 @@
 </ul>
 <h3 id="example_4">Example:</h3>
 <p>To enable SSL on a MySQL server, modify the configuration file (<code>my.cnf</code>):</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
-<span class="na">require_secure_transport</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ON</span>
-</code></pre></div>
-
+<pre><code class="language-ini">[mysqld]
+require_secure_transport = ON
+</code></pre>
 <p>Restart MySQL and create SSL certificates to enhance security.</p>
 <h2 id="9-monitor-and-respond-to-threats">9. Monitor and Respond to Threats</h2>
 <p>Continuous monitoring is essential for detecting and responding to threats. A report by Gartner indicates that organizations with Security Information and Event Management (SIEM) systems are 50% more effective at detecting threats.</p>
@@ -263,15 +257,14 @@
 </ul>
 <h3 id="implementation_1">Implementation:</h3>
 <p>Set up alerts in your SIEM system for suspicious activities, such as multiple failed login attempts:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;alert&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;failed_login&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;time_window&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10m&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;alert&quot;: {
+    &quot;type&quot;: &quot;failed_login&quot;,
+    &quot;threshold&quot;: 5,
+    &quot;time_window&quot;: &quot;10m&quot;
+  }
+}
+</code></pre>
 <h2 id="10-maintain-compliance-with-regulations">10. Maintain Compliance with Regulations</h2>
 <p>Compliance with regulations like GDPR, HIPAA, or PCI-DSS is not only a legal obligation but also enhances the security posture. Non-compliance can lead to hefty fines; for example, GDPR fines can reach up to €20 million or 4% of annual global turnover.</p>
 <h3 id="best-practices_9">Best Practices:</h3>

@@ -159,39 +159,36 @@
 <ol>
 <li>Create a Kubernetes deployment manifest file:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-image:latest</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-image:latest
+        ports:
+        - containerPort: 80
+</code></pre>
 <ol>
 <li>Apply the deployment manifest to your Kubernetes cluster:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f deployment.yaml
+</code></pre>
 <ol>
 <li>Scale the deployment to run multiple instances of the container:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>my-app<span class="w"> </span>--replicas<span class="o">=</span><span class="m">5</span>
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl scale deployment my-app --replicas=5
+</code></pre>
 <h2 id="container-registries">Container Registries</h2>
 <p>Container registries allow you to store and distribute container images. Popular container registries like Docker Hub, Amazon ECR, and Google Container Registry provide a centralized location to share and manage container images.</p>
 <h3 id="best-practices-for-container-registries">Best Practices for Container Registries</h3>
@@ -207,21 +204,18 @@
 <ol>
 <li>Create a bridge network in Docker:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>my-network
-</code></pre></div>
-
+<pre><code class="language-bash">docker network create my-network
+</code></pre>
 <ol>
 <li>Run a container connected to the bridge network:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>my-container<span class="w"> </span>--network<span class="w"> </span>my-network<span class="w"> </span>my-image
-</code></pre></div>
-
+<pre><code class="language-bash">docker run --name my-container --network my-network my-image
+</code></pre>
 <ol>
 <li>Verify network connectivity between containers:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>my-container<span class="w"> </span>ping<span class="w"> </span>other-container
-</code></pre></div>
-
+<pre><code class="language-bash">docker exec -it my-container ping other-container
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>Container technologies have transformed the way modern applications are built and deployed. By leveraging containers, organizations can achieve greater agility, scalability, and efficiency in their software development processes. Understanding the key concepts of containers, container orchestration, registries, and networking is essential for harnessing the full potential of container technologies. Start experimenting with containers in your projects and unlock the power of container technologies today!</p>
                 <div class="ad-middle" style="text-align: center; margin: 20px 0;">

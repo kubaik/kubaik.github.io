@@ -168,23 +168,20 @@
 </ul>
 <h3 id="implementing-accessibility-in-html">Implementing Accessibility in HTML</h3>
 <p>To implement accessibility in HTML, you can use various attributes and elements to provide a text alternative for non-text content, define the structure and relationships between elements, and provide a way for users to navigate and interact with the content. For example, you can use the <code>alt</code> attribute to provide a text alternative for images:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A picture of a mountain landscape&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A picture of a mountain landscape&quot;&gt;
+</code></pre>
 <p>You can also use the <code>aria-label</code> attribute to provide a text description for interactive elements, such as buttons:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Submit form&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button aria-label=&quot;Submit form&quot;&gt;Submit&lt;/button&gt;
+</code></pre>
 <p>Additionally, you can use the <code>role</code> attribute to define the role of an element, such as a navigation menu:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;navigation&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;nav role=&quot;navigation&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
 <h2 id="tools-and-platforms-for-accessibility-testing">Tools and Platforms for Accessibility Testing</h2>
 <p>There are various tools and platforms available for testing accessibility, including:</p>
 <ul>

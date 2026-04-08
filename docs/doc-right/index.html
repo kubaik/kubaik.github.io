@@ -164,14 +164,13 @@
 * Confluence: A comprehensive documentation platform that provides features such as collaboration, version control, and customizable templates.</p>
 <h3 id="example-using-github-pages-for-documentation">Example: Using GitHub Pages for Documentation</h3>
 <p>GitHub Pages is a popular choice for hosting documentation, as it is free and easy to use. To get started with GitHub Pages, simply create a new repository on GitHub and add a <code>docs</code> folder to the root directory. Then, create a new file called <code>index.md</code> and add your documentation content. Finally, navigate to the GitHub Pages settings and select the <code>docs</code> folder as the source for your documentation.</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Example Documentation</span>
-<span class="gu">## Introduction</span>
+<pre><code class="language-markdown"># Example Documentation
+## Introduction
 This is an example of documentation hosted on GitHub Pages.
 
-<span class="gu">## Getting Started</span>
-To get started with this project, simply clone the repository and navigate to the <span class="sb">`docs`</span> folder.
-</code></pre></div>
-
+## Getting Started
+To get started with this project, simply clone the repository and navigate to the `docs` folder.
+</code></pre>
 <h2 id="writing-effective-documentation">Writing Effective Documentation</h2>
 <p>Effective documentation should be clear, concise, and easy to understand. Some best practices for writing documentation include:
 * Using simple and straightforward language: Avoid using technical jargon or complex terminology that may be difficult for non-technical readers to understand.
@@ -180,17 +179,16 @@ To get started with this project, simply clone the repository and navigate to th
 * Providing context: Provide context for the documentation, including information about the project, the target audience, and the goals of the documentation.</p>
 <h3 id="example-using-code-examples-in-documentation">Example: Using Code Examples in Documentation</h3>
 <p>Code examples are an essential component of effective documentation, as they provide a concrete illustration of how to use a particular feature or functionality. For example, the following code snippet demonstrates how to use the <code>axios</code> library to make a GET request:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const axios = require('axios');
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+axios.get('https://api.example.com/data')
+  .then(response =&gt; {
+    console.log(response.data);
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>This code example provides a clear and concise illustration of how to use the <code>axios</code> library, making it easier for developers to understand and implement the functionality.</p>
 <h2 id="measuring-the-effectiveness-of-documentation">Measuring the Effectiveness of Documentation</h2>
 <p>Measuring the effectiveness of documentation is critical to ensuring that it is meeting the needs of the target audience. Some metrics that can be used to measure the effectiveness of documentation include:
@@ -199,18 +197,17 @@ To get started with this project, simply clone the repository and navigate to th
 * Feedback: Feedback from readers can provide valuable insight into the quality and effectiveness of the documentation.</p>
 <h3 id="example-using-google-analytics-to-measure-documentation-effectiveness">Example: Using Google Analytics to Measure Documentation Effectiveness</h3>
 <p>Google Analytics is a popular tool for measuring the effectiveness of documentation. To get started with Google Analytics, simply create a new account and add the tracking code to your documentation website. Then, navigate to the Google Analytics dashboard and view the page views, search queries, and feedback metrics.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Google Analytics Tracking Code --&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">o</span><span class="p">,</span><span class="nx">g</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">m</span><span class="p">){</span><span class="nx">i</span><span class="p">[</span><span class="s1">&#39;GoogleAnalyticsObject&#39;</span><span class="p">]</span><span class="o">=</span><span class="nx">r</span><span class="p">;</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="o">=</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="o">||</span><span class="kd">function</span><span class="p">(){</span>
-<span class="w">  </span><span class="p">(</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">q</span><span class="o">=</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">q</span><span class="o">||</span><span class="p">[]).</span><span class="nx">push</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)},</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">l</span><span class="o">=</span><span class="mf">1</span><span class="o">*</span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">();</span><span class="nx">a</span><span class="o">=</span><span class="nx">s</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">o</span><span class="p">),</span>
-<span class="w">  </span><span class="nx">m</span><span class="o">=</span><span class="nx">s</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="nx">o</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span><span class="nx">a</span><span class="p">.</span><span class="k">async</span><span class="o">=</span><span class="mf">1</span><span class="p">;</span><span class="nx">a</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="nx">g</span><span class="p">;</span><span class="nx">m</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">m</span><span class="p">)</span>
-<span class="w">  </span><span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="nb">document</span><span class="p">,</span><span class="s1">&#39;script&#39;</span><span class="p">,</span><span class="s1">&#39;https://www.google-analytics.com/analytics.js&#39;</span><span class="p">,</span><span class="s1">&#39;ga&#39;</span><span class="p">);</span>
+<pre><code class="language-html">&lt;!-- Google Analytics Tracking Code --&gt;
+&lt;script&gt;
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;create&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;UA-XXXXXXXX-X&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;auto&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">ga</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;pageview&#39;</span><span class="p">);</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+  ga('create', 'UA-XXXXXXXX-X', 'auto');
+  ga('send', 'pageview');
+&lt;/script&gt;
+</code></pre>
 <h2 id="common-problems-with-documentation">Common Problems with Documentation</h2>
 <p>There are several common problems that can occur with documentation, including:
 * Outdated content: Outdated content can be confusing and misleading, making it difficult for readers to understand the current state of the project.
@@ -228,24 +225,23 @@ To get started with this project, simply clone the repository and navigate to th
 * Encouraging feedback: Encouraging feedback can help to identify areas for improvement and ensure that the documentation is meeting the needs of the target audience.</p>
 <h3 id="example-using-confluence-for-documentation-maintenance">Example: Using Confluence for Documentation Maintenance</h3>
 <p>Confluence is a popular platform for maintaining documentation, as it provides features such as version control, collaboration, and customizable templates. To get started with Confluence, simply create a new space and add your documentation content. Then, navigate to the Confluence settings and configure the version control and collaboration features.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Confluence API Example</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.confluence.api.model.content.Content</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.confluence.api.model.content.Space</span><span class="p">;</span>
+<pre><code class="language-java">// Confluence API Example
+import com.atlassian.confluence.api.model.content.Content;
+import com.atlassian.confluence.api.model.content.Space;
 
-<span class="c1">// Create a new space</span>
-<span class="n">Space</span><span class="w"> </span><span class="n">space</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Space</span><span class="p">();</span>
-<span class="n">space</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;My Space&quot;</span><span class="p">);</span>
-<span class="n">space</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="s">&quot;My Space Description&quot;</span><span class="p">);</span>
+// Create a new space
+Space space = new Space();
+space.setName(&quot;My Space&quot;);
+space.setDescription(&quot;My Space Description&quot;);
 
-<span class="c1">// Add content to the space</span>
-<span class="n">Content</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Content</span><span class="p">();</span>
-<span class="n">content</span><span class="p">.</span><span class="na">setTitle</span><span class="p">(</span><span class="s">&quot;My Page&quot;</span><span class="p">);</span>
-<span class="n">content</span><span class="p">.</span><span class="na">setBody</span><span class="p">(</span><span class="s">&quot;My Page Content&quot;</span><span class="p">);</span>
+// Add content to the space
+Content content = new Content();
+content.setTitle(&quot;My Page&quot;);
+content.setBody(&quot;My Page Content&quot;);
 
-<span class="c1">// Save the content</span>
-<span class="n">space</span><span class="p">.</span><span class="na">addContent</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
-</code></pre></div>
-
+// Save the content
+space.addContent(content);
+</code></pre>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, creating high-quality documentation is a critical component of any software development project. By following best practices such as using simple and straightforward language, including code examples, and providing context, developers can create documentation that is clear, concise, and easy to understand. Additionally, using tools such as GitHub Pages, Read the Docs, and Confluence can help to streamline the documentation process and ensure that the content is current and accurate.</p>
 <p>To get started with creating high-quality documentation, follow these next steps:

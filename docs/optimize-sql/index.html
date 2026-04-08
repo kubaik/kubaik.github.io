@@ -156,24 +156,21 @@
 <p>To optimize SQL queries, it's essential to understand the query execution plan, which can be obtained using tools like EXPLAIN in MySQL or PostgreSQL. The EXPLAIN statement provides detailed information about the query execution plan, including the order of operations, index usage, and estimated row counts.</p>
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Let's consider a simple example to illustrate the importance of query optimization. Suppose we have a table called <code>orders</code> with the following schema:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">total</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  total DECIMAL(10, 2)
+);
+</code></pre>
 <p>We want to retrieve all orders for a specific customer, along with the total amount spent. A naive query might look like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = 123;
+</code></pre>
 <p>However, this query can be optimized by using an index on the <code>customer_id</code> column:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">);</span>
+<pre><code class="language-sql">CREATE INDEX idx_customer_id ON orders (customer_id);
 
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+SELECT * FROM orders WHERE customer_id = 123;
+</code></pre>
 <p>By creating an index on the <code>customer_id</code> column, we can reduce the query execution time from 10.2 seconds to 1.5 seconds, resulting in a 85% improvement in performance.</p>
 <h3 id="using-indexes-and-constraints">Using Indexes and Constraints</h3>
 <p>Indexes and constraints are essential tools for query optimization. Indexes allow the DBMS to quickly locate specific data, while constraints ensure data consistency and accuracy.</p>
@@ -185,11 +182,10 @@
 <li>Use check constraints to enforce business rules</li>
 </ul>
 <p>For example, suppose we have a table called <code>products</code> with a column called <code>price</code>. We can create an index on the <code>price</code> column to improve query performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_price</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="p">(</span><span class="n">price</span><span class="p">);</span>
+<pre><code class="language-sql">CREATE INDEX idx_price ON products (price);
 
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-</code></pre></div>
-
+SELECT * FROM products WHERE price &gt; 100;
+</code></pre>
 <p>This query can be executed in 2.1 seconds, compared to 15.6 seconds without the index, resulting in a 86% improvement in performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems encountered during query optimization, along with specific solutions:</p>

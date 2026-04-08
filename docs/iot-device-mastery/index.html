@@ -171,38 +171,37 @@
 4. <strong>Security</strong>: Implement security measures like encryption, authentication, and access control to prevent unauthorized access to devices and data.</p>
 <h3 id="example-code-device-registration-with-aws-iot-core">Example Code: Device Registration with AWS IoT Core</h3>
 <p>The following example code demonstrates how to register a device with AWS IoT Core using the AWS SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS IoT Core client</span>
-<span class="n">iot</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
+# Create an AWS IoT Core client
+iot = boto3.client('iot')
 
-<span class="c1"># Define the device certificate and private key</span>
-<span class="n">device_cert</span> <span class="o">=</span> <span class="s1">&#39;device_cert.pem&#39;</span>
-<span class="n">device_key</span> <span class="o">=</span> <span class="s1">&#39;device_key.pem&#39;</span>
+# Define the device certificate and private key
+device_cert = 'device_cert.pem'
+device_key = 'device_key.pem'
 
-<span class="c1"># Register the device</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">registerThing</span><span class="p">(</span>
-    <span class="n">thingName</span><span class="o">=</span><span class="s1">&#39;MyDevice&#39;</span><span class="p">,</span>
-    <span class="n">thingType</span><span class="o">=</span><span class="s1">&#39;MyDeviceType&#39;</span><span class="p">,</span>
-    <span class="n">attributePayload</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;deviceType&#39;</span><span class="p">:</span> <span class="s1">&#39;MyDeviceType&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Register the device
+response = iot.registerThing(
+    thingName='MyDevice',
+    thingType='MyDeviceType',
+    attributePayload={
+        'attributes': {
+            'deviceType': 'MyDeviceType'
+        }
+    }
+)
 
-<span class="c1"># Get the device certificate and private key</span>
-<span class="n">cert_arn</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;certificateArn&#39;</span><span class="p">]</span>
-<span class="n">cert</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">describeCertificate</span><span class="p">(</span><span class="n">certificateArn</span><span class="o">=</span><span class="n">cert_arn</span><span class="p">)</span>
-<span class="n">private_key</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">describeCertificate</span><span class="p">(</span><span class="n">certificateArn</span><span class="o">=</span><span class="n">cert_arn</span><span class="p">)[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+# Get the device certificate and private key
+cert_arn = response['certificateArn']
+cert = iot.describeCertificate(certificateArn=cert_arn)
+private_key = iot.describeCertificate(certificateArn=cert_arn)['key']
 
-<span class="c1"># Save the device certificate and private key to files</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">device_cert</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cert</span><span class="p">[</span><span class="s1">&#39;certificatePem&#39;</span><span class="p">])</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">device_key</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the device certificate and private key to files
+with open(device_cert, 'w') as f:
+    f.write(cert['certificatePem'])
+with open(device_key, 'w') as f:
+    f.write(private_key)
+</code></pre>
 <p>This code registers a device with AWS IoT Core, generates a device certificate and private key, and saves them to files.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems encountered in IoT device management include:
@@ -215,32 +214,31 @@
 * <strong>Security Monitoring</strong>: Implement security monitoring to detect and respond to security breaches in real-time, with features like intrusion detection and incident response.</p>
 <h3 id="example-code-firmware-update-with-google-cloud-iot-core">Example Code: Firmware Update with Google Cloud IoT Core</h3>
 <p>The following example code demonstrates how to update the firmware of a device using Google Cloud IoT Core and the Google Cloud SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">iot_v1</span>
+<pre><code class="language-python">import os
+from google.cloud import iot_v1
 
-<span class="c1"># Create a Google Cloud IoT Core client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">iot_v1</span><span class="o">.</span><span class="n">DeviceManagerClient</span><span class="p">()</span>
+# Create a Google Cloud IoT Core client
+client = iot_v1.DeviceManagerClient()
 
-<span class="c1"># Define the device ID and firmware version</span>
-<span class="n">device_id</span> <span class="o">=</span> <span class="s1">&#39;my-device&#39;</span>
-<span class="n">firmware_version</span> <span class="o">=</span> <span class="s1">&#39;1.2.3&#39;</span>
+# Define the device ID and firmware version
+device_id = 'my-device'
+firmware_version = '1.2.3'
 
-<span class="c1"># Create a firmware update request</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">iot_v1</span><span class="o">.</span><span class="n">UpdateDeviceRequest</span><span class="p">(</span>
-    <span class="n">device_path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;projects/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROJECT_ID&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">/locations/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LOCATION&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">/registries/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;REGISTRY_ID&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">/devices/</span><span class="si">{</span><span class="n">device_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="n">device</span><span class="o">=</span><span class="n">iot_v1</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span>
-        <span class="nb">id</span><span class="o">=</span><span class="n">device_id</span><span class="p">,</span>
-        <span class="n">version</span><span class="o">=</span><span class="n">firmware_version</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+# Create a firmware update request
+request = iot_v1.UpdateDeviceRequest(
+    device_path=f'projects/{os.environ[&quot;PROJECT_ID&quot;]}/locations/{os.environ[&quot;LOCATION&quot;]}/registries/{os.environ[&quot;REGISTRY_ID&quot;]}/devices/{device_id}',
+    device=iot_v1.Device(
+        id=device_id,
+        version=firmware_version
+    )
+)
 
-<span class="c1"># Update the device firmware</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_device</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+# Update the device firmware
+response = client.update_device(request)
 
-<span class="c1"># Print the update result</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the update result
+print(response)
+</code></pre>
 <p>This code updates the firmware of a device using Google Cloud IoT Core, with the firmware version specified in the <code>firmware_version</code> variable.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>IoT device management platforms have different performance benchmarks and pricing models. Here are some examples:
@@ -250,27 +248,26 @@
 <p>In terms of performance benchmarks, AWS IoT Core supports up to 10,000 messages per second, while Google Cloud IoT Core supports up to 100,000 messages per second. Microsoft Azure IoT Hub supports up to 1 million messages per second.</p>
 <h3 id="example-code-real-time-monitoring-with-microsoft-azure-iot-hub">Example Code: Real-time Monitoring with Microsoft Azure IoT Hub</h3>
 <p>The following example code demonstrates how to monitor device performance in real-time using Microsoft Azure IoT Hub and the Azure SDK for Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">azure.iot.hub</span> <span class="kn">import</span> <span class="n">IoTHubRegistryManager</span>
+<pre><code class="language-python">import os
+from azure.iot.hub import IoTHubRegistryManager
 
-<span class="c1"># Create an Azure IoT Hub client</span>
-<span class="n">registry_manager</span> <span class="o">=</span> <span class="n">IoTHubRegistryManager</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;IOTHUB_CONNECTION_STRING&quot;</span><span class="p">])</span>
+# Create an Azure IoT Hub client
+registry_manager = IoTHubRegistryManager(os.environ[&quot;IOTHUB_CONNECTION_STRING&quot;])
 
-<span class="c1"># Define the device ID</span>
-<span class="n">device_id</span> <span class="o">=</span> <span class="s1">&#39;my-device&#39;</span>
+# Define the device ID
+device_id = 'my-device'
 
-<span class="c1"># Get the device twin</span>
-<span class="n">twin</span> <span class="o">=</span> <span class="n">registry_manager</span><span class="o">.</span><span class="n">get_twin</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
+# Get the device twin
+twin = registry_manager.get_twin(device_id)
 
-<span class="c1"># Monitor device performance in real-time</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Get the latest telemetry data</span>
-    <span class="n">telemetry</span> <span class="o">=</span> <span class="n">registry_manager</span><span class="o">.</span><span class="n">receive_message</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
+# Monitor device performance in real-time
+while True:
+    # Get the latest telemetry data
+    telemetry = registry_manager.receive_message(device_id)
 
-    <span class="c1"># Print the telemetry data</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">telemetry</span><span class="p">)</span>
-</code></pre></div>
-
+    # Print the telemetry data
+    print(telemetry)
+</code></pre>
 <p>This code monitors device performance in real-time using Microsoft Azure IoT Hub, with the device ID specified in the <code>device_id</code> variable.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>IoT device management has many real-world use cases, including:

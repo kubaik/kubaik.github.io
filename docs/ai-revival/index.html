@@ -158,34 +158,34 @@
 * <strong>Decoder</strong>: generates output text based on the encoded input representation
 * <strong>Attention Mechanism</strong>: allows the model to focus on specific parts of the input sequence when generating output</p>
 <p>To illustrate this, consider the following code example using the Hugging Face Transformers library in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertModel</span>
+import torch
+from transformers import BertTokenizer, BertModel
 
-<span class="c1"># Load pre-trained BERT model and tokenizer</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+# Load pre-trained BERT model and tokenizer
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = BertModel.from_pretrained('bert-base-uncased')
 
-<span class="c1"># Define input text</span>
-<span class="n">input_text</span> <span class="o">=</span> <span class="s2">&quot;This is an example sentence.&quot;</span>
+# Define input text
+input_text = &quot;This is an example sentence.&quot;
 
-<span class="c1"># Tokenize input text</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_plus</span><span class="p">(</span>
-    <span class="n">input_text</span><span class="p">,</span>
-    <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span>
-<span class="p">)</span>
+# Tokenize input text
+inputs = tokenizer.encode_plus(
+    input_text,
+    add_special_tokens=True,
+    max_length=512,
+    return_attention_mask=True,
+    return_tensors='pt'
+)
 
-<span class="c1"># Generate output</span>
-<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;input_ids&#39;</span><span class="p">],</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;attention_mask&#39;</span><span class="p">])</span>
+# Generate output
+outputs = model(inputs['input_ids'], attention_mask=inputs['attention_mask'])
 
-<span class="c1"># Print output</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
-</code></pre></div>
-
+# Print output
+print(outputs.last_hidden_state[:, 0, :])
+</code></pre>
 <p>This code snippet demonstrates how to use the BERT model to generate contextualized embeddings for a given input sentence. The <code>encode_plus</code> method is used to tokenize the input text and add special tokens, while the <code>model</code> function generates the output embeddings.</p>
 <h2 id="applications-of-generative-ai">Applications of Generative AI</h2>
 <p>Generative AI has a wide range of applications, including:
@@ -200,36 +200,35 @@
 2. <strong>Language Learning</strong>: generating interactive language lessons and exercises for language learners
 3. <strong>Customer Service</strong>: generating human-like responses to customer inquiries and support requests</p>
 <p>To illustrate this, consider the following example of using the language model, LLaMA, to generate a chatbot response:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">LLaMAForConditionalGeneration</span><span class="p">,</span> <span class="n">LLaMATokenizer</span>
+<pre><code class="language-python">import torch
+from transformers import LLaMAForConditionalGeneration, LLaMATokenizer
 
-<span class="c1"># Load pre-trained LLaMA model and tokenizer</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">LLaMATokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;llama-7b&#39;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LLaMAForConditionalGeneration</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;llama-7b&#39;</span><span class="p">)</span>
+# Load pre-trained LLaMA model and tokenizer
+tokenizer = LLaMATokenizer.from_pretrained('llama-7b')
+model = LLaMAForConditionalGeneration.from_pretrained('llama-7b')
 
-<span class="c1"># Define input prompt</span>
-<span class="n">input_prompt</span> <span class="o">=</span> <span class="s2">&quot;What is the capital of France?&quot;</span>
+# Define input prompt
+input_prompt = &quot;What is the capital of France?&quot;
 
-<span class="c1"># Tokenize input prompt</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_plus</span><span class="p">(</span>
-    <span class="n">input_prompt</span><span class="p">,</span>
-    <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span>
-<span class="p">)</span>
+# Tokenize input prompt
+inputs = tokenizer.encode_plus(
+    input_prompt,
+    add_special_tokens=True,
+    max_length=512,
+    return_attention_mask=True,
+    return_tensors='pt'
+)
 
-<span class="c1"># Generate output</span>
-<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-    <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;input_ids&#39;</span><span class="p">],</span>
-    <span class="n">attention_mask</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;attention_mask&#39;</span><span class="p">],</span>
-    <span class="n">max_length</span><span class="o">=</span><span class="mi">128</span>
-<span class="p">)</span>
+# Generate output
+outputs = model.generate(
+    inputs['input_ids'],
+    attention_mask=inputs['attention_mask'],
+    max_length=128
+)
 
-<span class="c1"># Print output</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</code></pre></div>
-
+# Print output
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+</code></pre>
 <p>This code snippet demonstrates how to use the LLaMA model to generate a chatbot response to a given input prompt. The <code>encode_plus</code> method is used to tokenize the input prompt, while the <code>generate</code> method generates the output response.</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>

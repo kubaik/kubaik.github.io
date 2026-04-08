@@ -181,9 +181,8 @@
 <p><strong>Solution</strong>: Defer or Async Load JavaScript</p>
 <p>To improve FCP and TTI, you can load JavaScript files asynchronously or defer them until after the initial render. This can be achieved by adding <code>async</code> or <code>defer</code> attributes to your <code>&lt;script&gt;</code> tags.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span> <span class="na">async</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script src=&quot;script.js&quot; async&gt;&lt;/script&gt;
+</code></pre>
 <p>Using <code>async</code> will load the script while the document is parsing, and execute it as soon as it's loaded. Use <code>defer</code> if the script relies on the DOM being fully parsed.</p>
 <p><strong>Metrics Impact</strong>:
 - Using <code>async</code> or <code>defer</code> can improve FCP by up to 20% in cases where JavaScript is blocking initial content rendering.</p>
@@ -191,12 +190,11 @@
 <p><strong>Solution</strong>: Use Image Formats and Compression</p>
 <p>Images are often the largest assets on a webpage. Using modern formats like WebP or AVIF can dramatically reduce file sizes. Tools like <a href="https://imageoptim.com/">ImageOptim</a> or <a href="https://tinypng.com/">TinyPNG</a> can help compress images without significant quality loss.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">picture</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;image.webp&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;image/webp&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description of image&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">picture</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;picture&gt;
+  &lt;source srcset=&quot;image.webp&quot; type=&quot;image/webp&quot;&gt;
+  &lt;img src=&quot;image.jpg&quot; alt=&quot;Description of image&quot; loading=&quot;lazy&quot;&gt;
+&lt;/picture&gt;
+</code></pre>
 <p><strong>Metrics Impact</strong>:
 - Switching from JPEG to WebP can reduce image size by 25-34%, leading to faster LCP and overall page load.</p>
 <p><strong>Real Use Case</strong>: 
@@ -205,25 +203,24 @@ A retail website transitioned 30% of their images to WebP format, resulting in a
 <p><strong>Solution</strong>: Bundle and Minify Resources</p>
 <p>Bundling CSS and JavaScript files reduces the number of requests. Tools like <a href="https://webpack.js.org/">Webpack</a> or <a href="https://gulpjs.com/">Gulp</a> can help automate this process.</p>
 <p><strong>Example</strong>: Webpack Configuration for CSS and JS</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const path = require('path');
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">entry</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bundle.js&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dist&#39;</span><span class="p">),</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">module</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">rules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/\.css$/</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">use</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;style-loader&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;css-loader&#39;</span><span class="p">],</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+};
+</code></pre>
 <p><strong>Metrics Impact</strong>:
 - Bundling and minifying resources can reduce the number of requests by up to 70%, improving TTI and FCP.</p>
 <p><strong>Real Use Case</strong>: 
@@ -232,19 +229,18 @@ A tech blog reduced their initial HTTP requests from 45 to 12 through bundling a
 <p><strong>Solution</strong>: Code Splitting and Lazy Loading</p>
 <p>Use code splitting to load only necessary scripts for the initial render. Libraries like React support dynamic imports for splitting code.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Suspense</span><span class="p">,</span><span class="w"> </span><span class="nx">lazy</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { Suspense, lazy } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lazy</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;./LazyComponent&#39;</span><span class="p">));</span>
+const LazyComponent = lazy(() =&gt; import('./LazyComponent'));
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">Suspense</span><span class="w"> </span><span class="nx">fallback</span><span class="o">=</span><span class="p">{</span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;}&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">LazyComponent</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/Suspense&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+      &lt;LazyComponent /&gt;
+    &lt;/Suspense&gt;
+  );
+}
+</code></pre>
 <p><strong>Metrics Impact</strong>:
 - Code splitting can reduce the initial JavaScript bundle size by up to 80%, significantly improving TTI.</p>
 <p><strong>Real Use Case</strong>: 
@@ -266,13 +262,12 @@ A global news site implemented Cloudflare CDN, which resulted in an average load
 <h4 id="6-use-http2">6. Use HTTP/2</h4>
 <p>HTTP/2 allows multiplexing, which means multiple requests can be sent simultaneously over a single connection. Ensure your server supports HTTP/2, which can be enabled in configurations such as Nginx or Apache.</p>
 <p><strong>Nginx Configuration</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">http2</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">yourdomain.com</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="err">}</span>
-</code></pre></div>
-
+<pre><code class="language-nginx">server {
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+    ...
+}
+</code></pre>
 <p><strong>Metrics Impact</strong>:
 - Moving from HTTP/1.1 to HTTP/2 can improve loading times by up to 70% due to reduced overhead and latency.</p>
 <h3 id="monitoring-performance">Monitoring Performance</h3>
@@ -287,15 +282,14 @@ A global news site implemented Cloudflare CDN, which resulted in an average load
 <p><strong>Solution</strong>: Load Third-party Scripts Asynchronously</p>
 <p>Many websites use third-party services (e.g., Google Analytics, chat widgets) that load synchronously. Modifying their loading method can prevent blocking.</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.googletagmanager.com/gtag/js?id=YOUR_ID&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">dataLayer</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[];</span>
-<span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="nx">gtag</span><span class="p">(){</span><span class="nx">dataLayer</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);}</span>
-<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">&#39;js&#39;</span><span class="p">,</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">());</span>
-<span class="w">  </span><span class="nx">gtag</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;YOUR_ID&#39;</span><span class="p">);</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script async src=&quot;https://www.googletagmanager.com/gtag/js?id=YOUR_ID&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'YOUR_ID');
+&lt;/script&gt;
+</code></pre>
 <p><strong>Metrics Impact</strong>:
 - Asynchronous loading of third-party scripts can improve TTI by reducing blocking time by up to 3 seconds.</p>
 <h4 id="problem-2-excessive-dom-size">Problem 2: Excessive DOM Size</h4>

@@ -173,78 +173,74 @@
 <p>To implement this architecture, we can use Docker for containerization and Kubernetes for orchestration. Here’s a step-by-step guide to setting up these services.</p>
 <h4 id="step-1-dockerizing-services">Step 1: Dockerizing Services</h4>
 <p>Create a basic <code>Dockerfile</code> for the User Service:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># User Service Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile"># User Service Dockerfile
+FROM node:14
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/usr/src/app</span>
+WORKDIR /usr/src/app
 
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+COPY package*.json ./
 
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
+RUN npm install
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+EXPOSE 3000
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;server.js&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
 <h4 id="step-2-create-a-kubernetes-deployment">Step 2: Create a Kubernetes Deployment</h4>
 <p>Next, create a Kubernetes deployment for the User Service. This configuration will allow you to scale the service as needed.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-docker-repo/user-service:latest</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: your-docker-repo/user-service:latest
+        ports:
+        - containerPort: 3000
+</code></pre>
 <h4 id="step-3-expose-the-service">Step 3: Expose the Service</h4>
 <p>To make the User Service accessible, create a Kubernetes Service:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
-<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user-service</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: user-service
+</code></pre>
 <h3 id="common-challenges-and-solutions">Common Challenges and Solutions</h3>
 <p>While microservices offer significant advantages, they also introduce complexity. Here are common challenges and their solutions:</p>
 <h4 id="1-service-discovery">1. <strong>Service Discovery</strong></h4>
 <p><strong>Problem</strong>: As the number of services grows, keeping track of their locations becomes difficult.</p>
 <p><strong>Solution</strong>: Use tools like <strong>Consul</strong> or <strong>Eureka</strong> for service discovery. These tools help services register themselves and discover others easily.</p>
 <p><em>Example</em>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;consul&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const { createClient } = require('consul');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">consul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createClient</span><span class="p">();</span>
+const app = express();
+const consul = createClient();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/service-info&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">services</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">consul</span><span class="p">.</span><span class="nx">agent</span><span class="p">.</span><span class="nx">services</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">services</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.get('/service-info', async (req, res) =&gt; {
+  const services = await consul.agent.services();
+  res.send(services);
+});
+</code></pre>
 <h4 id="2-data-management">2. <strong>Data Management</strong></h4>
 <p><strong>Problem</strong>: Distributed data can lead to inconsistencies across services.</p>
 <p><strong>Solution</strong>: Implement a <strong>Database per Service</strong> pattern. Use event sourcing and CQRS (Command Query Responsibility Segregation) to manage data effectively.</p>
@@ -255,17 +251,16 @@
 <p><strong>Problem</strong>: Inter-service communication can introduce latency.</p>
 <p><strong>Solution</strong>: Minimize synchronous calls between services. Use asynchronous messaging systems like <strong>RabbitMQ</strong> or <strong>Kafka</strong> to decouple services. </p>
 <p><em>Example</em>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">amqp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;amqplib&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const amqp = require('amqplib');
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">amqp</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;amqp://localhost&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">connection</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">();</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">channel</span><span class="p">.</span><span class="nx">assertQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">channel</span><span class="p">.</span><span class="nx">sendToQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">message</span><span class="p">));</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot; [x] Sent %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+async function sendMessage(queue, message) {
+  const connection = await amqp.connect('amqp://localhost');
+  const channel = await connection.createChannel();
+  await channel.assertQueue(queue);
+  channel.sendToQueue(queue, Buffer.from(message));
+  console.log(&quot; [x] Sent %s&quot;, message);
+}
+</code></pre>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>In a microservices architecture, performance can be measured by response time, throughput, and resource utilization. For instance, consider the following metrics from a sample e-commerce application utilizing microservices:</p>
 <ul>

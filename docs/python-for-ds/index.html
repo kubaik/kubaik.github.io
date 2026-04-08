@@ -158,62 +158,59 @@
 * <strong>Matplotlib</strong> and <strong>Seaborn</strong>: These libraries provide a comprehensive set of tools for creating high-quality 2D and 3D plots, charts, and graphs.</p>
 <h3 id="data-manipulation-with-pandas">Data Manipulation with Pandas</h3>
 <p>Pandas is one of the most widely used libraries in data science, and its power lies in its ability to handle and manipulate large datasets. Here's an example of how to use Pandas to load and manipulate a dataset:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('data.csv')
 
-<span class="c1"># View the first few rows of the dataset</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+# View the first few rows of the dataset
+print(data.head())
 
-<span class="c1"># Calculate the mean and standard deviation of a column</span>
-<span class="n">mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">std_dev</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+# Calculate the mean and standard deviation of a column
+mean = data['column_name'].mean()
+std_dev = data['column_name'].std()
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">}</span><span class="s1">, Standard Deviation: </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f'Mean: {mean}, Standard Deviation: {std_dev}')
+</code></pre>
 <p>In this example, we load a dataset from a CSV file using <code>pd.read_csv</code>, view the first few rows of the dataset using <code>data.head</code>, and calculate the mean and standard deviation of a column using <code>data['column_name'].mean()</code> and <code>data['column_name'].std()</code>.</p>
 <h3 id="data-visualization-with-matplotlib-and-seaborn">Data Visualization with Matplotlib and Seaborn</h3>
 <p>Data visualization is a critical step in any data science project, as it allows us to communicate complex insights and patterns in the data to stakeholders. Here's an example of how to use Matplotlib and Seaborn to create a scatter plot:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Create a scatter plot</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+# Create a scatter plot
+sns.scatterplot(x='column1', y='column2', data=data)
 
-<span class="c1"># Show the plot</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Show the plot
+plt.show()
+</code></pre>
 <p>In this example, we load a dataset using <code>pd.read_csv</code>, create a scatter plot using <code>sns.scatterplot</code>, and display the plot using <code>plt.show</code>.</p>
 <h3 id="machine-learning-with-scikit-learn">Machine Learning with Scikit-Learn</h3>
 <p>Scikit-Learn is a popular library for machine learning in Python, providing a wide range of algorithms for classification, regression, clustering, and more. Here's an example of how to use Scikit-Learn to train a linear regression model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Split the dataset into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;feature&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data['feature'], data['target'], test_size=0.2, random_state=42)
 
-<span class="c1"># Train a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a linear regression model
+model = LinearRegression()
+model.fit(X_train.values.reshape(-1, 1), y_train)
 
-<span class="c1"># Make predictions on the testing set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+# Make predictions on the testing set
+y_pred = model.predict(X_test.values.reshape(-1, 1))
 
-<span class="c1"># Evaluate the model using mean squared error</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model using mean squared error
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+</code></pre>
 <p>In this example, we load a dataset using <code>pd.read_csv</code>, split the dataset into training and testing sets using <code>train_test_split</code>, train a linear regression model using <code>LinearRegression</code>, make predictions on the testing set, and evaluate the model using mean squared error.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Some common problems that data scientists face when working with Python include:

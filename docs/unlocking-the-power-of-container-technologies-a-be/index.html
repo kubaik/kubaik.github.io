@@ -210,49 +210,44 @@
 <h3 id="example-1-containerizing-a-simple-web-application-with-docker">Example 1: Containerizing a Simple Web Application with Docker</h3>
 <p>Suppose you have a basic Python Flask app. Here's how to containerize it:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># app.py</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<pre><code class="language-python"># app.py
+from flask import Flask
+app = Flask(__name__)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&quot;Hello, Container World!&quot;</span>
+@app.route('/')
+def hello():
+    return &quot;Hello, Container World!&quot;
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+</code></pre>
 <p><strong>Steps:</strong></p>
 <ol>
 <li>Create a <code>Dockerfile</code>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">5000</span>
-</code></pre></div>
-
+<pre><code class="language-dockerfile">FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+EXPOSE 5000
+</code></pre>
 <ol>
 <li>Create <code>requirements.txt</code>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>Flask==2.0.1
-</code></pre></div>
-
+<pre><code>Flask==2.0.1
+</code></pre>
 <ol>
 <li>Build the image:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-flask-app<span class="w"> </span>.
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-flask-app .
+</code></pre>
 <ol>
 <li>Run the container:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>:5000<span class="w"> </span>my-flask-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -d -p 5000:5000 my-flask-app
+</code></pre>
 <p>Visit <code>http://localhost:5000</code> to see your app in action.</p>
 <h3 id="use-cases-summary">Use Cases Summary</h3>
 <ul>
@@ -278,20 +273,18 @@
 </ul>
 <h3 id="3-explore-docker-compose">3. Explore Docker Compose</h3>
 <p>For multi-container applications, Docker Compose simplifies orchestration. Create a <code>docker-compose.yml</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3&#39;</span>
-<span class="nt">services</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
-<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span>
-<span class="w">  </span><span class="nt">redis</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis:alpine</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - &quot;5000:5000&quot;
+  redis:
+    image: redis:alpine
+</code></pre>
 <p>Run:</p>
-<div class="codehilite"><pre><span></span><code>docker-compose<span class="w"> </span>up
-</code></pre></div>
-
+<pre><code class="language-bash">docker-compose up
+</code></pre>
 <h3 id="4-dive-into-orchestration-with-kubernetes">4. Dive Into Orchestration with Kubernetes</h3>
 <p>Once comfortable with Docker, explore Kubernetes for managing complex deployments. Minikube allows you to run a local Kubernetes cluster:</p>
 <ul>

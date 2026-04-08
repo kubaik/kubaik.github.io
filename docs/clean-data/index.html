@@ -161,20 +161,19 @@
 * Inaccurate data: Inaccurate data can lead to incorrect conclusions and decisions.</p>
 <h3 id="handling-missing-values-with-python">Handling Missing Values with Python</h3>
 <p>One way to handle missing values is to use the <code>pandas</code> library in Python. Here is an example of how to replace missing values with the mean of the column:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-        <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Create a sample dataset
+data = {'A': [1, 2, None, 4, 5],
+        'B': [6, None, 8, 9, 10]}
+df = pd.DataFrame(data)
 
-<span class="c1"># Replace missing values with the mean of the column</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Replace missing values with the mean of the column
+df['A'].fillna(df['A'].mean(), inplace=True)
+df['B'].fillna(df['B'].mean(), inplace=True)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+print(df)
+</code></pre>
 <p>This code replaces missing values in columns 'A' and 'B' with the mean of the respective columns.</p>
 <h2 id="data-quality-tools-and-platforms">Data Quality Tools and Platforms</h2>
 <p>There are several data quality tools and platforms available that can help organizations manage data quality. Some popular ones include:
@@ -184,21 +183,20 @@
 4. <strong>Trifacta</strong>: A cloud-based data quality platform that provides tools for data profiling, data cleansing, and data transformation.</p>
 <h3 id="data-profiling-with-apache-spark">Data Profiling with Apache Spark</h3>
 <p>Data profiling is the process of analyzing data to understand its distribution, patterns, and relationships. Apache Spark provides a <code>describe</code> method that can be used to profile data. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s1">&#39;Data Profiling&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName('Data Profiling').getOrCreate()
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+# Create a sample dataset
+data = spark.createDataFrame([(1, 2), (3, 4), (5, 6)], ['A', 'B'])
 
-<span class="c1"># Profile the data</span>
-<span class="n">summary</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+# Profile the data
+summary = data.describe()
 
-<span class="c1"># Print the summary statistics</span>
-<span class="n">summary</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Print the summary statistics
+summary.show()
+</code></pre>
 <p>This code creates a SparkSession, creates a sample dataset, and profiles the data using the <code>describe</code> method.</p>
 <h2 id="data-quality-metrics">Data Quality Metrics</h2>
 <p>Data quality metrics are used to measure the quality of data. Some common data quality metrics include:
@@ -208,28 +206,27 @@
 * <strong>Timeliness</strong>: The degree to which data is up-to-date and relevant.</p>
 <h3 id="measuring-data-quality-with-aws-glue">Measuring Data Quality with AWS Glue</h3>
 <p>AWS Glue provides a <code>getMetrics</code> method that can be used to measure data quality metrics. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS Glue client</span>
-<span class="n">glue</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;glue&#39;</span><span class="p">)</span>
+# Create an AWS Glue client
+glue = boto3.client('glue')
 
-<span class="c1"># Create a sample dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;sample_dataset&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;A sample dataset&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Location&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://sample-bucket/sample-dataset&#39;</span><span class="p">}</span>
+# Create a sample dataset
+dataset = {'Name': 'sample_dataset',
+            'Description': 'A sample dataset',
+            'Location': 's3://sample-bucket/sample-dataset'}
 
-<span class="c1"># Create a Glue table</span>
-<span class="n">glue</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">DatabaseName</span><span class="o">=</span><span class="s1">&#39;sample_database&#39;</span><span class="p">,</span>
-                  <span class="n">TableInput</span><span class="o">=</span><span class="n">dataset</span><span class="p">)</span>
+# Create a Glue table
+glue.create_table(DatabaseName='sample_database',
+                  TableInput=dataset)
 
-<span class="c1"># Get the data quality metrics</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">glue</span><span class="o">.</span><span class="n">getMetrics</span><span class="p">(</span><span class="n">Table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;DatabaseName&#39;</span><span class="p">:</span> <span class="s1">&#39;sample_database&#39;</span><span class="p">,</span>
-                                  <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;sample_dataset&#39;</span><span class="p">})</span>
+# Get the data quality metrics
+metrics = glue.getMetrics(Table={'DatabaseName': 'sample_database',
+                                  'Name': 'sample_dataset'})
 
-<span class="c1"># Print the metrics</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the metrics
+print(metrics)
+</code></pre>
 <p>This code creates an AWS Glue client, creates a sample dataset, creates a Glue table, and gets the data quality metrics using the <code>getMetrics</code> method.</p>
 <h2 id="best-practices-for-data-quality-management">Best Practices for Data Quality Management</h2>
 <p>Here are some best practices for data quality management:

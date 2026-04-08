@@ -161,54 +161,51 @@
 * <strong>Simplified Management</strong>: Docker provides a simple and intuitive way to manage containers, making it easier to monitor and troubleshoot applications.</p>
 <h2 id="getting-started-with-docker">Getting Started with Docker</h2>
 <p>To get started with Docker, you will need to install the Docker platform on your machine. The installation process varies depending on your operating system. Here are the steps to install Docker on Ubuntu:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Update the package index</span>
-sudo<span class="w"> </span>apt<span class="w"> </span>update
+<pre><code class="language-bash"># Update the package index
+sudo apt update
 
-<span class="c1"># Install the Docker package</span>
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>docker.io
+# Install the Docker package
+sudo apt install docker.io
 
-<span class="c1"># Start the Docker service</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+# Start the Docker service
+sudo systemctl start docker
 
-<span class="c1"># Verify that Docker is installed correctly</span>
-docker<span class="w"> </span>--version
-</code></pre></div>
-
+# Verify that Docker is installed correctly
+docker --version
+</code></pre>
 <p>Once you have installed Docker, you can start creating and managing containers. Here is an example of how to create a simple container using the <code>docker run</code> command:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new container from the Ubuntu image</span>
-docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>/bin/bash
-</code></pre></div>
-
+<pre><code class="language-bash"># Create a new container from the Ubuntu image
+docker run -it ubuntu /bin/bash
+</code></pre>
 <p>This command will create a new container from the Ubuntu image and open a bash shell inside the container.</p>
 <h2 id="docker-images-and-containers">Docker Images and Containers</h2>
 <p>Docker images and containers are the building blocks of the Docker platform. A Docker image is a template that contains the code, libraries, and dependencies required to run an application. A Docker container is a runtime instance of a Docker image.</p>
 <h3 id="creating-docker-images">Creating Docker Images</h3>
 <p>To create a Docker image, you need to define a <code>Dockerfile</code> that contains the instructions for building the image. Here is an example of a simple <code>Dockerfile</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Use the official Python image as the base</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
+<pre><code class="language-dockerfile"># Use the official Python image as the base
+FROM python:3.9-slim
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Python<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>by<span class="w"> </span>Sebastian<span class="w"> </span>Raschka&lt;/a&gt;*
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
 
-<span class="c"># Set the working directory to /app</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+# Set the working directory to /app
+WORKDIR /app
 
-<span class="c"># Copy the requirements file</span>
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+# Copy the requirements file
+COPY requirements.txt .
 
-<span class="c"># Install the dependencies</span>
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+# Install the dependencies
+RUN pip install -r requirements.txt
 
-<span class="c"># Copy the application code</span>
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+# Copy the application code
+COPY . .
 
-<span class="c"># Expose the port</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">8000</span>
+# Expose the port
+EXPOSE 8000
 
-<span class="c"># Run the command to start the application</span>
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+# Run the command to start the application
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <p>This <code>Dockerfile</code> creates a Docker image that contains the Python application code, dependencies, and libraries required to run the application.</p>
 <h3 id="managing-docker-containers">Managing Docker Containers</h3>
 <p>Docker provides a range of commands to manage containers. Here are some of the most common commands:

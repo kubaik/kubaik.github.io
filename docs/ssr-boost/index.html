@@ -160,66 +160,63 @@
 <p>Implementing SSR requires a solid understanding of the underlying technology stack. Here, we will use Next.js, a popular React-based framework, to demonstrate how to set up SSR.</p>
 <h3 id="example-1-basic-nextjs-setup">Example 1: Basic Next.js Setup</h3>
 <p>To get started with Next.js, create a new project using the following command:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-app
+</code></pre>
 <p>This will set up a basic Next.js project with the necessary dependencies. To enable SSR, modify the <code>pages/index.js</code> file to include the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">setData</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+function HomePage() {
+  const [data, setData] = useState(null);
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setData</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    fetch('https://api.example.com/data')
+      .then(response =&gt; response.json())
+      .then(data =&gt; setData(data));
+  }, []);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">data</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nx">data</span><span class="p">.</span><span class="nx">description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="nx">Loading</span><span class="p">...&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">)}</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+  return (
+    &lt;div&gt;
+      {data ? (
+        &lt;div&gt;
+          &lt;h1&gt;{data.title}&lt;/h1&gt;
+          &lt;p&gt;{data.description}&lt;/p&gt;
+        &lt;/div&gt;
+      ) : (
+        &lt;div&gt;Loading...&lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we use the <code>fetch</code> API to retrieve data from an external API and render it on the page.</p>
 <h3 id="example-2-using-getserversideprops">Example 2: Using getServerSideProps</h3>
 <p>Next.js provides a built-in method called <code>getServerSideProps</code> that allows you to pre-render pages on the server. To use this method, modify the <code>pages/index.js</code> file to include the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import { useState, useEffect } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">({</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nx">data</span><span class="p">.</span><span class="nx">description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function HomePage({ data }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{data.title}&lt;/h1&gt;
+      &lt;p&gt;{data.description}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">getServerSideProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+export const getServerSideProps = async () =&gt; {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">data</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
+  return {
+    props: {
+      data,
+    },
+  };
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we use <code>getServerSideProps</code> to fetch data on the server and pass it as a prop to the <code>HomePage</code> component.</p>
 <h2 id="common-use-cases-for-server-side-rendering">Common Use Cases for Server-Side Rendering</h2>
 <p>SSR can be used in a variety of scenarios, including:</p>
@@ -236,23 +233,22 @@
 * React Helmet</p>
 <h3 id="example-3-using-react-helmet-for-seo">Example 3: Using React Helmet for SEO</h3>
 <p>React Helmet is a popular library for managing the document head in React applications. To use React Helmet with SSR, modify the <code>pages/index.js</code> file to include the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Helmet</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-helmet&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import { Helmet } from 'react-helmet';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Helmet</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Page</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">meta</span><span class="w"> </span><span class="na">name</span><span class="o">=</span><span class="s">&quot;description&quot;</span><span class="w"> </span><span class="na">content</span><span class="o">=</span><span class="s">&quot;This is my page&quot;</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">Helmet</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="nx">page</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function HomePage() {
+  return (
+    &lt;div&gt;
+      &lt;Helmet&gt;
+        &lt;title&gt;My Page&lt;/title&gt;
+        &lt;meta name=&quot;description&quot; content=&quot;This is my page&quot; /&gt;
+      &lt;/Helmet&gt;
+      &lt;h1&gt;Welcome to my page&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we use React Helmet to set the title and meta description of the page.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>To demonstrate the performance benefits of SSR, let's consider a real-world example. Suppose we have an e-commerce website with a product page that takes 2 seconds to load without SSR. By implementing SSR using Next.js, we can reduce the page load time to 500ms, resulting in a 60% improvement.</p>

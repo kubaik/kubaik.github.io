@@ -162,27 +162,26 @@
 <p>Azure offers a wide range of services, including compute, storage, networking, and database services, among others. The pricing for these services varies depending on the specific service, usage, and location.</p>
 <p>For example, the pricing for Azure Virtual Machines (VMs) starts at $0.013 per hour for a basic instance, while the pricing for Azure Storage starts at $0.023 per GB-month for hot storage. The pricing for Azure Database Services, such as Azure SQL Database, starts at $0.017 per hour for a basic instance.</p>
 <p>Here is an example of how to estimate the cost of running an Azure VM:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<pre><code class="language-python"># Import the necessary libraries
+import math
 
-<span class="c1"># Define the variables</span>
-<span class="n">vm_size</span> <span class="o">=</span> <span class="s2">&quot;Standard_DS2_v2&quot;</span>  <span class="c1"># Instance size</span>
-<span class="n">vm_region</span> <span class="o">=</span> <span class="s2">&quot;West US&quot;</span>  <span class="c1"># Region</span>
-<span class="n">vm_usage</span> <span class="o">=</span> <span class="mi">720</span>  <span class="c1"># Hours per month</span>
+# Define the variables
+vm_size = &quot;Standard_DS2_v2&quot;  # Instance size
+vm_region = &quot;West US&quot;  # Region
+vm_usage = 720  # Hours per month
 
-<span class="c1"># Define the pricing for the instance size and region</span>
-<span class="n">vm_pricing</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Standard_DS2_v2&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;West US&quot;</span><span class="p">:</span> <span class="mf">0.192</span><span class="p">,</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+# Define the pricing for the instance size and region
+vm_pricing = {
+    &quot;Standard_DS2_v2&quot;: {
+        &quot;West US&quot;: 0.192,
+    }
+}
 
-<span class="c1"># Calculate the estimated monthly cost</span>
-<span class="n">estimated_cost</span> <span class="o">=</span> <span class="n">vm_pricing</span><span class="p">[</span><span class="n">vm_size</span><span class="p">][</span><span class="n">vm_region</span><span class="p">]</span> <span class="o">*</span> <span class="n">vm_usage</span>
+# Calculate the estimated monthly cost
+estimated_cost = vm_pricing[vm_size][vm_region] * vm_usage
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated monthly cost: $</span><span class="si">{</span><span class="n">estimated_cost</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Estimated monthly cost: ${estimated_cost:.2f}&quot;)
+</code></pre>
 <p>This code calculates the estimated monthly cost of running an Azure VM based on the instance size, region, and usage.</p>
 <h3 id="azure-free-account-and-credits">Azure Free Account and Credits</h3>
 <p>Azure offers a free account that includes $200 in credits, which can be used to try out Azure services for 30 days. This is a great way for developers and organizations to get started with Azure and try out its services without incurring significant costs.</p>
@@ -195,36 +194,35 @@
 3. <strong>Use encryption</strong>: Azure provides encryption for data at rest and in transit, using technologies such as SSL/TLS and AES.
 4. <strong>Use firewalls and access controls</strong>: Azure provides firewalls and access controls, such as network security groups and access control lists.</p>
 <p>Here is an example of how to use Azure Security Center to monitor and respond to security threats:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">azure.common.credentials</span> <span class="kn">import</span> <span class="n">ServicePrincipalCredentials</span>
-<span class="kn">from</span> <span class="nn">azure.mgmt.security</span> <span class="kn">import</span> <span class="n">SecurityCenter</span>
+<pre><code class="language-python"># Import the necessary libraries
+import os
+import json
+from azure.common.credentials import ServicePrincipalCredentials
+from azure.mgmt.security import SecurityCenter
 
-<span class="c1"># Define the variables</span>
-<span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">&quot;your_tenant_id&quot;</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
-<span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">&quot;your_subscription_id&quot;</span>
+# Define the variables
+tenant_id = &quot;your_tenant_id&quot;
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
+subscription_id = &quot;your_subscription_id&quot;
 
-<span class="c1"># Authenticate with Azure</span>
-<span class="n">credentials</span> <span class="o">=</span> <span class="n">ServicePrincipalCredentials</span><span class="p">(</span>
-    <span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">,</span>
-    <span class="n">secret</span><span class="o">=</span><span class="n">client_secret</span><span class="p">,</span>
-    <span class="n">tenant</span><span class="o">=</span><span class="n">tenant_id</span>
-<span class="p">)</span>
+# Authenticate with Azure
+credentials = ServicePrincipalCredentials(
+    client_id=client_id,
+    secret=client_secret,
+    tenant=tenant_id
+)
 
-<span class="c1"># Create a Security Center client</span>
-<span class="n">security_center</span> <span class="o">=</span> <span class="n">SecurityCenter</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">)</span>
+# Create a Security Center client
+security_center = SecurityCenter(credentials, subscription_id)
 
-<span class="c1"># Get the security alerts</span>
-<span class="n">alerts</span> <span class="o">=</span> <span class="n">security_center</span><span class="o">.</span><span class="n">alerts</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+# Get the security alerts
+alerts = security_center.alerts.list()
 
-<span class="c1"># Print the security alerts</span>
-<span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">alerts</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">as_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-</code></pre></div>
-
+# Print the security alerts
+for alert in alerts:
+    print(json.dumps(alert.as_dict(), indent=4))
+</code></pre>
 <p>This code uses Azure Security Center to monitor and respond to security threats, by listing the security alerts and printing them to the console.</p>
 <h2 id="azure-migration-and-deployment">Azure Migration and Deployment</h2>
 <p>Azure provides a wide range of tools and services to help users migrate and deploy their applications to the cloud. These tools and services include Azure Migrate, Azure Site Recovery, and Azure DevOps, among others.</p>
@@ -235,44 +233,43 @@
 3. <strong>Use Azure Migrate</strong>: Use Azure Migrate to assess and migrate the application to Azure.
 4. <strong>Use Azure Site Recovery</strong>: Use Azure Site Recovery to replicate and recover the application in case of a disaster.</p>
 <p>Here is an example of how to use Azure Migrate to assess and migrate an application to Azure:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the necessary libraries</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">azure.mgmt.migrate</span> <span class="kn">import</span> <span class="n">Migrate</span>
+<pre><code class="language-python"># Import the necessary libraries
+import os
+import json
+from azure.mgmt.migrate import Migrate
 
-<span class="c1"># Define the variables</span>
-<span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">&quot;your_tenant_id&quot;</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
-<span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">&quot;your_subscription_id&quot;</span>
-<span class="n">resource_group_name</span> <span class="o">=</span> <span class="s2">&quot;your_resource_group_name&quot;</span>
+# Define the variables
+tenant_id = &quot;your_tenant_id&quot;
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
+subscription_id = &quot;your_subscription_id&quot;
+resource_group_name = &quot;your_resource_group_name&quot;
 
-<span class="c1"># Authenticate with Azure</span>
-<span class="n">credentials</span> <span class="o">=</span> <span class="n">ServicePrincipalCredentials</span><span class="p">(</span>
-    <span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">,</span>
-    <span class="n">secret</span><span class="o">=</span><span class="n">client_secret</span><span class="p">,</span>
-    <span class="n">tenant</span><span class="o">=</span><span class="n">tenant_id</span>
-<span class="p">)</span>
+# Authenticate with Azure
+credentials = ServicePrincipalCredentials(
+    client_id=client_id,
+    secret=client_secret,
+    tenant=tenant_id
+)
 
-<span class="c1"># Create a Migrate client</span>
-<span class="n">migrate</span> <span class="o">=</span> <span class="n">Migrate</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">)</span>
+# Create a Migrate client
+migrate = Migrate(credentials, subscription_id)
 
-<span class="c1"># Create a migration project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">migrate</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span>
-    <span class="n">resource_group_name</span><span class="p">,</span>
-    <span class="s2">&quot;my_migration_project&quot;</span><span class="p">,</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;West US&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;assessmentSolutionId&quot;</span><span class="p">:</span> <span class="s2">&quot;/subscriptions/your_subscription_id/providers/Microsoft.Migrate/assessmentSolutions/your_assessment_solution_id&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a migration project
+project = migrate.projects.create_or_update(
+    resource_group_name,
+    &quot;my_migration_project&quot;,
+    {
+        &quot;location&quot;: &quot;West US&quot;,
+        &quot;properties&quot;: {
+            &quot;assessmentSolutionId&quot;: &quot;/subscriptions/your_subscription_id/providers/Microsoft.Migrate/assessmentSolutions/your_assessment_solution_id&quot;
+        }
+    }
+)
 
-<span class="c1"># Print the migration project</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">as_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-</code></pre></div>
-
+# Print the migration project
+print(json.dumps(project.as_dict(), indent=4))
+</code></pre>
 <p>This code uses Azure Migrate to create a migration project and assess the application for migration to Azure.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that users may encounter when using Azure include:

@@ -160,55 +160,53 @@
 <h2 id="tip-1-assess-your-current-environment">Tip 1: Assess Your Current Environment</h2>
 <p>The first step in any cloud migration is to assess your current environment. This includes identifying the applications, data, and infrastructure that need to be migrated. You can use tools like AWS CloudMapper or Azure Migrate to discover and assess your on-premises environment.</p>
 <p>For example, let's say you're using AWS CloudMapper to assess your environment. You can use the following code to create a CloudMapper project:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cloudmapper</span>
+<pre><code class="language-python">import cloudmapper
 
-<span class="c1"># Create a new CloudMapper project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">cloudmapper</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="s1">&#39;my_project&#39;</span><span class="p">)</span>
+# Create a new CloudMapper project
+project = cloudmapper.create_project('my_project')
 
-<span class="c1"># Add a new environment to the project</span>
-<span class="n">environment</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">add_environment</span><span class="p">(</span><span class="s1">&#39;my_environment&#39;</span><span class="p">)</span>
+# Add a new environment to the project
+environment = project.add_environment('my_environment')
 
-<span class="c1"># Discover the resources in the environment</span>
-<span class="n">environment</span><span class="o">.</span><span class="n">discover_resources</span><span class="p">()</span>
-</code></pre></div>
-
+# Discover the resources in the environment
+environment.discover_resources()
+</code></pre>
 <p>This code creates a new CloudMapper project and adds a new environment to the project. It then discovers the resources in the environment, including servers, databases, and storage.</p>
 <h3 id="assessing-application-dependencies">Assessing Application Dependencies</h3>
 <p>When assessing your current environment, it's also important to identify application dependencies. This includes identifying the dependencies between applications, as well as the dependencies between applications and infrastructure components. You can use tools like Apache Airflow or Zapier to identify and manage application dependencies.</p>
 <p>For example, let's say you're using Apache Airflow to manage a workflow that includes multiple applications. You can use the following code to define the workflow:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<span class="kn">from</span> <span class="nn">airflow.operators.bash_operator</span> <span class="kn">import</span> <span class="n">BashOperator</span>
+<pre><code class="language-python">from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
 
-<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;airflow&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;depends_on_past&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s1">&#39;retries&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;retry_delay&#39;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-<span class="p">}</span>
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2022, 12, 1),
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
 
-<span class="n">dag</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span>
-    <span class="s1">&#39;my_workflow&#39;</span><span class="p">,</span>
-    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
-    <span class="n">schedule_interval</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">)</span>
+dag = DAG(
+    'my_workflow',
+    default_args=default_args,
+    schedule_interval=timedelta(days=1),
+)
 
-<span class="n">task1</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task1&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;echo &quot;Task 1 executed&quot;&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+task1 = BashOperator(
+    task_id='task1',
+    bash_command='echo &quot;Task 1 executed&quot;',
+    dag=dag,
+)
 
-<span class="n">task2</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
-    <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;task2&#39;</span><span class="p">,</span>
-    <span class="n">bash_command</span><span class="o">=</span><span class="s1">&#39;echo &quot;Task 2 executed&quot;&#39;</span><span class="p">,</span>
-    <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
-<span class="p">)</span>
+task2 = BashOperator(
+    task_id='task2',
+    bash_command='echo &quot;Task 2 executed&quot;',
+    dag=dag,
+)
 
-<span class="n">task1</span> <span class="o">&gt;&gt;</span> <span class="n">task2</span>
-</code></pre></div>
-
+task1 &gt;&gt; task2
+</code></pre>
 <p>This code defines a workflow that includes two tasks: task1 and task2. The tasks are dependent on each other, with task2 dependent on task1.</p>
 <h2 id="tip-2-choose-the-right-cloud-provider">Tip 2: Choose the Right Cloud Provider</h2>
 <p>The next step in the cloud migration process is to choose the right cloud provider. This includes evaluating the different cloud providers, such as AWS, Azure, and Google Cloud, and selecting the one that best meets your needs.</p>
@@ -231,61 +229,60 @@
 * Re-architecture: This involves re-architecting applications to take advantage of cloud-native features, such as scalability and high availability.
 * Hybrid: This involves using a combination of on-premises and cloud-based infrastructure components.</p>
 <p>For example, let's say you're planning to migrate a web application to AWS. You can use the following code to provision the necessary infrastructure components:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a new VPC</span>
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
-<span class="n">vpc</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">create_vpc</span><span class="p">(</span>
-    <span class="n">CidrBlock</span><span class="o">=</span><span class="s1">&#39;10.0.0.0/16&#39;</span><span class="p">,</span>
-    <span class="n">TagSpecifications</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;ResourceType&#39;</span><span class="p">:</span> <span class="s1">&#39;vpc&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Tags&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;my_vpc&#39;</span><span class="p">,</span>
-                <span class="p">},</span>
-            <span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
+# Create a new VPC
+ec2 = boto3.client('ec2')
+vpc = ec2.create_vpc(
+    CidrBlock='10.0.0.0/16',
+    TagSpecifications=[
+        {
+            'ResourceType': 'vpc',
+            'Tags': [
+                {
+                    'Key': 'Name',
+                    'Value': 'my_vpc',
+                },
+            ],
+        },
+    ],
+)
 
-<span class="c1"># Create a new subnet</span>
-<span class="n">subnet</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">create_subnet</span><span class="p">(</span>
-    <span class="n">CidrBlock</span><span class="o">=</span><span class="s1">&#39;10.0.1.0/24&#39;</span><span class="p">,</span>
-    <span class="n">VpcId</span><span class="o">=</span><span class="n">vpc</span><span class="p">[</span><span class="s1">&#39;Vpc&#39;</span><span class="p">][</span><span class="s1">&#39;VpcId&#39;</span><span class="p">],</span>
-    <span class="n">TagSpecifications</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;ResourceType&#39;</span><span class="p">:</span> <span class="s1">&#39;subnet&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Tags&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;my_subnet&#39;</span><span class="p">,</span>
-                <span class="p">},</span>
-            <span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
+# Create a new subnet
+subnet = ec2.create_subnet(
+    CidrBlock='10.0.1.0/24',
+    VpcId=vpc['Vpc']['VpcId'],
+    TagSpecifications=[
+        {
+            'ResourceType': 'subnet',
+            'Tags': [
+                {
+                    'Key': 'Name',
+                    'Value': 'my_subnet',
+                },
+            ],
+        },
+    ],
+)
 
-<span class="c1"># Create a new security group</span>
-<span class="n">security_group</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">create_security_group</span><span class="p">(</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;my_security_group&#39;</span><span class="p">,</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My security group&#39;</span><span class="p">,</span>
-    <span class="n">VpcId</span><span class="o">=</span><span class="n">vpc</span><span class="p">[</span><span class="s1">&#39;Vpc&#39;</span><span class="p">][</span><span class="s1">&#39;VpcId&#39;</span><span class="p">],</span>
-    <span class="n">TagSpecifications</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;ResourceType&#39;</span><span class="p">:</span> <span class="s1">&#39;security-group&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Tags&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;my_security_group&#39;</span><span class="p">,</span>
-                <span class="p">},</span>
-            <span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a new security group
+security_group = ec2.create_security_group(
+    GroupName='my_security_group',
+    Description='My security group',
+    VpcId=vpc['Vpc']['VpcId'],
+    TagSpecifications=[
+        {
+            'ResourceType': 'security-group',
+            'Tags': [
+                {
+                    'Key': 'Name',
+                    'Value': 'my_security_group',
+                },
+            ],
+        },
+    ],
+)
+</code></pre>
 <p>This code creates a new VPC, subnet, and security group in AWS.</p>
 <h2 id="tip-4-execute-your-migration-plan">Tip 4: Execute Your Migration Plan</h2>
 <p>Once you've planned your migration strategy, the next step is to execute your migration plan. This includes migrating applications and data to the cloud, as well as provisioning the necessary infrastructure components.</p>
@@ -294,22 +291,21 @@
 * Monitoring: Monitoring your applications and data to ensure they are performing correctly in the cloud.
 * Backup and recovery: Backing up your data and applications to ensure they can be recovered in case of a disaster.</p>
 <p>For example, let's say you're executing a migration plan for a database application. You can use the following code to backup the database:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a new database snapshot</span>
-<span class="n">rds</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;rds&#39;</span><span class="p">)</span>
-<span class="n">snapshot</span> <span class="o">=</span> <span class="n">rds</span><span class="o">.</span><span class="n">create_db_snapshot</span><span class="p">(</span>
-    <span class="n">DBSnapshotIdentifier</span><span class="o">=</span><span class="s1">&#39;my_snapshot&#39;</span><span class="p">,</span>
-    <span class="n">DBInstanceIdentifier</span><span class="o">=</span><span class="s1">&#39;my_database&#39;</span><span class="p">,</span>
-    <span class="n">Tags</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;my_snapshot&#39;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a new database snapshot
+rds = boto3.client('rds')
+snapshot = rds.create_db_snapshot(
+    DBSnapshotIdentifier='my_snapshot',
+    DBInstanceIdentifier='my_database',
+    Tags=[
+        {
+            'Key': 'Name',
+            'Value': 'my_snapshot',
+        },
+    ],
+)
+</code></pre>
 <p>This code creates a new database snapshot in AWS.</p>
 <h2 id="tip-5-optimize-your-cloud-resources">Tip 5: Optimize Your Cloud Resources</h2>
 <p>The final step in the cloud migration process is to optimize your cloud resources. This includes optimizing your compute resources, storage resources, and networking resources to ensure they are being used efficiently.</p>
@@ -318,25 +314,24 @@
 * Auto-scaling: Auto-scaling your compute resources to ensure they can scale up or down to match changing demand.
 * Reserved instances: Using reserved instances to reduce the cost of your compute resources.</p>
 <p>For example, let's say you're optimizing the compute resources for a web application. You can use the following code to auto-scale the compute resources:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a new auto-scaling group</span>
-<span class="n">asg</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;autoscaling&#39;</span><span class="p">)</span>
-<span class="n">auto_scaling_group</span> <span class="o">=</span> <span class="n">asg</span><span class="o">.</span><span class="n">create_auto_scaling_group</span><span class="p">(</span>
-    <span class="n">AutoScalingGroupName</span><span class="o">=</span><span class="s1">&#39;my_auto_scaling_group&#39;</span><span class="p">,</span>
-    <span class="n">LaunchConfigurationName</span><span class="o">=</span><span class="s1">&#39;my_launch_configuration&#39;</span><span class="p">,</span>
-    <span class="n">MinSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">DesiredCapacity</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">Tags</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;my_auto_scaling_group&#39;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Create a new auto-scaling group
+asg = boto3.client('autoscaling')
+auto_scaling_group = asg.create_auto_scaling_group(
+    AutoScalingGroupName='my_auto_scaling_group',
+    LaunchConfigurationName='my_launch_configuration',
+    MinSize=1,
+    MaxSize=10,
+    DesiredCapacity=5,
+    Tags=[
+        {
+            'Key': 'Name',
+            'Value': 'my_auto_scaling_group',
+        },
+    ],
+)
+</code></pre>
 <p>This code creates a new auto-scaling group in AWS.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>When migrating to the cloud, there are several common problems that can occur, including:

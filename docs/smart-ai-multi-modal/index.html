@@ -160,69 +160,68 @@
 </ul>
 <h3 id="practical-example-text-image-fusion-using-pytorch">Practical Example: Text-Image Fusion using PyTorch</h3>
 <p>Here's an example of how to implement a simple text-image fusion system using PyTorch:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torchvision</span>
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
 
-<span class="c1"># Define the text encoder</span>
-<span class="k">class</span> <span class="nc">TextEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TextEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Define the text encoder
+class TextEncoder(nn.Module):
+    def __init__(self):
+        super(TextEncoder, self).__init__()
+        self.embedding = nn.Embedding(10000, 128)
+        self.rnn = nn.GRU(128, 128, num_layers=1, batch_first=True)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+    def forward(self, text):
+        embedded = self.embedding(text)
+        output, _ = self.rnn(embedded)
+        return output[:, -1, :]
 
-<span class="c1"># Define the image encoder</span>
-<span class="k">class</span> <span class="nc">ImageEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ImageEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+# Define the image encoder
+class ImageEncoder(nn.Module):
+    def __init__(self):
+        super(ImageEncoder, self).__init__()
+        self.conv = nn.Conv2d(3, 128, kernel_size=3)
+        self.pool = nn.MaxPool2d(kernel_size=2)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+    def forward(self, image):
+        output = self.conv(image)
+        output = self.pool(output)
+        return output.view(-1, 128)
 
-<span class="c1"># Define the fusion module</span>
-<span class="k">class</span> <span class="nc">FusionModule</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FusionModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+# Define the fusion module
+class FusionModule(nn.Module):
+    def __init__(self):
+        super(FusionModule, self).__init__()
+        self.fc = nn.Linear(256, 128)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-        <span class="n">combined</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">text</span><span class="p">,</span> <span class="n">image</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span>
+    def forward(self, text, image):
+        combined = torch.cat((text, image), dim=1)
+        output = self.fc(combined)
+        return output
 
-<span class="c1"># Initialize the encoders and fusion module</span>
-<span class="n">text_encoder</span> <span class="o">=</span> <span class="n">TextEncoder</span><span class="p">()</span>
-<span class="n">image_encoder</span> <span class="o">=</span> <span class="n">ImageEncoder</span><span class="p">()</span>
-<span class="n">fusion_module</span> <span class="o">=</span> <span class="n">FusionModule</span><span class="p">()</span>
+# Initialize the encoders and fusion module
+text_encoder = TextEncoder()
+image_encoder = ImageEncoder()
+fusion_module = FusionModule()
 
-<span class="c1"># Define the dataset and data loader</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFAR10</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()]))</span>
-<span class="n">data_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Define the dataset and data loader
+dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
 
-<span class="c1"># Train the model</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">text_output</span> <span class="o">=</span> <span class="n">text_encoder</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">image_output</span> <span class="o">=</span> <span class="n">image_encoder</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">fused_output</span> <span class="o">=</span> <span class="n">fusion_module</span><span class="p">(</span><span class="n">text_output</span><span class="p">,</span> <span class="n">image_output</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">fused_output</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">fused_output</span><span class="p">))</span>
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">text_encoder</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">image_encoder</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">fusion_module</span><span class="o">.</span><span class="n">parameters</span><span class="p">()),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-</code></pre></div>
-
+# Train the model
+for epoch in range(10):
+    for batch in data_loader:
+        text = batch[0]
+        image = batch[1]
+        text_output = text_encoder(text)
+        image_output = image_encoder(image)
+        fused_output = fusion_module(text_output, image_output)
+        loss = nn.MSELoss()(fused_output, torch.randn_like(fused_output))
+        loss.backward()
+        optimizer = torch.optim.Adam(list(text_encoder.parameters()) + list(image_encoder.parameters()) + list(fusion_module.parameters()), lr=0.001)
+        optimizer.step()
+</code></pre>
 <p>This example demonstrates how to define separate encoders for text and images, and then combine the outputs using a fusion module.</p>
 <h2 id="applications-of-multi-modal-ai-systems">Applications of Multi-Modal AI Systems</h2>
 <p>Multi-modal AI systems have a wide range of applications, including:</p>
@@ -234,34 +233,33 @@
 </ol>
 <h3 id="real-world-example-vqa-using-amazon-sagemaker">Real-World Example: VQA using Amazon SageMaker</h3>
 <p>Amazon SageMaker provides a range of pre-built algorithms and frameworks for building multi-modal AI systems, including VQA. Here's an example of how to use SageMaker to build a VQA system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">sagemaker</span>
-<span class="kn">from</span> <span class="nn">sagemaker</span> <span class="kn">import</span> <span class="n">get_execution_role</span>
+<pre><code class="language-python">import sagemaker
+from sagemaker import get_execution_role
 
-<span class="c1"># Define the role and bucket</span>
-<span class="n">role</span> <span class="o">=</span> <span class="n">get_execution_role</span><span class="p">()</span>
-<span class="n">bucket</span> <span class="o">=</span> <span class="s1">&#39;my-bucket&#39;</span>
+# Define the role and bucket
+role = get_execution_role()
+bucket = 'my-bucket'
 
-<span class="c1"># Define the dataset and data loader</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFAR10</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
-<span class="n">data_loader</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+# Define the dataset and data loader
+dataset = sagemaker.datasets.CIFAR10(bucket, role)
+data_loader = sagemaker.data.load_data(dataset, batch_size=32)
 
-<span class="c1"># Define the model and estimator</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">VQA</span><span class="p">()</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">estimators</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span><span class="p">)</span>
+# Define the model and estimator
+model = sagemaker.models.VQA()
+estimator = sagemaker.estimators.Estimator(model, role, bucket, instance_type='ml.m5.xlarge')
 
-<span class="c1"># Train the model</span>
-<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_loader</span><span class="p">)</span>
+# Train the model
+estimator.fit(data_loader)
 
-<span class="c1"># Deploy the model</span>
-<span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m5.xlarge&#39;</span><span class="p">)</span>
+# Deploy the model
+predictor = estimator.deploy(instance_type='ml.m5.xlarge')
 
-<span class="c1"># Test the model</span>
-<span class="n">image</span> <span class="o">=</span> <span class="s1">&#39;image.jpg&#39;</span>
-<span class="n">question</span> <span class="o">=</span> <span class="s1">&#39;What is the color of the car in the image?&#39;</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">question</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+# Test the model
+image = 'image.jpg'
+question = 'What is the color of the car in the image?'
+response = predictor.predict(image, question)
+print(response)
+</code></pre>
 <p>This example demonstrates how to use SageMaker to build and deploy a VQA system.</p>
 <h2 id="challenges-and-limitations-of-multi-modal-ai-systems">Challenges and Limitations of Multi-Modal AI Systems</h2>
 <p>Despite the many applications of multi-modal AI systems, there are several challenges and limitations to consider, including:</p>

@@ -183,59 +183,56 @@
 * <strong>API Documentation</strong>: Postman offers more advanced API documentation features, including automatic API documentation generation.</p>
 <h3 id="code-example-sending-a-get-request-with-postman">Code Example: Sending a GET Request with Postman</h3>
 <p>Here is an example of how to send a GET request using Postman:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.example.com/users&quot;</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer YOUR_API_KEY&quot;</span>
-<span class="p">}</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+url = &quot;https://api.example.com/users&quot;
+headers = {
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;
+}
+response = requests.get(url, headers=headers)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre></div>
-
+print(response.json())
+</code></pre>
 <p>This code sends a GET request to the specified URL with the specified headers, and prints the response JSON.</p>
 <h3 id="code-example-sending-a-post-request-with-insomnia">Code Example: Sending a POST Request with Insomnia</h3>
 <p>Here is an example of how to send a POST request using Insomnia:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;axios&quot;</span><span class="p">);</span>
+<pre><code class="language-javascript">const axios = require(&quot;axios&quot;);
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.example.com/users&quot;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;Authorization&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Bearer YOUR_API_KEY&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span>
-<span class="p">};</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;email&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;john.doe@example.com&quot;</span>
-<span class="p">};</span>
+const url = &quot;https://api.example.com/users&quot;;
+const headers = {
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+};
+const data = {
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;email&quot;: &quot;john.doe@example.com&quot;
+};
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-</code></pre></div>
-
+axios.post(url, data, { headers: headers })
+    .then(response =&gt; {
+        console.log(response.data);
+    })
+    .catch(error =&gt; {
+        console.error(error);
+    });
+</code></pre>
 <p>This code sends a POST request to the specified URL with the specified headers and data, and logs the response data to the console.</p>
 <h3 id="code-example-testing-api-performance-with-postman">Code Example: Testing API Performance with Postman</h3>
 <p>Here is an example of how to test API performance using Postman:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import requests
+import time
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.example.com/users&quot;</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer YOUR_API_KEY&quot;</span>
-<span class="p">}</span>
+url = &quot;https://api.example.com/users&quot;
+headers = {
+    &quot;Authorization&quot;: &quot;Bearer YOUR_API_KEY&quot;
+}
 
-<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+start_time = time.time()
+response = requests.get(url, headers=headers)
+end_time = time.time()
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Response time: </span><span class="si">{:.2f}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
-</code></pre></div>
-
+print(&quot;Response time: {:.2f} seconds&quot;.format(end_time - start_time))
+</code></pre>
 <p>This code sends a GET request to the specified URL with the specified headers, and measures the response time. The response time is then printed to the console.</p>
 <h2 id="use-cases">Use Cases</h2>
 <p>Both Postman and Insomnia can be used for a variety of use cases, including:

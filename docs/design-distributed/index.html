@@ -161,28 +161,27 @@
 * TCP (Transmission Control Protocol): This protocol provides reliable, connection-oriented communication between nodes.
 * UDP (User Datagram Protocol): This protocol provides fast, connectionless communication between nodes.</p>
 <p>For example, the following Python code snippet demonstrates how to use the HTTP protocol to communicate between a client and a server:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client code</span>
-<span class="k">def</span> <span class="nf">client_request</span><span class="p">():</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://example.com/api/data&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+# Client code
+def client_request():
+    url = &quot;http://example.com/api/data&quot;
+    response = requests.get(url)
+    print(response.json())
 
-<span class="c1"># Server code</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+# Server code
+from flask import Flask, jsonify
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+app = Flask(__name__)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/data&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">server_response</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello, client!&quot;</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+@app.route(&quot;/api/data&quot;, methods=[&quot;GET&quot;])
+def server_response():
+    data = {&quot;message&quot;: &quot;Hello, client!&quot;}
+    return jsonify(data)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    app.run()
+</code></pre>
 <p>In this example, the client sends a GET request to the server using the HTTP protocol, and the server responds with a JSON message.</p>
 <h2 id="data-consistency-models">Data Consistency Models</h2>
 <p>Data consistency models are used to ensure that data is consistent across all nodes in a distributed system. There are several data consistency models, including:
@@ -196,21 +195,20 @@
 * Apache Cassandra: A distributed NoSQL database that provides high availability and scalability.
 * Docker: A containerization platform that provides a lightweight and portable way to deploy applications.</p>
 <p>For example, the following Dockerfile snippet demonstrates how to deploy a distributed system using Docker:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
+<pre><code class="language-dockerfile">FROM python:3.9-slim
 
-<span class="c"># Install dependencies</span>
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>flask
+# Install dependencies
+RUN pip install flask
 
-<span class="c"># Copy application code</span>
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>/app
+# Copy application code
+COPY . /app
 
-<span class="c"># Expose port</span>
-<span class="k">EXPOSE</span><span class="w"> </span><span class="s">5000</span>
+# Expose port
+EXPOSE 5000
 
-<span class="c"># Run command</span>
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+# Run command
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <p>In this example, the Dockerfile installs the Flask web framework, copies the application code, exposes port 5000, and runs the application using the <code>python</code> command.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Distributed systems are prone to several common problems, including:
@@ -222,25 +220,24 @@
 * Redundancy: This involves duplicating nodes or components to ensure availability and reliability.
 * Failover: This involves automatically switching to a backup node or component in the event of a failure.</p>
 <p>For example, the following code snippet demonstrates how to use replication to ensure data consistency in a distributed system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Connect to Redis cluster</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">RedisCluster</span><span class="p">(</span><span class="n">startup_nodes</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">6379</span><span class="p">}])</span>
+# Connect to Redis cluster
+redis_client = redis.RedisCluster(startup_nodes=[{&quot;host&quot;: &quot;node1&quot;, &quot;port&quot;: 6379}])
 
-<span class="c1"># Write data to Redis cluster</span>
-<span class="k">def</span> <span class="nf">write_data</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+# Write data to Redis cluster
+def write_data(key, value):
+    redis_client.set(key, value)
 
-<span class="c1"># Read data from Redis cluster</span>
-<span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+# Read data from Redis cluster
+def read_data(key):
+    return redis_client.get(key)
 
-<span class="c1"># Replicate data across multiple nodes</span>
-<span class="k">def</span> <span class="nf">replicate_data</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="n">write_data</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="n">write_data</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_replica&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-</code></pre></div>
-
+# Replicate data across multiple nodes
+def replicate_data(key, value):
+    write_data(key, value)
+    write_data(key + &quot;_replica&quot;, value)
+</code></pre>
 <p>In this example, the code writes data to a Redis cluster and replicates it across multiple nodes to ensure availability and consistency.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Distributed systems have several use cases, including:

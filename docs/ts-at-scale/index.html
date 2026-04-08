@@ -167,39 +167,37 @@
 2. Create a <code>tsconfig.json</code> file to configure the TypeScript compiler.
 3. Set up a <code>webpack.config.js</code> file to configure Webpack.</p>
 <p>Here is an example <code>tsconfig.json</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es6&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;commonjs&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;outDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;rootDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;strict&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;esModuleInterop&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es6&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;outDir&quot;: &quot;build&quot;,
+    &quot;rootDir&quot;: &quot;src&quot;,
+    &quot;strict&quot;: true,
+    &quot;esModuleInterop&quot;: true
+  }
+}
+</code></pre>
 <p>And here is an example <code>webpack.config.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const path = require('path');
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">entry</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./src/index.ts&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bundle.js&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;build&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">module</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">rules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/\.ts$/</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">use</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;ts-loader&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">exclude</span><span class="o">:</span><span class="w"> </span><span class="sr">/node_modules/</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+module.exports = {
+  entry: './src/index.ts',
+  output: {
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'build')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]
+  }
+};
+</code></pre>
 <h2 id="managing-complexity-in-large-scale-typescript-applications">Managing Complexity in Large-Scale TypeScript Applications</h2>
 <p>As applications grow in size and complexity, it can become difficult to manage the complexity of the codebase. There are several strategies that can help, including:
 * <strong>Modularization</strong>: Break down the application into smaller, independent modules that can be developed and maintained separately.
@@ -207,37 +205,36 @@
 * <strong>Type inference</strong>: Use type inference to automatically infer the types of variables and function return types, reducing the need for explicit type annotations.</p>
 <p>For example, consider a large-scale application with multiple modules, each with its own set of dependencies. Without modularization, it would be difficult to manage the dependencies between modules. With modularization, each module can be developed and maintained independently, making it easier to manage the complexity of the application.</p>
 <p>Here is an example of how to use modularization in a large-scale TypeScript application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// module1.ts</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Module1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">foo</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">// module1.ts
+export interface Module1 {
+  foo(): string;
+}
 
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Module1Impl</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Module1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">foo</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;Module 1&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+export class Module1Impl implements Module1 {
+  foo(): string {
+    return 'Module 1';
+  }
+}
 
-<span class="c1">// module2.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Module1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./module1&#39;</span><span class="p">;</span>
+// module2.ts
+import { Module1 } from './module1';
 
-<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Module2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">bar</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
+export interface Module2 {
+  bar(): string;
+}
 
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Module2Impl</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Module2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="kr">module</span><span class="nx">1</span><span class="o">:</span><span class="w"> </span><span class="nx">Module1</span><span class="p">;</span>
+export class Module2Impl implements Module2 {
+  private module1: Module1;
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="kr">module</span><span class="nx">1</span><span class="o">:</span><span class="w"> </span><span class="nx">Module1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="kr">module</span><span class="nx">1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">module</span><span class="nx">1</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  constructor(module1: Module1) {
+    this.module1 = module1;
+  }
 
-<span class="w">  </span><span class="nx">bar</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`Module 2: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="kr">module</span><span class="nx">1.foo</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  bar(): string {
+    return `Module 2: ${this.module1.foo()}`;
+  }
+}
+</code></pre>
 <h2 id="performance-optimization-in-large-scale-typescript-applications">Performance Optimization in Large-Scale TypeScript Applications</h2>
 <p>Performance optimization is critical in large-scale applications, where small improvements can result in significant benefits. There are several strategies that can help, including:
 * <strong>Tree shaking</strong>: Use tree shaking to remove unused code from the application, reducing the overall size of the bundle.
@@ -245,15 +242,14 @@
 * <strong>Minification</strong>: Use minification to reduce the size of the code, making it faster to download and execute.</p>
 <p>For example, consider a large-scale application with a lot of unused code. Without tree shaking, the unused code would be included in the bundle, resulting in a larger bundle size. With tree shaking, the unused code can be removed, resulting in a smaller bundle size and faster load times.</p>
 <p>Here is an example of how to use tree shaking in a large-scale TypeScript application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// webpack.config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">usedExports</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// webpack.config.js
+module.exports = {
+  // ...
+  optimization: {
+    usedExports: true
+  }
+};
+</code></pre>
 <h2 id="real-world-example-building-a-large-scale-e-commerce-application-with-typescript">Real-World Example: Building a Large-Scale E-Commerce Application with TypeScript</h2>
 <p>Let's consider a real-world example of building a large-scale e-commerce application with TypeScript. The application has the following requirements:
 * Handle thousands of concurrent users
@@ -264,35 +260,33 @@
 * <strong>Express.js</strong>: A popular web framework for Node.js that provides a lot of features out of the box, including routing, middleware, and template engines.
 * <strong>TypeORM</strong>: A TypeScript-based Object-Relational Mapping (ORM) framework that provides a lot of features out of the box, including database modeling, migrations, and query building.</p>
 <p>Here is an example of how to define a data model using TypeORM:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// user.entity.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Entity</span><span class="p">,</span><span class="w"> </span><span class="nx">Column</span><span class="p">,</span><span class="w"> </span><span class="nx">PrimaryGeneratedColumn</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;typeorm&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// user.entity.ts
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-<span class="kd">@Entity</span><span class="p">()</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">@PrimaryGeneratedColumn</span><span class="p">()</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-<span class="w">  </span><span class="kd">@Column</span><span class="p">()</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+  @Column()
+  name: string;
 
-<span class="w">  </span><span class="kd">@Column</span><span class="p">()</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  @Column()
+  email: string;
+}
+</code></pre>
 <p>And here is an example of how to define a repository using TypeORM:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// user.repository.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">EntityRepository</span><span class="p">,</span><span class="w"> </span><span class="nx">Repository</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;typeorm&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./user.entity&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">// user.repository.ts
+import { EntityRepository, Repository } from 'typeorm';
+import { User } from './user.entity';
 
-<span class="kd">@EntityRepository</span><span class="p">(</span><span class="nx">User</span><span class="p">)</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">UserRepository</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Repository</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">findByEmail</span><span class="p">(</span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">User</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="w"> </span><span class="nx">email</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@EntityRepository(User)
+export class UserRepository extends Repository&lt;User&gt; {
+  async findByEmail(email: string): Promise&lt;User | undefined&gt; {
+    return this.findOne({ email });
+  }
+}
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working on large-scale TypeScript applications, there are several common problems that can arise. Here are some solutions to these problems:
 * <strong>Error handling</strong>: Use try-catch blocks to handle errors, and provide meaningful error messages to help with debugging.
@@ -300,28 +294,27 @@
 * <strong>Performance optimization</strong>: Use tree shaking, code splitting, and minification to optimize performance.</p>
 <p>For example, consider a large-scale application with a lot of complex logic. Without proper error handling, it would be difficult to debug and maintain the application. With try-catch blocks and meaningful error messages, it becomes easier to identify and fix errors.</p>
 <p>Here is an example of how to handle errors in a large-scale TypeScript application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// error.handler.ts</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ErrorHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">handle</span><span class="p">(</span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kt">Error</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Send error report to logging service</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">// error.handler.ts
+export class ErrorHandler {
+  async handle(error: Error): Promise&lt;void&gt; {
+    console.error(error);
+    // Send error report to logging service
+  }
+}
 
-<span class="c1">// user.service.ts</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ErrorHandler</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./error.handler&#39;</span><span class="p">;</span>
+// user.service.ts
+import { ErrorHandler } from './error.handler';
 
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">UserService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">getUser</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">User</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Fetch user from database</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ErrorHandler</span><span class="p">().</span><span class="nx">handle</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+export class UserService {
+  async getUser(id: number): Promise&lt;User | undefined&gt; {
+    try {
+      // Fetch user from database
+    } catch (error) {
+      await new ErrorHandler().handle(error);
+    }
+  }
+}
+</code></pre>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, TypeScript is a powerful tool for building large-scale applications. By using TypeScript, developers can catch errors early, improve code maintainability, and reduce runtime errors. However, working with TypeScript at scale can be challenging, and requires careful planning and attention to detail.</p>
 <p>To get started with TypeScript at scale, follow these next steps:

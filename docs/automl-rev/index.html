@@ -159,91 +159,88 @@
 <p>Let's take a look at some practical examples of AutoML and NAS in action.</p>
 <h3 id="example-1-using-h2o-automl-to-build-a-classification-model">Example 1: Using H2O AutoML to Build a Classification Model</h3>
 <p>H2O AutoML is a popular AutoML platform that provides a simple and intuitive interface for building and deploying models. Here's an example of how to use H2O AutoML to build a classification model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">h2o</span>
-<span class="kn">from</span> <span class="nn">h2o.automl</span> <span class="kn">import</span> <span class="n">H2OAutoML</span>
+<pre><code class="language-python">import h2o
+from h2o.automl import H2OAutoML
 
-<span class="c1"># Load the dataset</span>
-<span class="n">h2o</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="s2">&quot;iris.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+h2o.init()
+df = h2o.import_file(&quot;iris.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">split_frame</span><span class="p">(</span><span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">])</span>
+# Split the data into training and testing sets
+train, test = df.split_frame(ratios=[0.8])
 
-<span class="c1"># Build the model</span>
-<span class="n">aml</span> <span class="o">=</span> <span class="n">H2OAutoML</span><span class="p">(</span><span class="n">max_runtime_secs</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
-<span class="n">aml</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">training_frame</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+# Build the model
+aml = H2OAutoML(max_runtime_secs=3600)
+aml.train(x=train.columns, y=&quot;species&quot;, training_frame=train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">perf</span> <span class="o">=</span> <span class="n">aml</span><span class="o">.</span><span class="n">leader</span><span class="o">.</span><span class="n">model_performance</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+perf = aml.leader.model_performance(test)
+print(perf)
+</code></pre>
 <p>In this example, we load the Iris dataset and split it into training and testing sets. We then use H2O AutoML to build a classification model, specifying the maximum runtime and the target variable. Finally, we evaluate the model on the testing set and print the performance metrics.</p>
 <h3 id="example-2-using-google-cloud-automl-to-build-a-image-classification-model">Example 2: Using Google Cloud AutoML to Build a Image Classification Model</h3>
 <p>Google Cloud AutoML is a cloud-based AutoML platform that provides a simple and intuitive interface for building and deploying models. Here's an example of how to use Google Cloud AutoML to build an image classification model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">automl</span>
+<pre><code class="language-python">import os
+from google.cloud import automl
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">AutoMlClient</span><span class="p">()</span>
+# Create a client instance
+client = automl.AutoMlClient()
 
-<span class="c1"># Create a dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s2">&quot;projects/your-project/locations/us-central1&quot;</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;your-dataset&quot;</span><span class="p">},</span>
-<span class="p">)</span>
+# Create a dataset
+dataset = client.create_dataset(
+    parent=&quot;projects/your-project/locations/us-central1&quot;,
+    dataset={&quot;display_name&quot;: &quot;your-dataset&quot;},
+)
 
-<span class="c1"># Upload images to the dataset</span>
-<span class="n">image_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/images&quot;</span>
-<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">client</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span>
-            <span class="n">parent</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">image</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()},</span>
-        <span class="p">)</span>
+# Upload images to the dataset
+image_path = &quot;path/to/images&quot;
+for file in os.listdir(image_path):
+    with open(os.path.join(image_path, file), &quot;rb&quot;) as f:
+        client.create_image(
+            parent=dataset.name,
+            image={&quot;image_bytes&quot;: f.read()},
+        )
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s2">&quot;projects/your-project/locations/us-central1&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;your-model&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
-<span class="p">)</span>
+# Train the model
+model = client.create_model(
+    parent=&quot;projects/your-project/locations/us-central1&quot;,
+    model={&quot;display_name&quot;: &quot;your-model&quot;, &quot;dataset_id&quot;: dataset.name},
+)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">evaluation</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_evaluation</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s2">&quot;projects/your-project/locations/us-central1&quot;</span><span class="p">,</span>
-    <span class="n">evaluation</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;your-evaluation&quot;</span><span class="p">,</span> <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">evaluation</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+evaluation = client.create_evaluation(
+    parent=&quot;projects/your-project/locations/us-central1&quot;,
+    evaluation={&quot;display_name&quot;: &quot;your-evaluation&quot;, &quot;model_id&quot;: model.name},
+)
+print(evaluation)
+</code></pre>
 <p>In this example, we create a client instance and a dataset, and then upload images to the dataset. We then train a model using the dataset and evaluate its performance.</p>
 <h3 id="example-3-using-microsoft-azure-machine-learning-to-build-a-regression-model">Example 3: Using Microsoft Azure Machine Learning to Build a Regression Model</h3>
 <p>Microsoft Azure Machine Learning is a cloud-based machine learning platform that provides a simple and intuitive interface for building and deploying models. Here's an example of how to use Microsoft Azure Machine Learning to build a regression model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">Workspace</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Datastore</span>
-<span class="kn">from</span> <span class="nn">azureml.core.model</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">import pandas as pd
+from azureml.core import Workspace, Dataset, Datastore
+from azureml.core.model import Model
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv(&quot;data.csv&quot;)
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train, test = train_test_split(df, test_size=0.2, random_state=42)
 
-<span class="c1"># Create a workspace and a dataset</span>
-<span class="n">ws</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">from_config</span><span class="p">()</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">Tabular</span><span class="o">.</span><span class="n">register_pandas_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="s2">&quot;your-dataset&quot;</span><span class="p">)</span>
+# Create a workspace and a dataset
+ws = Workspace.from_config()
+ds = Dataset.Tabular.register_pandas_dataframe(ws, train, &quot;your-dataset&quot;)
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">train</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+# Train the model
+model = LinearRegression()
+model.fit(train.drop(&quot;target&quot;, axis=1), train[&quot;target&quot;])
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+y_pred = model.predict(test.drop(&quot;target&quot;, axis=1))
+print(y_pred)
+</code></pre>
 <p>In this example, we load the dataset and split it into training and testing sets. We then create a workspace and a dataset, and train a linear regression model using the training data. Finally, we evaluate the model on the testing set and print the predicted values.</p>
 <h2 id="use-cases-for-automl-and-nas">Use Cases for AutoML and NAS</h2>
 <p>AutoML and NAS have a wide range of use cases, including:</p>

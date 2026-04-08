@@ -164,17 +164,16 @@
 * <strong>pgAdmin</strong>: A free, open-source tool for managing PostgreSQL databases.</p>
 <h3 id="example-using-mysql-workbench-to-design-a-database">Example: Using MySQL Workbench to Design a Database</h3>
 <p>MySQL Workbench provides a graphical user interface for designing and creating database structures. Here is an example of how to use MySQL Workbench to design a simple database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new database</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydatabase</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a new database
+CREATE DATABASE mydatabase;
 
-<span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+-- Create a new table
+CREATE TABLE mytable (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255)
+);
+</code></pre>
 <p>To create this database and table using MySQL Workbench, follow these steps:</p>
 <ol>
 <li>Open MySQL Workbench and connect to your MySQL server.</li>
@@ -191,29 +190,28 @@
 * <strong>Prometheus</strong>: A free, open-source tool for monitoring database performance, providing features such as query analysis, performance metrics, and alerting.</p>
 <h3 id="example-using-new-relic-to-monitor-database-performance">Example: Using New Relic to Monitor Database Performance</h3>
 <p>New Relic provides a comprehensive set of features for monitoring database performance. Here is an example of how to use New Relic to monitor database performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">newrelic.agent</span>
+<pre><code class="language-python">import newrelic.agent
 
-<span class="c1"># Create a New Relic agent</span>
-<span class="n">agent</span> <span class="o">=</span> <span class="n">newrelic</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">()</span>
+# Create a New Relic agent
+agent = newrelic.agent.Agent()
 
-<span class="c1"># Start the agent</span>
-<span class="n">agent</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+# Start the agent
+agent.start()
 
-<span class="c1"># Connect to your database</span>
-<span class="kn">import</span> <span class="nn">psycopg2</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">dbname</span><span class="o">=</span><span class="s2">&quot;mydatabase&quot;</span><span class="p">,</span>
-    <span class="n">user</span><span class="o">=</span><span class="s2">&quot;myuser&quot;</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;mypassword&quot;</span><span class="p">,</span>
-    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="s2">&quot;5432&quot;</span>
-<span class="p">)</span>
+# Connect to your database
+import psycopg2
+conn = psycopg2.connect(
+    dbname=&quot;mydatabase&quot;,
+    user=&quot;myuser&quot;,
+    password=&quot;mypassword&quot;,
+    host=&quot;myhost&quot;,
+    port=&quot;5432&quot;
+)
 
-<span class="c1"># Execute a query</span>
-<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM mytable&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Execute a query
+cur = conn.cursor()
+cur.execute(&quot;SELECT * FROM mytable&quot;)
+</code></pre>
 <p>To monitor this query using New Relic, follow these steps:</p>
 <ol>
 <li>Install the New Relic agent on your server.</li>
@@ -229,23 +227,22 @@
 * <strong>Imperva SecureSphere</strong>: A comprehensive tool for securing databases, providing features such as intrusion detection, encryption, and access control.</p>
 <h3 id="example-using-owasp-zap-to-identify-vulnerabilities">Example: Using OWASP ZAP to Identify Vulnerabilities</h3>
 <p>OWASP ZAP provides a comprehensive set of features for identifying vulnerabilities in web applications, including databases. Here is an example of how to use OWASP ZAP to identify vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">zapv2</span>
+<pre><code class="language-python">import zapv2
 
-<span class="c1"># Create a ZAP instance</span>
-<span class="n">zap</span> <span class="o">=</span> <span class="n">zapv2</span><span class="o">.</span><span class="n">ZAPv2</span><span class="p">()</span>
+# Create a ZAP instance
+zap = zapv2.ZAPv2()
 
-<span class="c1"># Open the URL</span>
-<span class="n">zap</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://mywebsite.com&quot;</span><span class="p">)</span>
+# Open the URL
+zap.urlopen(&quot;http://mywebsite.com&quot;)
 
-<span class="c1"># Scan the URL</span>
-<span class="n">zap</span><span class="o">.</span><span class="n">spider</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="s2">&quot;http://mywebsite.com&quot;</span><span class="p">)</span>
+# Scan the URL
+zap.spider.scan(&quot;http://mywebsite.com&quot;)
 
-<span class="c1"># Identify vulnerabilities</span>
-<span class="n">vulns</span> <span class="o">=</span> <span class="n">zap</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">alerts</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">vuln</span> <span class="ow">in</span> <span class="n">vulns</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">vuln</span><span class="p">)</span>
-</code></pre></div>
-
+# Identify vulnerabilities
+vulns = zap.core.alerts()
+for vuln in vulns:
+    print(vuln)
+</code></pre>
 <p>To identify vulnerabilities using OWASP ZAP, follow these steps:</p>
 <ol>
 <li>Install OWASP ZAP on your server.</li>

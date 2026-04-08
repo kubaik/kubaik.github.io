@@ -161,37 +161,35 @@
 <li><strong>Java</strong>: <code>JJWT</code> library, which provides a robust and customizable implementation of JWT.</li>
 </ul>
 <p>Here is an example of generating a JWT using the <code>jsonwebtoken</code> library in Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;johnDoe&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span>
-<span class="p">};</span>
+const payload = {
+  username: 'johnDoe',
+  email: 'john.doe@example.com',
+  role: 'admin'
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mySecretKey&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
+const secretKey = 'mySecretKey';
+const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</code></pre></div>
-
+console.log(token);
+</code></pre>
 <p>This code generates a JWT with a payload containing the username, email, and role of the user. The token is signed with a secret key and set to expire in one hour.</p>
 <h2 id="verifying-jwts">Verifying JWTs</h2>
 <p>Verifying a JWT involves checking the signature and payload to ensure that the token has not been tampered with or altered during transmission. Here is an example of verifying a JWT using the <code>jsonwebtoken</code> library:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mySecretKey&#39;</span><span class="p">;</span>
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+const secretKey = 'mySecretKey';
 
-<span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Invalid token&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">decoded</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+jwt.verify(token, secretKey, (err, decoded) =&gt; {
+  if (err) {
+    console.log('Invalid token');
+  } else {
+    console.log(decoded);
+  }
+});
+</code></pre>
 <p>This code verifies the signature of the JWT and checks the payload to ensure that it has not been altered. If the token is valid, the decoded payload is logged to the console.</p>
 <h2 id="common-use-cases">Common Use Cases</h2>
 <p>JWT authentication can be used in a variety of scenarios, including:</p>
@@ -230,52 +228,51 @@
 </ul>
 <h2 id="real-world-example">Real-World Example</h2>
 <p>Here is a real-world example of implementing JWT authentication using the <code>jsonwebtoken</code> library and the Express.js framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const express = require('express');
+const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+const app = express();
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mySecretKey&#39;</span><span class="p">;</span>
+const secretKey = 'mySecretKey';
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+app.post('/login', (req, res) =&gt; {
+  const username = req.body.username;
+  const password = req.body.password;
 
-<span class="w">  </span><span class="c1">// Authenticate user</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">username</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;johnDoe&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">password</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;password123&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">username</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span>
-<span class="w">    </span><span class="p">};</span>
+  // Authenticate user
+  if (username === 'johnDoe' &amp;&amp; password === 'password123') {
+    const payload = {
+      username: username,
+      role: 'admin'
+    };
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid credentials&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+    res.json({ token: token });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/protected&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;authorization&#39;</span><span class="p">];</span>
+app.get('/protected', (req, res) =&gt; {
+  const token = req.headers['authorization'];
 
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid token&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">decoded</span><span class="p">.</span><span class="nx">username</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;No token provided&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+  if (token) {
+    jwt.verify(token, secretKey, (err, decoded) =&gt; {
+      if (err) {
+        res.status(401).json({ error: 'Invalid token' });
+      } else {
+        res.json({ message: 'Hello, ' + decoded.username });
+      }
+    });
+  } else {
+    res.status(401).json({ error: 'No token provided' });
+  }
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This code implements a simple login system using JWT authentication. The <code>/login</code> endpoint generates a JWT token upon successful authentication, while the <code>/protected</code> endpoint verifies the token and returns a protected message.</p>
 <h2 id="pricing-and-cost">Pricing and Cost</h2>
 <p>The cost of implementing JWT authentication can vary depending on the specific implementation and use case. However, here are some general estimates:</p>

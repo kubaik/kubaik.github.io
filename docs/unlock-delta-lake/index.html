@@ -161,48 +161,45 @@
 <p>Here are a few practical examples of using Delta Lake:</p>
 <h3 id="example-1-creating-a-delta-lake-table">Example 1: Creating a Delta Lake Table</h3>
 <p>To create a Delta Lake table, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
 
-<span class="c1"># Create a Delta Lake table</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;delta-lake-table&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Create a Delta Lake table
+data = spark.range(0, 5)
+data.write.format(&quot;delta&quot;).save(&quot;delta-lake-table&quot;)
+</code></pre>
 <p>This code creates a SparkSession and uses it to create a Delta Lake table called "delta-lake-table" with a range of numbers from 0 to 4.</p>
 <h3 id="example-2-reading-and-writing-data-to-a-delta-lake-table">Example 2: Reading and Writing Data to a Delta Lake Table</h3>
 <p>To read and write data to a Delta Lake table, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Delta Lake Example&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Delta Lake Example&quot;).getOrCreate()
 
-<span class="c1"># Read data from a Delta Lake table</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;delta-lake-table&quot;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+# Read data from a Delta Lake table
+df = spark.read.format(&quot;delta&quot;).load(&quot;delta-lake-table&quot;)
+df.show()
 
-<span class="c1"># Write data to a Delta Lake table</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="mi">5</span><span class="p">,)],</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;append&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;delta-lake-table&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Write data to a Delta Lake table
+data = spark.createDataFrame([(5,)], [&quot;id&quot;])
+data.write.format(&quot;delta&quot;).mode(&quot;append&quot;).save(&quot;delta-lake-table&quot;)
+</code></pre>
 <p>This code reads data from a Delta Lake table called "delta-lake-table" and writes new data to the same table.</p>
 <h3 id="example-3-using-delta-lake-with-apache-spark-sql">Example 3: Using Delta Lake with Apache Spark SQL</h3>
 <p>To use Delta Lake with Apache Spark SQL, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a Delta Lake table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">delta_lake_table</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">)</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">delta</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a Delta Lake table
+CREATE TABLE delta_lake_table (id INT) USING delta;
 
-<span class="c1">-- Insert data into the Delta Lake table</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">delta_lake_table</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">delta_lake_table</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">delta_lake_table</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+-- Insert data into the Delta Lake table
+INSERT INTO delta_lake_table VALUES (1);
+INSERT INTO delta_lake_table VALUES (2);
+INSERT INTO delta_lake_table VALUES (3);
 
-<span class="c1">-- Query the Delta Lake table</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">delta_lake_table</span><span class="p">;</span>
-</code></pre></div>
-
+-- Query the Delta Lake table
+SELECT * FROM delta_lake_table;
+</code></pre>
 <p>This code creates a Delta Lake table called "delta_lake_table" and inserts data into it using Apache Spark SQL.</p>
 <h2 id="tools-and-platforms-for-working-with-delta-lake">Tools and Platforms for Working with Delta Lake</h2>
 <p>There are several tools and platforms that you can use to work with Delta Lake, including:

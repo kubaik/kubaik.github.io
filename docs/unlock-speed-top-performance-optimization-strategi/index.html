@@ -170,35 +170,34 @@
 </ul>
 <h4 id="implementation-example-combining-javascript-files">Implementation Example: Combining JavaScript Files</h4>
 <p>Assume you have three JavaScript files: <code>app.js</code>, <code>utils.js</code>, and <code>analytics.js</code>. Instead of including them individually, you can concatenate them into a single file named <code>bundle.js</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// app.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">initApp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Initialization code</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// app.js
+function initApp() {
+    // Initialization code
+}
 
-<span class="c1">// utils.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">helperFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Helper code</span>
-<span class="p">}</span>
+// utils.js
+function helperFunction() {
+    // Helper code
+}
 
-<span class="c1">// analytics.js</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">logEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Logging code</span>
-<span class="p">}</span>
+// analytics.js
+function logEvent(event) {
+    // Logging code
+}
 
-<span class="c1">// bundle.js (combined)</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">initApp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Initialization code</span>
-<span class="p">}</span>
+// bundle.js (combined)
+function initApp() {
+    // Initialization code
+}
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">helperFunction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Helper code</span>
-<span class="p">}</span>
+function helperFunction() {
+    // Helper code
+}
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">logEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Logging code</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function logEvent(event) {
+    // Logging code
+}
+</code></pre>
 <h3 id="3-optimize-images">3. Optimize Images</h3>
 <p>Images often account for a significant portion of the size of a web page. Optimize them to improve load times and performance.</p>
 <h4 id="image-optimization-techniques">Image Optimization Techniques</h4>
@@ -209,27 +208,26 @@
 </ul>
 <h4 id="real-world-example-lazy-loading-with-intersection-observer">Real-World Example: Lazy Loading with Intersection Observer</h4>
 <p>Here's how to implement lazy loading for images using the Intersection Observer API:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">data-src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span> <span class="p">/&gt;</span>
+<pre><code class="language-html">&lt;img class=&quot;lazy&quot; data-src=&quot;image.jpg&quot; alt=&quot;Description&quot; /&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">lazyImages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">entry</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">            </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">            </span><span class="nx">img</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">);</span>
-<span class="w">            </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
+&lt;script&gt;
+const lazyImages = document.querySelectorAll('img.lazy');
+const observer = new IntersectionObserver((entries) =&gt; {
+    entries.forEach(entry =&gt; {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+        }
+    });
+});
 
-<span class="nx">lazyImages</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">image</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
-<span class="p">});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+lazyImages.forEach(image =&gt; {
+    observer.observe(image);
+});
+&lt;/script&gt;
+</code></pre>
 <h3 id="4-use-a-content-delivery-network-cdn">4. Use a Content Delivery Network (CDN)</h3>
 <p>A CDN can significantly reduce latency by serving content from locations closer to the user. This is especially beneficial for geographically distributed users.</p>
 <h4 id="popular-cdn-providers">Popular CDN Providers</h4>
@@ -254,9 +252,8 @@
 </ul>
 <h4 id="example-indexing-in-sql">Example: Indexing in SQL</h4>
 <p>If you have a <code>users</code> table and frequently search by the <code>email</code> column, add an index:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_email ON users(email);
+</code></pre>
 <h3 id="6-code-optimization">6. Code Optimization</h3>
 <p>Writing efficient code is essential for performance. There are various techniques to optimize your application code.</p>
 <h4 id="code-optimization-techniques">Code Optimization Techniques</h4>
@@ -267,23 +264,22 @@
 </ul>
 <h4 id="practical-example-debouncing-a-search-input">Practical Example: Debouncing a Search Input</h4>
 <p>If you have a search box that triggers an API call on input, debounce the function to avoid excessive calls.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">debounce</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span><span class="w"> </span><span class="nx">delay</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">timeout</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timeout</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">),</span><span class="w"> </span><span class="nx">delay</span><span class="p">);</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() =&gt; func.apply(this, args), delay);
+    };
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">fetchResults</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">debounce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// API call to fetch results based on query</span>
-<span class="p">},</span><span class="w"> </span><span class="mf">300</span><span class="p">);</span>
+const fetchResults = debounce(function(query) {
+    // API call to fetch results based on query
+}, 300);
 
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;searchBox&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetchResults</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+document.getElementById('searchBox').addEventListener('input', (event) =&gt; {
+    fetchResults(event.target.value);
+});
+</code></pre>
 <h3 id="7-monitor-performance-continuously">7. Monitor Performance Continuously</h3>
 <p>Performance optimization is not a one-time task. Implement continuous monitoring to identify new bottlenecks as your application evolves.</p>
 <h4 id="tools-for-continuous-monitoring">Tools for Continuous Monitoring</h4>

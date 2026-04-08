@@ -174,9 +174,8 @@
 </ul>
 <h3 id="example-automating-updates-with-chocolatey">Example: Automating Updates with Chocolatey</h3>
 <p>You can automate the installation and update of software using Chocolatey with the following command:</p>
-<div class="codehilite"><pre><span></span><code>choco<span class="w"> </span>upgrade<span class="w"> </span>all<span class="w"> </span>-y
-</code></pre></div>
-
+<pre><code class="language-bash">choco upgrade all -y
+</code></pre>
 <p>This command instructs Chocolatey to upgrade all installed packages to their latest versions.</p>
 <h2 id="3-conduct-regular-security-audits">3. Conduct Regular Security Audits</h2>
 <h3 id="why-audits-matter">Why Audits Matter</h3>
@@ -227,11 +226,10 @@
 </ul>
 <h3 id="example-configuring-ufw-on-ubuntu">Example: Configuring UFW on Ubuntu</h3>
 <p>To enable UFW and allow SSH access while blocking other traffic, use the following commands:</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>ssh
-sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</span>
-sudo<span class="w"> </span>ufw<span class="w"> </span>status
-</code></pre></div>
-
+<pre><code class="language-bash">sudo ufw allow ssh
+sudo ufw enable
+sudo ufw status
+</code></pre>
 <h3 id="intrusion-detection-systems-ids">Intrusion Detection Systems (IDS)</h3>
 <p>Consider implementing an IDS like Snort or OSSEC to monitor network traffic for suspicious activity.</p>
 <h2 id="5-train-employees-on-cybersecurity-awareness">5. Train Employees on Cybersecurity Awareness</h2>
@@ -258,13 +256,11 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 </ul>
 <h3 id="example-encrypting-data-with-openssl">Example: Encrypting Data with OpenSSL</h3>
 <p>To encrypt a file using OpenSSL with AES-256, use the following commands:</p>
-<div class="codehilite"><pre><span></span><code>openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-salt<span class="w"> </span>-in<span class="w"> </span>sensitive_data.txt<span class="w"> </span>-out<span class="w"> </span>sensitive_data.txt.enc
-</code></pre></div>
-
+<pre><code class="language-bash">openssl enc -aes-256-cbc -salt -in sensitive_data.txt -out sensitive_data.txt.enc
+</code></pre>
 <p>To decrypt the file, use:</p>
-<div class="codehilite"><pre><span></span><code>openssl<span class="w"> </span>enc<span class="w"> </span>-d<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-in<span class="w"> </span>sensitive_data.txt.enc<span class="w"> </span>-out<span class="w"> </span>sensitive_data.txt
-</code></pre></div>
-
+<pre><code class="language-bash">openssl enc -d -aes-256-cbc -in sensitive_data.txt.enc -out sensitive_data.txt
+</code></pre>
 <h2 id="7-backup-data-regularly">7. Backup Data Regularly</h2>
 <h3 id="importance-of-data-backups">Importance of Data Backups</h3>
 <p>Regular backups are vital for recovery in case of data loss due to cyberattacks, hardware failure, or natural disasters. According to a survey by Datto, 74% of businesses that experience a major disaster fail within 3 years if they don’t have a backup plan.</p>

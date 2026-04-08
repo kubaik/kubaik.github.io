@@ -169,47 +169,44 @@
 <p>To illustrate the benefits of cloud computing, let's consider a few practical examples.</p>
 <h3 id="example-1-deploying-a-web-application-on-aws">Example 1: Deploying a Web Application on AWS</h3>
 <p>Suppose we want to deploy a simple web application on AWS using the Elastic Beanstalk service. We can use the following code to create a new environment:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">beanstalk</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elasticbeanstalk&#39;</span><span class="p">)</span>
+beanstalk = boto3.client('elasticbeanstalk')
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">beanstalk</span><span class="o">.</span><span class="n">create_environment</span><span class="p">(</span>
-    <span class="n">EnvironmentName</span><span class="o">=</span><span class="s1">&#39;my-environment&#39;</span><span class="p">,</span>
-    <span class="n">ApplicationName</span><span class="o">=</span><span class="s1">&#39;my-application&#39;</span><span class="p">,</span>
-    <span class="n">VersionLabel</span><span class="o">=</span><span class="s1">&#39;my-version&#39;</span><span class="p">,</span>
-    <span class="n">SolutionStackName</span><span class="o">=</span><span class="s1">&#39;64bit Amazon Linux 2018.03 v2.12.10 running Python 3.6&#39;</span>
-<span class="p">)</span>
+response = beanstalk.create_environment(
+    EnvironmentName='my-environment',
+    ApplicationName='my-application',
+    VersionLabel='my-version',
+    SolutionStackName='64bit Amazon Linux 2018.03 v2.12.10 running Python 3.6'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</code></pre></div>
-
+print(response)
+</code></pre>
 <p>This code creates a new environment with the specified name, application, and version label. We can then use the <code>create_environment</code> method to deploy our web application to the environment.</p>
 <h3 id="example-2-using-azure-functions-for-serverless-computing">Example 2: Using Azure Functions for Serverless Computing</h3>
 <p>Azure Functions is a serverless compute service that allows us to run small pieces of code in response to events. Suppose we want to create a new Azure Function using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">azure.functions</span> <span class="k">as</span> <span class="nn">func</span>
+<pre><code class="language-python">import azure.functions as func
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">func</span><span class="o">.</span><span class="n">HttpResponse</span><span class="p">:</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">func</span><span class="o">.</span><span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;Please pass a name on the query string&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">func</span><span class="o">.</span><span class="n">HttpResponse</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</code></pre></div>
-
+def main(req: func.HttpRequest) -&gt; func.HttpResponse:
+    name = req.params.get('name')
+    if not name:
+        return func.HttpResponse(&quot;Please pass a name on the query string&quot;, status_code=400)
+    return func.HttpResponse(f&quot;Hello, {name}!&quot;, status_code=200)
+</code></pre>
 <p>This code defines a new Azure Function that responds to HTTP requests. We can then use the Azure Functions dashboard to deploy and manage our function.</p>
 <h3 id="example-3-using-gcp-for-machine-learning">Example 3: Using GCP for Machine Learning</h3>
 <p>GCP provides a range of machine learning services, including the AutoML platform. Suppose we want to use AutoML to train a new machine learning model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">automl</span>
+<pre><code class="language-python">import automl
 
-<span class="c1"># Create a new dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;my-dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;my-project&#39;</span><span class="p">)</span>
+# Create a new dataset
+dataset = automl.Dataset.create('my-dataset', 'my-project')
 
-<span class="c1"># Create a new model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;my-model&#39;</span><span class="p">,</span> <span class="s1">&#39;my-project&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+# Create a new model
+model = automl.Model.create('my-model', 'my-project', dataset)
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-</code></pre></div>
-
+# Train the model
+model.train()
+</code></pre>
 <p>This code creates a new dataset and model using the AutoML platform. We can then use the <code>train</code> method to train our model.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Cloud computing has a wide range of real-world use cases, including:</p>

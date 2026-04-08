@@ -166,10 +166,9 @@
 <p><strong>What It Is</strong>: Tagging allows you to categorize your cloud resources based on various attributes, such as application, environment (dev, test, prod), or owner.</p>
 <p><strong>Why Use It</strong>: Tagging helps in tracking resource usage and costs, making it easier to identify underutilized or unnecessary resources.</p>
 <p><strong>Example</strong>: If you are using AWS, you can tag your EC2 instances as follows:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>create-tags<span class="w"> </span>--resources<span class="w"> </span>i-1234567890abcdef0<span class="w"> </span><span class="se">\</span>
---tags<span class="w"> </span><span class="nv">Key</span><span class="o">=</span>Environment,Value<span class="o">=</span>Production<span class="w"> </span><span class="nv">Key</span><span class="o">=</span>Owner,Value<span class="o">=</span>TeamA
-</code></pre></div>
-
+<pre><code class="language-bash">aws ec2 create-tags --resources i-1234567890abcdef0 \
+--tags Key=Environment,Value=Production Key=Owner,Value=TeamA
+</code></pre>
 <p><strong>Benefits</strong>:
 - Enhanced visibility into costs by team and project.
 - Simplified reporting for chargebacks or budgeting.</p>
@@ -186,9 +185,8 @@
 <li>Identify instances that are consistently utilizing less than 20% of their CPU.</li>
 </ol>
 <p>You can then downsize through the console or using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>modify-instance-attribute<span class="w"> </span>--instance-id<span class="w"> </span>i-1234567890abcdef0<span class="w"> </span>--instance-type<span class="w"> </span>t2.micro
-</code></pre></div>
-
+<pre><code class="language-bash">aws ec2 modify-instance-attribute --instance-id i-1234567890abcdef0 --instance-type t2.micro
+</code></pre>
 <p><strong>Metrics to Consider</strong>:
 - CPU utilization: Aim for instances running consistently under 20%.
 - Memory utilization: Monitor with CloudWatch; consider using Amazon CloudWatch Agent for deeper insights.</p>
@@ -201,24 +199,21 @@
 <ol>
 <li>Create a launch configuration:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>autoscaling<span class="w"> </span>create-launch-configuration<span class="w"> </span>--launch-configuration-name<span class="w"> </span>my-launch-configuration<span class="w"> </span><span class="se">\</span>
---image-id<span class="w"> </span>ami-12345678<span class="w"> </span>--instance-type<span class="w"> </span>t2.micro
-</code></pre></div>
-
+<pre><code class="language-bash">aws autoscaling create-launch-configuration --launch-configuration-name my-launch-configuration \
+--image-id ami-12345678 --instance-type t2.micro
+</code></pre>
 <ol>
 <li>Create an auto-scaling group:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>autoscaling<span class="w"> </span>create-auto-scaling-group<span class="w"> </span>--auto-scaling-group-name<span class="w"> </span>my-asg<span class="w"> </span><span class="se">\</span>
---launch-configuration-name<span class="w"> </span>my-launch-configuration<span class="w"> </span>--min-size<span class="w"> </span><span class="m">1</span><span class="w"> </span>--max-size<span class="w"> </span><span class="m">5</span><span class="w"> </span>--desired-capacity<span class="w"> </span><span class="m">2</span><span class="w"> </span>--vpc-zone-identifier<span class="w"> </span>subnet-12345678
-</code></pre></div>
-
+<pre><code class="language-bash">aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
+--launch-configuration-name my-launch-configuration --min-size 1 --max-size 5 --desired-capacity 2 --vpc-zone-identifier subnet-12345678
+</code></pre>
 <ol>
 <li>Define scaling policies:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>autoscaling<span class="w"> </span>put-scaling-policy<span class="w"> </span>--policy-name<span class="w"> </span>scale-out<span class="w"> </span>--auto-scaling-group-name<span class="w"> </span>my-asg<span class="w"> </span><span class="se">\</span>
---scaling-adjustment<span class="w"> </span><span class="m">1</span><span class="w"> </span>--adjustment-type<span class="w"> </span>ChangeInCapacity
-</code></pre></div>
-
+<pre><code class="language-bash">aws autoscaling put-scaling-policy --policy-name scale-out --auto-scaling-group-name my-asg \
+--scaling-adjustment 1 --adjustment-type ChangeInCapacity
+</code></pre>
 <p><strong>Benefits</strong>:
 - Pay only for what you use.
 - Automatically adapt to traffic spikes, reducing over-provisioning.</p>
@@ -256,27 +251,25 @@
 - Move infrequently accessed data to cheaper storage classes like S3 Glacier or S3 Infrequent Access.
 - Use lifecycle policies to automatically transition data.</p>
 <p><strong>Example</strong>: To create a lifecycle policy for an S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;Rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MoveToGlacier&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enabled&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logs/&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Transitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;Days&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;StorageClass&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GLACIER&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;Rules&quot;: [
+    {
+      &quot;ID&quot;: &quot;MoveToGlacier&quot;,
+      &quot;Status&quot;: &quot;Enabled&quot;,
+      &quot;Prefix&quot;: &quot;logs/&quot;,
+      &quot;Transitions&quot;: [
+        {
+          &quot;Days&quot;: 30,
+          &quot;StorageClass&quot;: &quot;GLACIER&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
 <p><strong>Command to apply the lifecycle policy</strong>:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>s3api<span class="w"> </span>put-bucket-lifecycle-configuration<span class="w"> </span>--bucket<span class="w"> </span>my-bucket<span class="w"> </span>--lifecycle-configuration<span class="w"> </span>file://lifecycle.json
-</code></pre></div>
-
+<pre><code class="language-bash">aws s3api put-bucket-lifecycle-configuration --bucket my-bucket --lifecycle-configuration file://lifecycle.json
+</code></pre>
 <p><strong>Benefits</strong>:
 - Significant savings on storage costs, especially for large datasets.</p>
 <h3 id="6-monitor-and-analyze-costs-continuously">6. Monitor and Analyze Costs Continuously</h3>
@@ -312,21 +305,20 @@
 <p><strong>Solution</strong>:
 - Implement automated scripts to shut down non-production resources during off-hours.</p>
 <p>Example of a simple AWS Lambda function to stop EC2 instances at 8 PM:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<pre><code class="language-python">import boto3
+from datetime import datetime
 
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+ec2 = boto3.client('ec2')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="n">instances</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">describe_instances</span><span class="p">(</span>
-        <span class="n">Filters</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;instance-state-name&#39;</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;running&#39;</span><span class="p">]}]</span>
-    <span class="p">)</span>
-    <span class="k">for</span> <span class="n">reservation</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">[</span><span class="s1">&#39;Reservations&#39;</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">reservation</span><span class="p">[</span><span class="s1">&#39;Instances&#39;</span><span class="p">]:</span>
-            <span class="n">ec2</span><span class="o">.</span><span class="n">stop_instances</span><span class="p">(</span><span class="n">InstanceIds</span><span class="o">=</span><span class="p">[</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">]])</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Stopped instance: </span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;InstanceId&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+def lambda_handler(event, context):
+    instances = ec2.describe_instances(
+        Filters=[{'Name': 'instance-state-name', 'Values': ['running']}]
+    )
+    for reservation in instances['Reservations']:
+        for instance in reservation['Instances']:
+            ec2.stop_instances(InstanceIds=[instance['InstanceId']])
+            print(f'Stopped instance: {instance[&quot;InstanceId&quot;]}')
+</code></pre>
 <h3 id="problem-3-difficulty-in-tracking-costs">Problem 3: Difficulty in Tracking Costs</h3>
 <p><strong>Solution</strong>:
 - Implement tagging strategies as discussed above.

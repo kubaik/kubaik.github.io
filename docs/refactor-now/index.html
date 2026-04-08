@@ -175,19 +175,18 @@
 <h3 id="2-set-up-a-testing-framework">2. Set Up a Testing Framework</h3>
 <p>To safely refactor your code, you need to ensure you have a robust suite of tests. For example, if you're using Java, consider using JUnit for unit tests and Mockito for mocking dependencies. If you're using JavaScript, frameworks like Jest or Mocha can be beneficial.</p>
 <p><strong>Example: Setting Up JUnit for Testing</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-<span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.*</span><span class="p">;</span>
+<pre><code class="language-java">import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-<span class="kd">class</span> <span class="nc">MyServiceTest</span><span class="w"> </span><span class="p">{</span>
+class MyServiceTest {
 
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testCalculateSum</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">MyService</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyService</span><span class="p">();</span>
-<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">calculateSum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Test
+    void testCalculateSum() {
+        MyService service = new MyService();
+        assertEquals(5, service.calculateSum(2, 3));
+    }
+}
+</code></pre>
 <h3 id="3-incremental-refactoring">3. Incremental Refactoring</h3>
 <p>Refactor your code in small, manageable increments. This reduces risk and allows you to validate the functionality at each step.</p>
 <h4 id="use-case-refactoring-a-payment-processing-module">Use Case: Refactoring a Payment Processing Module</h4>
@@ -210,13 +209,12 @@ public class PaymentProcessor {
 <p><strong>Step 2: Write Tests for the New Class</strong></p>
 <p>```java
 class PaymentProcessorTest {</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">@Test</span>
-<span class="n">void</span><span class="w"> </span><span class="n">testProcessPayment</span><span class="p">()</span><span class="w"> </span><span class="err">{</span>
-<span class="w">    </span><span class="n">PaymentProcessor</span><span class="w"> </span><span class="n">processor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PaymentProcessor</span><span class="p">();</span>
-<span class="w">    </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">processor</span><span class="p">.</span><span class="n">processPayment</span><span class="p">(</span><span class="mf">100.0</span><span class="p">));</span>
-<span class="err">}</span>
-</code></pre></div>
-
+<pre><code>@Test
+void testProcessPayment() {
+    PaymentProcessor processor = new PaymentProcessor();
+    assertTrue(processor.processPayment(100.0));
+}
+</code></pre>
 <p>}
 ```</p>
 </li>

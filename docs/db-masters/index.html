@@ -177,41 +177,38 @@
 <p>Let's take a look at some practical examples of using database management tools with code.</p>
 <h3 id="example-1-creating-a-database-with-mysql">Example 1: Creating a Database with MySQL</h3>
 <p>To create a database with MySQL, you can use the following SQL command:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydatabase</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE DATABASE mydatabase;
+</code></pre>
 <p>You can execute this command using the MySQL command-line tool or a graphical user interface like phpMyAdmin.</p>
 <h3 id="example-2-querying-a-database-with-postgresql">Example 2: Querying a Database with PostgreSQL</h3>
 <p>To query a database with PostgreSQL, you can use the following SQL command:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM mytable;
+</code></pre>
 <p>You can execute this command using the PostgreSQL command-line tool or a graphical user interface like pgAdmin.</p>
 <h3 id="example-3-inserting-data-into-a-mongodb-collection">Example 3: Inserting Data into a MongoDB Collection</h3>
 <p>To insert data into a MongoDB collection, you can use the following JavaScript code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">MongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mongodb://localhost:27017&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dbName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mydatabase&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">collectionName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mycollection&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
+const dbName = 'mydatabase';
+const collectionName = 'mycollection';
 
-<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to MongoDB&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">db</span><span class="p">(</span><span class="nx">dbName</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">collection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="nx">collectionName</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">collection</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Document inserted successfully&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+MongoClient.connect(url, function(err, client) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Connected to MongoDB');
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+    collection.insertOne({ name: 'John Doe', age: 30 }, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Document inserted successfully');
+      }
+    });
+  }
+});
+</code></pre>
 <p>This code connects to a MongoDB instance, selects a database and collection, and inserts a new document into the collection.</p>
 <h2 id="cloud-based-database-services">Cloud-Based Database Services</h2>
 <p>Cloud-based database services provide a convenient and scalable way to manage your databases. Some popular cloud-based database services include:</p>

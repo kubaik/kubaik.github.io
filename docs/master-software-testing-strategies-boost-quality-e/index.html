@@ -172,10 +172,9 @@
 - Use static code analysis tools to detect issues early.</p>
 <p><strong>Example:</strong><br />
 In a JavaScript project, use Jest for unit testing and integrate it into your GitHub Actions workflow to run tests on every pull request.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Running Jest tests in CI</span>
-npm<span class="w"> </span><span class="nb">test</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Example: Running Jest tests in CI
+npm test
+</code></pre>
 <h3 id="2-automated-testing">2. Automated Testing</h3>
 <p><strong>Definition:</strong> Using tools and scripts to execute tests automatically, reducing manual effort.</p>
 <p><strong>Benefits:</strong>
@@ -203,10 +202,9 @@ npm<span class="w"> </span><span class="nb">test</span>
 4. Repeat.</p>
 <p><strong>Example:</strong><br />
 Using pytest in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_add</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
-</code></pre></div>
-
+<pre><code class="language-python">def test_add():
+    assert add(2, 3) == 5
+</code></pre>
 <p>Once the test is defined, write the <code>add</code> function to pass it.</p>
 <h3 id="4-risk-based-testing">4. Risk-Based Testing</h3>
 <p><strong>Definition:</strong> Prioritizing testing efforts based on the risk and impact of failures.</p>
@@ -235,27 +233,26 @@ Optimizes resource utilization and ensures critical features are thoroughly test
 - Use tools like Jenkins or GitHub Actions to trigger tests on each commit.
 - Ensure tests include unit, integration, and UI tests.</p>
 <p><strong>Actionable step:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example GitHub Actions Workflow</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI/CD Pipeline</span>
+<pre><code class="language-yaml"># Example GitHub Actions Workflow
+name: CI/CD Pipeline
 
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+on:
+  push:
+    branches:
+      - main
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">build-and-test</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm test
+</code></pre>
 <h3 id="example-2-writing-effective-test-cases">Example 2: Writing Effective Test Cases</h3>
 <p><strong>Tip:</strong> Use the SMART criteria (Specific, Measurable, Achievable, Relevant, Time-bound).</p>
 <p><strong>Sample Test Case:</strong></p>

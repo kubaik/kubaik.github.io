@@ -160,94 +160,91 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to get you started with AR development:</p>
 <h3 id="example-1-using-arkit-to-display-a-3d-model">Example 1: Using ARKit to Display a 3D Model</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
-<span class="kd">import</span> <span class="nc">ARKit</span>
+<pre><code class="language-swift">import UIKit
+import ARKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kr">@IBOutlet</span> <span class="kd">var</span> <span class="nv">sceneView</span><span class="p">:</span> <span class="bp">ARSCNView</span><span class="p">!</span>
+class ViewController: UIViewController {
+    @IBOutlet var sceneView: ARSCNView!
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        <span class="c1">// Create a 3D model</span>
-        <span class="kd">let</span> <span class="nv">cube</span> <span class="p">=</span> <span class="bp">SCNBox</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">chamferRadius</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="kd">let</span> <span class="nv">cubeNode</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="n">cube</span><span class="p">)</span>
+        // Create a 3D model
+        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        let cubeNode = SCNNode(geometry: cube)
 
-        <span class="c1">// Add the 3D model to the scene</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">cubeNode</span><span class="p">)</span>
+        // Add the 3D model to the scene
+        sceneView.scene.rootNode.addChildNode(cubeNode)
 
-        <span class="c1">// Configure the AR session</span>
-        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Configure the AR session
+        let configuration = ARWorldTrackingConfiguration()
+        sceneView.session.run(configuration)
+    }
+}
+</code></pre>
 <p>This code example uses ARKit to display a 3D cube in an AR scene. The <code>SCNBox</code> class is used to create the 3D model, and the <code>SCNNode</code> class is used to add the model to the scene.</p>
 <h3 id="example-2-using-arcore-to-detect-planes">Example 2: Using ARCore to Detect Planes</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.ArCore</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Frame</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.core.Plane</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.ar.sceneform.ux.ArFragment</span><span class="p">;</span>
+<pre><code class="language-java">import android.os.Bundle;
+import com.google.ar.core.ArCore;
+import com.google.ar.core.Frame;
+import com.google.ar.core.Plane;
+import com.google.ar.sceneform.ux.ArFragment;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MainActivity</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">ArFragment</span><span class="w"> </span><span class="n">arFragment</span><span class="p">;</span>
+public class MainActivity extends AppCompatActivity {
+    private ArFragment arFragment;
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">Bundle</span><span class="w"> </span><span class="n">savedInstanceState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">activity_main</span><span class="p">);</span>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-<span class="w">        </span><span class="c1">// Initialize the AR session</span>
-<span class="w">        </span><span class="n">arFragment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ArFragment</span><span class="p">)</span><span class="w"> </span><span class="n">getSupportFragmentManager</span><span class="p">().</span><span class="na">findFragmentById</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">id</span><span class="p">.</span><span class="na">ar_fragment</span><span class="p">);</span>
-<span class="w">        </span><span class="n">arFragment</span><span class="p">.</span><span class="na">getArSceneView</span><span class="p">().</span><span class="na">setOnUpdateListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">BaseArFragment</span><span class="p">.</span><span class="na">OnUpdateListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nd">@Override</span>
-<span class="w">            </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onUpdate</span><span class="p">(</span><span class="n">Frame</span><span class="w"> </span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="n">BaseArFragment</span><span class="w"> </span><span class="n">baseArFragment</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Detect planes in the scene</span>
-<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Plane</span><span class="w"> </span><span class="n">plane</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="na">getPlanes</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="c1">// Draw a plane mesh</span>
-<span class="w">                    </span><span class="n">plane</span><span class="p">.</span><span class="na">draw</span><span class="p">(</span><span class="n">arFragment</span><span class="p">.</span><span class="na">getArSceneView</span><span class="p">().</span><span class="na">getScene</span><span class="p">());</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Initialize the AR session
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
+        arFragment.getArSceneView().setOnUpdateListener(new BaseArFragment.OnUpdateListener() {
+            @Override
+            public void onUpdate(Frame frame, BaseArFragment baseArFragment) {
+                // Detect planes in the scene
+                for (Plane plane : frame.getPlanes()) {
+                    // Draw a plane mesh
+                    plane.draw(arFragment.getArSceneView().getScene());
+                }
+            }
+        });
+    }
+}
+</code></pre>
 <p>This code example uses ARCore to detect planes in an AR scene. The <code>Plane</code> class is used to detect planes, and the <code>draw</code> method is used to draw a plane mesh.</p>
 <h3 id="example-3-using-unity-to-create-an-ar-experience">Example 3: Using Unity to Create an AR Experience</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARFoundation</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ARExperience</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ARSession</span><span class="w"> </span><span class="n">arSession</span><span class="p">;</span>
+public class ARExperience : MonoBehaviour
+{
+    private ARSession arSession;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Initialize the AR session</span>
-<span class="w">        </span><span class="n">arSession</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ARSession</span><span class="p">();</span>
-<span class="w">        </span><span class="n">arSession</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start()
+    {
+        // Initialize the AR session
+        arSession = new ARSession();
+        arSession.Run();
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get the current frame</span>
-<span class="w">        </span><span class="n">ARFrame</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arSession</span><span class="p">.</span><span class="n">GetFrame</span><span class="p">();</span>
+    void Update()
+    {
+        // Get the current frame
+        ARFrame frame = arSession.GetFrame();
 
-<span class="w">        </span><span class="c1">// Detect planes in the scene</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">ARPose</span><span class="w"> </span><span class="n">plane</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">GetPlanes</span><span class="p">())</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Draw a plane mesh</span>
-<span class="w">            </span><span class="n">GameObject</span><span class="w"> </span><span class="n">planeMesh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GameObject</span><span class="p">.</span><span class="n">CreatePrimitive</span><span class="p">(</span><span class="n">PrimitiveType</span><span class="p">.</span><span class="n">Plane</span><span class="p">);</span>
-<span class="w">            </span><span class="n">planeMesh</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plane</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
-<span class="w">            </span><span class="n">planeMesh</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plane</span><span class="p">.</span><span class="n">rotation</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Detect planes in the scene
+        foreach (ARPose plane in frame.GetPlanes())
+        {
+            // Draw a plane mesh
+            GameObject planeMesh = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            planeMesh.transform.position = plane.position;
+            planeMesh.transform.rotation = plane.rotation;
+        }
+    }
+}
+</code></pre>
 <p>This code example uses Unity to create an AR experience. The <code>ARSession</code> class is used to initialize the AR session, and the <code>ARFrame</code> class is used to get the current frame. The <code>GetPlanes</code> method is used to detect planes in the scene, and the <code>Draw</code> method is used to draw a plane mesh.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in AR development:

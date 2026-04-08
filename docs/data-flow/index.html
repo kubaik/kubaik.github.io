@@ -162,36 +162,35 @@
 * Apache NiFi: a data integration tool that provides a web-based interface for designing and managing data flows
 * AWS Kinesis: a fully managed service that makes it easy to collect, process, and analyze real-time data</p>
 <p>For example, let's consider a scenario where we need to ingest data from a Twitter API using Apache Kafka. We can use the following code to create a Kafka producer that sends tweets to a Kafka topic:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
-<span class="kn">import</span> <span class="nn">tweepy</span>
+<pre><code class="language-python">from kafka import KafkaProducer
+import tweepy
 
-<span class="c1"># Twitter API credentials</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_key&quot;</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_secret&quot;</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="s2">&quot;your_access_token&quot;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s2">&quot;your_access_token_secret&quot;</span>
+# Twitter API credentials
+consumer_key = &quot;your_consumer_key&quot;
+consumer_secret = &quot;your_consumer_secret&quot;
+access_token = &quot;your_access_token&quot;
+access_token_secret = &quot;your_access_token_secret&quot;
 
-<span class="c1"># Kafka producer settings</span>
-<span class="n">bootstrap_servers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;localhost:9092&quot;</span><span class="p">]</span>
-<span class="n">topic</span> <span class="o">=</span> <span class="s2">&quot;tweets&quot;</span>
+# Kafka producer settings
+bootstrap_servers = [&quot;localhost:9092&quot;]
+topic = &quot;tweets&quot;
 
-<span class="c1"># Create a Kafka producer</span>
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="n">bootstrap_servers</span><span class="p">)</span>
+# Create a Kafka producer
+producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
-<span class="c1"># Create a Tweepy API object</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
-<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+# Create a Tweepy API object
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
 
-<span class="c1"># Define a function to send tweets to Kafka</span>
-<span class="k">def</span> <span class="nf">send_tweet_to_kafka</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
-    <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+# Define a function to send tweets to Kafka
+def send_tweet_to_kafka(tweet):
+    producer.send(topic, value=tweet.text.encode(&quot;utf-8&quot;))
 
-<span class="c1"># Start streaming tweets</span>
-<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="s2">&quot;#dataengineering&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-    <span class="n">send_tweet_to_kafka</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</code></pre></div>
-
+# Start streaming tweets
+for tweet in tweepy.Cursor(api.search, q=&quot;#dataengineering&quot;).items(1000):
+    send_tweet_to_kafka(tweet)
+</code></pre>
 <p>This code creates a Kafka producer that sends tweets to a Kafka topic, where they can be processed further.</p>
 <h2 id="data-processing">Data Processing</h2>
 <p>Data processing is the second stage of a data pipeline, where data is transformed, aggregated, and filtered to prepare it for analysis. This stage can be computationally intensive, especially when dealing with large volumes of data. Some popular tools for data processing include:
@@ -199,22 +198,21 @@
 * Apache Flink: a platform for distributed stream and batch processing
 * Google Cloud Dataflow: a fully managed service for processing and analyzing data in the cloud</p>
 <p>For example, let's consider a scenario where we need to process a large dataset using Apache Spark. We can use the following code to create a Spark DataFrame and perform some basic data processing:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a SparkSession</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Data Processing&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a SparkSession
+spark = SparkSession.builder.appName(&quot;Data Processing&quot;).getOrCreate()
 
-<span class="c1"># Load a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Load a sample dataset
+data = spark.read.csv(&quot;data.csv&quot;, header=True, inferSchema=True)
 
-<span class="c1"># Perform some basic data processing</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+# Perform some basic data processing
+data = data.filter(data[&quot;age&quot;] &gt; 18)
+data = data.groupBy(&quot;country&quot;).count()
 
-<span class="c1"># Show the results</span>
-<span class="n">data</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Show the results
+data.show()
+</code></pre>
 <p>This code creates a Spark DataFrame, loads a sample dataset, and performs some basic data processing, such as filtering and grouping.</p>
 <h3 id="data-storage">Data Storage</h3>
 <p>Data storage is the third stage of a data pipeline, where data is loaded into a target system for analysis or other uses. This stage can be critical, especially when dealing with large volumes of data or high-performance requirements. Some popular tools for data storage include:
@@ -222,31 +220,30 @@
 * Google BigQuery: a fully managed enterprise data warehouse service that provides high-performance analytics
 * Apache Cassandra: a NoSQL database that provides high availability and scalability</p>
 <p>For example, let's consider a scenario where we need to load data into Amazon Redshift. We can use the following code to create a Redshift cluster and load data into it:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a Redshift client</span>
-<span class="n">redshift</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;redshift&quot;</span><span class="p">)</span>
+# Create a Redshift client
+redshift = boto3.client(&quot;redshift&quot;)
 
-<span class="c1"># Create a Redshift cluster</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">redshift</span><span class="o">.</span><span class="n">create_cluster</span><span class="p">(</span>
-    <span class="n">DBName</span><span class="o">=</span><span class="s2">&quot;datawarehouse&quot;</span><span class="p">,</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="s2">&quot;datawarehouse-cluster&quot;</span><span class="p">,</span>
-    <span class="n">MasterUsername</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
-    <span class="n">MasterUserPassword</span><span class="o">=</span><span class="s2">&quot;password&quot;</span><span class="p">,</span>
-    <span class="n">NodeType</span><span class="o">=</span><span class="s2">&quot;dc2.large&quot;</span><span class="p">,</span>
-    <span class="n">ClusterType</span><span class="o">=</span><span class="s2">&quot;single-node&quot;</span>
-<span class="p">)</span>
+# Create a Redshift cluster
+cluster = redshift.create_cluster(
+    DBName=&quot;datawarehouse&quot;,
+    ClusterIdentifier=&quot;datawarehouse-cluster&quot;,
+    MasterUsername=&quot;admin&quot;,
+    MasterUserPassword=&quot;password&quot;,
+    NodeType=&quot;dc2.large&quot;,
+    ClusterType=&quot;single-node&quot;
+)
 
-<span class="c1"># Load data into Redshift</span>
-<span class="n">redshift</span><span class="o">.</span><span class="n">copy_from_s3_to_redshift</span><span class="p">(</span>
-    <span class="n">ClusterIdentifier</span><span class="o">=</span><span class="n">cluster</span><span class="p">[</span><span class="s2">&quot;ClusterIdentifier&quot;</span><span class="p">],</span>
-    <span class="n">DBName</span><span class="o">=</span><span class="s2">&quot;datawarehouse&quot;</span><span class="p">,</span>
-    <span class="n">TableName</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
-    <span class="n">S3Bucket</span><span class="o">=</span><span class="s2">&quot;data-bucket&quot;</span><span class="p">,</span>
-    <span class="n">S3Key</span><span class="o">=</span><span class="s2">&quot;data.csv&quot;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Load data into Redshift
+redshift.copy_from_s3_to_redshift(
+    ClusterIdentifier=cluster[&quot;ClusterIdentifier&quot;],
+    DBName=&quot;datawarehouse&quot;,
+    TableName=&quot;data&quot;,
+    S3Bucket=&quot;data-bucket&quot;,
+    S3Key=&quot;data.csv&quot;
+)
+</code></pre>
 <p>This code creates a Redshift cluster and loads data into it from an S3 bucket.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Data engineering pipelines can be complex and prone to errors. Some common problems include:
@@ -258,23 +255,22 @@
 * Data caching: using tools like Redis or Memcached to cache frequently accessed data
 * Data partitioning: using tools like Apache Hive or Apache Cassandra to partition data for better performance</p>
 <p>For example, let's consider a scenario where we need to validate data quality using Apache Beam. We can use the following code to create a Beam pipeline and validate data quality:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">apache_beam.options.pipeline_options</span> <span class="kn">import</span> <span class="n">PipelineOptions</span>
-<span class="kn">from</span> <span class="nn">apache_beam</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<pre><code class="language-python">from apache_beam.options.pipeline_options import PipelineOptions
+from apache_beam import Pipeline
 
-<span class="c1"># Create a Beam pipeline</span>
-<span class="n">options</span> <span class="o">=</span> <span class="n">PipelineOptions</span><span class="p">()</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+# Create a Beam pipeline
+options = PipelineOptions()
+pipeline = Pipeline(options=options)
 
-<span class="c1"># Define a function to validate data quality</span>
-<span class="k">def</span> <span class="nf">validate_data</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
+# Define a function to validate data quality
+def validate_data(row):
+    if row[&quot;age&quot;] &lt; 18:
+        return False
+    return True
 
-<span class="c1"># Validate data quality</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">ReadFromText</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">Filter</span><span class="p">(</span><span class="n">validate_data</span><span class="p">)</span> <span class="o">|</span> <span class="n">WriteToText</span><span class="p">(</span><span class="s2">&quot;validated_data.csv&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Validate data quality
+data = pipeline | ReadFromText(&quot;data.csv&quot;) | Filter(validate_data) | WriteToText(&quot;validated_data.csv&quot;)
+</code></pre>
 <p>This code creates a Beam pipeline, defines a function to validate data quality, and uses the <code>Filter</code> transform to validate data quality.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Data engineering pipelines have many real-world use cases, such as:

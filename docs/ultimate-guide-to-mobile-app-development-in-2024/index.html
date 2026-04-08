@@ -223,18 +223,17 @@
 <li>Use version control systems like Git.</li>
 <li>Implement thorough testing (unit, integration, UI tests).</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example: Simple Swift UI Button</span>
-<span class="n">Button</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="p">{</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Button tapped!&quot;</span><span class="p">)</span>
-<span class="p">})</span> <span class="p">{</span>
-    <span class="n">Text</span><span class="p">(</span><span class="s">&quot;Press Me&quot;</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">padding</span><span class="p">()</span>
-        <span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">foregroundColor</span><span class="p">(.</span><span class="n">white</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">cornerRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-swift">// Example: Simple Swift UI Button
+Button(action: {
+    print(&quot;Button tapped!&quot;)
+}) {
+    Text(&quot;Press Me&quot;)
+        .padding()
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(8)
+}
+</code></pre>
 <h3 id="integrating-ai-machine-learning">Integrating AI &amp; Machine Learning</h3>
 <ul>
 <li>Use APIs like <strong>TensorFlow Lite</strong> or <strong>Core ML</strong> for on-device ML.</li>
@@ -286,71 +285,70 @@
 <hr />
 <h2 id="practical-examples-actionable-advice">Practical Examples &amp; Actionable Advice</h2>
 <h3 id="example-1-building-a-cross-platform-to-do-list-app-with-flutter">Example 1: Building a Cross-Platform To-Do List App with Flutter</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">runApp</span><span class="p">(</span><span class="n">TodoApp</span><span class="p">());</span>
+void main() =&gt; runApp(TodoApp());
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">TodoApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">TodoHome</span><span class="p">(),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class TodoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: TodoHome(),
+    );
+  }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">TodoHome</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">_TodoHomeState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_TodoHomeState</span><span class="p">();</span>
-<span class="p">}</span>
+class TodoHome extends StatefulWidget {
+  @override
+  _TodoHomeState createState() =&gt; _TodoHomeState();
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">_TodoHomeState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">TodoHome</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">TextEditingController</span><span class="w"> </span><span class="n">_controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextEditingController</span><span class="p">();</span>
+class _TodoHomeState extends State&lt;TodoHome&gt; {
+  final List&lt;String&gt; _tasks = [];
+  final TextEditingController _controller = TextEditingController();
 
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">_addTask</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_controller</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">isNotEmpty</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">setState</span><span class="p">(()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_tasks</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">_controller</span><span class="p">.</span><span class="n">text</span><span class="p">);</span>
-<span class="w">        </span><span class="n">_controller</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+  void _addTask() {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        _tasks.add(_controller.text);
+        _controller.clear();
+      });
+    }
+  }
 
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;To-Do List&#39;</span><span class="p">)),</span>
-<span class="w">      </span><span class="nl">body:</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">children:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">          </span><span class="n">Padding</span><span class="p">(</span>
-<span class="w">            </span><span class="nl">padding:</span><span class="w"> </span><span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">8.0</span><span class="p">),</span>
-<span class="w">            </span><span class="nl">child:</span><span class="w"> </span><span class="n">TextField</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">controller:</span><span class="w"> </span><span class="n">_controller</span><span class="p">,</span>
-<span class="w">              </span><span class="nl">decoration:</span><span class="w"> </span><span class="n">InputDecoration</span><span class="p">(</span>
-<span class="w">                </span><span class="nl">labelText:</span><span class="w"> </span><span class="s1">&#39;New Task&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="nl">suffixIcon:</span><span class="w"> </span><span class="n">IconButton</span><span class="p">(</span>
-<span class="w">                  </span><span class="nl">icon:</span><span class="w"> </span><span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">add</span><span class="p">),</span>
-<span class="w">                  </span><span class="nl">onPressed:</span><span class="w"> </span><span class="n">_addTask</span><span class="p">,</span>
-<span class="w">                </span><span class="p">),</span>
-<span class="w">              </span><span class="p">),</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">          </span><span class="p">),</span>
-<span class="w">          </span><span class="n">Expanded</span><span class="p">(</span>
-<span class="w">            </span><span class="nl">child:</span><span class="w"> </span><span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">itemCount:</span><span class="w"> </span><span class="n">_tasks</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-<span class="w">              </span><span class="nl">itemBuilder:</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">                </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">_tasks</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span>
-<span class="w">              </span><span class="p">),</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">          </span><span class="p">),</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('To-Do List')),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                labelText: 'New Task',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: _addTask,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _tasks.length,
+              itemBuilder: (_, index) =&gt; ListTile(
+                title: Text(_tasks[index]),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+</code></pre>
 <p><em>Tip</em>: Use Flutter’s hot reload feature to speed up development.</p>
 <h3 id="example-2-using-ai-for-personalized-content-recommendations">Example 2: Using AI for Personalized Content Recommendations</h3>
 <ul>

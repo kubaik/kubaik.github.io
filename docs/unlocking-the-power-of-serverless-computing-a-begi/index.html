@@ -244,22 +244,21 @@
 <li>Store data in a managed database like DynamoDB.</li>
 </ol>
 <p><strong>Sample Code (Node.js with AWS Lambda):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Hello, serverless!&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">httpMethod</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">path</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">),</span>
-<span class="w">        </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">exports.handler = async (event) =&gt; {
+    const data = {
+        message: &quot;Hello, serverless!&quot;,
+        method: event.httpMethod,
+        path: event.path
+    };
+    return {
+        statusCode: 200,
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+};
+</code></pre>
 <h3 id="example-2-image-processing-pipeline">Example 2: Image Processing Pipeline</h3>
 <p>Trigger a function when a user uploads an image to cloud storage:</p>
 <ul>

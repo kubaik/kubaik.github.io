@@ -157,64 +157,61 @@
 <p>Developing VR applications requires a deep understanding of the underlying technology and the tools used to develop them. Here are a few examples of how to develop VR applications using popular VR engines:</p>
 <h3 id="example-1-developing-a-simple-vr-scene-using-unity">Example 1: Developing a Simple VR Scene using Unity</h3>
 <p>To develop a simple VR scene using Unity, you need to create a new Unity project and add a VR package such as the Oculus Integration package. Here is an example code snippet that demonstrates how to create a simple VR scene:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.XR;
 
-<span class="k">public</span><span class="w"> </span><span class="n">classVRTutorial</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new VR scene</span>
-<span class="w">        </span><span class="n">XRSettings</span><span class="p">.</span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="w">        </span><span class="n">XRSettings</span><span class="p">.</span><span class="n">LoadDeviceByName</span><span class="p">(</span><span class="s">&quot;Oculus Quest&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+public classVRTutorial : MonoBehaviour
+{
+    void Start()
+    {
+        // Create a new VR scene
+        XRSettings.enabled = true;
+        XRSettings.LoadDeviceByName(&quot;Oculus Quest&quot;);
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the VR scene</span>
-<span class="w">        </span><span class="n">transform</span><span class="p">.</span><span class="n">Rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">up</span><span class="p">,</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void Update()
+    {
+        // Update the VR scene
+        transform.Rotate(Vector3.up, Time.deltaTime * 100);
+    }
+}
+</code></pre>
 <p>This code snippet creates a new VR scene and updates it in real-time, providing a simple and immersive experience to the user.</p>
 <h3 id="example-2-developing-a-complex-vr-application-using-unreal-engine">Example 2: Developing a Complex VR Application using Unreal Engine</h3>
 <p>To develop a complex VR application using Unreal Engine, you need to create a new Unreal Engine project and add a range of features such as 3D modeling, physics, and graphics rendering. Here is an example code snippet that demonstrates how to create a complex VR application:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;CoreMinimal.h&quot;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;GameFramework/Actor.h&quot;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;VR_Tutorial.h&quot;</span>
+<pre><code class="language-c++">#include &quot;CoreMinimal.h&quot;
+#include &quot;GameFramework/Actor.h&quot;
+#include &quot;VR_Tutorial.h&quot;
 
-<span class="k">class</span><span class="w"> </span><span class="nc">AVR_Tutorial</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">AActor</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">GENERATED_BODY</span><span class="p">()</span>
+class AVR_Tutorial : public AActor
+{
+    GENERATED_BODY()
 
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="n">AVR_Tutorial</span><span class="p">();</span>
+public:
+    AVR_Tutorial();
 
-<span class="k">protected</span><span class="o">:</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">BeginPlay</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+protected:
+    virtual void BeginPlay() override;
 
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">Tick</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">DeltaTime</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>
-
+public:
+    virtual void Tick(float DeltaTime) override;
+};
+</code></pre>
 <p>This code snippet creates a new Unreal Engine project and adds a range of features such as 3D modeling, physics, and graphics rendering, making it easier to develop complex VR applications.</p>
 <h3 id="example-3-developing-a-web-based-vr-application-using-a-frame">Example 3: Developing a Web-based VR Application using A-Frame</h3>
 <p>To develop a web-based VR application using A-Frame, you need to create a new HTML file and add the A-Frame library. Here is an example code snippet that demonstrates how to create a web-based VR application:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://aframe.io/releases/1.2.0/aframe.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">a-scene</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">a-box</span> <span class="na">position</span><span class="o">=</span><span class="s">&quot;0 0 -3&quot;</span> <span class="na">rotation</span><span class="o">=</span><span class="s">&quot;0 0 0&quot;</span> <span class="na">scale</span><span class="o">=</span><span class="s">&quot;1 1 1&quot;</span> <span class="na">color</span><span class="o">=</span><span class="s">&quot;#4CC3D9&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">a-box</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">a-camera</span> <span class="na">position</span><span class="o">=</span><span class="s">&quot;0 0 0&quot;</span> <span class="na">rotation</span><span class="o">=</span><span class="s">&quot;0 0 0&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">a-camera</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">a-scene</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;https://aframe.io/releases/1.2.0/aframe.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;
+      &lt;a-box position=&quot;0 0 -3&quot; rotation=&quot;0 0 0&quot; scale=&quot;1 1 1&quot; color=&quot;#4CC3D9&quot;&gt;&lt;/a-box&gt;
+      &lt;a-camera position=&quot;0 0 0&quot; rotation=&quot;0 0 0&quot;&gt;&lt;/a-camera&gt;
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>This code snippet creates a new web-based VR application using A-Frame, providing a simple and immersive experience to the user.</p>
 <h2 id="vr-applications-in-various-industries">VR Applications in Various Industries</h2>
 <p>VR applications are being used in various industries such as gaming, education, healthcare, and entertainment. Here are a few examples of VR applications in each industry:</p>

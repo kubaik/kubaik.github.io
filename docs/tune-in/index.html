@@ -154,112 +154,109 @@
 <h3 id="grid-search">Grid Search</h3>
 <p>Grid search is a simple and widely used hyperparameter tuning method. It involves defining a range of values for each hyperparameter and training a model for each combination of hyperparameters. The combination with the best performance is then selected. Grid search can be computationally expensive, especially when dealing with a large number of hyperparameters.</p>
 <p>For example, let's consider a simple neural network with two hyperparameters: learning rate and number of hidden layers. We can use the <code>GridSearchCV</code> class from scikit-learn to perform grid search:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load iris dataset
+iris = load_iris()
+X, y = iris.data, iris.target
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Define hyperparameter grid</span>
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;learning_rate_init&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="s1">&#39;hidden_layer_sizes&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">10</span><span class="p">,),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,)]</span>
-<span class="p">}</span>
+# Define hyperparameter grid
+param_grid = {
+    'learning_rate_init': [0.01, 0.1, 1],
+    'hidden_layer_sizes': [(10,), (50,), (100,)]
+}
 
-<span class="c1"># Initialize neural network classifier</span>
-<span class="n">mlp</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+# Initialize neural network classifier
+mlp = MLPClassifier(max_iter=1000)
 
-<span class="c1"># Perform grid search</span>
-<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">mlp</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Perform grid search
+grid_search = GridSearchCV(mlp, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
 
-<span class="c1"># Print best hyperparameters and accuracy</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best hyperparameters:&quot;</span><span class="p">,</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best accuracy:&quot;</span><span class="p">,</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print best hyperparameters and accuracy
+print(&quot;Best hyperparameters:&quot;, grid_search.best_params_)
+print(&quot;Best accuracy:&quot;, grid_search.best_score_)
+</code></pre>
 <p>In this example, we define a grid of hyperparameters with three values for the learning rate and three values for the number of hidden layers. The <code>GridSearchCV</code> class trains a model for each combination of hyperparameters and selects the combination with the best accuracy.</p>
 <h3 id="random-search">Random Search</h3>
 <p>Random search is another popular hyperparameter tuning method. It involves randomly sampling hyperparameters from a defined distribution and training a model for each sample. Random search can be more efficient than grid search, especially when dealing with a large number of hyperparameters.</p>
 <p>For example, let's consider a convolutional neural network (CNN) with three hyperparameters: learning rate, batch size, and number of filters. We can use the <code>RandomizedSearchCV</code> class from scikit-learn to perform random search:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">from sklearn.model_selection import RandomizedSearchCV
+from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load iris dataset
+iris = load_iris()
+X, y = iris.data, iris.target
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Define hyperparameter distribution</span>
-<span class="n">param_dist</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;learning_rate_init&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
-    <span class="s1">&#39;n_filters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
-<span class="p">}</span>
+# Define hyperparameter distribution
+param_dist = {
+    'learning_rate_init': [0.01, 0.1, 1],
+    'batch_size': [32, 64, 128],
+    'n_filters': [10, 50, 100]
+}
 
-<span class="c1"># Initialize neural network classifier</span>
-<span class="n">mlp</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+# Initialize neural network classifier
+mlp = MLPClassifier(max_iter=1000)
 
-<span class="c1"># Perform random search</span>
-<span class="n">random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">mlp</span><span class="p">,</span> <span class="n">param_dist</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Perform random search
+random_search = RandomizedSearchCV(mlp, param_dist, cv=5, n_iter=10)
+random_search.fit(X_train, y_train)
 
-<span class="c1"># Print best hyperparameters and accuracy</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best hyperparameters:&quot;</span><span class="p">,</span> <span class="n">random_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best accuracy:&quot;</span><span class="p">,</span> <span class="n">random_search</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print best hyperparameters and accuracy
+print(&quot;Best hyperparameters:&quot;, random_search.best_params_)
+print(&quot;Best accuracy:&quot;, random_search.best_score_)
+</code></pre>
 <p>In this example, we define a distribution of hyperparameters with three values for the learning rate, three values for the batch size, and three values for the number of filters. The <code>RandomizedSearchCV</code> class randomly samples hyperparameters from this distribution and trains a model for each sample.</p>
 <h3 id="bayesian-optimization">Bayesian Optimization</h3>
 <p>Bayesian optimization is a more advanced hyperparameter tuning method that uses a probabilistic approach to search for the optimal hyperparameters. It involves defining a prior distribution over the hyperparameters and updating this distribution based on the performance of the model.</p>
 <p>For example, let's consider a recurrent neural network (RNN) with two hyperparameters: learning rate and number of hidden layers. We can use the <code>optuna</code> library to perform Bayesian optimization:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">optuna</span>
-<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import optuna
+from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load iris dataset</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+# Load iris dataset
+iris = load_iris()
+X, y = iris.data, iris.target
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Define objective function</span>
-<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-    <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_loguniform</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-    <span class="n">n_hidden_layers</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s1">&#39;n_hidden_layers&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+# Define objective function
+def objective(trial):
+    learning_rate = trial.suggest_loguniform('learning_rate', 0.001, 0.1)
+    n_hidden_layers = trial.suggest_int('n_hidden_layers', 1, 10)
 
-    <span class="c1"># Initialize neural network classifier</span>
-    <span class="n">mlp</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">learning_rate_init</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="n">n_hidden_layers</span><span class="p">,))</span>
+    # Initialize neural network classifier
+    mlp = MLPClassifier(max_iter=1000, learning_rate_init=learning_rate, hidden_layer_sizes=(n_hidden_layers,))
 
-    <span class="c1"># Train model</span>
-    <span class="n">mlp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    # Train model
+    mlp.fit(X_train, y_train)
 
-    <span class="c1"># Evaluate model</span>
-    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">mlp</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    # Evaluate model
+    accuracy = mlp.score(X_test, y_test)
 
-    <span class="k">return</span> <span class="n">accuracy</span>
+    return accuracy
 
-<span class="c1"># Perform Bayesian optimization</span>
-<span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">)</span>
-<span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+# Perform Bayesian optimization
+study = optuna.create_study(direction='maximize')
+study.optimize(objective, n_trials=50)
 
-<span class="c1"># Print best hyperparameters and accuracy</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best hyperparameters:&quot;</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best accuracy:&quot;</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">best_value</span><span class="p">)</span>
-</code></pre></div>
-
+# Print best hyperparameters and accuracy
+print(&quot;Best hyperparameters:&quot;, study.best_params)
+print(&quot;Best accuracy:&quot;, study.best_value)
+</code></pre>
 <p>In this example, we define an objective function that takes in a trial object and returns the accuracy of the model. The <code>optuna</code> library uses this objective function to perform Bayesian optimization and find the optimal hyperparameters.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems that occur during hyperparameter tuning and their solutions:</p>

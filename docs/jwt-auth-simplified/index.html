@@ -161,37 +161,35 @@
 <li><strong>Java</strong>: <code>jjwt</code> library, which provides a robust set of features for generating and verifying JWT tokens.</li>
 </ul>
 <p>Here is an example of how to generate a JWT token using the <code>jsonwebtoken</code> library in Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;johnDoe&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;johndoe@example.com&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">admin</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="p">};</span>
+const payload = {
+  username: 'johnDoe',
+  email: 'johndoe@example.com',
+  admin: true
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mySecretKey&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
+const secretKey = 'mySecretKey';
+const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</code></pre></div>
-
+console.log(token);
+</code></pre>
 <p>This code generates a JWT token with the specified payload and signs it with the secret key. The token is set to expire in one hour.</p>
 <h2 id="verifying-jwt-tokens">Verifying JWT Tokens</h2>
 <p>To verify a JWT token, you can use the <code>verify</code> method provided by the <code>jsonwebtoken</code> library. Here is an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mySecretKey&#39;</span><span class="p">;</span>
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+const secretKey = 'mySecretKey';
 
-<span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">secretKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">decoded</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+jwt.verify(token, secretKey, (err, decoded) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(decoded);
+  }
+});
+</code></pre>
 <p>This code verifies the JWT token and checks if it is valid. If the token is valid, it logs the decoded payload to the console.</p>
 <h2 id="common-use-cases">Common Use Cases</h2>
 <p>JWT authentication can be used in a variety of scenarios, including:</p>

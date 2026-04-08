@@ -224,13 +224,12 @@
 </ul>
 <h3 id="step-2-define-your-functions">Step 2: Define Your Functions</h3>
 <p>Identify discrete units of logic that respond to specific events. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">hello_world</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, Serverless World!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-python">def hello_world(event, context):
+    return {
+        'statusCode': 200,
+        'body': 'Hello, Serverless World!'
+    }
+</code></pre>
 <h3 id="step-3-set-up-event-triggers">Step 3: Set Up Event Triggers</h3>
 <p>Configure your functions to respond to triggers:</p>
 <ul>

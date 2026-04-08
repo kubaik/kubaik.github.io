@@ -169,25 +169,24 @@
 <h2 id="practical-example-deploying-a-web-application-on-azure">Practical Example: Deploying a Web Application on Azure</h2>
 <p>To demonstrate the simplicity and power of Azure Cloud Services, let's consider a practical example of deploying a web application on Azure. We'll use Azure App Service to deploy a simple web application written in Python.</p>
 <p>Here's an example of how to deploy a web application on Azure using the Azure CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install the Azure CLI</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">cli</span>
+<pre><code class="language-python"># Install the Azure CLI
+pip install azure-cli
 
-<span class="c1"># Login to Azure</span>
-<span class="n">az</span> <span class="n">login</span>
+# Login to Azure
+az login
 
-<span class="c1"># Create a new resource group</span>
-<span class="n">az</span> <span class="n">group</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">myresourcegroup</span> <span class="o">--</span><span class="n">location</span> <span class="n">westus2</span>
+# Create a new resource group
+az group create --name myresourcegroup --location westus2
 
-<span class="c1"># Create a new App Service plan</span>
-<span class="n">az</span> <span class="n">appservice</span> <span class="n">plan</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">myappserviceplan</span> <span class="o">--</span><span class="n">resource</span><span class="o">-</span><span class="n">group</span> <span class="n">myresourcegroup</span> <span class="o">--</span><span class="n">location</span> <span class="n">westus2</span> <span class="o">--</span><span class="n">sku</span> <span class="n">FREE</span>
+# Create a new App Service plan
+az appservice plan create --name myappserviceplan --resource-group myresourcegroup --location westus2 --sku FREE
 
-<span class="c1"># Create a new web app</span>
-<span class="n">az</span> <span class="n">webapp</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">mywebapp</span> <span class="o">--</span><span class="n">resource</span><span class="o">-</span><span class="n">group</span> <span class="n">myresourcegroup</span> <span class="o">--</span><span class="n">plan</span> <span class="n">myappserviceplan</span> <span class="o">--</span><span class="n">location</span> <span class="n">westus2</span>
+# Create a new web app
+az webapp create --name mywebapp --resource-group myresourcegroup --plan myappserviceplan --location westus2
 
-<span class="c1"># Deploy the web application</span>
-<span class="n">az</span> <span class="n">webapp</span> <span class="n">deployment</span> <span class="n">slot</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">mywebapp</span> <span class="o">--</span><span class="n">resource</span><span class="o">-</span><span class="n">group</span> <span class="n">myresourcegroup</span> <span class="o">--</span><span class="n">slot</span> <span class="n">production</span> <span class="o">--</span><span class="n">package</span> <span class="o">./</span><span class="n">mywebapp</span><span class="o">.</span><span class="n">zip</span>
-</code></pre></div>
-
+# Deploy the web application
+az webapp deployment slot create --name mywebapp --resource-group myresourcegroup --slot production --package ./mywebapp.zip
+</code></pre>
 <p>This example demonstrates how to create a new resource group, App Service plan, and web app, and deploy a web application to Azure using the Azure CLI.</p>
 <h3 id="azure-storage-a-highly-available-and-durable-storage-solution">Azure Storage: A Highly Available and Durable Storage Solution</h3>
 <p>Azure Storage provides a highly available and durable storage solution for data. With Azure Storage, users can store and manage large amounts of data, including blobs, files, queues, and tables.</p>
@@ -198,24 +197,23 @@
 <li><strong>Scalability</strong>: provides a scalable storage solution that can handle large amounts of data and traffic</li>
 </ul>
 <p>Here's an example of how to use Azure Storage to store and manage blobs:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the Azure Storage library</span>
-<span class="kn">from</span> <span class="nn">azure.storage.blob</span> <span class="kn">import</span> <span class="n">BlobServiceClient</span>
+<pre><code class="language-python"># Import the Azure Storage library
+from azure.storage.blob import BlobServiceClient
 
-<span class="c1"># Create a new BlobServiceClient</span>
-<span class="n">blob_service_client</span> <span class="o">=</span> <span class="n">BlobServiceClient</span><span class="o">.</span><span class="n">from_connection_string</span><span class="p">(</span><span class="s2">&quot;DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=myaccountkey;BlobEndpoint=myblobendpoint&quot;</span><span class="p">)</span>
+# Create a new BlobServiceClient
+blob_service_client = BlobServiceClient.from_connection_string(&quot;DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=myaccountkey;BlobEndpoint=myblobendpoint&quot;)
 
-<span class="c1"># Create a new container</span>
+# Create a new container
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Docker</span> <span class="n">Deep</span> <span class="n">Dive</span> <span class="n">by</span> <span class="n">Nigel</span> <span class="n">Poulton</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B0816Q9F6Z?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Docker Deep Dive by Nigel Poulton&lt;/a&gt;*
 
-<span class="n">container_client</span> <span class="o">=</span> <span class="n">blob_service_client</span><span class="o">.</span><span class="n">get_container_client</span><span class="p">(</span><span class="s2">&quot;mycontainer&quot;</span><span class="p">)</span>
-<span class="n">container_client</span><span class="o">.</span><span class="n">create_container</span><span class="p">()</span>
+container_client = blob_service_client.get_container_client(&quot;mycontainer&quot;)
+container_client.create_container()
 
-<span class="c1"># Upload a blob to the container</span>
-<span class="n">blob_client</span> <span class="o">=</span> <span class="n">container_client</span><span class="o">.</span><span class="n">get_blob_client</span><span class="p">(</span><span class="s2">&quot;myblob&quot;</span><span class="p">)</span>
-<span class="n">blob_client</span><span class="o">.</span><span class="n">upload_blob</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Upload a blob to the container
+blob_client = container_client.get_blob_client(&quot;myblob&quot;)
+blob_client.upload_blob(&quot;Hello, World!&quot;)
+</code></pre>
 <p>This example demonstrates how to create a new BlobServiceClient, create a new container, and upload a blob to the container using the Azure Storage library.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem that users may encounter when using Azure Cloud Services is scalability. As the demand for an application or service increases, it can be challenging to scale the infrastructure to meet the demand.</p>

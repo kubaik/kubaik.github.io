@@ -158,87 +158,84 @@
 * <strong>Scalability</strong>: Component-based architecture makes it easier to scale large applications, as new components can be added or removed as needed.</p>
 <h2 id="building-a-simple-vuejs-component">Building a Simple Vue.js Component</h2>
 <p>To illustrate the concept of components in Vue.js, let's build a simple example. We'll create a <code>Counter</code> component that displays a count and allows the user to increment or decrement it.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Counter.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;increment&quot;</span><span class="o">&gt;+&lt;</span><span class="err">/button&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;decrement&quot;</span><span class="o">&gt;-&lt;</span><span class="err">/button&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// Counter.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Count: {{ count }}&lt;/p&gt;
+    &lt;button @click=&quot;increment&quot;&gt;+&lt;/button&gt;
+    &lt;button @click=&quot;decrement&quot;&gt;-&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">decrement</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">--</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
-</code></pre></div>
-
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    increment() {
+      this.count++
+    },
+    decrement() {
+      this.count--
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
 <p>In this example, we define a <code>Counter</code> component with a template, data, and methods. The template displays the current count and two buttons to increment or decrement it. The data object initializes the count to 0, and the methods update the count accordingly.</p>
 <h2 id="using-components-in-a-larger-application">Using Components in a Larger Application</h2>
 <p>To demonstrate how components can be used in a larger application, let's build a simple todo list app. We'll create a <code>TodoItem</code> component that displays a single todo item, and a <code>TodoList</code> component that displays a list of todo items.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// TodoItem.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">input</span><span class="w"> </span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="w"> </span><span class="nx">v</span><span class="o">-</span><span class="nx">model</span><span class="o">=</span><span class="s2">&quot;completed&quot;</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">span</span><span class="w"> </span><span class="o">:</span><span class="kd">class</span><span class="o">=</span><span class="s2">&quot;{ completed: completed }&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">// TodoItem.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;completed&quot; /&gt;
+    &lt;span :class=&quot;{ completed: completed }&quot;&gt;{{ text }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
-</code></pre></div>
+&lt;script&gt;
+export default {
+  props: {
+    text: String,
+    completed: Boolean
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<pre><code class="language-javascript">// TodoList.vue
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Todo List&lt;/h1&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;
+        &lt;TodoItem :text=&quot;todo.text&quot; :completed=&quot;todo.completed&quot; /&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// TodoList.vue</span>
-<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Todo</span><span class="w"> </span><span class="nx">List</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">li</span><span class="w"> </span><span class="nx">v</span><span class="o">-</span><span class="k">for</span><span class="o">=</span><span class="s2">&quot;todo in todos&quot;</span><span class="w"> </span><span class="o">:</span><span class="nx">key</span><span class="o">=</span><span class="s2">&quot;todo.id&quot;</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">TodoItem</span><span class="w"> </span><span class="o">:</span><span class="nx">text</span><span class="o">=</span><span class="s2">&quot;todo.text&quot;</span><span class="w"> </span><span class="o">:</span><span class="nx">completed</span><span class="o">=</span><span class="s2">&quot;todo.completed&quot;</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/ul&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+&lt;script&gt;
+import TodoItem from './TodoItem.vue'
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">TodoItem</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./TodoItem.vue&#39;</span>
-
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">TodoItem</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">todos</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Walk the dog&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Do laundry&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
-</code></pre></div>
-
+export default {
+  components: {
+    TodoItem
+  },
+  data() {
+    return {
+      todos: [
+        { id: 1, text: 'Buy milk', completed: false },
+        { id: 2, text: 'Walk the dog', completed: false },
+        { id: 3, text: 'Do laundry', completed: true }
+      ]
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
 <p>In this example, we define a <code>TodoItem</code> component that displays a single todo item, and a <code>TodoList</code> component that displays a list of todo items. The <code>TodoList</code> component uses a <code>v-for</code> loop to render a <code>TodoItem</code> component for each todo item in the list.</p>
 <h2 id="best-practices-for-component-architecture">Best Practices for Component Architecture</h2>
 <p>To get the most out of Vue.js component architecture, follow these best practices:

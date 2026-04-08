@@ -159,36 +159,33 @@
 <h3 id="providing-alternative-text-for-images">Providing Alternative Text for Images</h3>
 <p>Providing alternative text for images is a simple yet effective way to improve accessibility on your website. Alternative text, also known as alt text, is a text description of an image that is displayed when the image cannot be loaded.</p>
 <p>Here is an example of how to provide alternative text for an image using HTML:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo of a sunset&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A photo of a sunset&quot;&gt;
+</code></pre>
 <p>In this example, the <code>alt</code> attribute is used to provide a text description of the image.</p>
 <h3 id="making-navigation-accessible">Making Navigation Accessible</h3>
 <p>Making navigation accessible is crucial for users who rely on screen readers or other assistive technologies. One way to make navigation accessible is to use ARIA attributes to provide a clear and consistent navigation structure.</p>
 <p>Here is an example of how to use ARIA attributes to make navigation accessible:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;navigation&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Main navigation&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;nav role=&quot;navigation&quot; aria-label=&quot;Main navigation&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
 <p>In this example, the <code>role</code> attribute is used to define the role of the navigation element, and the <code>aria-label</code> attribute is used to provide a text description of the navigation.</p>
 <h3 id="ensuring-color-contrast">Ensuring Color Contrast</h3>
 <p>Ensuring color contrast is important for users who have visual impairments. The WCAG guidelines recommend a minimum contrast ratio of 4.5:1 for normal text and 7:1 for large text.</p>
 <p>Here is an example of how to ensure color contrast using CSS:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#ffffff</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#000000</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">body {
+  background-color: #ffffff;
+  color: #000000;
+}
 
-<span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333333</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+h1 {
+  color: #333333;
+}
+</code></pre>
 <p>In this example, the <code>background-color</code> property is used to set the background color of the page, and the <code>color</code> property is used to set the text color. The contrast ratio between the background color and the text color is 13.8:1, which meets the WCAG guidelines.</p>
 <h2 id="tools-and-platforms-for-accessibility-testing">Tools and Platforms for Accessibility Testing</h2>
 <p>There are several tools and platforms available for accessibility testing, including:</p>

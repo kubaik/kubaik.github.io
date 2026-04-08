@@ -163,31 +163,30 @@
 3. <strong>Microservices architecture</strong>: This pattern involves breaking down an application into smaller, independent services. Each service can be implemented as a serverless function, allowing for greater flexibility and scalability.</p>
 <h3 id="implementing-serverless-architecture-patterns">Implementing Serverless Architecture Patterns</h3>
 <p>Let's take a look at a concrete example of implementing a serverless architecture pattern. Suppose we want to build an image processing application that uses AWS Lambda and Amazon S3. Here's an example of how we can implement an event-driven architecture pattern:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<pre><code class="language-python">import boto3
+import os
 
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+s3 = boto3.client('s3')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the bucket name and object key from the event</span>
-    <span class="n">bucket_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-    <span class="n">object_key</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+def lambda_handler(event, context):
+    # Get the bucket name and object key from the event
+    bucket_name = event['Records'][0]['s3']['bucket']['name']
+    object_key = event['Records'][0]['s3']['object']['key']
 
-    <span class="c1"># Download the object from S3</span>
-    <span class="n">s3_object</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">)</span>
+    # Download the object from S3
+    s3_object = s3.get_object(Bucket=bucket_name, Key=object_key)
 
-    <span class="c1"># Process the object</span>
-    <span class="c1"># ...</span>
+    # Process the object
+    # ...
 
-    <span class="c1"># Upload the processed object to S3</span>
-    <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Body</span><span class="o">=</span><span class="s1">&#39;processed_object&#39;</span><span class="p">,</span> <span class="n">Bucket</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s1">&#39;processed_&#39;</span> <span class="o">+</span> <span class="n">object_key</span><span class="p">)</span>
+    # Upload the processed object to S3
+    s3.put_object(Body='processed_object', Bucket=bucket_name, Key='processed_' + object_key)
 
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;statusMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    return {
+        'statusCode': 200,
+        'statusMessage': 'OK'
+    }
+</code></pre>
 <p>In this example, we're using AWS Lambda to process images stored in Amazon S3. When a new object is uploaded to S3, it triggers the execution of the Lambda function, which then processes the object and uploads the processed object back to S3.</p>
 <h2 id="serverless-platforms-and-tools">Serverless Platforms and Tools</h2>
 <p>There are several serverless platforms and tools available, each with its own strengths and weaknesses. Some of the most popular serverless platforms include:

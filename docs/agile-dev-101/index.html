@@ -196,15 +196,14 @@
 <li><strong>Increment:</strong> The sum of all the Product Backlog items completed during a Sprint.</li>
 </ul>
 <p><strong>Example of a Sprint Backlog:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nt">Sprint Backlog</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">User Story</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">As a user, I want to log in using my email and password.</span>
-<span class="w">    </span><span class="nt">Tasks</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Design login UI</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Implement authentication logic</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Write unit tests</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Conduct user acceptance testing</span>
-</code></pre></div>
-
+<pre><code class="language-yaml">Sprint Backlog:
+  - User Story: As a user, I want to log in using my email and password.
+    Tasks:
+      - Design login UI
+      - Implement authentication logic
+      - Write unit tests
+      - Conduct user acceptance testing
+</code></pre>
 <h3 id="kanban">Kanban</h3>
 <p>Kanban is another Agile methodology that focuses on visualizing the workflow, limiting work in progress (WIP), and maximizing efficiency. It uses a Kanban board to display the work items, typically in three columns: To Do, In Progress, and Done.</p>
 <p><strong>Key Principles:</strong></p>
@@ -246,20 +245,19 @@
 <li><strong>Continuous Integration:</strong> Regularly merging code changes into a shared repository.</li>
 </ul>
 <p><strong>TDD Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Test case for a simple calculator</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
+<pre><code class="language-python"># Test case for a simple calculator
+import unittest
 
-<span class="k">class</span> <span class="nc">TestCalculator</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_addition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+class TestCalculator(unittest.TestCase):
+    def test_addition(self):
+        self.assertEqual(add(2, 3), 5)
 
-    <span class="k">def</span> <span class="nf">test_subtraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">subtract</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    def test_subtraction(self):
+        self.assertEqual(subtract(5, 3), 2)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
 <h3 id="implementing-agile-methodologies">Implementing Agile Methodologies</h3>
 <p>Transitioning to Agile methodologies requires careful planning and execution. Here’s a step-by-step guide to help you implement Agile practices in your organization.</p>
 <ol>

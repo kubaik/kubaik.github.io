@@ -181,20 +181,18 @@
 <ul>
 <li>Implement lazy loading for images and non-critical scripts.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Example Image&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; loading=&quot;lazy&quot; alt=&quot;Example Image&quot;&gt;
+</code></pre>
 <h3 id="use-content-delivery-networks-cdns">Use Content Delivery Networks (CDNs)</h3>
 <ul>
 <li>Distribute static assets via CDNs like Cloudflare, Akamai, or AWS CloudFront.</li>
 <li>Benefits include reduced latency and faster load times globally.</li>
 </ul>
 <h3 id="example-implementing-lazy-loading-with-javascript">Example: Implementing Lazy Loading with JavaScript</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">img</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">img</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">document.querySelectorAll('img.lazy').forEach(img =&gt; {
+  img.src = img.dataset.src;
+});
+</code></pre>
 <hr />
 <h2 id="3-backend-performance-tuning">3. Backend Performance Tuning</h2>
 <p>Optimizing your server-side code and infrastructure can significantly reduce response times.</p>
@@ -217,21 +215,20 @@
 <li>Enable HTTP/2 for multiplexing requests, reducing latency.</li>
 </ul>
 <h3 id="example-basic-redis-cache-for-database-results">Example: Basic Redis Cache for Database Results</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code class="language-python">import redis
+import json
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+r = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;user:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">cached_user</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">cached_user</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached_user</span><span class="p">)</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">fetch_user_from_db</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-    <span class="n">r</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="n">ex</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>  <span class="c1"># Cache for 5 minutes</span>
-    <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+def get_user(user_id):
+    cache_key = f&quot;user:{user_id}&quot;
+    cached_user = r.get(cache_key)
+    if cached_user:
+        return json.loads(cached_user)
+    user = fetch_user_from_db(user_id)
+    r.set(cache_key, json.dumps(user), ex=300)  # Cache for 5 minutes
+    return user
+</code></pre>
 <hr />
 <h2 id="4-optimize-network-performance">4. Optimize Network Performance</h2>
 <p>Network latency can be a significant bottleneck, especially for global audiences.</p>
@@ -243,14 +240,13 @@
 <li>Implement server push for critical resources.</li>
 </ul>
 <h3 id="practical-example-enabling-brotli-compression-on-nginx">Practical Example: Enabling Brotli Compression on Nginx</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kn">gzip_static</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
-<span class="w">  </span><span class="kn">brotli</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
-<span class="w">  </span><span class="kn">brotli_comp_level</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
-<span class="w">  </span><span class="kn">brotli_types</span><span class="w"> </span><span class="s">text/plain</span><span class="w"> </span><span class="s">text/css</span><span class="w"> </span><span class="s">application/javascript</span><span class="w"> </span><span class="s">application/json</span><span class="w"> </span><span class="s">image/svg+xml</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-nginx">http {
+  gzip_static on;
+  brotli on;
+  brotli_comp_level 6;
+  brotli_types text/plain text/css application/javascript application/json image/svg+xml;
+}
+</code></pre>
 <hr />
 <h2 id="5-implement-caching-strategically">5. Implement Caching Strategically</h2>
 <p>Caching reduces server load and accelerates content delivery.</p>

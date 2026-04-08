@@ -166,20 +166,17 @@
 </ul>
 <h3 id="b-compress-images">b. Compress Images</h3>
 <p>Use tools like <a href="https://tinypng.com/">TinyPNG</a>, <a href="https://github.com/tj/n">JPEGoptim</a>, or built-in features in image editing software to compress images without noticeable quality loss.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example using jpegoptim</span>
-jpegoptim<span class="w"> </span>--max<span class="o">=</span><span class="m">80</span><span class="w"> </span>image.jpg
-</code></pre></div>
-
+<pre><code class="language-bash"># Example using jpegoptim
+jpegoptim --max=80 image.jpg
+</code></pre>
 <h3 id="c-serve-responsive-images">c. Serve Responsive Images</h3>
 <p>Implement responsive images using the <code>&lt;img&gt;</code> <code>srcset</code> attribute to deliver appropriately sized images based on device resolution.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;small.jpg&quot;</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;large.jpg 1024w, medium.jpg 768w, small.jpg 480w&quot;</span> <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 600px) 480px, 1024px&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Example Image&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;small.jpg&quot; srcset=&quot;large.jpg 1024w, medium.jpg 768w, small.jpg 480w&quot; sizes=&quot;(max-width: 600px) 480px, 1024px&quot; alt=&quot;Example Image&quot;&gt;
+</code></pre>
 <h3 id="d-lazy-loading">d. Lazy Loading</h3>
 <p>Defer loading of images outside the viewport until they are needed:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">loading</span><span class="o">=</span><span class="s">&quot;lazy&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Lazy loaded image&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; loading=&quot;lazy&quot; alt=&quot;Lazy loaded image&quot;&gt;
+</code></pre>
 <hr />
 <h2 id="2-minimize-and-combine-files">2. Minimize and Combine Files</h2>
 <p>Reducing the number and size of CSS and JavaScript files can drastically decrease page load time.</p>
@@ -188,10 +185,9 @@ jpegoptim<span class="w"> </span>--max<span class="o">=</span><span class="m">80
 <ul>
 <li>Use tools like <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>, <a href="https://cssnano.co/">CSSNano</a>, or build tool integrations.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example using UglifyJS</span>
-uglifyjs<span class="w"> </span>script.js<span class="w"> </span>-o<span class="w"> </span>script.min.js
-</code></pre></div>
-
+<pre><code class="language-bash"># Example using UglifyJS
+uglifyjs script.js -o script.min.js
+</code></pre>
 <h3 id="b-combine-files">b. Combine Files</h3>
 <p>Where possible, combine multiple CSS or JS files into a single file to reduce HTTP requests.</p>
 <h3 id="c-use-http2">c. Use HTTP/2</h3>
@@ -201,19 +197,17 @@ uglifyjs<span class="w"> </span>script.js<span class="w"> </span>-o<span class="
 <p>Caching stores static resources locally on users’ browsers, eliminating the need to fetch them repeatedly.</p>
 <h3 id="a-set-cache-control-headers">a. Set Cache-Control Headers</h3>
 <p>Configure your server to specify cache expiration:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example in Apache .htaccess</span>
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_expires.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">ExpiresActive</span><span class="w"> </span><span class="k">On</span>
-<span class="w">  </span><span class="nb">ExpiresDefault</span><span class="w"> </span><span class="s2">&quot;access plus 1 year&quot;</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache"># Example in Apache .htaccess
+&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresDefault &quot;access plus 1 year&quot;
+&lt;/IfModule&gt;
+</code></pre>
 <h3 id="b-use-cache-busting-for-dynamic-files">b. Use Cache Busting for Dynamic Files</h3>
 <p>When files change, update their URLs (e.g., via version query strings) to force browsers to fetch the latest versions.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;styles.css?v=1.2&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;app.js?v=1.2&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css?v=1.2&quot;&gt;
+&lt;script src=&quot;app.js?v=1.2&quot;&gt;&lt;/script&gt;
+</code></pre>
 <hr />
 <h2 id="4-optimize-server-and-hosting-environment">4. Optimize Server and Hosting Environment</h2>
 <p>Your hosting environment significantly influences site speed.</p>
@@ -229,25 +223,22 @@ uglifyjs<span class="w"> </span>script.js<span class="w"> </span>-o<span class="
 </ul>
 <h3 id="c-enable-compression">c. Enable Compression</h3>
 <p>Enable GZIP or Brotli compression on your server to reduce file sizes during transfer:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Example in Apache</span>
-<span class="nb">AddOutputFilterByType</span><span class="w"> </span>BROTLI_COMPRESS<span class="w"> </span>text/html<span class="w"> </span>text/plain<span class="w"> </span>text/css<span class="w"> </span>application/javascript
-</code></pre></div>
-
+<pre><code class="language-apache"># Example in Apache
+AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css application/javascript
+</code></pre>
 <hr />
 <h2 id="5-optimize-critical-rendering-path">5. Optimize Critical Rendering Path</h2>
 <p>Reducing the time it takes for the browser to render content improves perceived performance.</p>
 <h3 id="a-inline-critical-css">a. Inline Critical CSS</h3>
 <p>Embed essential CSS directly into the HTML <code>&lt;head&gt;</code> to speed up rendering.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="c">/* Critical CSS here */</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;style&gt;
+/* Critical CSS here */
+&lt;/style&gt;
+</code></pre>
 <h3 id="b-defer-non-critical-javascript">b. Defer Non-Critical JavaScript</h3>
 <p>Use <code>defer</code> or <code>async</code> attributes to prevent scripts from blocking page rendering:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt;
+</code></pre>
 <h3 id="c-prioritize-visible-content">c. Prioritize Visible Content</h3>
 <p>Structure your HTML to load above-the-fold content first, deferring or lazy-loading below-the-fold elements.</p>
 <hr />

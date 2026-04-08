@@ -161,34 +161,32 @@
 * <strong>State management</strong>: Terraform manages the state of our infrastructure, which means it keeps track of the resources it creates and manages.</p>
 <h2 id="practical-example-provisioning-an-aws-ec2-instance">Practical Example: Provisioning an AWS EC2 Instance</h2>
 <p>Let's take a look at a practical example of using Terraform to provision an AWS EC2 instance. Here's an example configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform">provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="w">  </span><span class="na">vpc_security_group_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.example.id</span><span class="p">]</span>
-<span class="p">}</span>
+resource &quot;aws_instance&quot; &quot;example&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+  vpc_security_group_ids = [aws_security_group.example.id]
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example-sg&quot;</span>
-<span class="w">  </span><span class="na">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Example security group&quot;</span>
+resource &quot;aws_security_group&quot; &quot;example&quot; {
+  name        = &quot;example-sg&quot;
+  description = &quot;Example security group&quot;
 
-<span class="w">  </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
-<span class="w">    </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
-<span class="w">    </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
-<span class="w">    </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
+</code></pre>
 <p>In this example, we define an AWS provider and specify the region we want to use. We then define an EC2 instance resource, which specifies the AMI and instance type we want to use. We also define a security group resource, which specifies the ingress rules for the instance.</p>
 <p>To provision the instance, we can run the following command:</p>
-<div class="codehilite"><pre><span></span><code>terraform<span class="w"> </span>apply
-</code></pre></div>
-
+<pre><code class="language-bash">terraform apply
+</code></pre>
 <p>This will create the EC2 instance and security group in our AWS account. We can then use the <code>terraform destroy</code> command to destroy the resources when we're done with them.</p>
 <h2 id="performance-benchmarking-terraform-vs-aws-cloudformation">Performance Benchmarking: Terraform vs. AWS CloudFormation</h2>
 <p>When it comes to performance, Terraform and AWS CloudFormation are both capable tools. However, Terraform has a slight edge when it comes to provisioning large-scale infrastructure. According to a benchmarking study by HashiCorp, Terraform can provision 100 EC2 instances in under 2 minutes, while AWS CloudFormation takes around 5 minutes to achieve the same result.</p>
@@ -206,46 +204,44 @@
 <h3 id="example-use-case-deploying-a-web-application">Example Use Case: Deploying a Web Application</h3>
 <p>Let's take a look at an example use case for Terraform. Suppose we want to deploy a web application on AWS, which consists of an EC2 instance, an RDS database, and an Elastic Load Balancer. We can use Terraform to define and provision these resources.</p>
 <p>Here's an example configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-west-2&quot;</span>
-<span class="p">}</span>
+<pre><code class="language-terraform">provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;web&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ami-0c94855ba95c71c99&quot;</span>
-<span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t2.micro&quot;</span>
-<span class="w">  </span><span class="na">vpc_security_group_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.web.id</span><span class="p">]</span>
-<span class="p">}</span>
+resource &quot;aws_instance&quot; &quot;web&quot; {
+  ami           = &quot;ami-0c94855ba95c71c99&quot;
+  instance_type = &quot;t2.micro&quot;
+  vpc_security_group_ids = [aws_security_group.web.id]
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_db_instance&quot;</span><span class="w"> </span><span class="nv">&quot;database&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">allocated_storage</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="m">20</span>
-<span class="w">  </span><span class="na">engine</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mysql&quot;</span>
-<span class="w">  </span><span class="na">engine_version</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;5.7&quot;</span>
-<span class="w">  </span><span class="na">instance_class</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;db.t2.micro&quot;</span>
-<span class="w">  </span><span class="na">name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mydb&quot;</span>
-<span class="w">  </span><span class="na">username</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;myuser&quot;</span>
-<span class="w">  </span><span class="na">password</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mypassword&quot;</span>
-<span class="w">  </span><span class="na">vpc_security_group_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.database.id</span><span class="p">]</span>
-<span class="p">}</span>
+resource &quot;aws_db_instance&quot; &quot;database&quot; {
+  allocated_storage    = 20
+  engine               = &quot;mysql&quot;
+  engine_version       = &quot;5.7&quot;
+  instance_class       = &quot;db.t2.micro&quot;
+  name                 = &quot;mydb&quot;
+  username             = &quot;myuser&quot;
+  password             = &quot;mypassword&quot;
+  vpc_security_group_ids = [aws_security_group.database.id]
+}
 
-<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_elb&quot;</span><span class="w"> </span><span class="nv">&quot;load_balancer&quot;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="na">name</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-load-balancer&quot;</span>
-<span class="w">  </span><span class="na">subnets</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_subnet.public.id</span><span class="p">]</span>
-<span class="w">  </span><span class="na">security_groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">aws_security_group.load_balancer.id</span><span class="p">]</span>
+resource &quot;aws_elb&quot; &quot;load_balancer&quot; {
+  name            = &quot;my-load-balancer&quot;
+  subnets         = [aws_subnet.public.id]
+  security_groups = [aws_security_group.load_balancer.id]
 
-<span class="w">  </span><span class="nb">listener</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="na">instance_port</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">instance_protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http&quot;</span>
-<span class="w">    </span><span class="na">lb_port</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="m">80</span>
-<span class="w">    </span><span class="na">lb_protocol</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  listener {
+    instance_port      = 80
+    instance_protocol = &quot;http&quot;
+    lb_port           = 80
+    lb_protocol       = &quot;http&quot;
+  }
+}
+</code></pre>
 <p>In this example, we define an EC2 instance, an RDS database, and an Elastic Load Balancer. We also define the security groups and subnets for each resource.</p>
 <p>To deploy the web application, we can run the following command:</p>
-<div class="codehilite"><pre><span></span><code>terraform<span class="w"> </span>apply
-</code></pre></div>
-
+<pre><code class="language-bash">terraform apply
+</code></pre>
 <p>This will create the EC2 instance, RDS database, and Elastic Load Balancer in our AWS account. We can then use the <code>terraform destroy</code> command to destroy the resources when we're done with them.</p>
 <h2 id="cost-estimation-terraform-vs-manual-provisioning">Cost Estimation: Terraform vs. Manual Provisioning</h2>
 <p>When it comes to cost, Terraform can help us save money by automating the provisioning and management of our infrastructure. According to a study by HashiCorp, Terraform can help reduce infrastructure costs by up to 30%.</p>

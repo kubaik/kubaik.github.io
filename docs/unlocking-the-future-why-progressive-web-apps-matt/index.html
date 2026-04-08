@@ -169,55 +169,53 @@
 <h3 id="1-manifest-file">1. Manifest File</h3>
 <p>The manifest file is a JSON file that provides metadata about your application, such as its name, icons, theme colors, and display preferences. </p>
 <p><strong>Example: manifest.json</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;short_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;start_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standalone&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;background_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;theme_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#000000&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;icons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;images/icon-192x192.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192x192&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;images/icon-512x512.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;512x512&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;My PWA&quot;,
+  &quot;short_name&quot;: &quot;PWA&quot;,
+  &quot;start_url&quot;: &quot;.&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#ffffff&quot;,
+  &quot;theme_color&quot;: &quot;#000000&quot;,
+  &quot;icons&quot;: [
+    {
+      &quot;src&quot;: &quot;images/icon-192x192.png&quot;,
+      &quot;sizes&quot;: &quot;192x192&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    },
+    {
+      &quot;src&quot;: &quot;images/icon-512x512.png&quot;,
+      &quot;sizes&quot;: &quot;512x512&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    }
+  ]
+}
+</code></pre>
 <h3 id="2-service-workers">2. Service Workers</h3>
 <p>Service workers act as a proxy between the web app and the network, enabling offline capabilities and caching strategies.</p>
 <p><strong>Example: service-worker.js</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;my-cache&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">cache</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">([</span>
-<span class="w">        </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/script.js&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/images/icon-192x192.png&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/images/icon-512x512.png&#39;</span>
-<span class="w">      </span><span class="p">]);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">self.addEventListener('install', (event) =&gt; {
+  event.waitUntil(
+    caches.open('my-cache').then((cache) =&gt; {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles.css',
+        '/script.js',
+        '/images/icon-192x192.png',
+        '/images/icon-512x512.png'
+      ]);
+    })
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', (event) =&gt; {
+  event.respondWith(
+    caches.match(event.request).then((response) =&gt; {
+      return response || fetch(event.request);
+    })
+  );
+});
+</code></pre>
 <p><strong>Explanation</strong>: 
 - The <code>install</code> event caches essential files when the service worker is installed.
 - The <code>fetch</code> event intercepts network requests and serves cached files if available, ensuring offline access.</p>
@@ -255,32 +253,30 @@
 <p><strong>Problem</strong>: Choosing the right caching strategy can be complex.</p>
 <p><strong>Solution</strong>: Utilize Workbox to implement caching strategies with minimal code. Here’s an example of a caching strategy using Workbox:</p>
 <p><strong>Example: Workbox Caching</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerRoute</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-routing&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">StaleWhileRevalidate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-strategies&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 
-<span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">  </span><span class="p">({</span><span class="w"> </span><span class="nx">request</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">destination</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">StaleWhileRevalidate</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;images&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="p">);</span>
-</code></pre></div>
-
+registerRoute(
+  ({ request }) =&gt; request.destination === 'image',
+  new StaleWhileRevalidate({
+    cacheName: 'images',
+  })
+);
+</code></pre>
 <p>This code caches images and serves them from the cache first, ensuring faster load times while checking for updated versions in the background.</p>
 <h3 id="2-push-notifications">2. Push Notifications</h3>
 <p><strong>Problem</strong>: Implementing push notifications can be daunting.</p>
 <p><strong>Solution</strong>: Use Firebase Cloud Messaging (FCM) for easy integration of push notifications into your PWA.</p>
 <p><strong>Example: Sending a Notification</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">messaging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">();</span>
+<pre><code class="language-javascript">const messaging = firebase.messaging();
 
-<span class="nx">messaging</span><span class="p">.</span><span class="nx">requestPermission</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Notification permission granted.&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">messaging</span><span class="p">.</span><span class="nx">getToken</span><span class="p">();</span>
-<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;FCM Token:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+messaging.requestPermission().then(() =&gt; {
+  console.log('Notification permission granted.');
+  return messaging.getToken();
+}).then((token) =&gt; {
+  console.log('FCM Token:', token);
+});
+</code></pre>
 <p>This code requests permission from the user to send notifications and retrieves an FCM token for sending push notifications.</p>
 <h3 id="3-seo-considerations">3. SEO Considerations</h3>
 <p><strong>Problem</strong>: Ensuring PWAs are indexed properly by search engines.</p>

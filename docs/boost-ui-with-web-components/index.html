@@ -154,50 +154,47 @@
 <p>Custom Elements are the core of Web Components, and they allow you to create new HTML elements that can be used in your web pages. You can create a Custom Element by defining a class that extends the <code>HTMLElement</code> class and using the <code>customElements.define()</code> method to register the element.</p>
 <h3 id="example-creating-a-simple-custom-element">Example: Creating a Simple Custom Element</h3>
 <p>Here is an example of how you can create a simple Custom Element:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          display: block;</span>
-<span class="sb">          background-color: #f0f0f0;</span>
-<span class="sb">          padding: 20px;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;h1&gt;Hello, World!&lt;/h1&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          display: block;
+          background-color: #f0f0f0;
+          padding: 20px;
+        }
+      &lt;/style&gt;
+      &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    `;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-element', MyElement);
+</code></pre>
 <p>This code defines a new Custom Element called <code>my-element</code> that displays a heading with the text "Hello, World!". You can then use this element in your HTML like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;my-element&gt;&lt;/my-element&gt;
+</code></pre>
 <p>This will render the Custom Element with the specified styles and content.</p>
 <h2 id="using-web-components-with-popular-frameworks-and-libraries">Using Web Components with Popular Frameworks and Libraries</h2>
 <p>Web Components can be used with popular frameworks and libraries like React, Angular, and Vue.js. For example, you can use the <code>@angular/elements</code> package to create Custom Elements in Angular, and then use them in your Angular application.</p>
 <h3 id="example-using-web-components-with-react">Example: Using Web Components with React</h3>
 <p>Here is an example of how you can use Web Components with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">ReactDOM</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./my-element&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React from 'react';
+import ReactDOM from 'react-dom';
+import MyElement from './my-element';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">MyElement</span><span class="o">&gt;&lt;</span><span class="err">/MyElement&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;MyElement&gt;&lt;/MyElement&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">App</span><span class="w"> </span><span class="o">/&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
-</code></pre></div>
-
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+</code></pre>
 <p>This code uses the <code>MyElement</code> Custom Element in a React application. The <code>MyElement</code> class is defined in a separate file and imported into the React component.</p>
 <h2 id="performance-and-optimization">Performance and Optimization</h2>
 <p>Web Components can provide performance benefits by allowing you to encapsulate and reuse code, reducing the amount of DOM manipulation and improving rendering performance. According to a study by Google, using Web Components can improve page load times by up to 30% and reduce memory usage by up to 50%.</p>
@@ -228,44 +225,42 @@
 * Salesforce's Lightning Web Components</p>
 <h3 id="example-building-a-reusable-ui-component">Example: Building a Reusable UI Component</h3>
 <p>Here is an example of how you can build a reusable UI component using Web Components:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">Tabs</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">HTMLElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span><span class="w"> </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;open&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">      &lt;style&gt;</span>
-<span class="sb">        :host {</span>
-<span class="sb">          display: block;</span>
-<span class="sb">          background-color: #f0f0f0;</span>
-<span class="sb">          padding: 20px;</span>
-<span class="sb">        }</span>
-<span class="sb">        .tab {</span>
-<span class="sb">          display: inline-block;</span>
-<span class="sb">          padding: 10px;</span>
-<span class="sb">          border: 1px solid #ccc;</span>
-<span class="sb">        }</span>
-<span class="sb">        .tab.active {</span>
-<span class="sb">          background-color: #fff;</span>
-<span class="sb">        }</span>
-<span class="sb">      &lt;/style&gt;</span>
-<span class="sb">      &lt;div class=&quot;tabs&quot;&gt;</span>
-<span class="sb">        &lt;slot name=&quot;tab&quot;&gt;&lt;/slot&gt;</span>
-<span class="sb">      &lt;/div&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">class Tabs extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;
+        :host {
+          display: block;
+          background-color: #f0f0f0;
+          padding: 20px;
+        }
+        .tab {
+          display: inline-block;
+          padding: 10px;
+          border: 1px solid #ccc;
+        }
+        .tab.active {
+          background-color: #fff;
+        }
+      &lt;/style&gt;
+      &lt;div class=&quot;tabs&quot;&gt;
+        &lt;slot name=&quot;tab&quot;&gt;&lt;/slot&gt;
+      &lt;/div&gt;
+    `;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;tabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">Tabs</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('tabs', Tabs);
+</code></pre>
 <p>This code defines a <code>tabs</code> Custom Element that displays a tabbed interface. You can then use this element in your HTML like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">tabs</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">slot</span><span class="o">=</span><span class="s">&quot;tab&quot;</span><span class="p">&gt;</span>Tab 1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">slot</span><span class="o">=</span><span class="s">&quot;tab&quot;</span><span class="p">&gt;</span>Tab 2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">slot</span><span class="o">=</span><span class="s">&quot;tab&quot;</span><span class="p">&gt;</span>Tab 3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">tabs</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;tabs&gt;
+  &lt;div slot=&quot;tab&quot;&gt;Tab 1&lt;/div&gt;
+  &lt;div slot=&quot;tab&quot;&gt;Tab 2&lt;/div&gt;
+  &lt;div slot=&quot;tab&quot;&gt;Tab 3&lt;/div&gt;
+&lt;/tabs&gt;
+</code></pre>
 <p>This will render the <code>tabs</code> Custom Element with the specified tabs.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Web Components provide a powerful way to create custom, reusable, and encapsulated HTML tags that can be used to boost the UI of your web applications. By using Web Components, you can create reusable UI components, micro frontends, and Progressive Web Apps that provide a native app-like experience to users.</p>

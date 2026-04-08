@@ -163,23 +163,22 @@
 * <strong>Functional Programming</strong>: Swift supports functional programming concepts, such as closures, higher-order functions, and immutable data structures.</p>
 <h3 id="example-hello-world-in-swift">Example: Hello World in Swift</h3>
 <p>Here's a simple "Hello World" example in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+<pre><code class="language-swift">import UIKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Hello, World!&quot;</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="p">=</span> <span class="bp">UIFont</span><span class="p">.</span><span class="n">systemFont</span><span class="p">(</span><span class="n">ofSize</span><span class="p">:</span> <span class="mi">24</span><span class="p">)</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="p">=</span> <span class="p">.</span><span class="n">center</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="p">=</span> <span class="kc">false</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">).</span><span class="n">isActive</span> <span class="p">=</span> <span class="kc">true</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">).</span><span class="n">isActive</span> <span class="p">=</span> <span class="kc">true</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let label = UILabel()
+        label.text = &quot;Hello, World!&quot;
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.textAlignment = .center
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+}
+</code></pre>
 <p>This code creates a new <code>UILabel</code> instance, sets its text to "Hello, World!", and adds it to the view controller's view.</p>
 <h2 id="building-ios-apps-with-swift">Building iOS Apps with Swift</h2>
 <p>Swift is a powerful language for building iOS apps, with a wide range of features and libraries available. Here are some key tools and platforms you can use:
@@ -188,55 +187,54 @@
 * <strong>Core Data</strong>: Core Data is a framework for managing data in your iOS app. It provides a wide range of features, such as data modeling, persistence, and querying.</p>
 <h3 id="example-building-a-todo-list-app-with-swiftui">Example: Building a Todo List App with SwiftUI</h3>
 <p>Here's an example of building a simple todo list app with SwiftUI:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">SwiftUI</span>
+<pre><code class="language-swift">import SwiftUI
 
-<span class="kd">struct</span> <span class="nc">TodoItem</span><span class="p">:</span> <span class="n">Identifiable</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">UUID</span><span class="p">()</span>
-    <span class="kd">var</span> <span class="nv">title</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">var</span> <span class="nv">isCompleted</span><span class="p">:</span> <span class="nb">Bool</span>
-<span class="p">}</span>
+struct TodoItem: Identifiable {
+    let id = UUID()
+    var title: String
+    var isCompleted: Bool
+}
 
-<span class="kd">struct</span> <span class="nc">TodoList</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">todoItems</span><span class="p">:</span> <span class="p">[</span><span class="n">TodoItem</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
+struct TodoList: View {
+    @State private var todoItems: [TodoItem] = []
 
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">NavigationView</span> <span class="p">{</span>
-            <span class="n">List</span> <span class="p">{</span>
-                <span class="n">ForEach</span><span class="p">(</span><span class="n">todoItems</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="k">in</span>
-                    <span class="n">TodoItemRow</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">)</span>
-                <span class="p">}</span>
-                <span class="p">.</span><span class="n">onDelete</span> <span class="p">{</span> <span class="n">indexSet</span> <span class="k">in</span>
-                    <span class="n">todoItems</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">atOffsets</span><span class="p">:</span> <span class="n">indexSet</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="n">navigationBarTitle</span><span class="p">(</span><span class="s">&quot;Todo List&quot;</span><span class="p">)</span>
-            <span class="p">.</span><span class="n">navigationBarItems</span><span class="p">(</span><span class="n">trailing</span><span class="p">:</span> <span class="n">Button</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="p">{</span>
-                <span class="kd">let</span> <span class="nv">newItem</span> <span class="p">=</span> <span class="n">TodoItem</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="s">&quot;New Item&quot;</span><span class="p">,</span> <span class="n">isCompleted</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-                <span class="n">todoItems</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">newItem</span><span class="p">)</span>
-            <span class="p">})</span> <span class="p">{</span>
-                <span class="n">Image</span><span class="p">(</span><span class="n">systemName</span><span class="p">:</span> <span class="s">&quot;plus&quot;</span><span class="p">)</span>
-            <span class="p">})</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(todoItems) { item in
+                    TodoItemRow(item: item)
+                }
+                .onDelete { indexSet in
+                    todoItems.remove(atOffsets: indexSet)
+                }
+            }
+            .navigationBarTitle(&quot;Todo List&quot;)
+            .navigationBarItems(trailing: Button(action: {
+                let newItem = TodoItem(title: &quot;New Item&quot;, isCompleted: false)
+                todoItems.append(newItem)
+            }) {
+                Image(systemName: &quot;plus&quot;)
+            })
+        }
+    }
+}
 
-<span class="kd">struct</span> <span class="nc">TodoItemRow</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">item</span><span class="p">:</span> <span class="n">TodoItem</span>
+struct TodoItemRow: View {
+    let item: TodoItem
 
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">HStack</span> <span class="p">{</span>
-            <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">title</span><span class="p">)</span>
-            <span class="n">Spacer</span><span class="p">()</span>
-            <span class="n">Button</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="p">{</span>
-                <span class="c1">// Toggle completion status</span>
-            <span class="p">})</span> <span class="p">{</span>
-                <span class="n">Image</span><span class="p">(</span><span class="n">systemName</span><span class="p">:</span> <span class="n">item</span><span class="p">.</span><span class="n">isCompleted</span> <span class="p">?</span> <span class="s">&quot;checkmark&quot;</span> <span class="p">:</span> <span class="s">&quot;square&quot;</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    var body: some View {
+        HStack {
+            Text(item.title)
+            Spacer()
+            Button(action: {
+                // Toggle completion status
+            }) {
+                Image(systemName: item.isCompleted ? &quot;checkmark&quot; : &quot;square&quot;)
+            }
+        }
+    }
+}
+</code></pre>
 <p>This code defines a <code>TodoItem</code> struct to represent a single todo item, and a <code>TodoList</code> view to display the list of todo items. The <code>TodoList</code> view uses a <code>ForEach</code> loop to iterate over the todo items, and a <code>Button</code> to add new items to the list.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>Performance optimization is critical for building high-quality iOS apps. Here are some tips for optimizing your app's performance:
@@ -245,15 +243,14 @@
 * <strong>Use Caching</strong>: Caching can help improve your app's performance by reducing the number of requests to your server. Use frameworks like Alamofire to implement caching in your app.</p>
 <h3 id="example-optimizing-image-loading-with-kingfisher">Example: Optimizing Image Loading with Kingfisher</h3>
 <p>Here's an example of optimizing image loading with Kingfisher, a popular image loading library for iOS:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">Kingfisher</span>
+<pre><code class="language-swift">import Kingfisher
 
-<span class="kd">class</span> <span class="nc">ImageView</span><span class="p">:</span> <span class="bp">UIImageView</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">loadImage</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="n">URL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">kf</span><span class="p">.</span><span class="n">setImage</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">:</span> <span class="bp">UIImage</span><span class="p">(</span><span class="n">named</span><span class="p">:</span> <span class="s">&quot;placeholder&quot;</span><span class="p">))</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ImageView: UIImageView {
+    func loadImage(url: URL) {
+        kf.setImage(with: url, placeholder: UIImage(named: &quot;placeholder&quot;))
+    }
+}
+</code></pre>
 <p>This code uses Kingfisher to load an image from a URL and display it in a <code>UIImageView</code>. Kingfisher provides a wide range of features, such as caching, resizing, and placeholder images, to optimize image loading.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems you may encounter when building iOS apps with Swift, along with specific solutions:

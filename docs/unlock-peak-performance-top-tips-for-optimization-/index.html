@@ -181,10 +181,9 @@
 <li><strong>Compress Images:</strong> Use formats like WebP, and tools like ImageOptim or TinyPNG.</li>
 <li><strong>Minify CSS, JavaScript, and HTML:</strong> Remove unnecessary characters and whitespace.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Minify JavaScript using UglifyJS</span>
-uglifyjs<span class="w"> </span>app.js<span class="w"> </span>-o<span class="w"> </span>app.min.js
-</code></pre></div>
-
+<pre><code class="language-bash"># Example: Minify JavaScript using UglifyJS
+uglifyjs app.js -o app.min.js
+</code></pre>
 <ul>
 <li><strong>Implement Lazy Loading:</strong> Load images and resources only when needed.</li>
 <li><strong>Use Content Delivery Networks (CDNs):</strong> Distribute static assets globally for faster access.</li>
@@ -208,22 +207,21 @@ uglifyjs<span class="w"> </span>app.js<span class="w"> </span>-o<span class="w">
 <li>Profile code to identify slow functions.</li>
 <li>Use asynchronous programming models to improve throughput.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Asynchronous HTTP request in Python</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">import</span> <span class="nn">aiohttp</span>
+<pre><code class="language-python"># Example: Asynchronous HTTP request in Python
+import asyncio
+import aiohttp
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+async def fetch(session, url):
+    async with session.get(url) as response:
+        return await response.text()
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;https://example.com&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+async def main():
+    async with aiohttp.ClientSession() as session:
+        content = await fetch(session, 'https://example.com')
+        print(content)
 
-<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
-</code></pre></div>
-
+asyncio.run(main())
+</code></pre>
 <h3 id="3-infrastructure-and-network-optimization">3. Infrastructure and Network Optimization</h3>
 <ul>
 <li>Use load balancers to distribute traffic evenly.</li>

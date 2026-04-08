@@ -167,23 +167,22 @@
 * <strong>Sensor Tower</strong>: A tool that offers keyword research, competitor analysis, and app store optimization insights.
 * <strong>Google Keyword Planner</strong>: A free tool that provides keyword suggestions and traffic estimates.</p>
 <p>Here's an example of how to use App Annie to conduct keyword research:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">appannie</span>
+<pre><code class="language-python">import appannie
 
-<span class="c1"># Set up App Annie API credentials</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;YOUR_API_KEY&quot;</span>
-<span class="n">api_secret</span> <span class="o">=</span> <span class="s2">&quot;YOUR_API_SECRET&quot;</span>
+# Set up App Annie API credentials
+api_key = &quot;YOUR_API_KEY&quot;
+api_secret = &quot;YOUR_API_SECRET&quot;
 
-<span class="c1"># Initialize App Annie client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">appannie</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+# Initialize App Annie client
+client = appannie.Client(api_key, api_secret)
 
-<span class="c1"># Search for keywords related to &quot;fitness&quot;</span>
-<span class="n">keywords</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">search_keywords</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">)</span>
+# Search for keywords related to &quot;fitness&quot;
+keywords = client.search_keywords(&quot;fitness&quot;)
 
-<span class="c1"># Print the top 10 keywords</span>
-<span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="p">[</span><span class="s2">&quot;keyword&quot;</span><span class="p">],</span> <span class="n">keyword</span><span class="p">[</span><span class="s2">&quot;search_volume&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the top 10 keywords
+for keyword in keywords[:10]:
+    print(keyword[&quot;keyword&quot;], keyword[&quot;search_volume&quot;])
+</code></pre>
 <p>This code snippet uses the App Annie API to search for keywords related to "fitness" and prints the top 10 keywords along with their search volume.</p>
 <h2 id="optimizing-app-metadata">Optimizing App Metadata</h2>
 <p>Once you have identified the most relevant keywords, it's time to optimize your app's metadata. This includes:
@@ -191,20 +190,19 @@
 * <strong>Description</strong>: The app's description should be concise, informative, and include relevant keywords.
 * <strong>Keywords</strong>: The app's keywords should be relevant, unique, and not duplicated.</p>
 <p>Here's an example of how to optimize an app's metadata using Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">csv</span>
+<pre><code class="language-python">import csv
 
-<span class="c1"># Define the app&#39;s metadata</span>
-<span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Fitness Tracker&quot;</span>
-<span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;A fitness app that tracks your workouts and provides personalized recommendations.&quot;</span>
-<span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fitness&quot;</span><span class="p">,</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;workout&quot;</span><span class="p">,</span> <span class="s2">&quot;exercise&quot;</span><span class="p">]</span>
+# Define the app's metadata
+title = &quot;Fitness Tracker&quot;
+description = &quot;A fitness app that tracks your workouts and provides personalized recommendations.&quot;
+keywords = [&quot;fitness&quot;, &quot;tracker&quot;, &quot;workout&quot;, &quot;exercise&quot;]
 
-<span class="c1"># Write the metadata to a CSV file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;metadata.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;keywords&quot;</span><span class="p">])</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keywords</span><span class="p">)])</span>
-</code></pre></div>
-
+# Write the metadata to a CSV file
+with open(&quot;metadata.csv&quot;, &quot;w&quot;, newline=&quot;&quot;) as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow([&quot;title&quot;, &quot;description&quot;, &quot;keywords&quot;])
+    writer.writerow([title, description, &quot;,&quot;.join(keywords)])
+</code></pre>
 <p>This code snippet defines the app's metadata and writes it to a CSV file.</p>
 <h2 id="visual-optimization">Visual Optimization</h2>
 <p>Visual optimization is critical to an app's success in the app store. This includes:
@@ -212,26 +210,25 @@
 * <strong>Screenshots</strong>: The app's screenshots should showcase its features, benefits, and user interface.
 * <strong>Preview video</strong>: The app's preview video should demonstrate its features, gameplay, or user experience.</p>
 <p>Here's an example of how to create a preview video using Adobe After Effects:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AE</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;after-effects&quot;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the necessary libraries
+import { AE } from &quot;after-effects&quot;;
 
-<span class="c1">// Define the video composition</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">composition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AE</span><span class="p">.</span><span class="nx">Composition</span><span class="p">(</span><span class="s2">&quot;Preview Video&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1080</span><span class="p">,</span><span class="w"> </span><span class="mf">1920</span><span class="p">,</span><span class="w"> </span><span class="mf">30</span><span class="p">);</span>
+// Define the video composition
+const composition = new AE.Composition(&quot;Preview Video&quot;, 1080, 1920, 30);
 
-<span class="c1">// Add the app&#39;s screenshots to the composition</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">screenshot1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AE</span><span class="p">.</span><span class="nx">Layer</span><span class="p">(</span><span class="s2">&quot;screenshot1.png&quot;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">screenshot2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AE</span><span class="p">.</span><span class="nx">Layer</span><span class="p">(</span><span class="s2">&quot;screenshot2.png&quot;</span><span class="p">);</span>
-<span class="nx">composition</span><span class="p">.</span><span class="nx">addLayer</span><span class="p">(</span><span class="nx">screenshot1</span><span class="p">);</span>
-<span class="nx">composition</span><span class="p">.</span><span class="nx">addLayer</span><span class="p">(</span><span class="nx">screenshot2</span><span class="p">);</span>
+// Add the app's screenshots to the composition
+const screenshot1 = new AE.Layer(&quot;screenshot1.png&quot;);
+const screenshot2 = new AE.Layer(&quot;screenshot2.png&quot;);
+composition.addLayer(screenshot1);
+composition.addLayer(screenshot2);
 
-<span class="c1">// Add transitions and animations to the composition</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">transition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AE</span><span class="p">.</span><span class="nx">Transition</span><span class="p">(</span><span class="s2">&quot;Fade&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="nx">composition</span><span class="p">.</span><span class="nx">addTransition</span><span class="p">(</span><span class="nx">transition</span><span class="p">);</span>
+// Add transitions and animations to the composition
+const transition = new AE.Transition(&quot;Fade&quot;, 1);
+composition.addTransition(transition);
 
-<span class="c1">// Export the composition as a video file</span>
-<span class="nx">composition</span><span class="p">.</span><span class="k">export</span><span class="p">(</span><span class="s2">&quot;preview.mp4&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+// Export the composition as a video file
+composition.export(&quot;preview.mp4&quot;);
+</code></pre>
 <p>This code snippet uses Adobe After Effects to create a preview video and exports it as a video file.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can hinder an app's ASO efforts, including:

@@ -159,15 +159,14 @@
 <li>Combine multiple CSS and JavaScript files into a single file to reduce HTTP requests.</li>
 <li>Place CSS at the top of the HTML document and JavaScript at the bottom for faster rendering.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Before minification */</span>
-<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f0f0f0</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Before minification */
+body {
+    background-color: #f0f0f0;
+}
 
-<span class="c">/* After minification */</span>
-<span class="nt">body</span><span class="p">{</span><span class="k">background-color</span><span class="p">:</span><span class="mh">#f0f0f0</span><span class="p">;}</span>
-</code></pre></div>
-
+/* After minification */
+body{background-color:#f0f0f0;}
+</code></pre>
 <h2 id="3-leverage-browser-caching">3. Leverage Browser Caching</h2>
 <p>Browser caching allows frequently accessed resources to be stored locally on a user's device, reducing the need to re-download them on subsequent visits. Implement the following strategies for leveraging browser caching:</p>
 <ul>

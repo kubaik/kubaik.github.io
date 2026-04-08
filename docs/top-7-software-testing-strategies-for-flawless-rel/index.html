@@ -155,20 +155,19 @@
 </ul>
 <h3 id="example">Example</h3>
 <p>Here’s how you can implement unit testing using Python's pytest framework.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># calculator.py</span>
-<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<pre><code class="language-python"># calculator.py
+def add(x, y):
+    return x + y
 
-<span class="c1"># test_calculator.py</span>
-<span class="kn">import</span> <span class="nn">pytest</span>
-<span class="kn">from</span> <span class="nn">calculator</span> <span class="kn">import</span> <span class="n">add</span>
+# test_calculator.py
+import pytest
+from calculator import add
 
-<span class="k">def</span> <span class="nf">test_add</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
-    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-    <span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</code></pre></div>
-
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
+</code></pre>
 <h3 id="metrics">Metrics</h3>
 <ul>
 <li>Aim for at least 80% code coverage with unit tests to ensure comprehensive testing.</li>
@@ -193,15 +192,14 @@
 <li>Create a new request in Postman to your API endpoint.</li>
 <li>Add a test script in the "Tests" tab.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nx">pm</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;Response time is less than 200ms&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">pm</span><span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="nx">pm</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">responseTime</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">be</span><span class="p">.</span><span class="nx">below</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">pm.test(&quot;Response time is less than 200ms&quot;, function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});
 
-<span class="nx">pm</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;Status code is 200&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">pm</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+pm.test(&quot;Status code is 200&quot;, function () {
+    pm.response.to.have.status(200);
+});
+</code></pre>
 <h3 id="metrics_1">Metrics</h3>
 <ul>
 <li>Track response times and error rates. An ideal response time for APIs is under 200ms; any higher can lead to user dissatisfaction.</li>
@@ -222,14 +220,13 @@
 </ul>
 <h3 id="example_2">Example</h3>
 <p>Here’s a simple Selenium test that checks if the title of a web page is correct.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<pre><code class="language-python">from selenium import webdriver
 
-<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://example.com&quot;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="s2">&quot;Example Domain&quot;</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">title</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-</code></pre></div>
-
+driver = webdriver.Chrome()
+driver.get(&quot;http://example.com&quot;)
+assert &quot;Example Domain&quot; in driver.title
+driver.quit()
+</code></pre>
 <h3 id="metrics_2">Metrics</h3>
 <ul>
 <li>Aim for a pass rate of 95% or higher in functional tests to ensure your application behaves as expected.</li>
@@ -255,13 +252,12 @@
 <li>Create an HTTP Request Sampler to specify the target URL.</li>
 <li>Add a Listener to view results.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;ThreadGroup&gt;</span>
-<span class="w">    </span><span class="nt">&lt;numThreads&gt;</span>100<span class="nt">&lt;/numThreads&gt;</span>
-<span class="w">    </span><span class="nt">&lt;rampTime&gt;</span>10<span class="nt">&lt;/rampTime&gt;</span>
-<span class="w">    </span><span class="nt">&lt;duration&gt;</span>600<span class="nt">&lt;/duration&gt;</span>
-<span class="nt">&lt;/ThreadGroup&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;ThreadGroup&gt;
+    &lt;numThreads&gt;100&lt;/numThreads&gt;
+    &lt;rampTime&gt;10&lt;/rampTime&gt;
+    &lt;duration&gt;600&lt;/duration&gt;
+&lt;/ThreadGroup&gt;
+</code></pre>
 <h3 id="metrics_3">Metrics</h3>
 <ul>
 <li>Response time should remain below 2 seconds for 95% of requests during peak load.</li>
@@ -282,9 +278,8 @@
 </ul>
 <h3 id="example_4">Example</h3>
 <p>Using OWASP ZAP to scan an application can be done via its GUI or through the command line:</p>
-<div class="codehilite"><pre><span></span><code>zap.sh<span class="w"> </span>-daemon<span class="w"> </span>-port<span class="w"> </span><span class="m">8080</span><span class="w"> </span>-host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>-config<span class="w"> </span>api.addrs.addr.name<span class="o">=</span><span class="m">127</span>.0.0.1
-</code></pre></div>
-
+<pre><code class="language-bash">zap.sh -daemon -port 8080 -host 127.0.0.1 -config api.addrs.addr.name=127.0.0.1
+</code></pre>
 <h3 id="metrics_4">Metrics</h3>
 <ul>
 <li>Aim for zero critical vulnerabilities before release.</li>
@@ -305,17 +300,16 @@
 </ul>
 <h3 id="example_5">Example</h3>
 <p>A simple regression test using Cypress can look like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Login Page&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should allow user to log in&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">cy</span><span class="p">.</span><span class="nx">visit</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">cy</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;input[name=username]&#39;</span><span class="p">).</span><span class="nx">type</span><span class="p">(</span><span class="s1">&#39;testuser&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">cy</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;input[name=password]&#39;</span><span class="p">).</span><span class="nx">type</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">cy</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;button[type=submit]&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
-<span class="w">        </span><span class="nx">cy</span><span class="p">.</span><span class="nx">url</span><span class="p">().</span><span class="nx">should</span><span class="p">(</span><span class="s1">&#39;include&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/dashboard&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">describe('Login Page', () =&gt; {
+    it('should allow user to log in', () =&gt; {
+        cy.visit('/login');
+        cy.get('input[name=username]').type('testuser');
+        cy.get('input[name=password]').type('password');
+        cy.get('button[type=submit]').click();
+        cy.url().should('include', '/dashboard');
+    });
+});
+</code></pre>
 <h3 id="metrics_5">Metrics</h3>
 <ul>
 <li>Track the number of regressions found post-release. Ideally, this should be under 5% of total tests run during the regression suite.</li>

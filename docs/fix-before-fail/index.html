@@ -160,26 +160,25 @@
 * Penetration testing using tools like Metasploit or Burp Suite
 * Code review using tools like SonarQube or CodeFactor</p>
 <p>For example, the following code snippet shows how to use Nmap to scan a network for open ports:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nmap</span>
+<pre><code class="language-python">import nmap
 
-<span class="c1"># Create an Nmap object</span>
-<span class="n">nm</span> <span class="o">=</span> <span class="n">nmap</span><span class="o">.</span><span class="n">PortScanner</span><span class="p">()</span>
+# Create an Nmap object
+nm = nmap.PortScanner()
 
-<span class="c1"># Scan the network</span>
-<span class="n">nm</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="s1">&#39;192.168.1.0/24&#39;</span><span class="p">,</span> <span class="s1">&#39;1-1024&#39;</span><span class="p">)</span>
+# Scan the network
+nm.scan('192.168.1.0/24', '1-1024')
 
-<span class="c1"># Print the results</span>
-<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">nm</span><span class="o">.</span><span class="n">all_hosts</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Host : </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">hostname</span><span class="p">()))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;State : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">state</span><span class="p">())</span>
-    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">]</span><span class="o">.</span><span class="n">all_protocols</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Protocol : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">proto</span><span class="p">)</span>
-        <span class="n">lport</span> <span class="o">=</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">][</span><span class="n">proto</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="nb">sorted</span><span class="p">(</span><span class="n">lport</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="n">lport</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Port : </span><span class="si">%s</span><span class="s1"> State : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">nm</span><span class="p">[</span><span class="n">host</span><span class="p">][</span><span class="n">proto</span><span class="p">][</span><span class="n">port</span><span class="p">][</span><span class="s1">&#39;state&#39;</span><span class="p">]))</span>
-</code></pre></div>
-
+# Print the results
+for host in nm.all_hosts():
+    print('Host : %s (%s)' % (host, nm[host].hostname()))
+    print('State : %s' % nm[host].state())
+    for proto in nm[host].all_protocols():
+        print('Protocol : %s' % proto)
+        lport = nm[host][proto].keys()
+        sorted(lport)
+        for port in lport:
+            print('Port : %s State : %s' % (port, nm[host][proto][port]['state']))
+</code></pre>
 <p>This code scans the network <code>192.168.1.0/24</code> for open ports between 1 and 1024, and prints the results.</p>
 <h2 id="prioritizing-vulnerabilities">Prioritizing Vulnerabilities</h2>
 <p>Once vulnerabilities have been identified, they need to be prioritized based on their severity and potential impact. This can be done using a variety of metrics, including:
@@ -188,30 +187,29 @@
 * Number of affected systems
 * Potential impact on business operations</p>
 <p>For example, the following code snippet shows how to use the CVSS score to prioritize vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">csv</span>
+<pre><code class="language-python">import csv
 
-<span class="c1"># Define a dictionary to store vulnerability data</span>
-<span class="n">vulnerabilities</span> <span class="o">=</span> <span class="p">{}</span>
+# Define a dictionary to store vulnerability data
+vulnerabilities = {}
 
-<span class="c1"># Read vulnerability data from a CSV file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vulnerabilities.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
-    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-        <span class="n">vulnerabilities</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;cvss_score&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;cvss_score&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
+# Read vulnerability data from a CSV file
+with open('vulnerabilities.csv', 'r') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        vulnerabilities[row['id']] = {
+            'cvss_score': row['cvss_score'],
+            'description': row['description']
+        }
 
-<span class="c1"># Prioritize vulnerabilities based on CVSS score</span>
-<span class="n">prioritized_vulnerabilities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vulnerabilities</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;cvss_score&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Prioritize vulnerabilities based on CVSS score
+prioritized_vulnerabilities = sorted(vulnerabilities.items(), key=lambda x: x[1]['cvss_score'], reverse=True)
 
-<span class="c1"># Print the prioritized vulnerabilities</span>
-<span class="k">for</span> <span class="n">vulnerability</span> <span class="ow">in</span> <span class="n">prioritized_vulnerabilities</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vulnerability ID: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vulnerability</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CVSS Score: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vulnerability</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;cvss_score&#39;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Description: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vulnerability</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the prioritized vulnerabilities
+for vulnerability in prioritized_vulnerabilities:
+    print('Vulnerability ID: %s' % vulnerability[0])
+    print('CVSS Score: %s' % vulnerability[1]['cvss_score'])
+    print('Description: %s' % vulnerability[1]['description'])
+</code></pre>
 <p>This code reads vulnerability data from a CSV file, prioritizes the vulnerabilities based on their CVSS score, and prints the results.</p>
 <h2 id="remediating-vulnerabilities">Remediating Vulnerabilities</h2>
 <p>Remediating vulnerabilities involves taking steps to fix or mitigate the vulnerability. This can include:
@@ -219,29 +217,28 @@
 * Implementing workarounds or compensating controls
 * Removing or disabling vulnerable features or functionality</p>
 <p>For example, the following code snippet shows how to use Ansible to patch a vulnerable system:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
-<span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Patch</span> <span class="n">vulnerable</span> <span class="n">system</span>
-  <span class="n">hosts</span><span class="p">:</span> <span class="n">vulnerable_system</span>
-  <span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
+<pre><code class="language-python">---
+- name: Patch vulnerable system
+  hosts: vulnerable_system
+  become: yes
 
-  <span class="n">tasks</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Update</span> <span class="n">package</span> <span class="nb">list</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">update_cache</span><span class="p">:</span> <span class="n">yes</span>
+  tasks:
+  - name: Update package list
+    apt:
+      update_cache: yes
 
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Upgrade</span> <span class="n">packages</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">upgrade</span><span class="p">:</span> <span class="n">dist</span>
+  - name: Upgrade packages
+    apt:
+      upgrade: dist
 
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Install</span> <span class="n">security</span> <span class="n">updates</span>
-    <span class="n">apt</span><span class="p">:</span>
-      <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;{{ item }}&quot;</span>
-      <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
-    <span class="n">with_items</span><span class="p">:</span>
-    <span class="o">-</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span>
-    <span class="o">-</span> <span class="n">libssl1</span><span class="mf">.1</span>
-</code></pre></div>
-
+  - name: Install security updates
+    apt:
+      name: &quot;{{ item }}&quot;
+      state: present
+    with_items:
+    - libssl-dev
+    - libssl1.1
+</code></pre>
 <p>This code uses Ansible to update the package list, upgrade packages, and install security updates on a vulnerable system.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>There are a variety of tools and platforms available to help with vulnerability management, including:

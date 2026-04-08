@@ -176,77 +176,74 @@
 <p>Implementing SOC 2 and ISO 27001 compliance requires a thorough understanding of the requirements and a well-planned approach. Here are some practical examples and code snippets to illustrate the implementation process:</p>
 <h3 id="example-1-implementing-access-control">Example 1: Implementing Access Control</h3>
 <p>Access control is a critical component of both SOC 2 and ISO 27001. To implement access control, organizations can use tools like Okta or Auth0 to manage user identities and access to sensitive systems and data. Here is an example of how to implement access control using Okta:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">okta</span>
+<pre><code class="language-python">import okta
 
-<span class="c1"># Set up Okta API credentials</span>
-<span class="n">okta_api_key</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>
-<span class="n">okta_api_secret</span> <span class="o">=</span> <span class="s2">&quot;your_api_secret&quot;</span>
-<span class="n">okta_base_url</span> <span class="o">=</span> <span class="s2">&quot;https://your_okta_domain.okta.com&quot;</span>
+# Set up Okta API credentials
+okta_api_key = &quot;your_api_key&quot;
+okta_api_secret = &quot;your_api_secret&quot;
+okta_base_url = &quot;https://your_okta_domain.okta.com&quot;
 
-<span class="c1"># Create an Okta client</span>
-<span class="n">okta_client</span> <span class="o">=</span> <span class="n">okta</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">okta_api_key</span><span class="p">,</span> <span class="n">okta_api_secret</span><span class="p">,</span> <span class="n">okta_base_url</span><span class="p">)</span>
+# Create an Okta client
+okta_client = okta.Client(okta_api_key, okta_api_secret, okta_base_url)
 
-<span class="c1"># Create a new user</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">okta_client</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;john.doe@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;password123&quot;</span><span class="p">)</span>
+# Create a new user
+user = okta_client.create_user(&quot;john.doe@example.com&quot;, &quot;John Doe&quot;, &quot;password123&quot;)
 
-<span class="c1"># Assign the user to a group</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">okta_client</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s2">&quot;employees&quot;</span><span class="p">)</span>
-<span class="n">okta_client</span><span class="o">.</span><span class="n">add_user_to_group</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+# Assign the user to a group
+group = okta_client.get_group(&quot;employees&quot;)
+okta_client.add_user_to_group(user, group)
 
-<span class="c1"># Set up access control policies</span>
-<span class="n">policy</span> <span class="o">=</span> <span class="n">okta_client</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span><span class="s2">&quot;access_control_policy&quot;</span><span class="p">,</span> <span class="s2">&quot;Allow access to sensitive systems&quot;</span><span class="p">)</span>
-<span class="n">okta_client</span><span class="o">.</span><span class="n">assign_policy_to_group</span><span class="p">(</span><span class="n">policy</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
-</code></pre></div>
-
+# Set up access control policies
+policy = okta_client.create_policy(&quot;access_control_policy&quot;, &quot;Allow access to sensitive systems&quot;)
+okta_client.assign_policy_to_group(policy, group)
+</code></pre>
 <p>This example illustrates how to use Okta to create a new user, assign the user to a group, and set up access control policies to manage access to sensitive systems.</p>
 <h3 id="example-2-implementing-encryption">Example 2: Implementing Encryption</h3>
 <p>Encryption is another critical component of both SOC 2 and ISO 27001. To implement encryption, organizations can use tools like AWS Key Management Service (KMS) or Google Cloud Key Management Service (KMS) to manage encryption keys and encrypt sensitive data. Here is an example of how to implement encryption using AWS KMS:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Set up AWS KMS credentials</span>
-<span class="n">aws_access_key_id</span> <span class="o">=</span> <span class="s2">&quot;your_access_key_id&quot;</span>
-<span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="s2">&quot;your_secret_access_key&quot;</span>
-<span class="n">aws_region</span> <span class="o">=</span> <span class="s2">&quot;your_aws_region&quot;</span>
+# Set up AWS KMS credentials
+aws_access_key_id = &quot;your_access_key_id&quot;
+aws_secret_access_key = &quot;your_secret_access_key&quot;
+aws_region = &quot;your_aws_region&quot;
 
-<span class="c1"># Create an AWS KMS client</span>
-<span class="n">kms_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;kms&quot;</span><span class="p">,</span> <span class="n">aws_access_key_id</span><span class="p">,</span> <span class="n">aws_secret_access_key</span><span class="p">,</span> <span class="n">aws_region</span><span class="p">)</span>
+# Create an AWS KMS client
+kms_client = boto3.client(&quot;kms&quot;, aws_access_key_id, aws_secret_access_key, aws_region)
 
-<span class="c1"># Create a new encryption key</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">kms_client</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span><span class="s2">&quot;alias/my_key&quot;</span><span class="p">,</span> <span class="s2">&quot;description=my_key&quot;</span><span class="p">)</span>
+# Create a new encryption key
+key = kms_client.create_key(&quot;alias/my_key&quot;, &quot;description=my_key&quot;)
 
-<span class="c1"># Encrypt sensitive data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;This is sensitive data&quot;</span>
-<span class="n">encrypted_data</span> <span class="o">=</span> <span class="n">kms_client</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">Plaintext</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">KeyId</span><span class="o">=</span><span class="n">key</span><span class="p">[</span><span class="s2">&quot;KeyMetadata&quot;</span><span class="p">][</span><span class="s2">&quot;KeyId&quot;</span><span class="p">])</span>
+# Encrypt sensitive data
+data = &quot;This is sensitive data&quot;
+encrypted_data = kms_client.encrypt(Plaintext=data, KeyId=key[&quot;KeyMetadata&quot;][&quot;KeyId&quot;])
 
-<span class="c1"># Decrypt encrypted data</span>
-<span class="n">decrypted_data</span> <span class="o">=</span> <span class="n">kms_client</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">CiphertextBlob</span><span class="o">=</span><span class="n">encrypted_data</span><span class="p">[</span><span class="s2">&quot;CiphertextBlob&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Decrypt encrypted data
+decrypted_data = kms_client.decrypt(CiphertextBlob=encrypted_data[&quot;CiphertextBlob&quot;])
+</code></pre>
 <p>This example illustrates how to use AWS KMS to create a new encryption key, encrypt sensitive data, and decrypt encrypted data.</p>
 <h3 id="example-3-implementing-incident-response">Example 3: Implementing Incident Response</h3>
 <p>Incident response is a critical component of both SOC 2 and ISO 27001. To implement incident response, organizations can use tools like PagerDuty or Splunk to detect and respond to security incidents. Here is an example of how to implement incident response using PagerDuty:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pagerduty</span>
+<pre><code class="language-python">import pagerduty
 
-<span class="c1"># Set up PagerDuty API credentials</span>
-<span class="n">pagerduty_api_key</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>
-<span class="n">pagerduty_api_secret</span> <span class="o">=</span> <span class="s2">&quot;your_api_secret&quot;</span>
-<span class="n">pagerduty_base_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.pagerduty.com&quot;</span>
+# Set up PagerDuty API credentials
+pagerduty_api_key = &quot;your_api_key&quot;
+pagerduty_api_secret = &quot;your_api_secret&quot;
+pagerduty_base_url = &quot;https://api.pagerduty.com&quot;
 
-<span class="c1"># Create a PagerDuty client</span>
-<span class="n">pagerduty_client</span> <span class="o">=</span> <span class="n">pagerduty</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">pagerduty_api_key</span><span class="p">,</span> <span class="n">pagerduty_api_secret</span><span class="p">,</span> <span class="n">pagerduty_base_url</span><span class="p">)</span>
+# Create a PagerDuty client
+pagerduty_client = pagerduty.Client(pagerduty_api_key, pagerduty_api_secret, pagerduty_base_url)
 
-<span class="c1"># Create a new incident</span>
-<span class="n">incident</span> <span class="o">=</span> <span class="n">pagerduty_client</span><span class="o">.</span><span class="n">create_incident</span><span class="p">(</span><span class="s2">&quot;Security Incident&quot;</span><span class="p">,</span> <span class="s2">&quot;This is a security incident&quot;</span><span class="p">)</span>
+# Create a new incident
+incident = pagerduty_client.create_incident(&quot;Security Incident&quot;, &quot;This is a security incident&quot;)
 
-<span class="c1"># Assign the incident to a team</span>
-<span class="n">team</span> <span class="o">=</span> <span class="n">pagerduty_client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="s2">&quot;security_team&quot;</span><span class="p">)</span>
-<span class="n">pagerduty_client</span><span class="o">.</span><span class="n">assign_incident_to_team</span><span class="p">(</span><span class="n">incident</span><span class="p">,</span> <span class="n">team</span><span class="p">)</span>
+# Assign the incident to a team
+team = pagerduty_client.get_team(&quot;security_team&quot;)
+pagerduty_client.assign_incident_to_team(incident, team)
 
-<span class="c1"># Set up incident response workflows</span>
-<span class="n">workflow</span> <span class="o">=</span> <span class="n">pagerduty_client</span><span class="o">.</span><span class="n">create_workflow</span><span class="p">(</span><span class="s2">&quot;incident_response_workflow&quot;</span><span class="p">,</span> <span class="s2">&quot;This is an incident response workflow&quot;</span><span class="p">)</span>
-<span class="n">pagerduty_client</span><span class="o">.</span><span class="n">assign_workflow_to_incident</span><span class="p">(</span><span class="n">incident</span><span class="p">,</span> <span class="n">workflow</span><span class="p">)</span>
-</code></pre></div>
-
+# Set up incident response workflows
+workflow = pagerduty_client.create_workflow(&quot;incident_response_workflow&quot;, &quot;This is an incident response workflow&quot;)
+pagerduty_client.assign_workflow_to_incident(incident, workflow)
+</code></pre>
 <p>This example illustrates how to use PagerDuty to create a new incident, assign the incident to a team, and set up incident response workflows to manage the response to security incidents.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Implementing SOC 2 and ISO 27001 compliance can be challenging, and organizations often encounter common problems. Here are some common problems and solutions:</p>

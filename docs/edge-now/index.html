@@ -163,36 +163,35 @@
 * <strong>Healthcare</strong>: Edge computing is used to analyze medical images, monitor patient vital signs, and predict disease outbreaks. For example, Philips Healthcare uses edge computing to analyze medical images, reducing diagnosis time by 30% and improving accuracy by 20%.</p>
 <h3 id="practical-code-example-edge-computing-with-python-and-raspberry-pi">Practical Code Example: Edge Computing with Python and Raspberry Pi</h3>
 <p>Here is an example of how to use Python and Raspberry Pi to build an edge computing device that monitors temperature and humidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="nn">GPIO</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import RPi.GPIO as GPIO
+import time
+import requests
 
-<span class="c1"># Set up GPIO pins</span>
-<span class="n">GPIO</span><span class="o">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">GPIO</span><span class="o">.</span><span class="n">BCM</span><span class="p">)</span>
-<span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>
+# Set up GPIO pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.IN)
 
-<span class="c1"># Set up API endpoint</span>
-<span class="n">api_endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/api/edge_data&quot;</span>
+# Set up API endpoint
+api_endpoint = &quot;https://example.com/api/edge_data&quot;
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Read temperature and humidity data</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="mi">25</span>
-    <span class="n">humidity</span> <span class="o">=</span> <span class="mi">60</span>
+while True:
+    # Read temperature and humidity data
+    temperature = 25
+    humidity = 60
 
-    <span class="c1"># Send data to API endpoint</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">humidity</span><span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    # Send data to API endpoint
+    data = {&quot;temperature&quot;: temperature, &quot;humidity&quot;: humidity}
+    response = requests.post(api_endpoint, json=data)
 
-    <span class="c1"># Check response status code</span>
-    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data sent successfully&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error sending data&quot;</span><span class="p">)</span>
+    # Check response status code
+    if response.status_code == 200:
+        print(&quot;Data sent successfully&quot;)
+    else:
+        print(&quot;Error sending data&quot;)
 
-    <span class="c1"># Wait for 1 minute before sending next data point</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-</code></pre></div>
-
+    # Wait for 1 minute before sending next data point
+    time.sleep(60)
+</code></pre>
 <p>This code uses the RPi.GPIO library to read temperature and humidity data from sensors connected to the Raspberry Pi, and then sends the data to an API endpoint using the requests library.</p>
 <h2 id="edge-computing-platforms-and-tools">Edge Computing Platforms and Tools</h2>
 <p>There are several edge computing platforms and tools available, including:
@@ -212,42 +211,41 @@
 * <strong>Data processing</strong>: Use data processing frameworks like Apache Kafka or Apache Spark to process and analyze data in real-time.</p>
 <h3 id="practical-code-example-edge-computing-with-apache-kafka">Practical Code Example: Edge Computing with Apache Kafka</h3>
 <p>Here is an example of how to use Apache Kafka to process and analyze data in real-time:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerConfig</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerRecord</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerRecords</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.KafkaConsumer</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Properties</span><span class="p">;</span>
+import java.util.Arrays;
+import java.util.Properties;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EdgeComputingConsumer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Set up Kafka consumer properties</span>
-<span class="w">        </span><span class="n">Properties</span><span class="w"> </span><span class="n">properties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
-<span class="w">        </span><span class="n">properties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">properties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">GROUP_ID_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;edge_computing_group&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">properties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">KEY_DESERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">properties</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">VALUE_DESERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="p">);</span>
+public class EdgeComputingConsumer {
+    public static void main(String[] args) {
+        // Set up Kafka consumer properties
+        Properties properties = new Properties();
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, &quot;edge_computing_group&quot;);
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);
 
-<span class="w">        </span><span class="c1">// Create Kafka consumer</span>
-<span class="w">        </span><span class="n">KafkaConsumer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaConsumer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">properties</span><span class="p">);</span>
+        // Create Kafka consumer
+        KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(properties);
 
-<span class="w">        </span><span class="c1">// Subscribe to topic</span>
-<span class="w">        </span><span class="n">consumer</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;edge_data&quot;</span><span class="p">));</span>
+        // Subscribe to topic
+        consumer.subscribe(Arrays.asList(&quot;edge_data&quot;));
 
-<span class="w">        </span><span class="c1">// Consume and process data</span>
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">ConsumerRecords</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">consumer</span><span class="p">.</span><span class="na">poll</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">ConsumerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">records</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Process data</span>
-<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Received data: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">record</span><span class="p">.</span><span class="na">value</span><span class="p">());</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="n">consumer</span><span class="p">.</span><span class="na">commitSync</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Consume and process data
+        while (true) {
+            ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);
+            for (ConsumerRecord&lt;String, String&gt; record : records) {
+                // Process data
+                System.out.println(&quot;Received data: &quot; + record.value());
+            }
+            consumer.commitSync();
+        }
+    }
+}
+</code></pre>
 <p>This code uses the Apache Kafka library to create a Kafka consumer that subscribes to a topic and consumes data in real-time.</p>
 <h2 id="concrete-use-cases">Concrete Use Cases</h2>
 <p>Here are some concrete use cases for edge computing:
@@ -278,47 +276,46 @@
 <p>By leveraging these resources and following the next steps outlined above, you can become an expert in edge computing and start building your own edge computing applications today. </p>
 <h3 id="practical-code-example-edge-computing-with-c">Practical Code Example: Edge Computing with C++</h3>
 <p>Here is an example of how to use C++ to build an edge computing device that monitors temperature and humidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;wiringPi.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;curl/curl.h&gt;</span>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;wiringPi.h&gt;
+#include &lt;curl/curl.h&gt;
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Set up GPIO pins</span>
-<span class="w">    </span><span class="n">wiringPiSetup</span><span class="p">();</span>
+int main() {
+    // Set up GPIO pins
+    wiringPiSetup();
 
-<span class="w">    </span><span class="c1">// Set up API endpoint</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">apiEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com/api/edge_data&quot;</span><span class="p">;</span>
+    // Set up API endpoint
+    std::string apiEndpoint = &quot;https://example.com/api/edge_data&quot;;
 
-<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Read temperature and humidity data</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">humidity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span>
+    while (true) {
+        // Read temperature and humidity data
+        int temperature = 25;
+        int humidity = 60;
 
-<span class="w">        </span><span class="c1">// Send data to API endpoint</span>
-<span class="w">        </span><span class="n">CURL</span><span class="w"> </span><span class="o">*</span><span class="n">curl</span><span class="p">;</span>
-<span class="w">        </span><span class="n">CURLcode</span><span class="w"> </span><span class="n">res</span><span class="p">;</span>
-<span class="w">        </span><span class="n">curl_global_init</span><span class="p">(</span><span class="n">CURL_GLOBAL_DEFAULT</span><span class="p">);</span>
-<span class="w">        </span><span class="n">curl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curl_easy_init</span><span class="p">();</span>
-<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">curl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">postData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;temperature=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&amp;humidity=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">humidity</span><span class="p">);</span>
-<span class="w">            </span><span class="n">curl_easy_setopt</span><span class="p">(</span><span class="n">curl</span><span class="p">,</span><span class="w"> </span><span class="n">CURLOPT_URL</span><span class="p">,</span><span class="w"> </span><span class="n">apiEndpoint</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
-<span class="w">            </span><span class="n">curl_easy_setopt</span><span class="p">(</span><span class="n">curl</span><span class="p">,</span><span class="w"> </span><span class="n">CURLOPT_POSTFIELDS</span><span class="p">,</span><span class="w"> </span><span class="n">postData</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
-<span class="w">            </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curl_easy_perform</span><span class="p">(</span><span class="n">curl</span><span class="p">);</span>
-<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">CURLE_OK</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;cURL error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">curl_easy_strerror</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="n">curl_easy_cleanup</span><span class="p">(</span><span class="n">curl</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">curl_global_cleanup</span><span class="p">();</span>
+        // Send data to API endpoint
+        CURL *curl;
+        CURLcode res;
+        curl_global_init(CURL_GLOBAL_DEFAULT);
+        curl = curl_easy_init();
+        if(curl) {
+            std::string postData = &quot;temperature=&quot; + std::to_string(temperature) + &quot;&amp;humidity=&quot; + std::to_string(humidity);
+            curl_easy_setopt(curl, CURLOPT_URL, apiEndpoint.c_str());
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
+            res = curl_easy_perform(curl);
+            if(res != CURLE_OK) {
+                std::cerr &lt;&lt; &quot;cURL error: &quot; &lt;&lt; curl_easy_strerror(res) &lt;&lt; std::endl;
+            }
+            curl_easy_cleanup(curl);
+        }
+        curl_global_cleanup();
 
-<span class="w">        </span><span class="c1">// Wait for 1 minute before sending next data point</span>
-<span class="w">        </span><span class="n">delay</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+        // Wait for 1 minute before sending next data point
+        delay(60000);
+    }
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    return 0;
+}
+</code></pre>
 <p>This code uses the WiringPi library to read temperature and humidity data from sensors connected to the Raspberry Pi, and then sends the data to an API endpoint using the cURL library.</p>
 <h3 id="edge-computing-pricing">Edge Computing Pricing</h3>
 <p>Here are some pricing details for edge computing platforms and tools:

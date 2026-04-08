@@ -168,69 +168,66 @@
 <h4 id="permutation-importance">Permutation Importance</h4>
 <p>Permutation importance measures the change in model accuracy after permuting the feature values, which breaks the relationship between the feature and the target variable.</p>
 <p><strong>Code Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">permutation_importance</span>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>  <span class="c1"># replace with your dataset</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+# Load dataset
+data = pd.read_csv('data.csv')  # replace with your dataset
+X = data.drop('target', axis=1)
+y = data['target']
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train model
+model = RandomForestClassifier()
+model.fit(X, y)
 
-<span class="c1"># Evaluate model</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model Accuracy:&#39;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+# Evaluate model
+y_pred = model.predict(X)
+print('Model Accuracy:', accuracy_score(y, y_pred))
 
-<span class="c1"># Calculate permutation importance</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">importances_mean</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
+# Calculate permutation importance
+result = permutation_importance(model, X, y, n_repeats=10, random_state=42)
+sorted_idx = result.importances_mean.argsort()
 
-<span class="c1"># Display results</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+# Display results
+import matplotlib.pyplot as plt
 
-<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">importances_mean</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Permutation Importance&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+plt.barh(X.columns[sorted_idx], result.importances_mean[sorted_idx])
+plt.xlabel(&quot;Permutation Importance&quot;)
+plt.show()
+</code></pre>
 <h4 id="shap-shapley-additive-explanations">SHAP (SHapley Additive exPlanations)</h4>
 <p>SHAP values provide a unified measure of feature importance based on cooperative game theory, quantifying each feature's contribution to a prediction.</p>
 <p><strong>Code Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">shap</span>
+<pre><code class="language-python">import shap
 
-<span class="c1"># Initialize SHAP explainer</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+# Initialize SHAP explainer
+explainer = shap.TreeExplainer(model)
 
-<span class="c1"># Calculate SHAP values</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Calculate SHAP values
+shap_values = explainer.shap_values(X)
 
-<span class="c1"># Visualize SHAP values for the first instance</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span><span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span> <span class="n">shap_values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</code></pre></div>
-
+# Visualize SHAP values for the first instance
+shap.initjs()
+shap.force_plot(explainer.expected_value, shap_values[0], X.iloc[0])
+</code></pre>
 <h3 id="2-lime-local-interpretable-model-agnostic-explanations">2. LIME (Local Interpretable Model-agnostic Explanations)</h3>
 <p>LIME is another popular technique that explains individual predictions by approximating the model locally with an interpretable model.</p>
 <p><strong>Code Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">lime.lime_tabular</span> <span class="kn">import</span> <span class="n">LimeTabularExplainer</span>
+<pre><code class="language-python">from lime.lime_tabular import LimeTabularExplainer
 
-<span class="c1"># Create a LIME explainer</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">LimeTabularExplainer</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Class 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class 1&#39;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;classification&#39;</span><span class="p">)</span>
+# Create a LIME explainer
+explainer = LimeTabularExplainer(X.values, feature_names=X.columns.tolist(), class_names=['Class 0', 'Class 1'], mode='classification')
 
-<span class="c1"># Explain a prediction</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># index of the instance to explain</span>
-<span class="n">exp</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain_instance</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">)</span>
+# Explain a prediction
+i = 0  # index of the instance to explain
+exp = explainer.explain_instance(X.values[i], model.predict_proba)
 
-<span class="c1"># Visualize the explanation</span>
-<span class="n">exp</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">(</span><span class="n">show_table</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+# Visualize the explanation
+exp.show_in_notebook(show_table=True)
+</code></pre>
 <h3 id="3-counterfactual-explanations">3. Counterfactual Explanations</h3>
 <p>Counterfactual explanations provide insights by showing how minimal changes to input features can lead to different outcomes. They help users understand what could have happened under slightly different circumstances.</p>
 <h4 id="example-scenario">Example Scenario</h4>

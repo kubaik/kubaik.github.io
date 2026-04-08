@@ -158,25 +158,23 @@
 * Checkmarx: Provides a robust SAST platform with advanced code analysis capabilities and support for cloud-based deployments.
 * SonarQube: An open-source SAST tool that offers code analysis, vulnerability detection, and code quality metrics.</p>
 <p>For example, let's consider a simple Java application that uses a SQL database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Vulnerable code</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserData</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE username = &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; AND password = &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="c1">// Execute the query</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-java">// Vulnerable code
+public class UserData {
+    public void authenticate(String username, String password) {
+        String query = &quot;SELECT * FROM users WHERE username = '&quot; + username + &quot;' AND password = '&quot; + password + &quot;'&quot;;
+        // Execute the query
+    }
+}
+</code></pre>
 <p>Using Veracode's SAST tool, we can identify the SQL injection vulnerability in the above code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Fixed code</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserData</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE username = ? AND password = ?&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="c1">// Prepare the query with parameterized input</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-java">// Fixed code
+public class UserData {
+    public void authenticate(String username, String password) {
+        String query = &quot;SELECT * FROM users WHERE username = ? AND password = ?&quot;;
+        // Prepare the query with parameterized input
+    }
+}
+</code></pre>
 <p>By using parameterized input, we can prevent SQL injection attacks and ensure the security of our application.</p>
 <h3 id="dynamic-application-security-testing-dast">Dynamic Application Security Testing (DAST)</h3>
 <p>DAST involves analyzing the application's runtime behavior to identify potential security vulnerabilities. This type of testing is typically performed during the testing or production phase, allowing testers to identify vulnerabilities that may have been missed during SAST. DAST tools use various techniques, such as fuzz testing, penetration testing, and vulnerability scanning, to detect vulnerabilities like XSS, CSRF, and authentication bypass.</p>
@@ -185,23 +183,21 @@
 * Burp Suite: A commercial DAST tool that offers a wide range of features, including vulnerability scanning, penetration testing, and API testing.
 * Acunetix: A commercial DAST tool that offers advanced vulnerability scanning and penetration testing capabilities, with support for cloud-based deployments.</p>
 <p>For example, let's consider a simple web application that uses a login form:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Vulnerable code --&gt;</span>
-<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/login&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Login&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- Vulnerable code --&gt;
+&lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;
+    &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Login&quot;&gt;
+&lt;/form&gt;
+</code></pre>
 <p>Using OWASP ZAP's DAST tool, we can identify the XSS vulnerability in the above code:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Fixed code --&gt;</span>
-<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/login&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&quot;off&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&quot;off&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Login&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!-- Fixed code --&gt;
+&lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; autocomplete=&quot;off&quot;&gt;
+    &lt;input type=&quot;password&quot; name=&quot;password&quot; autocomplete=&quot;off&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Login&quot;&gt;
+&lt;/form&gt;
+</code></pre>
 <p>By using autocomplete attributes, we can prevent XSS attacks and ensure the security of our application.</p>
 <h2 id="comparison-of-sast-and-dast">Comparison of SAST and DAST</h2>
 <p>Both SAST and DAST are essential components of a comprehensive application security testing strategy. While SAST provides early detection of vulnerabilities during the development phase, DAST provides runtime analysis and detection of vulnerabilities during the testing or production phase.</p>

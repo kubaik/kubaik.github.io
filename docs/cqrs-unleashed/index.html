@@ -169,36 +169,35 @@
 3. <strong>Implementing the command and query repositories</strong>: The command and query repositories are responsible for storing and retrieving the application's state.</p>
 <h3 id="example-code-implementing-a-simple-cqrs-system">Example Code: Implementing a Simple CQRS System</h3>
 <p>Here is an example of a simple CQRS system implemented in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Domain model</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Guid</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">// Domain model
+public class User {
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+}
 
-<span class="c1">// Command handler</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CreateUserCommandHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Handle</span><span class="p">(</span><span class="n">CreateUserCommand</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new user</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
-<span class="w">            </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">Name</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="c1">// Save the user to the command repository</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">commandRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CommandRepository</span><span class="p">();</span>
-<span class="w">        </span><span class="n">commandRepository</span><span class="p">.</span><span class="n">Save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+// Command handler
+public class CreateUserCommandHandler {
+    public void Handle(CreateUserCommand command) {
+        // Create a new user
+        var user = new User {
+            Id = command.Id,
+            Name = command.Name
+        };
+        // Save the user to the command repository
+        var commandRepository = new CommandRepository();
+        commandRepository.Save(user);
+    }
+}
 
-<span class="c1">// Query handler</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GetUserQueryHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">Handle</span><span class="p">(</span><span class="n">GetUserQuery</span><span class="w"> </span><span class="n">query</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Retrieve the user from the query repository</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">queryRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">QueryRepository</span><span class="p">();</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">queryRepository</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Query handler
+public class GetUserQueryHandler {
+    public User Handle(GetUserQuery query) {
+        // Retrieve the user from the query repository
+        var queryRepository = new QueryRepository();
+        return queryRepository.Get(query.Id);
+    }
+}
+</code></pre>
 <p>In this example, we have a simple domain model that consists of a <code>User</code> entity. We also have command and query handlers that handle the <code>CreateUserCommand</code> and <code>GetUserQuery</code> messages, respectively.</p>
 <h2 id="implementing-event-sourcing">Implementing Event Sourcing</h2>
 <p>Implementing Event Sourcing involves several steps, including:
@@ -207,36 +206,35 @@
 3. <strong>Implementing the event handlers</strong>: The event handlers are responsible for handling the events and updating the application's state.</p>
 <h3 id="example-code-implementing-a-simple-event-sourced-system">Example Code: Implementing a Simple Event Sourced System</h3>
 <p>Here is an example of a simple Event Sourced system implemented in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Event</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserCreatedEvent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Guid</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">// Event
+public class UserCreatedEvent {
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+}
 
-<span class="c1">// Event store</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">EventStore</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Save</span><span class="p">(</span><span class="n">Event</span><span class="w"> </span><span class="n">@event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Save the event to the event store</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">eventRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EventRepository</span><span class="p">();</span>
-<span class="w">        </span><span class="n">eventRepository</span><span class="p">.</span><span class="n">Save</span><span class="p">(</span><span class="n">@event</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+// Event store
+public class EventStore {
+    public void Save(Event @event) {
+        // Save the event to the event store
+        var eventRepository = new EventRepository();
+        eventRepository.Save(@event);
+    }
+}
 
-<span class="c1">// Event handler</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserCreatedEventHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Handle</span><span class="p">(</span><span class="n">UserCreatedEvent</span><span class="w"> </span><span class="n">@event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the application&#39;s state</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
-<span class="w">            </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Name</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="c1">// Save the user to the query repository</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">queryRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">QueryRepository</span><span class="p">();</span>
-<span class="w">        </span><span class="n">queryRepository</span><span class="p">.</span><span class="n">Save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Event handler
+public class UserCreatedEventHandler {
+    public void Handle(UserCreatedEvent @event) {
+        // Update the application's state
+        var user = new User {
+            Id = @event.Id,
+            Name = @event.Name
+        };
+        // Save the user to the query repository
+        var queryRepository = new QueryRepository();
+        queryRepository.Save(user);
+    }
+}
+</code></pre>
 <p>In this example, we have a simple event that represents the creation of a new user. We also have an event store that stores the events, and an event handler that updates the application's state when a <code>UserCreatedEvent</code> is received.</p>
 <h2 id="tools-and-platforms-for-cqrs-and-event-sourcing">Tools and Platforms for CQRS and Event Sourcing</h2>
 <p>There are several tools and platforms that can be used to build CQRS and Event Sourced systems, including:
@@ -254,55 +252,53 @@
 <p>One common problem when implementing CQRS and Event Sourcing is handling concurrency conflicts. This can occur when multiple commands are executed concurrently, resulting in inconsistent state.</p>
 <h3 id="solution-using-optimistic-concurrency">Solution: Using Optimistic Concurrency</h3>
 <p>One solution to this problem is to use optimistic concurrency, which involves checking the version of the aggregate before updating it. If the version has changed, the update is rejected and the command is retried.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example code: Using optimistic concurrency</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UpdateUserCommandHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Handle</span><span class="p">(</span><span class="n">UpdateUserCommand</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Retrieve the user from the query repository</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">queryRepository</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// Check the version of the user</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Version</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">Version</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Reject the update and retry the command</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">ConcurrencyException</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="c1">// Update the user</span>
-<span class="w">        </span><span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span>
-<span class="w">        </span><span class="c1">// Save the user to the command repository</span>
-<span class="w">        </span><span class="n">commandRepository</span><span class="p">.</span><span class="n">Save</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">// Example code: Using optimistic concurrency
+public class UpdateUserCommandHandler {
+    public void Handle(UpdateUserCommand command) {
+        // Retrieve the user from the query repository
+        var user = queryRepository.Get(command.Id);
+        // Check the version of the user
+        if (user.Version != command.Version) {
+            // Reject the update and retry the command
+            throw new ConcurrencyException();
+        }
+        // Update the user
+        user.Name = command.Name;
+        // Save the user to the command repository
+        commandRepository.Save(user);
+    }
+}
+</code></pre>
 <p>Another common problem is handling event versioning. This can occur when the structure of an event changes over time, resulting in compatibility issues.</p>
 <h3 id="solution-using-event-versioning">Solution: Using Event Versioning</h3>
 <p>One solution to this problem is to use event versioning, which involves including a version number in each event. This allows the event handlers to handle different versions of the same event.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example code: Using event versioning</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserCreatedEvent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Guid</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Version</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
+<pre><code class="language-csharp">// Example code: Using event versioning
+public class UserCreatedEvent {
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public int Version { get; set; }
+}
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserCreatedEventHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Handle</span><span class="p">(</span><span class="n">UserCreatedEvent</span><span class="w"> </span><span class="n">@event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Check the version of the event</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">@event</span><span class="p">.</span><span class="n">Version</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Handle version 1 of the event</span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
-<span class="w">                </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Name</span>
-<span class="w">            </span><span class="p">};</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">@event</span><span class="p">.</span><span class="n">Version</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Handle version 2 of the event</span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
-<span class="w">                </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
-<span class="w">                </span><span class="n">Email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@event</span><span class="p">.</span><span class="n">Email</span>
-<span class="w">            </span><span class="p">};</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class UserCreatedEventHandler {
+    public void Handle(UserCreatedEvent @event) {
+        // Check the version of the event
+        if (@event.Version == 1) {
+            // Handle version 1 of the event
+            var user = new User {
+                Id = @event.Id,
+                Name = @event.Name
+            };
+        } else if (@event.Version == 2) {
+            // Handle version 2 of the event
+            var user = new User {
+                Id = @event.Id,
+                Name = @event.Name,
+                Email = @event.Email
+            };
+        }
+    }
+}
+</code></pre>
 <h2 id="use-cases">Use Cases</h2>
 <p>CQRS and Event Sourcing can be used in a variety of use cases, including:
 * <strong>E-commerce platforms</strong>: CQRS and Event Sourcing can be used to build scalable and maintainable e-commerce platforms that handle high volumes of orders and inventory updates.

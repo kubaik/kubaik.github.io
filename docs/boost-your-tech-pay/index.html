@@ -154,18 +154,17 @@
 <h3 id="understanding-the-market">Understanding the Market</h3>
 <p>To negotiate your salary effectively, you need to understand the market. This involves researching the average salary ranges for your role, location, and level of experience. Utilize online resources such as Glassdoor, Payscale, or LinkedIn to gather data on market trends. For example, according to Glassdoor, the average salary for a software engineer in San Francisco is around $124,000 per year, with a range of $90,000 to $170,000.</p>
 <p>Here is an example of how you can use Python to scrape salary data from Glassdoor:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.glassdoor.com/Salaries/san-francisco-software-engineer-salary-SRCH_IL.0,13_IM759_KO14,24.htm&quot;</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+url = &quot;https://www.glassdoor.com/Salaries/san-francisco-software-engineer-salary-SRCH_IL.0,13_IM759_KO14,24.htm&quot;
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
 
-<span class="n">salaries</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;salaries&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">salary</span> <span class="ow">in</span> <span class="n">salaries</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">salary</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</code></pre></div>
-
+salaries = soup.find_all('div', class_='salaries')
+for salary in salaries:
+    print(salary.text)
+</code></pre>
 <p>This code snippet uses the <code>requests</code> library to fetch the HTML content of the Glassdoor page and then uses <code>BeautifulSoup</code> to parse the HTML and extract the salary data.</p>
 <h3 id="building-your-case">Building Your Case</h3>
 <p>Once you have a clear understanding of the market, it's time to build your case for a higher salary. This involves highlighting your skills, experience, and achievements. Create a list of your accomplishments and quantify them wherever possible. For example, instead of saying "improved code quality," say "improved code quality by 30% through rigorous testing and refactoring."</p>
@@ -174,15 +173,14 @@
 * Jira: A software development platform that provides issue tracking, project management, and team collaboration features.
 * GitHub: A web-based platform for version control and collaboration that allows you to track your code changes and contributions.</p>
 <p>Here is an example of how you can use GitHub to track your code contributions:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">git</span>
+<pre><code class="language-python">import git
 
-<span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="s1">&#39;./myrepo&#39;</span><span class="p">)</span>
-<span class="n">commits</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">iter_commits</span><span class="p">()</span>
+repo = git.Repo('./myrepo')
+commits = repo.iter_commits()
 
-<span class="k">for</span> <span class="n">commit</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">commit</span><span class="o">.</span><span class="n">hexsha</span><span class="p">,</span> <span class="n">commit</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
-</code></pre></div>
-
+for commit in commits:
+    print(commit.hexsha, commit.message)
+</code></pre>
 <p>This code snippet uses the <code>git</code> library to iterate through the commits in your repository and print the commit hash and message.</p>
 <h3 id="negotiation-strategies">Negotiation Strategies</h3>
 <p>Now that you have built your case, it's time to negotiate your salary. Here are some strategies to keep in mind:
@@ -194,18 +192,17 @@
 * <strong>The range strategy</strong>: Provide a range of possible salaries to give the company flexibility.
 * <strong>The package strategy</strong>: Negotiate the entire compensation package, including benefits and perks.</p>
 <p>Here is an example of how you can use Python to calculate your desired salary range:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_salary_range</span><span class="p">(</span><span class="n">current_salary</span><span class="p">,</span> <span class="n">desired_increase</span><span class="p">):</span>
-    <span class="n">low</span> <span class="o">=</span> <span class="n">current_salary</span> <span class="o">*</span> <span class="mf">1.1</span>
-    <span class="n">high</span> <span class="o">=</span> <span class="n">current_salary</span> <span class="o">*</span> <span class="mf">1.3</span>
-    <span class="k">return</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span>
+<pre><code class="language-python">def calculate_salary_range(current_salary, desired_increase):
+    low = current_salary * 1.1
+    high = current_salary * 1.3
+    return low, high
 
-<span class="n">current_salary</span> <span class="o">=</span> <span class="mi">100000</span>
-<span class="n">desired_increase</span> <span class="o">=</span> <span class="mf">0.2</span>
+current_salary = 100000
+desired_increase = 0.2
 
-<span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">calculate_salary_range</span><span class="p">(</span><span class="n">current_salary</span><span class="p">,</span> <span class="n">desired_increase</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Desired salary range: $</span><span class="si">{</span><span class="n">low</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - $</span><span class="si">{</span><span class="n">high</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+low, high = calculate_salary_range(current_salary, desired_increase)
+print(f&quot;Desired salary range: ${low:.2f} - ${high:.2f}&quot;)
+</code></pre>
 <p>This code snippet uses a simple formula to calculate the desired salary range based on the current salary and desired increase.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems that tech professionals face during salary negotiations, along with specific solutions:

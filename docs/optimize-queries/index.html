@@ -153,9 +153,8 @@
 <p>Database query optimization is the process of improving the efficiency of database queries to reduce the time it takes to retrieve or manipulate data. This is achieved by analyzing the query execution plan, indexing, and optimizing the database schema. In this article, we'll explore the concepts, tools, and techniques used to optimize database queries, along with practical examples and real-world use cases.</p>
 <h3 id="understanding-query-execution-plans">Understanding Query Execution Plans</h3>
 <p>A query execution plan is a detailed outline of the steps a database management system (DBMS) takes to execute a query. It includes information about the indexes used, join orders, and aggregation methods. By analyzing the query execution plan, developers can identify performance bottlenecks and optimize the query accordingly. For example, the EXPLAIN statement in MySQL can be used to analyze the query execution plan:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM customers WHERE country='USA';
+</code></pre>
 <p>This statement will return a detailed report of the query execution plan, including the index used, the number of rows scanned, and the estimated cost of the query.</p>
 <h2 id="indexing-and-query-optimization">Indexing and Query Optimization</h2>
 <p>Indexing is a critical aspect of query optimization. An index is a data structure that improves the speed of data retrieval by providing a quick way to locate specific data. There are several types of indexes, including:</p>
@@ -165,15 +164,13 @@
 <li>Full-text indexes: suitable for text search queries</li>
 </ul>
 <p>To create an index in MySQL, you can use the CREATE INDEX statement:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_country</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">country</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_country ON customers (country);
+</code></pre>
 <p>This statement creates a B-tree index on the <code>country</code> column of the <code>customers</code> table.</p>
 <h3 id="using-indexes-to-optimize-queries">Using Indexes to Optimize Queries</h3>
 <p>Indexes can significantly improve the performance of queries. For example, consider a query that retrieves all customers from the USA:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM customers WHERE country='USA';
+</code></pre>
 <p>Without an index, this query would require a full table scan, resulting in a slow query performance. However, with an index on the <code>country</code> column, the query can use the index to quickly locate the relevant data, resulting in a significant performance improvement.</p>
 <h2 id="query-optimization-tools-and-platforms">Query Optimization Tools and Platforms</h2>
 <p>Several tools and platforms are available to help optimize database queries, including:</p>

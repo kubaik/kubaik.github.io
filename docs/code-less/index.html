@@ -163,62 +163,59 @@
 <p>Let's take a look at some practical examples of low-code/no-code platforms in action.</p>
 <h3 id="example-1-building-a-simple-web-application-with-bubble">Example 1: Building a Simple Web Application with Bubble</h3>
 <p>Bubble is a popular low-code platform that allows developers to build web applications without writing code. Here's an example of how to build a simple web application with Bubble:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new page</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bubble</span><span class="p">.</span><span class="nx">page</span><span class="p">(</span><span class="s2">&quot;my-page&quot;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Create a new page
+var page = bubble.page(&quot;my-page&quot;);
 
-<span class="c1">// Add a text element</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">textElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">addElement</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">);</span>
-<span class="nx">textElement</span><span class="p">.</span><span class="nx">setText</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
+// Add a text element
+var textElement = page.addElement(&quot;text&quot;);
+textElement.setText(&quot;Hello, World!&quot;);
 
-<span class="c1">// Add a button element</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">buttonElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">addElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
-<span class="nx">buttonElement</span><span class="p">.</span><span class="nx">setText</span><span class="p">(</span><span class="s2">&quot;Click me!&quot;</span><span class="p">);</span>
+// Add a button element
+var buttonElement = page.addElement(&quot;button&quot;);
+buttonElement.setText(&quot;Click me!&quot;);
 
-<span class="c1">// Configure the button&#39;s click event</span>
-<span class="nx">buttonElement</span><span class="p">.</span><span class="nx">onClick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Show an alert message</span>
-<span class="w">  </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Button clicked!&quot;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Configure the button's click event
+buttonElement.onClick(function() {
+  // Show an alert message
+  alert(&quot;Button clicked!&quot;);
+});
+</code></pre>
 <p>In this example, we create a new page, add a text element and a button element, and configure the button's click event. This code is generated automatically by Bubble's visual interface.</p>
 <h3 id="example-2-building-a-mobile-app-with-adalo">Example 2: Building a Mobile App with Adalo</h3>
 <p>Adalo is a no-code platform that allows developers to build mobile apps without writing code. Here's an example of how to build a simple mobile app with Adalo:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new screen</span>
-<span class="n">screen</span> <span class="o">=</span> <span class="n">adalo</span><span class="o">.</span><span class="n">screen</span><span class="p">(</span><span class="s2">&quot;my-screen&quot;</span><span class="p">)</span>
+<pre><code class="language-python"># Create a new screen
+screen = adalo.screen(&quot;my-screen&quot;)
 
-<span class="c1"># Add a text element</span>
-<span class="n">text_element</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-<span class="n">text_element</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">)</span>
+# Add a text element
+text_element = screen.add_element(&quot;text&quot;)
+text_element.set_text(&quot;Hello, World!&quot;)
 
-<span class="c1"># Add a button element</span>
-<span class="n">button_element</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">add_element</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">)</span>
-<span class="n">button_element</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Click me!&quot;</span><span class="p">)</span>
+# Add a button element
+button_element = screen.add_element(&quot;button&quot;)
+button_element.set_text(&quot;Click me!&quot;)
 
-<span class="c1"># Configure the button&#39;s click event</span>
-<span class="n">button_element</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1"># Show an alert message</span>
-  <span class="n">alert</span><span class="p">(</span><span class="s2">&quot;Button clicked!&quot;</span><span class="p">)</span>
-<span class="p">})</span>
-</code></pre></div>
-
+# Configure the button's click event
+button_element.on_click(function() {
+  # Show an alert message
+  alert(&quot;Button clicked!&quot;)
+})
+</code></pre>
 <p>In this example, we create a new screen, add a text element and a button element, and configure the button's click event. This code is generated automatically by Adalo's visual interface.</p>
 <h3 id="example-3-building-a-web-scraper-with-parsehub">Example 3: Building a Web Scraper with ParseHub</h3>
 <p>ParseHub is a low-code platform that allows developers to build web scrapers without writing code. Here's an example of how to build a simple web scraper with ParseHub:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">parsehub</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="s2">&quot;my-project&quot;</span><span class="p">)</span>
+<pre><code class="language-python"># Create a new project
+project = parsehub.project(&quot;my-project&quot;)
 
-<span class="c1"># Add a new extractor</span>
-<span class="n">extractor</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">add_extractor</span><span class="p">(</span><span class="s2">&quot;my-extractor&quot;</span><span class="p">)</span>
+# Add a new extractor
+extractor = project.add_extractor(&quot;my-extractor&quot;)
 
-<span class="c1"># Configure the extractor&#39;s settings</span>
-<span class="n">extractor</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="s2">&quot;https://www.example.com&quot;</span><span class="p">)</span>
-<span class="n">extractor</span><span class="o">.</span><span class="n">set_selector</span><span class="p">(</span><span class="s2">&quot;.my-selector&quot;</span><span class="p">)</span>
+# Configure the extractor's settings
+extractor.set_url(&quot;https://www.example.com&quot;)
+extractor.set_selector(&quot;.my-selector&quot;)
 
-<span class="c1"># Run the extractor</span>
-<span class="n">extractor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-
+# Run the extractor
+extractor.run()
+</code></pre>
 <p>In this example, we create a new project, add a new extractor, configure the extractor's settings, and run the extractor. This code is generated automatically by ParseHub's visual interface.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Low-code/no-code platforms have a wide range of real-world use cases. Here are a few examples:</p>

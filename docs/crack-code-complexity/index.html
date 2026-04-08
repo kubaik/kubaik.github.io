@@ -171,19 +171,18 @@
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <p>Let’s explore a few algorithms and analyze their complexities.</p>
 <h4 id="example-1-linear-search">Example 1: Linear Search</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">linear_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">index</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<pre><code class="language-python">def linear_search(arr, target):
+    for index in range(len(arr)):
+        if arr[index] == target:
+            return index
+    return -1
 
-<span class="c1"># Usage</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">target</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">linear_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Target found at index: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Usage
+arr = [3, 5, 2, 4, 9, 1]
+target = 4
+result = linear_search(arr, target)
+print(f'Target found at index: {result}')
+</code></pre>
 <p><strong>Time Complexity Analysis</strong>:
 - Best Case: O(1) (when the target is the first element)
 - Worst Case: O(n) (when the target is not in the array)
@@ -191,25 +190,24 @@
 <p><strong>Space Complexity</strong>: O(1) since we are using only a fixed amount of extra space.</p>
 <h4 id="example-2-binary-search">Example 2: Binary Search</h4>
 <p>Binary search is efficient for sorted arrays.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">binary_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">:</span>
-        <span class="n">mid</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">mid</span>
-        <span class="k">elif</span> <span class="n">arr</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
-            <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<pre><code class="language-python">def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = left + (right - left) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
 
-<span class="c1"># Usage</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">target</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Target found at index: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Usage
+arr = sorted([3, 5, 2, 4, 9, 1])
+target = 4
+result = binary_search(arr, target)
+print(f'Target found at index: {result}')
+</code></pre>
 <p><strong>Time Complexity Analysis</strong>:
 - Best Case: O(1) (when the target is at the middle)
 - Worst Case: O(log n) (when the search space is halved each time)

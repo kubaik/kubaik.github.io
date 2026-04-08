@@ -161,78 +161,75 @@
 <p>There are several patterns for implementing API gateways, each with its own strengths and weaknesses. The following are some common patterns:</p>
 <h3 id="1-single-entry-point-pattern">1. Single-Entry Point Pattern</h3>
 <p>In this pattern, all client requests go through a single API gateway, which then routes them to the appropriate microservice. This pattern is simple to implement and provides a unified interface for clients.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">Api</span><span class="p">,</span> <span class="n">Resource</span>
+<pre><code class="language-python">from flask import Flask, request
+from flask_restful import Api, Resource
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+app = Flask(__name__)
+api = Api(app)
 
-<span class="k">class</span> <span class="nc">UserService</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Call the user microservice</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">}</span>
+class UserService(Resource):
+    def get(self):
+        # Call the user microservice
+        return {'user': 'John Doe'}
 
-<span class="k">class</span> <span class="nc">OrderService</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Call the order microservice</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="s1">&#39;12345&#39;</span><span class="p">}</span>
+class OrderService(Resource):
+    def get(self):
+        # Call the order microservice
+        return {'order': '12345'}
 
-<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">UserService</span><span class="p">,</span> <span class="s1">&#39;/users&#39;</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">OrderService</span><span class="p">,</span> <span class="s1">&#39;/orders&#39;</span><span class="p">)</span>
+api.add_resource(UserService, '/users')
+api.add_resource(OrderService, '/orders')
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
 <p>In this example, the API gateway is implemented using Flask, a Python web framework. The <code>UserService</code> and <code>OrderService</code> classes handle requests for user and order data, respectively.</p>
 <h3 id="2-micro-frontend-pattern">2. Micro-frontend Pattern</h3>
 <p>In this pattern, each microservice has its own API gateway, which handles requests for that specific service. This pattern provides more flexibility and scalability than the single-entry point pattern.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="c1">// User microservice API gateway</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userGateway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">.</span><span class="nx">Router</span><span class="p">();</span>
-<span class="nx">userGateway</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Call the user microservice</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">});</span>
-<span class="p">});</span>
+// User microservice API gateway
+const userGateway = express.Router();
+userGateway.get('/users', (req, res) =&gt; {
+    // Call the user microservice
+    res.json({'user': 'John Doe'});
+});
 
-<span class="c1">// Order microservice API gateway</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">orderGateway</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">.</span><span class="nx">Router</span><span class="p">();</span>
-<span class="nx">orderGateway</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/orders&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Call the order microservice</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="s1">&#39;order&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;12345&#39;</span><span class="p">});</span>
-<span class="p">});</span>
+// Order microservice API gateway
+const orderGateway = express.Router();
+orderGateway.get('/orders', (req, res) =&gt; {
+    // Call the order microservice
+    res.json({'order': '12345'});
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">userGateway</span><span class="p">);</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/orders&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">orderGateway</span><span class="p">);</span>
+app.use('/users', userGateway);
+app.use('/orders', orderGateway);
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;API gateway listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+    console.log('API gateway listening on port 3000');
+});
+</code></pre>
 <p>In this example, the API gateways for the user and order microservices are implemented using Express.js, a Node.js web framework.</p>
 <h3 id="3-service-mesh-pattern">3. Service Mesh Pattern</h3>
 <p>In this pattern, a service mesh is used to manage communication between microservices. A service mesh provides features such as traffic management, security, and observability.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">networking</span><span class="o">.</span><span class="na">istio</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">v1beta1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">VirtualService</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">user</span><span class="o">-</span><span class="n">service</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">hosts</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">user</span><span class="o">-</span><span class="n">service</span>
-<span class="w">  </span><span class="n">http</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">match</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">uri</span><span class="o">:</span>
-<span class="w">        </span><span class="n">prefix</span><span class="o">:</span><span class="w"> </span><span class="o">/</span><span class="n">users</span>
-<span class="w">    </span><span class="n">route</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">destination</span><span class="o">:</span>
-<span class="w">        </span><span class="n">host</span><span class="o">:</span><span class="w"> </span><span class="n">user</span><span class="o">-</span><span class="n">service</span>
-<span class="w">        </span><span class="n">port</span><span class="o">:</span>
-<span class="w">          </span><span class="n">number</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: user-service
+spec:
+  hosts:
+  - user-service
+  http:
+  - match:
+    - uri:
+        prefix: /users
+    route:
+    - destination:
+        host: user-service
+        port:
+          number: 80
+</code></pre>
 <p>In this example, the service mesh is implemented using Istio, an open-source service mesh platform. The <code>VirtualService</code> resource defines a virtual service for the user microservice, which routes requests to the <code>user-service</code> host.</p>
 <h2 id="tools-and-platforms-for-api-gateways">Tools and Platforms for API Gateways</h2>
 <p>Several tools and platforms are available for implementing API gateways, including:</p>

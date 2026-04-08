@@ -163,45 +163,44 @@
 </ul>
 <h3 id="example-using-nessus-to-identify-vulnerabilities">Example: Using Nessus to Identify Vulnerabilities</h3>
 <p>Here's an example of how to use Nessus to identify vulnerabilities in a system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Define the IP address of the system to scan</span>
-<span class="n">ip_address</span> <span class="o">=</span> <span class="s2">&quot;192.168.1.100&quot;</span>
+# Define the IP address of the system to scan
+ip_address = &quot;192.168.1.100&quot;
 
-<span class="c1"># Define the username and password for the Nessus scanner</span>
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;password&quot;</span>
+# Define the username and password for the Nessus scanner
+username = &quot;admin&quot;
+password = &quot;password&quot;
 
-<span class="c1"># Authenticate with the Nessus scanner</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">:8834/login&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
+# Authenticate with the Nessus scanner
+response = requests.post(f&quot;https://{ip_address}:8834/login&quot;, json={&quot;username&quot;: username, &quot;password&quot;: password})
 
-<span class="c1"># Extract the token from the response</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
+# Extract the token from the response
+token = response.json()[&quot;token&quot;]
 
-<span class="c1"># Define the scan settings</span>
-<span class="n">scan_settings</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="s2">&quot;scanner-uuid&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Scan Settings&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;launch&quot;</span><span class="p">:</span> <span class="s2">&quot;ON_DEMAND&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;policy_id&quot;</span><span class="p">:</span> <span class="s2">&quot;policy-uuid&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+# Define the scan settings
+scan_settings = {
+    &quot;uuid&quot;: &quot;scanner-uuid&quot;,
+    &quot;settings&quot;: {
+        &quot;name&quot;: &quot;Scan Settings&quot;,
+        &quot;enabled&quot;: True,
+        &quot;launch&quot;: &quot;ON_DEMAND&quot;,
+        &quot;policy_id&quot;: &quot;policy-uuid&quot;
+    }
+}
 
-<span class="c1"># Create a new scan</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">:8834/scans&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;token=</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="n">scan_settings</span><span class="p">)</span>
+# Create a new scan
+response = requests.post(f&quot;https://{ip_address}:8834/scans&quot;, headers={&quot;X-Cookie&quot;: f&quot;token={token}&quot;}, json=scan_settings)
 
-<span class="c1"># Extract the scan ID from the response</span>
-<span class="n">scan_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;scan_id&quot;</span><span class="p">]</span>
+# Extract the scan ID from the response
+scan_id = response.json()[&quot;scan_id&quot;]
 
-<span class="c1"># Start the scan</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">ip_address</span><span class="si">}</span><span class="s2">:8834/scans/</span><span class="si">{</span><span class="n">scan_id</span><span class="si">}</span><span class="s2">/launch&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;X-Cookie&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;token=</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
+# Start the scan
+response = requests.post(f&quot;https://{ip_address}:8834/scans/{scan_id}/launch&quot;, headers={&quot;X-Cookie&quot;: f&quot;token={token}&quot;})
 
-<span class="c1"># Print the scan results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the scan results
+print(response.json())
+</code></pre>
 <p>This code snippet demonstrates how to use the Nessus API to create a new scan, start the scan, and print the scan results.</p>
 <h2 id="prioritization-and-remediation">Prioritization and Remediation</h2>
 <p>Once vulnerabilities have been identified, they need to be prioritized and remediated. This involves classifying vulnerabilities based on their severity and impact, and then applying patches or other fixes to mitigate the risk.</p>
@@ -212,34 +211,33 @@
 <li><strong>Risk score</strong>: A custom metric that takes into account the specific risks and threats facing an organization.</li>
 </ul>
 <p>Here's an example of how to prioritize vulnerabilities using a risk score:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a list of vulnerabilities</span>
-<span class="n">vulnerabilities</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;impact&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span> <span class="s2">&quot;impact&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;impact&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">}</span>
-<span class="p">]</span>
+<pre><code class="language-python"># Define a list of vulnerabilities
+vulnerabilities = [
+    {&quot;id&quot;: 1, &quot;severity&quot;: &quot;high&quot;, &quot;impact&quot;: &quot;critical&quot;},
+    {&quot;id&quot;: 2, &quot;severity&quot;: &quot;medium&quot;, &quot;impact&quot;: &quot;low&quot;},
+    {&quot;id&quot;: 3, &quot;severity&quot;: &quot;low&quot;, &quot;impact&quot;: &quot;critical&quot;}
+]
 
-<span class="c1"># Define a risk scoring function</span>
-<span class="k">def</span> <span class="nf">risk_score</span><span class="p">(</span><span class="n">vulnerability</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">vulnerability</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;high&quot;</span> <span class="ow">and</span> <span class="n">vulnerability</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;critical&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">10</span>
-    <span class="k">elif</span> <span class="n">vulnerability</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;medium&quot;</span> <span class="ow">and</span> <span class="n">vulnerability</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;low&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">5</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
+# Define a risk scoring function
+def risk_score(vulnerability):
+    if vulnerability[&quot;severity&quot;] == &quot;high&quot; and vulnerability[&quot;impact&quot;] == &quot;critical&quot;:
+        return 10
+    elif vulnerability[&quot;severity&quot;] == &quot;medium&quot; and vulnerability[&quot;impact&quot;] == &quot;low&quot;:
+        return 5
+    else:
+        return 1
 
-<span class="c1"># Calculate the risk score for each vulnerability</span>
-<span class="k">for</span> <span class="n">vulnerability</span> <span class="ow">in</span> <span class="n">vulnerabilities</span><span class="p">:</span>
-    <span class="n">vulnerability</span><span class="p">[</span><span class="s2">&quot;risk_score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_score</span><span class="p">(</span><span class="n">vulnerability</span><span class="p">)</span>
+# Calculate the risk score for each vulnerability
+for vulnerability in vulnerabilities:
+    vulnerability[&quot;risk_score&quot;] = risk_score(vulnerability)
 
-<span class="c1"># Sort the vulnerabilities by risk score</span>
-<span class="n">vulnerabilities</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;risk_score&quot;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Sort the vulnerabilities by risk score
+vulnerabilities.sort(key=lambda x: x[&quot;risk_score&quot;], reverse=True)
 
-<span class="c1"># Print the prioritized vulnerabilities</span>
-<span class="k">for</span> <span class="n">vulnerability</span> <span class="ow">in</span> <span class="n">vulnerabilities</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">vulnerability</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the prioritized vulnerabilities
+for vulnerability in vulnerabilities:
+    print(vulnerability)
+</code></pre>
 <p>This code snippet demonstrates how to prioritize vulnerabilities using a risk scoring function.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that organizations face when implementing vulnerability management, including:</p>
@@ -293,32 +291,31 @@
 </ol>
 <h3 id="example-using-burp-suite-to-identify-web-application-vulnerabilities">Example: Using Burp Suite to Identify Web Application Vulnerabilities</h3>
 <p>Here's an example of how to use Burp Suite to identify web application vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Define the URL of the web application</span>
-<span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://example.com&quot;</span><span class="p">;</span>
+<pre><code class="language-java">// Define the URL of the web application
+String url = &quot;https://example.com&quot;;
 
-<span class="c1">// Define the Burp Suite API endpoint</span>
-<span class="n">String</span><span class="w"> </span><span class="n">burp_api_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://localhost:8080&quot;</span><span class="p">;</span>
+// Define the Burp Suite API endpoint
+String burp_api_endpoint = &quot;http://localhost:8080&quot;;
 
-<span class="c1">// Authenticate with the Burp Suite API</span>
-<span class="n">String</span><span class="w"> </span><span class="n">auth_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">authenticate</span><span class="p">(</span><span class="n">burp_api_endpoint</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">);</span>
+// Authenticate with the Burp Suite API
+String auth_token = authenticate(burp_api_endpoint, &quot;username&quot;, &quot;password&quot;);
 
-<span class="c1">// Define the scan settings</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">scan_settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-<span class="n">scan_settings</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="p">);</span>
-<span class="n">scan_settings</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;scope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;in-scope&quot;</span><span class="p">);</span>
+// Define the scan settings
+Map&lt;String, String&gt; scan_settings = new HashMap&lt;&gt;();
+scan_settings.put(&quot;url&quot;, url);
+scan_settings.put(&quot;scope&quot;, &quot;in-scope&quot;);
 
-<span class="c1">// Start the scan</span>
-<span class="n">startScan</span><span class="p">(</span><span class="n">burp_api_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">auth_token</span><span class="p">,</span><span class="w"> </span><span class="n">scan_settings</span><span class="p">);</span>
+// Start the scan
+startScan(burp_api_endpoint, auth_token, scan_settings);
 
-<span class="c1">// Get the scan results</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Vulnerability</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vulnerabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getScanResults</span><span class="p">(</span><span class="n">burp_api_endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">auth_token</span><span class="p">);</span>
+// Get the scan results
+List&lt;Vulnerability&gt; vulnerabilities = getScanResults(burp_api_endpoint, auth_token);
 
-<span class="c1">// Print the vulnerabilities</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Vulnerability</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">vulnerabilities</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">vulnerability</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Print the vulnerabilities
+for (Vulnerability vulnerability : vulnerabilities) {
+    System.out.println(vulnerability);
+}
+</code></pre>
 <p>This code snippet demonstrates how to use the Burp Suite API to identify web application vulnerabilities.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, vulnerability management is a critical component of any cybersecurity strategy. By identifying and remediating vulnerabilities, organizations can reduce the risk of data breaches and other cyber attacks. There are numerous tools and techniques available for vulnerability management, including Nessus, OpenVAS, Qualys, and Burp Suite.</p>

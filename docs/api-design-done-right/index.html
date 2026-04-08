@@ -168,108 +168,103 @@
 </ul>
 <h3 id="example-1-restful-api-with-nodejs-and-express">Example 1: RESTful API with Node.js and Express</h3>
 <p>Here's an example of a simple RESTful API using Node.js and Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">];</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users', (req, res) =&gt; {
+  const users = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Doe' }
+  ];
+  res.json(users);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users/:id', (req, res) =&gt; {
+  const id = req.params.id;
+  const user = { id: id, name: 'John Doe' };
+  res.json(user);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server listening on port 3000&#39;</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(3000, () =&gt; {
+  console.log('Server listening on port 3000');
+});
+</code></pre>
 <p>This example demonstrates a simple RESTful API with two endpoints: one for retrieving a list of users, and another for retrieving a single user by ID.</p>
 <h3 id="example-2-graphql-api-with-apollo-server">Example 2: GraphQL API with Apollo Server</h3>
 <p>Here's an example of a simple GraphQL API using Apollo Server:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">typeDefs</span><span class="p">,</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./schema&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
+const { typeDefs, resolvers } = require('./schema');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">typeDefs</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">resolvers</span>
-<span class="p">});</span>
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>This example demonstrates a simple GraphQL API using Apollo Server, with a schema defined in a separate file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type User {
+  id: ID!
+  name: String!
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">users</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">!]!</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="p">}</span>
-</code></pre></div>
-
+type Query {
+  users: [User!]!
+  user(id: ID!): User
+}
+</code></pre>
 <h3 id="example-3-grpc-api-with-python-and-protocol-buffers">Example 3: gRPC API with Python and Protocol Buffers</h3>
 <p>Here's an example of a simple gRPC API using Python and Protocol Buffers:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">concurrent</span> <span class="kn">import</span> <span class="n">futures</span>
-<span class="kn">import</span> <span class="nn">grpc</span>
-<span class="kn">from</span> <span class="nn">grpc</span> <span class="kn">import</span> <span class="n">protobuf</span>
+<pre><code class="language-python">from concurrent import futures
+import grpc
+from grpc import protobuf
 
-<span class="c1"># Define the protocol buffer schema</span>
-<span class="n">syntax</span> <span class="o">=</span> <span class="s1">&#39;proto3&#39;</span>
+# Define the protocol buffer schema
+syntax = 'proto3'
 
-<span class="n">package</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+package = 'users'
 
-<span class="n">service</span> <span class="o">=</span> <span class="s1">&#39;Users&#39;</span>
+service = 'Users'
 
-<span class="n">rpc</span> <span class="o">=</span> <span class="s1">&#39;GetUser&#39;</span>
+rpc = 'GetUser'
 
-<span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span>
+message = 'User'
 
-<span class="n">field</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
+field = 'id'
 
-<span class="c1"># Generate the gRPC stub code</span>
-<span class="n">protobuf</span><span class="o">.</span><span class="n">generate_stub_code</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">rpc</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+# Generate the gRPC stub code
+protobuf.generate_stub_code(package, service, rpc, message, field)
 
-<span class="c1"># Create a gRPC server</span>
-<span class="n">server</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">server</span><span class="p">(</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+# Create a gRPC server
+server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-<span class="c1"># Register the service</span>
-<span class="n">users_pb2_grpc</span><span class="o">.</span><span class="n">add_UsersServicer_to_server</span><span class="p">(</span><span class="n">UsersServicer</span><span class="p">(),</span> <span class="n">server</span><span class="p">)</span>
+# Register the service
+users_pb2_grpc.add_UsersServicer_to_server(UsersServicer(), server)
 
-<span class="c1"># Start the server</span>
-<span class="n">server</span><span class="o">.</span><span class="n">add_insecure_port</span><span class="p">(</span><span class="s1">&#39;[::]:50051&#39;</span><span class="p">)</span>
-<span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</code></pre></div>
-
+# Start the server
+server.add_insecure_port('[::]:50051')
+server.start()
+</code></pre>
 <p>This example demonstrates a simple gRPC API using Python and Protocol Buffers, with a protocol buffer schema defined in a separate file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+<pre><code class="language-proto">syntax = &quot;proto3&quot;;
 
-<span class="kn">package</span><span class="w"> </span><span class="nn">users</span><span class="p">;</span>
+package users;
 
-<span class="kd">service</span><span class="w"> </span><span class="n">Users</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">GetUser</span><span class="p">(</span><span class="n">GetUserRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
-<span class="p">}</span>
+service Users {
+  rpc GetUser(GetUserRequest) returns (User) {}
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">GetUserRequest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
+message GetUserRequest {
+  int32 id = 1;
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+message User {
+  int32 id = 1;
+  string name = 2;
+}
+</code></pre>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of an API can be measured in terms of latency, throughput, and error rate. Here are some real-world performance benchmarks for different API design patterns:</p>
 <ul>

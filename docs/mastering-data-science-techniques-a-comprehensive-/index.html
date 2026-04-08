@@ -155,11 +155,10 @@
 <li>Encoding categorical variables</li>
 </ul>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python">import pandas as pd
+data = pd.read_csv('data.csv')
+data.dropna(inplace=True)
+</code></pre>
 <h3 id="2-exploratory-data-analysis-eda">2. Exploratory Data Analysis (EDA)</h3>
 <ul>
 <li>Descriptive statistics</li>
@@ -168,10 +167,9 @@
 <li>Dimensionality reduction</li>
 </ul>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python">import seaborn as sns
+sns.pairplot(data)
+</code></pre>
 <h3 id="3-machine-learning-algorithms">3. Machine Learning Algorithms</h3>
 <ul>
 <li>Supervised learning (e.g., regression, classification)</li>
@@ -181,11 +179,10 @@
 </ul>
 <p><em>Recommended: <a href="https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Python Machine Learning by Sebastian Raschka</a></em></p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
+</code></pre>
 <h2 id="tools-for-data-science">Tools for Data Science</h2>
 <p>To effectively apply data science techniques, it's essential to use the right tools. Here are some popular tools used in data science:</p>
 <h3 id="1-programming-languages">1. Programming Languages</h3>

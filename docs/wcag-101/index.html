@@ -162,23 +162,20 @@
 <h3 id="guidelines-and-success-criteria">Guidelines and Success Criteria</h3>
 <p>The WCAG guidelines are divided into three levels of conformance: A, AA, and AAA. Each level has a set of success criteria that must be met in order to achieve conformance. The success criteria are specific and testable, providing a clear roadmap for creating accessible web content.</p>
 <p>For example, the success criterion for providing alternative text for images (1.1.1) requires that all non-text content, such as images, have a text alternative that serves the same purpose as the non-text content. This can be achieved by using the <code>alt</code> attribute in HTML, as shown in the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo of a sunset&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A photo of a sunset&quot;&gt;
+</code></pre>
 <p>In this example, the <code>alt</code> attribute provides a text alternative for the image, allowing screen readers and other assistive technologies to convey the content of the image to users who cannot see it.</p>
 <h3 id="implementing-accessibility-features">Implementing Accessibility Features</h3>
 <p>Implementing accessibility features can be achieved through a variety of techniques, including the use of semantic HTML, CSS, and JavaScript. For example, the <code>aria-label</code> attribute can be used to provide a text description of a button or other interactive element, as shown in the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Submit form&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button aria-label=&quot;Submit form&quot;&gt;Submit&lt;/button&gt;
+</code></pre>
 <p>This provides a clear and consistent way for screen readers and other assistive technologies to convey the purpose of the button to users.</p>
 <p>Another example is the use of high contrast colors to ensure that text is readable by users with visual impairments. This can be achieved by using CSS to set the background and text colors, as shown in the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f2f2f2</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">body {
+  background-color: #f2f2f2;
+  color: #333;
+}
+</code></pre>
 <p>This sets the background color to a light gray and the text color to a dark gray, providing sufficient contrast for users with visual impairments.</p>
 <h3 id="tools-and-platforms-for-accessibility-testing">Tools and Platforms for Accessibility Testing</h3>
 <p>There are a variety of tools and platforms available for testing web content for accessibility. Some popular options include:</p>
@@ -191,33 +188,29 @@
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>One common problem in web accessibility is the use of inaccessible interactive elements, such as buttons and forms. To solve this problem, developers can use semantic HTML and ARIA attributes to provide a clear and consistent way for screen readers and other assistive technologies to convey the purpose and state of the interactive element.</p>
 <p>For example, the following code example shows how to create an accessible button using semantic HTML and ARIA attributes:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Submit form&quot;</span> <span class="na">aria-pressed</span><span class="o">=</span><span class="s">&quot;false&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button role=&quot;button&quot; aria-label=&quot;Submit form&quot; aria-pressed=&quot;false&quot;&gt;Submit&lt;/button&gt;
+</code></pre>
 <p>This provides a clear and consistent way for screen readers and other assistive technologies to convey the purpose and state of the button to users.</p>
 <p>Another common problem is the use of inadequate color contrast. To solve this problem, developers can use tools such as Snook's Color Contrast Checker to evaluate the color contrast of their web content and make adjustments as needed.</p>
 <p>For example, the following code example shows how to use CSS to set the background and text colors to provide sufficient contrast:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f2f2f2</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">body {
+  background-color: #f2f2f2;
+  color: #333;
+}
+</code></pre>
 <p>This sets the background color to a light gray and the text color to a dark gray, providing sufficient contrast for users with visual impairments.</p>
 <h3 id="real-world-examples-and-use-cases">Real-World Examples and Use Cases</h3>
 <p>One real-world example of web accessibility in action is the website of the National Federation of the Blind. The website provides a range of accessibility features, including alternative text for images, high contrast colors, and accessible interactive elements.</p>
 <p>For example, the website uses the <code>alt</code> attribute to provide alternative text for images, as shown in the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo of a person reading a book&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;A photo of a person reading a book&quot;&gt;
+</code></pre>
 <p>This provides a clear and consistent way for screen readers and other assistive technologies to convey the content of the image to users who cannot see it.</p>
 <p>Another example is the use of high contrast colors to ensure that text is readable by users with visual impairments. The website uses CSS to set the background and text colors, as shown in the following code example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f2f2f2</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">body {
+  background-color: #f2f2f2;
+  color: #333;
+}
+</code></pre>
 <p>This sets the background color to a light gray and the text color to a dark gray, providing sufficient contrast for users with visual impairments.</p>
 <h3 id="performance-benchmarks-and-metrics">Performance Benchmarks and Metrics</h3>
 <p>One key performance benchmark for web accessibility is the Web Accessibility Score, which is a measure of how well a website conforms to the WCAG guidelines. The score is based on a range of factors, including the presence of alternative text for images, the use of high contrast colors, and the accessibility of interactive elements.</p>

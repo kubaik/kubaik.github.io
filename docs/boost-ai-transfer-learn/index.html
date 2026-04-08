@@ -162,39 +162,38 @@
 <li><strong>Fine-tuning</strong>: Fine-tune the entire model, including the frozen layers, using your dataset.</li>
 </ol>
 <h3 id="example-code-transfer-learning-with-keras">Example Code: Transfer Learning with Keras</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import necessary libraries</span>
-<span class="kn">from</span> <span class="nn">keras.applications</span> <span class="kn">import</span> <span class="n">VGG16</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span>
-<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+<pre><code class="language-python"># Import necessary libraries
+from keras.applications import VGG16
+from keras.layers import Dense, Flatten
+from keras.models import Model
+from keras.preprocessing.image import ImageDataGenerator
 
-<span class="c1"># Load pre-trained VGG16 model</span>
-<span class="n">base_model</span> <span class="o">=</span> <span class="n">VGG16</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+# Load pre-trained VGG16 model
+base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
-<span class="c1"># Freeze all layers</span>
-<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">base_model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
-    <span class="n">layer</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">False</span>
+# Freeze all layers
+for layer in base_model.layers:
+    layer.trainable = False
 
-<span class="c1"># Add new layers</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">base_model</span><span class="o">.</span><span class="n">output</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+# Add new layers
+x = base_model.output
+x = Flatten()(x)
+x = Dense(128, activation='relu')(x)
+x = Dense(1, activation='sigmoid')(x)
 
-<span class="c1"># Create new model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">base_model</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+# Create new model
+model = Model(inputs=base_model.input, outputs=x)
 
-<span class="c1"># Compile model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Train model</span>
-<span class="n">train_datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
-<span class="n">validation_datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
-<span class="n">train_generator</span> <span class="o">=</span> <span class="n">train_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">)</span>
-<span class="n">validation_generator</span> <span class="o">=</span> <span class="n">validation_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span><span class="s1">&#39;validation&#39;</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_generator</span><span class="p">)</span>
-</code></pre></div>
-
+# Train model
+train_datagen = ImageDataGenerator(rescale=1./255)
+validation_datagen = ImageDataGenerator(rescale=1./255)
+train_generator = train_datagen.flow_from_directory('train', target_size=(224, 224), batch_size=32, class_mode='binary')
+validation_generator = validation_datagen.flow_from_directory('validation', target_size=(224, 224), batch_size=32, class_mode='binary')
+model.fit(train_generator, epochs=10, validation_data=validation_generator)
+</code></pre>
 <p>In this example, we use the pre-trained VGG16 model and freeze all its layers. We then add new layers on top of the frozen layers and fine-tune the entire model using our dataset.</p>
 <h2 id="benefits-of-transfer-learning">Benefits of Transfer Learning</h2>
 <p>Transfer learning offers several benefits, including:</p>

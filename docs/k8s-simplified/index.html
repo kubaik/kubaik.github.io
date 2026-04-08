@@ -165,74 +165,68 @@
 <p>To illustrate the concepts of Kubernetes orchestration, let's consider a few practical code examples.</p>
 <h3 id="example-1-deploying-a-simple-web-application">Example 1: Deploying a Simple Web Application</h3>
 <p>Suppose we want to deploy a simple web application using a Docker container. We can create a Kubernetes deployment YAML file, <code>deployment.yaml</code>, as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">replicas</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
-<span class="w">      </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">template</span><span class="o">:</span>
-<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
-<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
-<span class="w">        </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
-<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">nginx</span><span class="o">:</span><span class="n">latest</span>
-<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+      - name: web-app
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+</code></pre>
 <p>This YAML file defines a deployment named <code>web-app</code> with three replicas, using the <code>nginx:latest</code> Docker image. We can apply this configuration to our Kubernetes cluster using the <code>kubectl</code> command:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deployment.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f deployment.yaml
+</code></pre>
 <p>This will create the deployment and its associated replica set, as well as a pod for each replica.</p>
 <h3 id="example-2-exposing-the-web-application-as-a-service">Example 2: Exposing the Web Application as a Service</h3>
 <p>To make our web application accessible from outside the cluster, we need to create a Kubernetes service. We can create a service YAML file, <code>service.yaml</code>, as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Service</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
-<span class="w">    </span><span class="n">app</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span>
-<span class="w">  </span><span class="n">ports</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">http</span>
-<span class="w">    </span><span class="n">port</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">    </span><span class="n">targetPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">  </span><span class="n">type</span><span class="o">:</span><span class="w"> </span><span class="n">LoadBalancer</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+spec:
+  selector:
+    app: web-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+</code></pre>
 <p>This YAML file defines a service named <code>web-app</code> that selects the pods labeled with <code>app: web-app</code> and exposes port 80. We can apply this configuration to our Kubernetes cluster using the <code>kubectl</code> command:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>service.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f service.yaml
+</code></pre>
 <p>This will create the service and make our web application accessible from outside the cluster.</p>
 <h3 id="example-3-persistent-storage-using-persistent-volumes">Example 3: Persistent Storage using Persistent Volumes</h3>
 <p>Suppose we want to add persistent storage to our web application using a Persistent Volume (PV). We can create a PV YAML file, <code>pv.yaml</code>, as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">v1</span>
-<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">PersistentVolume</span>
-<span class="n">metadata</span><span class="o">:</span>
-<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">web</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">pv</span>
-<span class="n">spec</span><span class="o">:</span>
-<span class="w">  </span><span class="n">capacity</span><span class="o">:</span>
-<span class="w">    </span><span class="n">storage</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="n">Gi</span>
-<span class="w">  </span><span class="n">accessModes</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">ReadWriteOnce</span>
-<span class="w">  </span><span class="n">persistentVolumeReclaimPolicy</span><span class="o">:</span><span class="w"> </span><span class="n">Retain</span>
-<span class="w">  </span><span class="n">local</span><span class="o">:</span>
-<span class="w">    </span><span class="n">path</span><span class="o">:</span><span class="w"> </span><span class="sr">/mnt/</span><span class="n">data</span>
-<span class="w">  </span><span class="n">storageClassName</span><span class="o">:</span><span class="w"> </span><span class="n">local</span><span class="o">-</span><span class="n">storage</span>
-</code></pre></div>
-
+<pre><code class="language-yml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: web-app-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/data
+  storageClassName: local-storage
+</code></pre>
 <p>This YAML file defines a PV named <code>web-app-pv</code> with a capacity of 1 GB, using the <code>local</code> storage class. We can apply this configuration to our Kubernetes cluster using the <code>kubectl</code> command:</p>
-<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pv.yaml
-</code></pre></div>
-
+<pre><code class="language-bash">kubectl apply -f pv.yaml
+</code></pre>
 <p>This will create the PV and make it available for use by our web application.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>While Kubernetes provides a robust framework for deploying and managing applications, there are some common problems that can arise. Here are a few examples, along with specific solutions:</p>

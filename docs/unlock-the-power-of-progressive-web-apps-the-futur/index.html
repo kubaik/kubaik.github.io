@@ -209,83 +209,78 @@
 <h2 id="how-to-build-a-progressive-web-app-practical-steps">How to Build a Progressive Web App: Practical Steps</h2>
 <h3 id="1-start-with-a-responsive-web-design">1. Start with a Responsive Web Design</h3>
 <p>Ensure your website adapts well to all devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Example CSS for responsiveness */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">/* Example CSS for responsiveness */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+</code></pre>
 <h3 id="2-implement-a-web-app-manifest">2. Implement a Web App Manifest</h3>
 <p>Create a <code>manifest.json</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;short_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;start_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/index.html&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standalone&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;background_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;theme_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#3367D6&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;icons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/icons/icon-192.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192x192&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/icons/icon-512.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;512x512&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;My PWA&quot;,
+  &quot;short_name&quot;: &quot;PWA&quot;,
+  &quot;start_url&quot;: &quot;/index.html&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#ffffff&quot;,
+  &quot;theme_color&quot;: &quot;#3367D6&quot;,
+  &quot;icons&quot;: [
+    {
+      &quot;src&quot;: &quot;/icons/icon-192.png&quot;,
+      &quot;sizes&quot;: &quot;192x192&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    },
+    {
+      &quot;src&quot;: &quot;/icons/icon-512.png&quot;,
+      &quot;sizes&quot;: &quot;512x512&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    }
+  ]
+}
+</code></pre>
 <p>Link it in your HTML:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;manifest&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/manifest.json&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot; /&gt;
+</code></pre>
 <h3 id="3-register-a-service-worker">3. Register a Service Worker</h3>
 <p>Create a <code>service-worker.js</code> to cache assets:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;my-cache-v1&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">([</span>
-<span class="w">        </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/app.js&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/icons/icon-192.png&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/icons/icon-512.png&#39;</span>
-<span class="w">      </span><span class="p">]);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">self.addEventListener('install', event =&gt; {
+  event.waitUntil(
+    caches.open('my-cache-v1').then(cache =&gt; {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles.css',
+        '/app.js',
+        '/icons/icon-192.png',
+        '/icons/icon-512.png'
+      ]);
+    })
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', event =&gt; {
+  event.respondWith(
+    caches.match(event.request).then(response =&gt; {
+      return response || fetch(event.request);
+    })
+  );
+});
+</code></pre>
 <p>Register the service worker in your main JavaScript file:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/service-worker.js&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registered with scope:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">scope</span><span class="p">);</span>
-<span class="w">      </span><span class="p">})</span>
-<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registration failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =&gt; {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration =&gt; {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error =&gt; {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+</code></pre>
 <h3 id="4-enable-push-notifications">4. Enable Push Notifications</h3>
 <p>Use the Push API and Notification API to re-engage users. This involves server-side logic to send push messages and client-side code to subscribe users.</p>
 <h3 id="5-test-and-optimize">5. Test and Optimize</h3>

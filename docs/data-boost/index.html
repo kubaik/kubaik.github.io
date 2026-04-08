@@ -164,31 +164,30 @@
 * Snowflake: A cloud-based data warehousing platform that provides real-time analytics and data sharing capabilities.</p>
 <h3 id="example-building-a-data-warehouse-with-amazon-redshift">Example: Building a Data Warehouse with Amazon Redshift</h3>
 <p>To build a data warehouse with Amazon Redshift, you can follow these steps:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new Redshift cluster</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">CLUSTER</span><span class="w"> </span><span class="n">mycluster</span>
-<span class="w">  </span><span class="n">DBNAME</span><span class="w"> </span><span class="n">mydb</span>
-<span class="w">  </span><span class="n">MASTER_USERNAME</span><span class="w"> </span><span class="n">myuser</span>
-<span class="w">  </span><span class="n">MASTER_USER_PASSWORD</span><span class="w"> </span><span class="n">mypassword</span>
-<span class="w">  </span><span class="n">NODETYPE</span><span class="w"> </span><span class="n">dc2</span><span class="p">.</span><span class="k">large</span>
-<span class="w">  </span><span class="n">NUMBER_OF_NODES</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a new Redshift cluster
+CREATE CLUSTER mycluster
+  DBNAME mydb
+  MASTER_USERNAME myuser
+  MASTER_USER_PASSWORD mypassword
+  NODETYPE dc2.large
+  NUMBER_OF_NODES 2;
 
-<span class="c1">-- Create a new schema</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="n">myschema</span><span class="p">;</span>
+-- Create a new schema
+CREATE SCHEMA myschema;
 
-<span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+-- Create a new table
+CREATE TABLE mytable (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255)
+);
 
-<span class="c1">-- Load data into the table</span>
-<span class="k">COPY</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;s3://mybucket/data.csv&#39;</span>
-<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
-<span class="n">CSV</span><span class="p">;</span>
-</code></pre></div>
-
+-- Load data into the table
+COPY mytable (id, name, email)
+FROM 's3://mybucket/data.csv'
+DELIMITER ','
+CSV;
+</code></pre>
 <p>This example demonstrates how to create a new Redshift cluster, schema, and table, and load data into the table from an S3 bucket.</p>
 <h2 id="data-ingestion-and-integration">Data Ingestion and Integration</h2>
 <p>Data ingestion and integration are critical components of a data warehousing solution. Data can be ingested from various sources, including:
@@ -198,38 +197,37 @@
 * APIs: REST, SOAP, GraphQL</p>
 <h3 id="example-ingesting-data-from-a-relational-database-with-apache-nifi">Example: Ingesting Data from a Relational Database with Apache NiFi</h3>
 <p>To ingest data from a relational database using Apache NiFi, you can use the <code>JDBC</code> processor:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.nifi.processor.AbstractProcessor</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.nifi.processor.ProcessContext</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.nifi.processor.ProcessSession</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.nifi.processor.exception.ProcessException</span><span class="p">;</span>
+<pre><code class="language-java">// Import necessary libraries
+import org.apache.nifi.processor.AbstractProcessor;
+import org.apache.nifi.processor.ProcessContext;
+import org.apache.nifi.processor.ProcessSession;
+import org.apache.nifi.processor.exception.ProcessException;
 
-<span class="c1">// Create a new JDBC processor</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JdbcProcessor</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Override</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onTrigger</span><span class="p">(</span><span class="n">ProcessContext</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">ProcessSession</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ProcessException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Connect to the database</span>
-<span class="w">    </span><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost:3306/mydb&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;myuser&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mypassword&quot;</span><span class="p">);</span>
+// Create a new JDBC processor
+public class JdbcProcessor extends AbstractProcessor {
+  @Override
+  public void onTrigger(ProcessContext context, ProcessSession session) throws ProcessException {
+    // Connect to the database
+    Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/mydb&quot;, &quot;myuser&quot;, &quot;mypassword&quot;);
 
-<span class="w">    </span><span class="c1">// Execute a query</span>
-<span class="w">    </span><span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">();</span>
-<span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="s">&quot;SELECT * FROM mytable&quot;</span><span class="p">);</span>
+    // Execute a query
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery(&quot;SELECT * FROM mytable&quot;);
 
-<span class="w">    </span><span class="c1">// Process the results</span>
-<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Create a new flow file</span>
-<span class="w">      </span><span class="n">FlowFile</span><span class="w"> </span><span class="n">flowFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-<span class="w">      </span><span class="n">flowFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">putAttribute</span><span class="p">(</span><span class="n">flowFile</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">));</span>
-<span class="w">      </span><span class="n">flowFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">putAttribute</span><span class="p">(</span><span class="n">flowFile</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">));</span>
-<span class="w">      </span><span class="n">flowFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">putAttribute</span><span class="p">(</span><span class="n">flowFile</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;email&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">));</span>
+    // Process the results
+    while (rs.next()) {
+      // Create a new flow file
+      FlowFile flowFile = session.create();
+      flowFile = session.putAttribute(flowFile, &quot;id&quot;, rs.getString(&quot;id&quot;));
+      flowFile = session.putAttribute(flowFile, &quot;name&quot;, rs.getString(&quot;name&quot;));
+      flowFile = session.putAttribute(flowFile, &quot;email&quot;, rs.getString(&quot;email&quot;));
 
-<span class="w">      </span><span class="c1">// Send the flow file to the next processor</span>
-<span class="w">      </span><span class="n">session</span><span class="p">.</span><span class="na">transfer</span><span class="p">(</span><span class="n">flowFile</span><span class="p">,</span><span class="w"> </span><span class="n">REL_SUCCESS</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+      // Send the flow file to the next processor
+      session.transfer(flowFile, REL_SUCCESS);
+    }
+  }
+}
+</code></pre>
 <p>This example demonstrates how to use Apache NiFi to ingest data from a relational database using the <code>JDBC</code> processor.</p>
 <h2 id="data-storage-and-optimization">Data Storage and Optimization</h2>
 <p>Data storage and optimization are critical components of a data warehousing solution. Data can be stored in various formats, including:
@@ -238,16 +236,15 @@
 * Column-store databases: Amazon Redshift, Google BigQuery, Snowflake</p>
 <h3 id="example-optimizing-data-storage-with-amazon-redshift">Example: Optimizing Data Storage with Amazon Redshift</h3>
 <p>To optimize data storage with Amazon Redshift, you can use the <code>VACUUM</code> command to reorganize and recluster data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Reorganize and recluster data</span>
-<span class="k">VACUUM</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span>
+<pre><code class="language-sql">-- Reorganize and recluster data
+VACUUM mytable;
 
-<span class="c1">-- Analyze the table</span>
-<span class="k">ANALYZE</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span>
+-- Analyze the table
+ANALYZE mytable;
 
-<span class="c1">-- Check the storage usage</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_table_size</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+-- Check the storage usage
+SELECT * FROM pg_table_size('mytable');
+</code></pre>
 <p>This example demonstrates how to use the <code>VACUUM</code> command to optimize data storage with Amazon Redshift.</p>
 <h2 id="performance-benchmarking">Performance Benchmarking</h2>
 <p>Performance benchmarking is essential to ensure that a data warehousing solution meets the required performance standards. Some common performance metrics include:
@@ -256,16 +253,15 @@
 * Data storage capacity</p>
 <h3 id="example-benchmarking-query-performance-with-apache-hive">Example: Benchmarking Query Performance with Apache Hive</h3>
 <p>To benchmark query performance with Apache Hive, you can use the <code>EXPLAIN</code> command to analyze the query plan:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Analyze the query plan</span>
-<span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span>
+<pre><code class="language-sql">-- Analyze the query plan
+EXPLAIN SELECT * FROM mytable;
 
-<span class="c1">-- Execute the query</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mytable</span><span class="p">;</span>
+-- Execute the query
+SELECT * FROM mytable;
 
-<span class="c1">-- Check the query execution time</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">hive_default</span><span class="p">.</span><span class="n">metrics</span><span class="p">;</span>
-</code></pre></div>
-
+-- Check the query execution time
+SELECT * FROM hive_default.metrics;
+</code></pre>
 <p>This example demonstrates how to use Apache Hive to benchmark query performance.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Data warehousing solutions have numerous real-world use cases, including:
@@ -285,23 +281,22 @@
 * <strong>Performance issues</strong>: Poor performance can lead to slow query execution times and decreased productivity.</p>
 <h3 id="example-solving-data-quality-issues-with-apache-beam">Example: Solving Data Quality Issues with Apache Beam</h3>
 <p>To solve data quality issues with Apache Beam, you can use the <code>DataQuality</code> transform to validate and clean data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.beam.sdk.Pipeline</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.beam.sdk.transforms.DataQuality</span><span class="p">;</span>
+<pre><code class="language-java">// Import necessary libraries
+import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.transforms.DataQuality;
 
-<span class="c1">// Create a new pipeline</span>
-<span class="n">Pipeline</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pipeline</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+// Create a new pipeline
+Pipeline pipeline = Pipeline.create();
 
-<span class="c1">// Read data from a source</span>
-<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pipeline</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">TextIO</span><span class="p">.</span><span class="na">read</span><span class="p">().</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;gs://mybucket/data.csv&quot;</span><span class="p">));</span>
+// Read data from a source
+PCollection&lt;String&gt; data = pipeline.apply(TextIO.read().from(&quot;gs://mybucket/data.csv&quot;));
 
-<span class="c1">// Validate and clean data</span>
-<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cleanedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">DataQuality</span><span class="p">.</span><span class="na">validateAndClean</span><span class="p">());</span>
+// Validate and clean data
+PCollection&lt;String&gt; cleanedData = data.apply(DataQuality.validateAndClean());
 
-<span class="c1">// Write cleaned data to a sink</span>
-<span class="n">cleanedData</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">TextIO</span><span class="p">.</span><span class="na">write</span><span class="p">().</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;gs://mybucket/cleaned_data.csv&quot;</span><span class="p">));</span>
-</code></pre></div>
-
+// Write cleaned data to a sink
+cleanedData.apply(TextIO.write().to(&quot;gs://mybucket/cleaned_data.csv&quot;));
+</code></pre>
 <p>This example demonstrates how to use Apache Beam to solve data quality issues.</p>
 <h2 id="pricing-and-cost-optimization">Pricing and Cost Optimization</h2>
 <p>Data warehousing solutions can incur significant costs, including:

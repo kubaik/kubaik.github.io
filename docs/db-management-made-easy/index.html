@@ -163,23 +163,22 @@
 </ul>
 <h3 id="practical-example-database-design-with-dbforge-studio">Practical Example: Database Design with dbForge Studio</h3>
 <p>Here's an example of how to design a database using dbForge Studio:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new database</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">mydatabase</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a new database
+CREATE DATABASE mydatabase;
 
-<span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+-- Create a new table
+CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255)
+);
 
-<span class="c1">-- Insert data into the table</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;jane.doe@example.com&#39;</span><span class="p">),</span>
-<span class="w">  </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Bob Smith&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob.smith@example.com&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+-- Insert data into the table
+INSERT INTO customers (id, name, email) VALUES
+  (1, 'John Doe', 'john.doe@example.com'),
+  (2, 'Jane Doe', 'jane.doe@example.com'),
+  (3, 'Bob Smith', 'bob.smith@example.com');
+</code></pre>
 <p>In this example, we create a new database called <code>mydatabase</code>, and then create a new table called <code>customers</code>. We then insert some sample data into the table.</p>
 <h3 id="performance-benchmarking">Performance Benchmarking</h3>
 <p>When it comes to database performance, it's essential to benchmark your database regularly to identify any bottlenecks or areas for improvement. There are several tools available to help with performance benchmarking, including:</p>

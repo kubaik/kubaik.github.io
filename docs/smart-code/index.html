@@ -164,63 +164,60 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to demonstrate the basics of smart contract development:</p>
 <h3 id="example-1-simple-storage-contract">Example 1: Simple Storage Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="k">public </span><span class="nv">storedData</span><span class="p">;</span>
+contract SimpleStorage {
+    uint256 public storedData;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>storedData<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function set(uint256 x) public {
+        storedData = x;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">get</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>storedData<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function get() public view returns (uint256) {
+        return storedData;
+    }
+}
+</code></pre>
 <p>This contract allows users to store and retrieve a single <code>uint256</code> value. The <code>set</code> function sets the value of <code>storedData</code>, while the <code>get</code> function returns the current value.</p>
 <h3 id="example-2-token-contract">Example 2: Token Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Token</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>balances<span class="p">;</span>
+contract Token {
+    mapping (address =&gt; uint256) public balances;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>value<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>value<span class="p">;</span>
-<span class="w">        </span>balances<span class="p">[</span>to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>value<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function transfer(address to, uint256 value) public {
+        require(balances[msg.sender] &gt;= value, &quot;Insufficient balance&quot;);
+        balances[msg.sender] -= value;
+        balances[to] += value;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>balances<span class="p">[</span>owner<span class="p">];</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function balanceOf(address owner) public view returns (uint256) {
+        return balances[owner];
+    }
+}
+</code></pre>
 <p>This contract implements a simple token that can be transferred between users. The <code>transfer</code> function transfers a specified amount of tokens from the sender to the recipient, while the <code>balanceOf</code> function returns the current balance of a given address.</p>
 <h3 id="example-3-auction-contract">Example 3: Auction Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Auction</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBid</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBidder</span><span class="p">;</span>
+contract Auction {
+    address public owner;
+    uint256 public highestBid;
+    address public highestBidder;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">bidAmount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>bidAmount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>highestBid<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Bid must be higher than current highest bid&quot;</span><span class="p">);</span>
-<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span>bidAmount<span class="p">;</span>
-<span class="w">        </span>highestBidder<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function bid(uint256 bidAmount) public {
+        require(bidAmount &gt; highestBid, &quot;Bid must be higher than current highest bid&quot;);
+        highestBid = bidAmount;
+        highestBidder = msg.sender;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">endAuction</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can end the auction&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// Transfer the highest bid to the owner</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span>owner<span class="p">).</span>transfer<span class="p">(</span>highestBid<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function endAuction() public {
+        require(msg.sender == owner, &quot;Only the owner can end the auction&quot;);
+        // Transfer the highest bid to the owner
+        payable(owner).transfer(highestBid);
+    }
+}
+</code></pre>
 <p>This contract implements a simple auction where users can bid on an item. The <code>bid</code> function allows users to place bids, while the <code>endAuction</code> function ends the auction and transfers the highest bid to the owner.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers may encounter when building smart contracts, along with specific solutions:</p>

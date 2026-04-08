@@ -191,20 +191,19 @@
 <li>Leverage React Hooks for managing state and side effects.</li>
 <li>Incorporate TypeScript for type safety.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+function Counter() {
+  const [count, setCount] = useState(0);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Count: {count}&lt;/h1&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <h3 id="2-vuejs-3">2. Vue.js 3</h3>
 <h4 id="overview_1">Overview</h4>
 <p>Vue.js remains popular due to its simplicity, gentle learning curve, and progressive architecture. Vue 3 introduced Composition API, improving flexibility and code organization.</p>
@@ -234,28 +233,27 @@
 <li>Utilize Composition API for complex components.</li>
 <li>Take advantage of Vue Devtools for debugging.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">template</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Counter</span><span class="p">:</span> <span class="p">{{</span> <span class="n">count</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">button</span> <span class="nd">@click</span><span class="o">=</span><span class="s2">&quot;increment&quot;</span><span class="o">&gt;</span><span class="n">Increment</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
-  <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">template</span><span class="o">&gt;</span>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Counter: {{ count }}&lt;/p&gt;
+    &lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
-<span class="kn">import</span> <span class="p">{</span> <span class="n">ref</span> <span class="p">}</span> <span class="kn">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+&lt;script&gt;
+import { ref } from 'vue';
 
-<span class="n">export</span> <span class="n">default</span> <span class="p">{</span>
-  <span class="n">setup</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">const</span> <span class="n">count</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="n">const</span> <span class="n">increment</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="n">count</span><span class="o">.</span><span class="n">value</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">};</span>
-    <span class="k">return</span> <span class="p">{</span> <span class="n">count</span><span class="p">,</span> <span class="n">increment</span> <span class="p">};</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
-</code></pre></div>
-
+export default {
+  setup() {
+    const count = ref(0);
+    const increment = () =&gt; {
+      count.value++;
+    };
+    return { count, increment };
+  },
+};
+&lt;/script&gt;
+</code></pre>
 <h3 id="3-svelte">3. Svelte</h3>
 <h4 id="overview_2">Overview</h4>
 <p>Svelte takes a different approach by shifting much of the work to compile time, resulting in highly performant applications with minimal boilerplate.</p>
@@ -285,15 +283,14 @@
 <li>Take advantage of reactive statements (<code>$:</code>) for reactive logic.</li>
 <li>Use stores for state management across components.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;script&gt;</span>
-<span class="w">  </span>let<span class="w"> </span>count<span class="w"> </span>=<span class="w"> </span>0;
-<span class="w">  </span>$:<span class="w"> </span>doubled<span class="w"> </span>=<span class="w"> </span>count<span class="w"> </span>*<span class="w"> </span>2;
-<span class="nt">&lt;/script&gt;</span>
+<pre><code class="language-svelte">&lt;script&gt;
+  let count = 0;
+  $: doubled = count * 2;
+&lt;/script&gt;
 
-<span class="nt">&lt;button</span><span class="w"> </span><span class="na">on:click=</span><span class="s">{()</span><span class="w"> </span><span class="err">=</span><span class="nt">&gt;</span><span class="w"> </span>count++}&gt;Count:<span class="w"> </span>{count}<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;p&gt;</span>Doubled:<span class="w"> </span>{doubled}<span class="nt">&lt;/p&gt;</span>
-</code></pre></div>
-
+&lt;button on:click={() =&gt; count++}&gt;Count: {count}&lt;/button&gt;
+&lt;p&gt;Doubled: {doubled}&lt;/p&gt;
+</code></pre>
 <h3 id="4-angular">4. Angular</h3>
 <h4 id="overview_3">Overview</h4>
 <p>Developed by Google, Angular is a comprehensive framework suitable for enterprise-level applications. It offers a full suite of tools out-of-the-box, including routing, form handling, and state management.</p>
@@ -324,22 +321,21 @@
 <li>Follow Angular's best practices for modularity.</li>
 <li>Leverage Angular Material for UI components.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">@Component</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-counter&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;h1&gt;{{ count }}&lt;/h1&gt;</span>
-<span class="sb">    &lt;button (click)=&quot;increment()&quot;&gt;Increment&lt;/button&gt;</span>
-<span class="sb">  `</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CounterComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<pre><code class="language-typescript">@Component({
+  selector: 'app-counter',
+  template: `
+    &lt;h1&gt;{{ count }}&lt;/h1&gt;
+    &lt;button (click)=&quot;increment()&quot;&gt;Increment&lt;/button&gt;
+  `
+})
+export class CounterComponent {
+  count = 0;
 
-<span class="w">  </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  increment() {
+    this.count++;
+  }
+}
+</code></pre>
 <h3 id="5-solidjs">5. Solid.js</h3>
 <h4 id="overview_4">Overview</h4>
 <p>Solid.js is a reactive UI library that emphasizes fine-grained reactivity without virtual DOM, aiming for simplicity and high performance.</p>
@@ -368,19 +364,18 @@
 <li>Embrace signals (<code>createSignal</code>) for reactive state.</li>
 <li>Combine with TypeScript for better developer experience.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createSignal</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;solid-js&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import { createSignal } from 'solid-js';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createSignal</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">()}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+function Counter() {
+  const [count, setCount] = createSignal(0);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count()}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count() + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <hr />
 <h2 id="how-to-choose-the-right-framework-in-2024">How to Choose the Right Framework in 2024</h2>
 <p>Selecting the appropriate frontend framework depends on various factors:</p>

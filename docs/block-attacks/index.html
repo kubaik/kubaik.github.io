@@ -168,9 +168,8 @@
 </ul>
 <h3 id="practical-code-example-ip-blocking-using-iptables">Practical Code Example: IP Blocking using IPTables</h3>
 <p>One common technique for blocking malicious traffic is to use IPTables, a packet filtering framework for Linux. The following code example demonstrates how to block traffic from a specific IP address using IPTables:</p>
-<div class="codehilite"><pre><span></span><code>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-s<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span>-j<span class="w"> </span>DROP
-</code></pre></div>
-
+<pre><code class="language-bash">iptables -A INPUT -s 192.168.1.100 -j DROP
+</code></pre>
 <p>This command adds a new rule to the INPUT chain, dropping all traffic from the IP address 192.168.1.100. Note that this is a simple example, and in practice, you would want to use more sophisticated filtering criteria, such as packet content or traffic patterns.</p>
 <h3 id="tool-recommendations">Tool Recommendations</h3>
 <p>Several tools and platforms are available to help protect against DDoS attacks, including:</p>

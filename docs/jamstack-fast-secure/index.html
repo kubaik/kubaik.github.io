@@ -169,28 +169,26 @@
 * <strong>Gatsby</strong>: A React-based framework for building fast, secure, and scalable websites and applications.
 * <strong>Vercel</strong>: A platform for deploying and managing Jamstack applications, providing features such as automatic code splitting, server-side rendering, and CDN integration.</p>
 <p>Here's an example of how to use Next.js to create a simple Jamstack application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Head</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next/head&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/index.js
+import Head from 'next/head';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">Head</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Jamstack</span><span class="w"> </span><span class="nx">App</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="err">/Head&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="nx">Jamstack</span><span class="w"> </span><span class="nx">app</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function HomePage() {
+  return (
+    &lt;div&gt;
+      &lt;Head&gt;
+        &lt;title&gt;My Jamstack App&lt;/title&gt;
+      &lt;/Head&gt;
+      &lt;h1&gt;Welcome to my Jamstack app!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>In this example, we define a simple homepage component using Next.js. The <code>Head</code> component is used to set the title of the page, and the <code>h1</code> element is used to display a heading.</p>
 <p>To deploy this application to Vercel, we can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>vercel<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>vercel<span class="w"> </span>deploy
-</code></pre></div>
-
+<pre><code class="language-bash">vercel build &amp;&amp; vercel deploy
+</code></pre>
 <p>This command builds the application using Next.js and deploys it to Vercel.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Jamstack is suitable for a wide range of use cases, including:
@@ -198,25 +196,24 @@
 * <strong>E-commerce Websites</strong>: Jamstack can be used to build fast and secure e-commerce websites, with features such as server-side rendering and automatic code splitting.
 * <strong>Marketing Websites</strong>: Jamstack is suitable for marketing websites, as it enables developers to create high-performance applications with improved user experience.</p>
 <p>Here's an example of how to use Gatsby to create a simple blog:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// gatsby-config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">siteMetadata</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My Blog&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;A simple blog built with Gatsby&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s1">&#39;gatsby-plugin-react-helmet&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">resolve</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gatsby-source-filesystem&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;posts&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">__dirname</span><span class="si">}</span><span class="sb">/src/posts/`</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: 'My Blog',
+    description: 'A simple blog built with Gatsby',
+  },
+  plugins: [
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'posts',
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+  ],
+};
+</code></pre>
 <p>In this example, we define a simple blog using Gatsby. The <code>siteMetadata</code> object is used to set the title and description of the blog, and the <code>plugins</code> array is used to configure the blog's plugins.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing Jamstack, developers may encounter several common problems, including:

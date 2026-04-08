@@ -154,20 +154,19 @@
 <h3 id="agile-methodology">Agile Methodology</h3>
 <p>Agile is a popular project management methodology that emphasizes flexibility, collaboration, and continuous improvement. It involves breaking down work into small, manageable chunks, called sprints, and delivering working software at the end of each sprint. Agile teams use various tools and techniques, such as Scrum boards, Kanban boards, and burn-down charts, to track progress and identify areas for improvement.</p>
 <p>For example, let's consider a team of developers working on a web application using the Scrum framework. They use Jira, a popular project management tool, to create and manage user stories, tasks, and sprint backlogs. The team's velocity, which is the amount of work completed during a sprint, is tracked using a burn-down chart, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
-<span class="c1"># Sample data</span>
-<span class="n">sprint_days</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">remaining_work</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+# Sample data
+sprint_days = [1, 2, 3, 4, 5]
+remaining_work = [100, 80, 60, 40, 20]
 
-<span class="c1"># Create a burn-down chart</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sprint_days</span><span class="p">,</span> <span class="n">remaining_work</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sprint Days&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Remaining Work&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Burn-Down Chart&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
+# Create a burn-down chart
+plt.plot(sprint_days, remaining_work)
+plt.xlabel('Sprint Days')
+plt.ylabel('Remaining Work')
+plt.title('Burn-Down Chart')
+plt.show()
+</code></pre>
 <p>This code snippet generates a simple burn-down chart using Python and the Matplotlib library. The chart shows the remaining work in the sprint backlog over time, allowing the team to track their progress and adjust their velocity accordingly.</p>
 <h2 id="project-planning-and-estimation">Project Planning and Estimation</h2>
 <p>Project planning and estimation are critical components of project management. They involve defining project scope, identifying requirements, and estimating the time and resources needed to complete the project. There are various techniques for estimating project duration and cost, including:</p>
@@ -183,28 +182,27 @@
 | Development | 10 | 20 | 15 |
 | Testing | 5 | 10 | 7 |</p>
 <p>The team uses these estimates to create a project schedule and budget, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Sample data</span>
-<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Design&#39;</span><span class="p">,</span> <span class="s1">&#39;Development&#39;</span><span class="p">,</span> <span class="s1">&#39;Testing&#39;</span><span class="p">]</span>
-<span class="n">min_estimate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">max_estimate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-<span class="n">most_likely_estimate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+# Sample data
+tasks = ['Design', 'Development', 'Testing']
+min_estimate = [2, 10, 5]
+max_estimate = [5, 20, 10]
+most_likely_estimate = [3, 15, 7]
 
-<span class="c1"># Create a DataFrame</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;Task&#39;</span><span class="p">:</span> <span class="n">tasks</span><span class="p">,</span>
-    <span class="s1">&#39;Minimum&#39;</span><span class="p">:</span> <span class="n">min_estimate</span><span class="p">,</span>
-    <span class="s1">&#39;Maximum&#39;</span><span class="p">:</span> <span class="n">max_estimate</span><span class="p">,</span>
-    <span class="s1">&#39;Most Likely&#39;</span><span class="p">:</span> <span class="n">most_likely_estimate</span>
-<span class="p">})</span>
+# Create a DataFrame
+df = pd.DataFrame({
+    'Task': tasks,
+    'Minimum': min_estimate,
+    'Maximum': max_estimate,
+    'Most Likely': most_likely_estimate
+})
 
-<span class="c1"># Calculate the total estimated duration</span>
-<span class="n">total_duration</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Most Likely&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+# Calculate the total estimated duration
+total_duration = df['Most Likely'].sum()
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total Estimated Duration: </span><span class="si">{</span><span class="n">total_duration</span><span class="si">}</span><span class="s1"> days&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f'Total Estimated Duration: {total_duration} days')
+</code></pre>
 <p>This code snippet generates a project schedule and budget using Python and the Pandas library. The team can use this data to track their progress and adjust their estimates accordingly.</p>
 <h3 id="collaboration-and-communication">Collaboration and Communication</h3>
 <p>Collaboration and communication are essential components of project management. They involve working with team members, stakeholders, and customers to ensure that everyone is aligned and informed. There are various tools and techniques for collaboration and communication, including:</p>
@@ -214,19 +212,18 @@
 <li><strong>GitHub</strong>: A version control platform for managing code repositories.</li>
 </ul>
 <p>For example, let's consider a team of developers working on a web application. They use Slack to communicate with each other and with stakeholders, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">slack</span>
+<pre><code class="language-python">import slack
 
-<span class="c1"># Sample data</span>
-<span class="n">slack_token</span> <span class="o">=</span> <span class="s1">&#39;xoxb-1234567890&#39;</span>
-<span class="n">channel_name</span> <span class="o">=</span> <span class="s1">&#39;project-management&#39;</span>
+# Sample data
+slack_token = 'xoxb-1234567890'
+channel_name = 'project-management'
 
-<span class="c1"># Create a Slack client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">slack</span><span class="o">.</span><span class="n">WebClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">slack_token</span><span class="p">)</span>
+# Create a Slack client
+client = slack.WebClient(token=slack_token)
 
-<span class="c1"># Send a message to the channel</span>
-<span class="n">client</span><span class="o">.</span><span class="n">chat_postMessage</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel_name</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello, team!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send a message to the channel
+client.chat_postMessage(channel=channel_name, text='Hello, team!')
+</code></pre>
 <p>This code snippet sends a message to a Slack channel using Python and the Slack library. The team can use this platform to communicate with each other and with stakeholders, ensuring that everyone is aligned and informed.</p>
 <h2 id="performance-monitoring-and-optimization">Performance Monitoring and Optimization</h2>
 <p>Performance monitoring and optimization are critical components of project management. They involve tracking key performance indicators (KPIs) and adjusting project plans and resources accordingly. There are various tools and techniques for performance monitoring and optimization, including:</p>
@@ -236,26 +233,25 @@
 <li><strong>Jenkins</strong>: A continuous integration and continuous deployment (CI/CD) platform for automating testing and deployment.</li>
 </ul>
 <p>For example, let's consider a team of developers working on a web application. They use Google Analytics to track website traffic and behavior, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<pre><code class="language-python">import pandas as pd
+from googleapiclient.discovery import build
 
-<span class="c1"># Sample data</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;AIzaSyBdVhtBdVhtBdVhtBdVhtBdVhtBdVhtBdVht&#39;</span>
-<span class="n">view_id</span> <span class="o">=</span> <span class="s1">&#39;1234567890&#39;</span>
+# Sample data
+api_key = 'AIzaSyBdVhtBdVhtBdVhtBdVhtBdVhtBdVhtBdVht'
+view_id = '1234567890'
 
-<span class="c1"># Create a Google Analytics client</span>
-<span class="n">analytics</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;analytics&#39;</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span> <span class="n">developerKey</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+# Create a Google Analytics client
+analytics = build('analytics', 'v3', developerKey=api_key)
 
-<span class="c1"># Retrieve website traffic data</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">analytics</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">.</span><span class="n">ga</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="s1">&#39;ga:&#39;</span> <span class="o">+</span> <span class="n">view_id</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s1">&#39;7daysAgo&#39;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s1">&#39;today&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="s1">&#39;rt:activeUsers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+# Retrieve website traffic data
+response = analytics.data().ga().get(ids='ga:' + view_id, start_date='7daysAgo', end_date='today', metrics='rt:activeUsers').execute()
 
-<span class="c1"># Create a DataFrame</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rows&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+# Create a DataFrame
+df = pd.DataFrame(response.get('rows', []))
 
-<span class="c1"># Print the website traffic data</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the website traffic data
+print(df)
+</code></pre>
 <p>This code snippet retrieves website traffic data from Google Analytics using Python and the Google API Client Library. The team can use this data to track their website traffic and behavior, adjusting their project plans and resources accordingly.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that teams face when managing projects, including:</p>
@@ -271,24 +267,23 @@
 <li><strong>Resource Allocation</strong>: This involves allocating resources effectively, such as prioritizing tasks and assigning team members to tasks based on their skills and expertise.</li>
 </ul>
 <p>For example, let's consider a team of developers working on a web application. They use agile methodology to manage project scope and team conflict, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
+<pre><code class="language-python">import datetime
 
-<span class="c1"># Sample data</span>
-<span class="n">sprint_start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">sprint_end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
-<span class="n">sprint_backlog</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Task 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Task 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Task 3&#39;</span><span class="p">]</span>
+# Sample data
+sprint_start_date = datetime.date(2022, 1, 1)
+sprint_end_date = datetime.date(2022, 1, 15)
+sprint_backlog = ['Task 1', 'Task 2', 'Task 3']
 
-<span class="c1"># Create a sprint plan</span>
-<span class="n">sprint_plan</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Sprint Start Date&#39;</span><span class="p">:</span> <span class="n">sprint_start_date</span><span class="p">,</span>
-    <span class="s1">&#39;Sprint End Date&#39;</span><span class="p">:</span> <span class="n">sprint_end_date</span><span class="p">,</span>
-    <span class="s1">&#39;Sprint Backlog&#39;</span><span class="p">:</span> <span class="n">sprint_backlog</span>
-<span class="p">}</span>
+# Create a sprint plan
+sprint_plan = {
+    'Sprint Start Date': sprint_start_date,
+    'Sprint End Date': sprint_end_date,
+    'Sprint Backlog': sprint_backlog
+}
 
-<span class="c1"># Print the sprint plan</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sprint_plan</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the sprint plan
+print(sprint_plan)
+</code></pre>
 <p>This code snippet generates a sprint plan using Python and the datetime library. The team can use this plan to manage project scope and team conflict, ensuring that everyone is aligned and informed.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, project management is a critical component of software development, involving planning, organizing, and controlling resources to achieve specific goals and objectives. By using agile methodology, collaboration tools, and performance monitoring techniques, teams can deliver high-quality products on time and within budget.</p>

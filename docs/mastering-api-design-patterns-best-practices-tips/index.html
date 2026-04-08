@@ -177,9 +177,8 @@
 <li><code>/products?category=books&amp;sort=price&amp;limit=20</code></li>
 </ul>
 <h4 id="example">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /users/123/orders?status=shipped&amp;page=2</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /users/123/orders?status=shipped&amp;page=2
+</code></pre>
 <hr />
 <h3 id="2-hateoas-hypermedia-as-the-engine-of-application-state">2. HATEOAS (Hypermedia as the Engine of Application State)</h3>
 <h4 id="overview_1">Overview</h4>
@@ -192,26 +191,25 @@
 </ul>
 <h4 id="practical-implementation">Practical Implementation</h4>
 <p>Include links in your API responses:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;orderId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shipped&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/orders/456&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cancel&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/orders/456/cancel&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;customer&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/users/123&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;orderId&quot;: 456,
+  &quot;status&quot;: &quot;shipped&quot;,
+  &quot;links&quot;: [
+    {
+      &quot;rel&quot;: &quot;self&quot;,
+      &quot;href&quot;: &quot;/orders/456&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;cancel&quot;,
+      &quot;href&quot;: &quot;/orders/456/cancel&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;customer&quot;,
+      &quot;href&quot;: &quot;/users/123&quot;
+    }
+  ]
+}
+</code></pre>
 <hr />
 <h3 id="3-versioning-strategies">3. Versioning Strategies</h3>
 <h4 id="why-version-apis">Why Version APIs?</h4>
@@ -229,9 +227,8 @@
 <li>Document version lifecycle clearly.</li>
 </ul>
 <h4 id="example_1">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /v1/products</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /v1/products
+</code></pre>
 <hr />
 <h3 id="4-error-handling-and-status-codes">4. Error Handling and Status Codes</h3>
 <h4 id="principles_1">Principles</h4>
@@ -245,12 +242,11 @@
 <li>Return informative error messages in the body</li>
 </ul>
 <h4 id="example-error-response">Example Error Response</h4>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InvalidParameter&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The &#39;date&#39; parameter must be in YYYY-MM-DD format.&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;InvalidParameter&quot;,
+  &quot;message&quot;: &quot;The 'date' parameter must be in YYYY-MM-DD format.&quot;
+}
+</code></pre>
 <hr />
 <h3 id="5-consistent-naming-and-data-formats">5. Consistent Naming and Data Formats</h3>
 <ul>
@@ -299,43 +295,40 @@
 <li><code>/categories</code></li>
 </ul>
 <h3 id="endpoints">Endpoints</h3>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /books?category=fiction&amp;sort=title&amp;limit=10</span>
-<span class="err">POST /books</span>
-<span class="err">GET /books/{bookId}</span>
-<span class="err">PUT /books/{bookId}</span>
-<span class="err">DELETE /books/{bookId}</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /books?category=fiction&amp;sort=title&amp;limit=10
+POST /books
+GET /books/{bookId}
+PUT /books/{bookId}
+DELETE /books/{bookId}
+</code></pre>
 <h3 id="sample-response">Sample Response</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;bookId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Great Gatsby&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;authorId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;F. Scott Fitzgerald&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fiction&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;publishedDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1925-04-10&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/books/123&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;author&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/authors/45&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;bookId&quot;: 123,
+  &quot;title&quot;: &quot;The Great Gatsby&quot;,
+  &quot;author&quot;: {
+    &quot;authorId&quot;: 45,
+    &quot;name&quot;: &quot;F. Scott Fitzgerald&quot;
+  },
+  &quot;category&quot;: &quot;Fiction&quot;,
+  &quot;publishedDate&quot;: &quot;1925-04-10&quot;,
+  &quot;links&quot;: [
+    {
+      &quot;rel&quot;: &quot;self&quot;,
+      &quot;href&quot;: &quot;/books/123&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;author&quot;,
+      &quot;href&quot;: &quot;/authors/45&quot;
+    }
+  ]
+}
+</code></pre>
 <h3 id="error-handling">Error Handling</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NotFound&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Book with ID 999 not found.&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;NotFound&quot;,
+  &quot;message&quot;: &quot;Book with ID 999 not found.&quot;
+}
+</code></pre>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>Mastering API design patterns is fundamental to building effective, scalable, and user-friendly APIs. By adopting patterns like RESTful resource modeling, HATEOAS, thoughtful versioning, and robust error handling, you create APIs that are easier to maintain and more intuitive for consumers. Remember, good API design is an ongoing process—regularly review your APIs, gather feedback, and iterate to meet evolving needs.</p>

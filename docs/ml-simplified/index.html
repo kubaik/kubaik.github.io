@@ -168,28 +168,27 @@
 * <strong>PyTorch</strong>: An open-source ML framework developed by Facebook.
 * <strong>Scikit-learn</strong>: A Python library for ML that provides a wide range of algorithms for classification, regression, clustering, and more.</p>
 <p>Here is an example of implementing a simple linear regression algorithm using Scikit-learn:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import numpy as np
 
-<span class="c1"># Generate some random data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.5</span>
+# Generate some random data
+X = np.random.rand(100, 1)
+y = 3 * X + 2 + np.random.randn(100, 1) / 1.5
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create and train a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create and train a linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-<span class="c1"># Make predictions on the testing set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Make predictions on the testing set
+y_pred = model.predict(X_test)
 
-<span class="c1"># Evaluate the model</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
-</code></pre></div>
-
+# Evaluate the model
+print(&quot;Mean Squared Error:&quot;, np.mean((y_test - y_pred) ** 2))
+</code></pre>
 <p>This code generates some random data, splits it into training and testing sets, creates and trains a linear regression model, makes predictions on the testing set, and evaluates the model using the mean squared error metric.</p>
 <h2 id="common-problems-in-machine-learning">Common Problems in Machine Learning</h2>
 <p>Some common problems in ML include:
@@ -204,18 +203,17 @@
 <li><strong>Class Weighting</strong>: Assigning different weights to different classes to balance the data.</li>
 </ul>
 <p>For example, to address overfitting, you can use the L1 and L2 regularization techniques provided by Scikit-learn:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
+<pre><code class="language-python">from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
 
-<span class="c1"># Create and train a Lasso regression model with L1 regularization</span>
-<span class="n">model_lasso</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">model_lasso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create and train a Lasso regression model with L1 regularization
+model_lasso = Lasso(alpha=0.1)
+model_lasso.fit(X_train, y_train)
 
-<span class="c1"># Create and train a Ridge regression model with L2 regularization</span>
-<span class="n">model_ridge</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">model_ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div>
-
+# Create and train a Ridge regression model with L2 regularization
+model_ridge = Ridge(alpha=0.1)
+model_ridge.fit(X_train, y_train)
+</code></pre>
 <p>This code creates and trains two regression models with L1 and L2 regularization, respectively, to prevent overfitting.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases of ML:
@@ -227,22 +225,21 @@
 * <strong>Amazon SageMaker</strong>: A cloud-based platform for building, training, and deploying ML models.
 * <strong>Microsoft Azure Machine Learning</strong>: A cloud-based platform for building, training, and deploying ML models.</p>
 <p>For example, to implement image classification using the Google Cloud Vision API, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">vision</span>
+<pre><code class="language-python">from google.cloud import vision
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageAnnotatorClient</span><span class="p">()</span>
+# Create a client instance
+client = vision.ImageAnnotatorClient()
 
-<span class="c1"># Load the image</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+# Load the image
+image = vision.Image(content=open('image.jpg', 'rb').read())
 
-<span class="c1"># Perform image classification</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">label_detection</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+# Perform image classification
+response = client.label_detection(image)
 
-<span class="c1"># Print the labels</span>
-<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">label_annotations</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the labels
+for label in response.label_annotations:
+    print(label.description)
+</code></pre>
 <p>This code creates a client instance, loads an image, performs image classification using the Google Cloud Vision API, and prints the labels.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of ML models can be evaluated using various metrics, such as:

@@ -160,54 +160,51 @@
 <p>Let's take a look at some practical examples of serverless computing in action.</p>
 <h3 id="example-1-image-processing-with-aws-lambda">Example 1: Image Processing with AWS Lambda</h3>
 <p>Suppose we want to build an image processing application that resizes images uploaded to an S3 bucket. We can use AWS Lambda to create a serverless function that triggers on S3 upload events.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<pre><code class="language-python">import boto3
+from PIL import Image
 
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+s3 = boto3.client('s3')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Get the uploaded image</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+def lambda_handler(event, context):
+    # Get the uploaded image
+    image = Image.open(event['Records'][0]['s3']['object']['key'])
 
-    <span class="c1"># Resize the image</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+    # Resize the image
+    image = image.resize((800, 600))
 
-    <span class="c1"># Save the resized image</span>
-    <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Body</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;my-bucket&#39;</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="s1">&#39;resized-image.jpg&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+    # Save the resized image
+    s3.put_object(Body=image, Bucket='my-bucket', Key='resized-image.jpg')
+</code></pre>
 <p>This code snippet demonstrates how to use AWS Lambda to create a serverless function that processes images uploaded to an S3 bucket.</p>
 <h3 id="example-2-real-time-data-processing-with-azure-functions">Example 2: Real-time Data Processing with Azure Functions</h3>
 <p>Suppose we want to build a real-time data processing application that analyzes sensor data from IoT devices. We can use Azure Functions to create a serverless function that triggers on Azure IoT Hub events.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.Devices</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.Azure.Devices;
+using System.Threading.Tasks;
 
-<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">Run</span><span class="p">(</span>
-<span class="w">    </span><span class="na">[IoTHubTrigger(&quot;messages/events&quot;, Connection = &quot;IoTHubConnection&quot;)]</span><span class="n">EventData</span><span class="w"> </span><span class="n">message</span><span class="p">,</span>
-<span class="w">    </span><span class="n">ILogger</span><span class="w"> </span><span class="n">logger</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Process the sensor data</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">sensorData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;sensorData&quot;</span><span class="p">];</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">processedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProcessSensorData</span><span class="p">(</span><span class="n">sensorData</span><span class="p">);</span>
+public static async Task Run(
+    [IoTHubTrigger(&quot;messages/events&quot;, Connection = &quot;IoTHubConnection&quot;)]EventData message,
+    ILogger logger)
+{
+    // Process the sensor data
+    var sensorData = message.Properties[&quot;sensorData&quot;];
+    var processedData = ProcessSensorData(sensorData);
 
-<span class="w">    </span><span class="c1">// Save the processed data</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nf">SaveProcessedData</span><span class="p">(</span><span class="n">processedData</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Save the processed data
+    await SaveProcessedData(processedData);
+}
+</code></pre>
 <p>This code snippet demonstrates how to use Azure Functions to create a serverless function that processes real-time data from IoT devices.</p>
 <h3 id="example-3-web-application-with-google-cloud-functions">Example 3: Web Application with Google Cloud Functions</h3>
 <p>Suppose we want to build a web application that handles user requests. We can use Google Cloud Functions to create a serverless function that handles HTTP requests.</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Handle the HTTP request</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">405</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Method not allowed&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">exports.handler = async (req, res) =&gt; {
+  // Handle the HTTP request
+  if (req.method === 'GET') {
+    res.status(200).send('Hello World!');
+  } else {
+    res.status(405).send('Method not allowed');
+  }
+};
+</code></pre>
 <p>This code snippet demonstrates how to use Google Cloud Functions to create a serverless function that handles HTTP requests.</p>
 <h2 id="use-cases-for-serverless-computing">Use Cases for Serverless Computing</h2>
 <p>Serverless computing has a wide range of use cases, including:

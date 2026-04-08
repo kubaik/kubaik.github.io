@@ -161,19 +161,18 @@
 <h2 id="keyword-research-and-optimization">Keyword Research and Optimization</h2>
 <p>Keyword research is a critical component of ASO. It involves identifying relevant keywords and phrases that users might search for when looking for an app like yours. <strong>Ahrefs</strong> and <strong>SEMrush</strong> are popular tools for conducting keyword research.</p>
 <p>Here's an example of how to use <strong>Ahrefs</strong> to find relevant keywords:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">ahrefs</span>
+<pre><code class="language-python">import ahrefs
 
-<span class="c1"># Set up Ahrefs API credentials</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">ahrefs</span><span class="o">.</span><span class="n">Ahrefs</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;YOUR_API_KEY&quot;</span><span class="p">,</span> <span class="n">api_secret</span><span class="o">=</span><span class="s2">&quot;YOUR_API_SECRET&quot;</span><span class="p">)</span>
+# Set up Ahrefs API credentials
+api = ahrefs.Ahrefs(api_key=&quot;YOUR_API_KEY&quot;, api_secret=&quot;YOUR_API_SECRET&quot;)
 
-<span class="c1"># Search for keywords related to &quot;fitness&quot;</span>
-<span class="n">keywords</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_keywords</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">)</span>
+# Search for keywords related to &quot;fitness&quot;
+keywords = api.get_keywords(&quot;fitness&quot;)
 
-<span class="c1"># Print the top 10 keywords</span>
-<span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="p">[</span><span class="s2">&quot;keyword&quot;</span><span class="p">],</span> <span class="n">keyword</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the top 10 keywords
+for keyword in keywords[:10]:
+    print(keyword[&quot;keyword&quot;], keyword[&quot;volume&quot;])
+</code></pre>
 <p>This code snippet uses the <strong>Ahrefs</strong> API to search for keywords related to "fitness" and prints the top 10 keywords along with their search volume.</p>
 <h3 id="implementing-keyword-optimization">Implementing Keyword Optimization</h3>
 <p>Once you've identified relevant keywords, it's essential to incorporate them into your app's listing. Here are some tips:
@@ -184,20 +183,19 @@
 <h2 id="optimizing-visual-assets">Optimizing Visual Assets</h2>
 <p>Visual assets, such as screenshots and promotional images, play a significant role in ASO. They help users understand the app's features and functionality, increasing the chances of conversion.</p>
 <p>Here's an example of how to optimize screenshots using <strong>Adobe Creative Cloud</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Use Adobe Creative Cloud API to generate screenshots</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">adobe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;adobe-creative-cloud&quot;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Use Adobe Creative Cloud API to generate screenshots
+const adobe = require(&quot;adobe-creative-cloud&quot;);
 
-<span class="c1">// Set up Adobe Creative Cloud API credentials</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">adobe</span><span class="p">.</span><span class="nx">api</span><span class="p">(</span><span class="s2">&quot;YOUR_API_KEY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;YOUR_API_SECRET&quot;</span><span class="p">);</span>
+// Set up Adobe Creative Cloud API credentials
+const api = adobe.api(&quot;YOUR_API_KEY&quot;, &quot;YOUR_API_SECRET&quot;);
 
-<span class="c1">// Generate screenshots for different devices</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">devices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;iPhone&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;iPad&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Android&quot;</span><span class="p">];</span>
-<span class="nx">devices</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">device</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">screenshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">api</span><span class="p">.</span><span class="nx">generateScreenshot</span><span class="p">(</span><span class="nx">device</span><span class="p">);</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Generated screenshot for </span><span class="si">${</span><span class="nx">device</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Generate screenshots for different devices
+const devices = [&quot;iPhone&quot;, &quot;iPad&quot;, &quot;Android&quot;];
+devices.forEach((device) =&gt; {
+  const screenshot = api.generateScreenshot(device);
+  console.log(`Generated screenshot for ${device}`);
+});
+</code></pre>
 <p>This code snippet uses the <strong>Adobe Creative Cloud</strong> API to generate screenshots for different devices, ensuring that your app's visual assets are optimized for various screen sizes and resolutions.</p>
 <h3 id="best-practices-for-visual-assets">Best Practices for Visual Assets</h3>
 <p>Here are some best practices for optimizing visual assets:
@@ -211,21 +209,20 @@
 * <strong>Poor search visibility</strong>: This can be improved by conducting keyword research and incorporating relevant keywords into the app's listing.
 * <strong>Difficulty tracking ASO metrics</strong>: This can be solved by using tools like <strong>App Annie</strong> or <strong>Google Play Console</strong> to track key metrics.</p>
 <p>Here's an example of how to use <strong>Google Play Console</strong> to track ASO metrics:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Use Google Play Console API to track ASO metrics</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.play.console.api.*</span><span class="p">;</span>
+<pre><code class="language-java">// Use Google Play Console API to track ASO metrics
+import com.google.play.console.api.*;
 
-<span class="c1">// Set up Google Play Console API credentials</span>
-<span class="n">PlayConsoleApi</span><span class="w"> </span><span class="n">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayConsoleApi</span><span class="p">(</span><span class="s">&quot;YOUR_API_KEY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;YOUR_API_SECRET&quot;</span><span class="p">);</span>
+// Set up Google Play Console API credentials
+PlayConsoleApi api = new PlayConsoleApi(&quot;YOUR_API_KEY&quot;, &quot;YOUR_API_SECRET&quot;);
 
-<span class="c1">// Get the app&#39;s conversion rate</span>
-<span class="kt">double</span><span class="w"> </span><span class="n">conversionRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="na">getConversionRate</span><span class="p">(</span><span class="s">&quot;YOUR_APP_ID&quot;</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Conversion Rate: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">conversionRate</span><span class="p">);</span>
+// Get the app's conversion rate
+double conversionRate = api.getConversionRate(&quot;YOUR_APP_ID&quot;);
+System.out.println(&quot;Conversion Rate: &quot; + conversionRate);
 
-<span class="c1">// Get the app&#39;s search visibility</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">searchVisibility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="na">getSearchVisibility</span><span class="p">(</span><span class="s">&quot;YOUR_APP_ID&quot;</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Search Visibility: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">searchVisibility</span><span class="p">);</span>
-</code></pre></div>
-
+// Get the app's search visibility
+int searchVisibility = api.getSearchVisibility(&quot;YOUR_APP_ID&quot;);
+System.out.println(&quot;Search Visibility: &quot; + searchVisibility);
+</code></pre>
 <p>This code snippet uses the <strong>Google Play Console</strong> API to track the app's conversion rate and search visibility, providing valuable insights into the app's ASO performance.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>ASO is a critical component of any mobile app marketing strategy. By optimizing the app's listing, developers can increase visibility, drive more downloads, and improve revenue. To get started with ASO, follow these steps:

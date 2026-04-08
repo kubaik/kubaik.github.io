@@ -167,49 +167,48 @@
 * <strong>Apache Kafka</strong>: a distributed streaming platform that provides high-throughput and fault-tolerant data ingestion
 * <strong>AWS Kinesis</strong>: a fully managed service that provides real-time data ingestion and processing</p>
 <p>Here is an example of using Apache NiFi to ingest data from a Twitter API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tweepy</span>
-<span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">UTC</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<pre><code class="language-python">import tweepy
+from pytz import UTC
+from datetime import datetime
 
-<span class="c1"># Twitter API credentials</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_key&quot;</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">&quot;your_consumer_secret&quot;</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="s2">&quot;your_access_token&quot;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s2">&quot;your_access_token_secret&quot;</span>
+# Twitter API credentials
+consumer_key = &quot;your_consumer_key&quot;
+consumer_secret = &quot;your_consumer_secret&quot;
+access_token = &quot;your_access_token&quot;
+access_token_secret = &quot;your_access_token_secret&quot;
 
-<span class="c1"># Set up Twitter API connection</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
-<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
-<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+# Set up Twitter API connection
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
 
-<span class="c1"># Set up NiFi connection</span>
-<span class="n">nifi_url</span> <span class="o">=</span> <span class="s2">&quot;http://your_nifi_server:8080&quot;</span>
-<span class="n">nifi_process_group</span> <span class="o">=</span> <span class="s2">&quot;your_nifi_process_group&quot;</span>
+# Set up NiFi connection
+nifi_url = &quot;http://your_nifi_server:8080&quot;
+nifi_process_group = &quot;your_nifi_process_group&quot;
 
-<span class="c1"># Define a function to ingest Twitter data</span>
-<span class="k">def</span> <span class="nf">ingest_twitter_data</span><span class="p">():</span>
-    <span class="c1"># Get Twitter data using the API</span>
-    <span class="n">tweets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;your_search_query&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+# Define a function to ingest Twitter data
+def ingest_twitter_data():
+    # Get Twitter data using the API
+    tweets = api.search(q=&quot;your_search_query&quot;, count=100)
 
-    <span class="c1"># Create a NiFi flow file</span>
-    <span class="n">flow_file</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;twitter_data&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">tweets</span>
-    <span class="p">}</span>
+    # Create a NiFi flow file
+    flow_file = {
+        &quot;name&quot;: &quot;twitter_data&quot;,
+        &quot;content&quot;: tweets
+    }
 
-    <span class="c1"># Send the flow file to NiFi</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">nifi_url</span> <span class="o">+</span> <span class="s2">&quot;/nifi-api/flowfile&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">flow_file</span><span class="p">)</span>
+    # Send the flow file to NiFi
+    response = requests.post(nifi_url + &quot;/nifi-api/flowfile&quot;, json=flow_file)
 
-    <span class="c1"># Check if the flow file was sent successfully</span>
-    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Twitter data ingested successfully&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error ingesting Twitter data&quot;</span><span class="p">)</span>
+    # Check if the flow file was sent successfully
+    if response.status_code == 201:
+        print(&quot;Twitter data ingested successfully&quot;)
+    else:
+        print(&quot;Error ingesting Twitter data&quot;)
 
-<span class="c1"># Ingest Twitter data every 5 minutes</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">every</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">minutes</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">ingest_twitter_data</span><span class="p">)</span>
-</code></pre></div>
-
+# Ingest Twitter data every 5 minutes
+schedule.every(5).minutes.do(ingest_twitter_data)
+</code></pre>
 <p>This code uses the Tweepy library to connect to the Twitter API and retrieve tweets based on a search query. It then creates a NiFi flow file and sends it to the NiFi server using the Requests library.</p>
 <h2 id="data-storage-layer">Data Storage Layer</h2>
 <p>The data storage layer provides a scalable and durable storage solution for the data. This can be done using various tools and technologies, such as:
@@ -217,30 +216,29 @@
 * <strong>Google Cloud Storage</strong>: a fully managed object storage service that provides durable and scalable storage
 * <strong>Apache HDFS</strong>: a distributed file system that provides scalable and fault-tolerant storage</p>
 <p>Here is an example of using Amazon S3 to store data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Set up S3 connection</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;s3&quot;</span><span class="p">)</span>
+# Set up S3 connection
+s3 = boto3.client(&quot;s3&quot;)
 
-<span class="c1"># Define a function to store data in S3</span>
-<span class="k">def</span> <span class="nf">store_data_in_s3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="n">object_key</span><span class="p">):</span>
-    <span class="c1"># Store the data in S3</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span><span class="n">Body</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">Bucket</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">)</span>
+# Define a function to store data in S3
+def store_data_in_s3(data, bucket_name, object_key):
+    # Store the data in S3
+    response = s3.put_object(Body=data, Bucket=bucket_name, Key=object_key)
 
-    <span class="c1"># Check if the data was stored successfully</span>
-    <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;ResponseMetadata&quot;</span><span class="p">][</span><span class="s2">&quot;HTTPStatusCode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data stored successfully in S3&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error storing data in S3&quot;</span><span class="p">)</span>
+    # Check if the data was stored successfully
+    if response[&quot;ResponseMetadata&quot;][&quot;HTTPStatusCode&quot;] == 200:
+        print(&quot;Data stored successfully in S3&quot;)
+    else:
+        print(&quot;Error storing data in S3&quot;)
 
-<span class="c1"># Store a sample dataset in S3</span>
-<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World&quot;</span>
-<span class="n">bucket_name</span> <span class="o">=</span> <span class="s2">&quot;your_s3_bucket&quot;</span>
-<span class="n">object_key</span> <span class="o">=</span> <span class="s2">&quot;your_s3_object_key&quot;</span>
+# Store a sample dataset in S3
+data = b&quot;Hello World&quot;
+bucket_name = &quot;your_s3_bucket&quot;
+object_key = &quot;your_s3_object_key&quot;
 
-<span class="n">store_data_in_s3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="n">object_key</span><span class="p">)</span>
-</code></pre></div>
-
+store_data_in_s3(data, bucket_name, object_key)
+</code></pre>
 <p>This code uses the Boto3 library to connect to Amazon S3 and store a sample dataset in a bucket.</p>
 <h2 id="data-processing-layer">Data Processing Layer</h2>
 <p>The data processing layer handles data processing, transformation, and analysis. This can be done using various tools and technologies, such as:
@@ -248,30 +246,29 @@
 * <strong>Apache Flink</strong>: a distributed processing engine that provides high-performance data processing
 * <strong>AWS Glue</strong>: a fully managed extract, transform, and load (ETL) service that provides data processing</p>
 <p>Here is an example of using Apache Spark to process data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a Spark session</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;your_app_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a Spark session
+spark = SparkSession.builder.appName(&quot;your_app_name&quot;).getOrCreate()
 
-<span class="c1"># Define a function to process data</span>
-<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Create a Spark dataframe</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Define a function to process data
+def process_data(data):
+    # Create a Spark dataframe
+    df = spark.createDataFrame(data)
 
-    <span class="c1"># Process the data using Spark</span>
-    <span class="n">processed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;column_name&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    # Process the data using Spark
+    processed_df = df.filter(df[&quot;column_name&quot;] &gt; 0)
 
-    <span class="c1"># Return the processed data</span>
-    <span class="k">return</span> <span class="n">processed_df</span>
+    # Return the processed data
+    return processed_df
 
-<span class="c1"># Process a sample dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;column_name&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;column_name&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
-<span class="n">processed_data</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Process a sample dataset
+data = [(&quot;column_name&quot;, 1), (&quot;column_name&quot;, 2), (&quot;column_name&quot;, 3)]
+processed_data = process_data(data)
 
-<span class="c1"># Print the processed data</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">processed_data</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>
-</code></pre></div>
-
+# Print the processed data
+print(processed_data.show())
+</code></pre>
 <p>This code uses the PySpark library to create a Spark session and process a sample dataset using Spark.</p>
 <h2 id="data-analytics-layer">Data Analytics Layer</h2>
 <p>The data analytics layer provides tools and interfaces for data visualization, reporting, and business intelligence. This can be done using various tools and technologies, such as:

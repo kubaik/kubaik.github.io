@@ -179,23 +179,22 @@
 </ol>
 <h3 id="example-testing-a-simple-api-endpoint-with-postman">Example: Testing a Simple API Endpoint with Postman</h3>
 <p>Suppose we want to test a simple API endpoint that returns a list of users. We can use Postman to send a GET request to the endpoint and verify the response.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// API endpoint: https://example.com/api/users</span>
-<span class="c1">// HTTP method: GET</span>
-<span class="c1">// Response:</span>
-<span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;john.doe@example.com&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jane.doe@example.com&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-json">// API endpoint: https://example.com/api/users
+// HTTP method: GET
+// Response:
+[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;email&quot;: &quot;john.doe@example.com&quot;
+  },
+  {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;Jane Doe&quot;,
+    &quot;email&quot;: &quot;jane.doe@example.com&quot;
+  }
+]
+</code></pre>
 <p>In Postman, we can create a new request and enter the API endpoint URL, selecting the GET method. We can then send the request and verify the response using Postman's built-in JSON parser.</p>
 <h2 id="advanced-api-testing-with-insomnia">Advanced API Testing with Insomnia</h2>
 <p>Insomnia offers a range of advanced features for API testing, including support for API documentation and testing. To get started with Insomnia, follow these steps:</p>
@@ -207,19 +206,18 @@
 </ol>
 <h3 id="example-testing-api-authentication-with-insomnia">Example: Testing API Authentication with Insomnia</h3>
 <p>Suppose we want to test API authentication using Insomnia. We can create a new request and enter the API endpoint URL, selecting the POST method and adding the required authentication headers.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// API endpoint: https://example.com/api/login</span>
-<span class="c1">// HTTP method: POST</span>
-<span class="c1">// Request body:</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;john.doe&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;password123&quot;</span>
-<span class="p">}</span>
-<span class="c1">// Response:</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">// API endpoint: https://example.com/api/login
+// HTTP method: POST
+// Request body:
+{
+  &quot;username&quot;: &quot;john.doe&quot;,
+  &quot;password&quot;: &quot;password123&quot;
+}
+// Response:
+{
+  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c&quot;
+}
+</code></pre>
 <p>In Insomnia, we can create a new request and enter the API endpoint URL, selecting the POST method and adding the required authentication headers. We can then send the request and verify the response using Insomnia's built-in JSON parser.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>API testing can be challenging, and common problems include:</p>
@@ -242,13 +240,12 @@
 </ul>
 <h3 id="example-performance-benchmarking-with-postman">Example: Performance Benchmarking with Postman</h3>
 <p>Suppose we want to performance benchmark an API endpoint using Postman. We can create a new request and enter the API endpoint URL, selecting the GET method. We can then use Postman's built-in performance benchmarking tool to send multiple requests and measure the response time.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// API endpoint: https://example.com/api/users</span>
-<span class="c1">// HTTP method: GET</span>
-<span class="c1">// Response time (average): 200ms</span>
-<span class="c1">// Response time (max): 500ms</span>
-<span class="c1">// Response time (min): 100ms</span>
-</code></pre></div>
-
+<pre><code class="language-json">// API endpoint: https://example.com/api/users
+// HTTP method: GET
+// Response time (average): 200ms
+// Response time (max): 500ms
+// Response time (min): 100ms
+</code></pre>
 <p>In Postman, we can create a new request and enter the API endpoint URL, selecting the GET method. We can then use Postman's built-in performance benchmarking tool to send multiple requests and measure the response time.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>API testing is a critical step in ensuring the reliability, performance, and security of APIs. Postman and Insomnia are two popular tools that simplify the testing process, offering a range of features and advanced functionality. By following the examples and guidelines outlined in this article, you can get started with API testing using Postman and Insomnia.</p>

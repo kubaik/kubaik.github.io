@@ -163,24 +163,23 @@
 </ul>
 <h3 id="practical-example-building-a-vr-game-with-unity">Practical Example: Building a VR Game with Unity</h3>
 <p>To get started with VR development, let's build a simple VR game using Unity. Here's an example code snippet in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">VRController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5.0f</span><span class="p">;</span>
+public class VRController : MonoBehaviour
+{
+    public float speed = 5.0f;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get the controller input</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&quot;Horizontal&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&quot;Vertical&quot;</span><span class="p">);</span>
+    void Update()
+    {
+        // Get the controller input
+        float horizontal = Input.GetAxis(&quot;Horizontal&quot;);
+        float vertical = Input.GetAxis(&quot;Vertical&quot;);
 
-<span class="w">        </span><span class="c1">// Move the player</span>
-<span class="w">        </span><span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">horizontal</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Move the player
+        transform.Translate(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
+    }
+}
+</code></pre>
 <p>This script uses the Unity Input class to get the controller input and move the player accordingly. You can attach this script to a GameObject in your scene to create a simple VR controller.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When working with VR, you may encounter some common problems, such as:</p>
@@ -190,41 +189,40 @@
 <li><strong>Performance Optimization</strong>: VR applications can be computationally intensive, requiring optimization to run smoothly. To optimize performance, you can use techniques such as occlusion culling, level of detail, and physics simulation.</li>
 </ol>
 <p>For example, to optimize performance in Unity, you can use the Profiler tool to identify performance bottlenecks and optimize accordingly. Here's an example code snippet in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PerformanceOptimizer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Enable occlusion culling</span>
-<span class="w">        </span><span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">depthTextureMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DepthTextureMode</span><span class="p">.</span><span class="n">Depth</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+public class PerformanceOptimizer : MonoBehaviour
+{
+    void Start()
+    {
+        // Enable occlusion culling
+        Camera.main.depthTextureMode = DepthTextureMode.Depth;
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the level of detail</span>
-<span class="w">        </span><span class="n">GameObject</span><span class="p">[]</span><span class="w"> </span><span class="n">objects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GameObject</span><span class="p">.</span><span class="n">FindGameObjectsWithTag</span><span class="p">(</span><span class="s">&quot;LOD&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">GameObject</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">objects</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Update the level of detail based on distance</span>
-<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vector3</span><span class="p">.</span><span class="n">Distance</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="n">obj</span><span class="p">.</span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">LODGroup</span><span class="o">&gt;</span><span class="p">().</span><span class="n">SetLOD</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="nf">if</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="n">obj</span><span class="p">.</span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">LODGroup</span><span class="o">&gt;</span><span class="p">().</span><span class="n">SetLOD</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="k">else</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="n">obj</span><span class="p">.</span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">LODGroup</span><span class="o">&gt;</span><span class="p">().</span><span class="n">SetLOD</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void Update()
+    {
+        // Update the level of detail
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(&quot;LOD&quot;);
+        foreach (GameObject obj in objects)
+        {
+            // Update the level of detail based on distance
+            float distance = Vector3.Distance(obj.transform.position, Camera.main.transform.position);
+            if (distance &lt; 10)
+            {
+                obj.GetComponent&lt;LODGroup&gt;().SetLOD(0);
+            }
+            else if (distance &lt; 20)
+            {
+                obj.GetComponent&lt;LODGroup&gt;().SetLOD(1);
+            }
+            else
+            {
+                obj.GetComponent&lt;LODGroup&gt;().SetLOD(2);
+            }
+        }
+    }
+}
+</code></pre>
 <p>This script uses the Unity Profiler tool to identify performance bottlenecks and optimizes the level of detail accordingly.</p>
 <h3 id="concrete-use-cases">Concrete Use Cases</h3>
 <p>Here are some concrete use cases for VR:</p>
@@ -257,24 +255,23 @@
 <p>In terms of performance, the Oculus Quest 2 can handle complex VR applications with ease, while the HTC Vive Pro requires a more powerful computer to run smoothly.</p>
 <h2 id="code-example-using-the-oculus-quest-2-with-unity">Code Example: Using the Oculus Quest 2 with Unity</h2>
 <p>Here's an example code snippet in C# that demonstrates how to use the Oculus Quest 2 with Unity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">OculusQuest2Controller</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5.0f</span><span class="p">;</span>
+public class OculusQuest2Controller : MonoBehaviour
+{
+    public float speed = 5.0f;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Get the controller input</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OVRInput</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">OVRInput</span><span class="p">.</span><span class="n">Axis2D</span><span class="p">.</span><span class="n">PrimaryHand</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OVRInput</span><span class="p">.</span><span class="n">Get</span><span class="p">(</span><span class="n">OVRInput</span><span class="p">.</span><span class="n">Axis2D</span><span class="p">.</span><span class="n">SecondaryHand</span><span class="p">);</span>
+    void Update()
+    {
+        // Get the controller input
+        float horizontal = OVRInput.Get(OVRInput.Axis2D.PrimaryHand);
+        float vertical = OVRInput.Get(OVRInput.Axis2D.SecondaryHand);
 
-<span class="w">        </span><span class="c1">// Move the player</span>
-<span class="w">        </span><span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">horizontal</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span><span class="w"> </span><span class="n">vertical</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Move the player
+        transform.Translate(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
+    }
+}
+</code></pre>
 <p>This script uses the OVRInput class to get the controller input and move the player accordingly. You can attach this script to a GameObject in your scene to create a simple Oculus Quest 2 controller.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, VR is a powerful technology that has the potential to revolutionize various industries. With the rise of VR, we're seeing new applications in gaming, education, healthcare, and entertainment. To get started with VR development, you'll need to choose a VR headset and software platform that meets your needs and budget. You'll also need to create high-quality VR content that is engaging and interactive.</p>

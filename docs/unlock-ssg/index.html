@@ -170,29 +170,27 @@
 4. <strong>Community support</strong>: Choose a tool with an active and supportive community, including documentation, tutorials, and forums.</p>
 <h3 id="example-building-a-static-site-with-nextjs">Example: Building a Static Site with Next.js</h3>
 <p>Here is an example of how to build a static site with Next.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Head</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next/head&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/index.js
+import Head from 'next/head';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Home</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">Head</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Static</span><span class="w"> </span><span class="nx">Site</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="err">/Head&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">site</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function Home() {
+  return (
+    &lt;div&gt;
+      &lt;Head&gt;
+        &lt;title&gt;My Static Site&lt;/title&gt;
+      &lt;/Head&gt;
+      &lt;h1&gt;Welcome to my static site&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Home</span><span class="p">;</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="c1">// next.config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;serverless&#39;</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+export default Home;
+</code></pre>
+<pre><code class="language-javascript">// next.config.js
+module.exports = {
+  target: 'serverless',
+};
+</code></pre>
 <p>In this example, we define a simple page component that includes a <code>Head</code> component for setting the page title. We then configure Next.js to use serverless mode, which enables static site generation.</p>
 <h2 id="deploying-a-static-site">Deploying a Static Site</h2>
 <p>Once you have built your static site, you need to deploy it to a web server. There are many options available, including:
@@ -206,15 +204,14 @@
 4. <strong>Cost</strong>: Choose a platform that provides a cost-effective solution, including free or low-cost hosting options.</p>
 <h3 id="example-deploying-a-static-site-to-netlify">Example: Deploying a Static Site to Netlify</h3>
 <p>Here is an example of how to deploy a static site to Netlify:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="n">netlify</span><span class="p">.</span><span class="n">toml</span>
-<span class="o">[</span><span class="n">build</span><span class="o">]</span>
-<span class="w">  </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;npm run build&quot;</span>
-<span class="w">  </span><span class="n">publish</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;public&quot;</span>
+<pre><code class="language-yml"># netlify.toml
+[build]
+  command = &quot;npm run build&quot;
+  publish = &quot;public&quot;
 
-<span class="o">[</span><span class="n">deploy</span><span class="o">]</span>
-<span class="w">  </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;static&quot;</span>
-</code></pre></div>
-
+[deploy]
+  target = &quot;static&quot;
+</code></pre>
 <p>In this example, we define a Netlify configuration file that specifies the build command and publish directory. We then deploy our static site to Netlify using the <code>netlify deploy</code> command.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when working with SSG:
@@ -223,13 +220,12 @@
 * <strong>Difficulty with SEO</strong>: Use a SSG tool that provides built-in SEO support, such as Next.js or Gatsby, and use metadata to optimize your pages for search engines.</p>
 <h3 id="example-optimizing-build-times-with-nextjs">Example: Optimizing Build Times with Next.js</h3>
 <p>Here is an example of how to optimize build times with Next.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// next.config.js</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">target</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;serverless&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">concurrentBuilds</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// next.config.js
+module.exports = {
+  target: 'serverless',
+  concurrentBuilds: true,
+};
+</code></pre>
 <p>In this example, we enable concurrent builds in Next.js, which allows multiple pages to be built simultaneously, reducing the overall build time.</p>
 <h2 id="use-cases">Use Cases</h2>
 <p>Here are some concrete use cases for SSG:
@@ -239,15 +235,14 @@
 * <strong>Documentations</strong>: Use SSG to build fast and secure documentation sites, with support for custom templates and plugins.</p>
 <h3 id="example-building-a-blog-with-hugo">Example: Building a Blog with Hugo</h3>
 <p>Here is an example of how to build a blog with Hugo:</p>
-<div class="codehilite"><pre><span></span><code><span class="gu">// content/post.md</span>
-<span class="gu">---</span>
+<pre><code class="language-markdown">// content/post.md
+---
 title: My First Post
-<span class="gu">date: 2022-01-01</span>
-<span class="gu">---</span>
+date: 2022-01-01
+---
 
 Welcome to my first post!
-</code></pre></div>
-
+</code></pre>
 <p>In this example, we define a simple blog post using Markdown, with support for custom templates and plugins.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for popular SSG tools:

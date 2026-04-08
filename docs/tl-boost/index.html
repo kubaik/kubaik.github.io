@@ -171,37 +171,36 @@
 4. <strong>Fine-tuning the model</strong>: Finally, we fine-tune the model on our dataset, using a smaller learning rate and a smaller batch size.</p>
 <h3 id="example-code-transfer-learning-with-vgg16">Example Code: Transfer Learning with VGG16</h3>
 <p>Here is an example of how to implement transfer learning using VGG16 in PyTorch:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torchvision</span>
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
 
-<span class="c1"># Load the pre-trained VGG16 model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">vgg16</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Load the pre-trained VGG16 model
+model = torchvision.models.vgg16(pretrained=True)
 
-<span class="c1"># Freeze the weights of the pre-trained model</span>
-<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
-    <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
+# Freeze the weights of the pre-trained model
+for param in model.parameters():
+    param.requires_grad = False
 
-<span class="c1"># Add a new layer on top of the pre-trained model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">25088</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+# Add a new layer on top of the pre-trained model
+model.fc = nn.Linear(25088, 10)
 
-<span class="c1"># Define the loss function and optimizer</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+# Define the loss function and optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.001)
 
-<span class="c1"># Train the model</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-</code></pre></div>
-
+# Train the model
+for epoch in range(10):
+    for x, y in train_loader:
+        x = x.to(device)
+        y = y.to(device)
+        optimizer.zero_grad()
+        outputs = model(x)
+        loss = criterion(outputs, y)
+        loss.backward()
+        optimizer.step()
+</code></pre>
 <p>In this example, we load the pre-trained VGG16 model, freeze its weights, add a new layer on top, and fine-tune the model on our dataset.</p>
 <h2 id="common-use-cases">Common Use Cases</h2>
 <p>Transfer learning has a wide range of applications, including:

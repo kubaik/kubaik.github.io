@@ -161,56 +161,54 @@
 <h2 id="practical-implementation-of-eda">Practical Implementation of EDA</h2>
 <p>To demonstrate the practical implementation of EDA, let's consider an example of an e-commerce system that uses EDA to process orders. In this system, the event producers are the user interface and the API, which generate events when a user places an order or updates their order status. The event handlers are the order processing workflow, which reacts to the events by updating the order status and sending notifications to the user.</p>
 <p>Here is an example of how this could be implemented using Apache Kafka as the event broker and Apache Cassandra as the event store:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Event producer</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">KafkaTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">kafkaTemplate</span><span class="p">;</span>
+<pre><code class="language-java">// Event producer
+public class OrderService {
+    private final KafkaTemplate&lt;String, String&gt; kafkaTemplate;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">OrderService</span><span class="p">(</span><span class="n">KafkaTemplate</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">kafkaTemplate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">kafkaTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kafkaTemplate</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public OrderService(KafkaTemplate&lt;String, String&gt; kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">placeOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Generate event</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{\&quot;type\&quot;:\&quot;ORDER_PLACED\&quot;,\&quot;orderId\&quot;:\&quot;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getOrderId</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\&quot;}&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="c1">// Publish event to Kafka</span>
-<span class="w">        </span><span class="n">kafkaTemplate</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="s">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">event</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    public void placeOrder(Order order) {
+        // Generate event
+        String event = &quot;{\&quot;type\&quot;:\&quot;ORDER_PLACED\&quot;,\&quot;orderId\&quot;:\&quot;&quot; + order.getOrderId() + &quot;\&quot;}&quot;;
+        // Publish event to Kafka
+        kafkaTemplate.send(&quot;orders&quot;, event);
+    }
+}
 
-<span class="c1">// Event handler</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderProcessor</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">CassandraTemplate</span><span class="w"> </span><span class="n">cassandraTemplate</span><span class="p">;</span>
+// Event handler
+public class OrderProcessor {
+    private final CassandraTemplate cassandraTemplate;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">OrderProcessor</span><span class="p">(</span><span class="n">CassandraTemplate</span><span class="w"> </span><span class="n">cassandraTemplate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">cassandraTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cassandraTemplate</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public OrderProcessor(CassandraTemplate cassandraTemplate) {
+        this.cassandraTemplate = cassandraTemplate;
+    }
 
-<span class="w">    </span><span class="nd">@KafkaListener</span><span class="p">(</span><span class="n">topics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;orders&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Consume event from Kafka</span>
-<span class="w">        </span><span class="n">JsonNode</span><span class="w"> </span><span class="n">jsonNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JsonUtils</span><span class="p">.</span><span class="na">fromJson</span><span class="p">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">JsonNode</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">orderId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonNode</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;orderId&quot;</span><span class="p">).</span><span class="na">asText</span><span class="p">();</span>
-<span class="w">        </span><span class="c1">// Update order status in Cassandra</span>
-<span class="w">        </span><span class="n">cassandraTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">orderId</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PROCESSED&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @KafkaListener(topics = &quot;orders&quot;)
+    public void processOrder(String event) {
+        // Consume event from Kafka
+        JsonNode jsonNode = JsonUtils.fromJson(event, JsonNode.class);
+        String orderId = jsonNode.get(&quot;orderId&quot;).asText();
+        // Update order status in Cassandra
+        cassandraTemplate.update(&quot;orders&quot;, orderId, &quot;status&quot;, &quot;PROCESSED&quot;);
+    }
+}
+</code></pre>
 <p>In this example, the <code>OrderService</code> class generates an event when a user places an order, and publishes it to Apache Kafka. The <code>OrderProcessor</code> class consumes the event from Kafka, and updates the order status in Apache Cassandra.</p>
 <h2 id="performance-and-scalability">Performance and Scalability</h2>
 <p>One of the key benefits of EDA is its ability to enable high performance and scalability. By decoupling event producers and handlers, EDA allows for the addition of new event handlers without affecting the event producers. This means that the system can scale to handle high volumes of events, without impacting the performance of the event producers.</p>
 <p>To demonstrate the performance and scalability of EDA, let's consider an example of a system that uses Apache Kafka as the event broker and Apache Spark as the event handler. In this system, the event producers generate 10,000 events per second, and the event handlers process the events in real-time using Apache Spark.</p>
 <p>Here is an example of how this could be implemented:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Event producer</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">kafkaProducer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">KafkaProducer</span><span class="p">[</span><span class="nc">String</span><span class="p">,</span><span class="w"> </span><span class="nc">String</span><span class="p">](</span><span class="n">props</span><span class="p">)</span>
+<pre><code class="language-scala">// Event producer
+val kafkaProducer = new KafkaProducer[String, String](props)
 
-<span class="c1">// Event handler</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&quot;EventProcessor&quot;</span><span class="p">).</span><span class="n">getOrCreate</span><span class="p">()</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">kafkaStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spark</span><span class="p">.</span><span class="n">readStream</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;kafka&quot;</span><span class="p">).</span><span class="n">option</span><span class="p">(</span><span class="s">&quot;kafka.bootstrap.servers&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost:9092&quot;</span><span class="p">).</span><span class="n">option</span><span class="p">(</span><span class="s">&quot;subscribe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;events&quot;</span><span class="p">).</span><span class="n">load</span><span class="p">()</span>
+// Event handler
+val spark = SparkSession.builder.appName(&quot;EventProcessor&quot;).getOrCreate()
+val kafkaStream = spark.readStream.format(&quot;kafka&quot;).option(&quot;kafka.bootstrap.servers&quot;, &quot;localhost:9092&quot;).option(&quot;subscribe&quot;, &quot;events&quot;).load()
 
-<span class="n">kafkaStream</span><span class="p">.</span><span class="n">writeStream</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">).</span><span class="n">option</span><span class="p">(</span><span class="s">&quot;truncate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">).</span><span class="n">start</span><span class="p">()</span>
-</code></pre></div>
-
+kafkaStream.writeStream.format(&quot;console&quot;).option(&quot;truncate&quot;, &quot;false&quot;).start()
+</code></pre>
 <p>In this example, the event producers generate 10,000 events per second, and the event handlers process the events in real-time using Apache Spark. The system is able to handle high volumes of events, without impacting the performance of the event producers.</p>
 <h3 id="real-world-use-cases">Real-World Use Cases</h3>
 <p>Here are some real-world use cases for EDA:

@@ -166,81 +166,78 @@
 </ul>
 <h3 id="example-using-firebase-for-user-authentication">Example: Using Firebase for User Authentication</h3>
 <p>The following code example demonstrates how to use Firebase for user authentication in a mobile application:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/auth&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import firebase from 'firebase/app';
+import 'firebase/auth';
 
-<span class="c1">// Initialize Firebase</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+});
 
-<span class="c1">// Create a new user account</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">auth</span><span class="p">().</span><span class="nx">createUserWithEmailAndPassword</span><span class="p">(</span><span class="s1">&#39;user@example.com&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password123&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">userCredential</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User created successfully:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">userCredential</span><span class="p">.</span><span class="nx">user</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating user:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Create a new user account
+firebase.auth().createUserWithEmailAndPassword('user@example.com', 'password123')
+  .then((userCredential) =&gt; {
+    console.log('User created successfully:', userCredential.user);
+  })
+  .catch((error) =&gt; {
+    console.error('Error creating user:', error);
+  });
+</code></pre>
 <p>In this example, we initialize the Firebase SDK and create a new user account using the <code>createUserWithEmailAndPassword</code> method.</p>
 <h2 id="data-storage-with-mbaas">Data Storage with MBaaS</h2>
 <p>MBaaS platforms provide a range of data storage options, including NoSQL databases, relational databases, and file storage. For example, Firebase provides a NoSQL database called Cloud Firestore, which allows developers to store and retrieve data in real-time.</p>
 <h3 id="example-using-cloud-firestore-for-data-storage">Example: Using Cloud Firestore for Data Storage</h3>
 <p>The following code example demonstrates how to use Cloud Firestore for data storage in a mobile application:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/firestore&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import firebase from 'firebase/app';
+import 'firebase/firestore';
 
-<span class="c1">// Initialize Firebase</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+});
 
-<span class="c1">// Create a new document in Cloud Firestore</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">firestore</span><span class="p">().</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">).</span><span class="nx">add</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;johndoe@example.com&#39;</span><span class="p">,</span>
-<span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">docRef</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Document created successfully:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">docRef</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating document:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Create a new document in Cloud Firestore
+firebase.firestore().collection('users').add({
+  name: 'John Doe',
+  email: 'johndoe@example.com',
+})
+  .then((docRef) =&gt; {
+    console.log('Document created successfully:', docRef.id);
+  })
+  .catch((error) =&gt; {
+    console.error('Error creating document:', error);
+  });
+</code></pre>
 <p>In this example, we initialize the Firebase SDK and create a new document in Cloud Firestore using the <code>add</code> method.</p>
 <h2 id="push-notifications-with-mbaas">Push Notifications with MBaaS</h2>
 <p>MBaaS platforms provide a range of push notification services, including Firebase Cloud Messaging (FCM) and Amazon Device Messaging (ADM). For example, Firebase Cloud Messaging allows developers to send targeted push notifications to users based on their interests, location, and behavior.</p>
 <h3 id="example-using-firebase-cloud-messaging-for-push-notifications">Example: Using Firebase Cloud Messaging for Push Notifications</h3>
 <p>The following code example demonstrates how to use Firebase Cloud Messaging for push notifications in a mobile application:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/messaging&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import firebase from 'firebase/app';
+import 'firebase/messaging';
 
-<span class="c1">// Initialize Firebase</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_AUTH_DOMAIN&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+});
 
-<span class="c1">// Request permission for push notifications</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">().</span><span class="nx">requestPermission</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Permission granted&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error requesting permission:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
+// Request permission for push notifications
+firebase.messaging().requestPermission()
+  .then(() =&gt; {
+    console.log('Permission granted');
+  })
+  .catch((error) =&gt; {
+    console.error('Error requesting permission:', error);
+  });
 
-<span class="c1">// Handle incoming push notifications</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">messaging</span><span class="p">().</span><span class="nx">onMessage</span><span class="p">((</span><span class="nx">payload</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Received push notification:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">payload</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Handle incoming push notifications
+firebase.messaging().onMessage((payload) =&gt; {
+  console.log('Received push notification:', payload);
+});
+</code></pre>
 <p>In this example, we initialize the Firebase SDK and request permission for push notifications using the <code>requestPermission</code> method. We also handle incoming push notifications using the <code>onMessage</code> method.</p>
 <h2 id="pricing-and-performance">Pricing and Performance</h2>
 <p>The pricing and performance of MBaaS platforms vary depending on the provider and the services used. For example, Firebase provides a free plan with limited usage, as well as several paid plans with additional features and support.</p>

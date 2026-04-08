@@ -164,89 +164,88 @@
 </ul>
 <h3 id="example-code-using-hugging-face-transformers-for-text-classification">Example Code: Using Hugging Face Transformers for Text Classification</h3>
 <p>Here is an example code snippet that demonstrates how to use the Hugging Face Transformers library to build a text classification model using AutoML techniques:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSequenceClassification</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+<pre><code class="language-python">import pandas as pd
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-<span class="c1"># Load the dataset</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;train.csv&quot;</span><span class="p">)</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;test.csv&quot;</span><span class="p">)</span>
+# Load the dataset
+train_data = pd.read_csv(&quot;train.csv&quot;)
+test_data = pd.read_csv(&quot;test.csv&quot;)
 
-<span class="c1"># Load the pre-trained model and tokenizer</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+# Load the pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained(&quot;bert-base-uncased&quot;)
+tokenizer = AutoTokenizer.from_pretrained(&quot;bert-base-uncased&quot;)
 
-<span class="c1"># Preprocess the data</span>
-<span class="n">train_encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">batch_encode_plus</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> 
-                                              <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-                                              <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> 
-                                              <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-                                              <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
-<span class="n">test_encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">batch_encode_plus</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> 
-                                             <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-                                             <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> 
-                                             <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-                                             <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+# Preprocess the data
+train_encodings = tokenizer.batch_encode_plus(train_data[&quot;text&quot;], 
+                                              add_special_tokens=True, 
+                                              max_length=512, 
+                                              return_attention_mask=True, 
+                                              return_tensors=&quot;pt&quot;)
+test_encodings = tokenizer.batch_encode_plus(test_data[&quot;text&quot;], 
+                                             add_special_tokens=True, 
+                                             max_length=512, 
+                                             return_attention_mask=True, 
+                                             return_tensors=&quot;pt&quot;)
 
-<span class="c1"># Create a custom dataset class</span>
-<span class="k">class</span> <span class="nc">TextDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encodings</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encodings</span> <span class="o">=</span> <span class="n">encodings</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+# Create a custom dataset class
+class TextDataset(torch.utils.data.Dataset):
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">item</span>
+    def __getitem__(self, idx):
+        item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
+        item[&quot;labels&quot;] = torch.tensor(self.labels[idx])
+        return item
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+    def __len__(self):
+        return len(self.labels)
 
-<span class="c1"># Create the dataset and data loader</span>
-<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">TextDataset</span><span class="p">(</span><span class="n">train_encodings</span><span class="p">,</span> <span class="n">train_data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
-<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">TextDataset</span><span class="p">(</span><span class="n">test_encodings</span><span class="p">,</span> <span class="n">test_data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
-<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+# Create the dataset and data loader
+train_dataset = TextDataset(train_encodings, train_data[&quot;label&quot;])
+test_dataset = TextDataset(test_encodings, test_data[&quot;label&quot;])
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=16, shuffle=True)
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=False)
 
-<span class="c1"># Train the model using AutoML techniques</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+# Train the model using AutoML techniques
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+model.to(device)
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-        <span class="n">input_ids</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">, Loss: </span><span class="si">{</span><span class="n">total_loss</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in train_loader:
+        input_ids = batch[&quot;input_ids&quot;].to(device)
+        attention_mask = batch[&quot;attention_mask&quot;].to(device)
+        labels = batch[&quot;labels&quot;].to(device)
+        optimizer.zero_grad()
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    print(f&quot;Epoch {epoch+1}, Loss: {total_loss / len(train_loader)}&quot;)
 
-<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="n">test_loss</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
-        <span class="n">input_ids</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-        <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+model.eval()
+test_loss = 0
+correct = 0
+with torch.no_grad():
+    for batch in test_loader:
+        input_ids = batch[&quot;input_ids&quot;].to(device)
+        attention_mask = batch[&quot;attention_mask&quot;].to(device)
+        labels = batch[&quot;labels&quot;].to(device)
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+        test_loss += loss.item()
+        _, predicted = torch.max(outputs.scores, dim=1)
+        correct += (predicted == labels).sum().item()
 
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test Loss: </span><span class="si">{</span><span class="n">test_loss</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span><span class="si">}</span><span class="s2">, Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+accuracy = correct / len(test_data)
+print(f&quot;Test Loss: {test_loss / len(test_loader)}, Accuracy: {accuracy:.4f}&quot;)
+</code></pre>
 <p>This code snippet demonstrates how to use the Hugging Face Transformers library to build a text classification model using AutoML techniques. The code preprocesses the data, creates a custom dataset class, and trains the model using the Adam optimizer and cross-entropy loss function.</p>
 <h2 id="challenges-and-limitations-of-automl-and-nas">Challenges and Limitations of AutoML and NAS</h2>
 <p>While AutoML and NAS have numerous benefits, they also have several challenges and limitations, including:</p>
@@ -272,41 +271,40 @@
 </ul>
 <h3 id="example-code-using-googles-automl-platform-for-image-classification">Example Code: Using Google's AutoML Platform for Image Classification</h3>
 <p>Here is an example code snippet that demonstrates how to use Google's AutoML platform for image classification:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">automl</span>
+<pre><code class="language-python">import os
+import pandas as pd
+from google.cloud import automl
 
-<span class="c1"># Create a client instance</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">AutoMlClient</span><span class="p">()</span>
+# Create a client instance
+client = automl.AutoMlClient()
 
-<span class="c1"># Create a dataset</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s2">&quot;projects/your-project/locations/us-central1&quot;</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;your-dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;image_classification_dataset_metadata&quot;</span><span class="p">:</span> <span class="p">{}}</span>
-<span class="p">)</span>
+# Create a dataset
+dataset = client.create_dataset(
+    parent=&quot;projects/your-project/locations/us-central1&quot;,
+    dataset={&quot;display_name&quot;: &quot;your-dataset&quot;, &quot;image_classification_dataset_metadata&quot;: {}}
+)
 
-<span class="c1"># Import the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;your-data.csv&quot;</span><span class="p">)</span>
-<span class="n">images</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
+# Import the data
+data = pd.read_csv(&quot;your-data.csv&quot;)
+images = data[&quot;image&quot;]
+labels = data[&quot;label&quot;]
 
-<span class="c1"># Create a dataset item for each image</span>
-<span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="n">dataset_item</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_dataset_item</span><span class="p">(</span>
-        <span class="n">parent</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-        <span class="n">dataset_item</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="n">image</span><span class="p">},</span> <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">}</span>
-    <span class="p">)</span>
+# Create a dataset item for each image
+for image, label in zip(images, labels):
+    dataset_item = client.create_dataset_item(
+        parent=dataset.name,
+        dataset_item={&quot;image&quot;: {&quot;image_bytes&quot;: image}, &quot;display_name&quot;: label}
+    )
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="s2">&quot;projects/your-project/locations/us-central1&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;your-model&quot;</span><span class="p">,</span> <span class="s2">&quot;image_classification_model_metadata&quot;</span><span class="p">:</span> <span class="p">{}}</span>
-<span class="p">)</span>
+# Train the model
+model = client.create_model(
+    parent=&quot;projects/your-project/locations/us-central1&quot;,
+    model={&quot;display_name&quot;: &quot;your-model&quot;, &quot;image_classification_model_metadata&quot;: {}}
+)
 
-<span class="c1"># Deploy the model</span>
-<span class="n">client</span><span class="o">.</span><span class="n">deploy_model</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-</code></pre></div>
-
+# Deploy the model
+client.deploy_model(model.name)
+</code></pre>
 <p>This code snippet demonstrates how to use Google's AutoML platform for image classification. The code creates a dataset, imports the data, creates a dataset item for each image, trains the model, and deploys the model.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for AutoML and NAS models:</p>

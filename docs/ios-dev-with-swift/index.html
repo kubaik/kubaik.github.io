@@ -167,27 +167,26 @@
 </ul>
 <h3 id="practical-example-hello-world-app">Practical Example: Hello World App</h3>
 <p>Let's create a simple "Hello World" app to demonstrate the basics of Swift and iOS development. Create a new project in Xcode, choosing the "Single View App" template.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+<pre><code class="language-swift">import UIKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="c1">// Create a label to display the text</span>
-        <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Hello World!&quot;</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="p">=</span> <span class="bp">UIFont</span><span class="p">.</span><span class="n">systemFont</span><span class="p">(</span><span class="n">ofSize</span><span class="p">:</span> <span class="mi">24</span><span class="p">)</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="p">=</span> <span class="p">.</span><span class="n">center</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-        <span class="c1">// Center the label on the screen</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">translatesAutoresizingMaskIntoConstraints</span> <span class="p">=</span> <span class="kc">false</span>
-        <span class="bp">NSLayoutConstraint</span><span class="p">.</span><span class="n">activate</span><span class="p">([</span>
-            <span class="n">label</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerXAnchor</span><span class="p">),</span>
-            <span class="n">label</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">.</span><span class="n">constraint</span><span class="p">(</span><span class="n">equalTo</span><span class="p">:</span> <span class="n">view</span><span class="p">.</span><span class="n">centerYAnchor</span><span class="p">)</span>
-        <span class="p">])</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Create a label to display the text
+        let label = UILabel()
+        label.text = &quot;Hello World!&quot;
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.textAlignment = .center
+        view.addSubview(label)
+        // Center the label on the screen
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+}
+</code></pre>
 <p>This code creates a simple label with the text "Hello World!" and centers it on the screen.</p>
 <h2 id="ios-development-with-swift">iOS Development with Swift</h2>
 <p>Now that we have covered the basics of Swift, let's explore some key concepts and tools for iOS development.</p>
@@ -199,53 +198,52 @@
 </ul>
 <h3 id="practical-example-todo-list-app-with-swiftui">Practical Example: Todo List App with SwiftUI</h3>
 <p>Let's create a simple todo list app using SwiftUI. Create a new project in Xcode, choosing the "App" template under the "SwiftUI" section.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">SwiftUI</span>
+<pre><code class="language-swift">import SwiftUI
 
-<span class="kd">struct</span> <span class="nc">TodoItem</span><span class="p">:</span> <span class="n">Identifiable</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">UUID</span><span class="p">()</span>
-    <span class="kd">var</span> <span class="nv">title</span><span class="p">:</span> <span class="nb">String</span>
-    <span class="kd">var</span> <span class="nv">isCompleted</span><span class="p">:</span> <span class="nb">Bool</span>
-<span class="p">}</span>
+struct TodoItem: Identifiable {
+    let id = UUID()
+    var title: String
+    var isCompleted: Bool
+}
 
-<span class="kd">struct</span> <span class="nc">TodoList</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">todoItems</span><span class="p">:</span> <span class="p">[</span><span class="n">TodoItem</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span>
-        <span class="n">TodoItem</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="s">&quot;Buy milk&quot;</span><span class="p">,</span> <span class="n">isCompleted</span><span class="p">:</span> <span class="kc">false</span><span class="p">),</span>
-        <span class="n">TodoItem</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="s">&quot;Walk the dog&quot;</span><span class="p">,</span> <span class="n">isCompleted</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-    <span class="p">]</span>
+struct TodoList: View {
+    @State private var todoItems: [TodoItem] = [
+        TodoItem(title: &quot;Buy milk&quot;, isCompleted: false),
+        TodoItem(title: &quot;Walk the dog&quot;, isCompleted: false)
+    ]
 
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">NavigationView</span> <span class="p">{</span>
-            <span class="n">List</span> <span class="p">{</span>
-                <span class="n">ForEach</span><span class="p">(</span><span class="n">todoItems</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="k">in</span>
-                    <span class="n">HStack</span> <span class="p">{</span>
-                        <span class="n">Button</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="p">{</span>
-                            <span class="c1">// Toggle the completion status of the item</span>
-                            <span class="k">if</span> <span class="kd">let</span> <span class="nv">index</span> <span class="p">=</span> <span class="n">todoItems</span><span class="p">.</span><span class="n">firstIndex</span><span class="p">(</span><span class="k">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">id</span> <span class="p">==</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span> <span class="p">})</span> <span class="p">{</span>
-                                <span class="n">todoItems</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">isCompleted</span><span class="p">.</span><span class="n">toggle</span><span class="p">()</span>
-                            <span class="p">}</span>
-                        <span class="p">})</span> <span class="p">{</span>
-                            <span class="n">Image</span><span class="p">(</span><span class="n">systemName</span><span class="p">:</span> <span class="n">item</span><span class="p">.</span><span class="n">isCompleted</span> <span class="p">?</span> <span class="s">&quot;checkmark&quot;</span> <span class="p">:</span> <span class="s">&quot;circle&quot;</span><span class="p">)</span>
-                        <span class="p">}</span>
-                        <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">title</span><span class="p">)</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="p">.</span><span class="n">onDelete</span> <span class="p">{</span> <span class="bp">indices</span> <span class="k">in</span>
-                    <span class="c1">// Remove the selected items from the list</span>
-                    <span class="n">todoItems</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">atOffsets</span><span class="p">:</span> <span class="bp">indices</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="n">navigationTitle</span><span class="p">(</span><span class="s">&quot;Todo List&quot;</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(todoItems) { item in
+                    HStack {
+                        Button(action: {
+                            // Toggle the completion status of the item
+                            if let index = todoItems.firstIndex(where: { $0.id == item.id }) {
+                                todoItems[index].isCompleted.toggle()
+                            }
+                        }) {
+                            Image(systemName: item.isCompleted ? &quot;checkmark&quot; : &quot;circle&quot;)
+                        }
+                        Text(item.title)
+                    }
+                }
+                .onDelete { indices in
+                    // Remove the selected items from the list
+                    todoItems.remove(atOffsets: indices)
+                }
+            }
+            .navigationTitle(&quot;Todo List&quot;)
+        }
+    }
+}
 
-<span class="kd">struct</span> <span class="nc">TodoList_Previews</span><span class="p">:</span> <span class="n">PreviewProvider</span> <span class="p">{</span>
-    <span class="kd">static</span> <span class="kd">var</span> <span class="nv">previews</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">TodoList</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+struct TodoList_Previews: PreviewProvider {
+    static var previews: some View {
+        TodoList()
+    }
+}
+</code></pre>
 <p>This code creates a simple todo list app with a list of items, each with a checkbox and a title. The user can toggle the completion status of each item and remove items from the list.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When developing iOS apps with Swift, you may encounter some common problems. Here are a few solutions to get you started:</p>
@@ -256,51 +254,50 @@
 </ol>
 <h3 id="practical-example-optimizing-app-performance">Practical Example: Optimizing App Performance</h3>
 <p>Let's optimize the performance of our todo list app by reducing the number of unnecessary computations. We can use the <code>@StateObject</code> property wrapper to create a separate state object for our todo list data.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">SwiftUI</span>
+<pre><code class="language-swift">import SwiftUI
 
-<span class="kd">class</span> <span class="nc">TodoListData</span><span class="p">:</span> <span class="n">ObservableObject</span> <span class="p">{</span>
-    <span class="p">@</span><span class="n">Published</span> <span class="kd">var</span> <span class="nv">todoItems</span><span class="p">:</span> <span class="p">[</span><span class="n">TodoItem</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span>
-        <span class="n">TodoItem</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="s">&quot;Buy milk&quot;</span><span class="p">,</span> <span class="n">isCompleted</span><span class="p">:</span> <span class="kc">false</span><span class="p">),</span>
-        <span class="n">TodoItem</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="s">&quot;Walk the dog&quot;</span><span class="p">,</span> <span class="n">isCompleted</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-    <span class="p">]</span>
+class TodoListData: ObservableObject {
+    @Published var todoItems: [TodoItem] = [
+        TodoItem(title: &quot;Buy milk&quot;, isCompleted: false),
+        TodoItem(title: &quot;Walk the dog&quot;, isCompleted: false)
+    ]
 
-    <span class="kd">func</span> <span class="nf">toggleCompletion</span><span class="p">(</span><span class="n">of</span> <span class="n">item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">index</span> <span class="p">=</span> <span class="n">todoItems</span><span class="p">.</span><span class="n">firstIndex</span><span class="p">(</span><span class="k">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">id</span> <span class="p">==</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span> <span class="p">})</span> <span class="p">{</span>
-            <span class="n">todoItems</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">isCompleted</span><span class="p">.</span><span class="n">toggle</span><span class="p">()</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    func toggleCompletion(of item: TodoItem) {
+        if let index = todoItems.firstIndex(where: { $0.id == item.id }) {
+            todoItems[index].isCompleted.toggle()
+        }
+    }
 
-    <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">at</span> <span class="n">offsets</span><span class="p">:</span> <span class="n">IndexSet</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">todoItems</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">atOffsets</span><span class="p">:</span> <span class="n">offsets</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    func remove(at offsets: IndexSet) {
+        todoItems.remove(atOffsets: offsets)
+    }
+}
 
-<span class="kd">struct</span> <span class="nc">TodoList</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-    <span class="p">@</span><span class="n">StateObject</span> <span class="kd">var</span> <span class="nv">data</span> <span class="p">=</span> <span class="n">TodoListData</span><span class="p">()</span>
+struct TodoList: View {
+    @StateObject var data = TodoListData()
 
-    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-        <span class="n">NavigationView</span> <span class="p">{</span>
-            <span class="n">List</span> <span class="p">{</span>
-                <span class="n">ForEach</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">todoItems</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="k">in</span>
-                    <span class="n">HStack</span> <span class="p">{</span>
-                        <span class="n">Button</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="p">{</span>
-                            <span class="n">data</span><span class="p">.</span><span class="n">toggleCompletion</span><span class="p">(</span><span class="n">of</span><span class="p">:</span> <span class="n">item</span><span class="p">)</span>
-                        <span class="p">})</span> <span class="p">{</span>
-                            <span class="n">Image</span><span class="p">(</span><span class="n">systemName</span><span class="p">:</span> <span class="n">item</span><span class="p">.</span><span class="n">isCompleted</span> <span class="p">?</span> <span class="s">&quot;checkmark&quot;</span> <span class="p">:</span> <span class="s">&quot;circle&quot;</span><span class="p">)</span>
-                        <span class="p">}</span>
-                        <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">title</span><span class="p">)</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="p">.</span><span class="n">onDelete</span> <span class="p">{</span> <span class="bp">indices</span> <span class="k">in</span>
-                    <span class="n">data</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="bp">indices</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="n">navigationTitle</span><span class="p">(</span><span class="s">&quot;Todo List&quot;</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(data.todoItems) { item in
+                    HStack {
+                        Button(action: {
+                            data.toggleCompletion(of: item)
+                        }) {
+                            Image(systemName: item.isCompleted ? &quot;checkmark&quot; : &quot;circle&quot;)
+                        }
+                        Text(item.title)
+                    }
+                }
+                .onDelete { indices in
+                    data.remove(at: indices)
+                }
+            }
+            .navigationTitle(&quot;Todo List&quot;)
+        }
+    }
+}
+</code></pre>
 <p>This code creates a separate state object for our todo list data, reducing the number of unnecessary computations and improving app performance.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In this article, we have explored the world of iOS development with Swift, covering the basics of the Swift language, iOS development frameworks, and best practices for building high-performance apps. We have also demonstrated practical examples of building iOS apps with Swift, including a simple "Hello World" app, a todo list app with SwiftUI, and optimizing app performance.</p>

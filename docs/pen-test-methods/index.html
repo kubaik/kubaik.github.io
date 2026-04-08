@@ -178,33 +178,30 @@
 <h3 id="practical-examples">Practical Examples</h3>
 <p>Here are a few practical examples of penetration testing in action:</p>
 <h4 id="example-1-vulnerability-scanning-with-nmap">Example 1: Vulnerability Scanning with Nmap</h4>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sV<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>-65535<span class="w"> </span><span class="m">192</span>.168.1.100
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sV -p 1-65535 192.168.1.100
+</code></pre>
 <p>This command uses Nmap to scan the target system (192.168.1.100) for open ports and services. The <code>-sV</code> flag enables version detection, which provides detailed information about the services running on the target system.</p>
 <h4 id="example-2-exploiting-a-vulnerability-with-metasploit">Example 2: Exploiting a Vulnerability with Metasploit</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">http</span><span class="o">/</span><span class="n">rejetto_hfs_exec</span>
-<span class="n">set</span><span class="w"> </span><span class="no">RHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">100</span>
-<span class="n">set</span><span class="w"> </span><span class="no">RPORT</span><span class="w"> </span><span class="mi">80</span>
-<span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">use exploit/windows/http/rejetto_hfs_exec
+set RHOST 192.168.1.100
+set RPORT 80
+exploit
+</code></pre>
 <p>This code uses Metasploit to exploit a vulnerability in the Rejetto HTTP File Server (HFS) application. The <code>use</code> command loads the exploit module, and the <code>set</code> commands configure the target system and port. The <code>exploit</code> command launches the exploit.</p>
 <h4 id="example-3-web-application-security-testing-with-burp-suite">Example 3: Web Application Security Testing with Burp Suite</h4>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">burp.*</span><span class="p">;</span>
+<pre><code class="language-java">import burp.*;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BurpExtender</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">IBurpExtender</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerExtenderCallbacks</span><span class="p">(</span><span class="n">IBurpExtenderCallbacks</span><span class="w"> </span><span class="n">callbacks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">callbacks</span><span class="p">.</span><span class="na">setExtensionName</span><span class="p">(</span><span class="s">&quot;My Extension&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">callbacks</span><span class="p">.</span><span class="na">registerHttpListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HttpListener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processHttpMessage</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">toolFlag</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">messageIsRequest</span><span class="p">,</span><span class="w"> </span><span class="n">IHttpRequestResponse</span><span class="w"> </span><span class="n">messageInfo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">// Process HTTP messages here</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class BurpExtender implements IBurpExtender {
+    public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
+        callbacks.setExtensionName(&quot;My Extension&quot;);
+        callbacks.registerHttpListener(new HttpListener() {
+            public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo) {
+                // Process HTTP messages here
+            }
+        });
+    }
+}
+</code></pre>
 <p>This code uses Burp Suite to create a custom extension that processes HTTP messages. The <code>registerExtenderCallbacks</code> method registers the extension with Burp Suite, and the <code>registerHttpListener</code> method registers a listener for HTTP messages.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Penetration testing can be a complex and challenging process, and there are many common problems that testers may encounter. Here are a few examples:</p>

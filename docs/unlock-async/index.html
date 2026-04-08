@@ -167,47 +167,45 @@
 3. <strong>Define message formats</strong>: Define the format of the messages being sent and received, including any necessary headers or payload data.
 4. <strong>Implement async processing logic</strong>: Write the logic for processing messages asynchronously, using techniques such as callbacks, promises, or async/await.</p>
 <p>Here's an example of using RabbitMQ and Node.js to implement async processing:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// producer.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">amqp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;amqplib&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// producer.js
+const amqp = require('amqplib');
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">produceMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">amqp</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;amqp://localhost&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">connection</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">();</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my_queue&#39;</span><span class="p">;</span>
+async function produceMessage() {
+  const connection = await amqp.connect('amqp://localhost');
+  const channel = await connection.createChannel();
+  const queue = 'my_queue';
 
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">channel</span><span class="p">.</span><span class="nx">assertQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">durable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;my_message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="nx">channel</span><span class="p">.</span><span class="nx">sendToQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">message</span><span class="p">)));</span>
+  await channel.assertQueue(queue, { durable: true });
+  const message = { type: 'my_message', data: 'Hello, world!' };
+  channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
 
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Message sent to queue&#39;</span><span class="p">);</span>
-<span class="p">}</span>
+  console.log('Message sent to queue');
+}
 
-<span class="nx">produceMessage</span><span class="p">();</span>
-</code></pre></div>
+produceMessage();
+</code></pre>
+<pre><code class="language-javascript">// consumer.js
+const amqp = require('amqplib');
 
-<div class="codehilite"><pre><span></span><code><span class="c1">// consumer.js</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">amqp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;amqplib&#39;</span><span class="p">);</span>
+async function consumeMessage() {
+  const connection = await amqp.connect('amqp://localhost');
+  const channel = await connection.createChannel();
+  const queue = 'my_queue';
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">consumeMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">amqp</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;amqp://localhost&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">connection</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">();</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my_queue&#39;</span><span class="p">;</span>
+  await channel.assertQueue(queue, { durable: true });
+  channel.consume(queue, (msg) =&gt; {
+    if (msg !== null) {
+      const message = JSON.parse(msg.content.toString());
+      console.log(`Received message: ${message.type} - ${message.data}`);
+      channel.ack(msg);
+    }
+  });
 
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">channel</span><span class="p">.</span><span class="nx">assertQueue</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">durable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="nx">channel</span><span class="p">.</span><span class="nx">consume</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Received message: </span><span class="si">${</span><span class="nx">message</span><span class="p">.</span><span class="nx">type</span><span class="si">}</span><span class="sb"> - </span><span class="si">${</span><span class="nx">message</span><span class="p">.</span><span class="nx">data</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">      </span><span class="nx">channel</span><span class="p">.</span><span class="nx">ack</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
+  console.log('Waiting for messages...');
+}
 
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Waiting for messages...&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="nx">consumeMessage</span><span class="p">();</span>
-</code></pre></div>
-
+consumeMessage();
+</code></pre>
 <p>In this example, the producer sends a message to the queue using the <code>sendToQueue</code> method, and the consumer receives the message using the <code>consume</code> method.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>When choosing a message queue platform, it's essential to consider performance benchmarks and pricing. Here are some metrics to consider:

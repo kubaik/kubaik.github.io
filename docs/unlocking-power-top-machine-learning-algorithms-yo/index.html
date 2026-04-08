@@ -177,13 +177,12 @@
 </ul>
 <h4 id="how-it-works">How it works</h4>
 <p>It models the relationship between a dependent variable and one or more independent variables by fitting a linear equation.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = LinearRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips">Practical Tips</h4>
 <ul>
 <li>Ensure data linearity; if the relationship isn’t linear, consider polynomial regression.</li>
@@ -201,13 +200,12 @@
 </ul>
 <h4 id="how-it-works_1">How it works</h4>
 <p>It estimates the probability that an input belongs to a particular class using the logistic (sigmoid) function.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = LogisticRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips_1">Practical Tips</h4>
 <ul>
 <li>Suitable for linearly separable classes.</li>
@@ -225,13 +223,12 @@
 </ul>
 <h4 id="how-it-works_2">How it works</h4>
 <p>It recursively partitions the feature space based on the most significant splitting criteria, creating a tree-like structure.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<pre><code class="language-python">from sklearn.tree import DecisionTreeClassifier
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips_2">Practical Tips</h4>
 <ul>
 <li>Prone to overfitting; prune trees or set depth limits.</li>
@@ -249,13 +246,12 @@
 </ul>
 <h4 id="how-it-works_3">How it works</h4>
 <p>It combines predictions from multiple trees trained on random subsets of data and features.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips_3">Practical Tips</h4>
 <ul>
 <li>Usually performs better than individual trees.</li>
@@ -273,13 +269,12 @@
 </ul>
 <h4 id="how-it-works_4">How it works</h4>
 <p>SVM uses kernel functions to handle non-linear data.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<pre><code class="language-python">from sklearn.svm import SVC
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = SVC(kernel='rbf')
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips_4">Practical Tips</h4>
 <ul>
 <li>Experiment with different kernels (linear, polynomial, RBF).</li>
@@ -297,16 +292,15 @@
 </ul>
 <h4 id="how-it-works_5">How it works</h4>
 <p>Calculates distances (e.g., Euclidean) to find the ‘k’ closest points.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div>
-
+model = KNeighborsClassifier(n_neighbors=5)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
 <h4 id="practical-tips_5">Practical Tips</h4>
 <ul>
 <li>Choose an appropriate ‘k’ using cross-validation.</li>
@@ -324,13 +318,12 @@
 </ul>
 <h4 id="how-it-works_6">How it works</h4>
 <p>It assigns data points to the nearest centroid, then recalculates centroids iteratively.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<pre><code class="language-python">from sklearn.cluster import KMeans
 
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-</code></pre></div>
-
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(X)
+labels = kmeans.labels_
+</code></pre>
 <h4 id="practical-tips_6">Practical Tips</h4>
 <ul>
 <li>Use methods like the elbow method to select optimal ‘k’.</li>
@@ -348,12 +341,11 @@
 </ul>
 <h4 id="how-it-works_7">How it works</h4>
 <p>Projects data onto principal components that capture the most variance.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<pre><code class="language-python">from sklearn.decomposition import PCA
 
-<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">X_reduced</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</code></pre></div>
-
+pca = PCA(n_components=2)
+X_reduced = pca.fit_transform(X)
+</code></pre>
 <h4 id="practical-tips_7">Practical Tips</h4>
 <ul>
 <li>Helps visualize high-dimensional data.</li>

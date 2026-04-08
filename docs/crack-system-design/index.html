@@ -165,19 +165,18 @@
 * <strong>Load balancing</strong>: The ability to distribute traffic across multiple machines to ensure no single machine is overwhelmed
 * <strong>Caching</strong>: The ability to store frequently accessed data in memory to reduce the load on the system</p>
 <p>For example, let's say we want to design a scalable system for a social media platform like Facebook. We can use a load balancer like HAProxy to distribute traffic across multiple web servers, each running a caching layer like Redis to store frequently accessed data.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Connect to Redis</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Connect to Redis
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Set a key-value pair</span>
-<span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;user:1&#39;</span><span class="p">,</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">)</span>
+# Set a key-value pair
+redis_client.set('user:1', 'John Doe')
 
-<span class="c1"># Get the value for a key</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user:1&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># Output: b&#39;John Doe&#39;</span>
-</code></pre></div>
-
+# Get the value for a key
+value = redis_client.get('user:1')
+print(value)  # Output: b'John Doe'
+</code></pre>
 <p>In this example, we use the Redis Python client to connect to a Redis instance and store a key-value pair. We can then retrieve the value for a given key using the <code>get</code> method.</p>
 <h2 id="designing-a-highly-available-system">Designing a Highly Available System</h2>
 <p>When designing a highly available system, there are several factors to consider, including:
@@ -185,29 +184,28 @@
 * <strong>Failover</strong>: The ability to automatically switch to a redundant component if the primary component fails
 * <strong>Monitoring</strong>: The ability to detect failures and alert administrators</p>
 <p>For example, let's say we want to design a highly available system for a search engine like Google. We can use a redundant architecture with multiple data centers, each with multiple servers, to ensure the system remains available even if one data center or server fails.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.net.*</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<pre><code class="language-java">import java.net.*;
+import java.io.*;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SearchEngine</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a socket to connect to a data center</span>
-<span class="w">        </span><span class="n">Socket</span><span class="w"> </span><span class="n">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Socket</span><span class="p">(</span><span class="s">&quot;datacenter1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">);</span>
+public class SearchEngine {
+    public static void main(String[] args) throws Exception {
+        // Create a socket to connect to a data center
+        Socket socket = new Socket(&quot;datacenter1&quot;, 80);
 
-<span class="w">        </span><span class="c1">// Send a request to the data center</span>
-<span class="w">        </span><span class="n">OutputStream</span><span class="w"> </span><span class="n">outputStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socket</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">();</span>
-<span class="w">        </span><span class="n">outputStream</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;GET /search?q=hello HTTP/1.1\r\nHost: google.com\r\n\r\n&quot;</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+        // Send a request to the data center
+        OutputStream outputStream = socket.getOutputStream();
+        outputStream.write(&quot;GET /search?q=hello HTTP/1.1\r\nHost: google.com\r\n\r\n&quot;.getBytes());
 
-<span class="w">        </span><span class="c1">// Get the response from the data center</span>
-<span class="w">        </span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socket</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">();</span>
-<span class="w">        </span><span class="n">BufferedReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputStreamReader</span><span class="p">(</span><span class="n">inputStream</span><span class="p">));</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">;</span>
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">((</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Get the response from the data center
+        InputStream inputStream = socket.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
+}
+</code></pre>
 <p>In this example, we use Java to create a socket and connect to a data center. We then send a request to the data center and get the response.</p>
 <h2 id="common-system-design-interview-questions">Common System Design Interview Questions</h2>
 <p>Here are some common system design interview questions, along with some tips for answering them:

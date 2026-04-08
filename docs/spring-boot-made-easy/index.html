@@ -163,79 +163,75 @@
 <p>Here is a step-by-step example of building a simple Spring Boot application:
 1. Create a new Maven project using the Spring Boot starter template.
 2. Add the following dependencies to your <code>pom.xml</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependencies&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
 <ol>
 <li>Create a new Java class called <code>Application.java</code> with the following code:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-<span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Application</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+</code></pre>
 <ol>
 <li>Create a new Java class called <code>User.java</code> with the following code:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.Entity</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.GeneratedValue</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.GenerationType</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.persistence.Id</span><span class="p">;</span>
+<pre><code class="language-java">import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-<span class="nd">@Entity</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Id</span>
-<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
-<span class="w">    </span><span class="c1">// Getters and setters</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    // Getters and setters
+}
+</code></pre>
 <ol>
 <li>Create a new Java class called <code>UserController.java</code> with the following code:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+import java.util.List;
 
-<span class="nd">@RestController</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Autowired</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserRepository</span><span class="w"> </span><span class="n">userRepository</span><span class="p">;</span>
+@RestController
+public class UserController {
+    @Autowired
+    private UserRepository userRepository;
 
-<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/users&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    @GetMapping(&quot;/users&quot;)
+    public List&lt;User&gt; getUsers() {
+        return userRepository.findAll();
+    }
 
-<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/users/{id}&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userRepository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @GetMapping(&quot;/users/{id}&quot;)
+    public User getUser(@PathVariable Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+}
+</code></pre>
 <ol>
 <li>Run the application using the <code>mvn spring-boot:run</code> command.</li>
 </ol>
@@ -243,27 +239,26 @@
 <p>In this example, we built a simple RESTful API using Spring Boot. The API provides endpoints for retrieving a list of users and retrieving a single user by ID. We used the <code>@RestController</code> annotation to indicate that the <code>UserController</code> class handles REST requests, and the <code>@GetMapping</code> annotation to specify the HTTP method and endpoint path.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem encountered when building Spring Boot applications is the "white label" error page, which is displayed when the application is unable to find a valid endpoint to handle a request. To solve this problem, you can add a custom error page to your application by creating a new Java class called <code>ErrorController.java</code> with the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.web.servlet.error.ErrorController</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-<span class="nd">@Controller</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ErrorController</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">error</span><span class="p">.</span><span class="na">ErrorController</span><span class="w"> </span><span class="p">{</span>
+@Controller
+public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
 
-<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/error&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">handleError</span><span class="p">(</span><span class="n">HttpStatus</span><span class="w"> </span><span class="n">status</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle the error</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;error&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    @RequestMapping(&quot;/error&quot;)
+    public String handleError(HttpStatus status) {
+        // Handle the error
+        return &quot;error&quot;;
+    }
 
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getErrorPath</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;/error&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    @Override
+    public String getErrorPath() {
+        return &quot;/error&quot;;
+    }
+}
+</code></pre>
 <p>Another common problem is the "connection refused" error, which occurs when the application is unable to connect to a database or other external service. To solve this problem, you can check the application's configuration files to ensure that the correct connection settings are being used.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>To optimize the performance of a Spring Boot application, you can use a variety of techniques, including:
@@ -272,37 +267,34 @@
 * <strong>Profiling</strong>: Spring Boot provides a profiling framework that allows you to measure the performance of your application and identify bottlenecks.</p>
 <h3 id="example-caching-with-redis">Example: Caching with Redis</h3>
 <p>To use caching with Redis in a Spring Boot application, you will need to add the following dependencies to your <code>pom.xml</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependencies&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-redis<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>redis.clients<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>jedis<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;redis.clients&lt;/groupId&gt;
+        &lt;artifactId&gt;jedis&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
 <p>You will also need to configure the Redis connection settings in your <code>application.properties</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">spring.redis.host</span><span class="o">=</span><span class="s">localhost</span>
-<span class="na">spring.redis.port</span><span class="o">=</span><span class="s">6379</span>
-<span class="na">spring.redis.password</span><span class="o">=</span><span class="s">your_password</span>
-</code></pre></div>
-
+<pre><code class="language-properties">spring.redis.host=localhost
+spring.redis.port=6379
+spring.redis.password=your_password
+</code></pre>
 <p>You can then use the <code>@Cacheable</code> annotation to enable caching for a method:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.cache.annotation.Cacheable</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+<pre><code class="language-java">import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
-<span class="nd">@Service</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@Cacheable</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUsers</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Retrieve the list of users from the database</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+@Service
+public class UserService {
+    @Cacheable(&quot;users&quot;)
+    public List&lt;User&gt; getUsers() {
+        // Retrieve the list of users from the database
+    }
+}
+</code></pre>
 <p>According to benchmarks, using caching with Redis can improve the performance of a Spring Boot application by up to 50%.</p>
 <h2 id="deployment-options">Deployment Options</h2>
 <p>Spring Boot applications can be deployed to a variety of platforms, including:

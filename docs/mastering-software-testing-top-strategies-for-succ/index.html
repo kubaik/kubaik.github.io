@@ -167,15 +167,14 @@
 <li><strong>Refactor</strong>: Clean up the code while keeping all tests green.</li>
 </ol>
 <h3 id="example-tdd-in-action-with-javascript">Example: TDD in Action with JavaScript</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 1. Write a failing test</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// 1. Write a failing test
+function add(a, b) {
+    return a + b;
+}
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Test failed: 2 + 3 should equal 5&#39;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Test failed: -1 + 1 should equal 0&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+console.assert(add(2, 3) === 5, 'Test failed: 2 + 3 should equal 5');
+console.assert(add(-1, 1) === 0, 'Test failed: -1 + 1 should equal 0');
+</code></pre>
 <p>In this example, we start with a simple addition function and write assertions to ensure it works as expected. If a test fails, we know we need to adjust the logic in our <code>add</code> function.</p>
 <h3 id="benefits-of-tdd">Benefits of TDD</h3>
 <ul>
@@ -199,26 +198,25 @@
 </ol>
 <h3 id="example-setting-up-ci-with-github-actions">Example: Setting Up CI with GitHub Actions</h3>
 <p>Here’s a simple example of how to configure a CI pipeline using GitHub Actions to run tests every time code is pushed to the repository.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<pre><code class="language-yaml">name: CI
 
-<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+on: [push, pull_request]
 
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check out code</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Node.js</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-node@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm install</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm test</span>
-</code></pre></div>
-
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+</code></pre>
 <h3 id="benefits-of-cicd">Benefits of CI/CD</h3>
 <ul>
 <li><strong>Faster Feedback Loop</strong>: Developers receive immediate feedback on their changes.</li>
@@ -241,30 +239,29 @@
 </ol>
 <h3 id="example-automated-regression-testing-with-selenium">Example: Automated Regression Testing with Selenium</h3>
 <p>Here’s a simple example of how to automate a login test using Selenium in Python.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
+<pre><code class="language-python">from selenium import webdriver
+import unittest
 
-<span class="k">class</span> <span class="nc">LoginTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+class LoginTest(unittest.TestCase):
 
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://example.com/login&quot;</span><span class="p">)</span>
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get(&quot;http://example.com/login&quot;)
 
-    <span class="k">def</span> <span class="nf">test_login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
-        <span class="n">password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
-        <span class="n">username</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;testuser&quot;</span><span class="p">)</span>
-        <span class="n">password</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;password123&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;submit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s2">&quot;Welcome&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">page_source</span><span class="p">)</span>
+    def test_login(self):
+        username = self.driver.find_element_by_name(&quot;username&quot;)
+        password = self.driver.find_element_by_name(&quot;password&quot;)
+        username.send_keys(&quot;testuser&quot;)
+        password.send_keys(&quot;password123&quot;)
+        self.driver.find_element_by_name(&quot;submit&quot;).click()
+        self.assertIn(&quot;Welcome&quot;, self.driver.page_source)
 
-    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+    def tearDown(self):
+        self.driver.quit()
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    unittest.main()
+</code></pre>
 <h3 id="benefits-of-automated-regression-testing">Benefits of Automated Regression Testing</h3>
 <ul>
 <li><strong>Time Efficiency</strong>: Automated tests can be run quickly and frequently, reducing the time spent on manual testing.</li>

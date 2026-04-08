@@ -164,11 +164,10 @@
 <li>Add a workflow to save tasks when a button is clicked.</li>
 <li>Use conditionals to update the “Completed” status.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example Bubble workflow action to create a new Task</span>
-<span class="nx">Create</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">thing</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">Type</span><span class="o">:</span><span class="w"> </span><span class="nx">Task</span>
-<span class="nx">Fields</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">change</span><span class="o">:</span><span class="w"> </span><span class="nx">Title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Input</span><span class="w"> </span><span class="nx">Title</span><span class="err">&#39;</span><span class="nx">s</span><span class="w"> </span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">Completed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">No</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Example Bubble workflow action to create a new Task
+Create a new thing -&gt; Type: Task
+Fields to change: Title = Input Title's value, Completed = No
+</code></pre>
 <ol>
 <li><strong>Preview Your App</strong>: Test your app by adding, completing, and deleting tasks.</li>
 </ol>
@@ -187,28 +186,27 @@
 </ul>
 <h3 id="implementation-example-encrypting-user-data">Implementation Example: Encrypting User Data</h3>
 <p>For Android applications, you can use the <code>javax.crypto</code> package for data encryption. Here’s an example of encrypting user credentials before sending them to the server:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.crypto.Cipher</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.crypto.KeyGenerator</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.crypto.SecretKey</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="p">;</span>
+<pre><code class="language-java">import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">EncryptionUtil</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AES&quot;</span><span class="p">;</span>
+public class EncryptionUtil {
+    private static final String ALGORITHM = &quot;AES&quot;;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="nf">encrypt</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">SecretKey</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Cipher</span><span class="w"> </span><span class="n">cipher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cipher</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">ALGORITHM</span><span class="p">);</span>
-<span class="w">        </span><span class="n">cipher</span><span class="p">.</span><span class="na">init</span><span class="p">(</span><span class="n">Cipher</span><span class="p">.</span><span class="na">ENCRYPT_MODE</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">cipher</span><span class="p">.</span><span class="na">doFinal</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
+    public static byte[] encrypt(String data, SecretKey key) throws Exception {
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher.doFinal(data.getBytes());
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">SecretKey</span><span class="w"> </span><span class="nf">generateKey</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">KeyGenerator</span><span class="w"> </span><span class="n">keyGen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyGenerator</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">ALGORITHM</span><span class="p">);</span>
-<span class="w">        </span><span class="n">keyGen</span><span class="p">.</span><span class="na">init</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span><span class="w"> </span><span class="c1">// Key size</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">keyGen</span><span class="p">.</span><span class="na">generateKey</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public static SecretKey generateKey() throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
+        keyGen.init(128); // Key size
+        return keyGen.generateKey();
+    }
+}
+</code></pre>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <ul>
 <li><strong>Problem</strong>: Insufficient validation and authentication mechanisms.</li>
@@ -238,30 +236,29 @@
 <li><strong>Integrate with Mobile App</strong>:</li>
 <li>Use the Watson SDK to send user messages and receive responses.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.ibm.watson.assistant.v2.Assistant</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.ibm.watson.assistant.v2.model.MessageInput</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.ibm.watson.assistant.v2.model.MessageOptions</span><span class="p">;</span>
+<pre><code class="language-java">import com.ibm.watson.assistant.v2.Assistant;
+import com.ibm.watson.assistant.v2.model.MessageInput;
+import com.ibm.watson.assistant.v2.model.MessageOptions;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ChatbotUtil</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Assistant</span><span class="w"> </span><span class="n">assistant</span><span class="p">;</span>
+public class ChatbotUtil {
+    private Assistant assistant;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ChatbotUtil</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">assistant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Assistant</span><span class="p">(</span><span class="s">&quot;2021-06-14&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">assistant</span><span class="p">.</span><span class="na">setApiKey</span><span class="p">(</span><span class="s">&quot;your_api_key&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    public ChatbotUtil() {
+        assistant = new Assistant(&quot;2021-06-14&quot;);
+        assistant.setApiKey(&quot;your_api_key&quot;);
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">sendMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">inputText</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">MessageInput</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MessageInput</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<span class="w">                </span><span class="p">.</span><span class="na">text</span><span class="p">(</span><span class="n">inputText</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="w">        </span><span class="n">MessageOptions</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MessageOptions</span><span class="p">.</span><span class="na">Builder</span><span class="p">(</span><span class="s">&quot;your_assistant_id&quot;</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">input</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">assistant</span><span class="p">.</span><span class="na">message</span><span class="p">(</span><span class="n">options</span><span class="p">).</span><span class="na">execute</span><span class="p">().</span><span class="na">getResult</span><span class="p">().</span><span class="na">toString</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public String sendMessage(String inputText) {
+        MessageInput input = new MessageInput.Builder()
+                .text(inputText)
+                .build();
+        MessageOptions options = new MessageOptions.Builder(&quot;your_assistant_id&quot;)
+                .input(input)
+                .build();
+        return assistant.message(options).execute().getResult().toString();
+    }
+}
+</code></pre>
 <h3 id="benefits_1">Benefits</h3>
 <ul>
 <li><strong>Personalization</strong>: Tailor content and recommendations based on user behavior.</li>
@@ -282,36 +279,35 @@
 <li><strong>Update <code>pubspec.yaml</code></strong>: Add dependencies for HTTP requests if needed.</li>
 <li><strong>Implement the UI</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">import 'package:flutter/material.dart';
 
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+void main() =&gt; runApp(MyApp());
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item List&#39;</span><span class="p">)),</span>
-<span class="w">        </span><span class="nl">body:</span><span class="w"> </span><span class="n">ItemList</span><span class="p">(),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Item List')),
+        body: ItemList(),
+      ),
+    );
+  }
+}
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">ItemList</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ListView</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">children:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
-<span class="w">        </span><span class="n">ListTile</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 1&#39;</span><span class="p">)),</span>
-<span class="w">        </span><span class="n">ListTile</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 2&#39;</span><span class="p">)),</span>
-<span class="w">        </span><span class="n">ListTile</span><span class="p">(</span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 3&#39;</span><span class="p">)),</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ItemList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: &lt;Widget&gt;[
+        ListTile(title: Text('Item 1')),
+        ListTile(title: Text('Item 2')),
+        ListTile(title: Text('Item 3')),
+      ],
+    );
+  }
+}
+</code></pre>
 <ol>
 <li><strong>Run the App</strong>: Use <code>flutter run</code> to launch the app on an emulator or physical device.</li>
 </ol>

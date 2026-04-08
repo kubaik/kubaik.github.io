@@ -163,83 +163,79 @@ Let me know if you need any further assistance., DotNet, .NET Core applications,
 * <strong>Open-source</strong>: .NET Core is an open-source framework, which means that developers can contribute to its development and customize it to their needs.</p>
 <h2 id="building-a-simple-net-core-application">Building a Simple .NET Core Application</h2>
 <p>To get started with .NET Core, let's build a simple "Hello World" application. We will use the .NET Core CLI to create a new project and write a simple C# code to print "Hello World" to the console.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<pre><code class="language-csharp">using System;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">HelloWorld</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Hello World&quot;);
+        }
+    }
+}
+</code></pre>
 <p>To create a new .NET Core project, we can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>dotnet<span class="w"> </span>new<span class="w"> </span>console<span class="w"> </span>-o<span class="w"> </span>HelloWorld
-</code></pre></div>
-
+<pre><code class="language-bash">dotnet new console -o HelloWorld
+</code></pre>
 <p>This will create a new console application project in a folder called "HelloWorld". We can then navigate to the project folder and run the application using the following command:</p>
-<div class="codehilite"><pre><span></span><code>dotnet<span class="w"> </span>run
-</code></pre></div>
-
+<pre><code class="language-bash">dotnet run
+</code></pre>
 <p>This will compile and run the application, printing "Hello World" to the console.</p>
 <h3 id="using-dependency-injection-in-net-core">Using Dependency Injection in .NET Core</h3>
 <p>Dependency injection is a key feature of .NET Core that allows developers to decouple components and make their applications more modular and testable. Let's take a look at an example of how to use dependency injection in a .NET Core application.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.Extensions.DependencyInjection;
+using System;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">DependencyInjection</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ILogger</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">void</span><span class="w"> </span><span class="nf">Log</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+namespace DependencyInjection
+{
+    public interface ILogger
+    {
+        void Log(string message);
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ConsoleLogger</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ILogger</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Log</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    public class ConsoleLogger : ILogger
+    {
+        public void Log(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Program</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">_logger</span><span class="p">;</span>
+    public class Program
+    {
+        private readonly ILogger _logger;
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="nf">Program</span><span class="p">(</span><span class="n">ILogger</span><span class="w"> </span><span class="n">logger</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">_logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logger</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
+        public Program(ILogger logger)
+        {
+            _logger = logger;
+        }
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Run</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">_logger</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        public void Run()
+        {
+            _logger.Log(&quot;Hello World&quot;);
+        }
+    }
 
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Startup</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IServiceCollection</span><span class="w"> </span><span class="n">services</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">services</span><span class="p">.</span><span class="n">AddTransient</span><span class="o">&lt;</span><span class="n">ILogger</span><span class="p">,</span><span class="w"> </span><span class="n">ConsoleLogger</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
+    class Startup
+    {
+        public void Configure(IServiceCollection services)
+        {
+            services.AddTransient&lt;ILogger, ConsoleLogger&gt;();
+        }
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Run</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">serviceProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ServiceCollection</span><span class="p">()</span>
-<span class="w">                </span><span class="p">.</span><span class="n">BuildServiceProvider</span><span class="p">();</span>
+        public void Run()
+        {
+            var serviceProvider = new ServiceCollection()
+                .BuildServiceProvider();
 
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Program</span><span class="p">(</span><span class="n">serviceProvider</span><span class="p">.</span><span class="n">GetService</span><span class="o">&lt;</span><span class="n">ILogger</span><span class="o">&gt;</span><span class="p">());</span>
-<span class="w">            </span><span class="n">program</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+            var program = new Program(serviceProvider.GetService&lt;ILogger&gt;());
+            program.Run();
+        }
+    }
+}
+</code></pre>
 <p>In this example, we define an <code>ILogger</code> interface and a <code>ConsoleLogger</code> class that implements it. We then create a <code>Program</code> class that depends on the <code>ILogger</code> interface. We use the <code>IServiceCollection</code> class to register the <code>ConsoleLogger</code> class as the implementation of the <code>ILogger</code> interface. Finally, we create a <code>Startup</code> class that configures the dependency injection container and runs the <code>Program</code> class.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>.NET Core has a wide range of real-world use cases, from building web applications and microservices to creating desktop and mobile applications. Some examples of companies that use .NET Core include:
@@ -248,46 +244,43 @@ Let me know if you need any further assistance., DotNet, .NET Core applications,
 * <strong>IBM</strong>: IBM uses .NET Core to build many of its own applications, including IBM Cloud and IBM Watson.</p>
 <h3 id="building-a-web-api-with-net-core">Building a Web API with .NET Core</h3>
 <p>Let's take a look at an example of how to build a simple web API with .NET Core. We will use the ASP.NET Core framework to create a RESTful API that returns a list of books.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">BooksApi</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[ApiController]</span>
-<span class="w">    </span><span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BooksController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Book 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Author 1&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Book 2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Author 2&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Book 3&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Author 3&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="p">};</span>
+namespace BooksApi
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class BooksController : ControllerBase
+    {
+        private readonly List&lt;Book&gt; _books = new List&lt;Book&gt;
+        {
+            new Book { Id = 1, Title = &quot;Book 1&quot;, Author = &quot;Author 1&quot; },
+            new Book { Id = 2, Title = &quot;Book 2&quot;, Author = &quot;Author 2&quot; },
+            new Book { Id = 3, Title = &quot;Book 3&quot;, Author = &quot;Author 3&quot; },
+        };
 
-<span class="w">        </span><span class="na">[HttpGet]</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">GetBooks</span><span class="p">()</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">Ok</span><span class="p">(</span><span class="n">_books</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        [HttpGet]
+        public IActionResult GetBooks()
+        {
+            return Ok(_books);
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Book</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Author</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public class Book
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+    }
+}
+</code></pre>
 <p>To create a new ASP.NET Core web API project, we can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>dotnet<span class="w"> </span>new<span class="w"> </span>webapi<span class="w"> </span>-o<span class="w"> </span>BooksApi
-</code></pre></div>
-
+<pre><code class="language-bash">dotnet new webapi -o BooksApi
+</code></pre>
 <p>This will create a new web API project in a folder called "BooksApi". We can then navigate to the project folder and run the application using the following command:</p>
-<div class="codehilite"><pre><span></span><code>dotnet<span class="w"> </span>run
-</code></pre></div>
-
+<pre><code class="language-bash">dotnet run
+</code></pre>
 <p>This will start the web API and make it available at <code>http://localhost:5000</code>. We can then use a tool like Postman or cURL to test the API.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem that developers face when building .NET Core applications is troubleshooting errors. Here are some steps to follow when troubleshooting errors:

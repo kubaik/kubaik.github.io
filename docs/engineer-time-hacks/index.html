@@ -166,48 +166,47 @@
 * <strong>Prioritization</strong>: Engineers should prioritize tasks based on their urgency and importance. This involves using the Eisenhower Matrix to categorize tasks into four quadrants: urgent and important, important but not urgent, urgent but not important, and not urgent or important.</p>
 <h3 id="code-example-using-the-pomodoro-technique-with-python">Code Example: Using the Pomodoro Technique with Python</h3>
 <p>Here's an example of how engineers can use the Pomodoro Technique with Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<pre><code class="language-python">import time
+import tkinter as tk
 
-<span class="k">class</span> <span class="nc">PomodoroTimer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pomodoro Timer&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;25:00&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time_left</span> <span class="o">=</span> <span class="mi">1500</span>  <span class="c1"># 25 minutes in seconds</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">start_timer</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+class PomodoroTimer:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title(&quot;Pomodoro Timer&quot;)
+        self.label = tk.Label(self.root, text=&quot;25:00&quot;, font=(&quot;Helvetica&quot;, 48))
+        self.label.pack()
+        self.time_left = 1500  # 25 minutes in seconds
+        self.running = False
+        self.button = tk.Button(self.root, text=&quot;Start&quot;, command=self.start_timer)
+        self.button.pack()
 
-    <span class="k">def</span> <span class="nf">start_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Stop&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_timer</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_timer</span><span class="p">()</span>
+    def start_timer(self):
+        self.running = True
+        self.button.config(text=&quot;Stop&quot;, command=self.stop_timer)
+        self.update_timer()
 
-    <span class="k">def</span> <span class="nf">stop_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">start_timer</span><span class="p">)</span>
+    def stop_timer(self):
+        self.running = False
+        self.button.config(text=&quot;Start&quot;, command=self.start_timer)
 
-    <span class="k">def</span> <span class="nf">update_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
-            <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_left</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minutes</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">seconds</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">time_left</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">time_left</span> <span class="o">=</span> <span class="mi">1500</span>  <span class="c1"># reset timer</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">start_timer</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_timer</span><span class="p">)</span>
+    def update_timer(self):
+        if self.running:
+            minutes, seconds = divmod(self.time_left, 60)
+            self.label.config(text=f&quot;{minutes:02d}:{seconds:02d}&quot;)
+            self.time_left -= 1
+            if self.time_left == 0:
+                self.time_left = 1500  # reset timer
+                self.running = False
+                self.button.config(text=&quot;Start&quot;, command=self.start_timer)
+            self.root.after(1000, self.update_timer)
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+    def run(self):
+        self.root.mainloop()
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">timer</span> <span class="o">=</span> <span class="n">PomodoroTimer</span><span class="p">()</span>
-    <span class="n">timer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    timer = PomodoroTimer()
+    timer.run()
+</code></pre>
 <p>This code creates a simple Pomodoro timer using Python and the Tkinter library. Engineers can use this timer to stay focused and on track.</p>
 <h2 id="using-tools-and-platforms-to-boost-productivity">Using Tools and Platforms to Boost Productivity</h2>
 <p>There are many tools and platforms available that can help engineers boost their productivity. Some examples include:
@@ -228,38 +227,37 @@
 * <strong>Set boundaries</strong>: Establish clear boundaries around your work hours and avoid checking work emails or taking work calls during non-work hours.</p>
 <h3 id="code-example-using-calendar-api-to-schedule-meetings">Code Example: Using Calendar API to Schedule Meetings</h3>
 <p>Here's an example of how engineers can use the Google Calendar API to schedule meetings:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<pre><code class="language-python">import datetime
+import json
+from googleapiclient.discovery import build
 
-<span class="c1"># Create a new event</span>
-<span class="n">event</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;summary&#39;</span><span class="p">:</span> <span class="s1">&#39;Meeting with team&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Discuss project progress&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;dateTime&#39;</span><span class="p">:</span> <span class="s1">&#39;2023-03-15T10:00:00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;timeZone&#39;</span><span class="p">:</span> <span class="s1">&#39;America/New_York&#39;</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;dateTime&#39;</span><span class="p">:</span> <span class="s1">&#39;2023-03-15T11:00:00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;timeZone&#39;</span><span class="p">:</span> <span class="s1">&#39;America/New_York&#39;</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;attendees&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;jane.doe@example.com&#39;</span><span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+# Create a new event
+event = {
+    'summary': 'Meeting with team',
+    'description': 'Discuss project progress',
+    'start': {
+        'dateTime': '2023-03-15T10:00:00',
+        'timeZone': 'America/New_York'
+    },
+    'end': {
+        'dateTime': '2023-03-15T11:00:00',
+        'timeZone': 'America/New_York'
+    },
+    'attendees': [
+        {'email': 'john.doe@example.com'},
+        {'email': 'jane.doe@example.com'}
+    ]
+}
 
-<span class="c1"># Create a new service object</span>
-<span class="n">service</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">)</span>
+# Create a new service object
+service = build('calendar', 'v3')
 
-<span class="c1"># Create a new event</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">events</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">calendarId</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">event</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+# Create a new event
+response = service.events().insert(calendarId='primary', body=event).execute()
 
-<span class="c1"># Print the event ID</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
-</code></pre></div>
-
+# Print the event ID
+print(response.get('id'))
+</code></pre>
 <p>This code creates a new event on the Google Calendar using the Google Calendar API. Engineers can use this API to schedule meetings and manage their calendar.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, effective time management is critical for engineers to deliver high-quality work, meet deadlines, and maintain a healthy work-life balance. By using practical time management strategies, tools, and techniques, engineers can boost their productivity and achieve their goals.</p>

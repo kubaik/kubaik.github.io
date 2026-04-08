@@ -159,73 +159,70 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Let's take a look at some practical code examples to illustrate the concepts of smart contract development.</p>
 <h3 id="example-1-simple-ethereum-smart-contract">Example 1: Simple Ethereum Smart Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleContract</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">private </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">balance</span><span class="p">;</span>
+contract SimpleContract {
+    address private owner;
+    uint public balance;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        owner = msg.sender;
+        balance = 0;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">deposit</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function deposit() public payable {
+        balance += msg.value;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can withdraw&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>amount<span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>balance<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>amount<span class="p">);</span>
-<span class="w">        </span>balance<span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function withdraw(uint amount) public {
+        require(msg.sender == owner, &quot;Only the owner can withdraw&quot;);
+        require(amount &lt;= balance, &quot;Insufficient balance&quot;);
+        payable(msg.sender).transfer(amount);
+        balance -= amount;
+    }
+}
+</code></pre>
 <p>This example demonstrates a simple Ethereum smart contract that allows the owner to deposit and withdraw Ether. The contract uses the <code>pragma solidity</code> directive to specify the Solidity version, and the <code>contract</code> keyword to define the contract.</p>
 <h3 id="example-2-using-openzeppelins-erc-20-token-contract">Example 2: Using OpenZeppelin's ERC-20 Token Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyToken</span><span class="w"> </span><span class="kt">is</span><span class="w"> </span>SafeERC20<span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">symbol</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">totalSupply</span><span class="p">;</span>
+contract MyToken is SafeERC20 {
+    string public name;
+    string public symbol;
+    uint public totalSupply;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MyToken&quot;</span><span class="p">;</span>
-<span class="w">        </span>symbol<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MTK&quot;</span><span class="p">;</span>
-<span class="w">        </span>totalSupply<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1000000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">10</span><span class="w"> </span><span class="o">**</span><span class="w"> </span>decimals<span class="p">());</span>
-<span class="w">        </span>_balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>totalSupply<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        name = &quot;MyToken&quot;;
+        symbol = &quot;MTK&quot;;
+        totalSupply = 1000000 * (10 ** decimals());
+        _balances[msg.sender] = totalSupply;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>_transfer<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>to<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function transfer(address to, uint amount) public {
+        _transfer(msg.sender, to, amount);
+    }
+}
+</code></pre>
 <p>This example demonstrates the use of OpenZeppelin's ERC-20 token contract to create a custom token. The contract imports the <code>SafeERC20</code> library and inherits from it, using the <code>_balances</code> mapping to store the token balances.</p>
 <h3 id="example-3-using-web3js-to-interact-with-a-smart-contract">Example 3: Using Web3.js to Interact with a Smart Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID'));
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAbi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...];</span>
+const contractAddress = '0x...';
+const contractAbi = [...];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">contractAbi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="s1">&#39;0x...&#39;</span><span class="p">).</span><span class="nx">call</span><span class="p">()</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">balance</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Balance: </span><span class="si">${</span><span class="nx">balance</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-</code></pre></div>
-
+contract.methods.balanceOf('0x...').call()
+    .then((balance) =&gt; {
+        console.log(`Balance: ${balance}`);
+    })
+    .catch((error) =&gt; {
+        console.error(error);
+    });
+</code></pre>
 <p>This example demonstrates the use of Web3.js to interact with a smart contract. The code creates a new Web3 instance, sets up a provider, and creates a contract instance using the contract address and ABI.</p>
 <h2 id="tools-and-platforms-for-smart-contract-development">Tools and Platforms for Smart Contract Development</h2>
 <p>Several tools and platforms are available for smart contract development, including:

@@ -165,62 +165,59 @@
 <p>To demonstrate the capabilities of Snowflake, let's consider a few practical examples.</p>
 <h3 id="example-1-loading-data-into-snowflake">Example 1: Loading Data into Snowflake</h3>
 <p>To load data into Snowflake, you can use the <code>COPY INTO</code> command, which supports various data sources, including CSV, JSON, and Avro files. Here's an example of loading a CSV file into a Snowflake table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE customers (
+  id INT,
+  name VARCHAR,
+  email VARCHAR
+);
 
-<span class="k">COPY</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;@~/customers.csv&#39;</span>
-<span class="w">  </span><span class="n">FILE_FORMAT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CSV</span><span class="p">);</span>
-</code></pre></div>
-
+COPY INTO customers (id, name, email)
+  FROM '@~/customers.csv'
+  FILE_FORMAT = (TYPE = CSV);
+</code></pre>
 <p>This example creates a <code>customers</code> table and loads data from a CSV file named <code>customers.csv</code> into the table.</p>
 <h3 id="example-2-querying-data-in-snowflake">Example 2: Querying Data in Snowflake</h3>
 <p>To query data in Snowflake, you can use standard SQL syntax. Here's an example of querying the <code>customers</code> table:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM customers
+WHERE country = 'USA'
+ORDER BY name;
+</code></pre>
 <p>This example queries the <code>customers</code> table and returns all rows where the <code>country</code> column is 'USA', sorted by the <code>name</code> column.</p>
 <h3 id="example-3-creating-a-data-pipeline-with-snowflake-and-aws">Example 3: Creating a Data Pipeline with Snowflake and AWS</h3>
 <p>To create a data pipeline with Snowflake and AWS, you can use AWS Lambda and Amazon S3. Here's an example of creating a data pipeline that loads data from S3 into Snowflake:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
-<span class="kn">import</span> <span class="nn">snowflake.connector</span>
+<pre><code class="language-python">import boto3
+import snowflake.connector
 
-<span class="c1"># Create an S3 client</span>
-<span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+# Create an S3 client
+s3 = boto3.client('s3')
 
-<span class="c1"># Create a Snowflake connection</span>
-<span class="n">cnx</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-  <span class="n">user</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span>
-  <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
-  <span class="n">account</span><span class="o">=</span><span class="s1">&#39;account&#39;</span><span class="p">,</span>
-  <span class="n">warehouse</span><span class="o">=</span><span class="s1">&#39;warehouse&#39;</span><span class="p">,</span>
-  <span class="n">database</span><span class="o">=</span><span class="s1">&#39;database&#39;</span><span class="p">,</span>
-  <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;schema&#39;</span>
-<span class="p">)</span>
+# Create a Snowflake connection
+cnx = snowflake.connector.connect(
+  user='username',
+  password='password',
+  account='account',
+  warehouse='warehouse',
+  database='database',
+  schema='schema'
+)
 
-<span class="c1"># Define the data pipeline</span>
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-  <span class="c1"># Get the S3 bucket and file name</span>
-  <span class="n">bucket</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-  <span class="n">file_name</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+# Define the data pipeline
+def lambda_handler(event, context):
+  # Get the S3 bucket and file name
+  bucket = event['Records'][0]['s3']['bucket']['name']
+  file_name = event['Records'][0]['s3']['object']['key']
 
-  <span class="c1"># Load the data into Snowflake</span>
-  <span class="n">cursor</span> <span class="o">=</span> <span class="n">cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-  <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;COPY INTO customers (id, name, email) FROM &#39;@~/</span><span class="si">{}</span><span class="s2">&#39; FILE_FORMAT = (TYPE = CSV)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
-  <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  # Load the data into Snowflake
+  cursor = cnx.cursor()
+  cursor.execute(&quot;COPY INTO customers (id, name, email) FROM '@~/{}' FILE_FORMAT = (TYPE = CSV)&quot;.format(file_name))
+  cursor.close()
 
-  <span class="c1"># Return a success response</span>
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="s1">&#39;statusMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span>
-  <span class="p">}</span>
-</code></pre></div>
-
+  # Return a success response
+  return {
+    'statusCode': 200,
+    'statusMessage': 'OK'
+  }
+</code></pre>
 <p>This example creates a data pipeline that loads data from an S3 bucket into a Snowflake table using AWS Lambda and the Snowflake Python driver.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>While working with Snowflake, you may encounter some common problems. Here are some solutions to these problems:</p>

@@ -162,71 +162,68 @@
 <h2 id="react-a-closer-look">React: A Closer Look</h2>
 <p>React is one of the most widely-used frontend frameworks, with over 10 million downloads per week on npm. Its popularity can be attributed to its component-based architecture, which allows developers to build reusable UI components.</p>
 <h3 id="example-building-a-simple-react-component">Example: Building a Simple React Component</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+function Counter() {
+  const [count, setCount] = React.useState(0);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Counter</span><span class="p">;</span>
-</code></pre></div>
-
+export default Counter;
+</code></pre>
 <p>In this example, we create a simple <code>Counter</code> component that displays a count and an increment button. The <code>useState</code> hook is used to manage the component's state.</p>
 <h2 id="angular-a-full-fledged-framework">Angular: A Full-Fledged Framework</h2>
 <p>Angular is a full-fledged JavaScript framework for building complex web applications. It provides a set of built-in features, including dependency injection, services, and routing.</p>
 <h3 id="example-building-a-simple-angular-component">Example: Building a Simple Angular Component</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Component } from '@angular/core';
 
-<span class="kd">@Component</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-counter&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;p&gt;Count: {{ count }}&lt;/p&gt;</span>
-<span class="sb">    &lt;button (click)=&quot;increment()&quot;&gt;Increment&lt;/button&gt;</span>
-<span class="sb">  `</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CounterComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+@Component({
+  selector: 'app-counter',
+  template: `
+    &lt;p&gt;Count: {{ count }}&lt;/p&gt;
+    &lt;button (click)=&quot;increment()&quot;&gt;Increment&lt;/button&gt;
+  `
+})
+export class CounterComponent {
+  count = 0;
 
-<span class="w">  </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  increment() {
+    this.count++;
+  }
+}
+</code></pre>
 <p>In this example, we create a simple <code>CounterComponent</code> that displays a count and an increment button. The <code>@Component</code> decorator is used to define the component's metadata.</p>
 <h2 id="vuejs-a-progressive-framework">Vue.js: A Progressive Framework</h2>
 <p>Vue.js is a progressive and flexible framework for building web applications. It provides a set of built-in features, including a virtual DOM, reactivity, and a robust ecosystem of tools and libraries.</p>
 <h3 id="example-building-a-simple-vuejs-component">Example: Building a Simple Vue.js Component</h3>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="err">@</span><span class="nx">click</span><span class="o">=</span><span class="s2">&quot;increment&quot;</span><span class="o">&gt;</span><span class="nx">Increment</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-<span class="o">&lt;</span><span class="err">/template&gt;</span>
+<pre><code class="language-javascript">&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Count: {{ count }}&lt;/p&gt;
+    &lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
-</code></pre></div>
-
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
 <p>In this example, we create a simple Vue.js component that displays a count and an increment button. The <code>template</code> section defines the component's HTML template, while the <code>script</code> section defines the component's JavaScript code.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>When it comes to performance, React, Angular, and Vue.js have similar benchmarks. According to a study by HackerRank, the average load time for a React application is around 1.2 seconds, while Angular and Vue.js have average load times of 1.5 seconds and 1.1 seconds, respectively.</p>

@@ -237,13 +237,12 @@
 <h2 id="practical-examples-and-use-cases">Practical Examples and Use Cases</h2>
 <h3 id="example-1-simplifying-local-development">Example 1: Simplifying Local Development</h3>
 <p>Developers can use Docker to create consistent environments across team members' laptops, reducing "it works on my machine" issues.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Building a Docker image for a Node.js app</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-node-app<span class="w"> </span>.
+<pre><code class="language-bash"># Building a Docker image for a Node.js app
+docker build -t my-node-app .
 
-<span class="c1"># Running the container locally</span>
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>my-node-app
-</code></pre></div>
-
+# Running the container locally
+docker run -p 3000:3000 my-node-app
+</code></pre>
 <h3 id="example-2-continuous-deployment-pipeline">Example 2: Continuous Deployment Pipeline</h3>
 <p>Integrate container build and deployment into CI/CD pipelines for faster releases.</p>
 <ul>
@@ -259,28 +258,27 @@ docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </sp
 </ul>
 <h3 id="example-3-microservices-architecture">Example 3: Microservices Architecture</h3>
 <p>Deploying microservices as containers allows independent scaling, updates, and maintenance.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example Kubernetes deployment for a microservice</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">order-service</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">order</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">order</span>
-<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">order</span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myregistry/order-service:latest</span>
-<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
-</code></pre></div>
-
+<pre><code class="language-yaml"># Example Kubernetes deployment for a microservice
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: order
+        image: myregistry/order-service:latest
+        ports:
+        - containerPort: 8080
+</code></pre>
 <hr />
 <h2 id="actionable-advice-for-getting-started">Actionable Advice for Getting Started</h2>
 <h3 id="1-learn-the-basics">1. Learn the Basics</h3>

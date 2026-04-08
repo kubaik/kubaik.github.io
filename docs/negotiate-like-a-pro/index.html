@@ -155,23 +155,22 @@
 <h3 id="researching-salaries-with-online-tools">Researching Salaries with Online Tools</h3>
 <p>Before entering into salary negotiations, it's crucial to have a basis for your requested compensation. Online tools like Glassdoor, Payscale, and LinkedIn can provide valuable insights into average salaries for specific positions and locations. For instance, according to Payscale, the average salary for a data scientist in New York City is around $118,000 per year, with a range of $80,000 to over $170,000.</p>
 <p>To get a more accurate estimate, you can use the following Python code to scrape salary data from Indeed:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
 
-<span class="k">def</span> <span class="nf">scrape_indeed_salary</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
-    <span class="n">salaries</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;salaryText&#39;</span><span class="p">})</span>
-    <span class="n">salary_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">salary</span> <span class="ow">in</span> <span class="n">salaries</span><span class="p">:</span>
-        <span class="n">salary_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">salary</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">salary_list</span>
+def scrape_indeed_salary(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    salaries = soup.find_all('span', {'class': 'salaryText'})
+    salary_list = []
+    for salary in salaries:
+        salary_list.append(salary.text.strip())
+    return salary_list
 
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.indeed.com/jobs?q=data+scientist&amp;l=New+York%2C+NY&#39;</span>
-<span class="n">salaries</span> <span class="o">=</span> <span class="n">scrape_indeed_salary</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">salaries</span><span class="p">)</span>
-</code></pre></div>
-
+url = 'https://www.indeed.com/jobs?q=data+scientist&amp;l=New+York%2C+NY'
+salaries = scrape_indeed_salary(url)
+print(salaries)
+</code></pre>
 <p>This code snippet uses the <code>requests</code> and <code>BeautifulSoup</code> libraries to scrape salary data from Indeed job listings. By analyzing this data, you can get a better understanding of the market rate for your desired position.</p>
 <h2 id="preparing-for-negotiation">Preparing for Negotiation</h2>
 <p>Once you have a solid understanding of your worth in the market, it's time to prepare for the negotiation itself. This involves identifying your strengths and weaknesses, as well as preparing a clear and confident pitch. Here are some key points to consider:</p>
@@ -181,27 +180,26 @@
 <li><strong>Do your research</strong>: Learn as much as you can about the company and the position. This will help you understand their needs and priorities, and tailor your pitch accordingly.</li>
 </ul>
 <p>To illustrate this, let's consider an example use case:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a function to calculate the value of a candidate&#39;s achievements</span>
-<span class="k">def</span> <span class="nf">calculate_value</span><span class="p">(</span><span class="n">achievements</span><span class="p">):</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">achievement</span> <span class="ow">in</span> <span class="n">achievements</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">achievement</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sales_increase&#39;</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">+=</span> <span class="n">achievement</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
-        <span class="k">elif</span> <span class="n">achievement</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cost_reduction&#39;</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">+=</span> <span class="n">achievement</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.2</span>
-    <span class="k">return</span> <span class="n">value</span>
+<pre><code class="language-python"># Define a function to calculate the value of a candidate's achievements
+def calculate_value(achievements):
+    value = 0
+    for achievement in achievements:
+        if achievement['type'] == 'sales_increase':
+            value += achievement['amount'] * 0.1
+        elif achievement['type'] == 'cost_reduction':
+            value += achievement['amount'] * 0.2
+    return value
 
-<span class="c1"># Define a list of achievements</span>
-<span class="n">achievements</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sales_increase&#39;</span><span class="p">,</span> <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="mi">25000</span><span class="p">},</span>
-    <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;cost_reduction&#39;</span><span class="p">,</span> <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">}</span>
-<span class="p">]</span>
+# Define a list of achievements
+achievements = [
+    {'type': 'sales_increase', 'amount': 25000},
+    {'type': 'cost_reduction', 'amount': 10000}
+]
 
-<span class="c1"># Calculate the total value of the achievements</span>
-<span class="n">total_value</span> <span class="o">=</span> <span class="n">calculate_value</span><span class="p">(</span><span class="n">achievements</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">total_value</span><span class="p">)</span>
-</code></pre></div>
-
+# Calculate the total value of the achievements
+total_value = calculate_value(achievements)
+print(total_value)
+</code></pre>
 <p>This code snippet defines a function to calculate the value of a candidate's achievements, based on their type and amount. By using this function, you can quantify the value you bring to the company and make a stronger case for your desired compensation.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Salary negotiation can be a challenging and nuanced process, and there are several common problems that can arise. Here are some specific solutions to these problems:</p>
@@ -211,24 +209,23 @@
 <li><strong>The negotiation is becoming confrontational</strong>: In this case, it's essential to remain calm and professional, and to focus on finding a mutually beneficial solution. According to a study by Harvard Business Review, employees who negotiate in a collaborative and respectful manner are more likely to achieve their desired outcomes.</li>
 </ul>
 <p>To illustrate this, let's consider an example use case:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a function to simulate a salary negotiation</span>
-<span class="k">def</span> <span class="nf">simulate_negotiation</span><span class="p">(</span><span class="n">initial_salary</span><span class="p">,</span> <span class="n">target_salary</span><span class="p">):</span>
-    <span class="n">current_salary</span> <span class="o">=</span> <span class="n">initial_salary</span>
-    <span class="k">while</span> <span class="n">current_salary</span> <span class="o">&lt;</span> <span class="n">target_salary</span><span class="p">:</span>
-        <span class="c1"># Simulate a negotiation round</span>
-        <span class="n">current_salary</span> <span class="o">+=</span> <span class="mi">1000</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current salary: </span><span class="si">{</span><span class="n">current_salary</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">current_salary</span>
+<pre><code class="language-python"># Define a function to simulate a salary negotiation
+def simulate_negotiation(initial_salary, target_salary):
+    current_salary = initial_salary
+    while current_salary &lt; target_salary:
+        # Simulate a negotiation round
+        current_salary += 1000
+        print(f'Current salary: {current_salary}')
+    return current_salary
 
-<span class="c1"># Define the initial and target salaries</span>
-<span class="n">initial_salary</span> <span class="o">=</span> <span class="mi">80000</span>
-<span class="n">target_salary</span> <span class="o">=</span> <span class="mi">100000</span>
+# Define the initial and target salaries
+initial_salary = 80000
+target_salary = 100000
 
-<span class="c1"># Simulate the negotiation</span>
-<span class="n">final_salary</span> <span class="o">=</span> <span class="n">simulate_negotiation</span><span class="p">(</span><span class="n">initial_salary</span><span class="p">,</span> <span class="n">target_salary</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final salary: </span><span class="si">{</span><span class="n">final_salary</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Simulate the negotiation
+final_salary = simulate_negotiation(initial_salary, target_salary)
+print(f'Final salary: {final_salary}')
+</code></pre>
 <p>This code snippet defines a function to simulate a salary negotiation, where the current salary is incremented by $1000 in each round until the target salary is reached. By using this function, you can model different negotiation scenarios and find the optimal outcome.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>Salary negotiation is a critical step in the job search process, particularly for tech roles where compensation can vary significantly. By researching salaries, preparing a clear and confident pitch, and being flexible and open to different compensation packages, you can negotiate like a pro and achieve your desired outcomes.</p>

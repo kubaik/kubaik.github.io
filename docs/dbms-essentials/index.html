@@ -172,43 +172,40 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to illustrate the use of DBMS tools:</p>
 <h3 id="example-1-creating-a-table-in-mysql">Example 1: Creating a Table in MySQL</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255)
+);
+</code></pre>
 <p>This code creates a table named "customers" with three columns: "id", "name", and "email".</p>
 <h3 id="example-2-inserting-data-into-a-postgresql-table">Example 2: Inserting Data into a PostgreSQL Table</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">INSERT INTO customers (id, name, email)
+VALUES (1, 'John Doe', 'john.doe@example.com');
+</code></pre>
 <p>This code inserts a new row into the "customers" table with the specified values.</p>
 <h3 id="example-3-querying-a-mongodb-collection">Example 3: Querying a MongoDB Collection</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">MongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mongodb://localhost:27017&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dbName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;mydatabase&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
+const dbName = 'mydatabase';
 
-<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to MongoDB&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">db</span><span class="p">(</span><span class="nx">dbName</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">collection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;customers&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">collection</span><span class="p">.</span><span class="nx">find</span><span class="p">({}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+MongoClient.connect(url, function(err, client) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Connected to MongoDB');
+    const db = client.db(dbName);
+    const collection = db.collection('customers');
+    collection.find({}).toArray(function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    });
+  }
+});
+</code></pre>
 <p>This code connects to a MongoDB database, queries the "customers" collection, and logs the result to the console.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems encountered when working with DBMS tools, along with specific solutions:

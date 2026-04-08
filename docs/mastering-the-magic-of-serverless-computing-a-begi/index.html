@@ -158,15 +158,14 @@
 <p>Several cloud providers offer serverless computing services, with AWS Lambda, Azure Functions, and Google Cloud Functions being some of the most popular options. Consider factors such as pricing, integration with other services, and programming language support when choosing a provider.</p>
 <h3 id="writing-your-first-serverless-function">Writing Your First Serverless Function:</h3>
 <p>Let's dive into a simple example using AWS Lambda and Node.js. Create a new Lambda function in the AWS Management Console and paste the following Node.js code:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">;</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">exports.handler = async (event) =&gt; {
+  const name = event.name || 'World';
+  return {
+    statusCode: 200,
+    body: `Hello, ${name}!`
+  };
+};
+</code></pre>
 <p>This function takes an input event and responds with a personalized greeting. You can trigger this function using various AWS services like API Gateway or S3 events.</p>
 <h3 id="deploying-and-testing-your-function">Deploying and Testing Your Function:</h3>
 <p>Once you've written your function, deploy it to your serverless provider and test it using sample input events. Monitor the execution logs and performance metrics to ensure your function is working as expected.</p>

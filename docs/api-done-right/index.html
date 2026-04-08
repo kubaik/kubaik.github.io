@@ -172,22 +172,21 @@
 <li><code>DELETE /products/{id}</code>: Delete a product</li>
 </ul>
 <p>Here's an example of how we might implement the <code>GET /products</code> endpoint using Node.js and Express.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Fetch products from database</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">19.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 2&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">9.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 3&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">29.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
+app.get('/products', (req, res) =&gt; {
+  // Fetch products from database
+  const products = [
+    { id: 1, name: 'Product 1', price: 19.99 },
+    { id: 2, name: 'Product 2', price: 9.99 },
+    { id: 3, name: 'Product 3', price: 29.99 },
+  ];
 
-<span class="w">  </span><span class="c1">// Return products in JSON format</span>
-<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">products</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+  // Return products in JSON format
+  res.json(products);
+});
+</code></pre>
 <p>In this example, we're using Express.js to create a simple API endpoint that returns a list of products in JSON format.</p>
 <h2 id="api-security">API Security</h2>
 <p>Security is a critical aspect of API design. Here are some best practices to ensure your API is secure:</p>
@@ -198,28 +197,27 @@
 <li><strong>Input validation</strong>: Validate user input to prevent SQL injection and cross-site scripting (XSS) attacks.</li>
 </ul>
 <p>For example, we can use the <code>jsonwebtoken</code> library in Node.js to implement JWT-based authentication:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">jwt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jsonwebtoken&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const jwt = require('jsonwebtoken');
 
-<span class="c1">// Generate a JWT token</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">({</span><span class="w"> </span><span class="nx">userId</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s1">&#39;secretKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">expiresIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1h&#39;</span><span class="w"> </span><span class="p">});</span>
+// Generate a JWT token
+const token = jwt.sign({ userId: 1 }, 'secretKey', { expiresIn: '1h' });
 
-<span class="c1">// Verify a JWT token</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;x-access-token&#39;</span><span class="p">];</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;No token provided&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
+// Verify a JWT token
+app.use((req, res, next) =&gt; {
+  const token = req.headers['x-access-token'];
+  if (!token) {
+    return res.status(401).send({ message: 'No token provided' });
+  }
 
-<span class="w">  </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;secretKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">decoded</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">401</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Invalid token&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">decoded</span><span class="p">.</span><span class="nx">userId</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">next</span><span class="p">();</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+  jwt.verify(token, 'secretKey', (err, decoded) =&gt; {
+    if (err) {
+      return res.status(401).send({ message: 'Invalid token' });
+    }
+    req.userId = decoded.userId;
+    next();
+  });
+});
+</code></pre>
 <p>In this example, we're using the <code>jsonwebtoken</code> library to generate and verify JWT tokens.</p>
 <h2 id="api-performance">API Performance</h2>
 <p>API performance is critical to ensure a good user experience. Here are some best practices to optimize API performance:</p>
@@ -230,32 +228,31 @@
 <li><strong>Monitor performance</strong>: Use tools like New Relic or Datadog to monitor API performance and identify bottlenecks.</li>
 </ul>
 <p>For example, we can use the <code>redis</code> library in Node.js to implement caching:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const redis = require('redis');
 
-<span class="c1">// Create a Redis client</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+// Create a Redis client
+const client = redis.createClient();
 
-<span class="c1">// Cache a resource</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">reply</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">reply</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">reply</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
+// Cache a resource
+app.get('/products', (req, res) =&gt; {
+  client.get('products', (err, reply) =&gt; {
+    if (reply) {
+      return res.json(JSON.parse(reply));
+    }
 
-<span class="w">    </span><span class="c1">// Fetch products from database</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">products</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 1&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">19.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 2&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">9.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Product 3&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">29.99</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">];</span>
+    // Fetch products from database
+    const products = [
+      { id: 1, name: 'Product 1', price: 19.99 },
+      { id: 2, name: 'Product 2', price: 9.99 },
+      { id: 3, name: 'Product 3', price: 29.99 },
+    ];
 
-<span class="w">    </span><span class="c1">// Cache products for 1 hour</span>
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">products</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;EX&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">3600</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">products</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+    // Cache products for 1 hour
+    client.set('products', JSON.stringify(products), 'EX', 3600);
+    res.json(products);
+  });
+});
+</code></pre>
 <p>In this example, we're using the <code>redis</code> library to cache the list of products for 1 hour.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur when designing a RESTful API, along with their solutions:</p>

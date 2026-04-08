@@ -159,32 +159,29 @@
 * MongoDB Compass: A graphical user interface for managing MongoDB databases, offering features like data modeling, query analysis, and performance monitoring.</p>
 <h2 id="database-design-and-development">Database Design and Development</h2>
 <p>Database design and development are critical phases of database management. A well-designed database can improve data integrity, reduce data redundancy, and enhance query performance. Here's an example of how to design a database using MySQL Workbench:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">UNIQUE</span>
-<span class="p">);</span>
+<pre><code class="language-sql">CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255) UNIQUE
+);
 
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">customers</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+</code></pre>
 <p>In this example, we create two tables: <code>customers</code> and <code>orders</code>. The <code>customers</code> table has a primary key <code>id</code> and two columns: <code>name</code> and <code>email</code>. The <code>orders</code> table has a primary key <code>id</code>, a foreign key <code>customer_id</code> that references the <code>id</code> column in the <code>customers</code> table, and two columns: <code>order_date</code>.</p>
 <h3 id="database-performance-optimization">Database Performance Optimization</h3>
 <p>Database performance optimization is critical to ensure that queries are executed efficiently and data is retrieved quickly. One way to optimize database performance is by indexing columns used in WHERE and JOIN clauses. Here's an example of how to create an index using PostgreSQL pgAdmin:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_name ON customers (name);
+</code></pre>
 <p>In this example, we create an index on the <code>name</code> column in the <code>customers</code> table. This can improve query performance when filtering data based on the <code>name</code> column.</p>
 <h2 id="database-security-and-backup">Database Security and Backup</h2>
 <p>Database security and backup are essential components of database management. A secure database can protect sensitive data from unauthorized access, while regular backups can ensure data recovery in case of a disaster. Here's an example of how to create a backup using MySQL Workbench:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">mysqldump</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">mydatabase</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">backup</span><span class="p">.</span><span class="k">sql</span>
-</code></pre></div>
-
+<pre><code class="language-sql">mysqldump -u root -p mydatabase &gt; backup.sql
+</code></pre>
 <p>In this example, we create a backup of the <code>mydatabase</code> database using the <code>mysqldump</code> command. The backup is stored in a file named <code>backup.sql</code>.</p>
 <h3 id="cloud-based-database-services">Cloud-Based Database Services</h3>
 <p>Cloud-based database services offer a scalable and on-demand way to manage databases. Some popular cloud-based database services include:

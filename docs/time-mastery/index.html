@@ -169,33 +169,32 @@
 * Building and training the model within 4 weeks
 * Deploying the model to a production environment within 6 weeks</p>
 <p>To prioritize tasks, you can use a simple Python script to categorize tasks based on their urgency and importance:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a task class</span>
-<span class="k">class</span> <span class="nc">Task</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">urgency</span><span class="p">,</span> <span class="n">importance</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">urgency</span> <span class="o">=</span> <span class="n">urgency</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">importance</span> <span class="o">=</span> <span class="n">importance</span>
+<pre><code class="language-python"># Define a task class
+class Task:
+    def __init__(self, name, urgency, importance):
+        self.name = name
+        self.urgency = urgency
+        self.importance = importance
 
-<span class="c1"># Create a list of tasks</span>
-<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;Data preprocessing&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;Model building&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;Model deployment&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-    <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;Model testing&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">]</span>
+# Create a list of tasks
+tasks = [
+    Task(&quot;Data preprocessing&quot;, 1, 1),
+    Task(&quot;Model building&quot;, 0, 1),
+    Task(&quot;Model deployment&quot;, 1, 0),
+    Task(&quot;Model testing&quot;, 0, 1)
+]
 
-<span class="c1"># Categorize tasks using the Eisenhower Matrix</span>
-<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">urgency</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">task</span><span class="o">.</span><span class="n">importance</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Urgent and important: </span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">urgency</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">task</span><span class="o">.</span><span class="n">importance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Urgent but not important: </span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">task</span><span class="o">.</span><span class="n">urgency</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">task</span><span class="o">.</span><span class="n">importance</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not urgent but important: </span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not urgent and not important: </span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Categorize tasks using the Eisenhower Matrix
+for task in tasks:
+    if task.urgency == 1 and task.importance == 1:
+        print(f&quot;Urgent and important: {task.name}&quot;)
+    elif task.urgency == 1 and task.importance == 0:
+        print(f&quot;Urgent but not important: {task.name}&quot;)
+    elif task.urgency == 0 and task.importance == 1:
+        print(f&quot;Not urgent but important: {task.name}&quot;)
+    else:
+        print(f&quot;Not urgent and not important: {task.name}&quot;)
+</code></pre>
 <p>This script helps you visualize the tasks and prioritize them based on their urgency and importance.</p>
 <h2 id="using-time-management-tools">Using Time Management Tools</h2>
 <p>There are many tools available to help engineers manage their time effectively. Some popular options include:
@@ -206,26 +205,25 @@
 <p>For example, you can use Trello to create a board for your project and add lists for different stages of the project, such as "To-Do", "In Progress", and "Done". You can then add cards for each task and move them across lists as you complete them.</p>
 <h3 id="implementing-the-pomodoro-technique">Implementing the Pomodoro Technique</h3>
 <p>The Pomodoro Technique is a time management method that involves working in focused 25-minute increments, followed by a 5-minute break. This technique can help you stay focused and avoid burnout. To implement the Pomodoro Technique, you can use a simple Python script to track your work sessions:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import time
 
-<span class="c1"># Define a work session</span>
-<span class="k">def</span> <span class="nf">work_session</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Work session started. Duration: </span><span class="si">{</span><span class="n">duration</span><span class="si">}</span><span class="s2"> minutes&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Work session ended. Take a break!&quot;</span><span class="p">)</span>
+# Define a work session
+def work_session(duration):
+    print(f&quot;Work session started. Duration: {duration} minutes&quot;)
+    time.sleep(duration * 60)
+    print(&quot;Work session ended. Take a break!&quot;)
 
-<span class="c1"># Define a break session</span>
-<span class="k">def</span> <span class="nf">break_session</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Break session started. Duration: </span><span class="si">{</span><span class="n">duration</span><span class="si">}</span><span class="s2"> minutes&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Break session ended. Back to work!&quot;</span><span class="p">)</span>
+# Define a break session
+def break_session(duration):
+    print(f&quot;Break session started. Duration: {duration} minutes&quot;)
+    time.sleep(duration * 60)
+    print(&quot;Break session ended. Back to work!&quot;)
 
-<span class="c1"># Implement the Pomodoro Technique</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">work_session</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-    <span class="n">break_session</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</code></pre></div>
-
+# Implement the Pomodoro Technique
+while True:
+    work_session(25)
+    break_session(5)
+</code></pre>
 <p>This script helps you stay focused and on track by automating the work and break sessions.</p>
 <h2 id="managing-interruptions-and-distractions">Managing Interruptions and Distractions</h2>
 <p>Interruptions and distractions can significantly impact your productivity. To minimize their impact, you can:

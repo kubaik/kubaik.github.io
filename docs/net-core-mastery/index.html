@@ -161,9 +161,8 @@ C# .NET Core</span>
 * Lightweight: .NET Core is a lightweight framework, which means that it has a smaller footprint compared to the full .NET Framework.</p>
 <h2 id="building-net-core-applications">Building .NET Core Applications</h2>
 <p>Building .NET Core applications involves several steps, including creating a new project, designing the application architecture, and writing the code. Here is an example of how to create a new .NET Core web application using the <code>dotnet</code> command-line tool:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">dotnet</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="n">MyWebApp</span>
-</code></pre></div>
-
+<pre><code class="language-csharp">dotnet new web -n MyWebApp
+</code></pre>
 <p>This command creates a new .NET Core web application project called <code>MyWebApp</code>. The <code>-n</code> option specifies the name of the project.</p>
 <h3 id="project-structure">Project Structure</h3>
 <p>A typical .NET Core project consists of several folders and files, including:
@@ -173,26 +172,25 @@ C# .NET Core</span>
 * <code>appsettings.json</code>: This file contains the application settings, such as the database connection string.</p>
 <h2 id="dependency-injection-in-net-core">Dependency Injection in .NET Core</h2>
 <p>Dependency injection is a design pattern that allows components to be loosely coupled, making it easier to test and maintain the application. In .NET Core, dependency injection is built-in and can be used to inject dependencies into components. Here is an example of how to use dependency injection in a .NET Core controller:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[ApiController]</span>
-<span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UsersController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">IUserService</span><span class="w"> </span><span class="n">_userService</span><span class="p">;</span>
+<pre><code class="language-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class UsersController : ControllerBase
+{
+    private readonly IUserService _userService;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">UsersController</span><span class="p">(</span><span class="n">IUserService</span><span class="w"> </span><span class="n">userService</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_userService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public UsersController(IUserService userService)
+    {
+        _userService = userService;
+    }
 
-<span class="w">    </span><span class="na">[HttpGet]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">IActionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetUsers</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_userService</span><span class="p">.</span><span class="n">GetUsersAsync</span><span class="p">();</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Ok</span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    [HttpGet]
+    public async Task&lt;IActionResult&gt; GetUsers()
+    {
+        var users = await _userService.GetUsersAsync();
+        return Ok(users);
+    }
+}
+</code></pre>
 <p>In this example, the <code>UsersController</code> class depends on the <code>IUserService</code> interface, which is injected through the constructor. The <code>IUserService</code> interface is implemented by a concrete class, such as <code>UserService</code>, which provides the actual implementation of the service.</p>
 <h3 id="benefits-of-dependency-injection">Benefits of Dependency Injection</h3>
 <p>The benefits of dependency injection include:
@@ -221,26 +219,25 @@ C# .NET Core</span>
 * <strong>Real-time applications:</strong> .NET Core can be used to build real-time applications, such as live updates, chat applications, and gaming platforms.</p>
 <h3 id="implementing-a-real-world-use-case">Implementing a Real-World Use Case</h3>
 <p>Here is an example of how to implement a real-world use case for a .NET Core application:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[ApiController]</span>
-<span class="na">[Route(&quot;api/[controller]</span><span class="s">&quot;)]</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">OrdersController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ControllerBase</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">IOrderService</span><span class="w"> </span><span class="n">_orderService</span><span class="p">;</span>
+<pre><code class="language-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class OrdersController : ControllerBase
+{
+    private readonly IOrderService _orderService;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">OrdersController</span><span class="p">(</span><span class="n">IOrderService</span><span class="w"> </span><span class="n">orderService</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_orderService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orderService</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public OrdersController(IOrderService orderService)
+    {
+        _orderService = orderService;
+    }
 
-<span class="w">    </span><span class="na">[HttpPost]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">IActionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateOrder</span><span class="p">(</span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_orderService</span><span class="p">.</span><span class="n">CreateOrderAsync</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    [HttpPost]
+    public async Task&lt;IActionResult&gt; CreateOrder(Order order)
+    {
+        var result = await _orderService.CreateOrderAsync(order);
+        return Ok(result);
+    }
+}
+</code></pre>
 <p>In this example, the <code>OrdersController</code> class provides a RESTful API for creating orders. The <code>CreateOrder</code> method takes an <code>Order</code> object as input and returns a result object, which contains the created order.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>When building .NET Core applications, there are several pricing and cost considerations to keep in mind. Here are some estimates of the costs involved:

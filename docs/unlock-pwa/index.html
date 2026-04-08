@@ -167,28 +167,27 @@
 * <strong>Workbox</strong>: A library for building and managing service workers.</p>
 <h3 id="code-example-building-a-simple-pwa-with-react">Code Example: Building a Simple PWA with React</h3>
 <p>Here is an example of how to build a simple PWA with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">ReactDOM</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./App&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-<span class="c1">// Register the service worker</span>
-<span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;sw.js&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service worker registered&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error registering service worker:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
+// Register the service worker
+navigator.serviceWorker.register('sw.js')
+  .then(registration =&gt; {
+    console.log('Service worker registered');
+  })
+  .catch(error =&gt; {
+    console.error('Error registering service worker:', error);
+  });
 
-<span class="c1">// Render the app</span>
-<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="nx">React</span><span class="p">.</span><span class="nx">StrictMode</span><span class="o">&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">App</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="w">  </span><span class="o">&lt;</span><span class="err">/React.StrictMode&gt;,</span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+// Render the app
+ReactDOM.render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;,
+  document.getElementById('root')
+);
+</code></pre>
 <p>This code registers a service worker and renders the app to the DOM. The service worker is responsible for caching resources and handling network requests, providing offline support and a fast user experience.</p>
 <h2 id="tools-and-platforms-for-building-pwas">Tools and Platforms for Building PWAs</h2>
 <p>There are a number of different tools and platforms available for building PWAs. Some of the most popular include:
@@ -202,9 +201,8 @@
 </ul>
 <h3 id="code-example-using-lighthouse-to-audit-a-pwa">Code Example: Using Lighthouse to Audit a PWA</h3>
 <p>Here is an example of how to use Lighthouse to audit a PWA:</p>
-<div class="codehilite"><pre><span></span><code>lighthouse<span class="w"> </span>https://example.com<span class="w"> </span>--view
-</code></pre></div>
-
+<pre><code class="language-bash">lighthouse https://example.com --view
+</code></pre>
 <p>This code runs Lighthouse against the specified URL and displays the results in the browser. Lighthouse provides a number of different audits and metrics, including performance, accessibility, and best practices.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are a number of common problems that can occur when building PWAs. Some of the most common include:
@@ -219,22 +217,21 @@
 4. <strong>Using a push notification service</strong>: Using a push notification service can help to simplify the process of sending push notifications to users.</p>
 <h3 id="code-example-implementing-offline-support-with-workbox">Code Example: Implementing Offline Support with Workbox</h3>
 <p>Here is an example of how to implement offline support with Workbox:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">precacheAndRoute</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-precaching&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerRoute</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-routing&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">CacheFirst</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;workbox-strategies&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
 
-<span class="c1">// Precache resources</span>
-<span class="nx">precacheAndRoute</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">__WB_MANIFEST</span><span class="p">);</span>
+// Precache resources
+precacheAndRoute(self.__WB_MANIFEST);
 
-<span class="c1">// Register a route for the app shell</span>
-<span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="ow">new</span><span class="w"> </span><span class="nx">CacheFirst</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-shell&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">}),</span>
-<span class="p">);</span>
-</code></pre></div>
-
+// Register a route for the app shell
+registerRoute(
+  new RegExp '/',
+  new CacheFirst({
+    cacheName: 'app-shell',
+  }),
+);
+</code></pre>
 <p>This code precaches resources and registers a route for the app shell, providing offline support and a fast user experience.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>There are a number of real-world use cases for PWAs. Some examples include:

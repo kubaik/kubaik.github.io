@@ -157,19 +157,18 @@
 * <strong>Virtual model</strong>: A digital representation of the physical system, which can be simulated and analyzed.
 * <strong>Data connection</strong>: A link between the physical system and the virtual model, enabling real-time data exchange and synchronization.</p>
 <p>To illustrate this concept, let's consider a simple example using Python and the popular simulation library, PyDSTool:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">PyDSTool</span> <span class="kn">import</span> <span class="o">*</span>
+<pre><code class="language-python">import numpy as np
+from PyDSTool import *
 
-<span class="c1"># Define the physical system (a simple pendulum)</span>
-<span class="n">pendulum</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="s1">&#39;-x&#39;</span><span class="p">}</span>
+# Define the physical system (a simple pendulum)
+pendulum = {'x': 'y', 'y': '-x'}
 
-<span class="c1"># Create a virtual model of the pendulum</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">PyDSTool</span><span class="o">.</span><span class="n">Generator</span><span class="o">.</span><span class="n">Vode_ODEsystem</span><span class="p">(</span><span class="n">pendulum</span><span class="p">)</span>
+# Create a virtual model of the pendulum
+model = PyDSTool.Generator.Vode_ODEsystem(pendulum)
 
-<span class="c1"># Simulate the pendulum&#39;s behavior</span>
-<span class="n">trajectory</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="s1">&#39;pendulum&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Simulate the pendulum's behavior
+trajectory = model.compute('pendulum')
+</code></pre>
 <p>In this example, we define a simple pendulum as our physical system and create a virtual model using PyDSTool. We can then simulate the pendulum's behavior and analyze the results.</p>
 <h2 id="practical-applications-of-digital-twin-technology">Practical Applications of Digital Twin Technology</h2>
 <p>Digital twin technology has a wide range of practical applications across various industries. Some examples include:

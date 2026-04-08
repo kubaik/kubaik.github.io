@@ -169,9 +169,8 @@
 <li><strong>Deployment:</strong> Containers are deployed on any compatible host system, ensuring environment consistency.</li>
 </ol>
 <h3 id="example">Example:</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span>nginx
-</code></pre></div>
-
+<pre><code class="language-bash">docker run -d -p 80:80 nginx
+</code></pre>
 <p>This command pulls the <code>nginx</code> image and runs a container exposing port 80.</p>
 <hr />
 <h2 id="benefits-of-container-technologies">Benefits of Container Technologies</h2>
@@ -230,21 +229,19 @@
 <h2 id="practical-examples-and-use-cases">Practical Examples and Use Cases</h2>
 <h3 id="example-1-local-development-with-docker">Example 1: Local Development with Docker</h3>
 <p>Developers can use Docker to create consistent development environments:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a Dockerfile for a Node.js application</span>
-FROM<span class="w"> </span>node:14
-WORKDIR<span class="w"> </span>/app
-COPY<span class="w"> </span>package*.json<span class="w"> </span>./
-RUN<span class="w"> </span>npm<span class="w"> </span>install
-COPY<span class="w"> </span>.<span class="w"> </span>.
-EXPOSE<span class="w"> </span><span class="m">3000</span>
-CMD<span class="w"> </span><span class="o">[</span><span class="s2">&quot;node&quot;</span>,<span class="w"> </span><span class="s2">&quot;app.js&quot;</span><span class="o">]</span>
-</code></pre></div>
-
+<pre><code class="language-bash"># Create a Dockerfile for a Node.js application
+FROM node:14
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD [&quot;node&quot;, &quot;app.js&quot;]
+</code></pre>
 <p>Build and run:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-node-app<span class="w"> </span>.
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>my-node-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-node-app .
+docker run -d -p 3000:3000 my-node-app
+</code></pre>
 <h3 id="example-2-cicd-pipeline-integration">Example 2: CI/CD Pipeline Integration</h3>
 <p>Automate testing and deployment:
 - Build container images in CI pipelines.

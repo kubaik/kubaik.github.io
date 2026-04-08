@@ -161,11 +161,10 @@
 * Extensive plugin ecosystem for customization and extension</p>
 <h2 id="setting-up-a-nextjs-project">Setting Up a Next.js Project</h2>
 <p>To get started with Next.js, you'll need to create a new project using the <code>npx create-next-app</code> command. This will scaffold a basic Next.js project with the necessary dependencies and configuration files. For example:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-next-app
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-next-app
+</code></pre>
 <p>This will create a new directory called <code>my-next-app</code> with the following structure:</p>
-<div class="codehilite"><pre><span></span><code>my-next-app/
+<pre><code class="language-markdown">my-next-app/
 pages/
 index.js
 _api/
@@ -176,90 +175,85 @@ styles/
 ...
 ...
 package.json
-</code></pre></div>
-
+</code></pre>
 <p>The <code>pages</code> directory contains the application's routes, while the <code>_api</code> directory contains API routes. The <code>public</code> directory serves static assets, and the <code>styles</code> directory contains CSS and other styling files.</p>
 <h3 id="configuring-nextjs">Configuring Next.js</h3>
 <p>Next.js provides a range of configuration options for customizing the application's behavior. For example, you can configure the application's API routes by creating a <code>next.config.js</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">rewrites</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/api/v1/users&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">destination</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://api.example.com/v1/users&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">];</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/api/v1/users',
+        destination: 'https://api.example.com/v1/users',
+      },
+    ];
+  },
+};
+</code></pre>
 <p>This configuration sets up a rewrite rule for the <code>/api/v1/users</code> route, proxying requests to an external API endpoint.</p>
 <h2 id="building-a-full-stack-application-with-nextjs">Building a Full-Stack Application with Next.js</h2>
 <p>Next.js provides a range of features for building full-stack applications, including API routes, serverless functions, and database integration. For example, you can create a RESTful API using Next.js API routes:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/api/users.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/api/users.js
+import { NextApiRequest, NextApiResponse } from 'next';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Jane Doe&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="p">];</span>
+const users = [
+  { id: 1, name: 'John Doe' },
+  { id: 2, name: 'Jane Doe' },
+];
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiRequest</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="o">:</span><span class="w"> </span><span class="nx">NextApiResponse</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    return res.json(users);
+  } else if (req.method === 'POST') {
+    const { name } = req.body;
+    const newUser = { id: users.length + 1, name };
+    users.push(newUser);
+    return res.json(newUser);
+  }
+}
+</code></pre>
 <p>This API route handles GET and POST requests, returning a list of users and creating new users, respectively.</p>
 <h3 id="integrating-with-databases">Integrating with Databases</h3>
 <p>Next.js provides a range of options for integrating with databases, including MongoDB, PostgreSQL, and MySQL. For example, you can use the <code>mongoose</code> library to connect to a MongoDB database:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// lib/db.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">mongoose</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;mongoose&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// lib/db.js
+import mongoose from 'mongoose';
 
-<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost:27017/mydatabase&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">useNewUrlParser</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">useUnifiedTopology</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="p">});</span>
+mongoose.connect('mongodb://localhost:27017/mydatabase', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connection</span><span class="p">;</span>
+const db = mongoose.connection;
 
-<span class="nx">db</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="p">});</span>
+db.on('error', (err) =&gt; {
+  console.error(err);
+});
 
-<span class="nx">db</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Connected to MongoDB&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+db.once('open', () =&gt; {
+  console.log('Connected to MongoDB');
+});
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">db</span><span class="p">;</span>
-</code></pre></div>
-
+export default db;
+</code></pre>
 <p>This code sets up a connection to a local MongoDB database using the <code>mongoose</code> library.</p>
 <h2 id="performance-optimization-with-nextjs">Performance Optimization with Next.js</h2>
 <p>Next.js provides a range of features for optimizing application performance, including server-side rendering, static site generation, and code splitting. For example, you can use the <code>getStaticProps</code> method to pre-render pages at build time:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">GetStaticProps</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// pages/index.js
+import { GetStaticProps } from 'next';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">HomePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="nx">homepage</span><span class="o">&lt;</span><span class="err">/div&gt;;</span>
-<span class="p">};</span>
+const HomePage = () =&gt; {
+  return &lt;div&gt;Welcome to my homepage&lt;/div&gt;;
+};
 
-<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">getStaticProps</span><span class="o">:</span><span class="w"> </span><span class="nx">GetStaticProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">    </span><span class="nx">revalidate</span><span class="o">:</span><span class="w"> </span><span class="mf">60</span><span class="p">,</span><span class="w"> </span><span class="c1">// Revalidate every 60 seconds</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="p">};</span>
+export const getStaticProps: GetStaticProps = async () =&gt; {
+  return {
+    props: {},
+    revalidate: 60, // Revalidate every 60 seconds
+  };
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>This code pre-renders the homepage at build time, revalidating every 60 seconds.</p>
 <h3 id="measuring-performance-with-web-vitals">Measuring Performance with Web Vitals</h3>
 <p>Next.js provides a range of tools for measuring application performance, including Web Vitals. Web Vitals is a set of metrics for measuring web application performance, including:
@@ -268,14 +262,13 @@ package.json
 * Cumulative Layout Shift (CLS)
 * Total Blocking Time (TBT)</p>
 <p>You can use the <code>web-vitals</code> library to measure Web Vitals metrics in your Next.js application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// lib/web-vitals.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">reportWebVitals</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;web-vitals&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// lib/web-vitals.js
+import { reportWebVitals } from 'web-vitals';
 
-<span class="nx">reportWebVitals</span><span class="p">((</span><span class="nx">metrics</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">metrics</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+reportWebVitals((metrics) =&gt; {
+  console.log(metrics);
+});
+</code></pre>
 <p>This code reports Web Vitals metrics to the console.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems and solutions when using Next.js include:

@@ -164,96 +164,93 @@
 <p>Let's take a look at some practical examples of system design:</p>
 <h3 id="example-1-designing-a-url-shortening-service">Example 1: Designing a URL Shortening Service</h3>
 <p>A URL shortening service is a system that takes a long URL as input and generates a shorter URL that redirects to the original URL. Here's an example of how you might design such a system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import hashlib
+import redis
 
-<span class="c1"># Define a function to generate a short URL</span>
-<span class="k">def</span> <span class="nf">generate_short_url</span><span class="p">(</span><span class="n">long_url</span><span class="p">):</span>
-    <span class="c1"># Use a hash function to generate a unique short URL</span>
-    <span class="n">short_url</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">long_url</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">short_url</span>
+# Define a function to generate a short URL
+def generate_short_url(long_url):
+    # Use a hash function to generate a unique short URL
+    short_url = hashlib.sha256(long_url.encode()).hexdigest()[:6]
+    return short_url
 
-<span class="c1"># Define a function to store the mapping between short and long URLs</span>
-<span class="k">def</span> <span class="nf">store_url_mapping</span><span class="p">(</span><span class="n">short_url</span><span class="p">,</span> <span class="n">long_url</span><span class="p">):</span>
-    <span class="c1"># Use a Redis database to store the mapping</span>
-    <span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">short_url</span><span class="p">,</span> <span class="n">long_url</span><span class="p">)</span>
+# Define a function to store the mapping between short and long URLs
+def store_url_mapping(short_url, long_url):
+    # Use a Redis database to store the mapping
+    redis_client = redis.Redis(host='localhost', port=6379, db=0)
+    redis_client.set(short_url, long_url)
 
-<span class="c1"># Define a function to handle HTTP requests</span>
-<span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">short_url</span><span class="p">):</span>
-    <span class="c1"># Use a load balancer to distribute incoming requests across multiple servers</span>
-    <span class="c1"># Use a caching layer to store frequently accessed URLs</span>
-    <span class="c1"># Use a database to store the mapping between short and long URLs</span>
-    <span class="n">long_url</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">short_url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">long_url</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">long_url</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;URL not found&quot;</span>
-</code></pre></div>
-
+# Define a function to handle HTTP requests
+def handle_request(short_url):
+    # Use a load balancer to distribute incoming requests across multiple servers
+    # Use a caching layer to store frequently accessed URLs
+    # Use a database to store the mapping between short and long URLs
+    long_url = redis_client.get(short_url)
+    if long_url:
+        return long_url
+    else:
+        return &quot;URL not found&quot;
+</code></pre>
 <p>In this example, we use a combination of technologies such as hash functions, Redis databases, load balancers, and caching layers to design a scalable and efficient URL shortening service.</p>
 <h3 id="example-2-designing-a-real-time-analytics-system">Example 2: Designing a Real-Time Analytics System</h3>
 <p>A real-time analytics system is a system that collects, processes, and analyzes data in real-time to provide insights and metrics. Here's an example of how you might design such a system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.KafkaProducer</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.producer.ProducerConfig</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.common.serialization.StringSerializer</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 
-<span class="c1">// Define a function to collect and process data</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">collectAndProcessData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Use Apache Kafka to collect and process data in real-time</span>
-<span class="w">    </span><span class="n">KafkaProducer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaProducer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">getProducerConfig</span><span class="p">());</span>
-<span class="w">    </span><span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ProducerRecord</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;analytics-topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data&quot;</span><span class="p">));</span>
-<span class="p">}</span>
+// Define a function to collect and process data
+public void collectAndProcessData() {
+    // Use Apache Kafka to collect and process data in real-time
+    KafkaProducer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(getProducerConfig());
+    producer.send(new ProducerRecord&lt;&gt;(&quot;analytics-topic&quot;, &quot;data&quot;));
+}
 
-<span class="c1">// Define a function to analyze data and provide insights</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">analyzeData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Use Apache Spark to analyze data and provide insights</span>
-<span class="w">    </span><span class="n">SparkConf</span><span class="w"> </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkConf</span><span class="p">().</span><span class="na">setAppName</span><span class="p">(</span><span class="s">&quot;Analytics&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">JavaSparkContext</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JavaSparkContext</span><span class="p">(</span><span class="n">conf</span><span class="p">);</span>
-<span class="w">    </span><span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sc</span><span class="p">.</span><span class="na">textFile</span><span class="p">(</span><span class="s">&quot;analytics-data&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">data</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)).</span><span class="na">foreach</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">t</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">));</span>
-<span class="p">}</span>
+// Define a function to analyze data and provide insights
+public void analyzeData() {
+    // Use Apache Spark to analyze data and provide insights
+    SparkConf conf = new SparkConf().setAppName(&quot;Analytics&quot;);
+    JavaSparkContext sc = new JavaSparkContext(conf);
+    JavaRDD&lt;String&gt; data = sc.textFile(&quot;analytics-data&quot;);
+    data.map(s -&gt; s.split(&quot;,&quot;)).foreach(t -&gt; System.out.println(t[0] + &quot;, &quot; + t[1]));
+}
 
-<span class="c1">// Define a function to provide metrics and insights</span>
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">provideMetrics</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Use Apache Cassandra to store and provide metrics and insights</span>
-<span class="w">    </span><span class="n">Cluster</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cluster</span><span class="p">.</span><span class="na">builder</span><span class="p">().</span><span class="na">addContactPoint</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
-<span class="w">    </span><span class="n">Session</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cluster</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span><span class="s">&quot;analytics&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;SELECT * FROM metrics&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">results</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">row</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">row</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Define a function to provide metrics and insights
+public void provideMetrics() {
+    // Use Apache Cassandra to store and provide metrics and insights
+    Cluster cluster = Cluster.builder().addContactPoint(&quot;localhost&quot;).build();
+    Session session = cluster.connect(&quot;analytics&quot;);
+    ResultSet results = session.execute(&quot;SELECT * FROM metrics&quot;);
+    results.forEach(row -&gt; System.out.println(row.getString(0) + &quot;, &quot; + row.getString(1)));
+}
+</code></pre>
 <p>In this example, we use a combination of technologies such as Apache Kafka, Apache Spark, and Apache Cassandra to design a real-time analytics system that collects, processes, and analyzes data in real-time to provide insights and metrics.</p>
 <h3 id="example-3-designing-a-chatbot-system">Example 3: Designing a Chatbot System</h3>
 <p>A chatbot system is a system that uses natural language processing (NLP) and machine learning (ML) to provide automated support and answers to user queries. Here's an example of how you might design such a system:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+<pre><code class="language-python">import nltk
+from nltk.tokenize import word_tokenize
+from sklearn.naive_bayes import MultinomialNB
 
-<span class="c1"># Define a function to process user input</span>
-<span class="k">def</span> <span class="nf">process_user_input</span><span class="p">(</span><span class="n">user_input</span><span class="p">):</span>
-    <span class="c1"># Use NLTK to tokenize and process user input</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tokens</span>
+# Define a function to process user input
+def process_user_input(user_input):
+    # Use NLTK to tokenize and process user input
+    tokens = word_tokenize(user_input)
+    return tokens
 
-<span class="c1"># Define a function to classify user intent</span>
-<span class="k">def</span> <span class="nf">classify_user_intent</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
-    <span class="c1"># Use scikit-learn to classify user intent using a naive Bayes classifier</span>
-    <span class="n">classifier</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
-    <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;goodbye&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+# Define a function to classify user intent
+def classify_user_intent(tokens):
+    # Use scikit-learn to classify user intent using a naive Bayes classifier
+    classifier = MultinomialNB()
+    classifier.fit(tokens, [&quot;greeting&quot;, &quot;goodbye&quot;])
+    return classifier.predict(tokens)
 
-<span class="c1"># Define a function to provide automated support and answers</span>
-<span class="k">def</span> <span class="nf">provide_automated_support</span><span class="p">(</span><span class="n">user_intent</span><span class="p">):</span>
-    <span class="c1"># Use a knowledge graph to provide automated support and answers</span>
-    <span class="n">knowledge_graph</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello! How can I help you?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;goodbye&quot;</span><span class="p">:</span> <span class="s2">&quot;Goodbye! Have a great day!&quot;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">knowledge_graph</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_intent</span><span class="p">)</span>
-</code></pre></div>
-
+# Define a function to provide automated support and answers
+def provide_automated_support(user_intent):
+    # Use a knowledge graph to provide automated support and answers
+    knowledge_graph = {
+        &quot;greeting&quot;: &quot;Hello! How can I help you?&quot;,
+        &quot;goodbye&quot;: &quot;Goodbye! Have a great day!&quot;
+    }
+    return knowledge_graph.get(user_intent)
+</code></pre>
 <p>In this example, we use a combination of technologies such as NLTK, scikit-learn, and knowledge graphs to design a chatbot system that uses NLP and ML to provide automated support and answers to user queries.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that you may encounter during system design interviews include:

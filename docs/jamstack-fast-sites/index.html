@@ -169,61 +169,58 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Let's take a look at some practical code examples that demonstrate the power of Jamstack architecture:</p>
 <h3 id="example-1-using-nextjs-to-build-a-static-blog-site">Example 1: Using Next.js to Build a Static Blog Site</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// pages/index.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Head</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;next/head&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">// pages/index.js
+import Head from 'next/head';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Home</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="nx">My</span><span class="w"> </span><span class="nx">Blog</span><span class="w"> </span><span class="nx">Site</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">Head</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">my</span><span class="w"> </span><span class="nx">blog</span><span class="w"> </span><span class="nx">site</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+function Home() {
+  return (
+    &lt;div&gt;
+      &lt;Head&gt;
+        &lt;title&gt;My Blog Site&lt;/title&gt;
+      &lt;/Head&gt;
+      &lt;h1&gt;Welcome to my blog site!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Home</span><span class="p">;</span>
-</code></pre></div>
-
+export default Home;
+</code></pre>
 <p>In this example, we're using Next.js to build a simple blog site with a static homepage. The <code>pages/index.js</code> file defines the React component for the homepage, which includes a <code>Head</code> component for setting the page title.</p>
 <h3 id="example-2-fetching-data-from-an-api-with-gatsby">Example 2: Fetching Data from an API with Gatsby</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// src/components/data.js</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">graphql</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;gatsby&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// src/components/data.js
+import { graphql } from 'gatsby';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">getData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">graphql</span><span class="sb">`</span>
-<span class="sb">    query {</span>
-<span class="sb">      allMarkdownRemark {</span>
-<span class="sb">        edges {</span>
-<span class="sb">          node {</span>
-<span class="sb">            frontmatter {</span>
-<span class="sb">              title</span>
-<span class="sb">              date</span>
-<span class="sb">            }</span>
-<span class="sb">            html</span>
-<span class="sb">          }</span>
-<span class="sb">        }</span>
-<span class="sb">      }</span>
-<span class="sb">    }</span>
-<span class="sb">  `</span><span class="p">;</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
-<span class="p">};</span>
+const getData = () =&gt; {
+  const data = graphql`
+    query {
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              title
+              date
+            }
+            html
+          }
+        }
+      }
+    }
+  `;
+  return data;
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">getData</span><span class="p">;</span>
-</code></pre></div>
-
+export default getData;
+</code></pre>
 <p>In this example, we're using Gatsby to fetch data from a Markdown file using GraphQL. The <code>getData</code> function defines a GraphQL query that retrieves the title, date, and HTML content of the Markdown file.</p>
 <h3 id="example-3-deploying-a-jamstack-site-to-netlify">Example 3: Deploying a Jamstack Site to Netlify</h3>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="n">netlify</span><span class="p">.</span><span class="n">toml</span>
-<span class="o">[</span><span class="n">build</span><span class="o">]</span>
-<span class="w">  </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;npm run build&quot;</span>
-<span class="w">  </span><span class="n">publish</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;public&quot;</span>
+<pre><code class="language-yml"># netlify.toml
+[build]
+  command = &quot;npm run build&quot;
+  publish = &quot;public&quot;
 
-<span class="o">[</span><span class="n">functions</span><span class="o">]</span>
-<span class="w">  </span><span class="n">node_bundler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;esbuild&quot;</span>
-</code></pre></div>
-
+[functions]
+  node_bundler = &quot;esbuild&quot;
+</code></pre>
 <p>In this example, we're using Netlify to deploy a Jamstack site. The <code>netlify.toml</code> file defines the build command and publish directory for the site, as well as the Node.js bundler to use (in this case, esbuild).</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>While Jamstack architecture offers many benefits, it's not without its challenges. Here are some common problems and solutions:

@@ -171,13 +171,12 @@
 3. Use the Amazon Redshift COPY command to load data from your source systems into the database.
 4. Use SQL to transform, aggregate, and analyze the data.</p>
 <p>Here is an example of the COPY command:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">COPY</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;s3://my-bucket/orders.csv&#39;</span>
-<span class="n">CREDENTIALS</span><span class="w"> </span><span class="s1">&#39;aws_access_key_id=YOUR_ACCESS_KEY;aws_secret_access_key=YOUR_SECRET_KEY&#39;</span>
-<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
-<span class="n">IGNOREHEADER</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">COPY orders (order_id, customer_id, order_date, total)
+FROM 's3://my-bucket/orders.csv'
+CREDENTIALS 'aws_access_key_id=YOUR_ACCESS_KEY;aws_secret_access_key=YOUR_SECRET_KEY'
+DELIMITER ','
+IGNOREHEADER 1;
+</code></pre>
 <p>This command copies data from an S3 bucket into an Amazon Redshift table named "orders".</p>
 <h2 id="data-ingestion-and-processing">Data Ingestion and Processing</h2>
 <p>Data ingestion and processing are critical components of a data warehousing solution. There are several tools and platforms available to simplify the process, such as:
@@ -191,26 +190,25 @@
 3. Apply transformations to the data, such as filtering, aggregating, or joining.
 4. Write the transformed data to a destination system, such as a data warehouse or a file system.</p>
 <p>Here is an example of a data processing pipeline using Apache Beam:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Pipeline</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pipeline</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+<pre><code class="language-java">Pipeline pipeline = Pipeline.create();
 
-<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pipeline</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span>
-<span class="w">    </span><span class="n">TextIO</span><span class="p">.</span><span class="na">read</span><span class="p">().</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;gs://my-bucket/data.txt&quot;</span><span class="p">)</span>
-<span class="p">);</span>
+PCollection&lt;String&gt; lines = pipeline.apply(
+    TextIO.read().from(&quot;gs://my-bucket/data.txt&quot;)
+);
 
-<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">filteredLines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span>
-<span class="w">    </span><span class="n">Filter</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Boolean</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nd">@Override</span>
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="n">Boolean</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;example&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="p">);</span>
+PCollection&lt;String&gt; filteredLines = lines.apply(
+    Filter.by(new Function&lt;String, Boolean&gt;() {
+        @Override
+        public Boolean apply(String line) {
+            return line.contains(&quot;example&quot;);
+        }
+    })
+);
 
-<span class="n">filteredLines</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span>
-<span class="w">    </span><span class="n">TextIO</span><span class="p">.</span><span class="na">write</span><span class="p">().</span><span class="na">to</span><span class="p">(</span><span class="s">&quot;gs://my-bucket/filtered-data.txt&quot;</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+filteredLines.apply(
+    TextIO.write().to(&quot;gs://my-bucket/filtered-data.txt&quot;)
+);
+</code></pre>
 <p>This pipeline reads data from a file in a Google Cloud Storage bucket, filters out lines that do not contain the word "example", and writes the filtered data to a new file in the same bucket.</p>
 <h2 id="data-visualization-and-analysis">Data Visualization and Analysis</h2>
 <p>Data visualization and analysis are critical components of a data warehousing solution. There are several tools and platforms available to simplify the process, such as:
@@ -225,11 +223,10 @@
 4. Create a new dashboard and add the worksheet to it.
 5. Add interactive elements, such as filters and drill-downs, to the dashboard.</p>
 <p>Here is an example of a dashboard created using Tableau:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">*</span><span class="w"> </span><span class="gs">**Sales by Region**</span>: A bar chart showing sales by region, with a filter to select the year.
-<span class="k">*</span><span class="w"> </span><span class="gs">**Top 10 Products**</span>: A table showing the top 10 products by sales, with a drill-down to view detailed product information.
-<span class="k">*</span><span class="w"> </span><span class="gs">**Customer Segmentation**</span>: A scatter plot showing customer segmentation by age and income, with a filter to select the region.
-</code></pre></div>
-
+<pre><code class="language-markdown">* **Sales by Region**: A bar chart showing sales by region, with a filter to select the year.
+* **Top 10 Products**: A table showing the top 10 products by sales, with a drill-down to view detailed product information.
+* **Customer Segmentation**: A scatter plot showing customer segmentation by age and income, with a filter to select the region.
+</code></pre>
 <p>This dashboard provides an interactive and intuitive way to analyze sales data, product information, and customer segmentation.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>There are several common problems that can occur in a data warehousing solution, such as:

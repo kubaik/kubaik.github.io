@@ -168,29 +168,28 @@
 <li><strong>Unity</strong>: a game engine that can be used to create interactive 3D models</li>
 </ul>
 <p>For example, here's an example of how you might use Python to collect data from an IoT sensor using the <strong>PTC ThingWorx</strong> platform:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set up the API endpoint and credentials</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://your-thingworx-instance.com/Thingworx/Things/YourThing/Properties&quot;</span>
-<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;your-username&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;your-password&quot;</span>
+# Set up the API endpoint and credentials
+endpoint = &quot;https://your-thingworx-instance.com/Thingworx/Things/YourThing/Properties&quot;
+username = &quot;your-username&quot;
+password = &quot;your-password&quot;
 
-<span class="c1"># Set up the sensor data</span>
-<span class="n">sensor_data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
-    <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">50</span>
-<span class="p">}</span>
+# Set up the sensor data
+sensor_data = {
+    &quot;temperature&quot;: 25,
+    &quot;humidity&quot;: 50
+}
 
-<span class="c1"># Send the data to the API endpoint</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">sensor_data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span>
+# Send the data to the API endpoint
+response = requests.put(endpoint, json=sensor_data, auth=(username, password))
 
-<span class="c1"># Check the response status code</span>
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data sent successfully&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error sending data&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Check the response status code
+if response.status_code == 200:
+    print(&quot;Data sent successfully&quot;)
+else:
+    print(&quot;Error sending data&quot;)
+</code></pre>
 <p>This code snippet shows how to use the <strong>requests</strong> library to send data to a <strong>PTC ThingWorx</strong> API endpoint.</p>
 <h2 id="use-cases-for-digital-twins">Use Cases for Digital Twins</h2>
 <p>Digital twins have a wide range of use cases, including:</p>
@@ -206,27 +205,26 @@
 <li><strong>Microsoft</strong>: using digital twins to optimize the performance of its data centers, resulting in a 20% reduction in energy consumption</li>
 </ul>
 <p>Here's an example of how you might use <strong>Siemens MindSphere</strong> to create a digital twin of a wind turbine:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nf">com</span><span class="p">(</span><span class="n">siemen</span><span class="p">.</span><span class="na">mindsphere</span><span class="p">.</span><span class="na">sdk</span><span class="p">.</span><span class="na">core</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nf">com</span><span class="p">(</span><span class="n">siemen</span><span class="p">.</span><span class="na">mindsphere</span><span class="p">.</span><span class="na">sdk</span><span class="p">.</span><span class="na">windturbine</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+<pre><code class="language-java">// Import the necessary libraries
+import com(siemen.mindsphere.sdk.core.*;
+import com(siemen.mindsphere.sdk.windturbine.*;
 
-<span class="c1">// Set up the wind turbine model</span>
-<span class="n">WindTurbineModel</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WindTurbineModel</span><span class="p">();</span>
-<span class="n">model</span><span class="p">.</span><span class="na">setTurbineId</span><span class="p">(</span><span class="s">&quot;your-turbine-id&quot;</span><span class="p">);</span>
-<span class="n">model</span><span class="p">.</span><span class="na">setPowerRating</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span><span class="w"> </span><span class="c1">// kW</span>
+// Set up the wind turbine model
+WindTurbineModel model = new WindTurbineModel();
+model.setTurbineId(&quot;your-turbine-id&quot;);
+model.setPowerRating(2000); // kW
 
-<span class="c1">// Set up the simulation parameters</span>
-<span class="n">SimulationParameters</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimulationParameters</span><span class="p">();</span>
-<span class="n">params</span><span class="p">.</span><span class="na">setSimulationTime</span><span class="p">(</span><span class="mi">3600</span><span class="p">);</span><span class="w"> </span><span class="c1">// 1 hour</span>
-<span class="n">params</span><span class="p">.</span><span class="na">setTurbineSpeed</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span><span class="w"> </span><span class="c1">// rpm</span>
+// Set up the simulation parameters
+SimulationParameters params = new SimulationParameters();
+params.setSimulationTime(3600); // 1 hour
+params.setTurbineSpeed(15); // rpm
 
-<span class="c1">// Run the simulation</span>
-<span class="n">SimulationResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">simulate</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+// Run the simulation
+SimulationResult result = model.simulate(params);
 
-<span class="c1">// Print the results</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Energy production: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getEnergyProduction</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; kWh&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+// Print the results
+System.out.println(&quot;Energy production: &quot; + result.getEnergyProduction() + &quot; kWh&quot;);
+</code></pre>
 <p>This code snippet shows how to use the <strong>Siemens MindSphere</strong> SDK to create a digital twin of a wind turbine and run a simulation to predict its energy production.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem with digital twins is <strong>data quality</strong>, which can be addressed by:</p>
@@ -242,25 +240,24 @@
 <li><strong>Edge computing</strong>: using edge computing devices to process data closer to the source</li>
 </ul>
 <p>For example, here's an example of how you might use <strong>Apache Spark</strong> to process large datasets in a digital twin application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary libraries</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org</span><span class="p">.</span><span class="nn">apache</span><span class="p">.</span><span class="nn">spark</span><span class="p">.</span><span class="nn">sql</span><span class="p">.</span><span class="nc">SparkSession</span>
+<pre><code class="language-scala">// Import the necessary libraries
+import org.apache.spark.sql.SparkSession
 
-<span class="c1">// Set up the Spark session</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&quot;Digital Twin&quot;</span><span class="p">).</span><span class="n">getOrCreate</span><span class="p">()</span>
+// Set up the Spark session
+val spark = SparkSession.builder.appName(&quot;Digital Twin&quot;).getOrCreate()
 
-<span class="c1">// Load the data from a CSV file</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spark</span><span class="p">.</span><span class="n">read</span><span class="p">.</span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;data.csv&quot;</span><span class="p">)</span>
+// Load the data from a CSV file
+val data = spark.read.csv(&quot;data.csv&quot;)
 
-<span class="c1">// Process the data using Spark</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">processedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Process the data here</span>
-<span class="w">  </span><span class="n">row</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="p">})</span>
+// Process the data using Spark
+val processedData = data.map(row =&gt; {
+  // Process the data here
+  row.getString(0)
+})
 
-<span class="c1">// Save the processed data to a new CSV file</span>
-<span class="n">processedData</span><span class="p">.</span><span class="n">write</span><span class="p">.</span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;processed_data.csv&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+// Save the processed data to a new CSV file
+processedData.write.csv(&quot;processed_data.csv&quot;)
+</code></pre>
 <p>This code snippet shows how to use <strong>Apache Spark</strong> to process large datasets in a digital twin application.</p>
 <h2 id="implementation-details">Implementation Details</h2>
 <p>Implementing a digital twin requires a range of technical skills, including:</p>

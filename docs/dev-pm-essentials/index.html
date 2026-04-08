@@ -162,21 +162,20 @@
 </ul>
 <h3 id="example-using-asana-for-project-management">Example: Using Asana for Project Management</h3>
 <p>Here is an example of how to use Asana for project management:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">asana</span>
+<pre><code class="language-python">import asana
 
-<span class="c1"># Create a new Asana client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">asana</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="s2">&quot;your_access_token&quot;</span><span class="p">)</span>
+# Create a new Asana client
+client = asana.Client(access_token=&quot;your_access_token&quot;)
 
-<span class="c1"># Create a new project</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Project&quot;</span><span class="p">})</span>
+# Create a new project
+project = client.projects.create({&quot;name&quot;: &quot;My Project&quot;})
 
-<span class="c1"># Create a new task</span>
-<span class="n">task</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Task&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]})</span>
+# Create a new task
+task = client.tasks.create({&quot;name&quot;: &quot;My Task&quot;, &quot;project&quot;: project[&quot;id&quot;]})
 
-<span class="c1"># Assign the task to a team member</span>
-<span class="n">client</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;assignee&quot;</span><span class="p">:</span> <span class="s2">&quot;team_member_id&quot;</span><span class="p">})</span>
-</code></pre></div>
-
+# Assign the task to a team member
+client.tasks.update(task[&quot;id&quot;], {&quot;assignee&quot;: &quot;team_member_id&quot;})
+</code></pre>
 <p>This code example demonstrates how to create a new Asana client, create a new project, create a new task, and assign the task to a team member using the Asana API.</p>
 <h2 id="agile-development-methodologies">Agile Development Methodologies</h2>
 <p>Agile development methodologies are widely used in software development projects. These methodologies emphasize iterative and incremental development, continuous improvement, and flexibility. Some popular agile development methodologies include:</p>
@@ -187,28 +186,27 @@
 </ul>
 <h3 id="example-implementing-scrum-using-jira">Example: Implementing Scrum using Jira</h3>
 <p>Here is an example of how to implement Scrum using Jira:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.issue.Issue</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.issue.IssueManager</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.atlassian.jira.project.Project</span><span class="p">;</span>
+<pre><code class="language-java">import com.atlassian.jira.issue.Issue;
+import com.atlassian.jira.issue.IssueManager;
+import com.atlassian.jira.project.Project;
 
-<span class="c1">// Create a new Jira issue</span>
-<span class="n">Issue</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Issue</span><span class="p">();</span>
-<span class="n">issue</span><span class="p">.</span><span class="na">setSummary</span><span class="p">(</span><span class="s">&quot;My Issue&quot;</span><span class="p">);</span>
-<span class="n">issue</span><span class="p">.</span><span class="na">setDescription</span><span class="p">(</span><span class="s">&quot;My Issue Description&quot;</span><span class="p">);</span>
+// Create a new Jira issue
+Issue issue = new Issue();
+issue.setSummary(&quot;My Issue&quot;);
+issue.setDescription(&quot;My Issue Description&quot;);
 
-<span class="c1">// Create a new Jira project</span>
-<span class="n">Project</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Project</span><span class="p">();</span>
-<span class="n">project</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;My Project&quot;</span><span class="p">);</span>
+// Create a new Jira project
+Project project = new Project();
+project.setName(&quot;My Project&quot;);
 
-<span class="c1">// Create a new Jira sprint</span>
-<span class="n">Sprint</span><span class="w"> </span><span class="n">sprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Sprint</span><span class="p">();</span>
-<span class="n">sprint</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;My Sprint&quot;</span><span class="p">);</span>
-<span class="n">sprint</span><span class="p">.</span><span class="na">setProject</span><span class="p">(</span><span class="n">project</span><span class="p">);</span>
+// Create a new Jira sprint
+Sprint sprint = new Sprint();
+sprint.setName(&quot;My Sprint&quot;);
+sprint.setProject(project);
 
-<span class="c1">// Add the issue to the sprint</span>
-<span class="n">sprint</span><span class="p">.</span><span class="na">addIssue</span><span class="p">(</span><span class="n">issue</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the issue to the sprint
+sprint.addIssue(issue);
+</code></pre>
 <p>This code example demonstrates how to create a new Jira issue, create a new Jira project, create a new Jira sprint, and add the issue to the sprint using the Jira API.</p>
 <h2 id="metrics-and-benchmarking">Metrics and Benchmarking</h2>
 <p>Metrics and benchmarking are essential for measuring the success of software development projects. Some common metrics used in software development include:</p>
@@ -221,25 +219,24 @@
 <p>According to a survey by Puppet, the median cycle time for software development teams is 10 days, while the median lead time is 20 days. The survey also found that teams that deploy code more frequently have shorter cycle times and lead times.</p>
 <h3 id="example-measuring-cycle-time-using-github">Example: Measuring Cycle Time using GitHub</h3>
 <p>Here is an example of how to measure cycle time using GitHub:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">github</span>
+<pre><code class="language-python">import github
 
-<span class="c1"># Create a new GitHub client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="s2">&quot;your_access_token&quot;</span><span class="p">)</span>
+# Create a new GitHub client
+client = github.Client(access_token=&quot;your_access_token&quot;)
 
-<span class="c1"># Get the repository</span>
-<span class="n">repository</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_repo</span><span class="p">(</span><span class="s2">&quot;your_repository&quot;</span><span class="p">)</span>
+# Get the repository
+repository = client.get_repo(&quot;your_repository&quot;)
 
-<span class="c1"># Get the pull requests</span>
-<span class="n">pull_requests</span> <span class="o">=</span> <span class="n">repository</span><span class="o">.</span><span class="n">get_pulls</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+# Get the pull requests
+pull_requests = repository.get_pulls(state=&quot;all&quot;)
 
-<span class="c1"># Calculate the cycle time for each pull request</span>
-<span class="k">for</span> <span class="n">pull_request</span> <span class="ow">in</span> <span class="n">pull_requests</span><span class="p">:</span>
-    <span class="n">created_at</span> <span class="o">=</span> <span class="n">pull_request</span><span class="o">.</span><span class="n">created_at</span>
-    <span class="n">merged_at</span> <span class="o">=</span> <span class="n">pull_request</span><span class="o">.</span><span class="n">merged_at</span>
-    <span class="n">cycle_time</span> <span class="o">=</span> <span class="n">merged_at</span> <span class="o">-</span> <span class="n">created_at</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cycle time for pull request </span><span class="si">{</span><span class="n">pull_request</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cycle_time</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Calculate the cycle time for each pull request
+for pull_request in pull_requests:
+    created_at = pull_request.created_at
+    merged_at = pull_request.merged_at
+    cycle_time = merged_at - created_at
+    print(f&quot;Cycle time for pull request {pull_request.number}: {cycle_time}&quot;)
+</code></pre>
 <p>This code example demonstrates how to calculate the cycle time for each pull request in a GitHub repository using the GitHub API.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when managing projects include:</p>

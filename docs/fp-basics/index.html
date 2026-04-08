@@ -184,68 +184,65 @@
 <p>To illustrate these concepts, let's use JavaScript, a versatile language that supports FP techniques.</p>
 <h4 id="example-1-higher-order-functions">Example 1: Higher-Order Functions</h4>
 <p>Higher-order functions are functions that can take other functions as arguments or return them as output. Here’s a simple example using a higher-order function to apply a transformation to an array of numbers.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Higher-order function</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">applyOperation</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span><span class="w"> </span><span class="nx">operation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">arr</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">operation</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Higher-order function
+function applyOperation(arr, operation) {
+    return arr.map(operation);
+}
 
-<span class="c1">// Example operations</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">square</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="kr">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+// Example operations
+const square = x =&gt; x * x;
+const double = x =&gt; x * 2;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">];</span>
+const numbers = [1, 2, 3, 4, 5];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">squaredNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">applyOperation</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="w"> </span><span class="nx">square</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">squaredNumbers</span><span class="p">);</span><span class="w"> </span><span class="c1">// [1, 4, 9, 16, 25]</span>
+const squaredNumbers = applyOperation(numbers, square);
+console.log(squaredNumbers); // [1, 4, 9, 16, 25]
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">doubledNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">applyOperation</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="w"> </span><span class="kr">double</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doubledNumbers</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2, 4, 6, 8, 10]</span>
-</code></pre></div>
-
+const doubledNumbers = applyOperation(numbers, double);
+console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>applyOperation</code> function takes an array and a function as parameters and applies the function to each element of the array using <code>map</code>.
 - <code>square</code> and <code>double</code> are two operations that can be passed to <code>applyOperation</code>.</p>
 <h3 id="example-2-pure-functions-and-immutability">Example 2: Pure Functions and Immutability</h3>
 <p>Let’s create a simple example to show how to manage state immutably using pure functions. </p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// State represented as an object</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">initialState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="p">};</span>
+<pre><code class="language-javascript">// State represented as an object
+const initialState = {
+    users: [],
+};
 
-<span class="c1">// Pure function to add a user</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">addUser</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="p">...</span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="c1">// Spread operator to maintain immutability</span>
-<span class="w">        </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">[...</span><span class="nx">state</span><span class="p">.</span><span class="nx">users</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">],</span><span class="w"> </span><span class="c1">// Add new user to the users array</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="p">}</span>
+// Pure function to add a user
+function addUser(state, user) {
+    return {
+        ...state, // Spread operator to maintain immutability
+        users: [...state.users, user], // Add new user to the users array
+    };
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">newState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addUser</span><span class="p">(</span><span class="nx">initialState</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Alice&#39;</span><span class="w"> </span><span class="p">});</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">newState</span><span class="p">);</span>
-<span class="c1">// Output: { users: [ { id: 1, name: &#39;Alice&#39; } ] }</span>
+const newState = addUser(initialState, { id: 1, name: 'Alice' });
+console.log(newState);
+// Output: { users: [ { id: 1, name: 'Alice' } ] }
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">initialState</span><span class="p">);</span><span class="w"> </span>
-<span class="c1">// Output: { users: [] }, original state is unchanged</span>
-</code></pre></div>
-
+console.log(initialState); 
+// Output: { users: [] }, original state is unchanged
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>addUser</code> function returns a new state object instead of modifying the existing <code>initialState</code>.
 - This practice enhances predictability and makes it easier to track changes over time.</p>
 <h3 id="example-3-function-composition">Example 3: Function Composition</h3>
 <p>Function composition allows us to create complex behaviors with simpler functions. Below is an example demonstrating function composition in JavaScript.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Simple functions</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">multiply</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+<pre><code class="language-javascript">// Simple functions
+const add = x =&gt; x + 1;
+const multiply = x =&gt; x * 2;
 
-<span class="c1">// Function to compose two functions</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">compose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">f</span><span class="p">(</span><span class="nx">g</span><span class="p">(</span><span class="nx">x</span><span class="p">));</span>
+// Function to compose two functions
+const compose = (f, g) =&gt; x =&gt; f(g(x));
 
-<span class="c1">// Composed function</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">addThenMultiply</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">compose</span><span class="p">(</span><span class="nx">multiply</span><span class="p">,</span><span class="w"> </span><span class="nx">add</span><span class="p">);</span>
+// Composed function
+const addThenMultiply = compose(multiply, add);
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">addThenMultiply</span><span class="p">(</span><span class="mf">3</span><span class="p">));</span><span class="w"> </span><span class="c1">// Output: 8, because (3 + 1) * 2 = 8</span>
-</code></pre></div>
-
+console.log(addThenMultiply(3)); // Output: 8, because (3 + 1) * 2 = 8
+</code></pre>
 <p><strong>Explanation:</strong>
 - The <code>compose</code> function takes two functions <code>f</code> and <code>g</code> and returns a new function that applies <code>g</code> first and then <code>f</code>.
 - This allows us to create reusable and modular code.</p>

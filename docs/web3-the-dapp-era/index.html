@@ -166,44 +166,43 @@
 * <strong>Decentraland</strong>: A virtual reality platform that allows users to create and interact with virtual worlds.</p>
 <h2 id="building-a-dapp">Building a DApp</h2>
 <p>Building a DApp requires a good understanding of blockchain technology, as well as programming languages such as Solidity and JavaScript. Here is an example of a simple DApp built using the Ethereum platform and the Web3.js library:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Web3.js library</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the Web3.js library
+const Web3 = require('web3');
 
-<span class="c1">// Set up the Ethereum provider</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">);</span>
+// Set up the Ethereum provider
+const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID');
 
-<span class="c1">// Set up the Web3 instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="nx">provider</span><span class="p">);</span>
+// Set up the Web3 instance
+const web3 = new Web3(provider);
 
-<span class="c1">// Define the contract ABI</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">abi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;getBalance&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="s2">&quot;internalType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="s2">&quot;stateMutability&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;view&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">];</span>
+// Define the contract ABI
+const abi = [
+  {
+    &quot;inputs&quot;: [],
+    &quot;name&quot;: &quot;getBalance&quot;,
+    &quot;outputs&quot;: [
+      {
+        &quot;internalType&quot;: &quot;uint256&quot;,
+        &quot;name&quot;: &quot;&quot;,
+        &quot;type&quot;: &quot;uint256&quot;
+      }
+    ],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  }
+];
 
-<span class="c1">// Define the contract address</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
+// Define the contract address
+const contractAddress = '0x...';
 
-<span class="c1">// Create a new contract instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+// Create a new contract instance
+const contract = new web3.eth.Contract(abi, contractAddress);
 
-<span class="c1">// Call the getBalance function</span>
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getBalance</span><span class="p">().</span><span class="nx">call</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">balance</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The current balance is: </span><span class="si">${</span><span class="nx">balance</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Call the getBalance function
+contract.methods.getBalance().call().then((balance) =&gt; {
+  console.log(`The current balance is: ${balance}`);
+});
+</code></pre>
 <p>This code sets up a Web3 instance and defines a contract ABI and address. It then creates a new contract instance and calls the <code>getBalance</code> function to retrieve the current balance.</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
 <h3 id="tools-and-platforms-for-building-dapps">Tools and Platforms for Building DApps</h3>
@@ -228,35 +227,34 @@
 * <strong>Prediction markets</strong>: A platform that allows users to bet on the outcome of events in a decentralized manner.</p>
 <h3 id="implementing-a-dapp-use-case">Implementing a DApp Use Case</h3>
 <p>Here is an example of how to implement a DApp use case using the Ethereum platform and the Web3.js library:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Define the contract ABI</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">abi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="s2">&quot;internalType&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;_amount&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;lend&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="s2">&quot;stateMutability&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;nonpayable&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">];</span>
+<pre><code class="language-javascript">// Define the contract ABI
+const abi = [
+  {
+    &quot;inputs&quot;: [
+      {
+        &quot;internalType&quot;: &quot;uint256&quot;,
+        &quot;name&quot;: &quot;_amount&quot;,
+        &quot;type&quot;: &quot;uint256&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;lend&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  }
+];
 
-<span class="c1">// Define the contract address</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
+// Define the contract address
+const contractAddress = '0x...';
 
-<span class="c1">// Create a new contract instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+// Create a new contract instance
+const contract = new web3.eth.Contract(abi, contractAddress);
 
-<span class="c1">// Call the lend function</span>
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">lend</span><span class="p">(</span><span class="mf">100</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="w"> </span><span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">tx</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The lend transaction has been sent: </span><span class="si">${</span><span class="nx">tx</span><span class="p">.</span><span class="nx">transactionHash</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Call the lend function
+contract.methods.lend(100).send({ from: '0x...' }).then((tx) =&gt; {
+  console.log(`The lend transaction has been sent: ${tx.transactionHash}`);
+});
+</code></pre>
 <p>This code defines a contract ABI and address, creates a new contract instance, and calls the <code>lend</code> function to lend 100 tokens.</p>
 <h2 id="common-problems-with-dapps">Common Problems with DApps</h2>
 <p>DApps can be prone to several common problems, including:</p>

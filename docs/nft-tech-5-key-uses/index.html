@@ -153,73 +153,70 @@
 <p>NFT technology has gained significant attention in recent years, with the global NFT market reaching $22 billion in 2021, according to a report by Chainalysis. Non-fungible tokens (NFTs) are unique digital assets that can represent a wide range of items, such as art, collectibles, and even real-world assets. The use of NFTs is not limited to digital art; they have various applications across different industries. In this article, we will explore five key uses of NFT technology, along with practical examples and code snippets.</p>
 <h3 id="key-use-1-digital-art-and-collectibles">Key Use 1: Digital Art and Collectibles</h3>
 <p>One of the most popular use cases for NFTs is digital art and collectibles. Platforms like OpenSea and Rarible allow artists to create and sell unique digital art pieces. For example, the digital artist Beeple sold an NFT artwork for $69 million in 2021. To create an NFT on OpenSea, you can use the following code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/SafeERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span>using<span class="w"> </span>SafeERC721<span class="w"> </span><span class="kt">for</span><span class="w"> </span>ERC721<span class="p">;</span>
+contract MyNFT {
+    using SafeERC721 for ERC721;
 
-<span class="w">    </span>ERC721<span class="w"> </span><span class="kt">public</span><span class="w"> </span>nft<span class="p">;</span>
+    ERC721 public nft;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>nft<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span>ERC721<span class="p">(</span><span class="s2">&quot;MyNFT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MNFT&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() public {
+        nft = new ERC721(&quot;MyNFT&quot;, &quot;MNFT&quot;);
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">mintNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>nft<span class="p">.</span>mint<span class="p">(</span>to<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function mintNFT(address to) public {
+        nft.mint(to, 1);
+    }
+}
+</code></pre>
 <p>This code snippet creates a simple NFT contract using the OpenZeppelin library. The <code>mintNFT</code> function allows the contract owner to mint a new NFT and transfer it to a specified address.</p>
 <h2 id="key-use-2-gaming-and-virtual-worlds">Key Use 2: Gaming and Virtual Worlds</h2>
 <p>NFTs can be used to represent in-game items, such as characters, weapons, and virtual real estate. For example, the online game Decentraland allows players to buy and sell virtual land using NFTs. The game uses the MANA token, which has a market capitalization of over $1 billion. To create an NFT-based gaming platform, you can use tools like Unity and Unreal Engine. Here is an example of how to create an NFT-based game using Unity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Numerics</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">NFTGame</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;0x...&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// NFT contract address</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">tokenId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Token ID</span>
+public class NFTGame : MonoBehaviour
+{
+    private string contractAddress = &quot;0x...&quot;; // NFT contract address
+    private string tokenId = &quot;1&quot;; // Token ID
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Initialize the NFT contract</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NFTContract</span><span class="p">(</span><span class="n">contractAddress</span><span class="p">);</span>
-<span class="w">        </span><span class="n">nftContract</span><span class="p">.</span><span class="n">LoadTokenMetadata</span><span class="p">(</span><span class="n">tokenId</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start()
+    {
+        // Initialize the NFT contract
+        var nftContract = new NFTContract(contractAddress);
+        nftContract.LoadTokenMetadata(tokenId);
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the game state based on the NFT metadata</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nftContract</span><span class="p">.</span><span class="n">GetTokenMetadata</span><span class="p">(</span><span class="n">tokenId</span><span class="p">);</span>
-<span class="w">        </span><span class="c1">// ...</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void Update()
+    {
+        // Update the game state based on the NFT metadata
+        var metadata = nftContract.GetTokenMetadata(tokenId);
+        // ...
+    }
+}
+</code></pre>
 <p>This code snippet creates a simple NFT-based game using Unity. The <code>NFTGame</code> class initializes the NFT contract and loads the token metadata in the <code>Start</code> method. The <code>Update</code> method updates the game state based on the NFT metadata.</p>
 <h3 id="key-use-3-supply-chain-management">Key Use 3: Supply Chain Management</h3>
 <p>NFTs can be used to track and verify the authenticity of physical goods in supply chains. For example, the company Maersk uses NFTs to track shipping containers and verify their contents. To create an NFT-based supply chain management system, you can use platforms like Hyperledger Fabric and Corda. Here is an example of how to create an NFT-based supply chain management system using Hyperledger Fabric:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">FabricClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-client&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Channel</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-channel&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { FabricClient } = require('fabric-client');
+const { Channel } = require('fabric-channel');
 
-<span class="c1">// Create a new Fabric client</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">FabricClient</span><span class="p">();</span>
+// Create a new Fabric client
+const client = new FabricClient();
 
-<span class="c1">// Create a new channel</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">newChannel</span><span class="p">(</span><span class="s1">&#39;mychannel&#39;</span><span class="p">);</span>
+// Create a new channel
+const channel = client.newChannel('mychannel');
 
-<span class="c1">// Create a new NFT contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">channel</span><span class="p">.</span><span class="nx">newContract</span><span class="p">(</span><span class="s1">&#39;mycontract&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;NFTContract&#39;</span><span class="p">);</span>
+// Create a new NFT contract
+const nftContract = channel.newContract('mycontract', 'NFTContract');
 
-<span class="c1">// Mint a new NFT</span>
-<span class="nx">nftContract</span><span class="p">.</span><span class="nx">mintNFT</span><span class="p">(</span><span class="s1">&#39;asset1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;description1&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+// Mint a new NFT
+nftContract.mintNFT('asset1', 'description1');
+</code></pre>
 <p>This code snippet creates a simple NFT-based supply chain management system using Hyperledger Fabric. The <code>FabricClient</code> class creates a new Fabric client, and the <code>Channel</code> class creates a new channel. The <code>NFTContract</code> class creates a new NFT contract, and the <code>mintNFT</code> function mints a new NFT.</p>
 <h2 id="key-use-4-identity-verification">Key Use 4: Identity Verification</h2>
 <p>NFTs can be used to verify the identity of individuals and organizations. For example, the company uPort uses NFTs to create self-sovereign identities. To create an NFT-based identity verification system, you can use platforms like Ethereum and Polkadot. Here are some benefits of using NFTs for identity verification:

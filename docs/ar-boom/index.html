@@ -158,31 +158,30 @@
 * Unity: A popular game engine that supports AR development, with a wide range of features, including physics, graphics, and animation.
 * Unreal Engine: A powerful game engine that supports AR development, with features like physics, graphics, and animation.</p>
 <p>For example, using ARKit, you can create an AR experience that detects planes and allows users to place virtual objects on them. Here's an example code snippet in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">ARKit</span>
+<pre><code class="language-swift">import ARKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
-    <span class="kr">@IBOutlet</span> <span class="kd">var</span> <span class="nv">sceneView</span><span class="p">:</span> <span class="bp">ARSCNView</span><span class="p">!</span>
+class ViewController: UIViewController, ARSCNViewDelegate {
+    @IBOutlet var sceneView: ARSCNView!
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="p">=</span> <span class="kc">self</span>
-        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
-        <span class="n">configuration</span><span class="p">.</span><span class="n">planeDetection</span> <span class="p">=</span> <span class="p">.</span><span class="n">horizontal</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-    <span class="p">}</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sceneView.delegate = self
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+    }
 
-    <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="kc">_</span> <span class="n">renderer</span><span class="p">:</span> <span class="bp">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="n">node</span><span class="p">:</span> <span class="bp">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="n">anchor</span><span class="p">:</span> <span class="bp">ARAnchor</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">planeAnchor</span> <span class="p">=</span> <span class="n">anchor</span> <span class="k">as</span><span class="p">?</span> <span class="bp">ARPlaneAnchor</span> <span class="p">{</span>
-            <span class="kd">let</span> <span class="nv">plane</span> <span class="p">=</span> <span class="bp">SCNPlane</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">height</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">z</span><span class="p">))</span>
-            <span class="n">plane</span><span class="p">.</span><span class="n">firstMaterial</span><span class="p">?.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="p">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">blue</span>
-            <span class="kd">let</span> <span class="nv">planeNode</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="n">plane</span><span class="p">)</span>
-            <span class="n">planeNode</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="bp">SCNVector3</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">)</span>
-            <span class="n">node</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">planeNode</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let planeAnchor = anchor as? ARPlaneAnchor {
+            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+            plane.firstMaterial?.diffuse.contents = UIColor.blue
+            let planeNode = SCNNode(geometry: plane)
+            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: planeAnchor.center.y, z: planeAnchor.center.z)
+            node.addChildNode(planeNode)
+        }
+    }
+}
+</code></pre>
 <p>This code snippet creates an AR experience that detects horizontal planes and displays a blue plane on top of them.</p>
 <h2 id="practical-use-cases-for-ar-development">Practical Use Cases for AR Development</h2>
 <p>AR development has a wide range of practical use cases, including:
@@ -191,30 +190,29 @@
 3. <strong>Healthcare</strong>: AR can be used to create medical training simulations, patient education experiences, and telemedicine platforms.
 4. <strong>Retail</strong>: AR can be used to create immersive and interactive retail experiences, such as virtual try-on, product demos, and in-store navigation.</p>
 <p>For example, the IKEA Place app uses AR to allow users to see how furniture would look in their home before making a purchase. The app uses ARKit to detect planes and allows users to place virtual furniture on them. Here's an example code snippet in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">ARKit</span>
+<pre><code class="language-swift">import ARKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">ARSCNViewDelegate</span> <span class="p">{</span>
-    <span class="kr">@IBOutlet</span> <span class="kd">var</span> <span class="nv">sceneView</span><span class="p">:</span> <span class="bp">ARSCNView</span><span class="p">!</span>
+class ViewController: UIViewController, ARSCNViewDelegate {
+    @IBOutlet var sceneView: ARSCNView!
 
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="p">=</span> <span class="kc">self</span>
-        <span class="kd">let</span> <span class="nv">configuration</span> <span class="p">=</span> <span class="bp">ARWorldTrackingConfiguration</span><span class="p">()</span>
-        <span class="n">configuration</span><span class="p">.</span><span class="n">planeDetection</span> <span class="p">=</span> <span class="p">.</span><span class="n">horizontal</span>
-        <span class="n">sceneView</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-    <span class="p">}</span>
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sceneView.delegate = self
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+    }
 
-    <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="kc">_</span> <span class="n">renderer</span><span class="p">:</span> <span class="bp">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="n">node</span><span class="p">:</span> <span class="bp">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="n">anchor</span><span class="p">:</span> <span class="bp">ARAnchor</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="kd">let</span> <span class="nv">planeAnchor</span> <span class="p">=</span> <span class="n">anchor</span> <span class="k">as</span><span class="p">?</span> <span class="bp">ARPlaneAnchor</span> <span class="p">{</span>
-            <span class="kd">let</span> <span class="nv">furniture</span> <span class="p">=</span> <span class="bp">SCNNode</span><span class="p">(</span><span class="n">geometry</span><span class="p">:</span> <span class="bp">SCNSphere</span><span class="p">(</span><span class="n">radius</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">))</span>
-            <span class="n">furniture</span><span class="p">.</span><span class="n">firstMaterial</span><span class="p">?.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="p">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">red</span>
-            <span class="n">furniture</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="bp">SCNVector3</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">)</span>
-            <span class="n">node</span><span class="p">.</span><span class="n">addChildNode</span><span class="p">(</span><span class="n">furniture</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let planeAnchor = anchor as? ARPlaneAnchor {
+            let furniture = SCNNode(geometry: SCNSphere(radius: 0.1))
+            furniture.firstMaterial?.diffuse.contents = UIColor.red
+            furniture.position = SCNVector3(x: planeAnchor.center.x, y: planeAnchor.center.y, z: planeAnchor.center.z)
+            node.addChildNode(furniture)
+        }
+    }
+}
+</code></pre>
 <p>This code snippet creates an AR experience that detects horizontal planes and displays a red sphere on top of them, simulating the placement of furniture.</p>
 <h2 id="common-problems-in-ar-development">Common Problems in AR Development</h2>
 <p>There are several common problems that developers face when building AR experiences, including:
@@ -226,25 +224,24 @@
 * <strong>Tracking optimization</strong>: Optimizing tracking algorithms to improve the accuracy and robustness of the AR experience.
 * <strong>Content creation tools</strong>: Using content creation tools such as Unity, Unreal Engine, or Blender to create high-quality AR content.</p>
 <p>For example, using Unity, you can create an AR experience that uses light estimation to adjust the lighting conditions and improve tracking and plane detection. Here's an example code snippet in C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.XR.ARFoundation</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LightEstimation</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">LightEstimationManager</span><span class="w"> </span><span class="n">_lightEstimationManager</span><span class="p">;</span>
+public class LightEstimation : MonoBehaviour
+{
+    private LightEstimationManager _lightEstimationManager;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_lightEstimationManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">LightEstimationManager</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start()
+    {
+        _lightEstimationManager = GetComponent&lt;LightEstimationManager&gt;();
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_lightEstimationManager</span><span class="p">.</span><span class="n">UpdateLightEstimation</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void Update()
+    {
+        _lightEstimationManager.UpdateLightEstimation();
+    }
+}
+</code></pre>
 <p>This code snippet creates an AR experience that uses light estimation to adjust the lighting conditions and improve tracking and plane detection.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>The performance of AR experiences can vary depending on the device and platform used. Here are some performance benchmarks for ARKit and ARCore:

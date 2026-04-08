@@ -164,33 +164,32 @@
 * <strong>Amazon SQS</strong>: A fully managed message queue service offered by AWS, which provides a highly available and durable messaging system.</p>
 <h3 id="example-using-rabbitmq-with-python">Example: Using RabbitMQ with Python</h3>
 <p>Here's an example of using RabbitMQ with Python to send and receive messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="c1"># Connect to RabbitMQ</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+# Connect to RabbitMQ
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
 
-<span class="c1"># Declare a queue</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">)</span>
+# Declare a queue
+channel.queue_declare(queue='my_queue')
 
-<span class="c1"># Send a message</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">,</span>
-                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
+# Send a message
+channel.basic_publish(exchange='',
+                      routing_key='my_queue',
+                      body='Hello, world!')
 
-<span class="c1"># Receive a message</span>
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received message: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+# Receive a message
+def callback(ch, method, properties, body):
+    print(&quot;Received message: {}&quot;.format(body))
 
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">,</span>
-                      <span class="n">auto_ack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                      <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+channel.basic_consume(queue='my_queue',
+                      auto_ack=True,
+                      on_message_callback=callback)
 
-<span class="c1"># Start consuming</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting for messages...&quot;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
-</code></pre></div>
-
+# Start consuming
+print(&quot;Waiting for messages...&quot;)
+channel.start_consuming()
+</code></pre>
 <p>This example demonstrates how to connect to a RabbitMQ instance, declare a queue, send a message, and receive a message using a callback function.</p>
 <h2 id="async-processing-use-cases">Async Processing Use Cases</h2>
 <p>Async processing has a wide range of use cases, including:
@@ -199,33 +198,32 @@
 3. <strong>Microservices architecture</strong>: Using message queues to communicate between microservices, enabling loose coupling and scalability.</p>
 <h3 id="example-using-apache-kafka-for-real-time-data-processing">Example: Using Apache Kafka for Real-time Data Processing</h3>
 <p>Here's an example of using Apache Kafka to process real-time data streams:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerConfig</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerRecord</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.ConsumerRecords</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.kafka.clients.consumer.KafkaConsumer</span><span class="p">;</span>
+<pre><code class="language-java">import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-<span class="c1">// Create a Kafka consumer</span>
-<span class="n">Properties</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Properties</span><span class="p">();</span>
-<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">BOOTSTRAP_SERVERS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
-<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">GROUP_ID_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_group&quot;</span><span class="p">);</span>
-<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">KEY_DESERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="p">);</span>
-<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">ConsumerConfig</span><span class="p">.</span><span class="na">VALUE_DESERIALIZER_CLASS_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="p">);</span>
+// Create a Kafka consumer
+Properties props = new Properties();
+props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);
+props.put(ConsumerConfig.GROUP_ID_CONFIG, &quot;my_group&quot;);
+props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);
+props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);
 
-<span class="n">KafkaConsumer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">KafkaConsumer</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
+KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(props);
 
-<span class="c1">// Subscribe to a topic</span>
-<span class="n">consumer</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="n">Collections</span><span class="p">.</span><span class="na">singleton</span><span class="p">(</span><span class="s">&quot;my_topic&quot;</span><span class="p">));</span>
+// Subscribe to a topic
+consumer.subscribe(Collections.singleton(&quot;my_topic&quot;));
 
-<span class="c1">// Consume messages</span>
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">ConsumerRecords</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">consumer</span><span class="p">.</span><span class="na">poll</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">ConsumerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">records</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Received message: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">record</span><span class="p">.</span><span class="na">value</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="n">consumer</span><span class="p">.</span><span class="na">commitSync</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Consume messages
+while (true) {
+    ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);
+    for (ConsumerRecord&lt;String, String&gt; record : records) {
+        System.out.println(&quot;Received message: &quot; + record.value());
+    }
+    consumer.commitSync();
+}
+</code></pre>
 <p>This example demonstrates how to create a Kafka consumer, subscribe to a topic, and consume messages in real-time.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>When it comes to performance, message queues can handle high volumes of messages with low latency. Here are some performance benchmarks for RabbitMQ and Apache Kafka:
@@ -242,40 +240,39 @@
 * <strong>Broker crashes</strong>: Can occur due to hardware or software failures. Solution: Use clustering or replication to ensure high availability.</p>
 <h3 id="example-using-amazon-sqs-with-nodejs">Example: Using Amazon SQS with Node.js</h3>
 <p>Here's an example of using Amazon SQS with Node.js to send and receive messages:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">AWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const AWS = require('aws-sdk');
 
-<span class="c1">// Create an SQS client</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">sqs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">({</span><span class="w"> </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="w"> </span><span class="p">});</span>
+// Create an SQS client
+const sqs = new AWS.SQS({ region: 'us-east-1' });
 
-<span class="c1">// Send a message</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">MessageBody</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">QueueUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://sqs.us-east-1.amazonaws.com/123456789012/my_queue&#39;</span>
-<span class="p">};</span>
+// Send a message
+const params = {
+  MessageBody: 'Hello, world!',
+  QueueUrl: 'https://sqs.us-east-1.amazonaws.com/123456789012/my_queue'
+};
 
-<span class="nx">sqs</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+sqs.sendMessage(params, (err, data) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
 
-<span class="c1">// Receive a message</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">receiveParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">QueueUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://sqs.us-east-1.amazonaws.com/123456789012/my_queue&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">MaxNumberOfMessages</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span>
-<span class="p">};</span>
+// Receive a message
+const receiveParams = {
+  QueueUrl: 'https://sqs.us-east-1.amazonaws.com/123456789012/my_queue',
+  MaxNumberOfMessages: 10
+};
 
-<span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">receiveParams</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+sqs.receiveMessage(receiveParams, (err, data) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
+</code></pre>
 <p>This example demonstrates how to create an SQS client, send a message, and receive a message using the AWS SDK for Node.js.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, message queues are a powerful tool for building scalable and fault-tolerant systems. By leveraging async processing and message queues, developers can improve system responsiveness, increase throughput, and ensure better fault tolerance. When choosing a message queue, consider factors such as performance, scalability, and pricing.</p>

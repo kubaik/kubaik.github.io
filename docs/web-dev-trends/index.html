@@ -154,47 +154,44 @@
 <h3 id="javascript-frameworks">JavaScript Frameworks</h3>
 <p>JavaScript frameworks have become a staple in web development, allowing developers to build complex applications quickly and efficiently. Some popular JavaScript frameworks include React, Angular, and Vue.js. For example, React is widely used in production environments, with companies like Facebook, Instagram, and Netflix relying on it to build their web applications.</p>
 <p>Here's an example of a simple React component:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">Counter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+function Counter() {
+  const [count, setCount] = React.useState(0);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}&gt;</span><span class="nx">Increment</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <p>This code snippet demonstrates how to create a simple counter component using React's <code>useState</code> hook.</p>
 <h3 id="serverless-architecture">Serverless Architecture</h3>
 <p>Serverless architecture is another trend that's gaining traction in the web development community. With serverless architecture, developers can build and deploy applications without managing servers. This approach provides several benefits, including reduced costs, increased scalability, and improved reliability. Some popular serverless platforms include AWS Lambda, Google Cloud Functions, and Azure Functions.</p>
 <p>For example, AWS Lambda provides a free tier with 1 million requests per month, making it an attractive option for small to medium-sized applications. Additionally, AWS Lambda supports a wide range of programming languages, including Node.js, Python, and Java.</p>
 <p>Here's an example of a simple AWS Lambda function written in Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">responseBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">};</span>
+<pre><code class="language-javascript">exports.handler = async (event) =&gt; {
+  const responseBody = {
+    message: 'Hello, World!',
+  };
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">responseBody</span><span class="p">),</span>
-<span class="w">  </span><span class="p">};</span>
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify(responseBody),
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  return response;
+};
+</code></pre>
 <p>This code snippet demonstrates how to create a simple AWS Lambda function that returns a JSON response.</p>
 <h3 id="progressive-web-apps">Progressive Web Apps</h3>
 <p>Progressive web apps (PWAs) are web applications that provide a native app-like experience to users. PWAs are built using web technologies such as HTML, CSS, and JavaScript, and they provide several benefits, including offline support, push notifications, and home screen installation. Some popular tools for building PWAs include Lighthouse, Workbox, and PWA Builder.</p>
 <p>For example, Lighthouse is a popular tool for auditing and optimizing PWAs. It provides a scorecard with metrics such as performance, accessibility, and best practices. According to Google, PWAs can improve user engagement by up to 50% and increase conversions by up to 20%.</p>
 <p>Here's an example of how to use Lighthouse to audit a PWA:</p>
-<div class="codehilite"><pre><span></span><code>lighthouse<span class="w"> </span>https://example.com<span class="w"> </span>--view
-</code></pre></div>
-
+<pre><code class="language-bash">lighthouse https://example.com --view
+</code></pre>
 <p>This command runs Lighthouse against the specified URL and displays the results in a web-based interface.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite the many benefits of web development trends, there are several common problems that developers face. Here are some solutions to these problems:</p>

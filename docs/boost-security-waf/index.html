@@ -166,13 +166,11 @@
 * <strong>SSL/TLS encryption</strong>: WAFs can encrypt traffic between the web application and clients.</p>
 <h3 id="example-configuring-aws-waf">Example: Configuring AWS WAF</h3>
 <p>To configure AWS WAF, you need to create a web ACL (Access Control List) and define the rules for filtering traffic. Here is an example of how to create a web ACL using AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>MyWebACL<span class="w"> </span>--metric-name<span class="w"> </span>MyWebACL
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-web-acl --name MyWebACL --metric-name MyWebACL
+</code></pre>
 <p>You can then define rules for the web ACL using the <code>aws waf create-rule</code> command:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-rule<span class="w"> </span>--name<span class="w"> </span>MyRule<span class="w"> </span>--metric-name<span class="w"> </span>MyRule<span class="w"> </span>--predicate-list<span class="w"> </span><span class="s2">&quot;[{\&quot;DataId\&quot;:\&quot;IPMatch\&quot;,\&quot;Negated\&quot;:false,\&quot;Type\&quot;:\&quot;IPMatch\&quot;}]&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-rule --name MyRule --metric-name MyRule --predicate-list &quot;[{\&quot;DataId\&quot;:\&quot;IPMatch\&quot;,\&quot;Negated\&quot;:false,\&quot;Type\&quot;:\&quot;IPMatch\&quot;}]&quot;
+</code></pre>
 <h2 id="benefits-of-wafs">Benefits of WAFs</h2>
 <p>WAFs offer several benefits that make them a valuable investment for web application security. Some of the key benefits include:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
@@ -184,13 +182,12 @@
 </ul>
 <h3 id="example-implementing-owasp-modsecurity-core-rule-set">Example: Implementing OWASP ModSecurity Core Rule Set</h3>
 <p>The OWASP ModSecurity Core Rule Set is a popular WAF solution that can be implemented using the ModSecurity Apache module. Here is an example of how to configure the rule set:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Load the ModSecurity module</span>
-LoadModule<span class="w"> </span>security2_module<span class="w"> </span>modules/mod_security2.so
+<pre><code class="language-bash"># Load the ModSecurity module
+LoadModule security2_module modules/mod_security2.so
 
-<span class="c1"># Include the OWASP ModSecurity Core Rule Set</span>
-Include<span class="w"> </span>/etc/modsecurity/modsecurity.conf
-</code></pre></div>
-
+# Include the OWASP ModSecurity Core Rule Set
+Include /etc/modsecurity/modsecurity.conf
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>WAFs can be complex to configure and manage, and there are several common problems that administrators may encounter. Some of the common problems and solutions include:
 * <strong>False positives</strong>: WAFs can generate false positive alerts, which can be time-consuming to investigate.

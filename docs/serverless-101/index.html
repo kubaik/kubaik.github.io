@@ -167,35 +167,33 @@
 * <strong>AWS SAM</strong>: A framework for building and deploying serverless applications on AWS, with support for local testing and debugging.</p>
 <h3 id="example-building-a-serverless-api-with-aws-lambda-and-api-gateway">Example: Building a Serverless API with AWS Lambda and API Gateway</h3>
 <p>Here is an example of building a simple serverless API using AWS Lambda and API Gateway:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
+lambda_client = boto3.client('lambda')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process the event and return a response</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, World!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+def lambda_handler(event, context):
+    # Process the event and return a response
+    return {
+        'statusCode': 200,
+        'body': 'Hello, World!'
+    }
+</code></pre>
 <p>This code defines a simple Lambda function that returns a "Hello, World!" message. To deploy this function, we can use the AWS SAM framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Resources</span><span class="o">:</span>
-<span class="w">  </span><span class="n">HelloFunction</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::Serverless::Function&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">FunctionName</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">Sub</span><span class="w"> </span><span class="s1">&#39;hello-${AWS::Region}&#39;</span>
-<span class="w">      </span><span class="n">Runtime</span><span class="o">:</span><span class="w"> </span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span>
-<span class="w">      </span><span class="n">Handler</span><span class="o">:</span><span class="w"> </span><span class="n">index</span><span class="o">.</span><span class="na">lambda_handler</span>
-<span class="w">      </span><span class="n">CodeUri</span><span class="o">:</span><span class="w"> </span><span class="o">.</span>
-<span class="w">      </span><span class="n">Events</span><span class="o">:</span>
-<span class="w">        </span><span class="n">HelloEvent</span><span class="o">:</span>
-<span class="w">          </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Api&#39;</span>
-<span class="w">          </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">            </span><span class="n">Path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/hello&#39;</span>
-<span class="w">            </span><span class="n">Method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;get&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-yml">Resources:
+  HelloFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: !Sub 'hello-${AWS::Region}'
+      Runtime: python3.8
+      Handler: index.lambda_handler
+      CodeUri: .
+      Events:
+        HelloEvent:
+          Type: 'Api'
+          Properties:
+            Path: '/hello'
+            Method: 'get'
+</code></pre>
 <p>This SAM template defines a Lambda function with a single event source, an API Gateway endpoint.</p>
 <h2 id="performance-and-pricing">Performance and Pricing</h2>
 <p>Serverless computing can offer significant cost savings and performance benefits compared to traditional cloud computing models. Here are some real metrics and pricing data:
@@ -207,30 +205,29 @@
 * <strong>Memory usage</strong>: Serverless functions have limited memory availability, typically ranging from 128MB to 3GB.</p>
 <h3 id="example-optimizing-serverless-function-performance">Example: Optimizing Serverless Function Performance</h3>
 <p>Here is an example of optimizing serverless function performance using provisioned concurrency:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">lambda_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
+lambda_client = boto3.client('lambda')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Process the event and return a response</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, World!&#39;</span>
-    <span class="p">}</span>
+def lambda_handler(event, context):
+    # Process the event and return a response
+    return {
+        'statusCode': 200,
+        'body': 'Hello, World!'
+    }
 
-<span class="c1"># Create a provisioned concurrency configuration</span>
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">publish_version</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;Provisioned concurrency configuration&#39;</span>
-<span class="p">)</span>
+# Create a provisioned concurrency configuration
+lambda_client.publish_version(
+    FunctionName='hello',
+    Description='Provisioned concurrency configuration'
+)
 
-<span class="n">lambda_client</span><span class="o">.</span><span class="n">put_provisioned_concurrency_config</span><span class="p">(</span>
-    <span class="n">FunctionName</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
-    <span class="n">Qualifier</span><span class="o">=</span><span class="s1">&#39;$LATEST&#39;</span><span class="p">,</span>
-    <span class="n">ProvisionedConcurrentExecutions</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-</code></pre></div>
-
+lambda_client.put_provisioned_concurrency_config(
+    FunctionName='hello',
+    Qualifier='$LATEST',
+    ProvisionedConcurrentExecutions=10
+)
+</code></pre>
 <p>This code creates a provisioned concurrency configuration for a Lambda function, which can help reduce cold start times and improve performance.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when building serverless applications:
@@ -243,34 +240,33 @@
 3. <strong>Implement security and authentication</strong>: Use tools like AWS IAM and Google Cloud IAM to implement security and authentication mechanisms.</p>
 <h3 id="example-implementing-security-and-authentication">Example: Implementing Security and Authentication</h3>
 <p>Here is an example of implementing security and authentication using AWS IAM:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">iam_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+iam_client = boto3.client('iam')
 
-<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="c1"># Authenticate the user using AWS IAM</span>
-    <span class="n">user_identity</span> <span class="o">=</span> <span class="n">iam_client</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+def lambda_handler(event, context):
+    # Authenticate the user using AWS IAM
+    user_identity = iam_client.get_user(UserName='username')
 
-    <span class="c1"># Authorize the user using AWS IAM</span>
-    <span class="n">policy_document</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Sid&#39;</span><span class="p">:</span> <span class="s1">&#39;AllowAccessToResource&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;execute-api:Invoke&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Resource&#39;</span><span class="p">:</span> <span class="s1">&#39;arn:aws:execute-api:REGION:ACCOUNT_ID:API_ID/STAGE/RESOURCE&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
+    # Authorize the user using AWS IAM
+    policy_document = {
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Sid': 'AllowAccessToResource',
+                'Effect': 'Allow',
+                'Action': 'execute-api:Invoke',
+                'Resource': 'arn:aws:execute-api:REGION:ACCOUNT_ID:API_ID/STAGE/RESOURCE'
+            }
+        ]
+    }
 
-    <span class="c1"># Return a response based on the authentication and authorization result</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, World!&#39;</span>
-    <span class="p">}</span>
-</code></pre></div>
-
+    # Return a response based on the authentication and authorization result
+    return {
+        'statusCode': 200,
+        'body': 'Hello, World!'
+    }
+</code></pre>
 <p>This code authenticates and authorizes a user using AWS IAM, and returns a response based on the result.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Here are some concrete use cases for serverless computing, along with implementation details:

@@ -154,37 +154,36 @@
 <p>One of the key features of NFTs is their uniqueness, which is ensured by a unique identifier that distinguishes them from other tokens. This is achieved through the use of smart contracts, which are self-executing contracts with the terms of the agreement written directly into lines of code. For example, the popular NFT platform OpenSea uses the ERC-721 standard for creating and managing NFTs.</p>
 <h3 id="smart-contract-example">Smart Contract Example</h3>
 <p>Here's an example of a simple smart contract written in Solidity, the programming language used for Ethereum-based smart contracts:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Mapping of NFTs to their owners</span>
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>NFT<span class="p">))</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>nftOwners<span class="p">;</span>
+contract MyNFT {
+    // Mapping of NFTs to their owners
+    mapping (address =&gt; mapping (uint256 =&gt; NFT)) public nftOwners;
 
-<span class="w">    </span><span class="c1">// Event emitted when an NFT is created</span>
-<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">NewNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">nftId</span><span class="p">);</span>
+    // Event emitted when an NFT is created
+    event NewNFT(address owner, uint256 nftId);
 
-<span class="w">    </span><span class="c1">// Function to create a new NFT</span>
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createNFT</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_description<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Generate a unique ID for the NFT</span>
-<span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">nftId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint256</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span>_name<span class="p">,</span><span class="w"> </span>_description<span class="p">)));</span>
+    // Function to create a new NFT
+    function createNFT(string memory _name, string memory _description) public {
+        // Generate a unique ID for the NFT
+        uint256 nftId = uint256(keccak256(abi.encodePacked(_name, _description)));
 
-<span class="w">        </span><span class="c1">// Create a new NFT and store it in the mapping</span>
-<span class="w">        </span>nftOwners<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>nftId<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>NFT<span class="p">(</span>_name<span class="p">,</span><span class="w"> </span>_description<span class="p">);</span>
+        // Create a new NFT and store it in the mapping
+        nftOwners[msg.sender][nftId] = NFT(_name, _description);
 
-<span class="w">        </span><span class="c1">// Emit the event to notify listeners</span>
-<span class="w">        </span>emit<span class="w"> </span>NewNFT<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>nftId<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+        // Emit the event to notify listeners
+        emit NewNFT(msg.sender, nftId);
+    }
+}
 
-<span class="c1">// Define the NFT struct</span>
-<span class="kt">struct</span><span class="w"> </span><span class="nv">NFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nv">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nv">description</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Define the NFT struct
+struct NFT {
+    string name;
+    string description;
+}
+</code></pre>
 <p>This contract defines a simple NFT struct and provides a function to create new NFTs. The <code>createNFT</code> function generates a unique ID for the NFT based on its name and description, and then stores the NFT in a mapping.</p>
 <h2 id="use-cases-for-nft-technology">Use Cases for NFT Technology</h2>
 <p>NFT technology has a wide range of use cases, from digital art and collectibles to music and virtual real estate. Some of the most popular use cases include:</p>
@@ -207,23 +206,22 @@
 <p>Another common problem is the lack of standardization in NFT metadata. To solve this, developers can use standardized metadata formats, such as the OpenSea metadata standard, which provides a common format for NFT metadata.</p>
 <h3 id="code-example-gas-fee-reduction">Code Example: Gas Fee Reduction</h3>
 <p>Here's an example of how to reduce gas fees using the Polygon network:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">polygonWeb3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://matic-mainnet.fullstack.cash&#39;</span><span class="p">));</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const polygonWeb3 = new Web3(new Web3.providers.HttpProvider('https://matic-mainnet.fullstack.cash'));
 
-<span class="c1">// Create a new NFT contract on the Polygon network</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftContract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">polygonWeb3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">address</span><span class="p">);</span>
+// Create a new NFT contract on the Polygon network
+const nftContract = new polygonWeb3.eth.Contract(abi, address);
 
-<span class="c1">// Set the gas price to a lower value to reduce fees</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">gasPrice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">polygonWeb3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">toWei</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;gwei&#39;</span><span class="p">);</span>
+// Set the gas price to a lower value to reduce fees
+const gasPrice = polygonWeb3.utils.toWei('10', 'gwei');
 
-<span class="c1">// Create a new NFT and set the gas price</span>
-<span class="nx">nftContract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">createNFT</span><span class="p">(</span><span class="s1">&#39;My NFT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;This is my NFT&#39;</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span>
-<span class="w">  </span><span class="kr">from</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">gas</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;200000&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">gasPrice</span><span class="o">:</span><span class="w"> </span><span class="nx">gasPrice</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Create a new NFT and set the gas price
+nftContract.methods.createNFT('My NFT', 'This is my NFT').send({
+  from: '0x...',
+  gas: '200000',
+  gasPrice: gasPrice,
+});
+</code></pre>
 <p>This code example shows how to create a new NFT contract on the Polygon network and set the gas price to a lower value to reduce fees.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of NFT platforms can vary widely depending on the underlying blockchain and infrastructure. Here are some performance benchmarks for popular NFT platforms:</p>
@@ -240,28 +238,27 @@
 </ul>
 <h3 id="code-example-caching">Code Example: Caching</h3>
 <p>Here's an example of how to implement caching using the Redis database:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const Redis = require('redis');
 
-<span class="c1">// Create a new Redis client</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+// Create a new Redis client
+const client = Redis.createClient();
 
-<span class="c1">// Set a cache key for the NFT metadata</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;nft:metadata&#39;</span><span class="p">;</span>
+// Set a cache key for the NFT metadata
+const cacheKey = 'nft:metadata';
 
-<span class="c1">// Get the NFT metadata from the cache</span>
-<span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">metadata</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">metadata</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Return the cached metadata</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">metadata</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Fetch the metadata from the database and cache it</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fetchMetadataFromDatabase</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">cacheKey</span><span class="p">,</span><span class="w"> </span><span class="nx">metadata</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">metadata</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Get the NFT metadata from the cache
+client.get(cacheKey, (err, metadata) =&gt; {
+  if (metadata) {
+    // Return the cached metadata
+    return metadata;
+  } else {
+    // Fetch the metadata from the database and cache it
+    const metadata = fetchMetadataFromDatabase();
+    client.set(cacheKey, metadata);
+    return metadata;
+  }
+});
+</code></pre>
 <p>This code example shows how to implement caching using the Redis database to store frequently accessed NFT metadata.</p>
 <h2 id="real-world-metrics">Real-World Metrics</h2>
 <p>Here are some real-world metrics for popular NFT platforms:</p>

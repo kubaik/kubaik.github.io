@@ -168,28 +168,27 @@
 5. <strong>Keep software up to date</strong>: regularly update and patch cloud software to prevent vulnerabilities.</p>
 <h3 id="example-implementing-multi-factor-authentication-with-aws">Example: Implementing Multi-Factor Authentication with AWS</h3>
 <p>To implement multi-factor authentication with AWS, organizations can use AWS IAM to require users to provide a password and a code sent to their phone. The following is an example of how to implement multi-factor authentication using AWS IAM and the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an IAM client</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+# Create an IAM client
+iam = boto3.client('iam')
 
-<span class="c1"># Create a new IAM user</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span>
-<span class="p">)</span>
+# Create a new IAM user
+response = iam.create_user(
+    UserName='newuser'
+)
 
-<span class="c1"># Create a new IAM virtual MFA device</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_virtual_mfa_device</span><span class="p">(</span>
-    <span class="n">VirtualMFADeviceName</span><span class="o">=</span><span class="s1">&#39;newdevice&#39;</span>
-<span class="p">)</span>
+# Create a new IAM virtual MFA device
+response = iam.create_virtual_mfa_device(
+    VirtualMFADeviceName='newdevice'
+)
 
-<span class="c1"># Enable MFA for the new user</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">enable_mfa_device</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span><span class="p">,</span>
-    <span class="n">SerialNumber</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:mfa/newdevice&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Enable MFA for the new user
+response = iam.enable_mfa_device(
+    UserName='newuser',
+    SerialNumber='arn:aws:iam::123456789012:mfa/newdevice'
+)
+</code></pre>
 <p>This code creates a new IAM user, creates a new virtual MFA device, and enables MFA for the new user.</p>
 <h2 id="cloud-security-tools-and-platforms">Cloud Security Tools and Platforms</h2>
 <p>There are a range of cloud security tools and platforms available, including:
@@ -204,20 +203,19 @@
 3. Integrate with AWS services: integrate AWS Security Hub with AWS services, such as AWS CloudWatch and AWS CloudTrail.
 4. Monitor security findings: monitor security findings and take action to remediate any security issues.</p>
 <p>The following is an example of how to use the AWS CLI to enable AWS Security Hub and configure security standards:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a Security Hub client</span>
-<span class="n">securityhub</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;securityhub&#39;</span><span class="p">)</span>
+# Create a Security Hub client
+securityhub = boto3.client('securityhub')
 
-<span class="c1"># Enable Security Hub</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">securityhub</span><span class="o">.</span><span class="n">enable_security_hub</span><span class="p">()</span>
+# Enable Security Hub
+response = securityhub.enable_security_hub()
 
-<span class="c1"># Configure security standards</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">securityhub</span><span class="o">.</span><span class="n">update_standards_control</span><span class="p">(</span>
-    <span class="n">StandardsControlArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:securityhub:us-west-2:123456789012:control/cis-aws-foundation/benchmark/1.2.0&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure security standards
+response = securityhub.update_standards_control(
+    StandardsControlArn='arn:aws:securityhub:us-west-2:123456789012:control/cis-aws-foundation/benchmark/1.2.0'
+)
+</code></pre>
 <p>This code enables AWS Security Hub and configures the CIS AWS Foundations Benchmark security standard.</p>
 <h2 id="cloud-security-performance-benchmarks">Cloud Security Performance Benchmarks</h2>
 <p>Cloud security performance benchmarks can be used to evaluate the effectiveness of cloud security measures. The following are some common cloud security performance benchmarks:
@@ -232,27 +230,26 @@
 2. Configure Cloudflare: configure Cloudflare to protect against DDoS attacks, including setting up SSL/TLS encryption and configuring the WAF.
 3. Monitor traffic: monitor traffic to detect and respond to DDoS attacks.</p>
 <p>The following is an example of how to use the Cloudflare API to configure SSL/TLS encryption:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API endpoint and API key</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;https://api.cloudflare.com/client/v4/&#39;</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;your_api_key&#39;</span>
+# Set API endpoint and API key
+endpoint = 'https://api.cloudflare.com/client/v4/'
+api_key = 'your_api_key'
 
-<span class="c1"># Set SSL/TLS encryption settings</span>
-<span class="n">ssl_settings</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;ssl&#39;</span><span class="p">:</span> <span class="s1">&#39;full&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tls_1_2&#39;</span><span class="p">:</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tls_1_3&#39;</span><span class="p">:</span> <span class="s1">&#39;on&#39;</span>
-<span class="p">}</span>
+# Set SSL/TLS encryption settings
+ssl_settings = {
+    'ssl': 'full',
+    'tls_1_2': 'on',
+    'tls_1_3': 'on'
+}
 
-<span class="c1"># Configure SSL/TLS encryption</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
-    <span class="n">endpoint</span> <span class="o">+</span> <span class="s1">&#39;zones/your_zone_id/ssl&#39;</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="n">api_key</span><span class="p">},</span>
-    <span class="n">json</span><span class="o">=</span><span class="n">ssl_settings</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure SSL/TLS encryption
+response = requests.patch(
+    endpoint + 'zones/your_zone_id/ssl',
+    headers={'Authorization': 'Bearer ' + api_key},
+    json=ssl_settings
+)
+</code></pre>
 <p>This code configures SSL/TLS encryption settings using the Cloudflare API.</p>
 <h2 id="common-cloud-security-problems-and-solutions">Common Cloud Security Problems and Solutions</h2>
 <p>The following are some common cloud security problems and solutions:

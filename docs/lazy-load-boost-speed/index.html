@@ -162,31 +162,30 @@
 * Lazy Load Library: A popular JavaScript library that provides a simple and easy-to-use API for implementing lazy loading.
 * WordPress Lazy Load Plugin: A plugin for WordPress that provides a simple and easy-to-use interface for implementing lazy loading.</p>
 <h3 id="example-1-implementing-lazy-loading-using-intersectionobserver-api">Example 1: Implementing Lazy Loading using IntersectionObserver API</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create an observer instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Loop through the observed elements</span>
-<span class="w">  </span><span class="nx">entries</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// If the element is visible, load the resource</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">isIntersecting</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">image</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">image</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">src</span><span class="p">;</span>
-<span class="w">      </span><span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Set the threshold to 1.0 (100%)</span>
-<span class="w">  </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">1.0</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Create an observer instance
+const observer = new IntersectionObserver((entries) =&gt; {
+  // Loop through the observed elements
+  entries.forEach((entry) =&gt; {
+    // If the element is visible, load the resource
+    if (entry.isIntersecting) {
+      const image = entry.target;
+      image.src = image.dataset.src;
+      observer.unobserve(image);
+    }
+  });
+}, {
+  // Set the threshold to 1.0 (100%)
+  threshold: 1.0
+});
 
-<span class="c1">// Get all images with the lazy class</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;img.lazy&#39;</span><span class="p">);</span>
+// Get all images with the lazy class
+const images = document.querySelectorAll('img.lazy');
 
-<span class="c1">// Observe each image</span>
-<span class="nx">images</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">image</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Observe each image
+images.forEach((image) =&gt; {
+  observer.observe(image);
+});
+</code></pre>
 <p>In this example, we use the IntersectionObserver API to observe the visibility of images with the <code>lazy</code> class. When an image becomes visible, we load the resource by setting the <code>src</code> attribute.</p>
 <h2 id="common-use-cases">Common Use Cases</h2>
 <p>Lazy loading can be used in a variety of scenarios, including:
@@ -194,41 +193,39 @@
 2. <strong>Video loading</strong>: Lazy loading can be used to defer the loading of videos until they are actually needed, resulting in improved page load times and reduced bandwidth usage.
 3. <strong>Script loading</strong>: Lazy loading can be used to defer the loading of scripts until they are actually needed, resulting in improved page load times and reduced bandwidth usage.</p>
 <h3 id="example-2-implementing-lazy-loading-using-lazy-load-library">Example 2: Implementing Lazy Loading using Lazy Load Library</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Lazy Load Library</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;lazyload&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Lazy Load Library
+import 'lazyload';
 
-<span class="c1">// Initialize the lazy load library</span>
-<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.lazy&#39;</span><span class="p">).</span><span class="nx">lazyload</span><span class="p">({</span>
-<span class="w">    </span><span class="c1">// Set the threshold to 200px</span>
-<span class="w">    </span><span class="nx">threshold</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Initialize the lazy load library
+$(document).ready(function() {
+  $('.lazy').lazyload({
+    // Set the threshold to 200px
+    threshold: 200
+  });
+});
+</code></pre>
 <p>In this example, we use the Lazy Load Library to implement lazy loading for elements with the <code>lazy</code> class. We set the threshold to 200px, which means that the resource will be loaded when the element is within 200px of the viewport.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance benefits of lazy loading can be significant. According to a study by Google, lazy loading can reduce the initial page load time by up to 30%. Additionally, lazy loading can reduce bandwidth usage by up to 50%.</p>
 <h3 id="example-3-implementing-lazy-loading-using-wordpress-lazy-load-plugin">Example 3: Implementing Lazy Loading using WordPress Lazy Load Plugin</h3>
-<div class="codehilite"><pre><span></span><code><span class="x">// Install and activate the WordPress Lazy Load Plugin</span>
-<span class="x">// Configure the plugin settings</span>
-<span class="x">function configure_lazy_load_plugin() {</span>
-<span class="x">  // Set the threshold to 200px</span>
-<span class="x">  $threshold = 200;</span>
-<span class="x">  // Set the timeout to 500ms</span>
-<span class="x">  $timeout = 500;</span>
-<span class="x">  // Set the effect to fadein</span>
-<span class="x">  $effect = &#39;fadein&#39;;</span>
-<span class="x">  // Return the configuration settings</span>
-<span class="x">  return array(</span>
-<span class="x">    &#39;threshold&#39; =&gt; $threshold,</span>
-<span class="x">    &#39;timeout&#39; =&gt; $timeout,</span>
-<span class="x">    &#39;effect&#39; =&gt; $effect</span>
-<span class="x">  );</span>
-<span class="x">}</span>
-<span class="x">add_filter(&#39;lazy_load_plugin_settings&#39;, &#39;configure_lazy_load_plugin&#39;);</span>
-</code></pre></div>
-
+<pre><code class="language-php">// Install and activate the WordPress Lazy Load Plugin
+// Configure the plugin settings
+function configure_lazy_load_plugin() {
+  // Set the threshold to 200px
+  $threshold = 200;
+  // Set the timeout to 500ms
+  $timeout = 500;
+  // Set the effect to fadein
+  $effect = 'fadein';
+  // Return the configuration settings
+  return array(
+    'threshold' =&gt; $threshold,
+    'timeout' =&gt; $timeout,
+    'effect' =&gt; $effect
+  );
+}
+add_filter('lazy_load_plugin_settings', 'configure_lazy_load_plugin');
+</code></pre>
 <p>In this example, we use the WordPress Lazy Load Plugin to implement lazy loading for images and other resources. We set the threshold to 200px, the timeout to 500ms, and the effect to fadein.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that can occur when implementing lazy loading include:

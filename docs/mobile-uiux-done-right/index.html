@@ -164,32 +164,31 @@
 * <strong>Battery life and performance</strong>: Optimize your app's performance to minimize battery drain, using techniques such as caching, lazy loading, and reducing network requests.</p>
 <h3 id="implementing-responsive-design">Implementing Responsive Design</h3>
 <p>Responsive design is critical for ensuring that your app looks great on all devices. Here's an example of how to implement responsive design using CSS media queries:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">/* Default styles */</span>
-<span class="p">.</span><span class="nc">button</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-css">/* Default styles */
+.button {
+  width: 100px;
+  height: 50px;
+  font-size: 16px;
+}
 
-<span class="c">/* Styles for small screens */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="nt">screen</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">.</span><span class="nc">button</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+/* Styles for small screens */
+@media only screen and (max-width: 768px) {
+  .button {
+    width: 50px;
+    height: 25px;
+    font-size: 12px;
+  }
+}
 
-<span class="c">/* Styles for large screens */</span>
-<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="nt">screen</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="o">(</span><span class="nt">min-width</span><span class="o">:</span><span class="w"> </span><span class="nt">1024px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">.</span><span class="nc">button</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+/* Styles for large screens */
+@media only screen and (min-width: 1024px) {
+  .button {
+    width: 200px;
+    height: 100px;
+    font-size: 24px;
+  }
+}
+</code></pre>
 <p>This code uses CSS media queries to apply different styles to the <code>.button</code> element based on the screen size.</p>
 <h2 id="building-intuitive-navigation">Building Intuitive Navigation</h2>
 <p>Intuitive navigation is critical for ensuring that users can find what they're looking for quickly and easily. Here are some best practices for building intuitive navigation:
@@ -198,31 +197,30 @@
 3. <strong>Provide feedback and loading animations</strong>: Provide feedback and loading animations to let users know that their actions are being processed.</p>
 <h3 id="implementing-a-bottom-tab-bar">Implementing a Bottom Tab Bar</h3>
 <p>Here's an example of how to implement a bottom tab bar using React Native:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">TabBar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">activeTab</span><span class="p">,</span><span class="w"> </span><span class="nx">setActiveTab</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">);</span>
+const TabBar = () =&gt; {
+  const [activeTab, setActiveTab] = useState('home');
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">setActiveTab</span><span class="p">(</span><span class="nx">tab</span><span class="p">);</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleTabPress = (tab) =&gt; {
+    setActiveTab(tab);
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flexDirection</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;row&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">justifyContent</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;space-between&#39;</span><span class="w"> </span><span class="p">}}&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)}&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">activeTab</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;home&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gray&#39;</span><span class="w"> </span><span class="p">}}&gt;</span><span class="nx">Home</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">TouchableOpacity</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="p">(</span><span class="s1">&#39;settings&#39;</span><span class="p">)}&gt;</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">activeTab</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;settings&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gray&#39;</span><span class="w"> </span><span class="p">}}&gt;</span><span class="nx">Settings</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">TouchableOpacity</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View style={{ flexDirection: 'row', justifyContent: 'space-between' }}&gt;
+      &lt;TouchableOpacity onPress={() =&gt; handleTabPress('home')}&gt;
+        &lt;Text style={{ fontSize: 16, color: activeTab === 'home' ? 'blue' : 'gray' }}&gt;Home&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+      &lt;TouchableOpacity onPress={() =&gt; handleTabPress('settings')}&gt;
+        &lt;Text style={{ fontSize: 16, color: activeTab === 'settings' ? 'blue' : 'gray' }}&gt;Settings&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">TabBar</span><span class="p">;</span>
-</code></pre></div>
-
+export default TabBar;
+</code></pre>
 <p>This code uses React Native to implement a bottom tab bar with two tabs: "Home" and "Settings".</p>
 <h2 id="testing-and-iterating">Testing and Iterating</h2>
 <p>Testing and iterating are critical components of the mobile UI/UX design process. Here are some best practices for testing and iterating:
@@ -231,37 +229,36 @@
 * <strong>Iterate and refine</strong>: Iterate and refine your design based on user feedback and testing results.</p>
 <h3 id="using-analytics-tools">Using Analytics Tools</h3>
 <p>Here's an example of how to use Google Analytics to track user behavior:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Tracking</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@react-native-google-analytics&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Tracking } from '@react-native-google-analytics';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">HomePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">activeTab</span><span class="p">,</span><span class="w"> </span><span class="nx">setActiveTab</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">);</span>
+const HomePage = () =&gt; {
+  const [activeTab, setActiveTab] = useState('home');
 
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">Tracking</span><span class="p">.</span><span class="nx">trackScreenView</span><span class="p">(</span><span class="s1">&#39;Home Screen&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+  useEffect(() =&gt; {
+    Tracking.trackScreenView('Home Screen');
+  }, []);
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">setActiveTab</span><span class="p">(</span><span class="nx">tab</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">Tracking</span><span class="p">.</span><span class="nx">trackEvent</span><span class="p">(</span><span class="s1">&#39;Tab Press&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">category</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Navigation&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="nx">tab</span><span class="w"> </span><span class="p">});</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleTabPress = (tab) =&gt; {
+    setActiveTab(tab);
+    Tracking.trackEvent('Tab Press', { category: 'Navigation', action: tab });
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">View</span><span class="w"> </span><span class="nx">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flexDirection</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;row&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">justifyContent</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;space-between&#39;</span><span class="w"> </span><span class="p">}}</span><span class="o">&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="nx">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)}</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">Text</span><span class="w"> </span><span class="nx">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">activeTab</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;home&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gray&#39;</span><span class="w"> </span><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Home</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="err">/TouchableOpacity&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="nx">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">handleTabPress</span><span class="p">(</span><span class="s1">&#39;settings&#39;</span><span class="p">)}</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">Text</span><span class="w"> </span><span class="nx">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">activeTab</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;settings&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;blue&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;gray&#39;</span><span class="w"> </span><span class="p">}}</span><span class="o">&gt;</span><span class="nx">Settings</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
-<span class="w">      </span><span class="o">&lt;</span><span class="err">/TouchableOpacity&gt;</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/View&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View style={{ flexDirection: 'row', justifyContent: 'space-between' }}&gt;
+      &lt;TouchableOpacity onPress={() =&gt; handleTabPress('home')}&gt;
+        &lt;Text style={{ fontSize: 16, color: activeTab === 'home' ? 'blue' : 'gray' }}&gt;Home&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+      &lt;TouchableOpacity onPress={() =&gt; handleTabPress('settings')}&gt;
+        &lt;Text style={{ fontSize: 16, color: activeTab === 'settings' ? 'blue' : 'gray' }}&gt;Settings&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">HomePage</span><span class="p">;</span>
-</code></pre></div>
-
+export default HomePage;
+</code></pre>
 <p>This code uses the <code>@react-native-google-analytics</code> library to track screen views and events in Google Analytics.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions in mobile UI/UX design:

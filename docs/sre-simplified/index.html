@@ -165,36 +165,35 @@
 3. <strong>Service Level Objectives (SLOs)</strong>: SLOs are a practice that involves setting clear, measurable goals for system reliability and performance. This helps teams prioritize work, measure progress, and make data-driven decisions about where to focus their efforts.</p>
 <h3 id="example-implementing-error-budgeting-with-prometheus-and-grafana">Example: Implementing Error Budgeting with Prometheus and Grafana</h3>
 <p>Error budgeting is a powerful practice that can help teams prioritize reliability work and make data-driven decisions. One way to implement error budgeting is by using Prometheus and Grafana to monitor system metrics and calculate error budgets. Here's an example of how this might work:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># prometheus.yml</span>
-<span class="n">scrape_configs</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">job_name</span><span class="p">:</span> <span class="s1">&#39;my-service&#39;</span>
-    <span class="n">scrape_interval</span><span class="p">:</span> <span class="mi">10</span><span class="n">s</span>
-    <span class="n">metrics_path</span><span class="p">:</span> <span class="o">/</span><span class="n">metrics</span>
-    <span class="n">static_configs</span><span class="p">:</span>
-      <span class="o">-</span> <span class="n">targets</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;my-service:8080&#39;</span><span class="p">]</span>
+<pre><code class="language-python"># prometheus.yml
+scrape_configs:
+  - job_name: 'my-service'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['my-service:8080']
 
-<span class="c1"># grafana dashboard</span>
-<span class="p">{</span>
-  <span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Error Budget&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;panels&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-          <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Error Rate&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;graph&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;span&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-          <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;rate(my_service_errors[1m])&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;show&quot;</span><span class="p">:</span> <span class="n">true</span>
-          <span class="p">}</span>
-        <span class="p">}</span>
-      <span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+# grafana dashboard
+{
+  &quot;rows&quot;: [
+    {
+      &quot;title&quot;: &quot;Error Budget&quot;,
+      &quot;panels&quot;: [
+        {
+          &quot;id&quot;: 1,
+          &quot;title&quot;: &quot;Error Rate&quot;,
+          &quot;type&quot;: &quot;graph&quot;,
+          &quot;span&quot;: 6,
+          &quot;query&quot;: &quot;rate(my_service_errors[1m])&quot;,
+          &quot;legend&quot;: {
+            &quot;show&quot;: true
+          }
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
 <p>In this example, we're using Prometheus to scrape metrics from a service called <code>my-service</code>, and Grafana to visualize the error rate and calculate the error budget. The error budget is calculated by multiplying the error rate by the total number of requests, and then subtracting the result from 1.</p>
 <h2 id="sre-tools">SRE Tools</h2>
 <p>SRE teams use a wide range of tools to monitor, manage, and maintain complex systems. Some of the most popular SRE tools include:
@@ -204,42 +203,41 @@
 * <strong>PagerDuty</strong>: An incident management platform that provides alerting, on-call scheduling, and incident response.</p>
 <h3 id="example-using-kubernetes-to-automate-deployment-and-scaling">Example: Using Kubernetes to Automate Deployment and Scaling</h3>
 <p>Kubernetes is a powerful tool that can help SRE teams automate deployment and scaling of containerized applications. Here's an example of how to use Kubernetes to deploy and scale a simple web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">deployment</span><span class="p">.</span><span class="nx">yaml</span>
-<span class="nx">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="nx">apps</span><span class="o">/</span><span class="nx">v1</span>
-<span class="nx">kind</span><span class="p">:</span><span class="w"> </span><span class="nx">Deployment</span>
-<span class="nx">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="nx">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nx">replicas</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="nx">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">app</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="w">  </span><span class="nx">template</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">metadata</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="nx">app</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="w">    </span><span class="nx">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nx">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="w">        </span><span class="nx">image</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span><span class="p">:</span><span class="nx">latest</span>
-<span class="w">        </span><span class="nx">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="nx">containerPort</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span>
+<pre><code class="language-yml"># deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-web-app
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - name: my-web-app
+        image: my-web-app:latest
+        ports:
+        - containerPort: 8080
 
-<span class="err">#</span><span class="w"> </span><span class="nx">service</span><span class="p">.</span><span class="nx">yaml</span>
-<span class="nx">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="nx">v1</span>
-<span class="nx">kind</span><span class="p">:</span><span class="w"> </span><span class="nx">Service</span>
-<span class="nx">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="nx">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nx">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">app</span><span class="p">:</span><span class="w"> </span><span class="nx">my</span><span class="o">-</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span>
-<span class="w">  </span><span class="nx">ports</span><span class="p">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="nx">http</span>
-<span class="w">    </span><span class="nx">port</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">    </span><span class="nx">targetPort</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span>
-<span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nx">LoadBalancer</span>
-</code></pre></div>
-
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-web-app
+spec:
+  selector:
+    app: my-web-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+</code></pre>
 <p>In this example, we're using Kubernetes to deploy and scale a simple web application called <code>my-web-app</code>. The deployment is defined in a file called <code>deployment.yaml</code>, and the service is defined in a file called <code>service.yaml</code>. The deployment specifies that we want to run 3 replicas of the application, and the service specifies that we want to expose the application on port 80.</p>
 <h2 id="sre-case-studies">SRE Case Studies</h2>
 <p>SRE has been widely adopted by companies like Google, Amazon, and Netflix. Here are some real-world case studies that illustrate the benefits of SRE:
@@ -248,24 +246,23 @@
 * <strong>Netflix</strong>: Netflix has also adopted SRE, and has achieved significant improvements in system reliability and performance. For example, Netflix's streaming service is available 99.99% of the time, and the company's content delivery network (CDN) has an uptime of 99.99%.</p>
 <h3 id="example-using-sre-to-improve-system-reliability-at-netflix">Example: Using SRE to Improve System Reliability at Netflix</h3>
 <p>Netflix has been using SRE to improve system reliability and performance for several years. One example of how the company has applied SRE is by using a practice called "chaos engineering" to test the resilience of its systems. Chaos engineering involves intentionally introducing failures into a system in order to test its ability to recover and maintain performance. Here's an example of how Netflix uses chaos engineering to test the resilience of its systems:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># chaos.py</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python"># chaos.py
+import random
+import time
 
-<span class="k">def</span> <span class="nf">introduce_failure</span><span class="p">():</span>
-  <span class="c1"># introduce a failure into the system</span>
-  <span class="k">pass</span>
+def introduce_failure():
+  # introduce a failure into the system
+  pass
 
-<span class="k">def</span> <span class="nf">test_resilience</span><span class="p">():</span>
-  <span class="c1"># test the system&#39;s ability to recover from the failure</span>
-  <span class="k">pass</span>
+def test_resilience():
+  # test the system's ability to recover from the failure
+  pass
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-  <span class="n">introduce_failure</span><span class="p">()</span>
-  <span class="n">test_resilience</span><span class="p">()</span>
-  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
-</code></pre></div>
-
+while True:
+  introduce_failure()
+  test_resilience()
+  time.sleep(60)
+</code></pre>
 <p>In this example, we're using a Python script to introduce failures into a system and test its ability to recover. The script uses a loop to introduce failures and test resilience at regular intervals.</p>
 <h2 id="common-sre-problems-and-solutions">Common SRE Problems and Solutions</h2>
 <p>SRE teams often face a range of common problems, including:

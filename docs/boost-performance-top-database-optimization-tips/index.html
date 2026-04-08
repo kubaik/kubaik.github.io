@@ -172,21 +172,20 @@
 <li>Use smaller data types where possible (e.g., <code>TINYINT</code>, <code>SMALLINT</code>).</li>
 </ul>
 <h3 id="example">Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Inefficient</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">    </span><span class="n">birthdate</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Inefficient
+CREATE TABLE users (
+    user_id VARCHAR(255),
+    name VARCHAR(255),
+    birthdate VARCHAR(255)
+);
 
-<span class="c1">-- Optimized</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">birthdate</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">);</span>
-</code></pre></div>
-
+-- Optimized
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    birthdate DATE
+);
+</code></pre>
 <hr />
 <h2 id="2-indexing-for-speed">2. Indexing for Speed</h2>
 <p>Indexes are vital for quick data retrieval but can slow down write operations.</p>
@@ -205,13 +204,11 @@
 </ul>
 <h3 id="practical-example">Practical Example</h3>
 <p>Suppose you frequently query users by email:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_email ON users(email);
+</code></pre>
 <p>This index accelerates lookups like:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <hr />
 <h2 id="3-write-efficient-queries">3. Write Efficient Queries</h2>
 <p>Optimized queries reduce resource consumption and response time.</p>
@@ -224,17 +221,15 @@
 <li>Analyze query plans (using <code>EXPLAIN</code>) to identify inefficiencies.</li>
 </ul>
 <h3 id="example-of-an-efficient-query">Example of an Efficient Query</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Inefficient</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+<pre><code class="language-sql">-- Inefficient
+SELECT * FROM orders WHERE customer_id = 123;
 
-<span class="c1">-- Efficient</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">order_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">,</span><span class="w"> </span><span class="n">total_amount</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+-- Efficient
+SELECT order_id, order_date, total_amount FROM orders WHERE customer_id = 123;
+</code></pre>
 <h3 id="using-explain">Using EXPLAIN</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM orders WHERE customer_id = 123;
+</code></pre>
 <p>This shows whether indexes are used and helps optimize queries further.</p>
 <hr />
 <h2 id="4-regular-maintenance-and-housekeeping">4. Regular Maintenance and Housekeeping</h2>
@@ -247,13 +242,11 @@
 <li><strong>Monitor Slow Queries:</strong> Use logs and profiling tools to identify problematic queries.</li>
 </ul>
 <h3 id="example-rebuilding-indexes-in-mysql">Example: Rebuilding Indexes in MySQL</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">ALTER TABLE users ENGINE=InnoDB;
+</code></pre>
 <p>Or:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">OPTIMIZE TABLE users;
+</code></pre>
 <p>This command reorganizes the physical storage and defragments indexes.</p>
 <hr />
 <h2 id="5-configure-database-parameters-properly">5. Configure Database Parameters Properly</h2>
@@ -267,12 +260,11 @@
 </ul>
 <h3 id="practical-advice">Practical Advice</h3>
 <p>For MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
-<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">4G</span>
-<span class="na">max_connections</span><span class="o">=</span><span class="s">200</span>
-<span class="na">query_cache_size</span><span class="o">=</span><span class="s">256M</span>
-</code></pre></div>
-
+<pre><code class="language-ini">[mysqld]
+innodb_buffer_pool_size=4G
+max_connections=200
+query_cache_size=256M
+</code></pre>
 <p>Always test configuration changes in a staging environment before applying them to production.</p>
 <hr />
 <h2 id="6-use-caching-strategies">6. Use Caching Strategies</h2>
@@ -285,21 +277,20 @@
 </ul>
 <h3 id="practical-example_1">Practical Example</h3>
 <p>Implement caching in your application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="n">cache</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">)</span>
+cache = redis.Redis(host='localhost', port=6379)
 
-<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;user:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">user_data</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">user_data</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
-    <span class="c1"># Fetch from database</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">fetch_user_from_db</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="n">ex</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>  <span class="c1"># Cache for 1 hour</span>
-    <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+def get_user(user_id):
+    cache_key = f&quot;user:{user_id}&quot;
+    user_data = cache.get(cache_key)
+    if user_data:
+        return pickle.loads(user_data)
+    # Fetch from database
+    user = fetch_user_from_db(user_id)
+    cache.set(cache_key, pickle.dumps(user), ex=3600)  # Cache for 1 hour
+    return user
+</code></pre>
 <hr />
 <h2 id="7-load-balancing-and-replication">7. Load Balancing and Replication</h2>
 <p>Distribute load across multiple servers to improve scalability.</p>

@@ -170,51 +170,48 @@
 <h2 id="building-custom-elements">Building Custom Elements</h2>
 <p>To build a custom element, you'll need to define a class that extends the <code>HTMLElement</code> class and overrides the <code>connectedCallback</code> method. This method is called when the custom element is inserted into the DOM, and is where you'll initialize the element's properties and render its content.</p>
 <p>Here's an example of a simple custom element built using LitElement:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">html</span><span class="p">,</span><span class="w"> </span><span class="nx">css</span><span class="p">,</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;lit-element&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { html, css, LitElement } from 'lit-element';
 
-<span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="nx">get</span><span class="w"> </span><span class="nx">properties</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">}</span>
+class MyElement extends LitElement {
+  static get properties() {
+    return {
+      name: { type: String },
+      age: { type: Number }
+    };
+  }
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">super</span><span class="p">();</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">30</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  constructor() {
+    super();
+    this.name = 'John Doe';
+    this.age = 30;
+  }
 
-<span class="w">  </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">html</span><span class="sb">`</span>
-<span class="sb">      &lt;h1&gt;Hello, </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">!&lt;/h1&gt;</span>
-<span class="sb">      &lt;p&gt;You are </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="si">}</span><span class="sb"> years old.&lt;/p&gt;</span>
-<span class="sb">    `</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  render() {
+    return html`
+      &lt;h1&gt;Hello, ${this.name}!&lt;/h1&gt;
+      &lt;p&gt;You are ${this.age} years old.&lt;/p&gt;
+    `;
+  }
+}
 
-<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;my-element&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">MyElement</span><span class="p">);</span>
-</code></pre></div>
-
+customElements.define('my-element', MyElement);
+</code></pre>
 <p>This custom element has two properties: <code>name</code> and <code>age</code>, which are initialized with default values in the constructor. The <code>render</code> method returns a template literal that defines the element's content, using the <code>html</code> function from LitElement to create a virtual DOM node.</p>
 <h3 id="using-custom-elements-in-a-web-page">Using Custom Elements in a Web Page</h3>
 <p>To use a custom element in a web page, you'll need to include the JavaScript file that defines the element, and then use the element's tag name in your HTML code. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;my-element.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">my-element</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;my-element.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;my-element&gt;&lt;/my-element&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>This will render the custom element in the web page, with the default values for <code>name</code> and <code>age</code>. You can also pass attributes to the custom element to customize its properties:</p>
 <p><em>Recommended: <a href="https://amazon.com/dp/B07C3KLQWX?tag=aiblogcontent-20" target="_blank" rel="nofollow sponsored">Eloquent JavaScript Book</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;Jane Doe&quot;</span> <span class="na">age</span><span class="o">=</span><span class="s">&quot;25&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;my-element name=&quot;Jane Doe&quot; age=&quot;25&quot;&gt;&lt;/my-element&gt;
+</code></pre>
 <p>This will render the custom element with the specified values for <code>name</code> and <code>age</code>.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>One of the key benefits of using Web Components is improved performance due to reduced DOM overhead. However, to achieve optimal performance, you'll need to follow some best practices:
@@ -222,19 +219,18 @@
 * Use the <code>shouldUpdate</code> method to determine whether the custom element needs to be updated, and skip unnecessary updates.
 * Use the <code>render</code> method to define the custom element's content, rather than using a separate template engine or rendering library.</p>
 <p>For example, here's an updated version of the <code>MyElement</code> class that uses <code>requestAnimationFrame</code> to schedule updates:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyElement</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// ...</span>
+<pre><code class="language-javascript">class MyElement extends LitElement {
+  // ...
 
-<span class="w">  </span><span class="nx">update</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">requestAnimationFrame</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
+  update() {
+    requestAnimationFrame(() =&gt; {
+      this.render();
+    });
+  }
 
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  // ...
+}
+</code></pre>
 <p>This will schedule the <code>render</code> method to be called on the next animation frame, rather than updating the DOM directly.</p>
 <h3 id="measuring-performance">Measuring Performance</h3>
 <p>To measure the performance of your custom elements, you can use tools like the Chrome DevTools or Lighthouse. These tools provide detailed metrics on page load times, rendering performance, and other key performance indicators.</p>
@@ -248,18 +244,16 @@
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem when building custom elements is dealing with styling and layout issues. Since custom elements are encapsulated, they can be difficult to style and layout using traditional CSS techniques.</p>
 <p>To solve this problem, you can use the <code>::part</code> pseudo-element to target specific parts of the custom element's shadow DOM. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">my-element</span><span class="p">::</span><span class="nd">part</span><span class="o">(</span><span class="nt">header</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#333</span><span class="p">;</span>
-<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#fff</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">my-element::part(header) {
+  background-color: #333;
+  color: #fff;
+}
+</code></pre>
 <p>This will target the <code>header</code> part of the custom element's shadow DOM, and apply the specified styles.</p>
 <p>Another common problem is dealing with accessibility issues. Custom elements can be difficult to make accessible, since they may not provide the same level of semantic meaning as native HTML elements.</p>
 <p>To solve this problem, you can use ARIA attributes to provide a semantic meaning for the custom element. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">my-element</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Click me!&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">my-element</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;my-element role=&quot;button&quot; aria-label=&quot;Click me!&quot;&gt;&lt;/my-element&gt;
+</code></pre>
 <p>This will provide a semantic meaning for the custom element, and make it more accessible to screen readers and other assistive technologies.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Custom elements can be used in a wide range of real-world applications, from simple web pages to complex web apps. Here are some examples:
@@ -267,37 +261,35 @@
 * A social media platform that uses custom elements to render user profiles and posts
 * A e-commerce platform that uses custom elements to render product listings and shopping carts</p>
 <p>For example, here's an example of how you might use custom elements to build a todo list app:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">todo-list</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">todo-item</span><span class="p">&gt;</span>Buy milk<span class="p">&lt;/</span><span class="nt">todo-item</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">todo-item</span><span class="p">&gt;</span>Walk the dog<span class="p">&lt;/</span><span class="nt">todo-item</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">todo-item</span><span class="p">&gt;</span>Do laundry<span class="p">&lt;/</span><span class="nt">todo-item</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">todo-list</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;todo-list&gt;
+  &lt;todo-item&gt;Buy milk&lt;/todo-item&gt;
+  &lt;todo-item&gt;Walk the dog&lt;/todo-item&gt;
+  &lt;todo-item&gt;Do laundry&lt;/todo-item&gt;
+&lt;/todo-list&gt;
+</code></pre>
 <p>This will render a todo list with three individual todo items, each represented by a custom <code>todo-item</code> element.</p>
 <h3 id="implementation-details">Implementation Details</h3>
 <p>To implement this example, you would need to define the <code>todo-list</code> and <code>todo-item</code> custom elements, and provide a way to add and remove todo items from the list. You could use a library like LitElement to build the custom elements, and provide a simple API for interacting with the todo list.</p>
 <p>For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">TodoList</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">LitElement</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// ...</span>
+<pre><code class="language-javascript">class TodoList extends LitElement {
+  // ...
 
-<span class="w">  </span><span class="nx">addTodoItem</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">todoItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;todo-item&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">todoItem</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">item</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">todoItem</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
+  addTodoItem(item) {
+    const todoItem = document.createElement('todo-item');
+    todoItem.textContent = item;
+    this.shadowRoot.appendChild(todoItem);
+  }
 
-<span class="w">  </span><span class="nx">removeTodoItem</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">todoItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="sb">`todo-item[textContent=&quot;</span><span class="si">${</span><span class="nx">item</span><span class="si">}</span><span class="sb">&quot;]`</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">todoItem</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">todoItem</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
+  removeTodoItem(item) {
+    const todoItem = this.shadowRoot.querySelector(`todo-item[textContent=&quot;${item}&quot;]`);
+    if (todoItem) {
+      this.shadowRoot.removeChild(todoItem);
+    }
+  }
 
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  // ...
+}
+</code></pre>
 <p>This would provide a simple way to add and remove todo items from the list, and render the list using custom elements.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, Web Components provide a powerful way to build custom, reusable, and encapsulated HTML tags for use in web pages and web apps. By using libraries like LitElement or Stencil, you can build custom elements that are fast, efficient, and easy to use.</p>

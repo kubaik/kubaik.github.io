@@ -162,47 +162,45 @@
 * <strong>Performance requirements</strong>: Both Redis and Memcached offer high-performance caching, but Redis has more advanced features, such as pipelining and clustering, that can improve performance in high-traffic scenarios.</p>
 <h3 id="example-use-case-caching-user-sessions-with-redis">Example Use Case: Caching User Sessions with Redis</h3>
 <p>Let's consider an example of using Redis to cache user sessions in a web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="c1"># Create a Redis client</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Create a Redis client
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Set a user session in Redis</span>
-<span class="k">def</span> <span class="nf">set_user_session</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">session_data</span><span class="p">):</span>
-    <span class="n">redis_client</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s1">&#39;user:sessions&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">session_data</span><span class="p">)</span>
+# Set a user session in Redis
+def set_user_session(user_id, session_data):
+    redis_client.hset('user:sessions', user_id, session_data)
 
-<span class="c1"># Get a user session from Redis</span>
-<span class="k">def</span> <span class="nf">get_user_session</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s1">&#39;user:sessions&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+# Get a user session from Redis
+def get_user_session(user_id):
+    return redis_client.hget('user:sessions', user_id)
 
-<span class="c1"># Example usage:</span>
-<span class="n">set_user_session</span><span class="p">(</span><span class="s1">&#39;12345&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">})</span>
-<span class="n">session_data</span> <span class="o">=</span> <span class="n">get_user_session</span><span class="p">(</span><span class="s1">&#39;12345&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">session_data</span><span class="p">)</span>  <span class="c1"># Output: b&quot;{&#39;username&#39;: &#39;john&#39;, &#39;email&#39;: &#39;john@example.com&#39;}&quot;</span>
-</code></pre></div>
-
+# Example usage:
+set_user_session('12345', {'username': 'john', 'email': 'john@example.com'})
+session_data = get_user_session('12345')
+print(session_data)  # Output: b&quot;{'username': 'john', 'email': 'john@example.com'}&quot;
+</code></pre>
 <p>In this example, we use the Redis <code>hset</code> and <code>hget</code> commands to store and retrieve user session data in a Redis hash.</p>
 <h2 id="implementing-caching-with-memcached">Implementing Caching with Memcached</h2>
 <p>Memcached is a simpler caching solution that can be used for storing small, frequently accessed data. Here's an example of using Memcached to cache a web page:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pylibmc</span>
+<pre><code class="language-python">import pylibmc
 
-<span class="c1"># Create a Memcached client</span>
-<span class="n">memcached_client</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">Client</span><span class="p">([</span><span class="s1">&#39;localhost:11211&#39;</span><span class="p">])</span>
+# Create a Memcached client
+memcached_client = pylibmc.Client(['localhost:11211'])
 
-<span class="c1"># Set a cached web page in Memcached</span>
-<span class="k">def</span> <span class="nf">set_cached_page</span><span class="p">(</span><span class="n">page_id</span><span class="p">,</span> <span class="n">page_data</span><span class="p">):</span>
-    <span class="n">memcached_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">page_id</span><span class="p">,</span> <span class="n">page_data</span><span class="p">)</span>
+# Set a cached web page in Memcached
+def set_cached_page(page_id, page_data):
+    memcached_client.set(page_id, page_data)
 
-<span class="c1"># Get a cached web page from Memcached</span>
-<span class="k">def</span> <span class="nf">get_cached_page</span><span class="p">(</span><span class="n">page_id</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">memcached_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">page_id</span><span class="p">)</span>
+# Get a cached web page from Memcached
+def get_cached_page(page_id):
+    return memcached_client.get(page_id)
 
-<span class="c1"># Example usage:</span>
-<span class="n">set_cached_page</span><span class="p">(</span><span class="s1">&#39;home_page&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;html&gt;...&lt;/html&gt;&#39;</span><span class="p">)</span>
-<span class="n">page_data</span> <span class="o">=</span> <span class="n">get_cached_page</span><span class="p">(</span><span class="s1">&#39;home_page&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">page_data</span><span class="p">)</span>  <span class="c1"># Output: &lt;html&gt;...&lt;/html&gt;</span>
-</code></pre></div>
-
+# Example usage:
+set_cached_page('home_page', '&lt;html&gt;...&lt;/html&gt;')
+page_data = get_cached_page('home_page')
+print(page_data)  # Output: &lt;html&gt;...&lt;/html&gt;
+</code></pre>
 <p>In this example, we use the Memcached <code>set</code> and <code>get</code> commands to store and retrieve a cached web page.</p>
 <h2 id="caching-strategies-and-best-practices">Caching Strategies and Best Practices</h2>
 <p>Here are some caching strategies and best practices to keep in mind:

@@ -167,22 +167,21 @@
 2. Enable the DDoS protection feature in your Cloudflare dashboard.
 3. Configure your firewall rules to block suspicious traffic.</p>
 <p>Here is an example of how to use Cloudflare's API to enable DDoS protection programmatically:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cloudflare</span>
+<pre><code class="language-python">import cloudflare
 
-<span class="c1"># Set your Cloudflare API credentials</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>
-<span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;your_email&quot;</span>
+# Set your Cloudflare API credentials
+api_key = &quot;your_api_key&quot;
+email = &quot;your_email&quot;
 
-<span class="c1"># Create a Cloudflare API client</span>
-<span class="n">cf</span> <span class="o">=</span> <span class="n">cloudflare</span><span class="o">.</span><span class="n">CloudFlare</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">api_key</span><span class="p">)</span>
+# Create a Cloudflare API client
+cf = cloudflare.CloudFlare(email, api_key)
 
-<span class="c1"># Get your zone ID</span>
-<span class="n">zone_id</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;your_domain.com&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+# Get your zone ID
+zone_id = cf.zones.get(&quot;your_domain.com&quot;)[0][&quot;id&quot;]
 
-<span class="c1"># Enable DDoS protection for your zone</span>
-<span class="n">cf</span><span class="o">.</span><span class="n">zones</span><span class="o">.</span><span class="n">ddos</span><span class="p">(</span><span class="n">zone_id</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
+# Enable DDoS protection for your zone
+cf.zones.ddos(zone_id, enabled=True)
+</code></pre>
 <p>This code example uses the Cloudflare Python library to enable DDoS protection for a specific zone.</p>
 <h2 id="ddos-protection-with-aws-shield">DDoS Protection with AWS Shield</h2>
 <p>AWS Shield is a DDoS protection service that provides automatic detection and mitigation of DDoS attacks. To get started with AWS Shield, you can follow these steps:
@@ -190,9 +189,8 @@
 2. Create a new AWS Shield protection plan and configure your settings.
 3. Integrate AWS Shield with your AWS resources, such as EC2 instances or Elastic Load Balancers.</p>
 <p>Here is an example of how to use the AWS CLI to create an AWS Shield protection plan:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>shield<span class="w"> </span>create-protection<span class="w"> </span>--name<span class="w"> </span>my-protection-plan<span class="w"> </span>--resource-arn<span class="w"> </span>arn:aws:ec2:us-west-2:123456789012:instance/i-12345678
-</code></pre></div>
-
+<pre><code class="language-bash">aws shield create-protection --name my-protection-plan --resource-arn arn:aws:ec2:us-west-2:123456789012:instance/i-12345678
+</code></pre>
 <p>This command creates a new AWS Shield protection plan and associates it with a specific EC2 instance.</p>
 <h2 id="ddos-protection-with-akamai">DDoS Protection with Akamai</h2>
 <p>Akamai is a CDN and security platform that offers DDoS protection, WAF, and other security features. To get started with Akamai, you can follow these steps:
@@ -200,36 +198,35 @@
 2. Configure your Akamai settings, including your CDN and security features.
 3. Integrate Akamai with your web application or service.</p>
 <p>Here is an example of how to use Akamai's API to configure a WAF rule:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.akamai.open.cloudsecurity.ApiClient</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.akamai.open.cloudsecurity.ApiException</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.akamai.open.cloudsecurity.Configuration</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.akamai.open.cloudsecurity.auth.ApiKeyAuth</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.akamai.open.cloudsecurity.model.WafRule</span><span class="p">;</span>
+<pre><code class="language-java">import com.akamai.open.cloudsecurity.ApiClient;
+import com.akamai.open.cloudsecurity.ApiException;
+import com.akamai.open.cloudsecurity.Configuration;
+import com.akamai.open.cloudsecurity.auth.ApiKeyAuth;
+import com.akamai.open.cloudsecurity.model.WafRule;
 
-<span class="c1">// Set your Akamai API credentials</span>
-<span class="n">String</span><span class="w"> </span><span class="n">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your_api_key&quot;</span><span class="p">;</span>
-<span class="n">String</span><span class="w"> </span><span class="n">apiSecret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your_api_secret&quot;</span><span class="p">;</span>
+// Set your Akamai API credentials
+String apiKey = &quot;your_api_key&quot;;
+String apiSecret = &quot;your_api_secret&quot;;
 
-<span class="c1">// Create an Akamai API client</span>
-<span class="n">ApiClient</span><span class="w"> </span><span class="n">apiClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Configuration</span><span class="p">.</span><span class="na">getDefaultApiClient</span><span class="p">();</span>
-<span class="n">apiClient</span><span class="p">.</span><span class="na">setBasePath</span><span class="p">(</span><span class="s">&quot;https://api.akamai.com&quot;</span><span class="p">);</span>
-<span class="n">apiClient</span><span class="p">.</span><span class="na">setApiKey</span><span class="p">(</span><span class="n">apiKey</span><span class="p">);</span>
-<span class="n">apiClient</span><span class="p">.</span><span class="na">setApiSecret</span><span class="p">(</span><span class="n">apiSecret</span><span class="p">);</span>
+// Create an Akamai API client
+ApiClient apiClient = Configuration.getDefaultApiClient();
+apiClient.setBasePath(&quot;https://api.akamai.com&quot;);
+apiClient.setApiKey(apiKey);
+apiClient.setApiSecret(apiSecret);
 
-<span class="c1">// Create a new WAF rule</span>
-<span class="n">WafRule</span><span class="w"> </span><span class="n">wafRule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WafRule</span><span class="p">();</span>
-<span class="n">wafRule</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;my_waf_rule&quot;</span><span class="p">);</span>
-<span class="n">wafRule</span><span class="p">.</span><span class="na">setCondition</span><span class="p">(</span><span class="s">&quot;request_method == &#39;GET&#39;&quot;</span><span class="p">);</span>
-<span class="n">wafRule</span><span class="p">.</span><span class="na">setAction</span><span class="p">(</span><span class="s">&quot;allow&quot;</span><span class="p">);</span>
+// Create a new WAF rule
+WafRule wafRule = new WafRule();
+wafRule.setName(&quot;my_waf_rule&quot;);
+wafRule.setCondition(&quot;request_method == 'GET'&quot;);
+wafRule.setAction(&quot;allow&quot;);
 
-<span class="c1">// Configure the WAF rule</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">apiClient</span><span class="p">.</span><span class="na">getWafApi</span><span class="p">().</span><span class="na">createWafRule</span><span class="p">(</span><span class="n">wafRule</span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ApiException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Configure the WAF rule
+try {
+    apiClient.getWafApi().createWafRule(wafRule);
+} catch (ApiException e) {
+    System.out.println(e.getMessage());
+}
+</code></pre>
 <p>This code example uses the Akamai Java library to create a new WAF rule.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that organizations face when implementing DDoS protection include:

@@ -198,74 +198,71 @@
 <h2 id="code-examples">Code Examples</h2>
 <p>Here are a few code examples that demonstrate the implementation of CQRS and Event Sourcing:</p>
 <h3 id="example-1-cqrs-command-handler">Example 1: CQRS Command Handler</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// CQRS command handler example</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CreateUserCommandHandler</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">EventStore</span><span class="w"> </span><span class="n">eventStore</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="n">database</span><span class="p">;</span>
+<pre><code class="language-java">// CQRS command handler example
+public class CreateUserCommandHandler {
+    private final EventStore eventStore;
+    private final Database database;
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">CreateUserCommandHandler</span><span class="p">(</span><span class="n">EventStore</span><span class="w"> </span><span class="n">eventStore</span><span class="p">,</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="n">database</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">eventStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eventStore</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">database</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    public CreateUserCommandHandler(EventStore eventStore, Database database) {
+        this.eventStore = eventStore;
+        this.database = database;
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">CreateUserCommand</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new user event</span>
-<span class="w">        </span><span class="n">UserCreatedEvent</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserCreatedEvent</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="na">getUserId</span><span class="p">(),</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span>
+    public void handle(CreateUserCommand command) {
+        // Create a new user event
+        UserCreatedEvent event = new UserCreatedEvent(command.getUserId(), command.getUsername());
 
-<span class="w">        </span><span class="c1">// Store the event in the event store</span>
-<span class="w">        </span><span class="n">eventStore</span><span class="p">.</span><span class="na">storeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
+        // Store the event in the event store
+        eventStore.storeEvent(event);
 
-<span class="w">        </span><span class="c1">// Update the database</span>
-<span class="w">        </span><span class="n">database</span><span class="p">.</span><span class="na">updateUser</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="na">getUserId</span><span class="p">(),</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Update the database
+        database.updateUser(command.getUserId(), command.getUsername());
+    }
+}
+</code></pre>
 <p>This code example demonstrates a CQRS command handler that creates a new user event and stores it in the event store. The command handler also updates the database with the new user information.</p>
 <h3 id="example-2-event-sourcing-aggregate-root">Example 2: Event Sourcing Aggregate Root</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Event sourcing aggregate root example</span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserAggregateRoot</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Guid</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IEvent</span><span class="o">&gt;</span><span class="w"> </span><span class="n">events</span><span class="p">;</span>
+<pre><code class="language-csharp">// Event sourcing aggregate root example
+public class UserAggregateRoot {
+    private readonly Guid id;
+    private readonly List&lt;IEvent&gt; events;
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">UserAggregateRoot</span><span class="p">(</span><span class="n">Guid</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IEvent</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
+    public UserAggregateRoot(Guid id) {
+        this.id = id;
+        this.events = new List&lt;IEvent&gt;();
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ApplyEvent</span><span class="p">(</span><span class="n">IEvent</span><span class="w"> </span><span class="n">@event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Apply the event to the aggregate root</span>
-<span class="w">        </span><span class="n">events</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">@event</span><span class="p">);</span>
+    public void ApplyEvent(IEvent @event) {
+        // Apply the event to the aggregate root
+        events.Add(@event);
 
-<span class="w">        </span><span class="c1">// Update the aggregate root state</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">@event</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">UserCreatedEvent</span><span class="w"> </span><span class="n">userCreatedEvent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Update the aggregate root state with the new user information</span>
-<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userCreatedEvent</span><span class="p">.</span><span class="n">UserId</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+        // Update the aggregate root state
+        if (@event is UserCreatedEvent userCreatedEvent) {
+            // Update the aggregate root state with the new user information
+            id = userCreatedEvent.UserId;
+        }
+    }
 
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">IEvent</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetEvents</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return the list of events</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">events</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public List&lt;IEvent&gt; GetEvents() {
+        // Return the list of events
+        return events;
+    }
+}
+</code></pre>
 <p>This code example demonstrates an event sourcing aggregate root that applies events to the aggregate root state. The aggregate root also provides a list of events that can be used to replay the events and recover the aggregate root state.</p>
 <h3 id="example-3-cqrs-query-handler">Example 3: CQRS Query Handler</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># CQRS query handler example</span>
-<span class="k">class</span> <span class="nc">GetUserQueryHandler</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+<pre><code class="language-python"># CQRS query handler example
+class GetUserQueryHandler:
+    def __init__(self, database):
+        self.database = database
 
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-        <span class="c1"># Retrieve the user information from the database</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+    def handle(self, query):
+        # Retrieve the user information from the database
+        user = self.database.get_user(query.user_id)
 
-        <span class="c1"># Return the user information</span>
-        <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+        # Return the user information
+        return user
+</code></pre>
 <p>This code example demonstrates a CQRS query handler that retrieves user information from the database. The query handler returns the user information, which can be used to display the user information to the user.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of CQRS and Event Sourcing can vary depending on the implementation and the underlying infrastructure. However, here are some general performance benchmarks:</p>

@@ -163,87 +163,84 @@
 <h3 id="token-bucket-algorithm">Token Bucket Algorithm</h3>
 <p>The token bucket algorithm is a widely used rate limiting technique that works by adding tokens to a bucket at a specified rate. Each request consumes a token, and if the bucket is empty, the request is blocked until a token is added. This algorithm is useful for limiting the number of requests within a specified time frame.</p>
 <p>Here is an example of a token bucket implementation in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import time
 
-<span class="k">class</span> <span class="nc">TokenBucket</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">capacity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+class TokenBucket:
+    def __init__(self, rate, capacity):
+        self.rate = rate
+        self.capacity = capacity
+        self.tokens = capacity
+        self.last_update = time.time()
 
-    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">+</span> <span class="n">elapsed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
+    def consume(self, amount=1):
+        now = time.time()
+        elapsed = now - self.last_update
+        self.tokens = min(self.capacity, self.tokens + elapsed * self.rate)
+        self.last_update = now
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">&lt;</span> <span class="n">amount</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">-=</span> <span class="n">amount</span>
-        <span class="k">return</span> <span class="kc">True</span>
+        if self.tokens &lt; amount:
+            return False
+        self.tokens -= amount
+        return True
 
-<span class="c1"># Create a token bucket with a rate of 5 requests per second and a capacity of 10 requests</span>
-<span class="n">bucket</span> <span class="o">=</span> <span class="n">TokenBucket</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+# Create a token bucket with a rate of 5 requests per second and a capacity of 10 requests
+bucket = TokenBucket(5, 10)
 
-<span class="c1"># Consume tokens</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">bucket</span><span class="o">.</span><span class="n">consume</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Request allowed&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Request blocked&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</code></pre></div>
-
+# Consume tokens
+while True:
+    if bucket.consume():
+        print(&quot;Request allowed&quot;)
+    else:
+        print(&quot;Request blocked&quot;)
+    time.sleep(0.1)
+</code></pre>
 <p>This implementation creates a token bucket with a rate of 5 requests per second and a capacity of 10 requests. The <code>consume</code> method checks if there are enough tokens in the bucket to allow a request and updates the token count accordingly.</p>
 <h3 id="leaky-bucket-algorithm">Leaky Bucket Algorithm</h3>
 <p>The leaky bucket algorithm is another rate limiting technique that works by adding requests to a bucket at a specified rate. The bucket leaks at a constant rate, and if the bucket is full, new requests are blocked until the bucket leaks.</p>
 <p>Here is an example of a leaky bucket implementation in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="language-python">import time
 
-<span class="k">class</span> <span class="nc">LeakyBucket</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+class LeakyBucket:
+    def __init__(self, rate, capacity):
+        self.rate = rate
+        self.capacity = capacity
+        self.level = 0
+        self.last_update = time.time()
 
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">-</span> <span class="n">elapsed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
+    def add(self, amount=1):
+        now = time.time()
+        elapsed = now - self.last_update
+        self.level = max(0, self.level - elapsed * self.rate)
+        self.last_update = now
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">+</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">+=</span> <span class="n">amount</span>
-        <span class="k">return</span> <span class="kc">True</span>
+        if self.level + amount &gt; self.capacity:
+            return False
+        self.level += amount
+        return True
 
-<span class="c1"># Create a leaky bucket with a rate of 5 requests per second and a capacity of 10 requests</span>
-<span class="n">bucket</span> <span class="o">=</span> <span class="n">LeakyBucket</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+# Create a leaky bucket with a rate of 5 requests per second and a capacity of 10 requests
+bucket = LeakyBucket(5, 10)
 
-<span class="c1"># Add requests to the bucket</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">bucket</span><span class="o">.</span><span class="n">add</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Request allowed&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Request blocked&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</code></pre></div>
-
+# Add requests to the bucket
+while True:
+    if bucket.add():
+        print(&quot;Request allowed&quot;)
+    else:
+        print(&quot;Request blocked&quot;)
+    time.sleep(0.1)
+</code></pre>
 <p>This implementation creates a leaky bucket with a rate of 5 requests per second and a capacity of 10 requests. The <code>add</code> method checks if adding a request to the bucket would exceed the capacity and updates the bucket level accordingly.</p>
 <h2 id="throttling-techniques">Throttling Techniques</h2>
 <p>Throttling techniques are used to limit the amount of data that can be transferred within a specified time frame. This is useful for preventing network congestion and ensuring that a service remains responsive.</p>
 <h3 id="throttling-with-nginx">Throttling with NGINX</h3>
 <p>NGINX is a popular web server that provides built-in throttling capabilities. Here is an example of how to configure NGINX to throttle requests:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">http</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="w">    </span><span class="s">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=one:10m</span><span class="w"> </span><span class="s">rate=5r/s</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=one</span><span class="w"> </span><span class="s">burst=10</span><span class="w"> </span><span class="s">nodelay</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">...</span>
-<span class="err">}</span>
-</code></pre></div>
-
+<pre><code class="language-nginx">http {
+    ...
+    limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;
+    limit_req zone=one burst=10 nodelay;
+    ...
+}
+</code></pre>
 <p>This configuration creates a rate limiting zone called "one" that limits requests to 5 per second. The <code>burst</code> parameter allows for 10 requests to be processed immediately, and the <code>nodelay</code> parameter ensures that requests are not delayed.</p>
 <h2 id="tools-and-platforms-for-rate-limiting-and-throttling">Tools and Platforms for Rate Limiting and Throttling</h2>
 <p>There are several tools and platforms available that provide rate limiting and throttling capabilities. Some popular options include:</p>

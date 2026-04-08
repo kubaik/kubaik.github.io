@@ -165,50 +165,48 @@
 * Azure Data Factory</p>
 <h2 id="building-a-data-engineering-pipeline-with-apache-beam">Building a Data Engineering Pipeline with Apache Beam</h2>
 <p>Apache Beam is a popular open-source framework for building data engineering pipelines. Here is an example of how to build a simple pipeline using Apache Beam:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">apache_beam</span> <span class="k">as</span> <span class="nn">beam</span>
+<pre><code class="language-python">import apache_beam as beam
 
-<span class="c1"># Define the pipeline</span>
-<span class="k">with</span> <span class="n">beam</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">()</span> <span class="k">as</span> <span class="n">pipeline</span><span class="p">:</span>
-    <span class="c1"># Read data from a CSV file</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pipeline</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">ReadFromText</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Define the pipeline
+with beam.Pipeline() as pipeline:
+    # Read data from a CSV file
+    data = pipeline | beam.ReadFromText('data.csv')
 
-    <span class="c1"># Transform the data</span>
-    <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    # Transform the data
+    transformed_data = data | beam.Map(lambda x: x.split(','))
 
-    <span class="c1"># Write the transformed data to a Parquet file</span>
-    <span class="n">transformed_data</span> <span class="o">|</span> <span class="n">beam</span><span class="o">.</span><span class="n">WriteToParquet</span><span class="p">(</span><span class="s1">&#39;output.parquet&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+    # Write the transformed data to a Parquet file
+    transformed_data | beam.WriteToParquet('output.parquet')
+</code></pre>
 <p>This pipeline reads data from a CSV file, transforms it by splitting each line into a list of values, and writes the transformed data to a Parquet file.</p>
 <h3 id="data-ingestion-with-aws-glue">Data Ingestion with AWS Glue</h3>
 <p>AWS Glue is a fully managed extract, transform, and load (ETL) service that makes it easy to prepare and load data for analysis. Here is an example of how to use AWS Glue to ingest data from a relational database:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS Glue client</span>
-<span class="n">glue</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;glue&#39;</span><span class="p">)</span>
+# Create an AWS Glue client
+glue = boto3.client('glue')
 
-<span class="c1"># Define the database and table to ingest</span>
-<span class="n">database_name</span> <span class="o">=</span> <span class="s1">&#39;my_database&#39;</span>
-<span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;my_table&#39;</span>
+# Define the database and table to ingest
+database_name = 'my_database'
+table_name = 'my_table'
 
-<span class="c1"># Create a Glue job to ingest the data</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">glue</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;ingest_data&#39;</span><span class="p">,</span>
-    <span class="n">Role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/GlueRole&#39;</span><span class="p">,</span>
-    <span class="n">Command</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;glueetl&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;ScriptLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://my_bucket/ingest_data.py&#39;</span>
-    <span class="p">},</span>
-    <span class="n">DefaultArguments</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;--database&#39;</span><span class="p">:</span> <span class="n">database_name</span><span class="p">,</span>
-        <span class="s1">&#39;--table&#39;</span><span class="p">:</span> <span class="n">table_name</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a Glue job to ingest the data
+job = glue.create_job(
+    Name='ingest_data',
+    Role='arn:aws:iam::123456789012:role/GlueRole',
+    Command={
+        'Name': 'glueetl',
+        'ScriptLocation': 's3://my_bucket/ingest_data.py'
+    },
+    DefaultArguments={
+        '--database': database_name,
+        '--table': table_name
+    }
+)
 
-<span class="c1"># Run the Glue job</span>
-<span class="n">glue</span><span class="o">.</span><span class="n">start_job_run</span><span class="p">(</span><span class="n">JobName</span><span class="o">=</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Run the Glue job
+glue.start_job_run(JobName=job['Name'])
+</code></pre>
 <p>This code creates an AWS Glue job to ingest data from a relational database and runs the job to extract the data.</p>
 <h2 id="common-challenges-and-solutions">Common Challenges and Solutions</h2>
 <p>Some common challenges when building data engineering pipelines include:

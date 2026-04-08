@@ -240,27 +240,25 @@ A web app might consist of:
 </ul>
 <h3 id="step-2-build-your-first-container">Step 2: Build Your First Container</h3>
 <p>Here's a simple example of creating a Docker container for a Python application:</p>
-<div class="codehilite"><pre><span></span><code><span class="c"># Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+<pre><code class="language-dockerfile"># Dockerfile
+FROM python:3.11-slim
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Python<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>by<span class="w"> </span>Sebastian<span class="w"> </span>Raschka&lt;/a&gt;*
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+WORKDIR /app
 
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <p>Build and run:</p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-python-app<span class="w"> </span>.
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>:5000<span class="w"> </span>my-python-app
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-python-app .
+docker run -d -p 5000:5000 my-python-app
+</code></pre>
 <h3 id="step-3-use-container-orchestration-tools">Step 3: Use Container Orchestration Tools</h3>
 <ul>
 <li>Experiment with Docker Compose for multi-container setups</li>

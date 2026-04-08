@@ -164,22 +164,21 @@
 * <strong>Data normalization</strong>: Scale numeric values to a common range to prevent feature dominance.
 * <strong>Data augmentation</strong>: Increase the size of the training dataset through techniques like rotation, flipping, and cropping.</p>
 <p>For example, when working with image data, you can use the OpenCV library to perform data augmentation:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import cv2
+import numpy as np
 
-<span class="c1"># Load the image</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">)</span>
+# Load the image
+img = cv2.imread('image.jpg')
 
-<span class="c1"># Apply rotation</span>
-<span class="n">rotated_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ROTATE_90_CLOCKWISE</span><span class="p">)</span>
+# Apply rotation
+rotated_img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
 
-<span class="c1"># Apply flipping</span>
-<span class="n">flipped_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Apply flipping
+flipped_img = cv2.flip(img, 1)
 
-<span class="c1"># Apply cropping</span>
-<span class="n">cropped_img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">300</span><span class="p">]</span>
-</code></pre></div>
-
+# Apply cropping
+cropped_img = img[100:300, 100:300]
+</code></pre>
 <h3 id="model-selection">Model Selection</h3>
 <p>Model selection is another critical step in AI model training. The choice of model depends on the specific problem you're trying to solve. Here are some popular models for common tasks:
 * <strong>Classification</strong>: Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), and Support Vector Machines (SVMs)
@@ -195,41 +194,39 @@
 * <strong>Random search</strong>: Perform a random search over a defined range of hyperparameters.
 * <strong>Bayesian optimization</strong>: Use Bayesian optimization techniques to search for the optimal hyperparameters.</p>
 <p>For example, when using the Hyperopt library for hyperparameter tuning, you can define a search space and perform a random search:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hyperopt</span>
+<pre><code class="language-python">import hyperopt
 
-<span class="c1"># Define the search space</span>
-<span class="n">space</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">hyperopt</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="n">hyperopt</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">])</span>
-<span class="p">}</span>
+# Define the search space
+space = {
+    'learning_rate': hyperopt.hp.uniform('learning_rate', 0.001, 0.1),
+    'batch_size': hyperopt.hp.choice('batch_size', [32, 64, 128])
+}
 
-<span class="c1"># Perform a random search</span>
-<span class="n">trials</span> <span class="o">=</span> <span class="n">hyperopt</span><span class="o">.</span><span class="n">Trials</span><span class="p">()</span>
-<span class="n">best</span> <span class="o">=</span> <span class="n">hyperopt</span><span class="o">.</span><span class="n">fmin</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">:</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">space</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="n">hyperopt</span><span class="o">.</span><span class="n">rand</span><span class="o">.</span><span class="n">suggest</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">,</span> <span class="n">max_evals</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-</code></pre></div>
-
+# Perform a random search
+trials = hyperopt.Trials()
+best = hyperopt.fmin(lambda params: loss_function(params), space, algo=hyperopt.rand.suggest, trials=trials, max_evals=50)
+</code></pre>
 <h3 id="model-evaluation">Model Evaluation</h3>
 <p>Model evaluation is a critical step in AI model training. Here are some best practices for model evaluation:
 * <strong>Metrics</strong>: Use metrics like accuracy, precision, recall, and F1-score to evaluate the model's performance.
 * <strong>Cross-validation</strong>: Use cross-validation techniques to evaluate the model's performance on unseen data.
 * <strong>Overfitting</strong>: Monitor the model's performance on the training and validation sets to detect overfitting.</p>
 <p>For example, when using the Scikit-learn library for model evaluation, you can use the <code>cross_val_score</code> function to perform cross-validation:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<pre><code class="language-python">from sklearn.model_selection import cross_val_score
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+from sklearn.ensemble import RandomForestClassifier
 
-<span class="c1"># Define the model and dataset</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+# Define the model and dataset
+model = RandomForestClassifier(n_estimators=100)
+X = dataset.drop('target', axis=1)
+y = dataset['target']
 
-<span class="c1"># Perform cross-validation</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-</code></pre></div>
-
+# Perform cross-validation
+scores = cross_val_score(model, X, y, cv=5)
+print(scores.mean())
+</code></pre>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>Here are some common problems encountered during AI model training, along with their solutions:
 * <strong>Overfitting</strong>: Regularization techniques like L1 and L2 regularization, dropout, and early stopping can help prevent overfitting.
@@ -244,27 +241,26 @@
 * <strong>Natural language processing</strong>: Training an RNN or transformer to perform tasks like language translation, sentiment analysis, or text classification.
 * <strong>Recommendation systems</strong>: Training a collaborative filtering or content-based filtering model to recommend products or services to users.</p>
 <p>For example, when building a recommendation system for an e-commerce platform, you can use the TensorFlow Recommenders library to train a model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow_recommenders</span> <span class="k">as</span> <span class="nn">tfrs</span>
+<pre><code class="language-python">import tensorflow_recommenders as tfrs
 
-<span class="c1"># Define the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tfrs</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span>
-    <span class="n">user_model</span><span class="o">=</span><span class="n">tfrs</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span>
-        <span class="n">tfrs</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
-    <span class="p">),</span>
-    <span class="n">item_model</span><span class="o">=</span><span class="n">tfrs</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span>
-        <span class="n">tfrs</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">item_ids</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+# Define the model
+model = tfrs.Model(
+    user_model=tfrs.Model(
+        tfrs.Embedding(user_ids, embedding_dim=64)
+    ),
+    item_model=tfrs.Model(
+        tfrs.Embedding(item_ids, embedding_dim=64)
+    )
+)
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">user_ids</span><span class="o">=</span><span class="n">user_ids</span><span class="p">,</span>
-    <span class="n">item_ids</span><span class="o">=</span><span class="n">item_ids</span><span class="p">,</span>
-    <span class="n">ratings</span><span class="o">=</span><span class="n">ratings</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+model.fit(
+    user_ids=user_ids,
+    item_ids=item_ids,
+    ratings=ratings,
+    epochs=10
+)
+</code></pre>
 <h3 id="implementation-details">Implementation Details</h3>
 <p>When implementing AI model training, consider the following details:
 * <strong>Hardware</strong>: Choose the right hardware, such as GPUs or TPUs, to accelerate model training.

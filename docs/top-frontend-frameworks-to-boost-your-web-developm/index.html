@@ -152,36 +152,35 @@
 - Component-based architecture</p>
 <p><strong>Use Case</strong>: Building a Dynamic To-Do List</p>
 <p>Here’s a simple example of a React component that renders a to-do list:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">TodoApp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">setTodos</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">inputValue</span><span class="p">,</span><span class="w"> </span><span class="nx">setInputValue</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+const TodoApp = () =&gt; {
+    const [todos, setTodos] = useState([]);
+    const [inputValue, setInputValue] = useState('');
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">addTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">setTodos</span><span class="p">([...</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">inputValue</span><span class="p">]);</span>
-<span class="w">        </span><span class="nx">setInputValue</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">};</span>
+    const addTodo = () =&gt; {
+        setTodos([...todos, inputValue]);
+        setInputValue('');
+    };
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">            </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">To</span><span class="o">-</span><span class="nx">Do</span><span class="w"> </span><span class="nx">List</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">            </span><span class="p">&lt;</span><span class="nt">input</span><span class="w"> </span>
-<span class="w">                </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="w"> </span>
-<span class="w">                </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">inputValue</span><span class="p">}</span><span class="w"> </span>
-<span class="w">                </span><span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setInputValue</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span><span class="w"> </span>
-<span class="w">            </span><span class="p">/&gt;</span>
-<span class="w">            </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">addTodo</span><span class="p">}&gt;</span><span class="nx">Add</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">                </span><span class="p">{</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}&gt;{</span><span class="nx">todo</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;)}</span>
-<span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">};</span>
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;To-Do List&lt;/h1&gt;
+            &lt;input 
+                type=&quot;text&quot; 
+                value={inputValue} 
+                onChange={(e) =&gt; setInputValue(e.target.value)} 
+            /&gt;
+            &lt;button onClick={addTodo}&gt;Add&lt;/button&gt;
+            &lt;ul&gt;
+                {todos.map((todo, index) =&gt; &lt;li key={index}&gt;{todo}&lt;/li&gt;)}
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">TodoApp</span><span class="p">;</span>
-</code></pre></div>
-
+export default TodoApp;
+</code></pre>
 <p><strong>Explanation</strong>: 
 - The <code>useState</code> hook manages the state of the to-do items and the input field.
 - When the "Add" button is clicked, the current input value is added to the list of todos.</p>
@@ -194,29 +193,28 @@
 - Comprehensive routing capabilities</p>
 <p><strong>Use Case</strong>: Creating a Simple Calculator</p>
 <p>Here’s a basic example of an Angular component for a simple calculator:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Component } from '@angular/core';
 
-<span class="kd">@Component</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-calculator&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">        &lt;h1&gt;Simple Calculator&lt;/h1&gt;</span>
-<span class="sb">        &lt;input [(ngModel)]=&quot;num1&quot; placeholder=&quot;Enter first number&quot; /&gt;</span>
-<span class="sb">        &lt;input [(ngModel)]=&quot;num2&quot; placeholder=&quot;Enter second number&quot; /&gt;</span>
-<span class="sb">        &lt;button (click)=&quot;add()&quot;&gt;Add&lt;/button&gt;</span>
-<span class="sb">        &lt;p&gt;Result: {{ result }}&lt;/p&gt;</span>
-<span class="sb">    `</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CalculatorComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">num1</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">num2</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">result</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+@Component({
+    selector: 'app-calculator',
+    template: `
+        &lt;h1&gt;Simple Calculator&lt;/h1&gt;
+        &lt;input [(ngModel)]=&quot;num1&quot; placeholder=&quot;Enter first number&quot; /&gt;
+        &lt;input [(ngModel)]=&quot;num2&quot; placeholder=&quot;Enter second number&quot; /&gt;
+        &lt;button (click)=&quot;add()&quot;&gt;Add&lt;/button&gt;
+        &lt;p&gt;Result: {{ result }}&lt;/p&gt;
+    `
+})
+export class CalculatorComponent {
+    num1: number = 0;
+    num2: number = 0;
+    result: number = 0;
 
-<span class="w">    </span><span class="nx">add</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">num2</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    add() {
+        this.result = this.num1 + this.num2;
+    }
+}
+</code></pre>
 <p><strong>Explanation</strong>:
 - The <code>[(ngModel)]</code> directive implements two-way data binding, automatically updating the component's properties as the user inputs values.
 - The <code>add</code> method calculates the sum of the two numbers and updates the <code>result</code>.</p>
@@ -229,33 +227,32 @@
 - Simple integration with existing projects</p>
 <p><strong>Use Case</strong>: Building a Weather App</p>
 <p>Here’s how to create a simple weather app using Vue.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Weather App<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&quot;city&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Enter city&quot;</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;fetchWeather&quot;</span><span class="p">&gt;</span>Get Weather<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">p</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&quot;weather&quot;</span><span class="p">&gt;</span>The temperature in {{ city }} is {{ weather.main.temp }} °C<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div&gt;
+        &lt;h1&gt;Weather App&lt;/h1&gt;
+        &lt;input v-model=&quot;city&quot; placeholder=&quot;Enter city&quot; /&gt;
+        &lt;button @click=&quot;fetchWeather&quot;&gt;Get Weather&lt;/button&gt;
+        &lt;p v-if=&quot;weather&quot;&gt;The temperature in {{ city }} is {{ weather.main.temp }} °C&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">city</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">weather</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">async</span><span class="w"> </span><span class="nx">fetchWeather</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">city</span><span class="si">}</span><span class="sb">&amp;appid=YOUR_API_KEY&amp;units=metric`</span><span class="p">);</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">weather</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;script&gt;
+export default {
+    data() {
+        return {
+            city: '',
+            weather: null
+        };
+    },
+    methods: {
+        async fetchWeather() {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&amp;appid=YOUR_API_KEY&amp;units=metric`);
+            this.weather = await response.json();
+        }
+    }
+};
+&lt;/script&gt;
+</code></pre>
 <p><strong>Explanation</strong>:
 - The <code>v-model</code> directive binds the input value to the <code>city</code> data property.
 - The <code>fetchWeather</code> method retrieves weather data from the OpenWeatherMap API, displaying the temperature for the specified city.</p>
@@ -268,28 +265,27 @@
 - Smaller bundle sizes</p>
 <p><strong>Use Case</strong>: Building a Timer Application</p>
 <p>Here’s a Svelte component for a simple countdown timer:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;script&gt;</span>
-<span class="w">    </span>let<span class="w"> </span>seconds<span class="w"> </span>=<span class="w"> </span>60;
-<span class="w">    </span>let<span class="w"> </span>interval;
+<pre><code class="language-svelte">&lt;script&gt;
+    let seconds = 60;
+    let interval;
 
-<span class="w">    </span>function<span class="w"> </span>startTimer()<span class="w"> </span>{
-<span class="w">        </span>interval<span class="w"> </span>=<span class="w"> </span>setInterval(()<span class="w"> </span>=&gt;<span class="w"> </span>{
-<span class="w">            </span>if<span class="w"> </span>(seconds<span class="w"> </span>&gt;<span class="w"> </span>0)<span class="w"> </span>{
-<span class="w">                </span>seconds<span class="w"> </span>-=<span class="w"> </span>1;
-<span class="w">            </span>}<span class="w"> </span>else<span class="w"> </span>{
-<span class="w">                </span>clearInterval(interval);
-<span class="w">            </span>}
-<span class="w">        </span>},<span class="w"> </span>1000);
-<span class="w">    </span>}
-<span class="nt">&lt;/script&gt;</span>
+    function startTimer() {
+        interval = setInterval(() =&gt; {
+            if (seconds &gt; 0) {
+                seconds -= 1;
+            } else {
+                clearInterval(interval);
+            }
+        }, 1000);
+    }
+&lt;/script&gt;
 
-<span class="nt">&lt;main&gt;</span>
-<span class="w">    </span><span class="nt">&lt;h1&gt;</span>Countdown<span class="w"> </span>Timer<span class="nt">&lt;/h1&gt;</span>
-<span class="w">    </span><span class="nt">&lt;p&gt;</span>Time<span class="w"> </span>remaining:<span class="w"> </span>{seconds}<span class="w"> </span>seconds<span class="nt">&lt;/p&gt;</span>
-<span class="w">    </span><span class="nt">&lt;button</span><span class="w"> </span><span class="na">on:click=</span><span class="s">{startTimer}</span><span class="nt">&gt;</span>Start<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;/main&gt;</span>
-</code></pre></div>
-
+&lt;main&gt;
+    &lt;h1&gt;Countdown Timer&lt;/h1&gt;
+    &lt;p&gt;Time remaining: {seconds} seconds&lt;/p&gt;
+    &lt;button on:click={startTimer}&gt;Start&lt;/button&gt;
+&lt;/main&gt;
+</code></pre>
 <p><strong>Explanation</strong>:
 - The <code>startTimer</code> function sets up an interval that decrements the <code>seconds</code> variable every second.
 - The Svelte reactivity automatically updates the UI when <code>seconds</code> changes.</p>
@@ -302,25 +298,23 @@
 - Strong community and ecosystem</p>
 <p><strong>Use Case</strong>: Building a Blog Application</p>
 <p>Creating a simple blog post display with Ember.js involves setting up routes and templates:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// app/routes/posts.js</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Route</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@ember/routing/route&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// app/routes/posts.js
+import Route from '@ember/routing/route';
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PostsRoute</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Route</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">model</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Assume &#39;post&#39; model is defined</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- app/templates/posts.hbs --&gt;</span>
-<span class="x">&lt;h1&gt;Blog Posts&lt;/h1&gt;</span>
-<span class="x">&lt;ul&gt;</span>
-<span class="x">    </span><span class="cp">{{</span><span class="m m-Attribute">#each</span> <span class="nv">this.model</span> <span class="nv">as</span> <span class="err">|</span><span class="nv">post</span><span class="err">|</span><span class="cp">}}</span>
-<span class="x">        &lt;li&gt;</span><span class="cp">{{</span><span class="nv">post.title</span><span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
-<span class="x">    </span><span class="cp">{{</span><span class="m m-Attribute">/each</span><span class="cp">}}</span>
-<span class="x">&lt;/ul&gt;</span>
-</code></pre></div>
-
+export default class PostsRoute extends Route {
+    model() {
+        return this.store.findAll('post'); // Assume 'post' model is defined
+    }
+}
+</code></pre>
+<pre><code class="language-handlebars">&lt;!-- app/templates/posts.hbs --&gt;
+&lt;h1&gt;Blog Posts&lt;/h1&gt;
+&lt;ul&gt;
+    {{#each this.model as |post|}}
+        &lt;li&gt;{{post.title}}&lt;/li&gt;
+    {{/each}}
+&lt;/ul&gt;
+</code></pre>
 <p><strong>Explanation</strong>: 
 - The <code>model()</code> hook in the route fetches all posts from the Ember Data store.
 - The template iterates over the posts and displays their titles.</p>

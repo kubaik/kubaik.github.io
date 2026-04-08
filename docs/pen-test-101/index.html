@@ -168,9 +168,8 @@
 </ul>
 <h3 id="practical-example-vulnerability-scanning-with-nmap">Practical Example: Vulnerability Scanning with Nmap</h3>
 <p>Nmap is a popular network scanning tool that provides a comprehensive set of features for network discovery, vulnerability scanning, and OS detection. Here is an example of how to use Nmap to scan a network for vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code>nmap<span class="w"> </span>-sV<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>-65535<span class="w"> </span><span class="m">192</span>.168.1.1
-</code></pre></div>
-
+<pre><code class="language-bash">nmap -sV -p 1-65535 192.168.1.1
+</code></pre>
 <p>This command scans the network for open ports and identifies the operating system and services running on the target machine. The output of the scan can be used to identify potential vulnerabilities and prioritize remediation efforts.</p>
 <h2 id="penetration-testing-services">Penetration Testing Services</h2>
 <p>Penetration testing services are provided by a variety of companies, including security consulting firms, managed security service providers (MSSPs), and cloud security providers. Some of the most popular penetration testing services include:</p>
@@ -181,31 +180,30 @@
 </ul>
 <h3 id="practical-example-web-application-security-testing-with-burp-suite">Practical Example: Web Application Security Testing with Burp Suite</h3>
 <p>Burp Suite is a web application security testing tool that provides a comprehensive set of features for vulnerability scanning, exploitation, and post-exploitation activities. Here is an example of how to use Burp Suite to test a web application for vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">burp.*</span><span class="p">;</span>
+<pre><code class="language-java">import burp.*;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BurpExtender</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">IBurpExtender</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Override</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerExtenderCallbacks</span><span class="p">(</span><span class="n">IBurpExtenderCallbacks</span><span class="w"> </span><span class="n">callbacks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Set up the Burp Suite API</span>
-<span class="w">    </span><span class="n">callbacks</span><span class="p">.</span><span class="na">setExtensionName</span><span class="p">(</span><span class="s">&quot;Web App Security Tester&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">callbacks</span><span class="p">.</span><span class="na">registerHttpListener</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HttpListener</span><span class="p">());</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+public class BurpExtender implements IBurpExtender {
+  @Override
+  public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
+    // Set up the Burp Suite API
+    callbacks.setExtensionName(&quot;Web App Security Tester&quot;);
+    callbacks.registerHttpListener(new HttpListener());
+  }
+}
 
-<span class="kd">class</span> <span class="nc">HttpListener</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">IHttpListener</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Override</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processHttpMessage</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">toolFlag</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">messageIsRequest</span><span class="p">,</span><span class="w"> </span><span class="n">IHttpRequestResponse</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Test the web application for vulnerabilities</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">messageIsRequest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Send a request to the web application</span>
-<span class="w">      </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">getRequest</span><span class="p">();</span>
-<span class="w">      </span><span class="c1">// Test the response for vulnerabilities</span>
-<span class="w">      </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">getResponse</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class HttpListener implements IHttpListener {
+  @Override
+  public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse message) {
+    // Test the web application for vulnerabilities
+    if (messageIsRequest) {
+      // Send a request to the web application
+      byte[] request = message.getRequest();
+      // Test the response for vulnerabilities
+      byte[] response = message.getResponse();
+    }
+  }
+}
+</code></pre>
 <p>This code sets up a Burp Suite extension that tests a web application for vulnerabilities by sending requests and testing the responses.</p>
 <h2 id="penetration-testing-metrics-and-pricing">Penetration Testing Metrics and Pricing</h2>
 <p>Penetration testing metrics and pricing vary widely depending on the scope, complexity, and duration of the test. Here are some real metrics and pricing data:</p>
@@ -217,12 +215,11 @@
 </ul>
 <h3 id="practical-example-penetration-testing-with-metasploit">Practical Example: Penetration Testing with Metasploit</h3>
 <p>Metasploit is a popular penetration testing framework that provides a comprehensive set of tools for vulnerability exploitation and post-exploitation activities. Here is an example of how to use Metasploit to test a network for vulnerabilities:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">use</span><span class="w"> </span><span class="n">exploit</span><span class="o">/</span><span class="n">multi</span><span class="o">/</span><span class="n">http</span><span class="o">/</span><span class="n">apache_chunked</span>
-<span class="n">set</span><span class="w"> </span><span class="no">RHOST</span><span class="w"> </span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span>
-<span class="n">set</span><span class="w"> </span><span class="no">RPORT</span><span class="w"> </span><span class="mi">80</span>
-<span class="n">exploit</span>
-</code></pre></div>
-
+<pre><code class="language-ruby">use exploit/multi/http/apache_chunked
+set RHOST 192.168.1.1
+set RPORT 80
+exploit
+</code></pre>
 <p>This code sets up a Metasploit exploit that tests a network for vulnerabilities by sending a malicious request to the target machine.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Penetration testing can be challenging, and security professionals often encounter common problems and obstacles. Here are some common problems and solutions:</p>

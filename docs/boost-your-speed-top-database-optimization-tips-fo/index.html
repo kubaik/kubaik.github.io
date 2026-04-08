@@ -172,10 +172,9 @@
 </ul>
 <h3 id="practical-step-enable-slow-query-logging">Practical Step: Enable Slow Query Logging</h3>
 <p>For MySQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">slow_query_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ON&#39;</span><span class="p">;</span>
-<span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">long_query_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">-- logs queries taking longer than 1 second</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SET GLOBAL slow_query_log = 'ON';
+SET GLOBAL long_query_time = 1; -- logs queries taking longer than 1 second
+</code></pre>
 <p>Analyze logs to identify bottlenecks and prioritize optimization efforts.</p>
 <hr />
 <h2 id="2-optimize-indexing-strategies">2. Optimize Indexing Strategies</h2>
@@ -189,13 +188,11 @@
 </ul>
 <h3 id="practical-example">Practical Example:</h3>
 <p>Suppose you have a query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE customer_id = 123 AND order_date &gt; '2024-01-01';
+</code></pre>
 <p>Create a composite index:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_order_date</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_customer_order_date ON orders (customer_id, order_date);
+</code></pre>
 <p>This index enables efficient filtering on both columns.</p>
 <h3 id="tip-use-explain-to-analyze-query-plans-and-verify-index-effectiveness">Tip: Use <code>EXPLAIN</code> to analyze query plans and verify index effectiveness.</h3>
 <hr />
@@ -211,13 +208,11 @@
 </ul>
 <h3 id="example">Example:</h3>
 <p>Poor Query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">order_date</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2024</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE YEAR(order_date) = 2024;
+</code></pre>
 <p>Better Query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2025-01-01&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE order_date &gt;= '2024-01-01' AND order_date &lt; '2025-01-01';
+</code></pre>
 <p>The latter uses an index on <code>order_date</code> more effectively.</p>
 <hr />
 <h2 id="4-implement-partitioning-and-sharding">4. Implement Partitioning and Sharding</h2>
@@ -230,17 +225,16 @@
 </ul>
 <p><strong>Example:</strong></p>
 <p>Partition orders by year:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">order_date</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">)</span>
-<span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">RANGE</span><span class="w"> </span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">order_date</span><span class="p">))</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2023</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2024</span><span class="p">),</span>
-<span class="w">  </span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2024</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">LESS</span><span class="w"> </span><span class="k">THAN</span><span class="w"> </span><span class="p">(</span><span class="mi">2025</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE orders (
+  id INT,
+  customer_id INT,
+  order_date DATE
+)
+PARTITION BY RANGE (YEAR(order_date)) (
+  PARTITION p2023 VALUES LESS THAN (2024),
+  PARTITION p2024 VALUES LESS THAN (2025)
+);
+</code></pre>
 <h3 id="sharding">Sharding:</h3>
 <ul>
 <li>Distributes data across multiple database servers.</li>
@@ -264,21 +258,19 @@
 </ul>
 <h3 id="example_1">Example:</h3>
 <p>Instead of:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
-<span class="w">  </span><span class="n">signup_date</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+  id INT,
+  name VARCHAR(255),
+  signup_date VARCHAR(20)
+);
+</code></pre>
 <p>Use:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">  </span><span class="n">signup_date</span><span class="w"> </span><span class="nb">DATE</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+  id INT,
+  name VARCHAR(100),
+  signup_date DATE
+);
+</code></pre>
 <hr />
 <h2 id="6-leverage-caching-mechanisms">6. Leverage Caching Mechanisms</h2>
 <p>Caching can dramatically reduce database load and improve response times.</p>
@@ -296,22 +288,21 @@
 </ul>
 <p><strong>Example:</strong></p>
 <p>Implement Redis cache in your application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import redis
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+r = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Caching query result</span>
-<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;user:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">user_data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">user_data</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">fetch_user_from_db</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="n">r</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="n">ex</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>  <span class="c1"># cache for 5 minutes</span>
-        <span class="k">return</span> <span class="n">user</span>
-</code></pre></div>
-
+# Caching query result
+def get_user(user_id):
+    cache_key = f&quot;user:{user_id}&quot;
+    user_data = r.get(cache_key)
+    if user_data:
+        return json.loads(user_data)
+    else:
+        user = fetch_user_from_db(user_id)
+        r.set(cache_key, json.dumps(user), ex=300)  # cache for 5 minutes
+        return user
+</code></pre>
 <hr />
 <h2 id="7-regular-maintenance-and-backup">7. Regular Maintenance and Backup</h2>
 <p>Routine maintenance tasks help keep your database optimized:</p>
@@ -333,9 +324,8 @@
 </ul>
 <p><strong>Example:</strong></p>
 <p>In MySQL, set <code>innodb_buffer_pool_size</code> to 70-80% of available RAM for optimal InnoDB performance.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">innodb_buffer_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="k">G</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SET GLOBAL innodb_buffer_pool_size = 16G;
+</code></pre>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>Optimizing your database in 2024 requires a comprehensive approach that encompasses analysis, indexing, query writing, partitioning, storage management, caching, and hardware considerations. Regular monitoring and maintenance are crucial to sustain high performance as your data and user base grow.</p>

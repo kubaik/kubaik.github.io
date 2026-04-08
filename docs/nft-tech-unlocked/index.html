@@ -154,19 +154,18 @@
 <h3 id="blockchain-fundamentals">Blockchain Fundamentals</h3>
 <p>NFTs are built on blockchain technology, which provides a secure, decentralized, and transparent way to store and manage data. The most popular blockchain platforms for NFTs are Ethereum, Binance Smart Chain, and Flow. Ethereum, for example, uses the ERC-721 standard to create and manage NFTs. This standard defines a set of rules and guidelines for creating, storing, and transferring NFTs on the Ethereum blockchain.</p>
 <p>To illustrate this, let's consider an example of creating an NFT on Ethereum using the Solidity programming language:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span>ERC721<span class="p">(</span><span class="s2">&quot;MyNFT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MNFT&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+contract MyNFT {
+    constructor() ERC721(&quot;MyNFT&quot;, &quot;MNFT&quot;) {}
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">mintNFT</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>tokenURI<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>_mint<span class="p">(</span>to<span class="p">,</span><span class="w"> </span>tokenURI<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function mintNFT(address to, string memory tokenURI) public {
+        _mint(to, tokenURI);
+    }
+}
+</code></pre>
 <p>This code defines a simple NFT contract that allows for the creation and minting of new NFTs. The <code>mintNFT</code> function takes an address and a token URI as input and creates a new NFT with the specified properties.</p>
 <h2 id="nft-use-cases">NFT Use Cases</h2>
 <p>NFTs have a wide range of use cases, from digital art and collectibles to gaming and virtual real estate. Some of the most popular use cases include:</p>
@@ -178,29 +177,28 @@
 <h3 id="implementing-nfts-in-gaming">Implementing NFTs in Gaming</h3>
 <p>To implement NFTs in a game, you would need to create a smart contract that defines the properties and behaviors of the NFT. For example, you could create a contract that defines a character's attributes, such as its name, appearance, and abilities.</p>
 <p>Here's an example of how you could implement a simple character NFT in Solidity:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.5.0/contracts/token/ERC721/ERC721.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">CharacterNFT</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Character</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">name</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">appearance</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">abilities</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+contract CharacterNFT {
+    struct Character {
+        string name;
+        string appearance;
+        string abilities;
+    }
 
-<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>Character<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>characters<span class="p">;</span>
+    mapping (address =&gt; Character) public characters;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createCharacter</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>appearance<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>abilities<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>characters<span class="p">[</span>owner<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Character<span class="p">(</span>name<span class="p">,</span><span class="w"> </span>appearance<span class="p">,</span><span class="w"> </span>abilities<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    function createCharacter(address owner, string memory name, string memory appearance, string memory abilities) public {
+        characters[owner] = Character(name, appearance, abilities);
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">getCharacter</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">return</span><span class="w"> </span>characters<span class="p">[</span>owner<span class="p">].</span>name<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function getCharacter(address owner) public view returns (string memory) {
+        return characters[owner].name;
+    }
+}
+</code></pre>
 <p>This contract defines a <code>Character</code> struct that stores the character's attributes and a <code>createCharacter</code> function that allows you to create new characters. The <code>getCharacter</code> function allows you to retrieve a character's attributes by its owner's address.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One of the common problems with NFTs is the high cost of minting and transferring them on the Ethereum blockchain. This is due to the high gas fees, which can range from $10 to $100 per transaction. To solve this problem, you can use layer 2 scaling solutions, such as Polygon (formerly Matic) or Optimism, which can reduce gas fees by up to 99%.</p>
@@ -214,32 +212,31 @@
 </ul>
 <p>To integrate with these marketplaces, you would need to use their APIs, which provide a set of functions and endpoints for creating, managing, and trading NFTs. For example, you could use the OpenSea API to create a new NFT and list it for sale on the marketplace.</p>
 <p>Here's an example of how you could use the OpenSea API to create a new NFT:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const axios = require('axios');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">apiEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://api.opensea.io/api/v1&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;YOUR_API_KEY&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;My NFT&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;This is my NFT&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">nftImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://example.com/nft-image.png&#39;</span><span class="p">;</span>
+const apiEndpoint = 'https://api.opensea.io/api/v1';
+const apiKey = 'YOUR_API_KEY';
+const nftName = 'My NFT';
+const nftDescription = 'This is my NFT';
+const nftImage = 'https://example.com/nft-image.png';
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">apiEndpoint</span><span class="si">}</span><span class="sb">/assets`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">nftName</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">nftDescription</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">image_url</span><span class="o">:</span><span class="w"> </span><span class="nx">nftImage</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">external_link</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com&#39;</span><span class="p">,</span>
-<span class="p">},</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s1">&#39;X-API-KEY&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">apiKey</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+axios.post(`${apiEndpoint}/assets`, {
+  name: nftName,
+  description: nftDescription,
+  image_url: nftImage,
+  external_link: 'https://example.com',
+}, {
+  headers: {
+    'X-API-KEY': apiKey,
+  },
+})
+.then((response) =&gt; {
+  console.log(response.data);
+})
+.catch((error) =&gt; {
+  console.error(error);
+});
+</code></pre>
 <p>This code uses the Axios library to send a POST request to the OpenSea API, creating a new NFT with the specified properties.</p>
 <h2 id="metrics-and-performance">Metrics and Performance</h2>
 <p>The performance of NFT marketplaces can vary widely, depending on the platform, the number of users, and the volume of transactions. For example, OpenSea has reported that it can handle up to 10,000 transactions per second, while Rarible has reported that it can handle up to 5,000 transactions per second.</p>

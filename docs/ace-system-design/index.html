@@ -170,28 +170,27 @@
 <li>Provide a RESTful API for creating and retrieving shortened URLs</li>
 </ul>
 <p>Here's an example design:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python">import hashlib
+import redis
 
-<span class="k">class</span> <span class="nc">URLShortener</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+class URLShortener:
+    def __init__(self):
+        self.redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-    <span class="k">def</span> <span class="nf">shorten_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_url</span><span class="p">):</span>
-        <span class="c1"># Generate a unique hash for the original URL</span>
-        <span class="n">hash_key</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">original_url</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span>
-        <span class="c1"># Store the mapping between the hash key and the original URL in Redis</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redis_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">hash_key</span><span class="p">,</span> <span class="n">original_url</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;http://short.url/</span><span class="si">{</span><span class="n">hash_key</span><span class="si">}</span><span class="s2">&quot;</span>
+    def shorten_url(self, original_url):
+        # Generate a unique hash for the original URL
+        hash_key = hashlib.sha256(original_url.encode()).hexdigest()[:6]
+        # Store the mapping between the hash key and the original URL in Redis
+        self.redis_client.set(hash_key, original_url)
+        return f&quot;http://short.url/{hash_key}&quot;
 
-    <span class="k">def</span> <span class="nf">get_original_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shortened_url</span><span class="p">):</span>
-        <span class="c1"># Extract the hash key from the shortened URL</span>
-        <span class="n">hash_key</span> <span class="o">=</span> <span class="n">shortened_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="c1"># Retrieve the original URL from Redis</span>
-        <span class="n">original_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hash_key</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">original_url</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="k">if</span> <span class="n">original_url</span> <span class="k">else</span> <span class="kc">None</span>
-</code></pre></div>
-
+    def get_original_url(self, shortened_url):
+        # Extract the hash key from the shortened URL
+        hash_key = shortened_url.split('/')[-1]
+        # Retrieve the original URL from Redis
+        original_url = self.redis_client.get(hash_key)
+        return original_url.decode() if original_url else None
+</code></pre>
 <p>In this example, we use Redis as a key-value store to store the mapping between the shortened URL and the original URL. We generate a unique hash key for each original URL using SHA-256, and store the mapping in Redis. The <code>shorten_url</code> method generates the shortened URL, and the <code>get_original_url</code> method retrieves the original URL from Redis.</p>
 <h2 id="common-system-design-interview-questions">Common System Design Interview Questions</h2>
 <p>Here are some common system design interview questions, along with some tips and insights:</p>

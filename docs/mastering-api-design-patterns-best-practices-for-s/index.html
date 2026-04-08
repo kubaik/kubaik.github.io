@@ -181,19 +181,17 @@
 <li>Use status codes to indicate success or error states</li>
 </ul>
 <h4 id="example">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /users/123</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /users/123
+</code></pre>
 <p>Returns the user with ID 123.</p>
-<div class="codehilite"><pre><span></span><code><span class="err">POST /orders</span>
-<span class="err">Content-Type: application/json</span>
+<pre><code class="language-http">POST /orders
+Content-Type: application/json
 
-<span class="err">{</span>
-<span class="err">  &quot;product_id&quot;: 456,</span>
-<span class="err">  &quot;quantity&quot;: 2</span>
-<span class="err">}</span>
-</code></pre></div>
-
+{
+  &quot;product_id&quot;: 456,
+  &quot;quantity&quot;: 2
+}
+</code></pre>
 <p>Creates a new order.</p>
 <h4 id="tips">Tips</h4>
 <ul>
@@ -205,17 +203,16 @@
 <h4 id="overview_1">Overview</h4>
 <p>HATEOAS adds hyperlinks within responses, guiding clients through available actions dynamically. It enhances discoverability and reduces client-side hard-coding.</p>
 <h4 id="practical-example">Practical Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/users/123&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/users/123/orders&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;update&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/users/123&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PUT&quot;</span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;user_id&quot;: 123,
+  &quot;name&quot;: &quot;Alice&quot;,
+  &quot;links&quot;: [
+    {&quot;rel&quot;: &quot;self&quot;, &quot;href&quot;: &quot;/users/123&quot;},
+    {&quot;rel&quot;: &quot;orders&quot;, &quot;href&quot;: &quot;/users/123/orders&quot;},
+    {&quot;rel&quot;: &quot;update&quot;, &quot;href&quot;: &quot;/users/123&quot;, &quot;method&quot;: &quot;PUT&quot;}
+  ]
+}
+</code></pre>
 <h4 id="benefits">Benefits</h4>
 <ul>
 <li>Enables clients to navigate API without prior knowledge of endpoints.</li>
@@ -238,9 +235,8 @@
 </ul>
 <h4 id="recommended-practice">Recommended Practice</h4>
 <p>Use URI versioning for clear, explicit version control, especially for major changes.</p>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /v1/products</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /v1/products
+</code></pre>
 <hr />
 <h3 id="4-pagination-and-filtering">4. Pagination and Filtering</h3>
 <p>Handling large datasets efficiently requires thoughtful pagination and filtering.</p>
@@ -251,9 +247,8 @@
 </ul>
 <h4 id="filtering">Filtering</h4>
 <p>Allow clients to specify criteria:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /orders?status=shipped&amp;date_from=2023-01-01&amp;date_to=2023-01-31</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /orders?status=shipped&amp;date_from=2023-01-01&amp;date_to=2023-01-31
+</code></pre>
 <h4 id="best-practices_1">Best Practices</h4>
 <ul>
 <li>Document all query parameters.</li>
@@ -311,12 +306,11 @@
 </tbody>
 </table>
 <h4 id="error-response-format">Error Response Format</h4>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InvalidParameter&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The &#39;email&#39; parameter is required.&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;InvalidParameter&quot;,
+  &quot;message&quot;: &quot;The 'email' parameter is required.&quot;
+}
+</code></pre>
 <hr />
 <h3 id="6-data-schema-and-serialization-patterns">6. Data Schema and Serialization Patterns</h3>
 <p>Consistent data schemas facilitate easier processing.</p>
@@ -344,24 +338,22 @@
 <li><code>/orders</code>: place an order</li>
 </ul>
 <h3 id="sample-endpoints">Sample Endpoints</h3>
-<div class="codehilite"><pre><span></span><code><span class="err">GET /books?author=John+Doe&amp;sort=published_date_desc&amp;page=1</span>
-<span class="err">GET /books/123</span>
-<span class="err">POST /orders</span>
-</code></pre></div>
-
+<pre><code class="language-http">GET /books?author=John+Doe&amp;sort=published_date_desc&amp;page=1
+GET /books/123
+POST /orders
+</code></pre>
 <h3 id="response-example">Response Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Effective API Design&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jane Smith&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;published_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-05-10&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/books/123&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;author&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/authors/456&quot;</span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;id&quot;: 123,
+  &quot;title&quot;: &quot;Effective API Design&quot;,
+  &quot;author&quot;: &quot;Jane Smith&quot;,
+  &quot;published_date&quot;: &quot;2023-05-10&quot;,
+  &quot;links&quot;: [
+    {&quot;rel&quot;: &quot;self&quot;, &quot;href&quot;: &quot;/books/123&quot;},
+    {&quot;rel&quot;: &quot;author&quot;, &quot;href&quot;: &quot;/authors/456&quot;}
+  ]
+}
+</code></pre>
 <hr />
 <h2 id="actionable-advice-for-api-design-success">Actionable Advice for API Design Success</h2>
 <ul>

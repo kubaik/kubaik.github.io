@@ -164,39 +164,38 @@
 * Edge device: Process video feed using AI models (e.g., object detection, facial recognition)
 * Cloud: Store and analyze historical data</p>
 <p>Here's an example code snippet using OpenCV and TensorFlow to detect objects in a video feed:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import cv2
+import tensorflow as tf
 
-<span class="c1"># Load the AI model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;object_detection_model.h5&#39;</span><span class="p">)</span>
+# Load the AI model
+model = tf.keras.models.load_model('object_detection_model.h5')
 
-<span class="c1"># Capture video feed</span>
-<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Capture video feed
+cap = cv2.VideoCapture(0)
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Read frame from video feed</span>
-    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+while True:
+    # Read frame from video feed
+    ret, frame = cap.read()
 
-    <span class="c1"># Pre-process frame</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">/</span> <span class="mf">255.0</span>
+    # Pre-process frame
+    frame = cv2.resize(frame, (224, 224))
+    frame = frame / 255.0
 
-    <span class="c1"># Detect objects using AI model</span>
-    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    # Detect objects using AI model
+    predictions = model.predict(frame)
 
-    <span class="c1"># Draw bounding boxes around detected objects</span>
-    <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">:</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">prediction</span>
-        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    # Draw bounding boxes around detected objects
+    for prediction in predictions:
+        x, y, w, h = prediction
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-    <span class="c1"># Display frame</span>
-    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Frame&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+    # Display frame
+    cv2.imshow('Frame', frame)
 
-    <span class="c1"># Exit on key press</span>
-    <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">):</span>
-        <span class="k">break</span>
-</code></pre></div>
-
+    # Exit on key press
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
+</code></pre>
 <p>This code snippet demonstrates how to use Edge AI to detect objects in a video feed in real-time.</p>
 <h2 id="edge-ai-tools-and-platforms">Edge AI Tools and Platforms</h2>
 <p>Several tools and platforms are available for building Edge AI applications, including:
@@ -206,44 +205,43 @@
 4. <strong>AWS IoT Greengrass</strong>: A service for building edge computing applications on AWS.</p>
 <h3 id="example-deploying-edge-ai-model-using-tensorflow-lite">Example: Deploying Edge AI Model using TensorFlow Lite</h3>
 <p>TensorFlow Lite is a lightweight version of TensorFlow that can be used to deploy Edge AI models on edge devices. Here's an example code snippet using TensorFlow Lite to deploy an object detection model on an edge device:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tflite_runtime.interpreter</span> <span class="k">as</span> <span class="nn">tflite</span>
+<pre><code class="language-python">import tflite_runtime.interpreter as tflite
 
-<span class="c1"># Load the AI model</span>
-<span class="n">interpreter</span> <span class="o">=</span> <span class="n">tflite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;object_detection_model.tflite&#39;</span><span class="p">)</span>
+# Load the AI model
+interpreter = tflite.Interpreter(model_path='object_detection_model.tflite')
 
-<span class="c1"># Allocate memory for input and output tensors</span>
-<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_input_details</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
-<span class="n">output_tensor</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_output_details</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+# Allocate memory for input and output tensors
+input_tensor = interpreter.get_input_details()[0]['index']
+output_tensor = interpreter.get_output_details()[0]['index']
 
-<span class="c1"># Capture video feed</span>
-<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+# Capture video feed
+cap = cv2.VideoCapture(0)
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Read frame from video feed</span>
-    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+while True:
+    # Read frame from video feed
+    ret, frame = cap.read()
 
-    <span class="c1"># Pre-process frame</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">/</span> <span class="mf">255.0</span>
+    # Pre-process frame
+    frame = cv2.resize(frame, (224, 224))
+    frame = frame / 255.0
 
-    <span class="c1"># Detect objects using AI model</span>
-    <span class="n">interpreter</span><span class="o">.</span><span class="n">set_tensor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
-    <span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
-    <span class="n">predictions</span> <span class="o">=</span> <span class="n">interpreter</span><span class="o">.</span><span class="n">get_tensor</span><span class="p">(</span><span class="n">output_tensor</span><span class="p">)</span>
+    # Detect objects using AI model
+    interpreter.set_tensor(input_tensor, frame)
+    interpreter.invoke()
+    predictions = interpreter.get_tensor(output_tensor)
 
-    <span class="c1"># Draw bounding boxes around detected objects</span>
-    <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">:</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">prediction</span>
-        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    # Draw bounding boxes around detected objects
+    for prediction in predictions:
+        x, y, w, h = prediction
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-    <span class="c1"># Display frame</span>
-    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Frame&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+    # Display frame
+    cv2.imshow('Frame', frame)
 
-    <span class="c1"># Exit on key press</span>
-    <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">):</span>
-        <span class="k">break</span>
-</code></pre></div>
-
+    # Exit on key press
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
+</code></pre>
 <p>This code snippet demonstrates how to use TensorFlow Lite to deploy an Edge AI model on an edge device.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Several common problems can occur when building Edge AI applications, including:
@@ -256,21 +254,21 @@
 3. <strong>Data compression</strong>: Compressing data to reduce communication errors.</p>
 <h3 id="example-model-pruning-using-tensorflow">Example: Model Pruning using TensorFlow</h3>
 <p>Model pruning involves removing redundant neurons and connections in the AI model to reduce compute resources and memory usage. Here's an example code snippet using TensorFlow to prune an AI model:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Python</span> <span class="n">Machine</span> <span class="n">Learning</span> <span class="n">by</span> <span class="n">Sebastian</span> <span class="n">Raschka</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;*</span>
+<pre><code class="language-python">
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+import tensorflow as tf
 
-<span class="c1"># Load the AI model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;object_detection_model.h5&#39;</span><span class="p">)</span>
+# Load the AI model
+model = tf.keras.models.load_model('object_detection_model.h5')
 
-<span class="c1"># Prune the AI model</span>
-<span class="n">pruned_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">pruned_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">prune_model</span><span class="p">(</span><span class="n">pruned_model</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+# Prune the AI model
+pruned_model = tf.keras.models.clone_model(model)
+pruned_model = tf.keras.models.prune_model(pruned_model, 0.2)
 
-<span class="c1"># Save the pruned AI model</span>
-<span class="n">pruned_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;pruned_object_detection_model.h5&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the pruned AI model
+pruned_model.save('pruned_object_detection_model.h5')
+</code></pre>
 <p>This code snippet demonstrates how to use TensorFlow to prune an AI model and reduce compute resources and memory usage.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Edge AI is a rapidly growing field that involves integrating AI and edge computing to build real-time applications. Several tools and platforms are available for building Edge AI applications, including TensorFlow Lite, OpenCV, and EdgeX Foundry. To address common problems, several solutions can be used, including model pruning, model quantization, and data compression.</p>

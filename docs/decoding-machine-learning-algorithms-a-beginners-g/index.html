@@ -172,48 +172,46 @@
 <h2 id="practical-examples">Practical Examples</h2>
 <p>Let's delve into some practical examples to better understand how machine learning algorithms work:</p>
 <h3 id="example-1-predicting-housing-prices-with-linear-regression">Example 1: Predicting Housing Prices with Linear Regression</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.linear_model import LinearRegression
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;housing.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('housing.csv')
 
-<span class="c1"># Define features and target variable</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;sqft&#39;</span><span class="p">,</span> <span class="s1">&#39;bedrooms&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+# Define features and target variable
+X = data[['sqft', 'bedrooms']]
+y = data['price']
 
-<span class="c1"># Initialize the Linear Regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+# Initialize the Linear Regression model
+model = LinearRegression()
 
-<span class="c1"># Fit the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Fit the model
+model.fit(X, y)
 
-<span class="c1"># Predict the price of a house with 2000 sqft and 3 bedrooms</span>
-<span class="n">predicted_price</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">predicted_price</span><span class="p">)</span>
-</code></pre></div>
-
+# Predict the price of a house with 2000 sqft and 3 bedrooms
+predicted_price = model.predict([[2000, 3]])
+print(predicted_price)
+</code></pre>
 <h3 id="example-2-clustering-customer-segments-with-k-means">Example 2: Clustering Customer Segments with K-means</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.cluster import KMeans
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;customers.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('customers.csv')
 
-<span class="c1"># Define features</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">]]</span>
+# Define features
+X = data[['age', 'income']]
 
-<span class="c1"># Initialize the K-means model with 3 clusters</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+# Initialize the K-means model with 3 clusters
+model = KMeans(n_clusters=3)
 
-<span class="c1"># Fit the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Fit the model
+model.fit(X)
 
-<span class="c1"># Get cluster labels for each data point</span>
-<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">labels_</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">)</span>
-</code></pre></div>
-
+# Get cluster labels for each data point
+cluster_labels = model.labels_
+print(cluster_labels)
+</code></pre>
 <h2 id="actionable-advice-for-beginners">Actionable Advice for Beginners</h2>
 <p>To kickstart your journey into machine learning algorithms, here are some actionable tips:</p>
 <ol>

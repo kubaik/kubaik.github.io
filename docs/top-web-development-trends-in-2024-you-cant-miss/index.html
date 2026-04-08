@@ -174,13 +174,12 @@
 <li><strong>Cross-Platform Compatibility:</strong> Since Wasm runs in all major browsers, it simplifies deployment across different devices.</li>
 </ul>
 <h3 id="example">Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Example of a simple Rust function compiled to WebAssembly</span>
-<span class="cp">#[wasm_bindgen]</span>
-<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span>: <span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
-<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-rust">// Example of a simple Rust function compiled to WebAssembly
+#[wasm_bindgen]
+pub fn add(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
+</code></pre>
 <h3 id="actionable-advice_1">Actionable Advice</h3>
 <ul>
 <li>Evaluate parts of your application that can benefit from WebAssembly, such as real-time data processing or graphics.</li>
@@ -199,14 +198,13 @@
 </ul>
 <h3 id="practical-example">Practical Example</h3>
 <p>Deploying a static blog with Next.js:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-blog
-<span class="nb">cd</span><span class="w"> </span>my-blog
-<span class="c1"># Write your content, then build and export static files</span>
-npm<span class="w"> </span>run<span class="w"> </span>build
-npm<span class="w"> </span>run<span class="w"> </span><span class="nb">export</span>
-<span class="c1"># Deploy to CDN or static hosting like Vercel or Netlify</span>
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-blog
+cd my-blog
+# Write your content, then build and export static files
+npm run build
+npm run export
+# Deploy to CDN or static hosting like Vercel or Netlify
+</code></pre>
 <h3 id="actionable-advice_2">Actionable Advice</h3>
 <ul>
 <li>Migrate existing dynamic sites to Jamstack for improved performance.</li>
@@ -231,9 +229,8 @@ npm<span class="w"> </span>run<span class="w"> </span><span class="nb">export</s
 <li>Test your site with accessibility tools and real users.</li>
 </ul>
 <h3 id="example_1">Example</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Close menu&quot;</span><span class="p">&gt;</span>X<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;button aria-label=&quot;Close menu&quot;&gt;X&lt;/button&gt;
+</code></pre>
 <h3 id="actionable-advice_3">Actionable Advice</h3>
 <ul>
 <li>Incorporate accessibility testing into your development pipeline.</li>
@@ -253,29 +250,28 @@ npm<span class="w"> </span>run<span class="w"> </span><span class="nb">export</s
 </ul>
 <h3 id="practical-example_1">Practical Example</h3>
 <p>Implementing a simple service worker for offline caching:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// service-worker.js</span>
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;v1&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">([</span>
-<span class="w">        </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">&#39;/app.js&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="p">]);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// service-worker.js
+self.addEventListener('install', event =&gt; {
+  event.waitUntil(
+    caches.open('v1').then(cache =&gt; {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles.css',
+        '/app.js',
+      ]);
+    })
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">);</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', event =&gt; {
+  event.respondWith(
+    caches.match(event.request).then(response =&gt; {
+      return response || fetch(event.request);
+    })
+  );
+});
+</code></pre>
 <h3 id="actionable-advice_4">Actionable Advice</h3>
 <ul>
 <li>Convert existing websites into PWAs for better user engagement.</li>
@@ -301,9 +297,8 @@ npm<span class="w"> </span>run<span class="w"> </span><span class="nb">export</s
 </ul>
 <h3 id="example_2">Example</h3>
 <p>Configuring a Content Security Policy:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">Content-Security-Policy: default-src &#39;self&#39;; script-src &#39;self&#39; https://apis.example.com; object-src &#39;none&#39;;</span>
-</code></pre></div>
-
+<pre><code class="language-http">Content-Security-Policy: default-src 'self'; script-src 'self' https://apis.example.com; object-src 'none';
+</code></pre>
 <h3 id="actionable-advice_5">Actionable Advice</h3>
 <ul>
 <li>Regularly update security protocols and stay informed about emerging threats.</li>

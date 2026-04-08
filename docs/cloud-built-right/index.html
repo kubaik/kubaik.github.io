@@ -169,28 +169,27 @@
 * <strong>Database</strong>: An Amazon RDS instance running MySQL
 * <strong>Cache</strong>: An Amazon ElastiCache instance running Redis</p>
 <p>Here is an example of how we can use AWS CloudFormation to define this architecture:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Resources</span><span class="o">:</span>
-<span class="w">  </span><span class="n">WebServer</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::EC2::Instance&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">ImageId</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">FindInMap</span><span class="w"> </span><span class="o">[</span><span class="n">RegionMap</span><span class="o">,</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;AWS::Region&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;AMI&#39;</span><span class="o">]</span>
-<span class="w">      </span><span class="n">InstanceType</span><span class="o">:</span><span class="w"> </span><span class="n">t2</span><span class="o">.</span><span class="na">micro</span>
-<span class="w">  </span><span class="n">LoadBalancer</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::ElasticLoadBalancing::LoadBalancer&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">Listeners</span><span class="o">:</span>
-<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">LoadBalancerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">          </span><span class="n">InstancePort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
-<span class="w">          </span><span class="n">Protocol</span><span class="o">:</span><span class="w"> </span><span class="n">HTTP</span>
-<span class="w">  </span><span class="n">Database</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::RDS::DBInstance&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">DBInstanceClass</span><span class="o">:</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="na">t2</span><span class="o">.</span><span class="na">micro</span>
-<span class="w">      </span><span class="n">Engine</span><span class="o">:</span><span class="w"> </span><span class="n">mysql</span>
-<span class="w">      </span><span class="n">MasterUsername</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;DBUsername&#39;</span>
-<span class="w">      </span><span class="n">MasterUserPassword</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;DBPassword&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-yml">Resources:
+  WebServer:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', 'AMI']
+      InstanceType: t2.micro
+  LoadBalancer:
+    Type: 'AWS::ElasticLoadBalancing::LoadBalancer'
+    Properties:
+      Listeners:
+        - LoadBalancerPort: 80
+          InstancePort: 80
+          Protocol: HTTP
+  Database:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBInstanceClass: db.t2.micro
+      Engine: mysql
+      MasterUsername: !Ref 'DBUsername'
+      MasterUserPassword: !Ref 'DBPassword'
+</code></pre>
 <p>This CloudFormation template defines a web server, load balancer, and database instance, and configures the load balancer to distribute traffic across the web server instances.</p>
 <h2 id="performance-benchmarking">Performance Benchmarking</h2>
 <p>To ensure that our web application meets the required performance metrics, we can use AWS performance benchmarking tools such as:
@@ -198,29 +197,28 @@
 * <strong>AWS X-Ray</strong>: A service that provides detailed performance metrics and tracing information</p>
 <p>For example, we can use CloudWatch to monitor the average response time of our web application, and X-Ray to identify performance bottlenecks.</p>
 <p>Here is an example of how we can use CloudWatch to monitor the average response time of our web application:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
+cloudwatch = boto3.client('cloudwatch')
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">get_metric_statistics</span><span class="p">(</span>
-    <span class="n">Namespace</span><span class="o">=</span><span class="s1">&#39;AWS/EC2&#39;</span><span class="p">,</span>
-    <span class="n">MetricName</span><span class="o">=</span><span class="s1">&#39;ResponseTime&#39;</span><span class="p">,</span>
-    <span class="n">Dimensions</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;InstanceId&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;i-0123456789abcdef0&#39;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">StartTime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
-    <span class="n">EndTime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-    <span class="n">Period</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-    <span class="n">Statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">],</span>
-    <span class="n">Unit</span><span class="o">=</span><span class="s1">&#39;Milliseconds&#39;</span>
-<span class="p">)</span>
+response = cloudwatch.get_metric_statistics(
+    Namespace='AWS/EC2',
+    MetricName='ResponseTime',
+    Dimensions=[
+        {
+            'Name': 'InstanceId',
+            'Value': 'i-0123456789abcdef0'
+        }
+    ],
+    StartTime=datetime.datetime.now() - datetime.timedelta(minutes=10),
+    EndTime=datetime.datetime.now(),
+    Period=60,
+    Statistics=['Average'],
+    Unit='Milliseconds'
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Datapoints&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Average&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+print(response['Datapoints'][0]['Average'])
+</code></pre>
 <p>This code uses the CloudWatch API to retrieve the average response time of our web application over the past 10 minutes.</p>
 <h2 id="cost-optimization">Cost Optimization</h2>
 <p>To optimize the cost of our web application, we can use AWS cost optimization tools such as:
@@ -231,28 +229,27 @@
 * <strong>Spot Instances</strong>: Using spot instances to reduce costs
 * <strong>Auto Scaling</strong>: Using auto scaling to optimize instance usage</p>
 <p>Here is an example of how we can use Cost Explorer to identify areas where we can optimize costs:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">cost_explorer</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ce&#39;</span><span class="p">)</span>
+cost_explorer = boto3.client('ce')
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">cost_explorer</span><span class="o">.</span><span class="n">get_cost_and_usage</span><span class="p">(</span>
-    <span class="n">TimePeriod</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-01-31&#39;</span>
-    <span class="p">},</span>
-    <span class="n">Granularity</span><span class="o">=</span><span class="s1">&#39;DAILY&#39;</span><span class="p">,</span>
-    <span class="n">Metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;UnblendedCost&#39;</span><span class="p">],</span>
-    <span class="n">GroupBy</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;Type&#39;</span><span class="p">:</span> <span class="s1">&#39;DIMENSION&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="s1">&#39;SERVICE&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
+response = cost_explorer.get_cost_and_usage(
+    TimePeriod={
+        'Start': '2022-01-01',
+        'End': '2022-01-31'
+    },
+    Granularity='DAILY',
+    Metrics=['UnblendedCost'],
+    GroupBy=[
+        {
+            'Type': 'DIMENSION',
+            'Key': 'SERVICE'
+        }
+    ]
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;ResultsByTime&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Groups&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Metrics&#39;</span><span class="p">][</span><span class="s1">&#39;UnblendedCost&#39;</span><span class="p">][</span><span class="s1">&#39;Amount&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+print(response['ResultsByTime'][0]['Groups'][0]['Metrics']['UnblendedCost']['Amount'])
+</code></pre>
 <p>This code uses the Cost Explorer API to retrieve the daily cost of our web application over the past month.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that can occur when building and deploying web applications on AWS, along with specific solutions:
@@ -260,20 +257,19 @@
 * <strong>Database performance issues</strong>: Use Amazon RDS Performance Insights to identify performance bottlenecks
 * <strong>Security breaches</strong>: Use AWS IAM to ensure that access is restricted to authorized personnel</p>
 <p>For example, we can use Auto Scaling to ensure that instances are replaced in case of downtime:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Resources</span><span class="o">:</span>
-<span class="w">  </span><span class="n">AutoScalingGroup</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::AutoScaling::AutoScalingGroup&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">LaunchConfigurationName</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;LaunchConfiguration&#39;</span>
-<span class="w">      </span><span class="n">MinSize</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">      </span><span class="n">MaxSize</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="w">  </span><span class="n">LaunchConfiguration</span><span class="o">:</span>
-<span class="w">    </span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;AWS::AutoScaling::LaunchConfiguration&#39;</span>
-<span class="w">    </span><span class="n">Properties</span><span class="o">:</span>
-<span class="w">      </span><span class="n">ImageId</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="n">FindInMap</span><span class="w"> </span><span class="o">[</span><span class="n">RegionMap</span><span class="o">,</span><span class="w"> </span><span class="o">!</span><span class="n">Ref</span><span class="w"> </span><span class="s1">&#39;AWS::Region&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;AMI&#39;</span><span class="o">]</span>
-<span class="w">      </span><span class="n">InstanceType</span><span class="o">:</span><span class="w"> </span><span class="n">t2</span><span class="o">.</span><span class="na">micro</span>
-</code></pre></div>
-
+<pre><code class="language-yml">Resources:
+  AutoScalingGroup:
+    Type: 'AWS::AutoScaling::AutoScalingGroup'
+    Properties:
+      LaunchConfigurationName: !Ref 'LaunchConfiguration'
+      MinSize: 1
+      MaxSize: 10
+  LaunchConfiguration:
+    Type: 'AWS::AutoScaling::LaunchConfiguration'
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', 'AMI']
+      InstanceType: t2.micro
+</code></pre>
 <p>This CloudFormation template defines an auto scaling group that ensures that instances are replaced in case of downtime.</p>
 <h2 id="use-cases">Use Cases</h2>
 <p>Here are some concrete use cases for building and deploying web applications on AWS:

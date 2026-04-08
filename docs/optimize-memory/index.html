@@ -154,14 +154,13 @@
 <h3 id="understanding-memory-allocation">Understanding Memory Allocation</h3>
 <p>Memory allocation refers to the process of assigning a portion of memory to a program or application. There are two primary types of memory allocation: static and dynamic. Static allocation occurs during compile-time, where the memory is allocated for the entire duration of the program's execution. Dynamic allocation, on the other hand, occurs during runtime, where memory is allocated and deallocated as needed.</p>
 <p>To illustrate the difference, consider the following example in C++:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Static allocation</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"> </span><span class="c1">// Memory allocated during compile-time</span>
+<pre><code class="language-cpp">// Static allocation
+int arr[10]; // Memory allocated during compile-time
 
-<span class="c1">// Dynamic allocation</span>
-<span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"> </span><span class="c1">// Memory allocated during runtime</span>
-<span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// Memory deallocated during runtime</span>
-</code></pre></div>
-
+// Dynamic allocation
+int* ptr = new int[10]; // Memory allocated during runtime
+delete[] ptr; // Memory deallocated during runtime
+</code></pre>
 <p>In this example, the static allocation of the array <code>arr</code> occurs during compile-time, whereas the dynamic allocation of the pointer <code>ptr</code> occurs during runtime.</p>
 <h2 id="memory-profiling-tools">Memory Profiling Tools</h2>
 <p>Memory profiling tools are essential for identifying memory leaks, optimizing memory allocation, and improving overall system performance. Some popular memory profiling tools include:</p>
@@ -173,13 +172,12 @@
 <p>These tools provide detailed insights into memory usage, allowing developers to identify areas for improvement. For instance, Valgrind can detect memory leaks and provide detailed reports on memory allocation and deallocation.</p>
 <h3 id="example-use-case-optimizing-memory-allocation-in-a-java-application">Example Use Case: Optimizing Memory Allocation in a Java Application</h3>
 <p>Consider a Java application that uses a large array to store data. To optimize memory allocation, the developer can use the <code>ArrayList</code> class, which provides dynamic memory allocation and deallocation.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Inefficient memory allocation</span>
-<span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">1000000</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// Allocate 1 million integers</span>
+<pre><code class="language-java">// Inefficient memory allocation
+int[] arr = new int[1000000]; // Allocate 1 million integers
 
-<span class="c1">// Efficient memory allocation</span>
-<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Allocate 1 million integers dynamically</span>
-</code></pre></div>
-
+// Efficient memory allocation
+ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(1000000); // Allocate 1 million integers dynamically
+</code></pre>
 <p>By using the <code>ArrayList</code> class, the developer can reduce memory waste and improve performance. According to the Java documentation, <code>ArrayList</code> has an average time complexity of O(1) for add and remove operations, making it an efficient choice for dynamic memory allocation.</p>
 <h2 id="common-memory-related-problems-and-solutions">Common Memory-Related Problems and Solutions</h2>
 <p>Some common memory-related problems include:</p>
@@ -215,20 +213,19 @@
 </ul>
 <h3 id="example-use-case-implementing-memory-monitoring-in-a-python-application">Example Use Case: Implementing Memory Monitoring in a Python Application</h3>
 <p>Consider a Python application that uses a large amount of memory to process data. To implement memory monitoring, the developer can use the <code>psutil</code> library to track memory usage and alert when memory usage exceeds a certain threshold.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">psutil</span>
+<pre><code class="language-python">import psutil
 
-<span class="c1"># Set memory usage threshold</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="mi">80</span>  <span class="c1"># 80% of total memory</span>
+# Set memory usage threshold
+threshold = 80  # 80% of total memory
 
-<span class="c1"># Monitor memory usage</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">mem_usage</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">virtual_memory</span><span class="p">()</span><span class="o">.</span><span class="n">percent</span>
-    <span class="k">if</span> <span class="n">mem_usage</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memory usage exceeded threshold!&quot;</span><span class="p">)</span>
-        <span class="c1"># Take corrective action, such as freeing up memory or terminating the application</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
+# Monitor memory usage
+while True:
+    mem_usage = psutil.virtual_memory().percent
+    if mem_usage &gt; threshold:
+        print(&quot;Memory usage exceeded threshold!&quot;)
+        # Take corrective action, such as freeing up memory or terminating the application
+    time.sleep(1)
+</code></pre>
 <p>By implementing memory monitoring, the developer can detect low memory conditions and take corrective action to prevent out-of-memory errors.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, memory management is a critical component of system performance, and optimizing memory usage can have a significant impact on efficiency and reliability. By following best practices, such as using dynamic memory allocation, implementing memory deallocation, and monitoring memory usage, developers can improve system performance and reduce the risk of memory-related issues.</p>

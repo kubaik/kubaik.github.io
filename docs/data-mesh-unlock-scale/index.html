@@ -163,21 +163,19 @@
 * <strong>Apache Spark</strong>: A unified analytics engine for large-scale data processing.
 * <strong>AWS Lake Formation</strong>: A data warehousing and analytics service for building data lakes.</p>
 <p>For example, an organization can use Apache Kafka to build a real-time data pipeline that integrates data from multiple domains. Here is an example of how to use Kafka to produce and consume data:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Producer</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<pre><code class="language-python"># Producer
+from kafka import KafkaProducer
 
-<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
-<span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></div>
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer.send('my_topic', value='Hello, World!'.encode('utf-8'))
+</code></pre>
+<pre><code class="language-python"># Consumer
+from kafka import KafkaConsumer
 
-<div class="codehilite"><pre><span></span><code><span class="c1"># Consumer</span>
-<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
-
-<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span><span class="s1">&#39;my_topic&#39;</span><span class="p">,</span> <span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></div>
-
+consumer = KafkaConsumer('my_topic', bootstrap_servers='localhost:9092')
+for message in consumer:
+    print(message.value.decode('utf-8'))
+</code></pre>
 <h2 id="benefits-of-data-mesh-architecture">Benefits of Data Mesh Architecture</h2>
 <p>The Data Mesh architecture offers several benefits, including:
 * <strong>Improved scalability</strong>: By decentralizing data management, organizations can scale their data capabilities more easily.
@@ -190,16 +188,15 @@
 2. <strong>Data integration</strong>: To integrate data across domains, organizations need to use standardized APIs and data formats.
 3. <strong>Data security</strong>: To ensure data security, organizations need to implement robust access controls and encryption.</p>
 <p>For example, an organization can use a tool like <strong>Apache Atlas</strong> to implement data governance and metadata management. Here is an example of how to use Atlas to create a data entity:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a data entity</span>
-<span class="n">AtlasEntity</span><span class="w"> </span><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasEntity</span><span class="p">(</span><span class="s">&quot;my_entity&quot;</span><span class="p">);</span>
-<span class="n">entity</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;My Entity&quot;</span><span class="p">);</span>
-<span class="n">entity</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;description&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;This is my entity&quot;</span><span class="p">);</span>
+<pre><code class="language-java">// Create a data entity
+AtlasEntity entity = new AtlasEntity(&quot;my_entity&quot;);
+entity.setAttribute(&quot;name&quot;, &quot;My Entity&quot;);
+entity.setAttribute(&quot;description&quot;, &quot;This is my entity&quot;);
 
-<span class="c1">// Add the entity to the metadata repository</span>
-<span class="n">AtlasClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtlasClient</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">21000</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="na">createEntity</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-</code></pre></div>
-
+// Add the entity to the metadata repository
+AtlasClient client = new AtlasClient(&quot;localhost&quot;, 21000);
+client.createEntity(entity);
+</code></pre>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>The Data Mesh architecture has been adopted by several organizations, including:
 * <strong>Netflix</strong>: Uses a Data Mesh to manage its vast amounts of user data and provide personalized recommendations.

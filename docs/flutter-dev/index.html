@@ -166,56 +166,54 @@
 3. <strong>Install the Flutter Plugin</strong>: Install the Flutter plugin for your chosen code editor. This plugin provides features such as code completion, debugging, and project creation.
 4. <strong>Create a New Project</strong>: Create a new Flutter project using the <code>flutter create</code> command. This command generates a basic Flutter project with the necessary files and folders.</p>
 <h3 id="example-code-creating-a-new-flutter-project">Example Code: Creating a New Flutter Project</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Create a new Flutter project</span>
-<span class="n">flutter</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">my_app</span>
+<pre><code class="language-dart">// Create a new Flutter project
+flutter create my_app
 
-<span class="c1">// Change into the project directory</span>
-<span class="n">cd</span><span class="w"> </span><span class="n">my_app</span>
+// Change into the project directory
+cd my_app
 
-<span class="c1">// Run the app on an emulator or physical device</span>
-<span class="n">flutter</span><span class="w"> </span><span class="n">run</span>
-</code></pre></div>
-
+// Run the app on an emulator or physical device
+flutter run
+</code></pre>
 <p>This code creates a new Flutter project called <code>my_app</code>, changes into the project directory, and runs the app on an emulator or physical device.</p>
 <h2 id="building-a-simple-flutter-app">Building a Simple Flutter App</h2>
 <p>Let's build a simple Flutter app that displays a list of items. Here's an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the necessary packages</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<pre><code class="language-dart">// Import the necessary packages
+import 'package:flutter/material.dart';
 
-<span class="c1">// Create a new class that extends StatelessWidget</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;My App&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;My App&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="nl">body:</span><span class="w"> </span><span class="n">ListView</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">children:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 1&#39;</span><span class="p">),</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 2&#39;</span><span class="p">),</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">            </span><span class="n">ListTile</span><span class="p">(</span>
-<span class="w">              </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Item 3&#39;</span><span class="p">),</span>
-<span class="w">            </span><span class="p">),</span>
-<span class="w">          </span><span class="p">],</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+// Create a new class that extends StatelessWidget
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My App'),
+        ),
+        body: ListView(
+          children: [
+            ListTile(
+              title: Text('Item 1'),
+            ),
+            ListTile(
+              title: Text('Item 2'),
+            ),
+            ListTile(
+              title: Text('Item 3'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-<span class="c1">// Run the app</span>
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Run the app
+void main() {
+  runApp(MyApp());
+}
+</code></pre>
 <p>This code creates a simple Flutter app that displays a list of three items. The <code>ListView</code> widget is used to create the list, and the <code>ListTile</code> widget is used to create each item.</p>
 <h2 id="using-third-party-libraries-and-packages">Using Third-Party Libraries and Packages</h2>
 <p>Flutter has a vast ecosystem of third-party libraries and packages that can be used to add functionality to your apps. Some popular packages include:
@@ -223,61 +221,60 @@
 * <strong>SQFlite</strong>: A package for storing data in a SQLite database.
 * <strong>Firebase</strong>: A package for using Firebase services, such as authentication and cloud storage.</p>
 <h3 id="example-code-using-the-http-package">Example Code: Using the HTTP Package</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the HTTP package</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:http/http.dart&#39;</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">http</span><span class="p">;</span>
+<pre><code class="language-dart">// Import the HTTP package
+import 'package:http/http.dart' as http;
 
-<span class="c1">// Create a new class that extends StatefulWidget</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatefulWidget</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">_MyAppState</span><span class="w"> </span><span class="n">createState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_MyAppState</span><span class="p">();</span>
-<span class="p">}</span>
+// Create a new class that extends StatefulWidget
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() =&gt; _MyAppState();
+}
 
-<span class="c1">// Create a new class that extends State</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">_MyAppState</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">MyApp</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">String</span><span class="w"> </span><span class="n">_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+// Create a new class that extends State
+class _MyAppState extends State&lt;MyApp&gt; {
+  String _data = '';
 
-<span class="w">  </span><span class="c1">// Make an HTTP request</span>
-<span class="w">  </span><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_makeRequest</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="n">Uri</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;https://example.com&#39;</span><span class="p">));</span>
+  // Make an HTTP request
+  Future&lt;void&gt; _makeRequest() async {
+    final response = await http.get(Uri.parse('https://example.com'));
 
-<span class="w">    </span><span class="c1">// Update the state with the response data</span>
-<span class="w">    </span><span class="n">setState</span><span class="p">(()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">;</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
+    // Update the state with the response data
+    setState(() {
+      _data = response.body;
+    });
+  }
 
-<span class="w">  </span><span class="nd">@override</span>
-<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
-<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">&#39;My App&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">Scaffold</span><span class="p">(</span>
-<span class="w">        </span><span class="nl">appBar:</span><span class="w"> </span><span class="n">AppBar</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">title:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;My App&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">        </span><span class="nl">body:</span><span class="w"> </span><span class="n">Center</span><span class="p">(</span>
-<span class="w">          </span><span class="nl">child:</span><span class="w"> </span><span class="n">Column</span><span class="p">(</span>
-<span class="w">            </span><span class="nl">mainAxisAlignment:</span><span class="w"> </span><span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
-<span class="w">            </span><span class="nl">children:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">              </span><span class="n">Text</span><span class="p">(</span><span class="n">_data</span><span class="p">),</span>
-<span class="w">              </span><span class="n">SizedBox</span><span class="p">(</span><span class="nl">height:</span><span class="w"> </span><span class="m">20</span><span class="p">),</span>
-<span class="w">              </span><span class="n">ElevatedButton</span><span class="p">(</span>
-<span class="w">                </span><span class="nl">onPressed:</span><span class="w"> </span><span class="n">_makeRequest</span><span class="p">,</span>
-<span class="w">                </span><span class="nl">child:</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Make Request&#39;</span><span class="p">),</span>
-<span class="w">              </span><span class="p">),</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">          </span><span class="p">),</span>
-<span class="w">        </span><span class="p">),</span>
-<span class="w">      </span><span class="p">),</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My App'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_data),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _makeRequest,
+                child: Text('Make Request'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-<span class="c1">// Run the app</span>
-<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// Run the app
+void main() {
+  runApp(MyApp());
+}
+</code></pre>
 <p>This code uses the HTTP package to make a GET request to a URL and displays the response data in the app.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when building Flutter apps include:

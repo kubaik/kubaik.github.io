@@ -166,25 +166,23 @@
 * <strong>Improved code quality</strong>: TDD promotes good coding practices, such as loose coupling, high cohesion, and separation of concerns.</p>
 <h3 id="example-1-calculator-class">Example 1: Calculator Class</h3>
 <p>Let's consider a simple example of a Calculator class that adds two numbers. We will use Python as our programming language and the unittest framework for writing tests.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># calculator.py</span>
-<span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-</code></pre></div>
+<pre><code class="language-python"># calculator.py
+class Calculator:
+    def add(self, a, b):
+        return a + b
+</code></pre>
+<pre><code class="language-python"># test_calculator.py
+import unittest
+from calculator import Calculator
 
-<div class="codehilite"><pre><span></span><code><span class="c1"># test_calculator.py</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
+class TestCalculator(unittest.TestCase):
+    def test_add(self):
+        calculator = Calculator()
+        self.assertEqual(calculator.add(2, 3), 5)
 
-<span class="k">class</span> <span class="nc">TestCalculator</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">calculator</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">calculator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
 <p>In this example, we first write the test for the <code>add</code> method, then we write the minimal code required to pass the test. Finally, we can refactor the code to make it more maintainable.</p>
 <h2 id="tdd-tools-and-platforms">TDD Tools and Platforms</h2>
 <p>There are many tools and platforms available that support TDD. Some popular ones include:
@@ -195,37 +193,35 @@
 * <strong>Travis CI</strong>: A cloud-based continuous integration platform that supports automated testing.</p>
 <h3 id="example-2-using-mocking-library">Example 2: Using Mocking Library</h3>
 <p>Mocking libraries are essential in TDD, as they allow you to isolate dependencies and focus on the unit being tested. Let's consider an example of using the <code>unittest.mock</code> library in Python to mock a dependency.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># user_service.py</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python"># user_service.py
+import requests
 
-<span class="k">class</span> <span class="nc">UserService</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://api.example.com/users/</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre></div>
+class UserService:
+    def get_user(self, user_id):
+        response = requests.get(f'https://api.example.com/users/{user_id}')
+        return response.json()
+</code></pre>
+<pre><code class="language-python"># test_user_service.py
+import unittest
+from unittest.mock import patch, MagicMock
+from user_service import UserService
 
-<div class="codehilite"><pre><span></span><code><span class="c1"># test_user_service.py</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
-<span class="kn">from</span> <span class="nn">user_service</span> <span class="kn">import</span> <span class="n">UserService</span>
+class TestUserService(unittest.TestCase):
+    @patch('requests.get')
+    def test_get_user(self, mock_get):
+        mock_response = MagicMock()
+        mock_response.json.return_value = {'id': 1, 'name': 'John Doe'}
+        mock_get.return_value = mock_response
 
-<span class="k">class</span> <span class="nc">TestUserService</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;requests.get&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">test_get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_get</span><span class="p">):</span>
-        <span class="n">mock_response</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
-        <span class="n">mock_response</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">}</span>
-        <span class="n">mock_get</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_response</span>
+        user_service = UserService()
+        user = user_service.get_user(1)
 
-        <span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">()</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">user_service</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        self.assertEqual(user, {'id': 1, 'name': 'John Doe'})
+        mock_get.assert_called_once_with('https://api.example.com/users/1')
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">})</span>
-        <span class="n">mock_get</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/users/1&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
 <p>In this example, we use the <code>@patch</code> decorator to mock the <code>requests.get</code> function, allowing us to control the response and test the <code>get_user</code> method in isolation.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem in TDD is the issue of test fragility. Test fragility occurs when a test fails due to a change in the implementation details, rather than a change in the desired behavior. To solve this problem, you can use techniques such as:
@@ -234,46 +230,43 @@
 * <strong>Use of test-driven design</strong>: Test-driven design can help you design your code with testability in mind, reducing the likelihood of test fragility.</p>
 <h3 id="example-3-using-tdd-for-api-development">Example 3: Using TDD for API Development</h3>
 <p>Let's consider an example of using TDD for API development. We will use the Flask framework to create a simple API that returns a list of users.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># app.py</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+<pre><code class="language-python"># app.py
+from flask import Flask, jsonify
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+app = Flask(__name__)
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">get_users</span><span class="p">():</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jane Doe&#39;</span><span class="p">}]</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = [{'id': 1, 'name': 'John Doe'}, {'id': 2, 'name': 'Jane Doe'}]
+    return jsonify(users)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+<pre><code class="language-python"># test_app.py
+import unittest
+import requests
 
-<div class="codehilite"><pre><span></span><code><span class="c1"># test_app.py</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+class TestApp(unittest.TestCase):
+    def test_get_users(self):
+        response = requests.get('http://localhost:5000/users')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [{'id': 1, 'name': 'John Doe'}, {'id': 2, 'name': 'Jane Doe'}])
 
-<span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">test_get_users</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://localhost:5000/users&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jane Doe&#39;</span><span class="p">}])</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
 <p>In this example, we first write the test for the <code>/users</code> endpoint, then we write the minimal code required to pass the test. Finally, we can refactor the code to make it more maintainable.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>TDD can have a significant impact on the performance of your code. By writing tests before writing the code, you can ensure that your code is optimized for performance. Let's consider an example of using the <code>timeit</code> module in Python to benchmark the performance of a function.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># benchmark.py</span>
-<span class="kn">import</span> <span class="nn">timeit</span>
+<pre><code class="language-python"># benchmark.py
+import timeit
 
-<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+def add(a, b):
+    return a + b
 
-<span class="nb">print</span><span class="p">(</span><span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1000000</span><span class="p">))</span>
-</code></pre></div>
-
+print(timeit.timeit(lambda: add(2, 3), number=1000000))
+</code></pre>
 <p>In this example, we use the <code>timeit</code> module to benchmark the performance of the <code>add</code> function. The <code>number</code> parameter specifies the number of times to run the function.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>TDD has many real-world use cases, including:

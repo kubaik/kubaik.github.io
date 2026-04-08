@@ -155,48 +155,45 @@
 <p>Advanced types in TypeScript refer to the set of features that enable developers to create more expressive and flexible types. These include intersection types, union types, type guards, and more. With advanced types, developers can model complex data structures and relationships, making their code more robust, maintainable, and self-documenting.</p>
 <h3 id="intersection-types">Intersection Types</h3>
 <p>Intersection types are a type of advanced type that allows developers to combine multiple types into a single type. This is achieved using the <code>&amp;</code> operator. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">Rectangle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">};</span>
+<pre><code class="language-typescript">type Rectangle = {
+  width: number;
+  height: number;
+};
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">Circle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">};</span>
+type Circle = {
+  radius: number;
+};
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">Shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Rectangle</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Circle</span><span class="p">;</span>
+type Shape = Rectangle &amp; Circle;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">shape</span><span class="o">:</span><span class="w"> </span><span class="kt">Shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="kt">20</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="kt">5</span><span class="p">,</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const shape: Shape = {
+  width: 10,
+  height: 20,
+  radius: 5,
+};
+</code></pre>
 <p>In this example, the <code>Shape</code> type is an intersection of the <code>Rectangle</code> and <code>Circle</code> types, meaning it must have all the properties of both types.</p>
 <h3 id="union-types">Union Types</h3>
 <p>Union types, on the other hand, allow developers to create a type that can be one of multiple types. This is achieved using the <code>|</code> operator. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">StringOrNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<pre><code class="language-typescript">type StringOrNumber = string | number;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">StringOrNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">value2</span><span class="o">:</span><span class="w"> </span><span class="kt">StringOrNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">42</span><span class="p">;</span>
-</code></pre></div>
-
+const value: StringOrNumber = 'hello';
+const value2: StringOrNumber = 42;
+</code></pre>
 <p>In this example, the <code>StringOrNumber</code> type can be either a <code>string</code> or a <code>number</code>.</p>
 <h3 id="type-guards">Type Guards</h3>
 <p>Type guards are a feature of TypeScript that allows developers to narrow the type of a value within a specific scope. This is achieved using the <code>is</code> keyword. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">isString</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">function isString(value: string | number): value is string {
+  return typeof value === 'string';
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">;</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isString</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">());</span><span class="w"> </span><span class="c1">// value is string</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">));</span><span class="w"> </span><span class="c1">// value is number</span>
-<span class="p">}</span>
-</code></pre></div>
-
+const value: string | number = 'hello';
+if (isString(value)) {
+  console.log(value.toUpperCase()); // value is string
+} else {
+  console.log(value.toFixed(2)); // value is number
+}
+</code></pre>
 <p>In this example, the <code>isString</code> function is a type guard that checks if the <code>value</code> is a <code>string</code>. If it is, the type of <code>value</code> is narrowed to <code>string</code> within the <code>if</code> scope.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Advanced TypeScript types have many real-world use cases. Here are a few examples:</p>

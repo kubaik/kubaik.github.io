@@ -163,9 +163,8 @@
 <p>Indexes are critical for speeding up data retrieval. However, over-indexing can lead to increased storage costs and slower write operations. </p>
 <h4 id="practical-example-creating-an-index">Practical Example: Creating an Index</h4>
 <p>Consider a PostgreSQL database where you frequently query a <code>users</code> table to find users by their email. You can create an index like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_users_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_users_email ON users(email);
+</code></pre>
 <p><strong>Metrics</strong>: After creating this index, you could expect a reduction in query time from 200ms to 20ms under load, depending on the size of the dataset.</p>
 <h4 id="best-practices-for-indexing">Best Practices for Indexing</h4>
 <ul>
@@ -176,13 +175,11 @@
 <p>Optimizing queries can drastically improve performance. This involves re-writing queries for efficiency, avoiding unnecessary computations, and making sure they utilize indexes.</p>
 <h4 id="practical-example-optimizing-a-query">Practical Example: Optimizing a Query</h4>
 <p>Consider a query that retrieves users with active subscriptions:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">subscription_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;active&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE subscription_status = 'active';
+</code></pre>
 <p>This can be optimized by selecting only relevant columns:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">subscription_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;active&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT id, email FROM users WHERE subscription_status = 'active';
+</code></pre>
 <p><strong>Performance Benchmark</strong>: On a dataset of 1 million rows, the optimized query might reduce execution time from 150ms to 30ms.</p>
 <h4 id="common-query-optimization-techniques">Common Query Optimization Techniques</h4>
 <ul>
@@ -200,15 +197,14 @@
 <li><code>customers</code></li>
 </ul>
 <p>For performance reasons, you might denormalize certain read-heavy operations into a single <code>order_summary</code> table.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">order_summary</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">total</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">,</span>
-<span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE order_summary (
+    order_id INT,
+    product_id INT,
+    customer_id INT,
+    total DECIMAL,
+    created_at TIMESTAMP
+);
+</code></pre>
 <h3 id="4-database-configuration">4. Database Configuration</h3>
 <p>Configuration settings can dramatically impact performance. Ensure that your database is configured for your workload. </p>
 <h4 id="key-configuration-settings">Key Configuration Settings</h4>

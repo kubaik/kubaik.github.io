@@ -162,43 +162,40 @@
 <p>One of the most effective ways to optimize mobile speed is by leveraging coding best practices. Here are a few examples:</p>
 <h3 id="example-1-minifying-and-compressing-code">Example 1: Minifying and Compressing Code</h3>
 <p>Minifying and compressing code can significantly reduce the size of your HTML, CSS, and JavaScript files, resulting in faster page loads. For example, using a tool like Gzip can compress files by up to 90%. Here's an example of how to enable Gzip compression using Apache:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_deflate.c</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>text/plain
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>text/css
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>application/json
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>application/javascript
-<span class="w">  </span><span class="nb">AddOutputFilterByType</span><span class="w"> </span>DEFLATE<span class="w"> </span>text/html
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache">&lt;IfModule mod_deflate.c&gt;
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE text/html
+&lt;/IfModule&gt;
+</code></pre>
 <p>By enabling Gzip compression, you can reduce the size of your files and improve page load times.</p>
 <h3 id="example-2-leveraging-browser-caching">Example 2: Leveraging Browser Caching</h3>
 <p>Browser caching allows you to store frequently-used resources locally on the user's device, reducing the need for repeat requests to the server. Here's an example of how to leverage browser caching using HTML:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Cache-Control&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;max-age=31536000&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;meta http-equiv=&quot;Cache-Control&quot; content=&quot;max-age=31536000&quot;&gt;
+</code></pre>
 <p>This code sets the cache expiration to 1 year, allowing the browser to cache resources for an extended period.</p>
 <h3 id="example-3-using-a-content-delivery-network-cdn">Example 3: Using a Content Delivery Network (CDN)</h3>
 <p>A CDN can significantly improve page load times by reducing the distance between the user and the server. Here's an example of how to use a CDN like Cloudflare:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Enable Cloudflare CDN</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cloudflare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cloudflare&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">cf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cloudflare</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your_email@example.com&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your_api_key&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">// Enable Cloudflare CDN
+const cloudflare = require('cloudflare');
+const cf = cloudflare({
+  email: 'your_email@example.com',
+  key: 'your_api_key',
+});
 
-<span class="c1">// Get the current zone</span>
-<span class="nx">cf</span><span class="p">.</span><span class="nx">zones</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
-<span class="w">  </span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span>
-<span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">zone</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">zone</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Get the current zone
+cf.zones.get({
+  'name': 'example.com',
+}, (err, zone) =&gt; {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(zone);
+  }
+});
+</code></pre>
 <p>By using a CDN like Cloudflare, you can reduce the latency and improve page load times.</p>
 <h2 id="tools-and-platforms-for-mobile-performance-optimization">Tools and Platforms for Mobile Performance Optimization</h2>
 <p>There are several tools and platforms available for mobile performance optimization, including:

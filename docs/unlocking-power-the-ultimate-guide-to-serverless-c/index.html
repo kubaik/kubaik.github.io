@@ -232,39 +232,38 @@
 - Triggers invoke an AWS Lambda function.
 - Lambda fetches data from DynamoDB and returns it.</p>
 <p><strong>Sample Lambda Function (Node.js):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">AWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dynamo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AWS</span><span class="p">.</span><span class="nx">DynamoDB</span><span class="p">.</span><span class="nx">DocumentClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const AWS = require('aws-sdk');
+const dynamo = new AWS.DynamoDB.DocumentClient();
 
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">pathParameters</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+exports.handler = async (event) =&gt; {
+  const userId = event.pathParameters.id;
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">TableName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Users&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">Key</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">userId</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">};</span>
+  const params = {
+    TableName: 'Users',
+    Key: { id: userId }
+  };
 
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">dynamo</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Item</span><span class="p">),</span>
-<span class="w">      </span><span class="p">};</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">404</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;User not found&#39;</span><span class="w"> </span><span class="p">}),</span>
-<span class="w">      </span><span class="p">};</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">statusCode</span><span class="o">:</span><span class="w"> </span><span class="mf">500</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="w"> </span><span class="p">}),</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  try {
+    const data = await dynamo.get(params).promise();
+    if (data.Item) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(data.Item),
+      };
+    } else {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: 'User not found' }),
+      };
+    }
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
+};
+</code></pre>
 <p><strong>Actionable Tips:</strong>
 - Use API Gateway's proxy integration for simplified setup.
 - Enable caching for frequently accessed data.
@@ -277,31 +276,30 @@
 - The function processes and resizes images.
 - Resized images are saved back to storage.</p>
 <p><strong>Sample Azure Function (C#):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.IO</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.WebJobs</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Extensions.Logging</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">SixLabors.ImageSharp</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">SixLabors.ImageSharp.Processing</span><span class="p">;</span>
+<pre><code class="language-csharp">using System.IO;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
-<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ResizeImage</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[FunctionName(&quot;ResizeImage&quot;)]</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Run</span><span class="p">(</span>
-<span class="w">        </span><span class="na">[BlobTrigger(&quot;images/{name}&quot;, Connection = &quot;AzureWebJobsStorage&quot;)]</span><span class="w"> </span><span class="n">Stream</span><span class="w"> </span><span class="n">imageStream</span><span class="p">,</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span>
-<span class="w">        </span><span class="na">[Blob(&quot;images/resized/{name}&quot;, FileAccess.Write, Connection = &quot;AzureWebJobsStorage&quot;)]</span><span class="w"> </span><span class="n">Stream</span><span class="w"> </span><span class="n">outputStream</span><span class="p">,</span>
-<span class="w">        </span><span class="n">ILogger</span><span class="w"> </span><span class="n">log</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Image</span><span class="p">.</span><span class="n">Load</span><span class="p">(</span><span class="n">imageStream</span><span class="p">))</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">image</span><span class="p">.</span><span class="n">Mutate</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">Resize</span><span class="p">(</span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">200</span><span class="p">));</span>
-<span class="w">            </span><span class="n">image</span><span class="p">.</span><span class="n">SaveAsJpeg</span><span class="p">(</span><span class="n">outputStream</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="n">LogInformation</span><span class="p">(</span><span class="s">$&quot;Resized image {name} successfully.&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public static class ResizeImage
+{
+    [FunctionName(&quot;ResizeImage&quot;)]
+    public static void Run(
+        [BlobTrigger(&quot;images/{name}&quot;, Connection = &quot;AzureWebJobsStorage&quot;)] Stream imageStream,
+        string name,
+        [Blob(&quot;images/resized/{name}&quot;, FileAccess.Write, Connection = &quot;AzureWebJobsStorage&quot;)] Stream outputStream,
+        ILogger log)
+    {
+        using (var image = Image.Load(imageStream))
+        {
+            image.Mutate(x =&gt; x.Resize(200, 200));
+            image.SaveAsJpeg(outputStream);
+        }
+        log.LogInformation($&quot;Resized image {name} successfully.&quot;);
+    }
+}
+</code></pre>
 <p><strong>Actionable Tips:</strong>
 - Use precompiled libraries for image processing.
 - Set appropriate trigger filters to avoid unnecessary executions.

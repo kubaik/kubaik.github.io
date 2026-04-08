@@ -166,36 +166,34 @@
 * <strong>SnowSQL</strong>: SnowSQL is a command-line tool that allows users to load data into Snowflake using SQL commands.
 * <strong>Snowflake APIs</strong>: Snowflake provides APIs for loading data into Snowflake, which can be used with programming languages like Python and Java.</p>
 <p>Here is an example of loading data into Snowflake using SnowSQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a new table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span>
-<span class="w">  </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span>
-<span class="p">);</span>
+<pre><code class="language-sql">-- Create a new table
+CREATE TABLE customers (
+  id INT,
+  name VARCHAR,
+  email VARCHAR
+);
 
-<span class="c1">-- Load data into the table</span>
-<span class="k">COPY</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span>
-<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;@~/customers.csv&#39;</span>
-<span class="w">  </span><span class="n">STORAGE_INTEGRATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;MY_STORAGE_INTEGRATION&#39;</span>
-<span class="w">  </span><span class="n">FILE_FORMAT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CSV&#39;</span><span class="w"> </span><span class="n">FIELD_DELIMITER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="n">RECORD_DELIMITER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+-- Load data into the table
+COPY INTO customers (id, name, email)
+  FROM '@~/customers.csv'
+  STORAGE_INTEGRATION = 'MY_STORAGE_INTEGRATION'
+  FILE_FORMAT = (TYPE = 'CSV' FIELD_DELIMITER = ',' RECORD_DELIMITER = '\n');
+</code></pre>
 <p>In this example, we create a new table called <code>customers</code> and then load data into it from a CSV file using the <code>COPY INTO</code> command.</p>
 <h2 id="querying-data-in-snowflake">Querying Data in Snowflake</h2>
 <p>Querying data in Snowflake can be done using standard SQL commands, including <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, and <code>JOIN</code>. Snowflake also supports advanced SQL features like window functions, common table expressions (CTEs), and full-text search.</p>
 <p>Here is an example of querying data in Snowflake using SQL:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Query the customers table</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- Query the customers table
+SELECT *
+FROM customers
+WHERE country = 'USA';
 
-<span class="c1">-- Use a window function to calculate the top 10 customers by revenue</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span>
-<span class="w">       </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">row_num</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+-- Use a window function to calculate the top 10 customers by revenue
+SELECT *, 
+       ROW_NUMBER() OVER (ORDER BY revenue DESC) AS row_num
+FROM customers
+WHERE country = 'USA';
+</code></pre>
 <p>In this example, we query the <code>customers</code> table to retrieve all rows where the country is 'USA'. We then use a window function to calculate the top 10 customers by revenue.</p>
 <h2 id="performance-and-pricing">Performance and Pricing</h2>
 <p>Snowflake provides a high-performance data platform that can handle large workloads and scale up or down as needed. According to Snowflake's performance benchmarks, the platform can handle:
@@ -237,34 +235,33 @@
 * <strong>Python</strong>: Snowflake can be integrated with Python to provide data science and machine learning capabilities.
 * <strong>Apache Spark</strong>: Snowflake can be integrated with Apache Spark to provide big data and analytics capabilities.</p>
 <p>Here is an example of integrating Snowflake with Tableau:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">snowflake.connector</span>
-<span class="kn">import</span> <span class="nn">tableau</span>
+<pre><code class="language-python">import snowflake.connector
+import tableau
 
-<span class="c1"># Connect to Snowflake</span>
-<span class="n">ctx</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-  <span class="n">user</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span>
-  <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
-  <span class="n">account</span><span class="o">=</span><span class="s1">&#39;account&#39;</span><span class="p">,</span>
-  <span class="n">warehouse</span><span class="o">=</span><span class="s1">&#39;warehouse&#39;</span><span class="p">,</span>
-  <span class="n">database</span><span class="o">=</span><span class="s1">&#39;database&#39;</span><span class="p">,</span>
-  <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;schema&#39;</span>
-<span class="p">)</span>
+# Connect to Snowflake
+ctx = snowflake.connector.connect(
+  user='username',
+  password='password',
+  account='account',
+  warehouse='warehouse',
+  database='database',
+  schema='schema'
+)
 
-<span class="c1"># Connect to Tableau</span>
-<span class="n">server</span> <span class="o">=</span> <span class="n">tableau</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="s1">&#39;https://online.tableau.com&#39;</span><span class="p">)</span>
+# Connect to Tableau
+server = tableau.Server('https://online.tableau.com')
 
-<span class="c1"># Sign in to Tableau</span>
-<span class="n">server</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sign_in</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+# Sign in to Tableau
+server.auth.sign_in('username', 'password')
 
-<span class="c1"># Publish data to Tableau</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM customers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-<span class="n">tableau_data</span> <span class="o">=</span> <span class="n">tableau</span><span class="o">.</span><span class="n">Data</span><span class="p">()</span>
-<span class="n">tableau_data</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Customers&#39;</span>
-<span class="n">tableau_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
-<span class="n">tableau_data</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="n">data</span>
-<span class="n">server</span><span class="o">.</span><span class="n">datasources</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">tableau_data</span><span class="p">,</span> <span class="s1">&#39;Customers&#39;</span><span class="p">,</span> <span class="s1">&#39;overwrite&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Publish data to Tableau
+data = ctx.cursor().execute('SELECT * FROM customers').fetchall()
+tableau_data = tableau.Data()
+tableau_data.name = 'Customers'
+tableau_data.columns = ['id', 'name', 'email']
+tableau_data.rows = data
+server.datasources.publish(tableau_data, 'Customers', 'overwrite')
+</code></pre>
 <p>In this example, we connect to Snowflake using the Snowflake connector and then connect to Tableau using the Tableau API. We then publish data from Snowflake to Tableau using the <code>publish</code> method.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, Snowflake is a powerful cloud-based data platform that provides a scalable and flexible solution for data-driven organizations. With its columnar storage, massively parallel processing, and automatic tuning features, Snowflake can handle large workloads and provide fast query performance. Additionally, Snowflake provides a pay-as-you-go pricing model, which makes it a cost-effective solution for organizations of all sizes.</p>

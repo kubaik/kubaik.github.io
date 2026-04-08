@@ -169,22 +169,21 @@
 <li>Using asynchronous programming to perform tasks in the background</li>
 </ul>
 <p>Example code snippet in Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Using caching to minimize computational overhead</span>
-<span class="kd">private</span><span class="w"> </span><span class="n">LruCache</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Bitmap</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bitmapCache</span><span class="p">;</span>
+<pre><code class="language-java">// Using caching to minimize computational overhead
+private LruCache&lt;String, Bitmap&gt; bitmapCache;
 
-<span class="kd">public</span><span class="w"> </span><span class="n">Bitmap</span><span class="w"> </span><span class="nf">getBitmap</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Bitmap</span><span class="w"> </span><span class="n">bitmap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitmapCache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bitmap</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bitmap</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Load bitmap from URL and cache it</span>
-<span class="w">        </span><span class="n">bitmap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadBitmapFromUrl</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-<span class="w">        </span><span class="n">bitmapCache</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">bitmap</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bitmap</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public Bitmap getBitmap(String url) {
+    Bitmap bitmap = bitmapCache.get(url);
+    if (bitmap != null) {
+        return bitmap;
+    } else {
+        // Load bitmap from URL and cache it
+        bitmap = loadBitmapFromUrl(url);
+        bitmapCache.put(url, bitmap);
+        return bitmap;
+    }
+}
+</code></pre>
 <h3 id="2-optimizing-graphics-and-animations">2. Optimizing Graphics and Animations</h3>
 <p>Optimizing graphics and animations involves reducing the number of graphical elements and animations rendered by the application. This can be achieved by:</p>
 <ul>
@@ -193,11 +192,10 @@
 <li>Using animation libraries to simplify animation creation and management</li>
 </ul>
 <p>Example code snippet in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Using sprite sheets to optimize graphics</span>
-<span class="kd">let</span> <span class="nv">spriteSheet</span> <span class="p">=</span> <span class="bp">SKTextureAtlas</span><span class="p">(</span><span class="n">named</span><span class="p">:</span> <span class="s">&quot;game-atlas&quot;</span><span class="p">)</span>
-<span class="kd">let</span> <span class="nv">sprite</span> <span class="p">=</span> <span class="bp">SKSpriteNode</span><span class="p">(</span><span class="n">texture</span><span class="p">:</span> <span class="n">spriteSheet</span><span class="p">.</span><span class="n">textureNamed</span><span class="p">(</span><span class="s">&quot;player&quot;</span><span class="p">))</span>
-</code></pre></div>
-
+<pre><code class="language-swift">// Using sprite sheets to optimize graphics
+let spriteSheet = SKTextureAtlas(named: &quot;game-atlas&quot;)
+let sprite = SKSpriteNode(texture: spriteSheet.textureNamed(&quot;player&quot;))
+</code></pre>
 <h3 id="3-reducing-memory-allocation">3. Reducing Memory Allocation</h3>
 <p>Reducing memory allocation involves minimizing the amount of memory allocated by the application. This can be achieved by:</p>
 <ul>
@@ -206,28 +204,27 @@
 <li>Using compact data structures to reduce memory usage</li>
 </ul>
 <p>Example code snippet in Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Using object pooling to reduce memory allocation</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">ObjectPool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">pool</span><span class="p">:</span><span class="w"> </span><span class="n">MutableList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mutableListOf</span><span class="p">()</span>
+<pre><code class="language-kotlin">// Using object pooling to reduce memory allocation
+class ObjectPool&lt;T&gt; {
+    private val pool: MutableList&lt;T&gt; = mutableListOf()
 
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">acquire</span><span class="p">():</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pool</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">createObject</span><span class="p">()</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">pool</span><span class="p">.</span><span class="na">removeAt</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+    fun acquire(): T {
+        return if (pool.isEmpty()) {
+            createObject()
+        } else {
+            pool.removeAt(0)
+        }
+    }
 
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">release</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">pool</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    fun release(obj: T) {
+        pool.add(obj)
+    }
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">createObject</span><span class="p">():</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new object</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    private fun createObject(): T {
+        // Create a new object
+    }
+}
+</code></pre>
 <h2 id="resource-management">Resource Management</h2>
 <p>Resource management involves optimizing the use of system resources such as CPU, memory, and network bandwidth. Here are some strategies for managing resources:</p>
 <ul>

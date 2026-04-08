@@ -146,24 +146,23 @@
 <p>Serverless architecture continues to gain traction in 2024, allowing developers to focus on writing code without worrying about server management. Platforms like AWS Lambda, Azure Functions, and Google Cloud Functions enable developers to run backend code in response to events without provisioning or managing servers.</p>
 <h3 id="example-aws-lambda-function">Example: AWS Lambda Function</h3>
 <p>Here’s a simple AWS Lambda function that triggers when a new file is uploaded to an S3 bucket:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">AWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">s3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AWS</span><span class="p">.</span><span class="nx">S3</span><span class="p">();</span>
+<pre><code class="language-javascript">const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">Records</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">s3</span><span class="p">.</span><span class="nx">bucket</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">Records</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">s3</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+exports.handler = async (event) =&gt; {
+    const bucket = event.Records[0].s3.bucket.name;
+    const key = decodeURIComponent(event.Records[0].s3.object.key);
 
-<span class="w">    </span><span class="c1">// Process the file</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">Bucket</span><span class="o">:</span><span class="w"> </span><span class="nx">bucket</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">Key</span><span class="o">:</span><span class="w"> </span><span class="nx">key</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
+    // Process the file
+    const params = {
+        Bucket: bucket,
+        Key: key,
+    };
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">s3</span><span class="p">.</span><span class="nx">getObject</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;File content:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
-<span class="p">};</span>
-</code></pre></div>
-
+    const data = await s3.getObject(params).promise();
+    console.log('File content:', data.Body.toString());
+};
+</code></pre>
 <h3 id="benefits">Benefits</h3>
 <ul>
 <li><strong>Cost Efficiency</strong>: Pay only for the compute time you consume. AWS Lambda pricing starts at $0.00001667 per GB-second.</li>
@@ -175,53 +174,50 @@
 <p>Progressive Web Apps combine the best of web and mobile apps. They can work offline, send push notifications, and load quickly, enhancing user experience significantly. Google reports that PWAs can lead to a 36% increase in conversion rates.</p>
 <h3 id="creating-a-pwa">Creating a PWA</h3>
 <p>To create a basic PWA, you need a service worker and a manifest file. Here’s a simple service worker example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">        </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;v1&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">cache</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">([</span>
-<span class="w">                </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">                </span><span class="s1">&#39;/script.js&#39;</span><span class="p">,</span>
-<span class="w">            </span><span class="p">]);</span>
-<span class="w">        </span><span class="p">})</span>
-<span class="w">    </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">self.addEventListener('install', (event) =&gt; {
+    event.waitUntil(
+        caches.open('v1').then((cache) =&gt; {
+            return cache.addAll([
+                '/',
+                '/index.html',
+                '/styles.css',
+                '/script.js',
+            ]);
+        })
+    );
+});
+</code></pre>
 <h3 id="implementation-steps">Implementation Steps</h3>
 <ol>
 <li><strong>Add a manifest.json</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My PWA&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;short_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PWA&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;start_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/index.html&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standalone&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;background_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#FFFFFF&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;theme_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#000000&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;icons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;icon-192x192.png&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192x192&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;My PWA&quot;,
+    &quot;short_name&quot;: &quot;PWA&quot;,
+    &quot;start_url&quot;: &quot;/index.html&quot;,
+    &quot;display&quot;: &quot;standalone&quot;,
+    &quot;background_color&quot;: &quot;#FFFFFF&quot;,
+    &quot;theme_color&quot;: &quot;#000000&quot;,
+    &quot;icons&quot;: [
+        {
+            &quot;src&quot;: &quot;icon-192x192.png&quot;,
+            &quot;sizes&quot;: &quot;192x192&quot;,
+            &quot;type&quot;: &quot;image/png&quot;
+        }
+    ]
+}
+</code></pre>
 <ol>
 <li><strong>Register the Service Worker</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/service-worker.js&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">registration</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registered with scope:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">scope</span><span class="p">);</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () =&gt; {
+        navigator.serviceWorker.register('/service-worker.js').then((registration) =&gt; {
+            console.log('Service Worker registered with scope:', registration.scope);
+        });
+    });
+}
+</code></pre>
 <h3 id="performance-metrics">Performance Metrics</h3>
 <ul>
 <li><strong>Load Times</strong>: Google’s Lighthouse tool scores PWAs on performance; ideally, aim for a score above 90.</li>
@@ -250,21 +246,20 @@
 <li><strong>Swagger</strong>: Offers a suite of tools for API development and documentation.</li>
 </ul>
 <h3 id="example-creating-a-rest-api-with-expressjs">Example: Creating a REST API with Express.js</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = 3000;
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+app.use(express.json());
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/items&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">([{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Item One&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Item Two&#39;</span><span class="w"> </span><span class="p">}]);</span>
-<span class="p">});</span>
+app.get('/api/items', (req, res) =&gt; {
+    res.json([{ id: 1, name: 'Item One' }, { id: 2, name: 'Item Two' }]);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server running on http://localhost:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(PORT, () =&gt; {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+</code></pre>
 <h3 id="performance-considerations">Performance Considerations</h3>
 <ul>
 <li><strong>Response Time</strong>: Aim for under 200ms for REST API calls.</li>
@@ -274,12 +269,11 @@
 <p>Artificial Intelligence (AI) is transforming web development by automating tasks and enhancing user experiences. Tools like GitHub Copilot and ChatGPT provide code suggestions and automate repetitive tasks.</p>
 <h3 id="example-using-github-copilot">Example: Using GitHub Copilot</h3>
 <p>When writing a function to fetch user data, Copilot can suggest:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">fetchUserData</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://api.example.com/users/</span><span class="si">${</span><span class="nx">userId</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">async function fetchUserData(userId) {
+    const response = await fetch(`https://api.example.com/users/${userId}`);
+    return response.json();
+}
+</code></pre>
 <h3 id="implementation-benefits">Implementation Benefits</h3>
 <ul>
 <li><strong>Speed</strong>: AI tools can reduce development time by up to 30%, allowing developers to focus on complex problems.</li>
@@ -289,20 +283,19 @@
 <p>With increasing cyber threats, security has become a priority in web development. Implementing HTTPS, Content Security Policies (CSP), and regular security audits are essential.</p>
 <h3 id="example-setting-up-https-for-a-nodejs-app">Example: Setting up HTTPS for a Node.js App</h3>
 <p>Using the <code>https</code> module in Node.js, you can quickly set up a secure server:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">https</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const https = require('https');
+const fs = require('fs');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;server.key&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="nx">cert</span><span class="o">:</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;server.cert&#39;</span><span class="p">)</span>
-<span class="p">};</span>
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+};
 
-<span class="nx">https</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">200</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Secure Server Running&#39;</span><span class="p">);</span>
-<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mf">443</span><span class="p">);</span>
-</code></pre></div>
-
+https.createServer(options, (req, res) =&gt; {
+    res.writeHead(200);
+    res.end('Secure Server Running');
+}).listen(443);
+</code></pre>
 <h3 id="security-best-practices">Security Best Practices</h3>
 <ul>
 <li><strong>Use CSP</strong>: Prevent XSS attacks by defining a CSP.</li>
@@ -314,20 +307,18 @@
 <ol>
 <li><strong>Install Next.js</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-next-app<span class="w"> </span>my-jamstack-site
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-next-app my-jamstack-site
+</code></pre>
 <ol>
 <li><strong>Fetch Data from an API</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getStaticProps</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.example.com/data&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<pre><code class="language-javascript">export async function getStaticProps() {
+    const res = await fetch('https://api.example.com/data');
+    const data = await res.json();
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">props</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    return { props: { data } };
+}
+</code></pre>
 <h3 id="performance-metrics_1">Performance Metrics</h3>
 <ul>
 <li><strong>Load Time</strong>: Jamstack sites can achieve load times under 1 second.</li>
@@ -336,15 +327,14 @@
 <h2 id="8-motion-ui">8. Motion UI</h2>
 <p>Motion UI enhances user experience by providing visual feedback through animations. Libraries like Framer Motion and GSAP enable developers to create engaging interfaces.</p>
 <h3 id="example-using-framer-motion-in-react">Example: Using Framer Motion in React</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">motion</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;framer-motion&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import { motion } from 'framer-motion';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="nx">motion</span><span class="p">.</span><span class="nx">div</span><span class="w"> </span><span class="nx">animate</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">scale</span><span class="o">:</span><span class="w"> </span><span class="mf">1.2</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="nx">transition</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="p">}}</span><span class="o">&gt;</span>
-<span class="w">        </span><span class="nx">Hover</span><span class="w"> </span><span class="nx">over</span><span class="w"> </span><span class="nx">me</span><span class="o">!</span>
-<span class="w">    </span><span class="o">&lt;</span><span class="err">/motion.div&gt;</span>
-<span class="p">);</span>
-</code></pre></div>
-
+const MyComponent = () =&gt; (
+    &lt;motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}&gt;
+        Hover over me!
+    &lt;/motion.div&gt;
+);
+</code></pre>
 <h3 id="benefits-of-motion-ui">Benefits of Motion UI</h3>
 <ul>
 <li><strong>Engagement</strong>: Sites with animations can increase user interaction by up to 70%.</li>
@@ -356,22 +346,20 @@
 <ol>
 <li><strong>Dockerfile</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">node:14</span>
+<pre><code class="language-dockerfile">FROM node:14
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/usr/src/app</span>
-<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
-<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>install
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;server.js&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
 <ol>
 <li><strong>Build and Run</strong>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-microservice<span class="w"> </span>.
-docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>my-microservice
-</code></pre></div>
-
+<pre><code class="language-bash">docker build -t my-microservice .
+docker run -p 3000:3000 my-microservice
+</code></pre>
 <h3 id="metrics-of-cloud-native-applications">Metrics of Cloud-Native Applications</h3>
 <ul>
 <li><strong>Deployment Speed</strong>: Cloud-native applications can be deployed in minutes, versus days for traditional apps.</li>
@@ -380,17 +368,16 @@ docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </sp
 <h2 id="10-blockchain-integration">10. Blockchain Integration</h2>
 <p>Blockchain technology is making its way into web development, especially for applications needing transparency and security, such as e-commerce and finance.</p>
 <h3 id="example-using-web3js-to-interact-with-ethereum">Example: Using Web3.js to Interact with Ethereum</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const Web3 = require('web3');
+const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
 
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getBlockNumber</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">blockNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">getBlockNumber</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Current Block Number:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">blockNumber</span><span class="p">);</span>
-<span class="p">}</span>
+async function getBlockNumber() {
+    const blockNumber = await web3.eth.getBlockNumber();
+    console.log('Current Block Number:', blockNumber);
+}
 
-<span class="nx">getBlockNumber</span><span class="p">();</span>
-</code></pre></div>
-
+getBlockNumber();
+</code></pre>
 <h3 id="use-cases_1">Use Cases</h3>
 <ul>
 <li><strong>E-Commerce</strong>: Implementing smart contracts for transactions can increase trust and security.</li>

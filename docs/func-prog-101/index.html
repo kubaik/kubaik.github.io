@@ -163,18 +163,17 @@
 </ul>
 <h3 id="example-using-immutable-data-structures-in-javascript">Example: Using Immutable Data Structures in JavaScript</h3>
 <p>In JavaScript, we can use the <code>Object.freeze()</code> method to create immutable data structures. Here's an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">immutableData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span>
-<span class="p">});</span>
+<pre><code class="language-javascript">const immutableData = Object.freeze({
+  name: 'John',
+  age: 30
+});
 
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">immutableData</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Jane&#39;</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span><span class="w"> </span><span class="c1">// Output: Cannot assign to read only property &#39;name&#39; of object &#39;[object Object]&#39;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+try {
+  immutableData.name = 'Jane';
+} catch (error) {
+  console.log(error); // Output: Cannot assign to read only property 'name' of object '[object Object]'
+}
+</code></pre>
 <p>In this example, we create an immutable data structure using <code>Object.freeze()</code> and then try to modify it. The <code>try</code>-<code>catch</code> block catches the error and logs it to the console.</p>
 <h2 id="practical-applications-of-functional-programming">Practical Applications of Functional Programming</h2>
 <p>Functional programming has many practical applications, including:</p>
@@ -185,14 +184,13 @@
 </ol>
 <h3 id="example-using-the-map-function-in-python">Example: Using the <code>map()</code> Function in Python</h3>
 <p>In Python, we can use the <code>map()</code> function to apply a function to each element of a list. Here's an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-  <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+<pre><code class="language-python">def square(x):
+  return x ** 2
 
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">squaredNumbers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">numbers</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">squaredNumbers</span><span class="p">)</span>  <span class="c1"># Output: [1, 4, 9, 16, 25]</span>
-</code></pre></div>
-
+numbers = [1, 2, 3, 4, 5]
+squaredNumbers = list(map(square, numbers))
+print(squaredNumbers)  # Output: [1, 4, 9, 16, 25]
+</code></pre>
 <p>In this example, we define a <code>square()</code> function that takes a number and returns its square. We then use the <code>map()</code> function to apply this function to each element of the <code>numbers</code> list.</p>
 <h2 id="tools-and-platforms-for-functional-programming">Tools and Platforms for Functional Programming</h2>
 <p>There are many tools and platforms that support functional programming, including:</p>
@@ -204,11 +202,10 @@
 </ul>
 <h3 id="example-using-apache-spark-to-process-data">Example: Using Apache Spark to Process Data</h3>
 <p>In Apache Spark, we can use the <code>map()</code> function to apply a function to each element of a dataset. Here's an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spark</span><span class="p">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="nc">Seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span>
-<span class="kd">val</span><span class="w"> </span><span class="n">squaredData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
-<span class="n">squaredData</span><span class="p">.</span><span class="n">show</span><span class="p">()</span><span class="w">  </span><span class="c1">// Output: [1, 4, 9, 16, 25]</span>
-</code></pre></div>
-
+<pre><code class="language-scala">val data = spark.createDataFrame(Seq(1, 2, 3, 4, 5))
+val squaredData = data.map(x =&gt; x * x)
+squaredData.show()  // Output: [1, 4, 9, 16, 25]
+</code></pre>
 <p>In this example, we create a DataFrame using Apache Spark and then use the <code>map()</code> function to apply a function to each element of the dataset.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Some common problems that developers face when using functional programming include:</p>

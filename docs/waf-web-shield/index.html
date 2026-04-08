@@ -164,38 +164,33 @@
 <p>Let's take a look at some practical examples of WAF implementation using popular tools and platforms.</p>
 <h3 id="example-1-configuring-aws-waf">Example 1: Configuring AWS WAF</h3>
 <p>To configure AWS WAF, you need to create a web ACL (Access Control List) and define the rules that will be applied to incoming traffic. Here's an example of how to create a web ACL using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-web-acl<span class="w"> </span>--name<span class="w"> </span>my-web-acl<span class="w"> </span>--metric-name<span class="w"> </span>my-web-acl-metric
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-web-acl --name my-web-acl --metric-name my-web-acl-metric
+</code></pre>
 <p>You can then define rules for the web ACL using the <code>aws waf create-rule</code> command. For example:</p>
-<div class="codehilite"><pre><span></span><code>aws<span class="w"> </span>waf<span class="w"> </span>create-rule<span class="w"> </span>--name<span class="w"> </span>my-rule<span class="w"> </span>--metric-name<span class="w"> </span>my-rule-metric<span class="w"> </span>--predicate-list<span class="w"> </span><span class="s2">&quot;[{DataId=&#39;IP_MATCH&#39;,Negated=false}]&quot;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">aws waf create-rule --name my-rule --metric-name my-rule-metric --predicate-list &quot;[{DataId='IP_MATCH',Negated=false}]&quot;
+</code></pre>
 <p>This rule will match incoming requests from a specific IP address.</p>
 <h3 id="example-2-implementing-owasp-modsecurity-core-rule-set">Example 2: Implementing OWASP ModSecurity Core Rule Set</h3>
 <p>The OWASP ModSecurity Core Rule Set is a popular open-source WAF rule set that can be used with Apache and other web servers. To implement the rule set, you need to download and install the ModSecurity module for your web server. Here's an example of how to install ModSecurity on Ubuntu:</p>
 <p><em>Recommended: <a href="https://digitalocean.com" target="_blank" rel="nofollow sponsored">DigitalOcean Cloud Hosting</a></em></p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libapache2-modsecurity
-</code></pre></div>
-
+<pre><code class="language-bash">sudo apt-get install libapache2-modsecurity
+</code></pre>
 <p>You can then configure ModSecurity to use the OWASP ModSecurity Core Rule Set by adding the following lines to your Apache configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_security2.c</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nb">Include</span><span class="w"> </span><span class="sx">/etc/modsecurity/modsecurity.conf</span>
-<span class="w">    </span><span class="nb">Include</span><span class="w"> </span><span class="sx">/etc/modsecurity/owasp-modsecurity-crs/crs-setup.conf</span>
-<span class="w">    </span><span class="nb">Include</span><span class="w"> </span><span class="sx">/etc/modsecurity/owasp-modsecurity-crs/rules/*.conf</span>
-<span class="nt">&lt;/IfModule&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-apache">&lt;IfModule mod_security2.c&gt;
+    Include /etc/modsecurity/modsecurity.conf
+    Include /etc/modsecurity/owasp-modsecurity-crs/crs-setup.conf
+    Include /etc/modsecurity/owasp-modsecurity-crs/rules/*.conf
+&lt;/IfModule&gt;
+</code></pre>
 <p>This will enable the OWASP ModSecurity Core Rule Set and apply its rules to incoming traffic.</p>
 <h3 id="example-3-using-cloudflare-waf">Example 3: Using Cloudflare WAF</h3>
 <p>Cloudflare WAF is a cloud-based WAF that can be easily integrated with your web application. To use Cloudflare WAF, you need to sign up for a Cloudflare account and configure your DNS settings to point to Cloudflare. Here's an example of how to enable Cloudflare WAF using the Cloudflare API:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://api.cloudflare.com/client/v4/zones/<span class="o">{</span>zone_id<span class="o">}</span>/settings/security_level<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer {api_token}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;value&quot;:&quot;high&quot;}&#39;</span>
-</code></pre></div>
-
+<pre><code class="language-bash">curl -X PATCH \
+  https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/security_level \
+  -H 'Authorization: Bearer {api_token}' \
+  -H 'Content-Type: application/json' \
+  -d '{&quot;value&quot;:&quot;high&quot;}'
+</code></pre>
 <p>This will enable Cloudflare WAF and set the security level to "high".</p>
 <h2 id="benefits-of-using-a-waf">Benefits of Using a WAF</h2>
 <p>Using a WAF can provide several benefits, including:

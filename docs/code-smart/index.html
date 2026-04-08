@@ -163,86 +163,83 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>Here are a few practical code examples to illustrate the concept of smart contract development:</p>
 <h3 id="example-1-simple-auction-contract">Example 1: Simple Auction Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">Auction</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBid</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBidder</span><span class="p">;</span>
+contract Auction {
+    address public owner;
+    uint public highestBid;
+    address public highestBidder;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor() {
+        owner = msg.sender;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_bid</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>_bid<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>highestBid<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Bid must be higher than the current highest bid&quot;</span><span class="p">);</span>
-<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span>_bid<span class="p">;</span>
-<span class="w">        </span>highestBidder<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function bid(uint _bid) public {
+        require(_bid &gt; highestBid, &quot;Bid must be higher than the current highest bid&quot;);
+        highestBid = _bid;
+        highestBidder = msg.sender;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">endAuction</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the owner can end the auction&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="kt">payable</span><span class="p">(</span>highestBidder<span class="p">).</span>transfer<span class="p">(</span>highestBid<span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function endAuction() public {
+        require(msg.sender == owner, &quot;Only the owner can end the auction&quot;);
+        payable(highestBidder).transfer(highestBid);
+    }
+}
+</code></pre>
 <p>This contract allows users to bid on an item, with the highest bidder winning the auction. The <code>bid</code> function updates the highest bid and bidder, while the <code>endAuction</code> function transfers the highest bid to the winner.</p>
 <h3 id="example-2-token-contract">Example 2: Token Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="kt">import</span><span class="w"> </span><span class="s2">&quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol&quot;</span><span class="p">;</span>
+import &quot;https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol&quot;;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">MyToken</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">name</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="k">public </span><span class="nv">symbol</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">totalSupply</span><span class="p">;</span>
+contract MyToken {
+    string public name;
+    string public symbol;
+    uint public totalSupply;
 
-<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>balances<span class="p">;</span>
+    mapping(address =&gt; uint) public balances;
 
-<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_symbol<span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_totalSupply</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>name<span class="w"> </span><span class="o">=</span><span class="w"> </span>_name<span class="p">;</span>
-<span class="w">        </span>symbol<span class="w"> </span><span class="o">=</span><span class="w"> </span>_symbol<span class="p">;</span>
-<span class="w">        </span>totalSupply<span class="w"> </span><span class="o">=</span><span class="w"> </span>_totalSupply<span class="p">;</span>
-<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>totalSupply<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    constructor(string memory _name, string memory _symbol, uint _totalSupply) {
+        name = _name;
+        symbol = _symbol;
+        totalSupply = _totalSupply;
+        balances[msg.sender] = totalSupply;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>_amount<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Insufficient balance&quot;</span><span class="p">);</span>
-<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">        </span>balances<span class="p">[</span>_to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>_amount<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function transfer(address _to, uint _amount) public {
+        require(balances[msg.sender] &gt;= _amount, &quot;Insufficient balance&quot;);
+        balances[msg.sender] -= _amount;
+        balances[_to] += _amount;
+    }
+}
+</code></pre>
 <p>This contract creates a new ERC20 token, with functions for transferring tokens between accounts.</p>
 <h3 id="example-3-supply-chain-management-contract">Example 3: Supply Chain Management Contract</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span>
+<pre><code class="language-solidity">pragma solidity ^0.8.0;
 
-<span class="k">contract</span><span class="w"> </span><span class="ni">SupplyChain</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Product</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">name</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="nv">description</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">manufacturer</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">currentOwner</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+contract SupplyChain {
+    struct Product {
+        string name;
+        string description;
+        address manufacturer;
+        address currentOwner;
+    }
 
-<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>Product<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>products<span class="p">;</span>
+    mapping(string =&gt; Product) public products;
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">addProduct</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_description<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span>products<span class="p">[</span>_name<span class="p">].</span>name<span class="w"> </span><span class="o">=</span><span class="w"> </span>_name<span class="p">;</span>
-<span class="w">        </span>products<span class="p">[</span>_name<span class="p">].</span>description<span class="w"> </span><span class="o">=</span><span class="w"> </span>_description<span class="p">;</span>
-<span class="w">        </span>products<span class="p">[</span>_name<span class="p">].</span>manufacturer<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">        </span>products<span class="p">[</span>_name<span class="p">].</span>currentOwner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    function addProduct(string memory _name, string memory _description) public {
+        products[_name].name = _name;
+        products[_name].description = _description;
+        products[_name].manufacturer = msg.sender;
+        products[_name].currentOwner = msg.sender;
+    }
 
-<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferProduct</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_name<span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">_newOwner</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">require</span><span class="p">(</span>products<span class="p">[</span>_name<span class="p">].</span>currentOwner<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Only the current owner can transfer the product&quot;</span><span class="p">);</span>
-<span class="w">        </span>products<span class="p">[</span>_name<span class="p">].</span>currentOwner<span class="w"> </span><span class="o">=</span><span class="w"> </span>_newOwner<span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    function transferProduct(string memory _name, address _newOwner) public {
+        require(products[_name].currentOwner == msg.sender, &quot;Only the current owner can transfer the product&quot;);
+        products[_name].currentOwner = _newOwner;
+    }
+}
+</code></pre>
 <p>This contract manages a supply chain, allowing manufacturers to add products and transfer ownership between parties.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems encountered in smart contract development, along with their solutions:</p>

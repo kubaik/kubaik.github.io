@@ -165,36 +165,35 @@
 <p>These platforms provide a range of features, including device registration, configuration, and monitoring, as well as security and analytics capabilities.</p>
 <h3 id="example-using-aws-iot-core-to-manage-devices">Example: Using AWS IoT Core to Manage Devices</h3>
 <p>Here is an example of how to use AWS IoT Core to manage devices:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an AWS IoT Core client</span>
-<span class="n">iot</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iot&#39;</span><span class="p">)</span>
+# Create an AWS IoT Core client
+iot = boto3.client('iot')
 
-<span class="c1"># Register a new device</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iot</span><span class="o">.</span><span class="n">registerThing</span><span class="p">(</span>
-    <span class="n">thingName</span><span class="o">=</span><span class="s1">&#39;MyDevice&#39;</span><span class="p">,</span>
-    <span class="n">thingType</span><span class="o">=</span><span class="s1">&#39;MyDeviceType&#39;</span>
-<span class="p">)</span>
+# Register a new device
+response = iot.registerThing(
+    thingName='MyDevice',
+    thingType='MyDeviceType'
+)
 
-<span class="c1"># Get the device&#39;s certificate and private key</span>
-<span class="n">certificate</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;certificate&#39;</span><span class="p">]</span>
-<span class="n">private_key</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;privateKey&#39;</span><span class="p">]</span>
+# Get the device's certificate and private key
+certificate = response['certificate']
+private_key = response['privateKey']
 
-<span class="c1"># Connect to the device using the certificate and private key</span>
-<span class="kn">import</span> <span class="nn">ssl</span>
-<span class="kn">import</span> <span class="nn">socket</span>
+# Connect to the device using the certificate and private key
+import ssl
+import socket
 
-<span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">Purpose</span><span class="o">.</span><span class="n">CLIENT_AUTH</span><span class="p">)</span>
-<span class="n">context</span><span class="o">.</span><span class="n">load_verify_locations</span><span class="p">(</span><span class="n">cafile</span><span class="o">=</span><span class="s1">&#39;root_ca.pem&#39;</span><span class="p">)</span>
-<span class="n">context</span><span class="o">.</span><span class="n">load_cert_chain</span><span class="p">(</span><span class="n">certfile</span><span class="o">=</span><span class="s1">&#39;certificate.pem&#39;</span><span class="p">,</span> <span class="n">keyfile</span><span class="o">=</span><span class="s1">&#39;private_key.pem&#39;</span><span class="p">)</span>
+context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+context.load_verify_locations(cafile='root_ca.pem')
+context.load_cert_chain(certfile='certificate.pem', keyfile='private_key.pem')
 
-<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s1">&#39;a2xl6qbls5p33-ats.iot.us-east-1.amazonaws.com&#39;</span><span class="p">,</span> <span class="mi">8883</span><span class="p">))</span>
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect(('a2xl6qbls5p33-ats.iot.us-east-1.amazonaws.com', 8883))
 
-<span class="c1"># Send a message to the device</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Hello, device!&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Send a message to the device
+sock.send(b'Hello, device!')
+</code></pre>
 <p>This example demonstrates how to register a new device, get its certificate and private key, and connect to the device using the AWS IoT Core SDK.</p>
 <h2 id="best-practices-for-iot-device-management">Best Practices for IoT Device Management</h2>
 <p>To ensure effective IoT device management, follow these best practices:
@@ -204,20 +203,19 @@
 4. <strong>Implement firmware updates and patches</strong>: Regularly update device firmware and apply security patches to prevent vulnerabilities.</p>
 <h3 id="example-using-microsoft-azure-iot-hub-to-monitor-device-performance">Example: Using Microsoft Azure IoT Hub to Monitor Device Performance</h3>
 <p>Here is an example of how to use Microsoft Azure IoT Hub to monitor device performance:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Azure.Devices</span><span class="p">;</span>
+<pre><code class="language-csharp">using Microsoft.Azure.Devices;
 
-<span class="c1">// Create an Azure IoT Hub client</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">hub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DeviceClient</span><span class="p">.</span><span class="n">CreateFromConnectionString</span><span class="p">(</span><span class="s">&quot;HostName=&lt;hub_name&gt;;DeviceId=&lt;device_id&gt;;SharedAccessKey=&lt;shared_access_key&gt;&quot;</span><span class="p">);</span>
+// Create an Azure IoT Hub client
+var hub = DeviceClient.CreateFromConnectionString(&quot;HostName=&lt;hub_name&gt;;DeviceId=&lt;device_id&gt;;SharedAccessKey=&lt;shared_access_key&gt;&quot;);
 
-<span class="c1">// Send a telemetry message to the hub</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Message</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Temperature: 25°C&quot;</span><span class="p">));</span>
-<span class="k">await</span><span class="w"> </span><span class="n">hub</span><span class="p">.</span><span class="n">SendEventAsync</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+// Send a telemetry message to the hub
+var message = new Message(Encoding.UTF8.GetBytes(&quot;Temperature: 25°C&quot;));
+await hub.SendEventAsync(message);
 
-<span class="c1">// Receive a telemetry message from the hub</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">receivedMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">hub</span><span class="p">.</span><span class="n">ReceiveAsync</span><span class="p">();</span>
-<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;Received message: {Encoding.UTF8.GetString(receivedMessage.GetBytes())}&quot;</span><span class="p">);</span>
-</code></pre></div>
-
+// Receive a telemetry message from the hub
+var receivedMessage = await hub.ReceiveAsync();
+Console.WriteLine($&quot;Received message: {Encoding.UTF8.GetString(receivedMessage.GetBytes())}&quot;);
+</code></pre>
 <p>This example demonstrates how to send and receive telemetry messages using the Microsoft Azure IoT Hub SDK.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>IoT device management can be challenging, and several common problems can arise, including:
@@ -230,31 +228,30 @@
 * <strong>Use over-the-air (OTA) updates</strong>: Use OTA updates to remotely apply firmware updates and patches to devices.</p>
 <h3 id="example-using-google-cloud-iot-core-to-apply-ota-updates">Example: Using Google Cloud IoT Core to Apply OTA Updates</h3>
 <p>Here is an example of how to use Google Cloud IoT Core to apply OTA updates:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">iot_v1</span>
+<pre><code class="language-python">from google.cloud import iot_v1
 
-<span class="c1"># Create a Google Cloud IoT Core client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">iot_v1</span><span class="o">.</span><span class="n">DeviceManagerClient</span><span class="p">()</span>
+# Create a Google Cloud IoT Core client
+client = iot_v1.DeviceManagerClient()
 
-<span class="c1"># Create a device</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_device</span><span class="p">(</span>
-    <span class="n">request</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="s1">&#39;projects/&lt;project_id&gt;/locations/&lt;location&gt;/registries/&lt;registry_id&gt;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;device_id&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;device_id&gt;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;device&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;device_id&gt;&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a device
+device = client.create_device(
+    request={
+        'parent': 'projects/&lt;project_id&gt;/locations/&lt;location&gt;/registries/&lt;registry_id&gt;',
+        'device_id': '&lt;device_id&gt;',
+        'device': {
+            'id': '&lt;device_id&gt;'
+        }
+    }
+)
 
-<span class="c1"># Apply an OTA update to the device</span>
-<span class="n">update</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_device_config_version</span><span class="p">(</span>
-    <span class="n">request</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-        <span class="s1">&#39;binary_data&#39;</span><span class="p">:</span> <span class="sa">b</span><span class="s1">&#39;new_firmware&#39;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Apply an OTA update to the device
+update = client.create_device_config_version(
+    request={
+        'name': device.name,
+        'binary_data': b'new_firmware'
+    }
+)
+</code></pre>
 <p>This example demonstrates how to create a device and apply an OTA update using the Google Cloud IoT Core SDK.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>IoT device management has numerous real-world use cases, including:

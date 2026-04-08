@@ -165,33 +165,29 @@
 * <strong>Faiss</strong>: An open-source library for efficient similarity search and clustering of dense vectors, developed by Facebook AI Research.</p>
 <h2 id="practical-example-building-a-text-search-engine-with-pinecone">Practical Example: Building a Text Search Engine with Pinecone</h2>
 <p>Let's build a simple text search engine using Pinecone. First, we need to install the Pinecone client library:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">pinecone</span><span class="o">-</span><span class="n">client</span>
-</code></pre></div>
-
+<pre><code class="language-python">pip install pinecone-client
+</code></pre>
 <p>Next, we need to import the library and create a Pinecone index:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pinecone</span>
+<pre><code class="language-python">import pinecone
 
-<span class="c1"># Create a Pinecone index</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;text-search-index&quot;</span>
-<span class="n">pinecone</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;YOUR_API_KEY&quot;</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="s2">&quot;us-west1-gcp&quot;</span><span class="p">)</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">pinecone</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
-</code></pre></div>
-
+# Create a Pinecone index
+index_name = &quot;text-search-index&quot;
+pinecone.init(api_key=&quot;YOUR_API_KEY&quot;, environment=&quot;us-west1-gcp&quot;)
+index = pinecone.Index(index_name)
+</code></pre>
 <p>We can then ingest some text data into the index:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Ingest some text data</span>
-<span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is a sample text.&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another sample text.&quot;</span><span class="p">]</span>
-<span class="n">vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">pinecone</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">]</span>
-<span class="n">index</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Ingest some text data
+texts = [&quot;This is a sample text.&quot;, &quot;This is another sample text.&quot;]
+vectors = [pinecone.Embedding(text) for text in texts]
+index.upsert(vectors)
+</code></pre>
 <p>Finally, we can query the index for similar texts:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Query the index for similar texts</span>
-<span class="n">query_text</span> <span class="o">=</span> <span class="s2">&quot;This is a sample query text.&quot;</span>
-<span class="n">query_vector</span> <span class="o">=</span> <span class="n">pinecone</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">query_text</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_vector</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code class="language-python"># Query the index for similar texts
+query_text = &quot;This is a sample query text.&quot;
+query_vector = pinecone.Embedding(query_text)
+results = index.query(query_vector, top_k=5)
+print(results)
+</code></pre>
 <p>This will print the top 5 most similar texts to the query text.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Pinecone provides a scalable and performant way to build and deploy vector-based applications. According to Pinecone's documentation, their service can handle up to 100,000 queries per second, with an average latency of 10ms. They also provide a pricing plan that starts at $0.000004 per query, making it a cost-effective solution for large-scale applications.</p>

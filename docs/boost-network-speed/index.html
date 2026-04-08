@@ -165,16 +165,15 @@
 <p>Switching from Fast Ethernet (100 Mbps) to Gigabit Ethernet (1000 Mbps) can significantly improve network speeds. For example, a small office with 10 users can see a 10-fold increase in network speed by upgrading to Gigabit Ethernet. The cost of a Gigabit Ethernet switch can range from $50 to $500, depending on the number of ports and features.</p>
 <h3 id="2-implement-quality-of-service-qos">2. Implement Quality of Service (QoS)</h3>
 <p>QoS ensures that critical applications receive sufficient bandwidth. This can be achieved through configuration on network devices or using software solutions like OpenWRT on routers. Here's an example of how to configure QoS on a Cisco router:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Router</span><span class="err">#</span><span class="w"> </span><span class="n">configure</span><span class="w"> </span><span class="n">terminal</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">policy</span><span class="o">-</span><span class="n">map</span><span class="w"> </span><span class="n">QoS</span><span class="o">-</span><span class="n">Policy</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="n">pmap</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">class</span><span class="o">-</span><span class="k">default</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="n">pmap</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">bandwidth</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="mi">50</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="n">pmap</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">exit</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="n">pmap</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">exit</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span>
-<span class="n">Router</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="err">#</span><span class="w"> </span><span class="n">service</span><span class="o">-</span><span class="n">policy</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">QoS</span><span class="o">-</span><span class="n">Policy</span>
-</code></pre></div>
-
+<pre><code class="language-c">Router# configure terminal
+Router(config)# policy-map QoS-Policy
+Router(config-pmap)# class class-default
+Router(config-pmap-c)# bandwidth percent 50
+Router(config-pmap-c)# exit
+Router(config-pmap)# exit
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# service-policy output QoS-Policy
+</code></pre>
 <p>This example allocates 50% of the bandwidth to the default class, ensuring that critical traffic is prioritized.</p>
 <h3 id="3-use-content-delivery-networks-cdns">3. Use Content Delivery Networks (CDNs)</h3>
 <p>CDNs like Cloudflare or AWS CloudFront cache content at edge locations closer to users, reducing latency and improving page load times. For instance, a website that previously took 5 seconds to load can see a reduction to 1.5 seconds by using a CDN. Pricing for CDNs varies, with Cloudflare offering a free plan and paid plans starting at $20/month.</p>

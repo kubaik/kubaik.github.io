@@ -214,12 +214,12 @@
 <h2 id="practical-examples-of-container-technologies-in-action">Practical Examples of Container Technologies in Action</h2>
 <h3 id="1-simplified-development-environment-setup">1. Simplified Development Environment Setup</h3>
 <p>Developers often face the "It works on my machine" problem. Containers solve this by encapsulating the development environment.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Running a Python application with a specific version</span>
-docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/app<span class="w"> </span>-w<span class="w"> </span>/app<span class="w"> </span>python:3.11<span class="w"> </span>python<span class="w"> </span>app.py
+<pre><code class="language-bash"># Running a Python application with a specific version
+docker run -it --rm -v &quot;$(pwd)&quot;:/app -w /app python:3.11 python app.py
 
-*Recommended:<span class="w"> </span>&lt;a<span class="w"> </span><span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot;</span><span class="w"> </span><span class="nv">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="w"> </span><span class="nv">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span>&gt;Python<span class="w"> </span>Machine<span class="w"> </span>Learning<span class="w"> </span>by<span class="w"> </span>Sebastian<span class="w"> </span>Raschka&lt;/a&gt;*
-</code></pre></div>
+*Recommended: &lt;a href=&quot;https://amazon.com/dp/B08N5WRWNW?tag=aiblogcontent-20&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Python Machine Learning by Sebastian Raschka&lt;/a&gt;*
 
+</code></pre>
 <p>This command runs the current directory (<code>$(pwd)</code>) in a Python 3.11 container, ensuring consistency.</p>
 <h3 id="2-continuous-integration-and-deployment-cicd">2. Continuous Integration and Deployment (CI/CD)</h3>
 <p>Containers enable seamless CI/CD pipelines:</p>
@@ -229,18 +229,17 @@ docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </s
 <li>Deploy container images to production clusters.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># GitHub Actions workflow snippet</span>
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Docker Image</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker build -t myapp:${{ github.sha }} .</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Push to Registry</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker push myregistry.com/myapp:${{ github.sha }}</span>
-</code></pre></div>
-
+<pre><code class="language-yaml"># GitHub Actions workflow snippet
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: docker build -t myapp:${{ github.sha }} .
+      - name: Push to Registry
+        run: docker push myregistry.com/myapp:${{ github.sha }}
+</code></pre>
 <h3 id="3-microservices-deployment">3. Microservices Deployment</h3>
 <p>Breaking down monolithic apps into microservices packaged as containers improves scalability and maintainability.</p>
 <ul>
@@ -257,14 +256,13 @@ docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </s
 <li>Remove unnecessary dependencies and files.</li>
 </ul>
 <p><strong>Example Dockerfile:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-alpine</span>
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code class="language-dockerfile">FROM python:3.11-alpine
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <h3 id="3-secure-your-containers">3. Secure Your Containers</h3>
 <ul>
 <li>Use trusted base images.</li>

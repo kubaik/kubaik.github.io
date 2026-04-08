@@ -174,22 +174,21 @@
 * <strong>ElastiCache</strong>: Use ElastiCache to cache frequently accessed data, reducing the load on the database.
 * <strong>S3 Storage</strong>: Use S3 to store static assets, such as images and videos.</p>
 <p>Here's an example code snippet in Python to deploy an EC2 instance using the AWS SDK:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+ec2 = boto3.client('ec2')
 
-<span class="c1"># Create a new EC2 instance</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">run_instances</span><span class="p">(</span>
-    <span class="n">ImageId</span><span class="o">=</span><span class="s1">&#39;ami-0c94855ba95c71c99&#39;</span><span class="p">,</span>
-    <span class="n">InstanceType</span><span class="o">=</span><span class="s1">&#39;t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">MinCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">MaxCount</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
+# Create a new EC2 instance
+response = ec2.run_instances(
+    ImageId='ami-0c94855ba95c71c99',
+    InstanceType='t2.micro',
+    MinCount=1,
+    MaxCount=1
+)
 
-<span class="c1"># Print the instance ID</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Instances&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the instance ID
+print(response['Instances'][0]['InstanceId'])
+</code></pre>
 <p>This code creates a new EC2 instance using the <code>run_instances</code> method of the EC2 client.</p>
 <h2 id="implementing-security-and-compliance">Implementing Security and Compliance</h2>
 <p>Security and compliance are critical aspects of AWS Cloud Architecture. Here are some key considerations:
@@ -198,22 +197,21 @@
 * <strong>Monitoring</strong>: Use monitoring tools, such as AWS CloudWatch and AWS CloudTrail, to detect and respond to security incidents.</p>
 <h3 id="example-implementing-iam-roles">Example: Implementing IAM Roles</h3>
 <p>Let's consider an example of implementing IAM roles to manage access to an RDS database. Here's an example policy:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AllowRDSAccess&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;rds:DescribeDBInstances&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;rds:DescribeDBClusters&quot;</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;AllowRDSAccess&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;rds:DescribeDBInstances&quot;,
+                &quot;rds:DescribeDBClusters&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
 <p>This policy allows the IAM role to access RDS databases, including describing DB instances and clusters.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions when designing and implementing an AWS Cloud Architecture:
@@ -222,15 +220,14 @@
 * <strong>Security Incidents</strong>: Use AWS CloudTrail to detect and respond to security incidents, including API calls, user activity, and resource changes.</p>
 <h3 id="example-optimizing-costs-with-aws-cost-explorer">Example: Optimizing Costs with AWS Cost Explorer</h3>
 <p>Let's consider an example of optimizing costs with AWS Cost Explorer. Here's an example screenshot:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------------+-------------------------+</span>
-<span class="c">| Service                 | Cost                   |</span>
-<span class="nb">+-------------------------+-------------------------+</span>
-<span class="c">| EC2                      | $1</span><span class="nt">,</span><span class="c">000</span><span class="nt">.</span><span class="c">00             |</span>
-<span class="c">| RDS                      | $500</span><span class="nt">.</span><span class="c">00               |</span>
-<span class="c">| S3                       | $200</span><span class="nt">.</span><span class="c">00               |</span>
-<span class="nb">+-------------------------+-------------------------+</span>
-</code></pre></div>
-
+<pre><code>+-------------------------+-------------------------+
+| Service                 | Cost                   |
++-------------------------+-------------------------+
+| EC2                      | $1,000.00             |
+| RDS                      | $500.00               |
+| S3                       | $200.00               |
++-------------------------+-------------------------+
+</code></pre>
 <p>This screenshot shows the costs for different AWS services, including EC2, RDS, and S3. By analyzing these costs, you can identify opportunities to optimize and reduce costs.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for AWS Cloud Architecture:
@@ -243,29 +240,28 @@
 * <strong>EMR Cluster</strong>: Use EMR to process data, including data transformation and data aggregation.
 * <strong>Redshift Database</strong>: Use Redshift to store processed data, including data warehousing and data visualization.</p>
 <p>Here's an example code snippet in Python to deploy an EMR cluster using the AWS SDK:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">emr</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;emr&#39;</span><span class="p">)</span>
+emr = boto3.client('emr')
 
-<span class="c1"># Create a new EMR cluster</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">emr</span><span class="o">.</span><span class="n">run_job_flow</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;MyEMRCluster&#39;</span><span class="p">,</span>
-    <span class="n">ReleaseLabel</span><span class="o">=</span><span class="s1">&#39;emr-6.3.0&#39;</span><span class="p">,</span>
-    <span class="n">Instances</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;InstanceGroups&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;MasterNode&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Market&#39;</span><span class="p">:</span> <span class="s1">&#39;ON_DEMAND&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;InstanceType&#39;</span><span class="p">:</span> <span class="s1">&#39;m5.xlarge&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a new EMR cluster
+response = emr.run_job_flow(
+    Name='MyEMRCluster',
+    ReleaseLabel='emr-6.3.0',
+    Instances={
+        'InstanceGroups': [
+            {
+                'Name': 'MasterNode',
+                'Market': 'ON_DEMAND',
+                'InstanceType': 'm5.xlarge'
+            }
+        ]
+    }
+)
 
-<span class="c1"># Print the cluster ID</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;JobFlowId&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the cluster ID
+print(response['JobFlowId'])
+</code></pre>
 <p>This code creates a new EMR cluster using the <code>run_job_flow</code> method of the EMR client.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Here are some performance benchmarks for AWS services:
@@ -284,15 +280,14 @@
 * <strong>S3 Storage</strong>: $0.023 per GB-month for standard storage, $0.0125 per GB-month for infrequent access storage.</p>
 <h3 id="example-estimating-costs-with-aws-cost-explorer">Example: Estimating Costs with AWS Cost Explorer</h3>
 <p>Let's consider an example of estimating costs with AWS Cost Explorer. Here's an example screenshot:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------------+-------------------------+</span>
-<span class="c">| Service                 | Estimated Cost         |</span>
-<span class="nb">+-------------------------+-------------------------+</span>
-<span class="c">| EC2                      | $1</span><span class="nt">,</span><span class="c">500</span><span class="nt">.</span><span class="c">00             |</span>
-<span class="c">| RDS                      | $750</span><span class="nt">.</span><span class="c">00               |</span>
-<span class="c">| S3                       | $300</span><span class="nt">.</span><span class="c">00               |</span>
-<span class="nb">+-------------------------+-------------------------+</span>
-</code></pre></div>
-
+<pre><code>+-------------------------+-------------------------+
+| Service                 | Estimated Cost         |
++-------------------------+-------------------------+
+| EC2                      | $1,500.00             |
+| RDS                      | $750.00               |
+| S3                       | $300.00               |
++-------------------------+-------------------------+
+</code></pre>
 <p>This screenshot shows the estimated costs for different AWS services, including EC2, RDS, and S3. By analyzing these costs, you can identify opportunities to optimize and reduce costs.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, AWS Cloud Architecture is a comprehensive framework that enables businesses to design, build, and deploy scalable, secure, and efficient cloud-based systems. By considering key components, designing for scalability and security, and implementing best practices, businesses can unlock the full potential of the cloud. With real-world use cases, performance benchmarks, and pricing and cost estimation examples, this article provides a comprehensive guide to AWS Cloud Architecture. Here are some actionable next steps:

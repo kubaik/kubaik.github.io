@@ -164,19 +164,18 @@
 <h3 id="practical-example-migrating-a-web-application-to-aws">Practical Example: Migrating a Web Application to AWS</h3>
 <p>Let's consider a practical example of migrating a web application to AWS using the Lift and Shift strategy. Suppose we have a web application that is currently running on an on-premises server, and we want to move it to AWS to take advantage of the cloud's scalability and reliability.</p>
 <p>Here is an example of how we might use the AWS CLI to create a new EC2 instance and migrate our web application to it:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new EC2 instance</span>
-aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="w"> </span>--image-id<span class="w"> </span>ami-abc123<span class="w"> </span>--instance-type<span class="w"> </span>t2.micro<span class="w"> </span>--key-name<span class="w"> </span>my-key
+<pre><code class="language-bash"># Create a new EC2 instance
+aws ec2 run-instances --image-id ami-abc123 --instance-type t2.micro --key-name my-key
 
-<span class="c1"># Copy the web application code to the new instance</span>
-aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span>s3://my-bucket/web-app-code<span class="w"> </span>/home/ec2-user/
+# Copy the web application code to the new instance
+aws s3 cp s3://my-bucket/web-app-code /home/ec2-user/
 
-<span class="c1"># Install and configure the web server</span>
-aws<span class="w"> </span>ssh<span class="w"> </span>ec2-user@my-ec2-instance<span class="w"> </span><span class="s2">&quot;sudo apt-get update &amp;&amp; sudo apt-get install -y apache2&quot;</span>
+# Install and configure the web server
+aws ssh ec2-user@my-ec2-instance &quot;sudo apt-get update &amp;&amp; sudo apt-get install -y apache2&quot;
 
-<span class="c1"># Start the web server</span>
-aws<span class="w"> </span>ssh<span class="w"> </span>ec2-user@my-ec2-instance<span class="w"> </span><span class="s2">&quot;sudo service apache2 start&quot;</span>
-</code></pre></div>
-
+# Start the web server
+aws ssh ec2-user@my-ec2-instance &quot;sudo service apache2 start&quot;
+</code></pre>
 <p>This code snippet demonstrates how to create a new EC2 instance, copy the web application code to it, install and configure the web server, and start the web server.</p>
 <h2 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h2>
 <p>When evaluating cloud migration strategies, it's essential to consider performance benchmarks and pricing data. For example, suppose we are considering migrating a database workload to AWS, and we want to compare the performance and cost of using Amazon RDS versus Amazon Aurora.</p>
@@ -192,28 +191,27 @@ aws<span class="w"> </span>ssh<span class="w"> </span>ec2-user@my-ec2-instance<s
 3. <strong>Configure the migration tool</strong>: We would configure the migration tool to connect to our on-premises database and our Google Cloud database, and to migrate the data between the two.
 4. <strong>Test the migration</strong>: We would test the migration to ensure that it is successful and that the data is accurate and complete.</p>
 <p>Here is an example of how we might use the Google Cloud CLI to create a new Cloud SQL instance and migrate our database workload to it:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new Cloud SQL instance</span>
-<span class="kn">from</span> <span class="nn">googleapiclient</span> <span class="kn">import</span> <span class="n">discovery</span>
-<span class="n">sql_service</span> <span class="o">=</span> <span class="n">discovery</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;sqladmin&#39;</span><span class="p">,</span> <span class="s1">&#39;v1beta4&#39;</span><span class="p">)</span>
-<span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;my-instance&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;databaseVersion&#39;</span><span class="p">:</span> <span class="s1">&#39;POSTGRES_11&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="s1">&#39;us-central1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;settings&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;tier&#39;</span><span class="p">:</span> <span class="s1">&#39;db-n1-standard-1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;availabilityType&#39;</span><span class="p">:</span> <span class="s1">&#39;REGIONAL&#39;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">sql_service</span><span class="o">.</span><span class="n">instances</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;my-project&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<pre><code class="language-python"># Create a new Cloud SQL instance
+from googleapiclient import discovery
+sql_service = discovery.build('sqladmin', 'v1beta4')
+body = {
+    'name': 'my-instance',
+    'databaseVersion': 'POSTGRES_11',
+    'region': 'us-central1',
+    'settings': {
+        'tier': 'db-n1-standard-1',
+        'availabilityType': 'REGIONAL'
+    }
+}
+response = sql_service.instances().insert(project='my-project', body=body).execute()
 
-<span class="c1"># Migrate the database workload to the new instance</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">sql</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
-<span class="n">instance</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="s1">&#39;my-instance&#39;</span><span class="p">)</span>
-<span class="n">database</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="s1">&#39;my-database&#39;</span><span class="p">)</span>
-<span class="n">database</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="s1">&#39;my-on-premises-database&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Migrate the database workload to the new instance
+from google.cloud import sql
+client = sql.Client()
+instance = client.instance('my-instance')
+database = instance.database('my-database')
+database.migrate('my-on-premises-database')
+</code></pre>
 <p>This code snippet demonstrates how to create a new Cloud SQL instance and migrate a database workload to it using the Google Cloud CLI and the Cloud SQL API.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When migrating to the cloud, organizations often encounter common problems, such as:
@@ -227,47 +225,46 @@ aws<span class="w"> </span>ssh<span class="w"> </span>ec2-user@my-ec2-instance<s
 <h3 id="practical-example-implementing-security-and-compliance-measures">Practical Example: Implementing Security and Compliance Measures</h3>
 <p>Let's consider a practical example of implementing security and compliance measures for a cloud migration. Suppose we are migrating a sensitive database workload to AWS, and we want to ensure that the data is protected and compliant with relevant regulations.</p>
 <p>Here is an example of how we might use AWS IAM and AWS KMS to implement security and compliance measures for our database workload:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create an IAM role for the database instance</span>
-<span class="kn">import</span> <span class="nn">boto3</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_role</span><span class="p">(</span>
-    <span class="n">RoleName</span><span class="o">=</span><span class="s1">&#39;my-database-role&#39;</span><span class="p">,</span>
-    <span class="n">AssumeRolePolicyDocument</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Principal&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;Service&#39;</span><span class="p">:</span> <span class="s1">&#39;ec2.amazonaws.com&#39;</span>
-                <span class="p">},</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;sts:AssumeRole&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+<pre><code class="language-python"># Create an IAM role for the database instance
+import boto3
+iam = boto3.client('iam')
+response = iam.create_role(
+    RoleName='my-database-role',
+    AssumeRolePolicyDocument={
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Effect': 'Allow',
+                'Principal': {
+                    'Service': 'ec2.amazonaws.com'
+                },
+                'Action': 'sts:AssumeRole'
+            }
+        ]
+    }
+)
 
-<span class="c1"># Create a KMS key for encrypting the database</span>
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My database encryption key&#39;</span><span class="p">,</span>
-    <span class="n">KeyUsage</span><span class="o">=</span><span class="s1">&#39;ENCRYPT_DECRYPT&#39;</span>
-<span class="p">)</span>
+# Create a KMS key for encrypting the database
+kms = boto3.client('kms')
+response = kms.create_key(
+    Description='My database encryption key',
+    KeyUsage='ENCRYPT_DECRYPT'
+)
 
-<span class="c1"># Configure the database instance to use the IAM role and KMS key</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;rds&#39;</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">create_db_instance</span><span class="p">(</span>
-    <span class="n">DBInstanceIdentifier</span><span class="o">=</span><span class="s1">&#39;my-database-instance&#39;</span><span class="p">,</span>
-    <span class="n">DBInstanceClass</span><span class="o">=</span><span class="s1">&#39;db.t2.micro&#39;</span><span class="p">,</span>
-    <span class="n">Engine</span><span class="o">=</span><span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
-    <span class="n">MasterUsername</span><span class="o">=</span><span class="s1">&#39;my-master-username&#39;</span><span class="p">,</span>
-    <span class="n">MasterUserPassword</span><span class="o">=</span><span class="s1">&#39;my-master-password&#39;</span><span class="p">,</span>
-    <span class="n">VPCSecurityGroups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;my-vpc-security-group&#39;</span><span class="p">],</span>
-    <span class="n">DBSubnetGroupName</span><span class="o">=</span><span class="s1">&#39;my-db-subnet-group&#39;</span><span class="p">,</span>
-    <span class="n">IAMRoleArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/my-database-role&#39;</span><span class="p">,</span>
-    <span class="n">KmsKeyId</span><span class="o">=</span><span class="s1">&#39;arn:aws:kms:us-east-1:123456789012:key/my-kms-key&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Configure the database instance to use the IAM role and KMS key
+db = boto3.client('rds')
+response = db.create_db_instance(
+    DBInstanceIdentifier='my-database-instance',
+    DBInstanceClass='db.t2.micro',
+    Engine='postgres',
+    MasterUsername='my-master-username',
+    MasterUserPassword='my-master-password',
+    VPCSecurityGroups=['my-vpc-security-group'],
+    DBSubnetGroupName='my-db-subnet-group',
+    IAMRoleArn='arn:aws:iam::123456789012:role/my-database-role',
+    KmsKeyId='arn:aws:kms:us-east-1:123456789012:key/my-kms-key'
+)
+</code></pre>
 <p>This code snippet demonstrates how to create an IAM role and a KMS key, and configure a database instance to use them for security and compliance.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, cloud migration can be a complex and challenging process, but with the right strategy and tools, it can also bring numerous benefits, such as increased scalability, reduced costs, and improved performance. By considering different cloud migration strategies, evaluating performance benchmarks and pricing data, and implementing security and compliance measures, organizations can ensure a successful and cost-effective cloud migration.</p>

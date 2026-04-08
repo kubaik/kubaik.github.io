@@ -154,32 +154,31 @@
 <h3 id="education-and-training">Education and Training</h3>
 <p>One of the most significant applications of VR is in education and training. By providing an immersive and interactive environment, VR can enhance the learning experience, increase student engagement, and improve knowledge retention. For instance, medical students can use VR to practice surgeries, while architecture students can use it to design and explore virtual buildings.</p>
 <p>To create such interactive environments, developers can use tools like Unity, a popular game engine that supports VR development. Here is an example of how to create a simple VR scene in Unity using C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">VRScene</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Create a new VR camera</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Camera</span><span class="w"> </span><span class="n">vrCamera</span><span class="p">;</span>
+public class VRScene : MonoBehaviour
+{
+    // Create a new VR camera
+    public Camera vrCamera;
 
-<span class="w">    </span><span class="c1">// Create a new VR controller</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">GameObject</span><span class="w"> </span><span class="n">vrController</span><span class="p">;</span>
+    // Create a new VR controller
+    public GameObject vrController;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Initialize the VR camera and controller</span>
-<span class="w">        </span><span class="n">vrCamera</span><span class="p">.</span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="w">        </span><span class="n">vrController</span><span class="p">.</span><span class="n">SetActive</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start()
+    {
+        // Initialize the VR camera and controller
+        vrCamera.enabled = true;
+        vrController.SetActive(true);
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update the VR camera and controller positions</span>
-<span class="w">        </span><span class="n">vrCamera</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InputTracking</span><span class="p">.</span><span class="n">GetLocalPosition</span><span class="w"> </span><span class="n">XRNode</span><span class="p">.</span><span class="n">CenterEye</span><span class="p">);</span>
-<span class="w">        </span><span class="n">vrController</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InputTracking</span><span class="p">.</span><span class="n">GetLocalPosition</span><span class="p">(</span><span class="n">XRNode</span><span class="p">.</span><span class="n">RightHand</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    void Update()
+    {
+        // Update the VR camera and controller positions
+        vrCamera.transform.position = InputTracking.GetLocalPosition XRNode.CenterEye);
+        vrController.transform.position = InputTracking.GetLocalPosition(XRNode.RightHand);
+    }
+}
+</code></pre>
 <p>This code snippet demonstrates how to create a basic VR scene in Unity, with a camera and controller that track the user's movements.</p>
 <h3 id="healthcare-and-therapy">Healthcare and Therapy</h3>
 <p>VR is also being used in healthcare and therapy to treat a range of conditions, from anxiety disorders to physical rehabilitation. For example, exposure therapy, a common treatment for anxiety disorders, can be enhanced using VR. Patients can be immersed in simulated environments that trigger their anxiety, allowing them to confront and overcome their fears in a controlled and safe manner.</p>
@@ -196,33 +195,32 @@
 <li>Providing a comfortable and intuitive user interface</li>
 </ul>
 <p>For example, the following code snippet demonstrates how to implement a frame rate limiter in Unity using C#:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<pre><code class="language-csharp">using UnityEngine;
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">FrameRateLimiter</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Set the target frame rate</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">targetFrameRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">60</span><span class="p">;</span>
+public class FrameRateLimiter : MonoBehaviour
+{
+    // Set the target frame rate
+    public int targetFrameRate = 60;
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Set the frame rate limit</span>
-<span class="w">        </span><span class="n">QualitySettings</span><span class="p">.</span><span class="n">targetFrameRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetFrameRate</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
+    void Start()
+    {
+        // Set the frame rate limit
+        QualitySettings.targetFrameRate = targetFrameRate;
+    }
 
-<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Monitor the current frame rate</span>
-<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">currentFrameRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+    void Update()
+    {
+        // Monitor the current frame rate
+        float currentFrameRate = 1f / Time.deltaTime;
 
-<span class="w">        </span><span class="c1">// Adjust the frame rate limit if necessary</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">currentFrameRate</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">targetFrameRate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1.1f</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">QualitySettings</span><span class="p">.</span><span class="n">targetFrameRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetFrameRate</span><span class="p">;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+        // Adjust the frame rate limit if necessary
+        if (currentFrameRate &gt; targetFrameRate * 1.1f)
+        {
+            QualitySettings.targetFrameRate = targetFrameRate;
+        }
+    }
+}
+</code></pre>
 <p>This code snippet demonstrates how to limit the frame rate in Unity, helping to prevent motion sickness and ensure a smooth user experience.</p>
 <h3 id="performance-benchmarks-and-pricing-data">Performance Benchmarks and Pricing Data</h3>
 <p>When it comes to VR development, performance and pricing are critical considerations. The cost of VR hardware and software can vary widely, depending on the specific tools and platforms used. For example:</p>
@@ -257,46 +255,45 @@
 <li><strong>Facebook's Oculus</strong>: A VR platform that supports development of immersive and interactive applications, with a free version and a paid version starting at $9.99 per month</li>
 </ul>
 <p>Here is an example of how to use the Oculus API to create a simple VR application in C++:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;OVR_CAPI.h&gt;</span>
+<pre><code class="language-cpp">#include &lt;OVR_CAPI.h&gt;
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Initialize the Oculus API</span>
-<span class="w">    </span><span class="n">ovrResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ovr_Initialize</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">OVR_FAILURE</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle initialization failure</span>
-<span class="w">    </span><span class="p">}</span>
+int main()
+{
+    // Initialize the Oculus API
+    ovrResult result = ovr_Initialize(nullptr);
+    if (OVR_FAILURE(result))
+    {
+        // Handle initialization failure
+    }
 
-<span class="w">    </span><span class="c1">// Create a new Oculus session</span>
-<span class="w">    </span><span class="n">ovrSession</span><span class="w"> </span><span class="n">session</span><span class="p">;</span>
-<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ovr_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ovrDefaultSessionConfig</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">OVR_FAILURE</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle session creation failure</span>
-<span class="w">    </span><span class="p">}</span>
+    // Create a new Oculus session
+    ovrSession session;
+    result = ovr_Create(&amp;session, &amp;ovrDefaultSessionConfig);
+    if (OVR_FAILURE(result))
+    {
+        // Handle session creation failure
+    }
 
-<span class="w">    </span><span class="c1">// Create a new Oculus frame</span>
-<span class="w">    </span><span class="n">ovrFrameData</span><span class="w"> </span><span class="n">frameData</span><span class="p">;</span>
-<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ovr_GetFrameData</span><span class="p">(</span><span class="n">session</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">frameData</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">OVR_FAILURE</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle frame data retrieval failure</span>
-<span class="w">    </span><span class="p">}</span>
+    // Create a new Oculus frame
+    ovrFrameData frameData;
+    result = ovr_GetFrameData(session, 0, &amp;frameData);
+    if (OVR_FAILURE(result))
+    {
+        // Handle frame data retrieval failure
+    }
 
-<span class="w">    </span><span class="c1">// Render the frame</span>
-<span class="w">    </span><span class="c1">// ...</span>
+    // Render the frame
+    // ...
 
-<span class="w">    </span><span class="c1">// Destroy the Oculus session</span>
-<span class="w">    </span><span class="n">ovr_DestroySession</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+    // Destroy the Oculus session
+    ovr_DestroySession(session);
 
-<span class="w">    </span><span class="c1">// Shut down the Oculus API</span>
-<span class="w">    </span><span class="n">ovr_Shutdown</span><span class="p">();</span>
+    // Shut down the Oculus API
+    ovr_Shutdown();
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    return 0;
+}
+</code></pre>
 <p>This code snippet demonstrates how to initialize the Oculus API, create a new Oculus session, and render a frame using the Oculus API.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In conclusion, VR has a wide range of applications beyond gaming, from education and healthcare to architecture and real estate. By using tools like Unity, Unreal Engine, and Google's Daydream, developers can create immersive and interactive VR experiences that enhance engagement, improve knowledge retention, and increase design and visualization capabilities.</p>

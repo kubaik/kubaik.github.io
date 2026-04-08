@@ -157,26 +157,25 @@
 * Increased code reusability: React Native allows developers to reuse code across different platforms, reducing the need for duplicated effort.
 * Faster time-to-market: With a shared codebase, developers can deploy updates and new features across multiple platforms simultaneously.</p>
 <p>To illustrate this, let's consider a simple example of a React Native component that displays a user's profile information:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">Image</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Text, Image } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">UserProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">user</span><span class="p">,</span><span class="w"> </span><span class="nx">setUser</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">avatar</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://example.com/avatar.jpg&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">});</span>
+const UserProfile = () =&gt; {
+  const [user, setUser] = useState({
+    name: 'John Doe',
+    avatar: 'https://example.com/avatar.jpg',
+  });
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Image</span><span class="w"> </span><span class="na">source</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">uri</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">avatar</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;{</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
+  return (
+    &lt;View&gt;
+      &lt;Image source={{ uri: user.avatar }} /&gt;
+      &lt;Text&gt;{user.name}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
 
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">UserProfile</span><span class="p">;</span>
-</code></pre></div>
-
+export default UserProfile;
+</code></pre>
 <p>This component can be used across both Android and iOS platforms, with minimal modifications required.</p>
 <h2 id="tools-and-services-for-cross-platform-development">Tools and Services for Cross-Platform Development</h2>
 <p>Several tools and services are available to support cross-platform development with React Native, including:
@@ -184,9 +183,8 @@
 * React Native CLI: The official command-line interface for building and debugging React Native applications.
 * App Center: A cloud-based platform for building, testing, and distributing mobile applications.</p>
 <p>For example, Expo provides a simple way to get started with React Native, with a single command to create a new project:</p>
-<div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>create-expo-app<span class="w"> </span>my-app
-</code></pre></div>
-
+<pre><code class="language-bash">npx create-expo-app my-app
+</code></pre>
 <p>This command creates a new React Native project with a basic structure and configuration.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>React Native has made significant strides in terms of performance, with many applications achieving native-like performance. According to a benchmarking study by the React Native team, React Native applications can achieve:
@@ -206,21 +204,20 @@
 * <strong>Debugging tools</strong>: Using debugging tools like React DevTools and Flipper can help identify and resolve issues with application performance and functionality.
 * <strong>Automated testing</strong>: Using automated testing frameworks like Jest and Appium can help ensure application quality and reliability.</p>
 <p>For example, to debug a React Native application, developers can use the React DevTools to inspect and modify the application's component hierarchy and state:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">setCount</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+const MyComponent = () =&gt; {
+  const [count, setCount] = useState(0);
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Increment&quot;</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)}</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+  return (
+    &lt;View&gt;
+      &lt;Text&gt;Count: {count}&lt;/Text&gt;
+      &lt;Button title=&quot;Increment&quot; onPress={() =&gt; setCount(count + 1)} /&gt;
+    &lt;/View&gt;
+  );
+};
+</code></pre>
 <p>By using the React DevTools, developers can inspect the component's state and props, and modify them in real-time to debug and test the application.</p>
 <h2 id="concrete-use-cases">Concrete Use Cases</h2>
 <p>Cross-platform development with React Native has many practical applications, including:

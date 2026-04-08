@@ -153,33 +153,32 @@
 <p>Artificial Intelligence (AI) and Machine Learning (ML) have become essential tools in various industries, from healthcare to finance. At the heart of these technologies lies the AI model, which is only as good as the data it's trained on and the techniques used to train it. In this article, we will delve into the best practices for training AI models, highlighting specific tools, platforms, and techniques that can significantly improve model performance and efficiency.</p>
 <h3 id="data-preparation">Data Preparation</h3>
 <p>Before diving into model training, it's essential to prepare the data. This involves collecting, cleaning, and preprocessing the data to ensure it's in a suitable format for training. A key step in data preparation is data augmentation, which can significantly improve model performance by increasing the diversity of the training data. For example, in image classification tasks, data augmentation can include techniques such as rotation, flipping, and cropping.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+<pre><code class="language-python">import numpy as np
+from tensorflow import keras
+from tensorflow.keras import layers
 
-<span class="c1"># Load the dataset</span>
-<span class="n">train_dir</span> <span class="o">=</span> <span class="s1">&#39;path/to/train/directory&#39;</span>
-<span class="n">validation_dir</span> <span class="o">=</span> <span class="s1">&#39;path/to/validation/directory&#39;</span>
+# Load the dataset
+train_dir = 'path/to/train/directory'
+validation_dir = 'path/to/validation/directory'
 
-<span class="c1"># Define data augmentation pipeline</span>
-<span class="n">data_augmentation</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">RandomFlip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">RandomRotation</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">RandomZoom</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span>
-<span class="p">])</span>
+# Define data augmentation pipeline
+data_augmentation = keras.Sequential([
+    layers.RandomFlip('horizontal'),
+    layers.RandomRotation(0.2),
+    layers.RandomZoom(0.1),
+])
 
-<span class="c1"># Apply data augmentation to the training data</span>
-<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image_dataset_from_directory</span><span class="p">(</span>
-    <span class="n">train_dir</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
-    <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-    <span class="n">subset</span><span class="o">=</span><span class="s1">&#39;training&#39;</span><span class="p">,</span>
-    <span class="n">preprocessing_function</span><span class="o">=</span><span class="n">data_augmentation</span><span class="p">,</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Apply data augmentation to the training data
+train_dataset = keras.preprocessing.image_dataset_from_directory(
+    train_dir,
+    seed=123,
+    image_size=(256, 256),
+    batch_size=32,
+    validation_split=0.2,
+    subset='training',
+    preprocessing_function=data_augmentation,
+)
+</code></pre>
 <h2 id="choosing-the-right-model">Choosing the Right Model</h2>
 <p>Selecting the appropriate model for the task at hand is critical. Different models are suited for different types of problems, such as classification, regression, or clustering. For instance, Convolutional Neural Networks (CNNs) are well-suited for image classification tasks, while Recurrent Neural Networks (RNNs) are more suitable for sequential data like time series or natural language processing.</p>
 <p>When choosing a model, consider the following factors:
@@ -188,39 +187,38 @@
 * <strong>Interpretability</strong>: Some models, like decision trees or linear regression, are more interpretable than others, like neural networks.</p>
 <h3 id="model-training">Model Training</h3>
 <p>Once the data is prepared and the model is chosen, it's time to start training. This involves defining the model architecture, compiling the model, and training the model on the prepared data. A key aspect of model training is hyperparameter tuning, which involves adjusting model parameters like learning rate, batch size, or number of epochs to optimize model performance.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Define the model architecture</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">),</span>
-<span class="p">])</span>
+# Define the model architecture
+model = keras.Sequential([
+    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 3)),
+    layers.MaxPooling2D((2, 2)),
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(10, activation='softmax'),
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Define hyperparameter tuning space</span>
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
-    <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
-<span class="p">}</span>
+# Define hyperparameter tuning space
+param_grid = {
+    'batch_size': [32, 64, 128],
+    'epochs': [10, 20, 30],
+    'learning_rate': [0.001, 0.01, 0.1],
+}
 
-<span class="c1"># Perform hyperparameter tuning using GridSearchCV</span>
-<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+# Perform hyperparameter tuning using GridSearchCV
+grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy')
+grid_search.fit(train_dataset)
 
-<span class="c1"># Print the best hyperparameters and the corresponding accuracy</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best hyperparameters:&quot;</span><span class="p">,</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best accuracy:&quot;</span><span class="p">,</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the best hyperparameters and the corresponding accuracy
+print(&quot;Best hyperparameters:&quot;, grid_search.best_params_)
+print(&quot;Best accuracy:&quot;, grid_search.best_score_)
+</code></pre>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Despite best efforts, model training can sometimes go awry. Here are some common problems and their solutions:
 1. <strong>Overfitting</strong>: This occurs when the model is too complex and fits the training data too closely, resulting in poor performance on unseen data. Solutions include:
@@ -240,37 +238,36 @@
 * <strong>Natural Language Processing (NLP)</strong>: Training models to process and understand human language, such as text classification, sentiment analysis, or language translation.
 * <strong>Time series forecasting</strong>: Training models to predict future values in a time series dataset, such as stock prices or weather forecasts.</p>
 <p>For example, a company like Netflix can use AI model training to build a recommendation system that suggests movies or TV shows based on a user's viewing history and preferences. This can be achieved by training a model on a large dataset of user interactions, such as ratings, watches, and searches.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from tensorflow import keras
+from tensorflow.keras import layers
 
-<span class="c1"># Load the dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;netflix_data.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+df = pd.read_csv('netflix_data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
 
-<span class="c1"># Define the model architecture</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">),</span>
-<span class="p">])</span>
+# Define the model architecture
+model = keras.Sequential([
+    layers.Embedding(input_dim=10000, output_dim=128, input_length=100),
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(1, activation='sigmoid'),
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mean_squared_error&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">test_data</span><span class="p">)</span>
+# Train the model
+model.fit(train_data, epochs=10, batch_size=32, validation_data=test_data)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+mse = model.evaluate(test_data)
+print(&quot;Mean Squared Error:&quot;, mse)
+</code></pre>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>The performance of AI models can vary significantly depending on the hardware and software used. Here are some performance benchmarks for popular deep learning frameworks:</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>

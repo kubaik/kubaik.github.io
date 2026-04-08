@@ -147,28 +147,27 @@
 <h2 id="1-healthcare-predictive-analytics">1. Healthcare: Predictive Analytics</h2>
 <p>AI is making significant strides in healthcare by analyzing patient data to predict disease outbreaks and enhance treatment plans. For example, IBM Watson Health uses AI to analyze millions of medical records and clinical studies, offering insights that improve patient outcomes.</p>
 <h3 id="example-implementation">Example Implementation</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
-<span class="c1"># Load dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;patient_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;blood_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;cholesterol&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;heart_disease&#39;</span><span class="p">]</span>
+# Load dataset
+data = pd.read_csv('patient_data.csv')
+X = data[['age', 'blood_pressure', 'cholesterol']]
+y = data['heart_disease']
 
-<span class="c1"># Split data</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train model
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
 
-<span class="c1"># Predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">predictions</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Predictions
+predictions = model.predict(X_test)
+print(f'Accuracy: {accuracy_score(y_test, predictions)}')
+</code></pre>
 <h3 id="key-metrics">Key Metrics</h3>
 <ul>
 <li><strong>Cost Savings:</strong> The integration of AI in healthcare can reduce costs by 15% to 20% by optimizing hospital operations.</li>
@@ -182,33 +181,32 @@
 <li><strong>Functionality:</strong> Analyze transaction data to detect anomalies.</li>
 </ul>
 <h3 id="example-code">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Load transaction data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;transaction_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;transaction_amount&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;is_fraud&#39;</span><span class="p">]</span>
+# Load transaction data
+data = pd.read_csv('transaction_data.csv')
+X = data[['transaction_amount', 'location', 'time']]
+y = data['is_fraud']
 
-<span class="c1"># Split data</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
-<span class="c1"># Build model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
-<span class="p">])</span>
+# Build model
+model = keras.Sequential([
+    keras.layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    keras.layers.Dense(32, activation='relu'),
+    keras.layers.Dense(1, activation='sigmoid')
+])
 
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.fit(X_train, y_train, epochs=10)
 
-<span class="c1"># Evaluate</span>
-<span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f'Accuracy: {accuracy}')
+</code></pre>
 <h3 id="performance-metrics">Performance Metrics</h3>
 <ul>
 <li><strong>Detection Rate:</strong> AI models can increase fraud detection rates by up to 90%.</li>
@@ -222,20 +220,19 @@
 <li><strong>Model Training:</strong> Use collaborative filtering algorithms to predict customer preferences.</li>
 </ol>
 <h3 id="example-code_1">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
-<span class="c1"># Example user-item matrix</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-                    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+# Example user-item matrix
+ratings = np.array([[5, 0, 0, 2],
+                    [4, 0, 0, 3],
+                    [0, 0, 5, 0],
+                    [0, 3, 0, 5]])
 
-<span class="c1"># Calculate similarity</span>
-<span class="n">similarity</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">ratings</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">similarity</span><span class="p">)</span>
-</code></pre></div>
-
+# Calculate similarity
+similarity = cosine_similarity(ratings)
+print(similarity)
+</code></pre>
 <h3 id="results">Results</h3>
 <ul>
 <li><strong>Increased Sales:</strong> Personalized recommendations can boost sales by 30%.</li>
@@ -249,24 +246,23 @@
 <li><strong>Data Analysis:</strong> Use AI algorithms to predict when maintenance is needed.</li>
 </ul>
 <h3 id="example-code_2">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.ensemble import GradientBoostingRegressor
 
-<span class="c1"># Load maintenance data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;equipment_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;vibration&#39;</span><span class="p">,</span> <span class="s1">&#39;operating_hours&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;maintenance_needed&#39;</span><span class="p">]</span>
+# Load maintenance data
+data = pd.read_csv('equipment_data.csv')
+X = data[['temperature', 'vibration', 'operating_hours']]
+y = data['maintenance_needed']
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train model
+model = GradientBoostingRegressor()
+model.fit(X, y)
 
-<span class="c1"># Predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Predictions
+predictions = model.predict(X)
+print(predictions)
+</code></pre>
 <h3 id="key-metrics_1">Key Metrics</h3>
 <ul>
 <li><strong>Downtime Reduction:</strong> Predictive maintenance can reduce downtime by 30% to 50%.</li>
@@ -280,31 +276,30 @@
 <li><strong>Path Planning:</strong> Develop algorithms for safe navigation.</li>
 </ol>
 <h3 id="example-algorithm">Example Algorithm</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">compute_route</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-    <span class="c1"># Simple A* pathfinding algorithm</span>
-    <span class="n">open_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span><span class="p">}</span>
-    <span class="n">came_from</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">g_score</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-    <span class="n">f_score</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span><span class="p">:</span> <span class="n">heuristic</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)}</span>
+<pre><code class="language-python">def compute_route(start, end):
+    # Simple A* pathfinding algorithm
+    open_set = {start}
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, end)}
 
-    <span class="k">while</span> <span class="n">open_set</span><span class="p">:</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">open_set</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f_score</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">reconstruct_path</span><span class="p">(</span><span class="n">came_from</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
+    while open_set:
+        current = min(open_set, key=lambda x: f_score.get(x, float('inf')))
+        if current == end:
+            return reconstruct_path(came_from, current)
 
-        <span class="n">open_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">get_neighbors</span><span class="p">(</span><span class="n">current</span><span class="p">):</span>
-            <span class="n">tentative_g_score</span> <span class="o">=</span> <span class="n">g_score</span><span class="p">[</span><span class="n">current</span><span class="p">]</span> <span class="o">+</span> <span class="n">distance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">)</span>
+        open_set.remove(current)
+        for neighbor in get_neighbors(current):
+            tentative_g_score = g_score[current] + distance(current, neighbor)
 
-            <span class="k">if</span> <span class="n">tentative_g_score</span> <span class="o">&lt;</span> <span class="n">g_score</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">neighbor</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
-                <span class="n">came_from</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
-                <span class="n">g_score</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">tentative_g_score</span>
-                <span class="n">f_score</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_score</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">+</span> <span class="n">heuristic</span><span class="p">(</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-                <span class="n">open_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+            if tentative_g_score &lt; g_score.get(neighbor, float('inf')):
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score[neighbor] = g_score[neighbor] + heuristic(neighbor, end)
+                open_set.add(neighbor)
 
-    <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Path not found</span>
-</code></pre></div>
-
+    return False  # Path not found
+</code></pre>
 <h3 id="performance-insights">Performance Insights</h3>
 <ul>
 <li><strong>Safety Improvements:</strong> Autonomous vehicles have the potential to reduce traffic accidents by 90%.</li>
@@ -318,23 +313,22 @@
 <li><strong>Natural Language Processing (NLP):</strong> Use NLP to analyze text data.</li>
 </ol>
 <h3 id="example-code_3">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-<span class="c1"># Sample job description and resumes</span>
-<span class="n">job_description</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Looking for a data scientist with experience in Python and machine learning.&quot;</span><span class="p">]</span>
-<span class="n">resumes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Data scientist with Python experience.&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;Expert in machine learning and data analysis.&quot;</span><span class="p">]</span>
+# Sample job description and resumes
+job_description = [&quot;Looking for a data scientist with experience in Python and machine learning.&quot;]
+resumes = [&quot;Data scientist with Python experience.&quot;,
+           &quot;Expert in machine learning and data analysis.&quot;]
 
-<span class="c1"># Vectorization</span>
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">job_description</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">resumes</span><span class="p">)</span>
+# Vectorization
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform([job_description[0]] + resumes)
 
-<span class="c1"># Similarity calculation</span>
-<span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">tfidf_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
-</code></pre></div>
-
+# Similarity calculation
+cosine_similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:]).flatten()
+print(cosine_similarities)
+</code></pre>
 <h3 id="key-metrics_2">Key Metrics</h3>
 <ul>
 <li><strong>Efficiency Gains:</strong> AI can reduce recruitment time by 50%.</li>
@@ -348,22 +342,21 @@
 <li><strong>Data Analysis:</strong> Implement machine learning algorithms to analyze crop health.</li>
 </ol>
 <h3 id="example-code_4">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import LinearRegression
 
-<span class="c1"># Sample crop data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">400</span><span class="p">]])</span>  <span class="c1"># [fertilizer, water]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>  <span class="c1"># yield</span>
+# Sample crop data
+X = np.array([[1, 200], [2, 300], [3, 400]])  # [fertilizer, water]
+y = np.array([20, 30, 40])  # yield
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train model
+model = LinearRegression()
+model.fit(X, y)
 
-<span class="c1"># Predict yield</span>
-<span class="n">predicted_yield</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predicted Yield: </span><span class="si">{</span><span class="n">predicted_yield</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Predict yield
+predicted_yield = model.predict([[4, 500]])
+print(f'Predicted Yield: {predicted_yield}')
+</code></pre>
 <h3 id="performance-metrics_1">Performance Metrics</h3>
 <ul>
 <li><strong>Yield Increase:</strong> Precision farming can increase crop yields by 15% to 20%.</li>
@@ -377,23 +370,22 @@
 <li><strong>Demand Forecasting:</strong> Use machine learning to predict energy demand.</li>
 </ol>
 <h3 id="example-code_5">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 
-<span class="c1"># Load energy consumption data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;energy_data.csv&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;time_of_day&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;energy_consumption&#39;</span><span class="p">]</span>
+# Load energy consumption data
+data = pd.read_csv('energy_data.csv')
+X = data[['temperature', 'time_of_day']]
+y = data['energy_consumption']
 
-<span class="c1"># Train model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+# Train model
+model = RandomForestRegressor()
+model.fit(X, y)
 
-<span class="c1"># Predict future energy consumption</span>
-<span class="n">future_consumption</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">18</span><span class="p">]])</span>  <span class="c1"># Predict for 25°C at 6 PM</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predicted Energy Consumption: </span><span class="si">{</span><span class="n">future_consumption</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Predict future energy consumption
+future_consumption = model.predict([[25, 18]])  # Predict for 25°C at 6 PM
+print(f'Predicted Energy Consumption: {future_consumption}')
+</code></pre>
 <h3 id="key-metrics_3">Key Metrics</h3>
 <ul>
 <li><strong>Efficiency Improvement:</strong> AI can optimize energy distribution by 30%.</li>
@@ -407,20 +399,19 @@
 <li><strong>Content Recommendation:</strong> Use algorithms to suggest relevant learning materials.</li>
 </ol>
 <h3 id="example-code_6">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.cluster import KMeans
 
-<span class="c1"># Sample student data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">85</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">],</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">],</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">95</span><span class="p">]])</span>
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Sample student data
+data = np.array([[85, 90], [70, 80], [60, 70], [90, 95]])
+kmeans = KMeans(n_clusters=2)
+kmeans.fit(data)
 
-<span class="c1"># Predict cluster for a new student</span>
-<span class="n">new_student</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">85</span><span class="p">]])</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_student</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Assigned Cluster: </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Predict cluster for a new student
+new_student = np.array([[75, 85]])
+cluster = kmeans.predict(new_student)
+print(f'Assigned Cluster: {cluster}')
+</code></pre>
 <h3 id="performance-metrics_2">Performance Metrics</h3>
 <ul>
 <li><strong>Engagement Increase:</strong> Adaptive learning can increase student engagement by 50%.</li>
@@ -434,19 +425,18 @@
 <li><strong>Anomaly Detection:</strong> Implement machine learning algorithms to identify unusual patterns.</li>
 </ol>
 <h3 id="example-code_7">Example Code</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">IsolationForest</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">from sklearn.ensemble import IsolationForest
+import numpy as np
 
-<span class="c1"># Sample network traffic data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">150</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">400</span><span class="p">]])</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Sample network traffic data
+data = np.array([[1, 100], [0, 200], [1, 150], [0, 300], [1, 400]])
+model = IsolationForest()
+model.fit(data)
 
-<span class="c1"># Detect anomalies</span>
-<span class="n">anomalies</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected Anomalies: </span><span class="si">{</span><span class="n">anomalies</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Detect anomalies
+anomalies = model.predict(data)
+print(f'Detected Anomalies: {anomalies}')
+</code></pre>
 <h3 id="performance-metrics_3">Performance Metrics</h3>
 <ul>
 <li><strong>Threat Detection Rate:</strong> AI can improve threat detection rates by up to 90%.</li>

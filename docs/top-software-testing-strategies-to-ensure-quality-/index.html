@@ -172,10 +172,9 @@
 <li><strong>Use Static Code Analysis:</strong> Tools like SonarQube to identify code issues early.</li>
 <li><strong>Integrate Automated Unit Tests:</strong> Run tests on every code commit using CI/CD pipelines.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example: Running unit tests automatically with Jenkins or GitHub Actions</span>
-pytest<span class="w"> </span>tests/<span class="w"> </span>--maxfail<span class="o">=</span><span class="m">1</span><span class="w"> </span>--disable-warnings<span class="w"> </span>-q
-</code></pre></div>
-
+<pre><code class="language-bash"># Example: Running unit tests automatically with Jenkins or GitHub Actions
+pytest tests/ --maxfail=1 --disable-warnings -q
+</code></pre>
 <h3 id="2-continuous-testing-in-cicd-pipelines">2. Continuous Testing in CI/CD Pipelines</h3>
 <h4 id="what-is-continuous-testing">What is Continuous Testing?</h4>
 <p>Continuous testing involves automating tests to run as part of your Continuous Integration/Continuous Delivery (CI/CD) pipeline. It ensures that code changes are validated instantly, enabling rapid feedback.</p>
@@ -191,27 +190,26 @@ pytest<span class="w"> </span>tests/<span class="w"> </span>--maxfail<span class
 <li>Use containerization (Docker) to create consistent testing environments.</li>
 <li>Prioritize fast feedback by running quick tests first, followed by thorough tests.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Example snippet for GitHub Actions workflow</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI/CD Pipeline</span>
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
-<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.11&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Tests</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
-</code></pre></div>
-
+<pre><code class="language-yaml"># Example snippet for GitHub Actions workflow
+name: CI/CD Pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Tests
+        run: pytest
+</code></pre>
 <h3 id="3-test-automation-with-ai-and-machine-learning">3. Test Automation with AI and Machine Learning</h3>
 <h4 id="leveraging-ai-in-testing">Leveraging AI in Testing</h4>
 <p>AI-driven testing tools are revolutionizing how tests are created, maintained, and executed. They can:</p>

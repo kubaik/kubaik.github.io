@@ -173,12 +173,11 @@ A developer working on a login feature writes unit tests for all possible input 
 <li>Maintain a well-structured test suite and regularly update it to reflect changes.</li>
 </ul>
 <p><strong>Sample Automation Script (Python + pytest):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_login</span><span class="p">():</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="s1">&#39;user@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;correct_password&#39;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;success&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span>
-</code></pre></div>
-
+<pre><code class="language-python">def test_login():
+    response = login('user@example.com', 'correct_password')
+    assert response.status_code == 200
+    assert response.json()['success'] is True
+</code></pre>
 <h3 id="3-implement-continuous-testing-in-cicd-pipelines">3. Implement Continuous Testing in CI/CD Pipelines</h3>
 <p>Integrate testing into your <strong>Continuous Integration/Continuous Deployment (CI/CD)</strong> pipelines to ensure that code is automatically tested with each change.</p>
 <h4 id="benefits">Benefits:</h4>

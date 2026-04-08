@@ -160,45 +160,44 @@
 * <strong>Coroutines</strong>: Kotlin's coroutines provide a lightweight and efficient way to handle concurrency, making it easier to build scalable and responsive backend applications.</p>
 <h2 id="practical-example-building-a-restful-api-with-javalin">Practical Example: Building a RESTful API with Javalin</h2>
 <p>Let's build a simple RESTful API using Javalin, a popular Kotlin framework for building web applications. Here's an example of how to create a RESTful API that handles CRUD (Create, Read, Update, Delete) operations:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">io.javalin.Javalin</span>
+<pre><code class="language-kotlin">import io.javalin.Javalin
 
-<span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Javalin</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">start</span><span class="p">(</span><span class="m">7000</span><span class="p">)</span>
+fun main() {
+    val app = Javalin.create().start(7000)
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/users&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">),</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&quot;Jane Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">))</span>
-<span class="w">        </span><span class="n">ctx</span><span class="p">.</span><span class="na">json</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    app.get(&quot;/users&quot;) { ctx -&gt;
+        val users = listOf(User(&quot;John Doe&quot;, 30), User(&quot;Jane Doe&quot;, 25))
+        ctx.json(users)
+    }
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/users&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">bodyAsClass</span><span class="p">(</span><span class="n">User</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
-<span class="w">        </span><span class="c1">// Save the user to the database</span>
-<span class="w">        </span><span class="n">ctx</span><span class="p">.</span><span class="na">status</span><span class="p">(</span><span class="m">201</span><span class="p">).</span><span class="na">json</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    app.post(&quot;/users&quot;) { ctx -&gt;
+        val user = ctx.bodyAsClass(User::class.java)
+        // Save the user to the database
+        ctx.status(201).json(user)
+    }
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/users/{id}&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">pathParam</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">)</span>
-<span class="w">        </span><span class="n">ctx</span><span class="p">.</span><span class="na">json</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    app.get(&quot;/users/{id}&quot;) { ctx -&gt;
+        val id = ctx.pathParam(&quot;id&quot;)
+        val user = User(&quot;John Doe&quot;, 30)
+        ctx.json(user)
+    }
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;/users/{id}&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">pathParam</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">bodyAsClass</span><span class="p">(</span><span class="n">User</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
-<span class="w">        </span><span class="c1">// Update the user in the database</span>
-<span class="w">        </span><span class="n">ctx</span><span class="p">.</span><span class="na">status</span><span class="p">(</span><span class="m">200</span><span class="p">).</span><span class="na">json</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    app.put(&quot;/users/{id}&quot;) { ctx -&gt;
+        val id = ctx.pathParam(&quot;id&quot;)
+        val user = ctx.bodyAsClass(User::class.java)
+        // Update the user in the database
+        ctx.status(200).json(user)
+    }
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="s">&quot;/users/{id}&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="na">pathParam</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
-<span class="w">        </span><span class="c1">// Delete the user from the database</span>
-<span class="w">        </span><span class="n">ctx</span><span class="p">.</span><span class="na">status</span><span class="p">(</span><span class="m">204</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    app.delete(&quot;/users/{id}&quot;) { ctx -&gt;
+        val id = ctx.pathParam(&quot;id&quot;)
+        // Delete the user from the database
+        ctx.status(204)
+    }
+}
 
-<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">age</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span>
-</code></pre></div>
-
+data class User(val name: String, val age: Int)
+</code></pre>
 <p>This example demonstrates how to create a RESTful API that handles CRUD operations using Javalin. The API has endpoints for creating, reading, updating, and deleting users.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>Kotlin's performance is comparable to Java's, and in some cases, it can be even faster. Here are some performance benchmarks that compare Kotlin and Java:

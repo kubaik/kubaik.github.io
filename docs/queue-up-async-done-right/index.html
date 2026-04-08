@@ -176,33 +176,32 @@
 * <strong>Consumers</strong>: Retrieve messages from the message queue and process them.
 * <strong>Message queue</strong>: Stores messages until they are retrieved by a consumer.</p>
 <p>Here's an example implementation using RabbitMQ and Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="c1"># Producer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">,</span>
-                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
-<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+# Producer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='my_queue')
+channel.basic_publish(exchange='',
+                      routing_key='my_queue',
+                      body='Hello, world!')
+connection.close()
 
-<span class="c1"># Consumer</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">)</span>
+# Consumer
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='my_queue')
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received message: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">body</span><span class="p">)</span>
+def callback(ch, method, properties, body):
+    print(&quot;Received message: %s&quot; % body)
 
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">,</span>
-                      <span class="n">auto_ack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                      <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+channel.basic_consume(queue='my_queue',
+                      auto_ack=True,
+                      on_message_callback=callback)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting for messages...&quot;</span><span class="p">)</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
-</code></pre></div>
-
+print(&quot;Waiting for messages...&quot;)
+channel.start_consuming()
+</code></pre>
 <p>This example demonstrates a basic producer-consumer pattern using RabbitMQ and Python.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Message queues and async processing have numerous real-world use cases:
@@ -210,47 +209,46 @@
 * <strong>Image processing</strong>: A photo-sharing application can use a message queue to handle image processing, allowing the application to continue uploading images without waiting for the image processing task to complete.
 * <strong>Notification systems</strong>: A notification system can use a message queue to handle notifications, allowing the system to continue sending notifications without waiting for the notification to be delivered.</p>
 <p>Here's an example implementation of an order processing system using Amazon SQS and Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">AWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">sqs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">({</span><span class="w"> </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="w"> </span><span class="p">});</span>
+<pre><code class="language-javascript">const AWS = require('aws-sdk');
+const sqs = new AWS.SQS({ region: 'us-east-1' });
 
-<span class="c1">// Producer</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">MessageBody</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">orderId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;12345&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">customerId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;67890&#39;</span>
-<span class="w">  </span><span class="p">}),</span>
-<span class="w">  </span><span class="nx">QueueUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://sqs.us-east-1.amazonaws.com/123456789012/my-queue&#39;</span>
-<span class="p">};</span>
+// Producer
+const params = {
+  MessageBody: JSON.stringify({
+    orderId: '12345',
+    customerId: '67890'
+  }),
+  QueueUrl: 'https://sqs.us-east-1.amazonaws.com/123456789012/my-queue'
+};
 
-<span class="nx">sqs</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
+sqs.sendMessage(params, (err, data) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
 
-<span class="c1">// Consumer</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">QueueUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://sqs.us-east-1.amazonaws.com/123456789012/my-queue&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">MaxNumberOfMessages</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span>
-<span class="p">};</span>
+// Consumer
+const params = {
+  QueueUrl: 'https://sqs.us-east-1.amazonaws.com/123456789012/my-queue',
+  MaxNumberOfMessages: 10
+};
 
-<span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">messages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">messages</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">orderId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">Body</span><span class="p">).</span><span class="nx">orderId</span><span class="p">;</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">customerId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">Body</span><span class="p">).</span><span class="nx">customerId</span><span class="p">;</span>
-<span class="w">      </span><span class="c1">// Process order</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Processing order </span><span class="si">${</span><span class="nx">orderId</span><span class="si">}</span><span class="sb"> for customer </span><span class="si">${</span><span class="nx">customerId</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+sqs.receiveMessage(params, (err, data) =&gt; {
+  if (err) {
+    console.log(err);
+  } else {
+    const messages = data.Messages;
+    messages.forEach((message) =&gt; {
+      const orderId = JSON.parse(message.Body).orderId;
+      const customerId = JSON.parse(message.Body).customerId;
+      // Process order
+      console.log(`Processing order ${orderId} for customer ${customerId}`);
+    });
+  }
+});
+</code></pre>
 <p>This example demonstrates a basic order processing system using Amazon SQS and Node.js.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Common problems when using message queues and async processing include:

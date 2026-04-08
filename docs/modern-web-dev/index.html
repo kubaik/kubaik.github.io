@@ -163,35 +163,34 @@
 <p>React is one of the most popular modern web development frameworks. It uses a component-based architecture, where each component represents a small piece of the user interface. React components can be reused throughout the application, making it easy to maintain and update the code.</p>
 <h3 id="example-building-a-todo-list-app-with-react">Example: Building a Todo List App with React</h3>
 <p>Here is an example of building a simple todo list app with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">TodoList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">setTodos</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">newTodo</span><span class="p">,</span><span class="w"> </span><span class="nx">setNewTodo</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState('');
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleAddTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">setTodos</span><span class="p">([...</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">newTodo</span><span class="p">]);</span>
-<span class="w">    </span><span class="nx">setNewTodo</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleAddTodo = () =&gt; {
+    setTodos([...todos, newTodo]);
+    setNewTodo('');
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">input</span>
-<span class="w">        </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span>
-<span class="w">        </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">newTodo</span><span class="p">}</span>
-<span class="w">        </span><span class="na">onChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setNewTodo</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)}</span>
-<span class="w">      </span><span class="p">/&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleAddTodo</span><span class="p">}&gt;</span><span class="nx">Add</span><span class="w"> </span><span class="nx">Todo</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}&gt;{</span><span class="nx">todo</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">))}</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      &lt;input
+        type=&quot;text&quot;
+        value={newTodo}
+        onChange={(e) =&gt; setNewTodo(e.target.value)}
+      /&gt;
+      &lt;button onClick={handleAddTodo}&gt;Add Todo&lt;/button&gt;
+      &lt;ul&gt;
+        {todos.map((todo, index) =&gt; (
+          &lt;li key={index}&gt;{todo}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <p>This example demonstrates how to use React's <code>useState</code> hook to manage state and how to use JSX to render the user interface.</p>
 <h3 id="performance-benchmarks-react-vs-angular-vs-vuejs">Performance Benchmarks: React vs. Angular vs. Vue.js</h3>
 <p>In terms of performance, React is generally considered to be one of the fastest frameworks. According to a benchmarking study by <a href="https://jsframeworkbenchmark.github.io/">JS Framework Benchmark</a>, React outperforms Angular and Vue.js in terms of rendering speed and memory usage.</p>
@@ -225,42 +224,41 @@
 <p>Angular is a full-fledged JavaScript framework for building complex web applications. It uses a opinionated approach and provides a wide range of features out of the box, including dependency injection, services, and routing.</p>
 <h3 id="example-building-a-crud-app-with-angular">Example: Building a CRUD App with Angular</h3>
 <p>Here is an example of building a simple CRUD (Create, Read, Update, Delete) app with Angular:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">OnInit</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">HttpClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/common/http&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-<span class="kd">@Component</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-crud&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;ul&gt;</span>
-<span class="sb">      &lt;li *ngFor=&quot;let item of items&quot;&gt;{{ item.name }}&lt;/li&gt;</span>
-<span class="sb">    &lt;/ul&gt;</span>
-<span class="sb">    &lt;form (ngSubmit)=&quot;createItem()&quot;&gt;</span>
-<span class="sb">      &lt;input type=&quot;text&quot; [(ngModel)]=&quot;newItemName&quot;&gt;</span>
-<span class="sb">      &lt;button type=&quot;submit&quot;&gt;Create&lt;/button&gt;</span>
-<span class="sb">    &lt;/form&gt;</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CrudComponent</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">OnInit</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="w">  </span><span class="nx">newItemName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+@Component({
+  selector: 'app-crud',
+  template: `
+    &lt;ul&gt;
+      &lt;li *ngFor=&quot;let item of items&quot;&gt;{{ item.name }}&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;form (ngSubmit)=&quot;createItem()&quot;&gt;
+      &lt;input type=&quot;text&quot; [(ngModel)]=&quot;newItemName&quot;&gt;
+      &lt;button type=&quot;submit&quot;&gt;Create&lt;/button&gt;
+    &lt;/form&gt;
+  `,
+})
+export class CrudComponent implements OnInit {
+  items = [];
+  newItemName = '';
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">http</span><span class="o">:</span><span class="w"> </span><span class="kt">HttpClient</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+  constructor(private http: HttpClient) { }
 
-<span class="w">  </span><span class="nx">ngOnInit</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://example.com/api/items&#39;</span><span class="p">).</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">[])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">items</span><span class="p">;</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
+  ngOnInit(): void {
+    this.http.get('https://example.com/api/items').subscribe((items: any[]) =&gt; {
+      this.items = items;
+    });
+  }
 
-<span class="w">  </span><span class="nx">createItem</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;https://example.com/api/items&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">this.newItemName</span><span class="w"> </span><span class="p">}).</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">item</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">newItemName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  createItem(): void {
+    this.http.post('https://example.com/api/items', { name: this.newItemName }).subscribe((item: any) =&gt; {
+      this.items.push(item);
+      this.newItemName = '';
+    });
+  }
+}
+</code></pre>
 <p>This example demonstrates how to use Angular's dependency injection system and how to use the <code>HttpClient</code> to make API requests.</p>
 <h3 id="pricing-angular-vs-react-vs-vuejs">Pricing: Angular vs. React vs. Vue.js</h3>
 <p>In terms of pricing, all three frameworks are open-source and free to use. However, the cost of development can vary depending on the complexity of the application and the experience of the development team. According to a survey by <a href="https://stackoverflow.com/">Stack Overflow</a>, the average hourly rate for a React developer is $115, while the average hourly rate for an Angular developer is $125, and the average hourly rate for a Vue.js developer is $100.</p>
@@ -268,35 +266,33 @@
 <p>Vue.js is a progressive and flexible JavaScript framework for building web applications. It uses a component-based architecture and is known for its simplicity and ease of use.</p>
 <h3 id="example-building-a-chat-app-with-vuejs">Example: Building a Chat App with Vue.js</h3>
 <p>Here is an example of building a simple chat app with Vue.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Vue</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">import Vue from 'vue';
 
-<span class="nx">Vue</span><span class="p">.</span><span class="nx">createApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">      </span><span class="nx">newMessage</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">addMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">newMessage</span><span class="w"> </span><span class="p">});</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">newMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">}).</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+Vue.createApp({
+  data() {
+    return {
+      messages: [],
+      newMessage: '',
+    };
+  },
+  methods: {
+    addMessage() {
+      this.messages.push({ text: this.newMessage });
+      this.newMessage = '';
+    },
+  },
+}).mount('#app');
+</code></pre>
 <p>This example demonstrates how to use Vue.js's <code>data</code> function to manage state and how to use the <code>methods</code> object to define functions.</p>
 <h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
 <p>One common problem when building web applications is handling errors and exceptions. Here are some specific solutions:
 1. <strong>Error Handling</strong>: Use try-catch blocks to catch and handle errors. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// code that may throw an error</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">try {
+  // code that may throw an error
+} catch (error) {
+  console.error(error);
+}
+</code></pre>
 <ol>
 <li><strong>Debugging</strong>: Use the browser's developer tools to debug your application. For example, you can use the Chrome DevTools to set breakpoints and inspect variables.</li>
 <li><strong>Performance Optimization</strong>: Use tools like Webpack and Babel to optimize your application's performance. For example, you can use Webpack's <code>optimization.splitChunks</code> option to split your code into smaller chunks.</li>

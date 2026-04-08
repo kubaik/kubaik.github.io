@@ -174,22 +174,21 @@
 <li>Cache expensive API responses for improved performance</li>
 <li>Coordinate access to a centralized service or component</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SingletonAPI</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">SingletonAPI</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+<pre><code class="language-java">public class SingletonAPI {
+    private static SingletonAPI instance;
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">SingletonAPI</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Private constructor to prevent instantiation</span>
-<span class="w">    </span><span class="p">}</span>
+    private SingletonAPI() {
+        // Private constructor to prevent instantiation
+    }
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="n">SingletonAPI</span><span class="w"> </span><span class="nf">getInstance</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">instance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SingletonAPI</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+    public static synchronized SingletonAPI getInstance() {
+        if (instance == null) {
+            instance = new SingletonAPI();
+        }
+        return instance;
+    }
+}
+</code></pre>
 <h3 id="builder-pattern">Builder Pattern</h3>
 <p>The Builder pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations. In API design, the Builder pattern can be used to:</p>
 <ul>
@@ -197,43 +196,42 @@
 <li>Create complex data structures or payloads in a flexible and readable way</li>
 <li>Encapsulate the construction logic to improve code maintainability</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">apiRequestBuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">endpoint</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">    </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
+<pre><code class="language-javascript">const apiRequestBuilder = {
+    endpoint: '',
+    method: 'GET',
+    headers: {},
+    params: {},
 
-<span class="w">    </span><span class="nx">setEndpoint</span><span class="p">(</span><span class="nx">endpoint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">endpoint</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
+    setEndpoint(endpoint) {
+        this.endpoint = endpoint;
+        return this;
+    },
 
-<span class="w">    </span><span class="nx">setMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">method</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
+    setMethod(method) {
+        this.method = method;
+        return this;
+    },
 
-<span class="w">    </span><span class="nx">setHeaders</span><span class="p">(</span><span class="nx">headers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">headers</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
+    setHeaders(headers) {
+        this.headers = headers;
+        return this;
+    },
 
-<span class="w">    </span><span class="nx">setParams</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">params</span><span class="p">;</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
+    setParams(params) {
+        this.params = params;
+        return this;
+    },
 
-<span class="w">    </span><span class="nx">build</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">method</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">headers</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">params</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">endpoint</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">endpoint</span><span class="p">,</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+    build() {
+        return {
+            method: this.method,
+            headers: this.headers,
+            params: this.params,
+            endpoint: this.endpoint,
+        };
+    },
+};
+</code></pre>
 <h3 id="observer-pattern">Observer Pattern</h3>
 <p>The Observer pattern establishes a one-to-many dependency between objects, where changes in one object trigger updates in its dependent objects. In API design, the Observer pattern can be used to:</p>
 <ul>
@@ -241,22 +239,21 @@
 <li>Implement event-driven architectures for real-time communication</li>
 <li>Decouple API components to improve modularity and extensibility</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">APISubject</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span> <span class="o">=</span> <span class="p">[]</span>
+<pre><code class="language-python">class APISubject:
+    def __init__(self):
+        self._observers = []
 
-    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">observer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+    def attach(self, observer):
+        if observer not in self._observers:
+            self._observers.append(observer)
 
-    <span class="k">def</span> <span class="nf">detach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+    def detach(self, observer):
+        self._observers.remove(observer)
 
-    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="p">:</span>
-            <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-
+    def notify(self, data):
+        for observer in self._observers:
+            observer.update(data)
+</code></pre>
 <h2 id="best-practices-for-api-design">Best Practices for API Design</h2>
 <ol>
 <li>

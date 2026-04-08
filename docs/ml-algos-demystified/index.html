@@ -166,30 +166,29 @@
 4. Neural Networks, a supervised learning algorithm for complex classification and regression tasks</p>
 <h2 id="practical-implementation-of-machine-learning-algorithms">Practical Implementation of Machine Learning Algorithms</h2>
 <p>To illustrate the implementation of machine learning algorithms, let's consider a concrete example using Python and the popular scikit-learn library. Suppose we want to build a linear regression model to predict house prices based on features like number of bedrooms, square footage, and location.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import necessary libraries</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python"># Import necessary libraries
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import pandas as pd
 
-<span class="c1"># Load the dataset</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;houses.csv&#39;</span><span class="p">)</span>
+# Load the dataset
+data = pd.read_csv('houses.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('price', axis=1), data['price'], test_size=0.2, random_state=42)
 
-<span class="c1"># Create and train a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create and train a linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-<span class="c1"># Make predictions on the testing set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Make predictions on the testing set
+y_pred = model.predict(X_test)
 
-<span class="c1"># Evaluate the model using mean squared error</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model using mean squared error
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse:.2f}')
+</code></pre>
 <p>In this example, we load a dataset of houses with features like number of bedrooms, square footage, and location, and a target variable of price. We split the data into training and testing sets, create and train a linear regression model, make predictions on the testing set, and evaluate the model using mean squared error.</p>
 <h3 id="tools-and-platforms-for-machine-learning">Tools and Platforms for Machine Learning</h3>
 <p>Several tools and platforms are available for machine learning, including:
@@ -237,40 +236,39 @@
 <p>In each of these use cases, we can use a combination of machine learning algorithms and techniques to build a robust and accurate model.</p>
 <h2 id="code-example-neural-networks-with-pytorch">Code Example: Neural Networks with PyTorch</h2>
 <p>To illustrate the implementation of neural networks using PyTorch, let's consider a simple example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import necessary libraries</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<pre><code class="language-python"># Import necessary libraries
+import torch
+import torch.nn as nn
+import torch.optim as optim
 
-<span class="c1"># Define a neural network architecture</span>
-<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>  <span class="c1"># input layer (28x28 images) -&gt; hidden layer (128 units)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># hidden layer (128 units) -&gt; output layer (10 units)</span>
+# Define a neural network architecture
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(784, 128)  # input layer (28x28 images) -&gt; hidden layer (128 units)
+        self.fc2 = nn.Linear(128, 10)  # hidden layer (128 units) -&gt; output layer (10 units)
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># activation function for hidden layer</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x</span>
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
 
-<span class="c1"># Initialize the neural network and optimizer</span>
-<span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+# Initialize the neural network and optimizer
+net = Net()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(net.parameters(), lr=0.01)
 
-<span class="c1"># Train the neural network</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span>  <span class="c1"># flatten the input data</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the neural network
+for epoch in range(10):
+    for x, y in train_loader:
+        x = x.view(-1, 784)  # flatten the input data
+        optimizer.zero_grad()
+        outputs = net(x)
+        loss = criterion(outputs, y)
+        loss.backward()
+        optimizer.step()
+    print(f'Epoch {epoch+1}, Loss: {loss.item():.4f}')
+</code></pre>
 <p>In this example, we define a simple neural network architecture with two fully connected layers, and train it on a dataset of images using the stochastic gradient descent (SGD) optimizer and cross-entropy loss function.</p>
 <h2 id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
 <p>In this article, we have explored the world of machine learning algorithms, covering their types, applications, and implementation details. We have also discussed several tools and platforms for machine learning, including scikit-learn, TensorFlow, and PyTorch. To get started with machine learning, we recommend the following next steps:

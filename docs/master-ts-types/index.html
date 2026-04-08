@@ -155,43 +155,40 @@
 <h3 id="conditional-types">Conditional Types</h3>
 <p>Conditional types are a powerful feature in TypeScript that allows developers to create types that depend on the value of a type parameter. They are denoted by the <code>T extends U ? X : Y</code> syntax, where <code>T</code> is the type parameter, <code>U</code> is the type to check against, <code>X</code> is the type to return if <code>T</code> extends <code>U</code>, and <code>Y</code> is the type to return otherwise.</p>
 <p>Here is an example of how to use conditional types to create a type that checks if a type is a primitive type:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">IsPrimitive</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">true</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">true</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">;</span>
+<pre><code class="language-typescript">type IsPrimitive&lt;T&gt; = T extends null | undefined ? true : T extends number | string | boolean ? true : false;
 
-<span class="c1">// Test the type</span>
-<span class="kr">type</span><span class="w"> </span><span class="nx">PrimitiveTest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">IsPrimitive</span><span class="o">&lt;</span><span class="kt">number</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// true</span>
-<span class="kr">type</span><span class="w"> </span><span class="nx">NonPrimitiveTest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">IsPrimitive</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// false</span>
-</code></pre></div>
-
+// Test the type
+type PrimitiveTest = IsPrimitive&lt;number&gt;; // true
+type NonPrimitiveTest = IsPrimitive&lt;object&gt;; // false
+</code></pre>
 <p>In this example, the <code>IsPrimitive</code> type checks if a type <code>T</code> is a primitive type by using a conditional type. If <code>T</code> is <code>null</code> or <code>undefined</code>, it returns <code>true</code>. If <code>T</code> is a <code>number</code>, <code>string</code>, or <code>boolean</code>, it returns <code>true</code>. Otherwise, it returns <code>false</code>.</p>
 <h2 id="mapped-types">Mapped Types</h2>
 <p>Mapped types are another powerful feature in TypeScript that allows developers to create types that transform other types. They are denoted by the <code>{ [P in K]: T }</code> syntax, where <code>K</code> is the type of the keys, <code>T</code> is the type of the values, and <code>P</code> is the type parameter.</p>
 <p>Here is an example of how to use mapped types to create a type that converts an object type to a type with optional properties:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">MakeOptional</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">[</span><span class="nx">P</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">keyof</span><span class="w"> </span><span class="nx">T</span><span class="p">]</span><span class="nx">?</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">[</span><span class="nx">P</span><span class="p">];</span>
-<span class="p">};</span>
+<pre><code class="language-typescript">type MakeOptional&lt;T&gt; = {
+  [P in keyof T]?: T[P];
+};
 
-<span class="c1">// Test the type</span>
-<span class="kd">interface</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">}</span>
+// Test the type
+interface Person {
+  name: string;
+  age: number;
+}
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">OptionalPerson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">MakeOptional</span><span class="o">&lt;</span><span class="nx">Person</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="c1">// type OptionalPerson = { name?: string; age?: number; }</span>
-</code></pre></div>
-
+type OptionalPerson = MakeOptional&lt;Person&gt;;
+// type OptionalPerson = { name?: string; age?: number; }
+</code></pre>
 <p>In this example, the <code>MakeOptional</code> type uses a mapped type to create a new type that has the same properties as the original type, but with optional modifiers.</p>
 <h3 id="lookup-types">Lookup Types</h3>
 <p>Lookup types are a feature in TypeScript that allows developers to access the type of a property in an object type. They are denoted by the <code>T[K]</code> syntax, where <code>T</code> is the object type and <code>K</code> is the type of the key.</p>
 <p>Here is an example of how to use lookup types to create a type that gets the type of a property in an object:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">interface Person {
+  name: string;
+  age: number;
+}
 
-<span class="kr">type</span><span class="w"> </span><span class="nx">GetNameType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Person</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span><span class="w"> </span><span class="c1">// string</span>
-</code></pre></div>
-
+type GetNameType = Person['name']; // string
+</code></pre>
 <p>In this example, the <code>GetNameType</code> type uses a lookup type to get the type of the <code>name</code> property in the <code>Person</code> interface.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Advanced TypeScript types have many real-world use cases, including:</p>

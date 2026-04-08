@@ -168,22 +168,21 @@
 <li><strong>Model Deployment</strong>: This stage involves deploying trained models to production environments, such as cloud platforms, containerized applications, or edge devices.</li>
 </ol>
 <h3 id="example-code-data-preprocessing-with-pandas">Example Code: Data Preprocessing with Pandas</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<pre><code class="language-python">import pandas as pd
 
-<span class="c1"># Load data from a CSV file</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load data from a CSV file
+data = pd.read_csv('data.csv')
 
-<span class="c1"># Handle missing values</span>
-<span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Handle missing values
+data.fillna(data.mean(), inplace=True)
 
-<span class="c1"># Encode categorical variables</span>
-<span class="n">data</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
+# Encode categorical variables
+data['category'] = pd.Categorical(data['category']).codes
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</code></pre></div>
-
+# Split data into training and testing sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1), data['target'], test_size=0.2, random_state=42)
+</code></pre>
 <p>In this example, we use Pandas to load data from a CSV file, handle missing values, encode categorical variables, and split the data into training and testing sets.</p>
 <h2 id="benefits-of-automl-pipelines">Benefits of AutoML Pipelines</h2>
 <p>AutoML pipelines offer several benefits, including:</p>
@@ -193,29 +192,28 @@
 <li><strong>Faster Model Deployment</strong>: AutoML pipelines can reduce model deployment time by up to 70%, enabling organizations to respond quickly to changing market conditions.</li>
 </ul>
 <h3 id="example-code-automated-hyperparameter-tuning-with-h2o-automl">Example Code: Automated Hyperparameter Tuning with H2O AutoML</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">h2o</span>
-<span class="kn">from</span> <span class="nn">h2o.automl</span> <span class="kn">import</span> <span class="n">H2OAutoML</span>
+<pre><code class="language-python">import h2o
+from h2o.automl import H2OAutoML
 
-<span class="c1"># Initialize the H2O cluster</span>
-<span class="n">h2o</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+# Initialize the H2O cluster
+h2o.init()
 
-<span class="c1"># Load data into H2O</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load data into H2O
+data = h2o.upload_file('data.csv')
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split_frame</span><span class="p">(</span><span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">])</span>
+# Split data into training and testing sets
+train, test = data.split_frame(ratios=[0.8])
 
-<span class="c1"># Create an AutoML object</span>
-<span class="n">aml</span> <span class="o">=</span> <span class="n">H2OAutoML</span><span class="p">(</span><span class="n">max_runtime_secs</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
+# Create an AutoML object
+aml = H2OAutoML(max_runtime_secs=3600)
 
-<span class="c1"># Train the model with automated hyperparameter tuning</span>
-<span class="n">aml</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">training_frame</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+# Train the model with automated hyperparameter tuning
+aml.train(x=data.columns, y='target', training_frame=train)
 
-<span class="c1"># Evaluate the model on the testing set</span>
-<span class="n">perf</span> <span class="o">=</span> <span class="n">aml</span><span class="o">.</span><span class="n">leader</span><span class="o">.</span><span class="n">model_performance</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model on the testing set
+perf = aml.leader.model_performance(test)
+print(perf)
+</code></pre>
 <p>In this example, we use H2O AutoML to automate hyperparameter tuning and model selection. The <code>H2OAutoML</code> class is initialized with a maximum runtime of 3600 seconds, and the <code>train</code> method is used to train the model with automated hyperparameter tuning.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>AutoML pipelines can encounter several challenges, including:</p>
@@ -225,17 +223,16 @@
 <li><strong>Scalability Issues</strong>: AutoML pipelines can become computationally expensive, leading to scalability issues. Solution: Leverage cloud-based infrastructure or distributed computing frameworks to scale AutoML pipelines.</li>
 </ul>
 <h3 id="example-code-model-monitoring-with-prometheus-and-grafana">Example Code: Model Monitoring with Prometheus and Grafana</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">prometheus_client</span>
+<pre><code class="language-python">import prometheus_client
 
-<span class="c1"># Define a Prometheus metric for model performance</span>
-<span class="n">model_performance</span> <span class="o">=</span> <span class="n">prometheus_client</span><span class="o">.</span><span class="n">Gauge</span><span class="p">(</span><span class="s1">&#39;model_performance&#39;</span><span class="p">,</span> <span class="s1">&#39;Model performance metric&#39;</span><span class="p">)</span>
+# Define a Prometheus metric for model performance
+model_performance = prometheus_client.Gauge('model_performance', 'Model performance metric')
 
-<span class="c1"># Update the metric with the current model performance</span>
-<span class="n">model_performance</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.85</span><span class="p">)</span>
+# Update the metric with the current model performance
+model_performance.set(0.85)
 
-<span class="c1"># Use Grafana to visualize the model performance metric</span>
-</code></pre></div>
-
+# Use Grafana to visualize the model performance metric
+</code></pre>
 <p>In this example, we use Prometheus and Grafana to monitor model performance. The <code>prometheus_client</code> library is used to define a Prometheus metric, and the <code>Gauge</code> class is used to update the metric with the current model performance.</p>
 <h2 id="concrete-use-cases">Concrete Use Cases</h2>
 <p>AutoML pipelines have several concrete use cases, including:</p>

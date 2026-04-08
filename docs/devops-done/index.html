@@ -164,28 +164,27 @@
 * CircleCI: A cloud-based platform for continuous integration and continuous deployment.</p>
 <h3 id="example-1-jenkins-pipeline-for-automated-testing">Example 1: Jenkins Pipeline for Automated Testing</h3>
 <p>Here is an example of a Jenkins pipeline script that automates testing for a Java application:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pipeline</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">agent</span><span class="w"> </span><span class="n">any</span>
-<span class="w">    </span><span class="n">stages</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;mvn clean package&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;mvn test&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">        </span><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">sh</span><span class="w"> </span><span class="s1">&#39;mvn deploy&#39;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-
+<pre><code class="language-groovy">pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'mvn deploy'
+            }
+        }
+    }
+}
+</code></pre>
 <p>This script defines a pipeline with three stages: build, test, and deploy. Each stage runs a specific Maven command to build, test, and deploy the application.</p>
 <h2 id="implementing-cicd-pipelines">Implementing CI/CD Pipelines</h2>
 <p>Implementing CI/CD pipelines requires careful planning and execution. Here are some steps to follow:
@@ -195,30 +194,29 @@
 4. <strong>Monitor and optimize</strong>: Monitor the pipeline for performance and errors, and optimize as needed to improve speed and reliability.</p>
 <h3 id="example-2-gitlab-cicd-pipeline-for-docker-deployment">Example 2: GitLab CI/CD Pipeline for Docker Deployment</h3>
 <p>Here is an example of a GitLab CI/CD pipeline script that deploys a Docker container:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">docker</span><span class="o">:</span><span class="n">latest</span>
+<pre><code class="language-yml">image: docker:latest
 
-<span class="n">services</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">docker</span><span class="o">:</span><span class="n">dind</span>
+services:
+  - docker:dind
 
-<span class="n">stages</span><span class="o">:</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">build</span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">deploy</span>
+stages:
+  - build
+  - deploy
 
-<span class="n">build</span><span class="o">:</span>
-<span class="w">  </span><span class="n">stage</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
-<span class="w">  </span><span class="n">script</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="n">myapp</span><span class="w"> </span><span class="o">.</span>
-<span class="w">  </span><span class="n">artifacts</span><span class="o">:</span>
-<span class="w">    </span><span class="n">paths</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">$CI_PROJECT_DIR</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">image</span><span class="o">.</span><span class="na">tar</span>
+build:
+  stage: build
+  script:
+    - docker build -t myapp .
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/docker-image.tar
 
-<span class="n">deploy</span><span class="o">:</span>
-<span class="w">  </span><span class="n">stage</span><span class="o">:</span><span class="w"> </span><span class="n">deploy</span>
-<span class="w">  </span><span class="n">script</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="n">myapp</span><span class="o">:</span><span class="n">latest</span><span class="w"> </span><span class="n">$CI_REGISTRY_IMAGE</span><span class="o">:</span><span class="n">latest</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">push</span><span class="w"> </span><span class="n">$CI_REGISTRY_IMAGE</span><span class="o">:</span><span class="n">latest</span>
-</code></pre></div>
-
+deploy:
+  stage: deploy
+  script:
+    - docker tag myapp:latest $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+</code></pre>
 <p>This script defines a pipeline with two stages: build and deploy. The build stage builds a Docker image, and the deploy stage pushes the image to a registry.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions for DevOps and CI/CD:</p>
@@ -230,26 +228,25 @@
 </ul>
 <h3 id="example-3-circleci-configuration-for-security-scanning">Example 3: CircleCI Configuration for Security Scanning</h3>
 <p>Here is an example of a CircleCI configuration file that enables security scanning:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">2.1</span>
+<pre><code class="language-yml">version: 2.1
 
-<span class="n">jobs</span><span class="o">:</span>
-<span class="w">  </span><span class="n">build</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">test</span><span class="o">:</span>
-<span class="w">    </span><span class="n">docker</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">circleci</span><span class="o">/</span><span class="n">node</span><span class="o">:</span><span class="mi">14</span>
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/node:14
 
-<span class="w">    </span><span class="n">steps</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">checkout</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">test</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">audit</span>
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - run: npm audit
 
-<span class="n">workflows</span><span class="o">:</span>
-<span class="w">  </span><span class="n">version</span><span class="o">:</span><span class="w"> </span><span class="mf">2.1</span>
-<span class="w">  </span><span class="n">build</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">test</span><span class="o">:</span>
-<span class="w">    </span><span class="n">jobs</span><span class="o">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">build</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">test</span>
-</code></pre></div>
-
+workflows:
+  version: 2.1
+  build-and-test:
+    jobs:
+      - build-and-test
+</code></pre>
 <p>This configuration file defines a job that runs npm audit to scan for security vulnerabilities in the application.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>Here are some real-world use cases for DevOps and CI/CD:

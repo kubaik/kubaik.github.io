@@ -161,19 +161,18 @@
 <li><strong>Token Response</strong>: The authorization server responds with an access token, which the client uses to access protected resources.</li>
 </ol>
 <p>For example, when using the Google OAuth 2.0 API, the client registration step involves creating a project in the Google Cloud Console and enabling the OAuth 2.0 API. The client ID and client secret are then used to authenticate the client.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client ID and client secret</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Client ID and client secret
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Authorization URL</span>
-<span class="n">authorization_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://accounts.google.com/o/oauth2/v2/auth?response_type=code&amp;client_id=</span><span class="si">{</span><span class="n">client_id</span><span class="si">}</span><span class="s2">&amp;redirect_uri=http://localhost:8080&amp;scope=profile&quot;</span>
+# Authorization URL
+authorization_url = f&quot;https://accounts.google.com/o/oauth2/v2/auth?response_type=code&amp;client_id={client_id}&amp;redirect_uri=http://localhost:8080&amp;scope=profile&quot;
 
-<span class="c1"># Redirect the user to the authorization URL</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please visit: </span><span class="si">{</span><span class="n">authorization_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Redirect the user to the authorization URL
+print(f&quot;Please visit: {authorization_url}&quot;)
+</code></pre>
 <h3 id="openid-connect">OpenID Connect</h3>
 <p>OpenID Connect (OIDC) is an identity layer on top of OAuth 2.0, providing a standardized way for clients to authenticate users. OIDC introduces the concept of an ID token, which contains the user's identity information. The OIDC flow involves the following steps:</p>
 <ol>
@@ -184,19 +183,18 @@
 <li><strong>Token Response</strong>: The authorization server responds with an ID token and access token, which the client uses to authenticate the user and access protected resources.</li>
 </ol>
 <p>For example, when using the Okta OIDC API, the client registration step involves creating an application in the Okta dashboard and configuring the authorization server.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client ID and client secret</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Client ID and client secret
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Authorization URL</span>
-<span class="n">authorization_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://your_okta_domain.com/oauth2/v1/authorize?response_type=code&amp;client_id=</span><span class="si">{</span><span class="n">client_id</span><span class="si">}</span><span class="s2">&amp;redirect_uri=http://localhost:8080&amp;scope=openid profile&quot;</span>
+# Authorization URL
+authorization_url = f&quot;https://your_okta_domain.com/oauth2/v1/authorize?response_type=code&amp;client_id={client_id}&amp;redirect_uri=http://localhost:8080&amp;scope=openid profile&quot;
 
-<span class="c1"># Redirect the user to the authorization URL</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please visit: </span><span class="si">{</span><span class="n">authorization_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Redirect the user to the authorization URL
+print(f&quot;Please visit: {authorization_url}&quot;)
+</code></pre>
 <h3 id="implementation-details">Implementation Details</h3>
 <p>When implementing OAuth 2.0 and OIDC, there are several details to consider:</p>
 <ul>
@@ -255,44 +253,43 @@
 <li><strong>Token Request</strong>: The client exchanges the authorization code for an access token and ID token.</li>
 <li><strong>Token Response</strong>: The authorization server responds with an access token and ID token, which the client uses to authenticate the user and access protected resources.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Client ID and client secret</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;your_client_id&quot;</span>
-<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;your_client_secret&quot;</span>
+# Client ID and client secret
+client_id = &quot;your_client_id&quot;
+client_secret = &quot;your_client_secret&quot;
 
-<span class="c1"># Authorization URL</span>
-<span class="n">authorization_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://your_okta_domain.com/oauth2/v1/authorize?response_type=code&amp;client_id=</span><span class="si">{</span><span class="n">client_id</span><span class="si">}</span><span class="s2">&amp;redirect_uri=http://localhost:8080&amp;scope=openid profile&quot;</span>
+# Authorization URL
+authorization_url = f&quot;https://your_okta_domain.com/oauth2/v1/authorize?response_type=code&amp;client_id={client_id}&amp;redirect_uri=http://localhost:8080&amp;scope=openid profile&quot;
 
-<span class="c1"># Redirect the user to the authorization URL</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please visit: </span><span class="si">{</span><span class="n">authorization_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Redirect the user to the authorization URL
+print(f&quot;Please visit: {authorization_url}&quot;)
 
-<span class="c1"># Handle the redirect</span>
-<span class="k">def</span> <span class="nf">handle_redirect</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="c1"># Get the authorization code</span>
-    <span class="n">authorization_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">)</span>
+# Handle the redirect
+def handle_redirect(request):
+    # Get the authorization code
+    authorization_code = request.args.get(&quot;code&quot;)
 
-    <span class="c1"># Exchange the authorization code for an access token and ID token</span>
-    <span class="n">token_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://your_okta_domain.com/oauth2/v1/token&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">}</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">authorization_code</span><span class="p">,</span>
-        <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8080&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span>
-        <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span>
-    <span class="p">}</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">token_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    # Exchange the authorization code for an access token and ID token
+    token_url = f&quot;https://your_okta_domain.com/oauth2/v1/token&quot;
+    headers = {&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;}
+    data = {
+        &quot;grant_type&quot;: &quot;authorization_code&quot;,
+        &quot;code&quot;: authorization_code,
+        &quot;redirect_uri&quot;: &quot;http://localhost:8080&quot;,
+        &quot;client_id&quot;: client_id,
+        &quot;client_secret&quot;: client_secret
+    }
+    response = requests.post(token_url, headers=headers, data=data)
 
-    <span class="c1"># Get the access token and ID token</span>
-    <span class="n">access_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-    <span class="n">id_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id_token&quot;</span><span class="p">]</span>
+    # Get the access token and ID token
+    access_token = response.json()[&quot;access_token&quot;]
+    id_token = response.json()[&quot;id_token&quot;]
 
-    <span class="c1"># Use the access token and ID token to authenticate the user and access protected resources</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Access token: </span><span class="si">{</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ID token: </span><span class="si">{</span><span class="n">id_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+    # Use the access token and ID token to authenticate the user and access protected resources
+    print(f&quot;Access token: {access_token}&quot;)
+    print(f&quot;ID token: {id_token}&quot;)
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, OAuth 2.0 and OpenID Connect are two widely adopted protocols for authentication and authorization. By understanding the details of these protocols, developers can implement secure and scalable authentication and authorization systems. Some key takeaways include:</p>
 <ul>

@@ -162,77 +162,74 @@
 <p>Let's consider a real-world example of implementing a data warehousing solution for an e-commerce company. The company has multiple data sources, including a transactional database, log files, and social media platforms. The goal is to create a data warehouse that can store and analyze data from these sources to gain insights into customer behavior and sales trends.</p>
 <h3 id="step-1-data-ingestion">Step 1: Data Ingestion</h3>
 <p>The first step is to ingest data from the various sources into the data warehouse. We can use Apache NiFi to extract data from the transactional database and log files, and AWS Glue to extract data from social media platforms. Here's an example of how to use Apache NiFi to ingest data from a transactional database:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">nifi</span> <span class="kn">import</span> <span class="n">NiFi</span>
-<span class="kn">from</span> <span class="nn">nifi.components</span> <span class="kn">import</span> <span class="n">Processor</span>
+<pre><code class="language-python">from nifi import NiFi
+from nifi.components import Processor
 
-<span class="c1"># Create a NiFi instance</span>
-<span class="n">nifi</span> <span class="o">=</span> <span class="n">NiFi</span><span class="p">(</span><span class="s1">&#39;http://localhost:8080/nifi&#39;</span><span class="p">)</span>
+# Create a NiFi instance
+nifi = NiFi('http://localhost:8080/nifi')
 
-<span class="c1"># Create a processor to extract data from the transactional database</span>
-<span class="n">processor</span> <span class="o">=</span> <span class="n">Processor</span><span class="p">(</span><span class="s1">&#39;ExtractData&#39;</span><span class="p">)</span>
-<span class="n">processor</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;database&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
-    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="s1">&#39;SELECT * FROM sales&#39;</span>
-<span class="p">}</span>
+# Create a processor to extract data from the transactional database
+processor = Processor('ExtractData')
+processor.properties = {
+    'database': 'mysql',
+    'host': 'localhost',
+    'port': 3306,
+    'username': 'username',
+    'password': 'password',
+    'query': 'SELECT * FROM sales'
+}
 
-<span class="c1"># Add the processor to the NiFi instance</span>
-<span class="n">nifi</span><span class="o">.</span><span class="n">add_processor</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+# Add the processor to the NiFi instance
+nifi.add_processor(processor)
 
-<span class="c1"># Start the NiFi instance</span>
-<span class="n">nifi</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</code></pre></div>
-
+# Start the NiFi instance
+nifi.start()
+</code></pre>
 <p>This code creates a NiFi instance and adds a processor to extract data from a MySQL database. The processor is configured to connect to the database, execute a query, and extract the data.</p>
 <h3 id="step-2-data-storage">Step 2: Data Storage</h3>
 <p>Once the data is ingested, it needs to be stored in a centralized repository. We can use Amazon Redshift as the data storage solution. Here's an example of how to create a Redshift cluster and load data into it:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a Redshift cluster</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">CLUSTER</span><span class="w"> </span><span class="n">mycluster</span>
-<span class="w">  </span><span class="k">WITH</span>
-<span class="w">    </span><span class="n">dbversion</span><span class="w"> </span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">cluster_type</span><span class="w"> </span><span class="s1">&#39;multi-node&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">node_type</span><span class="w"> </span><span class="s1">&#39;dc2.large&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">num_nodes</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<pre><code class="language-sql">-- Create a Redshift cluster
+CREATE CLUSTER mycluster
+  WITH
+    dbversion '1.0',
+    cluster_type 'multi-node',
+    node_type 'dc2.large',
+    num_nodes 4;
 
-<span class="c1">-- Create a table to store the data</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">customer_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">  </span><span class="n">sale_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span>
-<span class="w">  </span><span class="n">sale_amount</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<span class="p">);</span>
+-- Create a table to store the data
+CREATE TABLE sales (
+  id INT,
+  customer_id INT,
+  product_id INT,
+  sale_date DATE,
+  sale_amount DECIMAL(10, 2)
+);
 
-<span class="c1">-- Load data into the table</span>
-<span class="k">COPY</span><span class="w"> </span><span class="n">sales</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;s3://mybucket/sales.csv&#39;</span>
-<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
-<span class="n">CSV</span>
-<span class="n">IGNOREHEADER</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-
+-- Load data into the table
+COPY sales
+FROM 's3://mybucket/sales.csv'
+DELIMITER ','
+CSV
+IGNOREHEADER 1;
+</code></pre>
 <p>This code creates a Redshift cluster, creates a table to store the data, and loads the data into the table from a CSV file stored in an S3 bucket.</p>
 <h3 id="step-3-data-processing">Step 3: Data Processing</h3>
 <p>Once the data is stored, it needs to be processed to make it suitable for analysis. We can use Apache Spark to process the data. Here's an example of how to use Spark to process the data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<pre><code class="language-python">from pyspark.sql import SparkSession
 
-<span class="c1"># Create a Spark session</span>
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s1">&#39;Data Processing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+# Create a Spark session
+spark = SparkSession.builder.appName('Data Processing').getOrCreate()
 
-<span class="c1"># Load the data into a Spark dataframe</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;s3://mybucket/sales.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Load the data into a Spark dataframe
+df = spark.read.csv('s3://mybucket/sales.csv', header=True, inferSchema=True)
 
-<span class="c1"># Process the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sale_amount&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s1">&#39;customer_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;sale_amount&#39;</span><span class="p">)</span>
+# Process the data
+df = df.filter(df['sale_amount'] &gt; 100)
+df = df.groupBy('customer_id').sum('sale_amount')
 
-<span class="c1"># Save the processed data</span>
-<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="s1">&#39;s3://mybucket/processed_data&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Save the processed data
+df.write.parquet('s3://mybucket/processed_data')
+</code></pre>
 <p>This code creates a Spark session, loads the data into a Spark dataframe, processes the data by filtering and grouping it, and saves the processed data to a Parquet file stored in an S3 bucket.</p>
 <h2 id="benefits-of-data-warehousing">Benefits of Data Warehousing</h2>
 <p>The benefits of data warehousing include:</p>

@@ -159,22 +159,20 @@
 <p>When selecting an APM tool or platform, it's essential to consider factors such as scalability, ease of use, and integration with existing systems.</p>
 <h2 id="code-level-performance-optimization">Code-Level Performance Optimization</h2>
 <p>Code-level performance optimization is a critical aspect of APM, involving the identification and resolution of performance bottlenecks in application code. Here's an example of how to use the <code>cProfile</code> module in Python to profile a function and identify performance bottlenecks:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">cProfile</span>
+<pre><code class="language-python">import cProfile
 
-<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
-    <span class="c1"># Simulate some work</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="k">pass</span>
+def my_function():
+    # Simulate some work
+    for i in range(1000000):
+        pass
 
-<span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;my_function()&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+cProfile.run('my_function()')
+</code></pre>
 <p>This code will generate a profile report highlighting the performance bottlenecks in the <code>my_function</code> function. By analyzing this report, developers can identify areas for optimization and implement targeted improvements.</p>
 <h3 id="database-query-optimization">Database Query Optimization</h3>
 <p>Database query optimization is another critical area of APM, involving the optimization of database queries to improve application performance. Here's an example of how to use the <code>EXPLAIN</code> statement in MySQL to analyze a query and identify optimization opportunities:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT * FROM users WHERE country='USA';
+</code></pre>
 <p>This query will generate a report detailing the query execution plan, including the index used, the number of rows scanned, and the estimated query cost. By analyzing this report, developers can identify opportunities for optimization, such as adding indexes or rewriting the query.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>APM has numerous real-world use cases, including:

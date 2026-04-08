@@ -149,18 +149,16 @@
 <p>Indexes are crucial for speeding up data retrieval operations. A well-placed index can drastically reduce the time it takes to search through large datasets. However, poor indexing can lead to performance degradation and increased storage requirements.</p>
 <h3 id="practical-example">Practical Example</h3>
 <p>Suppose you have a table <code>users</code> with the following structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</code></pre>
 <p>If you frequently query users by their username, you can create an index like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_username</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_username ON users(username);
+</code></pre>
 <h3 id="metrics-before-and-after">Metrics Before and After</h3>
 <ul>
 <li><strong>Before Indexing:</strong> A query to find a user by username might take 200 ms on a dataset of 1 million rows.</li>
@@ -173,16 +171,14 @@
 <p>Inefficient queries can lead to slow responses and high resource consumption. Analyzing and optimizing your queries is essential for database performance.</p>
 <h3 id="example-of-query-optimization">Example of Query Optimization</h3>
 <p>Consider the following inefficient query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM orders WHERE user_id IN (SELECT id FROM users WHERE country = 'USA');
+</code></pre>
 <p>This can be optimized using a JOIN:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="o">*</span><span class="w"> </span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT o.* 
+FROM orders o
+JOIN users u ON o.user_id = u.id
+WHERE u.country = 'USA';
+</code></pre>
 <h3 id="metrics-to-watch">Metrics to Watch</h3>
 <ul>
 <li><strong>Before Optimization:</strong> The original query might consume 300 ms.</li>
@@ -190,12 +186,11 @@
 </ul>
 <h3 id="tools-for-query-analysis">Tools for Query Analysis</h3>
 <p>Use the <strong>EXPLAIN</strong> command to analyze the execution plan of your queries:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="o">*</span><span class="w"> </span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
-<span class="k">JOIN</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;USA&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">EXPLAIN SELECT o.* 
+FROM orders o
+JOIN users u ON o.user_id = u.id
+WHERE u.country = 'USA';
+</code></pre>
 <p>This will give you insights into how your query is executed and where bottlenecks may occur.</p>
 <h2 id="3-database-configuration">3. Database Configuration</h2>
 <h3 id="importance-of-configuration">Importance of Configuration</h3>
@@ -207,10 +202,9 @@
 <li><strong>work_mem:</strong> This affects the memory used for sorting and hash tables. Increase this for complex queries, but be cautious as it applies per connection.</li>
 </ul>
 <p>To adjust these settings, you can modify the <code>postgresql.conf</code> file:</p>
-<div class="codehilite"><pre><span></span><code>shared_buffers = 4GB
+<pre><code class="language-plaintext">shared_buffers = 4GB
 work_mem = 64MB
-</code></pre></div>
-
+</code></pre>
 <p>After making changes, restart PostgreSQL to apply them.</p>
 <h3 id="benchmarking-after-configuration">Benchmarking After Configuration</h3>
 <p>Utilize tools like <strong>pgBench</strong> or <strong>JMeter</strong> to benchmark the performance of your queries before and after configuration changes. You might observe a reduction in query runtime from 150 ms to 60 ms, depending on the workload.</p>
@@ -219,15 +213,14 @@ work_mem = 64MB
 <p>Normalization reduces data redundancy and improves data integrity. However, excessive normalization can lead to complex queries that might slow down performance.</p>
 <h3 id="example-of-denormalization">Example of Denormalization</h3>
 <p>If you frequently query user data along with their orders, consider denormalizing the data:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">user_orders</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-<span class="w">    </span><span class="n">order_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">order_date</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="p">,</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE user_orders (
+    user_id INT,
+    username VARCHAR(50),
+    order_id INT,
+    order_date TIMESTAMP,
+    ...
+);
+</code></pre>
 <h3 id="metrics">Metrics</h3>
 <ul>
 <li><strong>Normalized Queries:</strong> 120 ms for complex joins.</li>
@@ -242,9 +235,8 @@ work_mem = 64MB
 <p>Archiving old data and partitioning tables can lead to performance improvements by reducing the amount of data the database needs to scan during queries.</p>
 <h3 id="example-of-partitioning-in-postgresql">Example of Partitioning in PostgreSQL</h3>
 <p>Assuming you have a large <code>orders</code> table, you can partition it by year:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders_2022</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE TABLE orders_2022 PARTITION OF orders FOR VALUES FROM ('2022-01-01') TO ('2023-01-01');
+</code></pre>
 <h3 id="performance-metrics">Performance Metrics</h3>
 <ul>
 <li><strong>Before Partitioning:</strong> Full table scans could take 500 ms.</li>
@@ -257,17 +249,16 @@ work_mem = 64MB
 <p>Connection pooling reduces the overhead of establishing database connections by maintaining a pool of active connections. This is particularly important in high-concurrency environments.</p>
 <h3 id="example-with-pgbouncer">Example with pgBouncer</h3>
 <p>For PostgreSQL, you can use <strong>pgBouncer</strong> to implement connection pooling. Here's a basic configuration to get started:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[databases]</span>
-<span class="na">mydb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">host=localhost dbname=mydb user=myuser password=mypassword</span>
+<pre><code class="language-plaintext">[databases]
+mydb = host=localhost dbname=mydb user=myuser password=mypassword
 
-<span class="k">[pgbouncer]</span>
-<span class="na">listen_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">6432</span>
-<span class="na">listen_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">*</span>
-<span class="na">pool_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">session</span>
-<span class="na">max_client_conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">100</span>
-<span class="na">default_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">20</span>
-</code></pre></div>
-
+[pgbouncer]
+listen_port = 6432
+listen_addr = *
+pool_mode = session
+max_client_conn = 100
+default_pool_size = 20
+</code></pre>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <ul>
 <li><strong>Without Pooling:</strong> Average connection time could be 150 ms.</li>

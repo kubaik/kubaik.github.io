@@ -159,39 +159,37 @@
 <h3 id="ios-design-guidelines">iOS Design Guidelines</h3>
 <p>For iOS, designers should follow the official Human Interface Guidelines, which provide detailed recommendations for typography, color, and layout. For example, the guidelines recommend using the San Francisco font family, with a minimum font size of 17 points for body text.</p>
 <p>Here's an example of how to implement the San Francisco font family in Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+<pre><code class="language-swift">import UIKit
 
-<span class="kd">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
-    <span class="kr">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kc">super</span><span class="p">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
-        <span class="kd">let</span> <span class="nv">label</span> <span class="p">=</span> <span class="bp">UILabel</span><span class="p">()</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="p">=</span> <span class="p">.</span><span class="n">systemFont</span><span class="p">(</span><span class="n">ofSize</span><span class="p">:</span> <span class="mi">17</span><span class="p">)</span>
-        <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="s">&quot;Hello, World!&quot;</span>
-        <span class="n">view</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 17)
+        label.text = &quot;Hello, World!&quot;
+        view.addSubview(label)
+    }
+}
+</code></pre>
 <p>In this example, we're using the <code>systemFont</code> method to set the font to San Francisco, with a font size of 17 points.</p>
 <h3 id="android-design-guidelines">Android Design Guidelines</h3>
 <p>For Android, designers should follow the official Material Design guidelines, which provide recommendations for typography, color, and layout. For example, the guidelines recommend using the Roboto font family, with a minimum font size of 14 points for body text.</p>
 <p>Here's an example of how to implement the Roboto font family in Kotlin:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">android.app.Activity</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">android.widget.TextView</span>
+<pre><code class="language-kotlin">import android.app.Activity
+import android.os.Bundle
+import android.widget.TextView
 
-<span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Activity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TextView</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-<span class="w">        </span><span class="n">label</span><span class="p">.</span><span class="na">typeface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Typeface</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="s">&quot;sans-serif&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Typeface</span><span class="p">.</span><span class="na">NORMAL</span><span class="p">)</span>
-<span class="w">        </span><span class="n">label</span><span class="p">.</span><span class="na">textSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14f</span>
-<span class="w">        </span><span class="n">label</span><span class="p">.</span><span class="na">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, World!&quot;</span>
-<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class MainActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val label = TextView(this)
+        label.typeface = Typeface.create(&quot;sans-serif&quot;, Typeface.NORMAL)
+        label.textSize = 14f
+        label.text = &quot;Hello, World!&quot;
+        setContentView(label)
+    }
+}
+</code></pre>
 <p>In this example, we're using the <code>Typeface</code> class to set the font to Roboto, with a font size of 14 points.</p>
 <h2 id="implementing-mobile-uiux-best-practices">Implementing Mobile UI/UX Best Practices</h2>
 <p>To create effective mobile UI/UX, designers should follow best practices that prioritize simplicity, consistency, and usability. Here are some key principles to keep in mind:</p>
@@ -221,31 +219,30 @@
 <li><strong>Design systems</strong>: Implement design systems that provide a centralized repository of design elements, such as typography and color, to ensure consistency throughout the app.</li>
 </ul>
 <p>Here's an example of how to implement a design system in React Native:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React from 'react';
+import { View, Text } from 'react-native';
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">DesignSystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">typography</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fontFamily</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Open Sans&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">17</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">primary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#3498db&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">secondary</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#f1c40f&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const DesignSystem = {
+  typography: {
+    fontFamily: 'Open Sans',
+    fontSize: 17,
+  },
+  color: {
+    primary: '#3498db',
+    secondary: '#f1c40f',
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">View</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flex</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">justifyContent</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">alignItems</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;center&#39;</span><span class="w"> </span><span class="p">}}&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{[</span><span class="nx">DesignSystem</span><span class="p">.</span><span class="nx">typography</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">DesignSystem</span><span class="p">.</span><span class="nx">color</span><span class="p">.</span><span class="nx">primary</span><span class="w"> </span><span class="p">}]}&gt;</span>
-<span class="w">        </span><span class="nx">Hello</span><span class="p">,</span><span class="w"> </span><span class="nx">World</span><span class="o">!</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
-
+const App = () =&gt; {
+  return (
+    &lt;View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}&gt;
+      &lt;Text style={[DesignSystem.typography, { color: DesignSystem.color.primary }]}&gt;
+        Hello, World!
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+};
+</code></pre>
 <p>In this example, we're defining a design system that provides a centralized repository of design elements, such as typography and color. We're then using these elements to style our app's UI components.</p>
 <h2 id="real-world-examples-and-case-studies">Real-World Examples and Case Studies</h2>
 <p>To illustrate the effectiveness of mobile UI/UX best practices, let's consider some real-world examples and case studies:</p>

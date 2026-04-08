@@ -178,26 +178,24 @@
 </ul>
 <h3 id="example-combining-css-and-javascript">Example: Combining CSS and JavaScript</h3>
 <p>You can use Webpack to bundle and minify your JavaScript files. Here's a snippet of a simple Webpack configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const path = require('path');
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">entry</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bundle.js&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;production&#39;</span>
-<span class="p">};</span>
-</code></pre></div>
-
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  mode: 'production'
+};
+</code></pre>
 <h3 id="2-enable-compression">2. Enable Compression</h3>
 <p>Enabling Gzip compression can reduce the size of your HTML, CSS, and JavaScript files by up to 70%.</p>
 <h4 id="solution-configuring-gzip-in-nginx">Solution: Configuring Gzip in Nginx</h4>
 <p>If you are using Nginx, you can enable Gzip compression by adding the following lines to your configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">gzip</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
-<span class="k">gzip_types</span><span class="w"> </span><span class="s">text/css</span><span class="w"> </span><span class="s">application/javascript</span><span class="w"> </span><span class="s">text/html</span><span class="w"> </span><span class="s">text/xml</span><span class="w"> </span><span class="s">application/xml</span><span class="w"> </span><span class="s">application/xml+rss</span><span class="w"> </span><span class="s">text/javascript</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-nginx">gzip on;
+gzip_types text/css application/javascript text/html text/xml application/xml application/xml+rss text/javascript;
+</code></pre>
 <h3 id="real-world-impact">Real-World Impact</h3>
 <p>According to a study by KeyCDN, enabling Gzip compression can decrease page load times by an average of 30-50%. </p>
 <h2 id="optimizing-back-end-performance">Optimizing Back-End Performance</h2>
@@ -205,13 +203,11 @@
 <p>Slow database queries can create significant performance bottlenecks. Use indexing to speed up data retrieval.</p>
 <h4 id="solution-use-indexing">Solution: Use Indexing</h4>
 <p>Consider the following SQL query:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;example@example.com&#39;</span><span class="p">;</span>
-</code></pre></div>
-
+<pre><code class="language-sql">SELECT * FROM users WHERE email = 'example@example.com';
+</code></pre>
 <p>To optimize this query, create an index on the email column:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-</code></pre></div>
-
+<pre><code class="language-sql">CREATE INDEX idx_email ON users(email);
+</code></pre>
 <h3 id="example-benchmarking-queries">Example: Benchmarking Queries</h3>
 <p>Use tools like <strong>MySQL EXPLAIN</strong> to analyze your queries. It provides insights into how MySQL executes your queries, helping you identify possible optimizations.</p>
 <ol>
@@ -225,22 +221,21 @@
 <h4 id="solution-use-redis-for-caching">Solution: Use Redis for Caching</h4>
 <p>Redis is an in-memory data structure store that can be used as a database, cache, and message broker.</p>
 <p><strong>Example: Caching with Redis in Node.js</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
 
-<span class="c1">// Set cache</span>
-<span class="nx">client</span><span class="p">.</span><span class="nx">setex</span><span class="p">(</span><span class="s1">&#39;user:1000&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">3600</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">user</span><span class="p">));</span>
+// Set cache
+client.setex('user:1000', 3600, JSON.stringify(user));
 
-<span class="c1">// Retrieve cache</span>
-<span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;user:1000&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Fetch from database</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Retrieve cache
+client.get('user:1000', (err, data) =&gt; {
+  if (data) {
+    console.log(JSON.parse(data));
+  } else {
+    // Fetch from database
+  }
+});
+</code></pre>
 <h3 id="real-world-metrics">Real-World Metrics</h3>
 <p>Using Redis for caching can lead to a 10x improvement in response times, especially for read-heavy applications.</p>
 <h2 id="leveraging-content-delivery-networks-cdns">Leveraging Content Delivery Networks (CDNs)</h2>
@@ -262,23 +257,21 @@
 <p>With mobile traffic accounting for over 50% of total web traffic, optimizing for mobile is non-negotiable.</p>
 <h3 id="1-use-responsive-design">1. Use Responsive Design</h3>
 <p>Make your website responsive using CSS media queries. This ensures that your site looks good on all devices.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">600px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">lightblue</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-css">@media (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+</code></pre>
 <h3 id="2-optimize-images">2. Optimize Images</h3>
 <p>Large images can slow down your site considerably. Use tools like <strong>ImageOptim</strong> or <strong>TinyPNG</strong> to compress images without quality loss.</p>
 <h3 id="example-image-optimization-with-webp">Example: Image Optimization with WebP</h3>
 <p>Convert images to the WebP format for better compression rates.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">picture</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;image.webp&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;image/webp&quot;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;image.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Description&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">picture</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;picture&gt;
+  &lt;source srcset=&quot;image.webp&quot; type=&quot;image/webp&quot;&gt;
+  &lt;img src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
+&lt;/picture&gt;
+</code></pre>
 <h3 id="conclusion">Conclusion</h3>
 <p>Optimizing application performance involves a multifaceted approach, addressing both front-end and back-end aspects. Here’s a quick recap of actionable steps:</p>
 <ol>

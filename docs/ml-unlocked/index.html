@@ -162,83 +162,80 @@
 <h2 id="practical-code-examples">Practical Code Examples</h2>
 <p>To illustrate the concepts, let's consider a few practical code examples using popular ML libraries.</p>
 <h3 id="example-1-linear-regression-with-scikit-learn">Example 1: Linear Regression with Scikit-Learn</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<pre><code class="language-python">import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
-<span class="c1"># Generate sample data</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# Generate sample data
+X = np.random.rand(100, 1)
+y = 3 * X + 2 + np.random.randn(100, 1)
 
-<span class="c1"># Split data into training and testing sets</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-<span class="c1"># Create and train a linear regression model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Create and train a linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R-squared score:&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
-</code></pre></div>
-
+# Evaluate the model
+score = model.score(X_test, y_test)
+print(&quot;R-squared score:&quot;, score)
+</code></pre>
 <p>This example demonstrates a simple linear regression model using Scikit-Learn, a popular Python library for ML. The model is trained on a synthetic dataset and evaluated on a separate test set.</p>
 <h3 id="example-2-image-classification-with-tensorflow-and-keras">Example 2: Image Classification with TensorFlow and Keras</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<pre><code class="language-python">import tensorflow as tf
 
-<span class="o">*</span><span class="n">Recommended</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://coursera.org/learn/machine-learning&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;nofollow sponsored&quot;</span><span class="o">&gt;</span><span class="n">Andrew</span> <span class="n">Ng</span><span class="s1">&#39;s Machine Learning Course&lt;/a&gt;*</span>
+*Recommended: &lt;a href=&quot;https://coursera.org/learn/machine-learning&quot; target=&quot;_blank&quot; rel=&quot;nofollow sponsored&quot;&gt;Andrew Ng's Machine Learning Course&lt;/a&gt;*
 
-<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+from tensorflow import keras
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import ImageDataGenerator
 
-<span class="c1"># Load the CIFAR-10 dataset</span>
-<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+# Load the CIFAR-10 dataset
+(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
 
-<span class="c1"># Normalize the data</span>
-<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
-<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+# Normalize the data
+x_train = x_train.astype('float32') / 255
+x_test = x_test.astype('float32') / 255
 
-<span class="c1"># Define the model architecture</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
-    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
-<span class="p">])</span>
+# Define the model architecture
+model = keras.Sequential([
+    keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)),
+    keras.layers.MaxPooling2D((2, 2)),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
 
-<span class="c1"># Compile the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+# Compile the model
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-</code></pre></div>
-
+# Train the model
+model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))
+</code></pre>
 <p>This example demonstrates a simple image classification model using TensorFlow and Keras, a popular deep learning library. The model is trained on the CIFAR-10 dataset and evaluated on a separate test set.</p>
 <h3 id="example-3-natural-language-processing-with-nltk-and-spacy">Example 3: Natural Language Processing with NLTK and spaCy</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import nltk
+from nltk.tokenize import word_tokenize
+import spacy
 
-<span class="c1"># Load the spaCy English language model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en_core_web_sm&#39;</span><span class="p">)</span>
+# Load the spaCy English language model
+nlp = spacy.load('en_core_web_sm')
 
-<span class="c1"># Define a sample text</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is a sample text for natural language processing.&quot;</span>
+# Define a sample text
+text = &quot;This is a sample text for natural language processing.&quot;
 
-<span class="c1"># Tokenize the text</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Tokenize the text
+tokens = word_tokenize(text)
 
-<span class="c1"># Perform part-of-speech tagging</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="n">pos_tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span>
+# Perform part-of-speech tagging
+doc = nlp(text)
+pos_tags = [token.pos_ for token in doc]
 
-<span class="c1"># Print the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tokens:&quot;</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Part-of-speech tags:&quot;</span><span class="p">,</span> <span class="n">pos_tags</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the results
+print(&quot;Tokens:&quot;, tokens)
+print(&quot;Part-of-speech tags:&quot;, pos_tags)
+</code></pre>
 <p>This example demonstrates a simple natural language processing (NLP) task using NLTK and spaCy, popular libraries for NLP. The example performs tokenization and part-of-speech tagging on a sample text.</p>
 <h2 id="tools-and-platforms">Tools and Platforms</h2>
 <p>Several tools and platforms are available for building and deploying ML models, including:

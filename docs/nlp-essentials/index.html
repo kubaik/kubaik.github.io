@@ -157,99 +157,91 @@
 <p>Tokenization is the process of splitting text into smaller components, called tokens. These tokens can be words, phrases, or sentences. This step is crucial for various NLP tasks, including text classification, sentiment analysis, and language modeling.</p>
 <h4 id="example-tokenizing-text-with-nltk">Example: Tokenizing Text with NLTK</h4>
 <p>The Natural Language Toolkit (NLTK) is a powerful Python library for NLP tasks. Below is a simple example of how to tokenize text using NLTK.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install NLTK if you haven&#39;t already</span>
-<span class="c1"># pip install nltk</span>
+<pre><code class="language-python"># Install NLTK if you haven't already
+# pip install nltk
 
-<span class="kn">import</span> <span class="nn">nltk</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>  <span class="c1"># Download the Punkt tokenizer models</span>
+import nltk
+nltk.download('punkt')  # Download the Punkt tokenizer models
 
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span><span class="p">,</span> <span class="n">sent_tokenize</span>
+from nltk.tokenize import word_tokenize, sent_tokenize
 
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Natural Language Processing is fascinating. It involves various techniques.&quot;</span>
-<span class="c1"># Tokenize into sentences</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sentences:&quot;</span><span class="p">,</span> <span class="n">sentences</span><span class="p">)</span>
+text = &quot;Natural Language Processing is fascinating. It involves various techniques.&quot;
+# Tokenize into sentences
+sentences = sent_tokenize(text)
+print(&quot;Sentences:&quot;, sentences)
 
-<span class="c1"># Tokenize into words</span>
-<span class="n">words</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Words:&quot;</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
-</code></pre></div>
-
+# Tokenize into words
+words = word_tokenize(text)
+print(&quot;Words:&quot;, words)
+</code></pre>
 <p><strong>Output:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Sentences</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Natural Language Processing is fascinating.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;It involves various techniques.&#39;</span><span class="p">]</span>
-<span class="n">Words</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Natural&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Language&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Processing&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;is&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;fascinating&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;It&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;involves&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;various&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;techniques&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="p">]</span>
-</code></pre></div>
-
+<pre><code>Sentences: ['Natural Language Processing is fascinating.', 'It involves various techniques.']
+Words: ['Natural', 'Language', 'Processing', 'is', 'fascinating', '.', 'It', 'involves', 'various', 'techniques', '.']
+</code></pre>
 <h3 id="2-part-of-speech-tagging">2. Part-of-Speech Tagging</h3>
 <p>Part-of-Speech (POS) tagging involves labeling words in a text with their corresponding parts of speech, such as nouns, verbs, adjectives, etc. This is essential for understanding the grammatical structure of sentences and can improve the performance of various NLP applications.</p>
 <h4 id="example-pos-tagging-with-spacy">Example: POS Tagging with SpaCy</h4>
 <p>SpaCy is another popular NLP library that supports POS tagging. Here's how you can use it:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install SpaCy and download the English model</span>
-<span class="c1"># pip install spacy</span>
-<span class="c1"># python -m spacy download en_core_web_sm</span>
+<pre><code class="language-python"># Install SpaCy and download the English model
+# pip install spacy
+# python -m spacy download en_core_web_sm
 
-<span class="kn">import</span> <span class="nn">spacy</span>
+import spacy
 
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Natural Language Processing is fascinating.&quot;</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
+text = &quot;Natural Language Processing is fascinating.&quot;
+doc = nlp(text)
 
-<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+for token in doc:
+    print(f&quot;{token.text}: {token.pos_}&quot;)
+</code></pre>
 <p><strong>Output:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Natural</span><span class="o">:</span><span class="w"> </span><span class="n">ADJ</span>
-<span class="n">Language</span><span class="o">:</span><span class="w"> </span><span class="n">NOUN</span>
-<span class="n">Processing</span><span class="o">:</span><span class="w"> </span><span class="n">NOUN</span>
-<span class="k">is</span><span class="o">:</span><span class="w"> </span><span class="n">AUX</span>
-<span class="n">fascinating</span><span class="o">:</span><span class="w"> </span><span class="n">ADJ</span>
-<span class="o">.:</span><span class="w"> </span><span class="n">PUNCT</span>
-</code></pre></div>
-
+<pre><code>Natural: ADJ
+Language: NOUN
+Processing: NOUN
+is: AUX
+fascinating: ADJ
+.: PUNCT
+</code></pre>
 <h3 id="3-named-entity-recognition">3. Named Entity Recognition</h3>
 <p>Named Entity Recognition (NER) is the process of identifying and classifying named entities in text into predefined categories such as person names, organizations, dates, etc. This technique is widely used in information retrieval and question-answering systems.</p>
 <h4 id="example-ner-with-hugging-face-transformers">Example: NER with Hugging Face Transformers</h4>
 <p>The Hugging Face Transformers library provides pre-trained models for NER. Below is an example using the BERT model:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Hugging Face Transformers</span>
-<span class="c1"># pip install transformers</span>
+<pre><code class="language-python"># Install Hugging Face Transformers
+# pip install transformers
 
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+from transformers import pipeline
 
-<span class="n">ner_pipeline</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;ner&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;dbmdz/bert-large-cased-finetuned-conll03-english&quot;</span><span class="p">)</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple Inc. was founded by Steve Jobs in 1976.&quot;</span>
-<span class="n">ner_results</span> <span class="o">=</span> <span class="n">ner_pipeline</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+ner_pipeline = pipeline(&quot;ner&quot;, model=&quot;dbmdz/bert-large-cased-finetuned-conll03-english&quot;)
+text = &quot;Apple Inc. was founded by Steve Jobs in 1976.&quot;
+ner_results = ner_pipeline(text)
 
-<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">ner_results</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entity</span><span class="p">[</span><span class="s1">&#39;word&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">entity</span><span class="p">[</span><span class="s1">&#39;entity_group&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (Score: </span><span class="si">{</span><span class="n">entity</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+for entity in ner_results:
+    print(f&quot;{entity['word']}: {entity['entity_group']} (Score: {entity['score']:.2f})&quot;)
+</code></pre>
 <p><strong>Output:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Apple</span><span class="o">:</span><span class="w"> </span><span class="n">ORG</span><span class="w"> </span><span class="o">(</span><span class="n">Score</span><span class="o">:</span><span class="w"> </span><span class="mf">0.99</span><span class="o">)</span>
-<span class="n">Steve</span><span class="o">:</span><span class="w"> </span><span class="n">PER</span><span class="w"> </span><span class="o">(</span><span class="n">Score</span><span class="o">:</span><span class="w"> </span><span class="mf">0.99</span><span class="o">)</span>
-<span class="mi">1976</span><span class="o">:</span><span class="w"> </span><span class="n">DATE</span><span class="w"> </span><span class="o">(</span><span class="n">Score</span><span class="o">:</span><span class="w"> </span><span class="mf">0.99</span><span class="o">)</span>
-</code></pre></div>
-
+<pre><code>Apple: ORG (Score: 0.99)
+Steve: PER (Score: 0.99)
+1976: DATE (Score: 0.99)
+</code></pre>
 <h3 id="4-sentiment-analysis">4. Sentiment Analysis</h3>
 <p>Sentiment analysis is the task of determining the emotional tone behind a body of text. This is particularly useful in social media monitoring, customer feedback analysis, and market research.</p>
 <h4 id="example-sentiment-analysis-with-textblob">Example: Sentiment Analysis with TextBlob</h4>
 <p>TextBlob is a simple library for processing textual data. Here's how to perform sentiment analysis using TextBlob:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install TextBlob</span>
-<span class="c1"># pip install textblob</span>
+<pre><code class="language-python"># Install TextBlob
+# pip install textblob
 
-<span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
+from textblob import TextBlob
 
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love programming in Python! It&#39;s so much fun.&quot;</span>
-<span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="n">sentiment</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">sentiment</span>
+text = &quot;I love programming in Python! It's so much fun.&quot;
+blob = TextBlob(text)
+sentiment = blob.sentiment
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Polarity: </span><span class="si">{</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span><span class="si">}</span><span class="s2">, Subjectivity: </span><span class="si">{</span><span class="n">sentiment</span><span class="o">.</span><span class="n">subjectivity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Polarity: {sentiment.polarity}, Subjectivity: {sentiment.subjectivity}&quot;)
+</code></pre>
 <p><strong>Output:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Polarity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.5</span><span class="o">,</span><span class="w"> </span><span class="n">Subjectivity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.6</span>
-</code></pre></div>
-
+<pre><code>Polarity: 0.5, Subjectivity: 0.6
+</code></pre>
 <ul>
 <li><strong>Polarity</strong> ranges from -1 (negative) to 1 (positive).</li>
 <li><strong>Subjectivity</strong> ranges from 0 (objective) to 1 (subjective).</li>
@@ -258,67 +250,64 @@
 <p>Word embeddings transform words into numerical vectors, allowing algorithms to understand the semantic meaning of words. Techniques like Word2Vec, GloVe, and FastText are widely used for creating word embeddings.</p>
 <h4 id="example-creating-word-embeddings-with-gensim">Example: Creating Word Embeddings with Gensim</h4>
 <p>Gensim is a library for topic modeling and document similarity. Here's how to create word embeddings using Word2Vec:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Gensim</span>
-<span class="c1"># pip install gensim</span>
+<pre><code class="language-python"># Install Gensim
+# pip install gensim
 
-<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span>
-<span class="kn">import</span> <span class="nn">nltk</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
+from gensim.models import Word2Vec
+import nltk
+nltk.download('punkt')
 
-<span class="c1"># Sample data</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Natural Language Processing is a field of AI.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Machine Learning techniques can be applied in NLP.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Deep Learning has revolutionized NLP.&quot;</span><span class="p">,</span>
-<span class="p">]</span>
+# Sample data
+sentences = [
+    &quot;Natural Language Processing is a field of AI.&quot;,
+    &quot;Machine Learning techniques can be applied in NLP.&quot;,
+    &quot;Deep Learning has revolutionized NLP.&quot;,
+]
 
-<span class="c1"># Tokenize the sentences</span>
-<span class="n">tokenized_sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
+# Tokenize the sentences
+tokenized_sentences = [nltk.word_tokenize(sentence.lower()) for sentence in sentences]
 
-<span class="c1"># Create Word2Vec model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">tokenized_sentences</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+# Create Word2Vec model
+model = Word2Vec(tokenized_sentences, vector_size=50, window=2, min_count=1, workers=4)
 
-<span class="c1"># Get vector for a word</span>
-<span class="n">vector</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;nlp&#39;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector for &#39;nlp&#39;:&quot;</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span>
-</code></pre></div>
-
+# Get vector for a word
+vector = model.wv['nlp']
+print(&quot;Vector for 'nlp':&quot;, vector)
+</code></pre>
 <h3 id="6-text-classification">6. Text Classification</h3>
 <p>Text classification involves categorizing text into predefined labels. This is extensively used in spam detection, topic labeling, and sentiment analysis.</p>
 <h4 id="example-text-classification-with-scikit-learn">Example: Text Classification with Scikit-learn</h4>
 <p>Scikit-learn is a robust library for machine learning. Here's a basic example of text classification using a Naive Bayes classifier:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Install Scikit-learn</span>
-<span class="c1"># pip install scikit-learn</span>
+<pre><code class="language-python"># Install Scikit-learn
+# pip install scikit-learn
 
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
 
-<span class="c1"># Sample data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;This movie is great!&quot;</span><span class="p">,</span> <span class="s2">&quot;positive&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;I didn&#39;t like this film.&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;It was okay, not the best.&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">),</span>
-<span class="p">]</span>
+# Sample data
+data = [
+    (&quot;This movie is great!&quot;, &quot;positive&quot;),
+    (&quot;I didn't like this film.&quot;, &quot;negative&quot;),
+    (&quot;It was okay, not the best.&quot;, &quot;neutral&quot;),
+]
 
-<span class="c1"># Splitting data into training and testing</span>
-<span class="n">train_texts</span><span class="p">,</span> <span class="n">train_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
+# Splitting data into training and testing
+train_texts, train_labels = zip(*data)
 
-<span class="c1"># Create a pipeline for vectorization and classification</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">CountVectorizer</span><span class="p">(),</span> <span class="n">MultinomialNB</span><span class="p">())</span>
+# Create a pipeline for vectorization and classification
+model = make_pipeline(CountVectorizer(), MultinomialNB())
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_texts</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+# Train the model
+model.fit(train_texts, train_labels)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="s2">&quot;I love this movie!&quot;</span><span class="p">,</span> <span class="s2">&quot;It was terrible.&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predictions:&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
-</code></pre></div>
-
+# Make predictions
+predictions = model.predict([&quot;I love this movie!&quot;, &quot;It was terrible.&quot;])
+print(&quot;Predictions:&quot;, predictions)
+</code></pre>
 <p><strong>Output:</strong></p>
-<div class="codehilite"><pre><span></span><code>Predictions: [&#39;positive&#39; &#39;negative&#39;]
-</code></pre></div>
-
+<pre><code>Predictions: ['positive' 'negative']
+</code></pre>
 <h2 id="tools-and-platforms-for-nlp">Tools and Platforms for NLP</h2>
 <h3 id="popular-nlp-libraries">Popular NLP Libraries</h3>
 <ul>

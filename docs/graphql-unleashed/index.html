@@ -154,55 +154,52 @@
 <p>One of the key benefits of GraphQL is its ability to reduce latency by allowing clients to specify exactly what data they need. This is in contrast to traditional REST APIs, which often return a large amount of unnecessary data. For example, consider a REST API that returns a list of users, including their names, email addresses, and profile pictures. If a client only needs the names and email addresses, it will still receive the profile pictures, which can increase latency and reduce performance.</p>
 <h3 id="graphql-schema-definition">GraphQL Schema Definition</h3>
 <p>To get started with GraphQL, you need to define a schema. A schema is a definition of the types of data that can be queried and mutated in your API. Here is an example of a simple GraphQL schema:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="w">  </span><span class="nl">email</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
-<span class="p">}</span>
+<pre><code class="language-graphql">type User {
+  id: ID!
+  name: String!
+  email: String!
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Query</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nl">users</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">User</span><span class="err">]</span>
-<span class="w">  </span><span class="n">user</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="p">}</span>
+type Query {
+  users: [User]
+  user(id: ID!): User
+}
 
-<span class="k">type</span><span class="w"> </span><span class="err">Mutation</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">createUser</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="w">  </span><span class="n">updateUser</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">User</span>
-<span class="p">}</span>
-</code></pre></div>
-
+type Mutation {
+  createUser(name: String!, email: String!): User
+  updateUser(id: ID!, name: String, email: String): User
+}
+</code></pre>
 <p>This schema defines a <code>User</code> type with <code>id</code>, <code>name</code>, and <code>email</code> fields, as well as <code>Query</code> and <code>Mutation</code> types that allow clients to retrieve and modify users.</p>
 <h2 id="implementing-a-graphql-api">Implementing a GraphQL API</h2>
 <p>To implement a GraphQL API, you can use a library such as Apollo Server or GraphQL Yoga. These libraries provide a number of features, including schema validation, query execution, and caching.</p>
 <p>For example, to implement the schema defined above using Apollo Server, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./schema&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./resolvers&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer } = require('apollo-server');
+const { typeDefs } = require('./schema');
+const { resolvers } = require('./resolvers');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">typeDefs</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">resolvers</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">context</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="p">}),</span>
-<span class="p">});</span>
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) =&gt; ({ req, res }),
+});
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server listening on </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`Server listening on ${url}`);
+});
+</code></pre>
 <p>This code defines an Apollo Server instance with the schema and resolvers defined above. It also sets up a context object that includes the request and response objects.</p>
 <h3 id="resolvers">Resolvers</h3>
 <p>Resolvers are functions that are responsible for fetching the data for a particular field. For example, to implement the <code>users</code> resolver, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Fetch users from database</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">users</span><span class="p">();</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const resolvers = {
+  Query: {
+    users: () =&gt; {
+      // Fetch users from database
+      return db.users();
+    },
+  },
+};
+</code></pre>
 <p>This code defines a <code>users</code> resolver that fetches the list of users from a database.</p>
 <h2 id="performance-optimization">Performance Optimization</h2>
 <p>One of the key benefits of GraphQL is its ability to improve performance. By allowing clients to specify exactly what data they need, GraphQL can reduce the amount of data that needs to be transferred over the network.</p>

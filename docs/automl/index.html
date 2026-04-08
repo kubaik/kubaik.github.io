@@ -180,53 +180,51 @@
 <h3 id="practical-code-examples">Practical Code Examples</h3>
 <p>Let's dive into some code snippets using Python and popular libraries to demonstrate automation in the ML pipeline.</p>
 <h4 id="example-1-automated-data-preprocessing-with-pandas">Example 1: Automated Data Preprocessing with <code>pandas</code></h4>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-<span class="c1"># Load dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load dataset
+df = pd.read_csv('data.csv')
 
-<span class="c1"># Handle missing values</span>
-<span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# Handle missing values
+df.fillna(df.mean(), inplace=True)
 
-<span class="c1"># Feature selection</span>
-<span class="n">features</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+# Feature selection
+features = df.drop('target', axis=1)
+target = df['target']
 
-<span class="c1"># Train-test split</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
 
-<span class="c1"># Standardization</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+# Standardization
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data preprocessing complete.&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+print(&quot;Data preprocessing complete.&quot;)
+</code></pre>
 <p><strong>Explanation</strong>: 
 - This snippet automates data preprocessing steps like handling missing values, feature selection, and standardization.
 - It uses <code>pandas</code> for data manipulation and <code>sklearn</code> for splitting the dataset and scaling features.</p>
 <h4 id="example-2-model-training-and-evaluation-using-scikit-learn">Example 2: Model Training and Evaluation Using <code>scikit-learn</code></h4>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-<span class="c1"># Train a Random Forest model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+# Train a Random Forest model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train_scaled, y_train)
 
-<span class="c1"># Make predictions</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+# Make predictions
+predictions = model.predict(X_test_scaled)
 
-<span class="c1"># Evaluate model performance</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
-<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+# Evaluate model performance
+accuracy = accuracy_score(y_test, predictions)
+report = classification_report(y_test, predictions)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">report</span><span class="p">)</span>
-</code></pre></div>
-
+print(f&quot;Model Accuracy: {accuracy:.2f}&quot;)
+print(&quot;Classification Report:\n&quot;, report)
+</code></pre>
 <p><strong>Explanation</strong>: 
 - This code snippet automates the model training and evaluation process. 
 - We use a Random Forest classifier from <code>scikit-learn</code> and print the model's accuracy and a detailed classification report.</p>
@@ -236,45 +234,42 @@
 <ul>
 <li><strong>Solution</strong>: Implement automated data validation checks. For instance, use <code>pandas</code> to check for duplicates, missing values, and outliers before proceeding with training.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Check for duplicates</span>
-<span class="n">duplicates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">duplicates</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s2"> duplicate rows. Removing duplicates.&quot;</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<pre><code class="language-python"># Check for duplicates
+duplicates = df.duplicated().sum()
+if duplicates &gt; 0:
+    print(f&quot;Found {duplicates} duplicate rows. Removing duplicates.&quot;)
+    df.drop_duplicates(inplace=True)
 
-<span class="c1"># Check for outliers</span>
-<span class="n">outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outliers detected: </span><span class="si">{</span><span class="n">outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+# Check for outliers
+outliers = (df &lt; (df.mean() - 3 * df.std())) | (df &gt; (df.mean() + 3 * df.std()))
+print(f&quot;Outliers detected: {outliers.sum()}&quot;)
+</code></pre>
 <h4 id="problem-2-model-drift">Problem 2: Model Drift</h4>
 <ul>
 <li><strong>Solution</strong>: Automate model monitoring using tools like Prometheus and Grafana to track performance metrics over time. Set up alerts for significant drops in accuracy that may require retraining.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Prometheus configuration for monitoring model metrics</span>
-<span class="nt">scrape_configs</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ml_model&#39;</span>
-<span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:8000&#39;</span><span class="p p-Indicator">]</span>
-</code></pre></div>
-
+<pre><code class="language-yaml"># Prometheus configuration for monitoring model metrics
+scrape_configs:
+  - job_name: 'ml_model'
+    static_configs:
+      - targets: ['localhost:8000']
+</code></pre>
 <h4 id="problem-3-deployment-challenges">Problem 3: Deployment Challenges</h4>
 <ul>
 <li><strong>Solution</strong>: Use containerization with Docker to ensure consistent deployment environments. Here’s a basic Dockerfile for a Python ML model:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c"># Dockerfile</span>
-<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.8-slim</span>
+<pre><code class="language-dockerfile"># Dockerfile
+FROM python:3.8-slim
 
-<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+WORKDIR /app
 
-<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
-<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+COPY . .
 
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-
+CMD [&quot;python&quot;, &quot;app.py&quot;]
+</code></pre>
 <h3 id="tools-and-platforms-for-mlops">Tools and Platforms for MLOps</h3>
 <ol>
 <li><strong>MLflow</strong>: An open-source platform for managing the ML lifecycle, including experimentation, reproducibility, and deployment.</li>

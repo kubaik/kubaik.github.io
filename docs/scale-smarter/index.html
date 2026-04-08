@@ -154,92 +154,89 @@
 <h3 id="load-balancing">Load Balancing</h3>
 <p>Load balancing is a technique used to distribute incoming traffic across multiple servers to improve responsiveness, reliability, and scalability. There are several load balancing algorithms, including round-robin, least connections, and IP hashing. For example, you can use the HAProxy load balancer to distribute traffic across multiple Apache servers.</p>
 <p>Here is an example of how to configure HAProxy to load balance traffic across two Apache servers:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># HAProxy configuration file</span>
+<pre><code class="language-bash"># HAProxy configuration file
 global
-<span class="w">    </span>maxconn<span class="w"> </span><span class="m">256</span>
+    maxconn 256
 
 defaults
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>timeout<span class="w"> </span>connect<span class="w"> </span>5000ms
-<span class="w">    </span>timeout<span class="w"> </span>client<span class="w">  </span>50000ms
-<span class="w">    </span>timeout<span class="w"> </span>server<span class="w">  </span>50000ms
+    mode http
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
 
-frontend<span class="w"> </span>http
-<span class="w">    </span><span class="nb">bind</span><span class="w"> </span>*:80
-<span class="w">    </span>default_backend<span class="w"> </span>apache
+frontend http
+    bind *:80
+    default_backend apache
 
-backend<span class="w"> </span>apache
-<span class="w">    </span>mode<span class="w"> </span>http
-<span class="w">    </span>balance<span class="w"> </span>roundrobin
-<span class="w">    </span>server<span class="w"> </span>apache1<span class="w"> </span><span class="m">192</span>.168.1.1:80<span class="w"> </span>check
-<span class="w">    </span>server<span class="w"> </span>apache2<span class="w"> </span><span class="m">192</span>.168.1.2:80<span class="w"> </span>check
-</code></pre></div>
-
+backend apache
+    mode http
+    balance roundrobin
+    server apache1 192.168.1.1:80 check
+    server apache2 192.168.1.2:80 check
+</code></pre>
 <p>In this example, HAProxy is configured to listen on port 80 and distribute traffic across two Apache servers using the round-robin algorithm. The <code>check</code> parameter is used to enable health checks for the Apache servers.</p>
 <h3 id="caching">Caching</h3>
 <p>Caching is a technique used to store frequently accessed data in memory or a faster storage medium to reduce the number of requests made to a database or other data source. There are several caching strategies, including time-to-live (TTL) caching, least recently used (LRU) caching, and most recently used (MRU) caching. For example, you can use the Redis in-memory data store to cache data for a web application.</p>
 <p>Here is an example of how to use Redis to cache data for a web application using Python and the Flask web framework:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import the required libraries</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
-<span class="kn">import</span> <span class="nn">redis</span>
+<pre><code class="language-python"># Import the required libraries
+from flask import Flask, jsonify
+import redis
 
-<span class="c1"># Create a Flask application</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+# Create a Flask application
+app = Flask(__name__)
 
-<span class="c1"># Create a Redis client</span>
-<span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Create a Redis client
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
-<span class="c1"># Define a route to retrieve data from the cache</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/data&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">get_data</span><span class="p">():</span>
-    <span class="c1"># Check if the data is cached</span>
-    <span class="n">cached_data</span> <span class="o">=</span> <span class="n">redis_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">cached_data</span><span class="p">:</span>
-        <span class="c1"># Return the cached data</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">cached_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)})</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Retrieve the data from the database</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">retrieve_data_from_database</span><span class="p">()</span>
-        <span class="c1"># Cache the data for 1 hour</span>
-        <span class="n">redis_client</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-        <span class="c1"># Return the data</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+# Define a route to retrieve data from the cache
+@app.route('/data')
+def get_data():
+    # Check if the data is cached
+    cached_data = redis_client.get('data')
+    if cached_data:
+        # Return the cached data
+        return jsonify({'data': cached_data.decode('utf-8')})
+    else:
+        # Retrieve the data from the database
+        data = retrieve_data_from_database()
+        # Cache the data for 1 hour
+        redis_client.setex('data', 3600, data)
+        # Return the data
+        return jsonify({'data': data})
 
-<span class="c1"># Define a function to retrieve data from the database</span>
-<span class="k">def</span> <span class="nf">retrieve_data_from_database</span><span class="p">():</span>
-    <span class="c1"># Simulate a database query</span>
-    <span class="k">return</span> <span class="s1">&#39;Data from database&#39;</span>
-</code></pre></div>
-
+# Define a function to retrieve data from the database
+def retrieve_data_from_database():
+    # Simulate a database query
+    return 'Data from database'
+</code></pre>
 <p>In this example, the Flask application uses the Redis client to cache data for 1 hour. If the data is cached, it is returned directly from the cache. Otherwise, the data is retrieved from the database, cached, and returned.</p>
 <h3 id="sharding">Sharding</h3>
 <p>Sharding is a technique used to distribute data across multiple servers to improve scalability and performance. There are several sharding strategies, including horizontal partitioning, vertical partitioning, and range-based partitioning. For example, you can use the MongoDB NoSQL database to shard data across multiple servers.</p>
 <p>Here is an example of how to configure MongoDB to shard data across two servers:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># MongoDB configuration file</span>
+<pre><code class="language-bash"># MongoDB configuration file
 sharding:
-<span class="w">  </span>clusterRole:<span class="w"> </span>configsvr
-<span class="w">  </span>configDB:<span class="w"> </span>config
+  clusterRole: configsvr
+  configDB: config
 
 replication:
-<span class="w">  </span>replSetName:<span class="w"> </span>rs0
+  replSetName: rs0
 
 net:
-<span class="w">  </span>port:<span class="w"> </span><span class="m">27017</span>
-<span class="w">  </span>bindIp:<span class="w"> </span><span class="m">192</span>.168.1.1
+  port: 27017
+  bindIp: 192.168.1.1
 
 security:
-<span class="w">  </span>authorization:<span class="w"> </span>enabled
-<span class="w">  </span>keyFile:<span class="w"> </span>/path/to/keyfile
+  authorization: enabled
+  keyFile: /path/to/keyfile
 
 shards:
-<span class="w">  </span>-<span class="w"> </span>_id:<span class="w"> </span><span class="m">1</span>
-<span class="w">    </span>host:<span class="w"> </span><span class="m">192</span>.168.1.1:27017
-<span class="w">    </span>state:<span class="w"> </span><span class="m">1</span>
-<span class="w">  </span>-<span class="w"> </span>_id:<span class="w"> </span><span class="m">2</span>
-<span class="w">    </span>host:<span class="w"> </span><span class="m">192</span>.168.1.2:27017
-<span class="w">    </span>state:<span class="w"> </span><span class="m">1</span>
-</code></pre></div>
-
+  - _id: 1
+    host: 192.168.1.1:27017
+    state: 1
+  - _id: 2
+    host: 192.168.1.2:27017
+    state: 1
+</code></pre>
 <p>In this example, MongoDB is configured to shard data across two servers using the <code>shards</code> parameter. The <code>_id</code> parameter is used to identify each shard, and the <code>host</code> parameter is used to specify the hostname and port of each shard.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Scalability patterns can be applied to a variety of use cases, including:</p>

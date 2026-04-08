@@ -185,15 +185,14 @@
 <li><strong>Responsive Design:</strong> CSS media queries and flexible layouts.</li>
 </ul>
 <h3 id="basic-architecture">Basic Architecture</h3>
-<div class="codehilite"><pre><span></span><code>Browser
+<pre><code class="language-plaintext">Browser
    |
    v
 Web App + Manifest + Service Worker
    |
    v
 Device (Desktop, Mobile, Tablet)
-</code></pre></div>
-
+</code></pre>
 <h3 id="workflow">Workflow</h3>
 <ol>
 <li><strong>Loading:</strong> The PWA loads like any web page.</li>
@@ -224,107 +223,102 @@ Device (Desktop, Mobile, Tablet)
 <h2 id="building-your-own-pwa-actionable-steps">Building Your Own PWA: Actionable Steps</h2>
 <h3 id="1-set-up-basic-web-application">1. Set Up Basic Web Application</h3>
 <p>Start with a responsive website that works well on all devices.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Your PWA<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;manifest&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/manifest.json&quot;</span> <span class="p">/&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to Your PWA<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;app.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+&lt;title&gt;Your PWA&lt;/title&gt;
+&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome to Your PWA&lt;/h1&gt;
+&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <h3 id="2-create-a-web-app-manifest">2. Create a Web App Manifest</h3>
 <p>Create a <code>manifest.json</code> file describing how your app appears when installed.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;short_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PWA&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;start_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;standalone&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;background_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;theme_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2196f3&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;icons&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/icons/icon-192.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192x192&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/icons/icon-512.png&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;512x512&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/png&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;My PWA&quot;,
+  &quot;short_name&quot;: &quot;PWA&quot;,
+  &quot;start_url&quot;: &quot;/&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#ffffff&quot;,
+  &quot;theme_color&quot;: &quot;#2196f3&quot;,
+  &quot;icons&quot;: [
+    {
+      &quot;src&quot;: &quot;/icons/icon-192.png&quot;,
+      &quot;sizes&quot;: &quot;192x192&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    },
+    {
+      &quot;src&quot;: &quot;/icons/icon-512.png&quot;,
+      &quot;sizes&quot;: &quot;512x512&quot;,
+      &quot;type&quot;: &quot;image/png&quot;
+    }
+  ]
+}
+</code></pre>
 <h3 id="3-register-a-service-worker">3. Register a Service Worker</h3>
 <p>Create a <code>service-worker.js</code> to cache assets and enable offline mode.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Register in main JavaScript</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">navigator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/service-worker.js&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">registration</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registered with scope:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">registration</span><span class="p">.</span><span class="nx">scope</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Service Worker registration failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">// Register in main JavaScript
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =&gt; {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration =&gt; {
+        console.log('Service Worker registered with scope:', registration.scope);
+      }).catch(error =&gt; {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+</code></pre>
 <p><strong>Basic Service Worker:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">CACHE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-pwa-cache-v1&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">urlsToCache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/index.html&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/app.js&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/styles.css&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/icons/icon-192.png&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;/icons/icon-512.png&#39;</span>
-<span class="p">];</span>
+<pre><code class="language-javascript">const CACHE_NAME = 'my-pwa-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/app.js',
+  '/styles.css',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
+];
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">CACHE_NAME</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">addAll</span><span class="p">(</span><span class="nx">urlsToCache</span><span class="p">))</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
+self.addEventListener('install', event =&gt; {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache =&gt; cache.addAll(urlsToCache))
+  );
+});
 
-<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;fetch&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">caches</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">request</span><span class="p">))</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+self.addEventListener('fetch', event =&gt; {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response =&gt; response || fetch(event.request))
+  );
+});
+</code></pre>
 <h3 id="4-enable-installation-and-add-to-home-screen">4. Enable Installation and Add to Home Screen</h3>
 <p>Prompt users to install the app by handling the <code>beforeinstallprompt</code> event and providing a custom UI.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">deferredPrompt</span><span class="p">;</span>
+<pre><code class="language-javascript">let deferredPrompt;
 
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;beforeinstallprompt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
-<span class="w">  </span><span class="nx">deferredPrompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">e</span><span class="p">;</span>
-<span class="w">  </span><span class="c1">// Show your custom install button</span>
-<span class="p">});</span>
+window.addEventListener('beforeinstallprompt', (e) =&gt; {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show your custom install button
+});
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">installBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;install-btn&#39;</span><span class="p">);</span>
-<span class="nx">installBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">deferredPrompt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">deferredPrompt</span><span class="p">.</span><span class="nx">prompt</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">deferredPrompt</span><span class="p">.</span><span class="nx">userChoice</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">choiceResult</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">deferredPrompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+const installBtn = document.getElementById('install-btn');
+installBtn.addEventListener('click', () =&gt; {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) =&gt; {
+      deferredPrompt = null;
+    });
+  }
+});
+</code></pre>
 <hr />
 <h2 id="best-practices-tips">Best Practices &amp; Tips</h2>
 <ul>

@@ -159,47 +159,46 @@
 * <strong>Interoperability</strong>: Kotlin is fully interoperable with Java, making it easy to integrate with existing Java-based systems and libraries.</p>
 <h2 id="practical-example-building-a-restful-api-with-kotlin-and-spring-boot">Practical Example: Building a RESTful API with Kotlin and Spring Boot</h2>
 <p>To demonstrate the power of Kotlin for backend development, let's build a simple RESTful API using Spring Boot. We'll create a API that exposes endpoints for creating, reading, updating, and deleting (CRUD) books.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// BookController.kt</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.*</span>
-<span class="k">import</span><span class="w"> </span><span class="nn">java.util.*</span>
+<pre><code class="language-kotlin">// BookController.kt
+import org.springframework.web.bind.annotation.*
+import java.util.*
 
-<span class="nd">@RestController</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/api/books&quot;</span><span class="p">)</span>
-<span class="kd">class</span><span class="w"> </span><span class="nc">BookController</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nd">@GetMapping</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getAllBooks</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return a list of all books</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">Book</span><span class="p">(</span><span class="s">&quot;Book 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Author 1&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">Book</span><span class="p">(</span><span class="s">&quot;Book 2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Author 2&quot;</span><span class="p">))</span>
-<span class="w">    </span><span class="p">}</span>
+@RestController
+@RequestMapping(&quot;/api/books&quot;)
+class BookController {
+    @GetMapping
+    fun getAllBooks(): List&lt;Book&gt; {
+        // Return a list of all books
+        return listOf(Book(&quot;Book 1&quot;, &quot;Author 1&quot;), Book(&quot;Book 2&quot;, &quot;Author 2&quot;))
+    }
 
-<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getBookById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="n">Book? </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Return a book by ID</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Book</span><span class="p">(</span><span class="s">&quot;Book </span><span class="si">$</span><span class="n">id</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Author </span><span class="si">$</span><span class="n">id</span><span class="s">&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
+    @GetMapping(&quot;/{id}&quot;)
+    fun getBookById(@PathVariable id: Int): Book? {
+        // Return a book by ID
+        return Book(&quot;Book $id&quot;, &quot;Author $id&quot;)
+    }
 
-<span class="w">    </span><span class="nd">@PostMapping</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">createBook</span><span class="p">(</span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">book</span><span class="p">:</span><span class="w"> </span><span class="n">Book</span><span class="p">):</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Create a new book</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">book</span>
-<span class="w">    </span><span class="p">}</span>
+    @PostMapping
+    fun createBook(@RequestBody book: Book): Book {
+        // Create a new book
+        return book
+    }
 
-<span class="w">    </span><span class="nd">@PutMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">updateBook</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">book</span><span class="p">:</span><span class="w"> </span><span class="n">Book</span><span class="p">):</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Update an existing book</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">book</span>
-<span class="w">    </span><span class="p">}</span>
+    @PutMapping(&quot;/{id}&quot;)
+    fun updateBook(@PathVariable id: Int, @RequestBody book: Book): Book {
+        // Update an existing book
+        return book
+    }
 
-<span class="w">    </span><span class="nd">@DeleteMapping</span><span class="p">(</span><span class="s">&quot;/{id}&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">deleteBook</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Delete a book by ID</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+    @DeleteMapping(&quot;/{id}&quot;)
+    fun deleteBook(@PathVariable id: Int) {
+        // Delete a book by ID
+    }
+}
 
-<span class="c1">// Book.kt</span>
-<span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Book</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">title</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">author</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
-</code></pre></div>
-
+// Book.kt
+data class Book(val title: String, val author: String)
+</code></pre>
 <p>In this example, we define a <code>BookController</code> class that handles HTTP requests for CRUD operations on books. We use Spring Boot's <code>@RestController</code> annotation to enable RESTful API support, and define endpoints for getting all books, getting a book by ID, creating a new book, updating an existing book, and deleting a book.</p>
 <h2 id="performance-benchmarks-kotlin-vs-java">Performance Benchmarks: Kotlin vs. Java</h2>
 <p>To evaluate the performance of Kotlin for backend development, we can compare it to Java. In a recent benchmarking study, the following results were obtained:

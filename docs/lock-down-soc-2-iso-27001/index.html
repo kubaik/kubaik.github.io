@@ -173,118 +173,115 @@
 </ol>
 <h3 id="example-implementing-access-control-using-aws-iam">Example: Implementing Access Control using AWS IAM</h3>
 <p>Here is an example of how to implement access control using AWS IAM:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create an IAM client</span>
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+# Create an IAM client
+iam = boto3.client('iam')
 
-<span class="c1"># Create a new user</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span>
-<span class="p">)</span>
+# Create a new user
+response = iam.create_user(
+    UserName='newuser'
+)
 
-<span class="c1"># Create a new group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span>
-<span class="p">)</span>
+# Create a new group
+response = iam.create_group(
+    GroupName='newgroup'
+)
 
-<span class="c1"># Add the user to the group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">add_user_to_group</span><span class="p">(</span>
-    <span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span><span class="p">,</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span>
-<span class="p">)</span>
+# Add the user to the group
+response = iam.add_user_to_group(
+    UserName='newuser',
+    GroupName='newgroup'
+)
 
-<span class="c1"># Create a new policy</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span>
-    <span class="n">PolicyName</span><span class="o">=</span><span class="s1">&#39;newpolicy&#39;</span><span class="p">,</span>
-    <span class="n">PolicyDocument</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="s1">&#39;2012-10-17&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Statement&#39;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s1">&#39;Sid&#39;</span><span class="p">:</span> <span class="s1">&#39;AllowEC2ReadOnly&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Effect&#39;</span><span class="p">:</span> <span class="s1">&#39;Allow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="s1">&#39;ec2:Describe*&#39;</span>
-                <span class="p">],</span>
-                <span class="s1">&#39;Resource&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+# Create a new policy
+response = iam.create_policy(
+    PolicyName='newpolicy',
+    PolicyDocument={
+        'Version': '2012-10-17',
+        'Statement': [
+            {
+                'Sid': 'AllowEC2ReadOnly',
+                'Effect': 'Allow',
+                'Action': [
+                    'ec2:Describe*'
+                ],
+                'Resource': '*'
+            }
+        ]
+    }
+)
 
-<span class="c1"># Attach the policy to the group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">attach_group_policy</span><span class="p">(</span>
-    <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span><span class="p">,</span>
-    <span class="n">PolicyArn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:policy/newpolicy&#39;</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Attach the policy to the group
+response = iam.attach_group_policy(
+    GroupName='newgroup',
+    PolicyArn='arn:aws:iam::123456789012:policy/newpolicy'
+)
+</code></pre>
 <p>This code creates a new user, group, and policy, and then adds the user to the group and attaches the policy to the group.</p>
 <h3 id="example-implementing-encryption-using-aws-kms">Example: Implementing Encryption using AWS KMS</h3>
 <p>Here is an example of how to implement encryption using AWS KMS:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a KMS client</span>
-<span class="n">kms</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kms&#39;</span><span class="p">)</span>
+# Create a KMS client
+kms = boto3.client('kms')
 
-<span class="c1"># Create a new key</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span>
-    <span class="n">Description</span><span class="o">=</span><span class="s1">&#39;My new key&#39;</span>
-<span class="p">)</span>
+# Create a new key
+response = kms.create_key(
+    Description='My new key'
+)
 
-<span class="c1"># Get the key ID</span>
-<span class="n">key_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;KeyMetadata&#39;</span><span class="p">][</span><span class="s1">&#39;KeyId&#39;</span><span class="p">]</span>
+# Get the key ID
+key_id = response['KeyMetadata']['KeyId']
 
-<span class="c1"># Encrypt a string</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">KeyId</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
-    <span class="n">Plaintext</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span>
-<span class="p">)</span>
+# Encrypt a string
+response = kms.encrypt(
+    KeyId=key_id,
+    Plaintext='Hello, World!'
+)
 
-<span class="c1"># Get the encrypted string</span>
-<span class="n">encrypted_string</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;CiphertextBlob&#39;</span><span class="p">]</span>
+# Get the encrypted string
+encrypted_string = response['CiphertextBlob']
 
-<span class="c1"># Decrypt the string</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">kms</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
-    <span class="n">CiphertextBlob</span><span class="o">=</span><span class="n">encrypted_string</span>
-<span class="p">)</span>
+# Decrypt the string
+response = kms.decrypt(
+    CiphertextBlob=encrypted_string
+)
 
-<span class="c1"># Get the decrypted string</span>
-<span class="n">decrypted_string</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Plaintext&#39;</span><span class="p">]</span>
-</code></pre></div>
-
+# Get the decrypted string
+decrypted_string = response['Plaintext']
+</code></pre>
 <p>This code creates a new key, encrypts a string using the key, and then decrypts the string.</p>
 <h3 id="example-implementing-logging-using-aws-cloudwatch">Example: Implementing Logging using AWS CloudWatch</h3>
 <p>Here is an example of how to implement logging using AWS CloudWatch:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="c1"># Create a CloudWatch client</span>
-<span class="n">cloudwatch</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;cloudwatch&#39;</span><span class="p">)</span>
+# Create a CloudWatch client
+cloudwatch = boto3.client('cloudwatch')
 
-<span class="c1"># Create a new log group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">create_log_group</span><span class="p">(</span>
-    <span class="n">logGroupName</span><span class="o">=</span><span class="s1">&#39;myloggroup&#39;</span>
-<span class="p">)</span>
+# Create a new log group
+response = cloudwatch.create_log_group(
+    logGroupName='myloggroup'
+)
 
-<span class="c1"># Create a new log stream</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">create_log_stream</span><span class="p">(</span>
-    <span class="n">logGroupName</span><span class="o">=</span><span class="s1">&#39;myloggroup&#39;</span><span class="p">,</span>
-    <span class="n">logStreamName</span><span class="o">=</span><span class="s1">&#39;mystream&#39;</span>
-<span class="p">)</span>
+# Create a new log stream
+response = cloudwatch.create_log_stream(
+    logGroupName='myloggroup',
+    logStreamName='mystream'
+)
 
-<span class="c1"># Put a log event</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">cloudwatch</span><span class="o">.</span><span class="n">put_log_events</span><span class="p">(</span>
-    <span class="n">logGroupName</span><span class="o">=</span><span class="s1">&#39;myloggroup&#39;</span><span class="p">,</span>
-    <span class="n">logStreamName</span><span class="o">=</span><span class="s1">&#39;mystream&#39;</span><span class="p">,</span>
-    <span class="n">logEvents</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="mi">1643723400</span><span class="p">,</span>
-            <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, World!&#39;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</code></pre></div>
-
+# Put a log event
+response = cloudwatch.put_log_events(
+    logGroupName='myloggroup',
+    logStreamName='mystream',
+    logEvents=[
+        {
+            'timestamp': 1643723400,
+            'message': 'Hello, World!'
+        }
+    ]
+)
+</code></pre>
 <p>This code creates a new log group, log stream, and puts a log event.</p>
 <h2 id="tools-and-platforms-for-security-compliance">Tools and Platforms for Security Compliance</h2>
 <p>There are several tools and platforms available to help with security compliance, including:

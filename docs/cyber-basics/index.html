@@ -168,9 +168,8 @@
 4. <strong>Use a firewall</strong>: Enable the firewall on your computer and network to block unauthorized access.
 5. <strong>Use encryption</strong>: Use encryption to protect sensitive data, both in transit and at rest.</p>
 <p>For example, to implement encryption using OpenSSL, you can use the following command:</p>
-<div class="codehilite"><pre><span></span><code>openssl<span class="w"> </span>enc<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-in<span class="w"> </span>plaintext.txt<span class="w"> </span>-out<span class="w"> </span>encrypted.txt
-</code></pre></div>
-
+<pre><code class="language-bash">openssl enc -aes-256-cbc -in plaintext.txt -out encrypted.txt
+</code></pre>
 <p>This command encrypts the contents of <code>plaintext.txt</code> using AES-256-CBC and saves the encrypted data to <code>encrypted.txt</code>.</p>
 <h3 id="network-security">Network Security</h3>
 <p>Network security is a critical aspect of cybersecurity, as it involves protecting the integrity and confidentiality of data transmitted over a network. Some key concepts in network security include:
@@ -185,20 +184,19 @@
 * <strong>Data encryption</strong>: Encrypting data stored in cloud environments to protect it from unauthorized access
 * <strong>Compliance and governance</strong>: Ensuring that cloud environments comply with relevant regulations and standards, such as HIPAA or PCI-DSS</p>
 <p>For example, to implement IAM in AWS, you can use the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span>
+<pre><code class="language-python">import boto3
 
-<span class="n">iam</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;iam&#39;</span><span class="p">)</span>
+iam = boto3.client('iam')
 
-<span class="c1"># Create a new user</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span><span class="p">)</span>
+# Create a new user
+response = iam.create_user(UserName='newuser')
 
-<span class="c1"># Create a new group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span><span class="p">)</span>
+# Create a new group
+response = iam.create_group(GroupName='newgroup')
 
-<span class="c1"># Add the user to the group</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">iam</span><span class="o">.</span><span class="n">add_user_to_group</span><span class="p">(</span><span class="n">UserName</span><span class="o">=</span><span class="s1">&#39;newuser&#39;</span><span class="p">,</span> <span class="n">GroupName</span><span class="o">=</span><span class="s1">&#39;newgroup&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+# Add the user to the group
+response = iam.add_user_to_group(UserName='newuser', GroupName='newgroup')
+</code></pre>
 <p>This code creates a new user and group in AWS IAM, and adds the user to the group.</p>
 <h3 id="incident-response">Incident Response</h3>
 <p>Incident response involves responding to and managing cybersecurity incidents, such as data breaches or malware outbreaks. Some key concepts in incident response include:

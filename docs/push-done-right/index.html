@@ -154,25 +154,24 @@
 <h3 id="choosing-a-push-notification-service">Choosing a Push Notification Service</h3>
 <p>When it comes to push notification services, there are several options to choose from, including Google Firebase Cloud Messaging (FCM), Amazon Device Messaging (ADM), and OneSignal. Each service has its strengths and weaknesses, and the choice ultimately depends on your specific needs and requirements. For example, FCM is a popular choice for Android apps, with over 70% of Android devices using the service, while OneSignal is a popular choice for cross-platform apps, with support for over 100,000 mobile apps.</p>
 <p>Here's an example of how to use FCM to send a push notification using Node.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">admin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;firebase-admin&#39;</span><span class="p">);</span>
-<span class="nx">admin</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">credential</span><span class="o">:</span><span class="w"> </span><span class="nx">admin</span><span class="p">.</span><span class="nx">credential</span><span class="p">.</span><span class="nx">cert</span><span class="p">(</span><span class="s1">&#39;path/to/serviceAccountKey.json&#39;</span><span class="p">),</span>
-<span class="w">  </span><span class="nx">databaseURL</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;https://your-database-url.firebaseio.com&#39;</span>
-<span class="p">});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">messaging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">admin</span><span class="p">.</span><span class="nx">messaging</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;This is a push notification&#39;</span>
-<span class="p">};</span>
-<span class="nx">messaging</span><span class="p">.</span><span class="nx">sendToDevice</span><span class="p">(</span><span class="s1">&#39;device-token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">notification</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Notification sent successfully:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">response</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error sending notification:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">const admin = require('firebase-admin');
+admin.initializeApp({
+  credential: admin.credential.cert('path/to/serviceAccountKey.json'),
+  databaseURL: 'https://your-database-url.firebaseio.com'
+});
+const messaging = admin.messaging();
+const notification = {
+  title: 'Hello, World!',
+  body: 'This is a push notification'
+};
+messaging.sendToDevice('device-token', notification)
+  .then((response) =&gt; {
+    console.log('Notification sent successfully:', response);
+  })
+  .catch((error) =&gt; {
+    console.error('Error sending notification:', error);
+  });
+</code></pre>
 <p>This code snippet demonstrates how to use the Firebase Admin SDK to send a push notification to a device using its token.</p>
 <h2 id="implementing-push-notifications-on-ios-and-android">Implementing Push Notifications on iOS and Android</h2>
 <p>Implementing push notifications on iOS and Android requires different approaches due to the unique characteristics of each platform. On iOS, you need to use the Apple Push Notification service (APNs) to send push notifications, while on Android, you can use FCM or other third-party services.</p>
@@ -184,18 +183,17 @@
 <li><strong>Handle incoming notifications</strong>: You need to handle incoming notifications in your app, including displaying the notification to the user and handling any actions associated with the notification.</li>
 </ol>
 <p>Here's an example of how to handle incoming notifications on iOS using Swift:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">import</span> <span class="nc">UserNotifications</span>
+<pre><code class="language-swift">import UserNotifications
 
-<span class="kd">class</span> <span class="nc">AppDelegate</span><span class="p">:</span> <span class="bp">UIResponder</span><span class="p">,</span> <span class="bp">UIApplicationDelegate</span><span class="p">,</span> <span class="bp">UNUserNotificationCenterDelegate</span> <span class="p">{</span>
-  <span class="kd">func</span> <span class="nf">userNotificationCenter</span><span class="p">(</span><span class="kc">_</span> <span class="n">center</span><span class="p">:</span> <span class="bp">UNUserNotificationCenter</span><span class="p">,</span> <span class="n">didReceive</span> <span class="n">response</span><span class="p">:</span> <span class="bp">UNNotificationResponse</span><span class="p">,</span> <span class="n">withCompletionHandler</span> <span class="n">completionHandler</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Handle incoming notification</span>
-    <span class="kd">let</span> <span class="nv">notification</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">notification</span>
-    <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Received notification: </span><span class="si">\(</span><span class="n">notification</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
-    <span class="n">completionHandler</span><span class="p">()</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -&gt; Void) {
+    // Handle incoming notification
+    let notification = response.notification
+    print(&quot;Received notification: \(notification)&quot;)
+    completionHandler()
+  }
+}
+</code></pre>
 <p>This code snippet demonstrates how to handle incoming notifications on iOS using the UserNotifications framework.</p>
 <h3 id="android-implementation">Android Implementation</h3>
 <p>To implement push notifications on Android, you need to:</p>
@@ -205,20 +203,19 @@
 <li><strong>Handle incoming notifications</strong>: You need to handle incoming notifications in your app, including displaying the notification to the user and handling any actions associated with the notification.</li>
 </ol>
 <p>Here's an example of how to handle incoming notifications on Android using Java:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.google.firebase.messaging.FirebaseMessagingService</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.google.firebase.messaging.RemoteMessage</span><span class="p">;</span>
+<pre><code class="language-java">import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyFirebaseMessagingService</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">FirebaseMessagingService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nd">@Override</span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onMessageReceived</span><span class="p">(</span><span class="n">RemoteMessage</span><span class="w"> </span><span class="n">remoteMessage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Handle incoming notification</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">notificationTitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remoteMessage</span><span class="p">.</span><span class="na">getNotification</span><span class="p">().</span><span class="na">getTitle</span><span class="p">();</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">notificationBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remoteMessage</span><span class="p">.</span><span class="na">getNotification</span><span class="p">().</span><span class="na">getBody</span><span class="p">();</span>
-<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Received notification: \(notificationTitle) \(notificationBody)&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
+  @Override
+  public void onMessageReceived(RemoteMessage remoteMessage) {
+    // Handle incoming notification
+    String notificationTitle = remoteMessage.getNotification().getTitle();
+    String notificationBody = remoteMessage.getNotification().getBody();
+    print(&quot;Received notification: \(notificationTitle) \(notificationBody)&quot;);
+  }
+}
+</code></pre>
 <p>This code snippet demonstrates how to handle incoming notifications on Android using the FirebaseMessagingService class.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing push notifications, you may encounter several common problems, including:</p>

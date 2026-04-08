@@ -160,89 +160,86 @@
 <p>React is one of the most popular web development frameworks. It's used by companies like Facebook, Instagram, and Netflix. React's virtual DOM is its most distinctive feature. The virtual DOM is a lightweight in-memory representation of the real DOM. When the state of the application changes, React updates the virtual DOM, and then efficiently updates the real DOM by comparing the two.</p>
 <h3 id="example-building-a-todo-list-with-react">Example: Building a Todo List with React</h3>
 <p>Here's an example of building a simple todo list with React:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<pre><code class="language-jsx">import React, { useState } from 'react';
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">TodoList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="nx">setTodos</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Walk the dog&#39;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">]);</span>
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Buy milk' },
+    { id: 2, text: 'Walk the dog' },
+  ]);
 
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleAddTodo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">setTodos</span><span class="p">([...</span><span class="nx">todos</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">todos</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;New todo&#39;</span><span class="w"> </span><span class="p">}]);</span>
-<span class="w">  </span><span class="p">};</span>
+  const handleAddTodo = () =&gt; {
+    setTodos([...todos, { id: todos.length + 1, text: 'New todo' }]);
+  };
 
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Todo</span><span class="w"> </span><span class="nx">List</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">{</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">          </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">todo</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">todo</span><span class="p">.</span><span class="nx">text</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="p">))}</span>
-<span class="w">      </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleAddTodo</span><span class="p">}&gt;</span><span class="nx">Add</span><span class="w"> </span><span class="nx">Todo</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Todo List&lt;/h1&gt;
+      &lt;ul&gt;
+        {todos.map((todo) =&gt; (
+          &lt;li key={todo.id}&gt;{todo.text}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;button onClick={handleAddTodo}&gt;Add Todo&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
 <p>This example demonstrates how to use React's <code>useState</code> hook to manage state and how to use the <code>map</code> function to render a list of items.</p>
 <h2 id="angular-a-deep-dive">Angular: A Deep Dive</h2>
 <p>Angular is another popular web development framework. It's known for its opinionated architecture and robust set of features. Angular uses a component-based architecture, where each component has its own template, controller, and services.</p>
 <h3 id="example-building-a-weather-app-with-angular">Example: Building a Weather App with Angular</h3>
 <p>Here's an example of building a simple weather app with Angular:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">HttpClient</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/common/http&#39;</span><span class="p">;</span>
+<pre><code class="language-typescript">import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-<span class="kd">@Component</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;app-weather&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
-<span class="sb">    &lt;h1&gt;Weather App&lt;/h1&gt;</span>
-<span class="sb">    &lt;p&gt;Temperature: {{ temperature }}&lt;/p&gt;</span>
-<span class="sb">  `</span><span class="p">,</span>
-<span class="p">})</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">WeatherComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">temperature</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+@Component({
+  selector: 'app-weather',
+  template: `
+    &lt;h1&gt;Weather App&lt;/h1&gt;
+    &lt;p&gt;Temperature: {{ temperature }}&lt;/p&gt;
+  `,
+})
+export class WeatherComponent {
+  temperature: number;
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">http</span><span class="o">:</span><span class="w"> </span><span class="kt">HttpClient</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+  constructor(private http: HttpClient) {}
 
-<span class="w">  </span><span class="nx">ngOnInit</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://api.openweathermap.org/data/2.5/weather?q=London&#39;</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">response</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">temp</span><span class="p">;</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  ngOnInit(): void {
+    this.http.get('https://api.openweathermap.org/data/2.5/weather?q=London')
+      .subscribe((response: any) =&gt; {
+        this.temperature = response.main.temp;
+      });
+  }
+}
+</code></pre>
 <p>This example demonstrates how to use Angular's <code>HttpClient</code> to make a GET request to the OpenWeatherMap API and how to use the <code>ngOnInit</code> lifecycle hook to initialize the component.</p>
 <h2 id="vuejs-a-deep-dive">Vue.js: A Deep Dive</h2>
 <p>Vue.js is a progressive and flexible JavaScript framework for building web applications. It's known for its simplicity and ease of use. Vue.js uses a component-based architecture, where each component has its own template, script, and style.</p>
 <h3 id="example-building-a-counter-with-vuejs">Example: Building a Counter with Vue.js</h3>
 <p>Here's an example of building a simple counter with Vue.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Counter: {{ count }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;increment&quot;</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Counter: {{ count }}&lt;/h1&gt;
+    &lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">data</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
-<span class="w">    </span><span class="p">};</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">methods</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      count: 0,
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    },
+  },
+};
+&lt;/script&gt;
+</code></pre>
 <p>This example demonstrates how to use Vue.js's <code>data</code> function to define the component's state and how to use the <code>methods</code> object to define functions that can be called from the template.</p>
 <h2 id="performance-benchmarks">Performance Benchmarks</h2>
 <p>When it comes to performance, React, Angular, and Vue.js are all highly optimized frameworks. However, there are some differences in their performance characteristics. Here are some benchmark results from the popular benchmarking tool, Benchmark.js:

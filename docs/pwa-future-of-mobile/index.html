@@ -162,44 +162,43 @@
 <h2 id="building-a-pwa">Building a PWA</h2>
 <p>To build a PWA, you will need to use a combination of modern web technologies, including HTML, CSS, and JavaScript. You will also need to use a service worker to handle caching, network requests, and offline support.</p>
 <p>Here is an example of how you can use the Workbox library to create a service worker for your PWA:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">workbox</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Workbox is loaded`</span><span class="p">);</span>
+if (workbox) {
+  console.log(`Workbox is loaded`);
 
-<span class="w">  </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;.*\\.js&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">StaleWhileRevalidate</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;js-cache&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">}),</span>
-<span class="w">  </span><span class="p">);</span>
+  workbox.routing.registerRoute(
+    new RegExp('.*\\.js'),
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: 'js-cache',
+    }),
+  );
 
-<span class="w">  </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;.*\\.css&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">StaleWhileRevalidate</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;css-cache&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">}),</span>
-<span class="w">  </span><span class="p">);</span>
+  workbox.routing.registerRoute(
+    new RegExp('.*\\.css'),
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: 'css-cache',
+    }),
+  );
 
-<span class="w">  </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;.*\\.png|.*\\.jpg|.*\\.jpeg&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">cacheName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;image-cache&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
-<span class="w">          </span><span class="nx">statuses</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">200</span><span class="p">],</span>
-<span class="w">        </span><span class="p">}),</span>
-<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
-<span class="w">          </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">24</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="p">,</span><span class="w"> </span><span class="c1">// 30 days</span>
-<span class="w">        </span><span class="p">}),</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">    </span><span class="p">}),</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Workbox didn&#39;t load`</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+  workbox.routing.registerRoute(
+    new RegExp('.*\\.png|.*\\.jpg|.*\\.jpeg'),
+    new workbox.strategies.CacheFirst({
+      cacheName: 'image-cache',
+      plugins: [
+        new workbox.cacheableResponse.CacheableResponsePlugin({
+          statuses: [0, 200],
+        }),
+        new workbox.expiration.ExpirationPlugin({
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+        }),
+      ],
+    }),
+  );
+} else {
+  console.log(`Workbox didn't load`);
+}
+</code></pre>
 <p>This code uses the Workbox library to create a service worker that caches JavaScript, CSS, and image files. It also uses the <code>StaleWhileRevalidate</code> strategy to ensure that the cached files are updated when the user visits the site again.</p>
 <h3 id="tools-and-platforms-for-building-pwas">Tools and Platforms for Building PWAs</h3>
 <p>There are many tools and platforms available for building PWAs, including:
@@ -218,28 +217,27 @@
 * <strong>Minification and compression</strong>: Minifying and compressing your code to reduce the size of your files.
 * <strong>Caching</strong>: Caching resources to reduce the number of network requests.</p>
 <p>Here is an example of how you can use the <code>webpack</code> library to optimize the performance of your PWA:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="w">  </span><span class="nx">optimization</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">splitChunks</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">minSize</span><span class="o">:</span><span class="w"> </span><span class="mf">10000</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">minChunks</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">maxAsyncRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">maxInitialRequests</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">enforceSizeThreshold</span><span class="o">:</span><span class="w"> </span><span class="mf">50000</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">cacheGroups</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">vendor</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nx">test</span><span class="o">:</span><span class="w"> </span><span class="sr">/[\\/]node_modules[\\/]/</span><span class="p">,</span>
-<span class="w">          </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;vendor&#39;</span><span class="p">,</span>
-<span class="w">          </span><span class="nx">chunks</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
-</code></pre></div>
-
+<pre><code class="language-javascript">module.exports = {
+  // ...
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 10000,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+};
+</code></pre>
 <p>This code uses the <code>webpack</code> library to split your code into smaller chunks, and to cache resources to reduce the number of network requests.</p>
 <h3 id="metrics-and-benchmarks">Metrics and Benchmarks</h3>
 <p>Some common metrics and benchmarks for measuring the performance of a PWA include:

@@ -168,25 +168,23 @@
 </ol>
 <h3 id="practical-example-using-prettier-to-format-code">Practical Example: Using Prettier to Format Code</h3>
 <p>Let's take a look at an example of how to use Prettier to format some JavaScript code:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Before formatting</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">helloWorld</span><span class="p">(){</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code class="language-javascript">// Before formatting
+function helloWorld(){
+  console.log('hello world');
+}
 
-<span class="c1">// After formatting with Prettier</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">helloWorld</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
+// After formatting with Prettier
+function helloWorld() {
+  console.log('hello world');
+}
+</code></pre>
 <p>To use Prettier, you can install the extension and then configure it to format your code on save. Here's an example of how to do this:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// settings.json</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;editor.defaultFormatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;esbenp.prettier-vscode&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;editor.formatOnSave&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<pre><code class="language-json">// settings.json
+{
+  &quot;editor.defaultFormatter&quot;: &quot;esbenp.prettier-vscode&quot;,
+  &quot;editor.formatOnSave&quot;: true
+}
+</code></pre>
 <p>This will format your code automatically whenever you save a file.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems that developers face when using VS Code, along with specific solutions:</p>
@@ -200,34 +198,33 @@
 </ul>
 <h3 id="real-world-use-case-implementing-a-cicd-pipeline">Real-World Use Case: Implementing a CI/CD Pipeline</h3>
 <p>Let's take a look at a real-world use case for implementing a CI/CD pipeline using VS Code extensions. Suppose we have a web application written in JavaScript, using the React framework. We want to automate the build, test, and deployment process using a CI/CD pipeline.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># .github/workflows/ci-cd.yml</span>
-name:<span class="w"> </span>CI/CD<span class="w"> </span>Pipeline
+<pre><code class="language-bash"># .github/workflows/ci-cd.yml
+name: CI/CD Pipeline
 
 on:
-<span class="w">  </span>push:
-<span class="w">    </span>branches:
-<span class="w">      </span>-<span class="w"> </span>main
+  push:
+    branches:
+      - main
 
 jobs:
-<span class="w">  </span>build-and-deploy:
-<span class="w">    </span>runs-on:<span class="w"> </span>ubuntu-latest
-<span class="w">    </span>steps:
-<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Checkout<span class="w"> </span>code
-<span class="w">        </span>uses:<span class="w"> </span>actions/checkout@v2
-<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Install<span class="w"> </span>dependencies
-<span class="w">        </span>run:<span class="w"> </span>npm<span class="w"> </span>install
-<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Build<span class="w"> </span>and<span class="w"> </span><span class="nb">test</span>
-<span class="w">        </span>run:<span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span><span class="nb">test</span>
-<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Deploy<span class="w"> </span>to<span class="w"> </span>production
-<span class="w">        </span>uses:<span class="w"> </span>appleboy/scp-action@v1
-<span class="w">        </span>with:
-<span class="w">          </span>host:<span class="w"> </span><span class="si">${</span><span class="p">{ secrets.HOST </span><span class="si">}</span><span class="o">}</span>
-<span class="w">          </span>username:<span class="w"> </span><span class="si">${</span><span class="p">{ secrets.USERNAME </span><span class="si">}</span><span class="o">}</span>
-<span class="w">          </span>password:<span class="w"> </span><span class="si">${</span><span class="p">{ secrets.PASSWORD </span><span class="si">}</span><span class="o">}</span>
-<span class="w">          </span>source:<span class="w"> </span><span class="s2">&quot;build/&quot;</span>
-<span class="w">          </span>target:<span class="w"> </span><span class="s2">&quot;/var/www/html&quot;</span>
-</code></pre></div>
-
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Build and test
+        run: npm run build &amp;&amp; npm run test
+      - name: Deploy to production
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          source: &quot;build/&quot;
+          target: &quot;/var/www/html&quot;
+</code></pre>
 <p>In this example, we're using the <strong>GitHub Actions</strong> extension to automate the build, test, and deployment process. We're also using the <strong>SCP Action</strong> extension to deploy the built application to a production server.</p>
 <h2 id="performance-benchmarks-and-pricing">Performance Benchmarks and Pricing</h2>
 <p>Here are some performance benchmarks and pricing data for some of the extensions mentioned in this article:

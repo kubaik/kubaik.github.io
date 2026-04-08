@@ -166,80 +166,77 @@
 <p>Let's take a look at some practical examples of how MBaaS can be used to simplify mobile application development.</p>
 <h3 id="example-1-building-a-to-do-list-app-with-firebase">Example 1: Building a To-Do List App with Firebase</h3>
 <p>Firebase is a popular MBaaS platform that provides a range of tools and services to support mobile application development. Here's an example of how to build a simple to-do list app using Firebase:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Firebase library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">firebase</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;firebase/app&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="s1">&#39;firebase/firestore&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the Firebase library
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
-<span class="c1">// Initialize the Firebase app</span>
-<span class="nx">firebase</span><span class="p">.</span><span class="nx">initializeApp</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;API_KEY&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;AUTH_DOMAIN&gt;&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">projectId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;PROJECT_ID&gt;&#39;</span><span class="p">,</span>
-<span class="p">});</span>
+// Initialize the Firebase app
+firebase.initializeApp({
+  apiKey: '&lt;API_KEY&gt;',
+  authDomain: '&lt;AUTH_DOMAIN&gt;',
+  projectId: '&lt;PROJECT_ID&gt;',
+});
 
-<span class="c1">// Create a reference to the Firestore database</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">firebase</span><span class="p">.</span><span class="nx">firestore</span><span class="p">();</span>
+// Create a reference to the Firestore database
+const db = firebase.firestore();
 
-<span class="c1">// Create a new to-do item</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;todos&#39;</span><span class="p">).</span><span class="nx">add</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Buy milk&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">completed</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">doc</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`To-do item created with ID: </span><span class="si">${</span><span class="nx">doc</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error creating to-do item:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Create a new to-do item
+db.collection('todos').add({
+  title: 'Buy milk',
+  completed: false,
+})
+.then((doc) =&gt; {
+  console.log(`To-do item created with ID: ${doc.id}`);
+})
+.catch((error) =&gt; {
+  console.error('Error creating to-do item:', error);
+});
+</code></pre>
 <p>In this example, we're using the Firebase JavaScript SDK to interact with the Firestore database. We create a new to-do item by adding a document to the <code>todos</code> collection, and then log the ID of the newly created document to the console.</p>
 <h3 id="example-2-implementing-user-authentication-with-aws-amplify">Example 2: Implementing User Authentication with AWS Amplify</h3>
 <p>AWS Amplify is a development platform that provides a range of tools and services to support mobile application development, including user authentication. Here's an example of how to implement user authentication using AWS Amplify:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the AWS Amplify library</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">Amplify</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;aws-amplify&#39;</span><span class="p">;</span>
+<pre><code class="language-javascript">// Import the AWS Amplify library
+import Amplify from 'aws-amplify';
 
-<span class="c1">// Initialize the AWS Amplify app</span>
-<span class="nx">Amplify</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">Auth</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">mandatorySignIn</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">region</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">userPoolId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;USER_POOL_ID&gt;&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">userPoolWebClientId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;USER_POOL_WEB_CLIENT_ID&gt;&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">oauth</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">domain</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;DOMAIN&gt;&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;openid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;profile&#39;</span><span class="p">],</span>
-<span class="w">      </span><span class="nx">redirectSignIn</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;REDIRECT_SIGN_IN&gt;&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">redirectSignOut</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&lt;REDIRECT_SIGN_OUT&gt;&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">responseType</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;code&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">});</span>
+// Initialize the AWS Amplify app
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: 'us-east-1',
+    userPoolId: '&lt;USER_POOL_ID&gt;',
+    userPoolWebClientId: '&lt;USER_POOL_WEB_CLIENT_ID&gt;',
+    oauth: {
+      domain: '&lt;DOMAIN&gt;',
+      scope: ['email', 'openid', 'profile'],
+      redirectSignIn: '&lt;REDIRECT_SIGN_IN&gt;',
+      redirectSignOut: '&lt;REDIRECT_SIGN_OUT&gt;',
+      responseType: 'code',
+    },
+  },
+});
 
-<span class="c1">// Sign in the user</span>
-<span class="nx">Auth</span><span class="p">.</span><span class="nx">signIn</span><span class="p">(</span><span class="s1">&#39;&lt;USERNAME&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;PASSWORD&gt;&#39;</span><span class="p">)</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;User signed in:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
-<span class="p">})</span>
-<span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Error signing in user:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+// Sign in the user
+Auth.signIn('&lt;USERNAME&gt;', '&lt;PASSWORD&gt;')
+.then((user) =&gt; {
+  console.log('User signed in:', user);
+})
+.catch((error) =&gt; {
+  console.error('Error signing in user:', error);
+});
+</code></pre>
 <p>In this example, we're using the AWS Amplify JavaScript SDK to implement user authentication. We configure the Auth module with the necessary settings, and then sign in the user using the <code>signIn</code> method.</p>
 <h3 id="example-3-sending-push-notifications-with-parse">Example 3: Sending Push Notifications with Parse</h3>
 <p>Parse is a popular MBaaS platform that provides a range of tools and services to support mobile application development, including push notifications. Here's an example of how to send a push notification using Parse:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Parse library</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.parse.ParseObject</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">com.parse.ParsePush</span><span class="p">;</span>
+<pre><code class="language-java">// Import the Parse library
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 
-<span class="c1">// Create a new push notification</span>
-<span class="n">ParsePush</span><span class="w"> </span><span class="n">push</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ParsePush</span><span class="p">();</span>
-<span class="n">push</span><span class="p">.</span><span class="na">setChannel</span><span class="p">(</span><span class="s">&quot;my_channel&quot;</span><span class="p">);</span>
-<span class="n">push</span><span class="p">.</span><span class="na">setMessage</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-<span class="n">push</span><span class="p">.</span><span class="na">sendInBackground</span><span class="p">();</span>
-</code></pre></div>
-
+// Create a new push notification
+ParsePush push = new ParsePush();
+push.setChannel(&quot;my_channel&quot;);
+push.setMessage(&quot;Hello, world!&quot;);
+push.sendInBackground();
+</code></pre>
 <p>In this example, we're using the Parse Java SDK to send a push notification to a specific channel. We create a new <code>ParsePush</code> object, set the channel and message, and then send the notification in the background.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>One common problem that mobile application developers face is handling errors and exceptions in their code. Here are some specific solutions to common problems:</p>

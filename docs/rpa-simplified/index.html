@@ -169,147 +169,144 @@
 <p>RPA can be applied to various industries and use cases. Here are a few practical examples:</p>
 <h3 id="example-1-automating-data-entry">Example 1: Automating Data Entry</h3>
 <p>Suppose we have a company that receives invoices from suppliers in PDF format. The invoices need to be manually entered into the company's accounting system. We can use RPA to automate this process.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyautogui</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">pytesseract</span> <span class="kn">import</span> <span class="n">image_to_string</span>
+<pre><code class="language-python">import pyautogui
+import pandas as pd
+from PIL import Image
+from pytesseract import image_to_string
 
-<span class="c1"># Extract data from PDF invoice</span>
-<span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-    <span class="c1"># Open the PDF file</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="c1"># Extract text from the image</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-    <span class="c1"># Parse the text to extract relevant data</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">parse_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data</span>
+# Extract data from PDF invoice
+def extract_data(file_path):
+    # Open the PDF file
+    image = Image.open(file_path)
+    # Extract text from the image
+    text = image_to_string(image)
+    # Parse the text to extract relevant data
+    data = parse_text(text)
+    return data
 
-<span class="c1"># Enter data into accounting system</span>
-<span class="k">def</span> <span class="nf">enter_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Launch the accounting system</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">press</span><span class="p">(</span><span class="s1">&#39;win&#39;</span><span class="p">)</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">typewrite</span><span class="p">(</span><span class="s1">&#39;Accounting System&#39;</span><span class="p">)</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">press</span><span class="p">(</span><span class="s1">&#39;enter&#39;</span><span class="p">)</span>
-    <span class="c1"># Navigate to the data entry screen</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">click</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="c1"># Enter the data</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">typewrite</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;invoice_number&#39;</span><span class="p">])</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">press</span><span class="p">(</span><span class="s1">&#39;tab&#39;</span><span class="p">)</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">typewrite</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;supplier_name&#39;</span><span class="p">])</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">press</span><span class="p">(</span><span class="s1">&#39;tab&#39;</span><span class="p">)</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">typewrite</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">])</span>
-    <span class="n">pyautogui</span><span class="o">.</span><span class="n">press</span><span class="p">(</span><span class="s1">&#39;enter&#39;</span><span class="p">)</span>
+# Enter data into accounting system
+def enter_data(data):
+    # Launch the accounting system
+    pyautogui.press('win')
+    pyautogui.typewrite('Accounting System')
+    pyautogui.press('enter')
+    # Navigate to the data entry screen
+    pyautogui.click(100, 100)
+    # Enter the data
+    pyautogui.typewrite(data['invoice_number'])
+    pyautogui.press('tab')
+    pyautogui.typewrite(data['supplier_name'])
+    pyautogui.press('tab')
+    pyautogui.typewrite(data['amount'])
+    pyautogui.press('enter')
 
-<span class="c1"># Main function</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;invoice.pdf&#39;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">extract_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="n">enter_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Main function
+def main():
+    file_path = 'invoice.pdf'
+    data = extract_data(file_path)
+    enter_data(data)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    main()
+</code></pre>
 <p>This code uses the <code>pyautogui</code> library to launch the accounting system, navigate to the data entry screen, and enter the data. The <code>pytesseract</code> library is used to extract text from the PDF invoice.</p>
 <h3 id="example-2-automating-report-generation">Example 2: Automating Report Generation</h3>
 <p>Suppose we have a company that needs to generate reports on a daily basis. The reports need to be generated based on data from various sources, including databases and spreadsheets. We can use RPA to automate this process.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">openpyxl</span> <span class="kn">import</span> <span class="n">Workbook</span>
-<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">connect_to_db</span>
+<pre><code class="language-python">import pandas as pd
+from openpyxl import Workbook
+from db import connect_to_db
 
-<span class="c1"># Connect to database</span>
-<span class="k">def</span> <span class="nf">connect_to_database</span><span class="p">():</span>
-    <span class="c1"># Establish a connection to the database</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_to_db</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">conn</span>
+# Connect to database
+def connect_to_database():
+    # Establish a connection to the database
+    conn = connect_to_db()
+    return conn
 
-<span class="c1"># Extract data from database</span>
-<span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
-    <span class="c1"># Query the database to extract relevant data</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM sales&#39;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data</span>
+# Extract data from database
+def extract_data(conn):
+    # Query the database to extract relevant data
+    query = 'SELECT * FROM sales'
+    data = pd.read_sql_query(query, conn)
+    return data
 
-<span class="c1"># Generate report</span>
-<span class="k">def</span> <span class="nf">generate_report</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Create a new Excel workbook</span>
-    <span class="n">wb</span> <span class="o">=</span> <span class="n">Workbook</span><span class="p">()</span>
-    <span class="c1"># Add data to the workbook</span>
-    <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
-    <span class="n">ws</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Sales Report&#39;</span>
-    <span class="n">ws</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Date&#39;</span>
-    <span class="n">ws</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Sales&#39;</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span>
-        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span>
-    <span class="c1"># Save the workbook</span>
-    <span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;sales_report.xlsx&#39;</span><span class="p">)</span>
+# Generate report
+def generate_report(data):
+    # Create a new Excel workbook
+    wb = Workbook()
+    # Add data to the workbook
+    ws = wb.active
+    ws.title = 'Sales Report'
+    ws['A1'] = 'Date'
+    ws['B1'] = 'Sales'
+    for i, row in data.iterrows():
+        ws.cell(row=i+2, column=1).value = row['date']
+        ws.cell(row=i+2, column=2).value = row['sales']
+    # Save the workbook
+    wb.save('sales_report.xlsx')
 
-<span class="c1"># Main function</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">connect_to_database</span><span class="p">()</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">extract_data</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
-    <span class="n">generate_report</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+# Main function
+def main():
+    conn = connect_to_database()
+    data = extract_data(conn)
+    generate_report(data)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    main()
+</code></pre>
 <p>This code uses the <code>pandas</code> library to extract data from the database and the <code>openpyxl</code> library to generate an Excel report.</p>
 <h3 id="example-3-automating-customer-service">Example 3: Automating Customer Service</h3>
 <p>Suppose we have a company that receives a high volume of customer inquiries. We can use RPA to automate the response to common inquiries.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<pre><code class="language-python">import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-<span class="c1"># Load training data</span>
-<span class="k">def</span> <span class="nf">load_training_data</span><span class="p">():</span>
-    <span class="c1"># Load a dataset of common customer inquiries and responses</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;training_data.csv&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data</span>
+# Load training data
+def load_training_data():
+    # Load a dataset of common customer inquiries and responses
+    data = pd.read_csv('training_data.csv')
+    return data
 
-<span class="c1"># Train a model to respond to customer inquiries</span>
-<span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Tokenize the text data</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inquiry&#39;</span><span class="p">])</span>
-    <span class="c1"># Remove stopwords</span>
-    <span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
-    <span class="c1"># Vectorize the text data</span>
-    <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-    <span class="n">vectors</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inquiry&#39;</span><span class="p">])</span>
-    <span class="c1"># Train a model to predict the response</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+# Train a model to respond to customer inquiries
+def train_model(data):
+    # Tokenize the text data
+    tokens = word_tokenize(data['inquiry'])
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    tokens = [t for t in tokens if t not in stop_words]
+    # Vectorize the text data
+    vectorizer = TfidfVectorizer()
+    vectors = vectorizer.fit_transform(data['inquiry'])
+    # Train a model to predict the response
+    model = cosine_similarity(vectors)
+    return model
 
-<span class="c1"># Respond to customer inquiry</span>
-<span class="k">def</span> <span class="nf">respond_to_inquiry</span><span class="p">(</span><span class="n">inquiry</span><span class="p">):</span>
-    <span class="c1"># Tokenize the inquiry</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">inquiry</span><span class="p">)</span>
-    <span class="c1"># Remove stopwords</span>
-    <span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
-    <span class="c1"># Vectorize the inquiry</span>
-    <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-    <span class="n">vector</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">inquiry</span><span class="p">])</span>
-    <span class="c1"># Use the model to predict the response</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span>
+# Respond to customer inquiry
+def respond_to_inquiry(inquiry):
+    # Tokenize the inquiry
+    tokens = word_tokenize(inquiry)
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    tokens = [t for t in tokens if t not in stop_words]
+    # Vectorize the inquiry
+    vectorizer = TfidfVectorizer()
+    vector = vectorizer.transform([inquiry])
+    # Use the model to predict the response
+    response = model.predict(vector)
+    return response
 
-<span class="c1"># Main function</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">load_training_data</span><span class="p">()</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">inquiry</span> <span class="o">=</span> <span class="s1">&#39;What is your return policy?&#39;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">respond_to_inquiry</span><span class="p">(</span><span class="n">inquiry</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+# Main function
+def main():
+    data = load_training_data()
+    model = train_model(data)
+    inquiry = 'What is your return policy?'
+    response = respond_to_inquiry(inquiry)
+    print(response)
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-
+if __name__ == '__main__':
+    main()
+</code></pre>
 <p>This code uses the <code>nltk</code> library to tokenize the text data and the <code>scikit-learn</code> library to train a model to respond to customer inquiries.</p>
 <h2 id="common-problems-with-rpa">Common Problems with RPA</h2>
 <p>While RPA can be a powerful tool for automating tasks, there are several common problems that can arise. Here are a few examples:</p>

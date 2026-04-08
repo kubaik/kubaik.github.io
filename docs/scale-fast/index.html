@@ -159,15 +159,14 @@
 <p>There are two primary types of replication: master-slave and master-master. In a master-slave setup, one database (the master) accepts writes, while the slaves replicate the data from the master. In a master-master setup, all databases can accept writes and replicate data with each other.</p>
 <h3 id="example-mysql-replication">Example: MySQL Replication</h3>
 <p>To illustrate database replication, let's consider an example using MySQL. We will set up a master-slave replication between two MySQL instances.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- On the master database</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-<span class="k">GRANT</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;replication_user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<pre><code class="language-sql">-- On the master database
+CREATE USER 'replication_user'@'%' IDENTIFIED BY 'replication_password';
+GRANT REPLICATION SLAVE ON *.* TO 'replication_user'@'%';
 
-<span class="c1">-- On the slave database</span>
-<span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;master_host&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PORT</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;replication_user&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;replication_password&#39;</span><span class="p">;</span>
-<span class="k">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
-</code></pre></div>
-
+-- On the slave database
+CHANGE MASTER TO MASTER_HOST='master_host', MASTER_PORT=3306, MASTER_USER='replication_user', MASTER_PASSWORD='replication_password';
+START SLAVE;
+</code></pre>
 <p>In this example, we create a replication user on the master database and grant the necessary privileges. On the slave database, we configure the master host, port, user, and password, and start the replication process.</p>
 <h2 id="database-sharding">Database Sharding</h2>
 <p>Database sharding is a technique where a large database is divided into smaller, more manageable pieces called shards. Each shard contains a subset of the data, and the shards are typically distributed across multiple servers. Sharding provides several benefits, including:
@@ -177,38 +176,36 @@
 <p>There are two primary types of sharding: horizontal and vertical. In horizontal sharding, the data is divided into shards based on a specific key or range. In vertical sharding, the data is divided into shards based on the type of data.</p>
 <h3 id="example-sharding-with-postgresql">Example: Sharding with PostgreSQL</h3>
 <p>To illustrate database sharding, let's consider an example using PostgreSQL. We will create a simple sharding system using the <code>pg_pathman</code> extension.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">-- Create a distributed table</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="n">DISTRIBUTED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<pre><code class="language-sql">-- Create a distributed table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100)
+) DISTRIBUTED BY (id);
 
-<span class="c1">-- Create a shard for users with id between 1 and 1000</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users_1_1000</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="k">INHERITS</span><span class="w"> </span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
+-- Create a shard for users with id between 1 and 1000
+CREATE TABLE users_1_1000 (
+    CHECK (id BETWEEN 1 AND 1000)
+) INHERITS (users);
 
-<span class="c1">-- Create a shard for users with id between 1001 and 2000</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users_1001_2000</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1001</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2000</span><span class="p">)</span>
-<span class="p">)</span><span class="w"> </span><span class="k">INHERITS</span><span class="w"> </span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
-</code></pre></div>
-
+-- Create a shard for users with id between 1001 and 2000
+CREATE TABLE users_1001_2000 (
+    CHECK (id BETWEEN 1001 AND 2000)
+) INHERITS (users);
+</code></pre>
 <p>In this example, we create a distributed table <code>users</code> and define two shards: <code>users_1_1000</code> and <code>users_1001_2000</code>. Each shard contains a subset of the data, based on the <code>id</code> column.</p>
 <h3 id="example-sharding-with-mongodb">Example: Sharding with MongoDB</h3>
 <p>To illustrate database sharding in a NoSQL database, let's consider an example using MongoDB. We will create a sharded cluster using the <code>mongos</code> process.</p>
-<div class="codehilite"><pre><span></span><code>--<span class="w"> </span>Start<span class="w"> </span>the<span class="w"> </span>config<span class="w"> </span>server
-mongod<span class="w"> </span>--configsvr<span class="w"> </span>--dbpath<span class="w"> </span>/var/lib/mongodb-config<span class="w"> </span>--bind_ip<span class="w"> </span><span class="m">127</span>.0.0.1:27019
+<pre><code class="language-bash">-- Start the config server
+mongod --configsvr --dbpath /var/lib/mongodb-config --bind_ip 127.0.0.1:27019
 
---<span class="w"> </span>Start<span class="w"> </span>the<span class="w"> </span>shard<span class="w"> </span>servers
-mongod<span class="w"> </span>--shardsvr<span class="w"> </span>--dbpath<span class="w"> </span>/var/lib/mongodb-shard1<span class="w"> </span>--bind_ip<span class="w"> </span><span class="m">127</span>.0.0.1:27018
-mongod<span class="w"> </span>--shardsvr<span class="w"> </span>--dbpath<span class="w"> </span>/var/lib/mongodb-shard2<span class="w"> </span>--bind_ip<span class="w"> </span><span class="m">127</span>.0.0.1:27020
+-- Start the shard servers
+mongod --shardsvr --dbpath /var/lib/mongodb-shard1 --bind_ip 127.0.0.1:27018
+mongod --shardsvr --dbpath /var/lib/mongodb-shard2 --bind_ip 127.0.0.1:27020
 
---<span class="w"> </span>Start<span class="w"> </span>the<span class="w"> </span>mongos<span class="w"> </span>process
-mongos<span class="w"> </span>--configdb<span class="w"> </span><span class="m">127</span>.0.0.1:27019<span class="w"> </span>--bind_ip<span class="w"> </span><span class="m">127</span>.0.0.1:27017
-</code></pre></div>
-
+-- Start the mongos process
+mongos --configdb 127.0.0.1:27019 --bind_ip 127.0.0.1:27017
+</code></pre>
 <p>In this example, we start the config server, shard servers, and the <code>mongos</code> process. The <code>mongos</code> process acts as a router, directing traffic to the appropriate shard.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When implementing database replication and sharding, several common problems can arise. Here are some solutions to these problems:

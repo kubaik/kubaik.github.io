@@ -166,16 +166,15 @@
 5. <strong>Monitor the Green environment</strong>: Monitor the Green environment to ensure that it is working correctly.</p>
 <h3 id="example-code-deploying-a-nodejs-application-to-aws-elastic-beanstalk">Example Code: Deploying a Node.js Application to AWS Elastic Beanstalk</h3>
 <p>Here is an example of how to deploy a Node.js application to AWS Elastic Beanstalk using the AWS CLI:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create a new Elastic Beanstalk environment</span>
-eb<span class="w"> </span>create<span class="w"> </span>my-environment<span class="w"> </span>--version<span class="w"> </span>my-version
+<pre><code class="language-bash"># Create a new Elastic Beanstalk environment
+eb create my-environment --version my-version
 
-<span class="c1"># Deploy the new version to the Green environment</span>
-eb<span class="w"> </span>deploy<span class="w"> </span>my-environment<span class="w"> </span>--version<span class="w"> </span>my-version<span class="w"> </span>--environment-name<span class="w"> </span>my-green-environment
+# Deploy the new version to the Green environment
+eb deploy my-environment --version my-version --environment-name my-green-environment
 
-<span class="c1"># Switch traffic to the Green environment</span>
-eb<span class="w"> </span>swap<span class="w"> </span>my-environment<span class="w"> </span>--environment-name<span class="w"> </span>my-green-environment
-</code></pre></div>
-
+# Switch traffic to the Green environment
+eb swap my-environment --environment-name my-green-environment
+</code></pre>
 <p>This code creates a new Elastic Beanstalk environment, deploys the new version to the Green environment, and switches traffic to the Green environment.</p>
 <h2 id="tools-and-platforms-for-blue-green-deployment">Tools and Platforms for Blue-Green Deployment</h2>
 <p>There are several tools and platforms that support Blue-Green deployment, including:
@@ -184,7 +183,7 @@ eb<span class="w"> </span>swap<span class="w"> </span>my-environment<span class=
 * Kubernetes: Kubernetes is a container orchestration platform that supports Blue-Green deployments.</p>
 <h3 id="example-code-deploying-a-docker-application-to-kubernetes">Example Code: Deploying a Docker Application to Kubernetes</h3>
 <p>Here is an example of how to deploy a Docker application to Kubernetes using the Kubernetes CLI:</p>
-<div class="codehilite"><pre><span></span><code># Create a new deployment
+<pre><code class="language-yml"># Create a new deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -204,8 +203,7 @@ spec:
         image: my-image
         ports:
         - containerPort: 80
-</code></pre></div>
-
+</code></pre>
 <p>This code creates a new deployment with three replicas, using the <code>my-image</code> Docker image.</p>
 <h2 id="performance-metrics-and-pricing">Performance Metrics and Pricing</h2>
 <p>The performance metrics and pricing for Blue-Green deployment vary depending on the tool or platform used. Here are some examples:
@@ -214,7 +212,7 @@ spec:
 * Kubernetes: The pricing for Kubernetes varies depending on the cloud provider and instance type. For example, the cost of running a single instance of the <code>n1-standard-1</code> instance type in the US Central region on Google Cloud Platform is $0.0472 per hour.</p>
 <h3 id="example-code-monitoring-performance-metrics-with-prometheus">Example Code: Monitoring Performance Metrics with Prometheus</h3>
 <p>Here is an example of how to monitor performance metrics with Prometheus:</p>
-<div class="codehilite"><pre><span></span><code># Create a new Prometheus deployment
+<pre><code class="language-yml"># Create a new Prometheus deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -234,8 +232,7 @@ spec:
         image: prometheus/prometheus
         ports:
         - containerPort: 9090
-</code></pre></div>
-
+</code></pre>
 <p>This code creates a new Prometheus deployment with a single replica, using the <code>prometheus/prometheus</code> Docker image.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Here are some common problems and solutions associated with Blue-Green deployment:

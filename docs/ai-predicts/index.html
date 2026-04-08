@@ -169,33 +169,32 @@
 <li>Gradient Boosting</li>
 </ul>
 <p>These techniques can be implemented using popular libraries such as TensorFlow, PyTorch, and scikit-learn. For example, the following code snippet uses the LSTM network to forecast a time series:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Dense</span>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
 
-<span class="c1"># Load the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+# Load the data
+df = pd.read_csv('data.csv', index_col='date', parse_dates=['date'])
 
-<span class="c1"># Scale the data</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;value&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;value&#39;</span><span class="p">]])</span>
+# Scale the data
+scaler = MinMaxScaler()
+df[['value']] = scaler.fit_transform(df[['value']])
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">train_size</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)]</span>
+# Split the data into training and testing sets
+train_size = int(0.8 * len(df))
+train_data, test_data = df[0:train_size], df[train_size:len(df)]
 
-<span class="c1"># Create the LSTM model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mean_squared_error&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">)</span>
+# Create the LSTM model
+model = Sequential()
+model.add(LSTM(50, input_shape=(train_data.shape[1], 1)))
+model.add(Dense(1))
+model.compile(loss='mean_squared_error', optimizer='adam')
 
-<span class="c1"># Train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div>
-
+# Train the model
+model.fit(train_data, epochs=50, batch_size=32, verbose=2)
+</code></pre>
 <p>This code snippet uses the Keras library to create an LSTM network that forecasts a time series. The <code>MinMaxScaler</code> is used to scale the data, and the <code>Sequential</code> API is used to create the LSTM model.</p>
 <h3 id="tools-and-platforms-for-time-series-forecasting">Tools and Platforms for Time Series Forecasting</h3>
 <p>Several tools and platforms are available for time series forecasting, including:</p>
@@ -216,26 +215,25 @@
 <li><strong>Traffic management</strong>: Forecasting traffic patterns to optimize traffic flow, reduce congestion, and improve safety.</li>
 </ul>
 <p>For example, a retail company can use time series forecasting to forecast demand for its products and optimize its inventory management. The following code snippet uses the Prophet library to forecast demand:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+<pre><code class="language-python">import pandas as pd
+from prophet import Prophet
 
-<span class="c1"># Load the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the data
+df = pd.read_csv('data.csv')
 
-<span class="c1"># Create the Prophet model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span>
+# Create the Prophet model
+model = Prophet()
 
-<span class="c1"># Fit the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+# Fit the model
+model.fit(df)
 
-<span class="c1"># Make predictions</span>
-<span class="n">future</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">make_future_dataframe</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">forecast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+# Make predictions
+future = model.make_future_dataframe(periods=30)
+forecast = model.predict(future)
 
-<span class="c1"># Plot the forecast</span>
-<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
-</code></pre></div>
-
+# Plot the forecast
+model.plot(forecast)
+</code></pre>
 <p>This code snippet uses the Prophet library to forecast demand for a product. The <code>Prophet</code> class is used to create the model, and the <code>make_future_dataframe</code> method is used to generate a future dataframe for making predictions.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>Time series forecasting can be challenging due to various issues, including:</p>
@@ -254,19 +252,18 @@
 </ul>
 <p>For example, to address overfitting, the <code>L1</code> and <code>L2</code> regularization techniques can be used. The following code snippet uses the <code>L1</code> regularization technique to prevent overfitting:</p>
 <p><em>Recommended: <a href="https://coursera.org/learn/machine-learning" target="_blank" rel="nofollow sponsored">Andrew Ng's Machine Learning Course</a></em></p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.linear_model import Lasso
 
-<span class="c1"># Load the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the data
+df = pd.read_csv('data.csv')
 
-<span class="c1"># Create the Lasso model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+# Create the Lasso model
+model = Lasso(alpha=0.1)
 
-<span class="c1"># Fit the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Fit the model
+model.fit(df.drop('target', axis=1), df['target'])
+</code></pre>
 <p>This code snippet uses the <code>Lasso</code> class to create a model that uses <code>L1</code> regularization to prevent overfitting. The <code>alpha</code> parameter is used to specify the regularization strength.</p>
 <h2 id="performance-metrics-and-benchmarking">Performance Metrics and Benchmarking</h2>
 <p>Time series forecasting models can be evaluated using various performance metrics, including:</p>
@@ -277,34 +274,33 @@
 <li><strong>Coefficient of Determination (R-squared)</strong>: The proportion of the variance in the actual values that is explained by the forecasted values.</li>
 </ul>
 <p>For example, the MAE and RMSE metrics can be used to evaluate the performance of a time series forecasting model. The following code snippet uses the <code>mean_absolute_error</code> and <code>mean_squared_error</code> functions to evaluate the performance of a model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<pre><code class="language-python">import pandas as pd
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-<span class="c1"># Load the data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+# Load the data
+df = pd.read_csv('data.csv')
 
-<span class="c1"># Split the data into training and testing sets</span>
-<span class="n">train_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">train_size</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)]</span>
+# Split the data into training and testing sets
+train_size = int(0.8 * len(df))
+train_data, test_data = df[0:train_size], df[train_size:len(df)]
 
-<span class="c1"># Create the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span>
+# Create the model
+model = Prophet()
 
-<span class="c1"># Fit the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+# Fit the model
+model.fit(train_data)
 
-<span class="c1"># Make predictions</span>
-<span class="n">future</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">make_future_dataframe</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
-<span class="n">forecast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+# Make predictions
+future = model.make_future_dataframe(periods=len(test_data))
+forecast = model.predict(future)
 
-<span class="c1"># Evaluate the model</span>
-<span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">forecast</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
-<span class="n">rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">forecast</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+# Evaluate the model
+mae = mean_absolute_error(test_data['target'], forecast['target'])
+rmse = mean_squared_error(test_data['target'], forecast['target'], squared=False)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MAE: </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+print(f'MAE: {mae:.2f}')
+print(f'RMSE: {rmse:.2f}')
+</code></pre>
 <p>This code snippet uses the <code>mean_absolute_error</code> and <code>mean_squared_error</code> functions to evaluate the performance of a model. The <code>make_future_dataframe</code> method is used to generate a future dataframe for making predictions.</p>
 <h2 id="pricing-and-cost-considerations">Pricing and Cost Considerations</h2>
 <p>Time series forecasting can be implemented using various tools and platforms, each with its own pricing and cost considerations. For example:</p>

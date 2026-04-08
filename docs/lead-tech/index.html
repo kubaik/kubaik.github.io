@@ -158,19 +158,18 @@
 * Cloud computing: Familiarity with cloud platforms like Amazon Web Services (AWS), Microsoft Azure, or Google Cloud Platform (GCP)
 * DevOps tools: Knowledge of DevOps tools like Jenkins, Docker, and Kubernetes</p>
 <p>For example, a tech leader at a startup might use Python to analyze customer data and identify trends. Here's an example code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
 
-<span class="c1"># Load customer data from CSV file</span>
-<span class="n">customer_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;customer_data.csv&#39;</span><span class="p">)</span>
+# Load customer data from CSV file
+customer_data = pd.read_csv('customer_data.csv')
 
-<span class="c1"># Calculate average order value</span>
-<span class="n">average_order_value</span> <span class="o">=</span> <span class="n">customer_data</span><span class="p">[</span><span class="s1">&#39;order_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+# Calculate average order value
+average_order_value = customer_data['order_value'].mean()
 
-<span class="c1"># Print the result</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average order value:&#39;</span><span class="p">,</span> <span class="n">average_order_value</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the result
+print('Average order value:', average_order_value)
+</code></pre>
 <p>This code snippet uses the pandas library to load customer data from a CSV file, calculate the average order value, and print the result.</p>
 <h2 id="business-acumen-for-tech-leaders">Business Acumen for Tech Leaders</h2>
 <p>Tech leaders need to have a solid understanding of business concepts, including finance, marketing, and sales. Some essential business skills for tech leaders include:
@@ -178,27 +177,26 @@
 * Marketing and sales: Knowledge of marketing channels, sales strategies, and customer acquisition costs
 * Project management: Ability to plan, execute, and track projects using tools like Asana, Trello, or Jira</p>
 <p>For instance, a tech leader at an e-commerce company might use Google Analytics to track website traffic and conversion rates. Here's an example of how to use the Google Analytics API to retrieve website traffic data:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API credentials</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;YOUR_API_KEY&#39;</span>
-<span class="n">view_id</span> <span class="o">=</span> <span class="s1">&#39;YOUR_VIEW_ID&#39;</span>
+# Set API credentials
+api_key = 'YOUR_API_KEY'
+view_id = 'YOUR_VIEW_ID'
 
-<span class="c1"># Set API endpoint and parameters</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;https://www.googleapis.com/analytics/v3/data/realtime&#39;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;ids&#39;</span><span class="p">:</span> <span class="s1">&#39;ga:&#39;</span> <span class="o">+</span> <span class="n">view_id</span><span class="p">,</span>
-    <span class="s1">&#39;metrics&#39;</span><span class="p">:</span> <span class="s1">&#39;rt:activeUsers&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;dimensions&#39;</span><span class="p">:</span> <span class="s1">&#39;rt:medium,rt:source&#39;</span>
-<span class="p">}</span>
+# Set API endpoint and parameters
+endpoint = 'https://www.googleapis.com/analytics/v3/data/realtime'
+params = {
+    'ids': 'ga:' + view_id,
+    'metrics': 'rt:activeUsers',
+    'dimensions': 'rt:medium,rt:source'
+}
 
-<span class="c1"># Make API request</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="n">api_key</span><span class="p">})</span>
+# Make API request
+response = requests.get(endpoint, params=params, headers={'Authorization': 'Bearer ' + api_key})
 
-<span class="c1"># Print the result</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Active users:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;rows&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the result
+print('Active users:', response.json()['rows'][0]['metrics'][0]['values'][0])
+</code></pre>
 <p>This code snippet uses the Google Analytics API to retrieve real-time website traffic data, including the number of active users, medium, and source.</p>
 <h3 id="interpersonal-skills-for-tech-leaders">Interpersonal Skills for Tech Leaders</h3>
 <p>Tech leaders need to have strong interpersonal skills to effectively communicate with their teams, stakeholders, and customers. Some essential interpersonal skills for tech leaders include:
@@ -206,27 +204,26 @@
 * Team management: Ability to motivate, coach, and develop team members
 * Stakeholder management: Ability to manage expectations and build relationships with stakeholders</p>
 <p>For example, a tech leader at a software company might use Slack to communicate with their team and stakeholders. Here's an example of how to use Slack's Web API to send a message to a channel:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<pre><code class="language-python">import requests
 
-<span class="c1"># Set API credentials</span>
-<span class="n">api_token</span> <span class="o">=</span> <span class="s1">&#39;YOUR_API_TOKEN&#39;</span>
-<span class="n">channel_id</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CHANNEL_ID&#39;</span>
+# Set API credentials
+api_token = 'YOUR_API_TOKEN'
+channel_id = 'YOUR_CHANNEL_ID'
 
-<span class="c1"># Set API endpoint and parameters</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;https://slack.com/api/chat.postMessage&#39;</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">api_token</span><span class="p">,</span>
-    <span class="s1">&#39;channel&#39;</span><span class="p">:</span> <span class="n">channel_id</span><span class="p">,</span>
-    <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, team!&#39;</span>
-<span class="p">}</span>
+# Set API endpoint and parameters
+endpoint = 'https://slack.com/api/chat.postMessage'
+params = {
+    'token': api_token,
+    'channel': channel_id,
+    'text': 'Hello, team!'
+}
 
-<span class="c1"># Make API request</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+# Make API request
+response = requests.post(endpoint, params=params)
 
-<span class="c1"># Print the result</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Message sent:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;ok&#39;</span><span class="p">])</span>
-</code></pre></div>
-
+# Print the result
+print('Message sent:', response.json()['ok'])
+</code></pre>
 <p>This code snippet uses the Slack Web API to send a message to a channel, illustrating how tech leaders can use APIs to automate communication tasks.</p>
 <h2 id="tools-and-platforms-for-tech-leaders">Tools and Platforms for Tech Leaders</h2>
 <p>Tech leaders have a wide range of tools and platforms at their disposal to help them manage their teams, projects, and stakeholders. Some popular tools and platforms include:

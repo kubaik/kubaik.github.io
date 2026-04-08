@@ -159,42 +159,39 @@
 * <strong>Reliability</strong>: Messages are persisted in the queue, ensuring that they're not lost in case of failures.
 * <strong>Flexibility</strong>: Message queues support various messaging patterns, enabling services to communicate in different ways.</p>
 <p>To illustrate the benefits of message queues, consider a simple example using RabbitMQ and Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pika</span>
+<pre><code class="language-python">import pika
 
-<span class="c1"># Connect to RabbitMQ</span>
-<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+# Connect to RabbitMQ
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
 
-<span class="c1"># Declare a queue</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">)</span>
+# Declare a queue
+channel.queue_declare(queue='my_queue')
 
-<span class="c1"># Send a message</span>
-<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;my_queue&#39;</span><span class="p">,</span>
-                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
+# Send a message
+channel.basic_publish(exchange='',
+                      routing_key='my_queue',
+                      body='Hello, world!')
 
-<span class="c1"># Close the connection</span>
-<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div>
-
+# Close the connection
+connection.close()
+</code></pre>
 <p>This example demonstrates how to send a message to a RabbitMQ queue using the Pika library. The message is persisted in the queue, allowing the sender to continue processing without waiting for the receiver.</p>
 <h2 id="async-processing-with-celery">Async Processing with Celery</h2>
 <p>Async processing is a technique that enables services to execute tasks in the background, without blocking the main thread. One popular library for async processing is Celery, a distributed task queue that supports multiple brokers, including RabbitMQ, Apache Kafka, and Amazon SQS.</p>
 <p>Celery provides a simple and intuitive API for defining tasks, which can be executed asynchronously using a worker process. For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+<pre><code class="language-python">from celery import Celery
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">(</span><span class="s1">&#39;tasks&#39;</span><span class="p">,</span> <span class="n">broker</span><span class="o">=</span><span class="s1">&#39;amqp://guest@localhost//&#39;</span><span class="p">)</span>
+app = Celery('tasks', broker='amqp://guest@localhost//')
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">task</span>
-<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</code></pre></div>
-
+@app.task
+def add(x, y):
+    return x + y
+</code></pre>
 <p>This example defines a simple task that adds two numbers together. The task can be executed asynchronously using the <code>delay</code> method:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">add</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>  <span class="c1"># prints 4</span>
-</code></pre></div>
-
+<pre><code class="language-python">result = add.delay(2, 2)
+print(result.get())  # prints 4
+</code></pre>
 <p>Celery provides a high degree of customization, with support for various task queues, worker processes, and result backends. For example, you can use Celery's built-in support for Redis to store task results, or use a custom result backend to store results in a database.</p>
 <h3 id="performance-benchmarks">Performance Benchmarks</h3>
 <p>To demonstrate the performance benefits of async processing, consider a simple benchmark using Celery and RabbitMQ. In this benchmark, we'll execute 10,000 tasks concurrently, measuring the time it takes to complete each task.</p>

@@ -160,28 +160,27 @@
 <h2 id="practical-implementation-with-faiss">Practical Implementation with Faiss</h2>
 <p>One popular tool for building and querying vector databases is Faiss (Facebook AI Similarity Search), an open-source library developed by Facebook AI Research. Faiss provides a range of indexing algorithms and techniques for efficient similarity search and clustering of dense vectors.</p>
 <p>Here's an example code snippet demonstrating how to create an index and perform a similarity search using Faiss:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">faiss</span>
+<pre><code class="language-python">import numpy as np
+import faiss
 
-<span class="c1"># Generate some random vectors</span>
-<span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+# Generate some random vectors
+vectors = np.random.rand(1000, 128).astype('float32')
 
-<span class="c1"># Create a Faiss index</span>
-<span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatL2</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>  <span class="c1"># L2 distance metric</span>
+# Create a Faiss index
+index = faiss.IndexFlatL2(128)  # L2 distance metric
 
-<span class="c1"># Add vectors to the index</span>
-<span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+# Add vectors to the index
+index.add(vectors)
 
-<span class="c1"># Define a query vector</span>
-<span class="n">query_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+# Define a query vector
+query_vector = np.random.rand(1, 128).astype('float32')
 
-<span class="c1"># Perform a similarity search</span>
-<span class="n">distances</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query_vector</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Find 10 nearest neighbors</span>
+# Perform a similarity search
+distances, indices = index.search(query_vector, k=10)  # Find 10 nearest neighbors
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distances:&quot;</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indices:&quot;</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
-</code></pre></div>
-
+print(&quot;Distances:&quot;, distances)
+print(&quot;Indices:&quot;, indices)
+</code></pre>
 <p>In this example, we create a Faiss index with an L2 distance metric, add 1000 random vectors to the index, and then perform a similarity search using a query vector. The <code>search</code> method returns the distances and indices of the 10 nearest neighbors to the query vector.</p>
 <h2 id="use-cases-and-implementation-details">Use Cases and Implementation Details</h2>
 <p>Vector databases have a wide range of applications, including:

@@ -168,26 +168,24 @@
 </ul>
 <h3 id="code-example-1-sentiment-analysis-with-nltk">Code Example 1: Sentiment Analysis with NLTK</h3>
 <p>Here's an example of how to use the NLTK library in Python to perform sentiment analysis on a piece of text:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.sentiment.vader</span> <span class="kn">import</span> <span class="n">SentimentIntensityAnalyzer</span>
+<pre><code class="language-python">import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-<span class="c1"># Initialize the sentiment analyzer</span>
-<span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+# Initialize the sentiment analyzer
+sia = SentimentIntensityAnalyzer()
 
-<span class="c1"># Define the text to analyze</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love this product! It&#39;s amazing.&quot;</span>
+# Define the text to analyze
+text = &quot;I love this product! It's amazing.&quot;
 
-<span class="c1"># Analyze the sentiment of the text</span>
-<span class="n">sentiment</span> <span class="o">=</span> <span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Analyze the sentiment of the text
+sentiment = sia.polarity_scores(text)
 
-<span class="c1"># Print the sentiment scores</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the sentiment scores
+print(sentiment)
+</code></pre>
 <p>This code uses the NLTK library to analyze the sentiment of a piece of text and print out the sentiment scores. The output will look something like this:</p>
-<div class="codehilite"><pre><span></span><code>{&#39;neg&#39;: 0.0, &#39;neu&#39;: 0.281, &#39;pos&#39;: 0.719, &#39;compound&#39;: 0.8439}
-</code></pre></div>
-
+<pre><code>{'neg': 0.0, 'neu': 0.281, 'pos': 0.719, 'compound': 0.8439}
+</code></pre>
 <p>This shows that the text has a positive sentiment, with a compound score of 0.8439.</p>
 <h2 id="nlp-tools-and-platforms">NLP Tools and Platforms</h2>
 <p>There are many NLP tools and platforms available, both open-source and commercial. Some popular options include:</p>
@@ -200,28 +198,26 @@
 </ul>
 <h3 id="code-example-2-named-entity-recognition-with-spacy">Code Example 2: Named Entity Recognition with spaCy</h3>
 <p>Here's an example of how to use the spaCy library in Python to perform named entity recognition on a piece of text:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
+<pre><code class="language-python">import spacy
 
-<span class="c1"># Load the spaCy model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+# Load the spaCy model
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
 
-<span class="c1"># Define the text to analyze</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Apple is a technology company based in Cupertino, California.&quot;</span>
+# Define the text to analyze
+text = &quot;Apple is a technology company based in Cupertino, California.&quot;
 
-<span class="c1"># Analyze the text</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+# Analyze the text
+doc = nlp(text)
 
-<span class="c1"># Print the named entities</span>
-<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
-</code></pre></div>
-
+# Print the named entities
+for entity in doc.ents:
+    print(entity.text, entity.label_)
+</code></pre>
 <p>This code uses the spaCy library to analyze the text and print out the named entities. The output will look something like this:</p>
-<div class="codehilite"><pre><span></span><code>Apple ORG
+<pre><code>Apple ORG
 Cupertino GPE
 California GPE
-</code></pre></div>
-
+</code></pre>
 <p>This shows that the text contains three named entities: Apple (an organization), Cupertino (a geographic location), and California (a geographic location).</p>
 <h2 id="common-problems-in-nlp">Common Problems in NLP</h2>
 <p>Despite the many advances in NLP, there are still some common problems that can occur. Some of these include:</p>
@@ -239,32 +235,31 @@ California GPE
 </ul>
 <h3 id="code-example-3-using-pre-trained-models-with-hugging-face-transformers">Code Example 3: Using Pre-Trained Models with Hugging Face Transformers</h3>
 <p>Here's an example of how to use the Hugging Face Transformers library in Python to perform sentiment analysis on a piece of text using a pre-trained model:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertModel</span>
+<pre><code class="language-python">import torch
+from transformers import BertTokenizer, BertModel
 
-<span class="c1"># Load the pre-trained BERT model and tokenizer</span>
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">)</span>
+# Load the pre-trained BERT model and tokenizer
+tokenizer = BertTokenizer.from_pretrained(&quot;bert-base-uncased&quot;)
+model = BertModel.from_pretrained(&quot;bert-base-uncased&quot;)
 
-<span class="c1"># Define the text to analyze</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;I love this product! It&#39;s amazing.&quot;</span>
+# Define the text to analyze
+text = &quot;I love this product! It's amazing.&quot;
 
-<span class="c1"># Tokenize the text</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_plus</span><span class="p">(</span>
-    <span class="n">text</span><span class="p">,</span>
-    <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span>
-<span class="p">)</span>
+# Tokenize the text
+inputs = tokenizer.encode_plus(
+    text,
+    add_special_tokens=True,
+    max_length=512,
+    return_attention_mask=True,
+    return_tensors=&quot;pt&quot;
+)
 
-<span class="c1"># Analyze the sentiment of the text</span>
-<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">],</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">])</span>
+# Analyze the sentiment of the text
+outputs = model(inputs[&quot;input_ids&quot;], attention_mask=inputs[&quot;attention_mask&quot;])
 
-<span class="c1"># Print the sentiment scores</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">last_hidden_state</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
-</code></pre></div>
-
+# Print the sentiment scores
+print(outputs.last_hidden_state[:, 0, :])
+</code></pre>
 <p>This code uses the Hugging Face Transformers library to load a pre-trained BERT model and perform sentiment analysis on a piece of text. The output will be a tensor representing the sentiment scores of the text.</p>
 <h2 id="real-world-metrics-and-pricing">Real-World Metrics and Pricing</h2>
 <p>The cost of using NLP services can vary widely, depending on the specific service and the amount of data being processed. Some examples of NLP services and their pricing include:</p>

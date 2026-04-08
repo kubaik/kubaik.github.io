@@ -154,29 +154,28 @@
 </ul>
 <h4 id="example">Example:</h4>
 <p>Here’s a simple RESTful API using Node.js with Express:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3000</span><span class="p">;</span>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = 3000;
 
-<span class="kd">let</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">}];</span>
+let users = [{ id: 1, name: 'John Doe' }];
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+app.use(express.json());
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="p">});</span>
+app.get('/users', (req, res) =&gt; {
+    res.json(users);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">201</span><span class="p">).</span><span class="nx">json</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="p">});</span>
+app.post('/users', (req, res) =&gt; {
+    const newUser = { id: users.length + 1, name: req.body.name };
+    users.push(newUser);
+    res.status(201).json(newUser);
+});
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server running on http://localhost:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.listen(PORT, () =&gt; {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+</code></pre>
 <h3 id="2-graphql">2. <strong>GraphQL</strong></h3>
 <p>GraphQL is an alternative to REST that allows clients to request only the data they need. This can significantly reduce the amount of data transferred over the network, improving performance.</p>
 <h4 id="key-characteristics_1">Key Characteristics:</h4>
@@ -186,45 +185,44 @@
 </ul>
 <h4 id="example_1">Example:</h4>
 <p>Using Apollo Server, a popular GraphQL implementation, here’s how to set up a simple GraphQL API:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">,</span><span class="w"> </span><span class="nx">gql</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;apollo-server&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const { ApolloServer, gql } = require('apollo-server');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">typeDefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">gql</span><span class="sb">`</span>
-<span class="sb">  type User {</span>
-<span class="sb">    id: ID!</span>
-<span class="sb">    name: String!</span>
-<span class="sb">  }</span>
+const typeDefs = gql`
+  type User {
+    id: ID!
+    name: String!
+  }
 
-<span class="sb">  type Query {</span>
-<span class="sb">    users: [User]</span>
-<span class="sb">  }</span>
+  type Query {
+    users: [User]
+  }
 
-<span class="sb">  type Mutation {</span>
-<span class="sb">    addUser(name: String!): User</span>
-<span class="sb">  }</span>
-<span class="sb">`</span><span class="p">;</span>
+  type Mutation {
+    addUser(name: String!): User
+  }
+`;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">}];</span>
+const users = [{ id: 1, name: 'John Doe' }];
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">Query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">users</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">users</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">Mutation</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">addUser</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">newUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">args</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
-<span class="w">      </span><span class="nx">users</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">newUser</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">newUser</span><span class="p">;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">};</span>
+const resolvers = {
+  Query: {
+    users: () =&gt; users,
+  },
+  Mutation: {
+    addUser: (parent, args) =&gt; {
+      const newUser = { id: users.length + 1, name: args.name };
+      users.push(newUser);
+      return newUser;
+    },
+  },
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ApolloServer</span><span class="p">({</span><span class="w"> </span><span class="nx">typeDefs</span><span class="p">,</span><span class="w"> </span><span class="nx">resolvers</span><span class="w"> </span><span class="p">});</span>
+const server = new ApolloServer({ typeDefs, resolvers });
 
-<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">().</span><span class="nx">then</span><span class="p">(({</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`🚀  Server ready at </span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+server.listen().then(({ url }) =&gt; {
+  console.log(`🚀  Server ready at ${url}`);
+});
+</code></pre>
 <h3 id="3-grpc">3. <strong>gRPC</strong></h3>
 <p>gRPC is a modern open-source RPC framework that uses HTTP/2 for transport, Protocol Buffers as the interface description language, and provides features such as authentication, load balancing, and more.</p>
 <h4 id="key-characteristics_2">Key Characteristics:</h4>
@@ -237,45 +235,43 @@
 <ol>
 <li>Define a <code>.proto</code> file:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+<pre><code class="language-protobuf">syntax = &quot;proto3&quot;;
 
-<span class="kd">service</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">GetUser</span><span class="w"> </span><span class="p">(</span><span class="n">UserRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">UserResponse</span><span class="p">);</span>
-<span class="p">}</span>
+service UserService {
+  rpc GetUser (UserRequest) returns (UserResponse);
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">UserRequest</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
+message UserRequest {
+  int32 id = 1;
+}
 
-<span class="kd">message</span><span class="w"> </span><span class="nc">UserResponse</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+message UserResponse {
+  int32 id = 1;
+  string name = 2;
+}
+</code></pre>
 <ol>
 <li>Implement the service:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">grpc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;grpc&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">protoLoader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@grpc/proto-loader&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">const grpc = require('grpc');
+const protoLoader = require('@grpc/proto-loader');
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">packageDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">protoLoader</span><span class="p">.</span><span class="nx">loadSync</span><span class="p">(</span><span class="s1">&#39;user.proto&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{});</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userProto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">packageDefinition</span><span class="p">).</span><span class="nx">UserService</span><span class="p">;</span>
+const packageDefinition = protoLoader.loadSync('user.proto', {});
+const userProto = grpc.loadPackageDefinition(packageDefinition).UserService;
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John Doe&#39;</span><span class="w"> </span><span class="p">}];</span>
+const users = [{ id: 1, name: 'John Doe' }];
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">getUser</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">user</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">call</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">);</span>
-<span class="p">}</span>
+function getUser(call, callback) {
+    const user = users.find(user =&gt; user.id === call.request.id);
+    callback(null, user);
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">Server</span><span class="p">();</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">addService</span><span class="p">(</span><span class="nx">userProto</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">GetUser</span><span class="o">:</span><span class="w"> </span><span class="nx">getUser</span><span class="w"> </span><span class="p">});</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;localhost:50051&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">ServerCredentials</span><span class="p">.</span><span class="nx">createInsecure</span><span class="p">());</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running at http://localhost:50051&#39;</span><span class="p">);</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-</code></pre></div>
-
+const server = new grpc.Server();
+server.addService(userProto.service, { GetUser: getUser });
+server.bind('localhost:50051', grpc.ServerCredentials.createInsecure());
+console.log('Server running at http://localhost:50051');
+server.start();
+</code></pre>
 <h2 id="common-challenges-in-api-design">Common Challenges in API Design</h2>
 <h3 id="1-versioning">1. Versioning</h3>
 <p>APIs evolve over time, and managing changes without breaking existing clients is crucial. Common strategies include:</p>
@@ -312,42 +308,40 @@
 </ul>
 <h3 id="3-pagination-and-filtering">3. Pagination and Filtering</h3>
 <p>When dealing with large datasets, implement pagination and filtering to enhance performance. For example, in a REST API:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">page</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">limit</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">startIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">page</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">limit</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">endIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">limit</span><span class="p">;</span>
+<pre><code class="language-javascript">app.get('/users', (req, res) =&gt; {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">endIndex</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">results</span><span class="p">.</span><span class="nx">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">page</span><span class="o">:</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="nx">limit</span><span class="p">,</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">results</span><span class="p">.</span><span class="nx">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">users</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">startIndex</span><span class="p">,</span><span class="w"> </span><span class="nx">endIndex</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-
+    const results = {};
+    if (endIndex &lt; users.length) {
+        results.next = {
+            page: page + 1,
+            limit: limit,
+        };
+    }
+    results.results = users.slice(startIndex, endIndex);
+    res.json(results);
+});
+</code></pre>
 <h3 id="4-caching">4. Caching</h3>
 <p>Implement caching mechanisms using tools like Redis or Memcached to improve response times and reduce load on your API. For example, using Redis for caching:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">redis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redis&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+<pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">cachedUsers</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cachedUsers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">cachedUsers</span><span class="p">));</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Fetch from database</span>
-<span class="w">            </span><span class="nx">client</span><span class="p">.</span><span class="nx">setex</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">3600</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">users</span><span class="p">));</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">users</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-
+app.get('/users', (req, res) =&gt; {
+    client.get('users', (err, cachedUsers) =&gt; {
+        if (cachedUsers) {
+            return res.json(JSON.parse(cachedUsers));
+        } else {
+            // Fetch from database
+            client.setex('users', 3600, JSON.stringify(users));
+            return res.json(users);
+        }
+    });
+});
+</code></pre>
 <h2 id="conclusion-actionable-steps-to-master-api-design-patterns">Conclusion: Actionable Steps to Master API Design Patterns</h2>
 <ol>
 <li><strong>Choose the Right Pattern</strong>: Evaluate your project requirements and choose between REST, GraphQL, or gRPC based on your needs.</li>

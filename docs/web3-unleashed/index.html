@@ -163,47 +163,46 @@
 * <strong>OpenZeppelin</strong>: A framework for building secure and modular smart contracts.</p>
 <h3 id="example-building-a-simple-dapp-with-ethereum-and-web3js">Example: Building a Simple DApp with Ethereum and Web3.js</h3>
 <p>Here's an example of how to build a simple DApp using Ethereum and Web3.js:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Web3.js library</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">Web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;web3&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the Web3.js library
+const Web3 = require('web3');
 
-<span class="c1">// Set up the Ethereum provider</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="s1">&#39;https://mainnet.infura.io/v3/YOUR_PROJECT_ID&#39;</span><span class="p">);</span>
+// Set up the Ethereum provider
+const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID');
 
-<span class="c1">// Set up the Web3 instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">web3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Web3</span><span class="p">(</span><span class="nx">provider</span><span class="p">);</span>
+// Set up the Web3 instance
+const web3 = new Web3(provider);
 
-<span class="c1">// Define the smart contract ABI</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">abi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="s2">&quot;constant&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;getBalance&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="s2">&quot;payable&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;stateMutability&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;view&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">];</span>
+// Define the smart contract ABI
+const abi = [
+  {
+    &quot;constant&quot;: true,
+    &quot;inputs&quot;: [],
+    &quot;name&quot;: &quot;getBalance&quot;,
+    &quot;outputs&quot;: [
+      {
+        &quot;name&quot;: &quot;&quot;,
+        &quot;type&quot;: &quot;uint256&quot;
+      }
+    ],
+    &quot;payable&quot;: false,
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  }
+];
 
-<span class="c1">// Deploy the smart contract</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contractAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">contract</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">Contract</span><span class="p">(</span><span class="nx">abi</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">);</span>
+// Deploy the smart contract
+const contractAddress = '0x...';
+const contract = new web3.eth.Contract(abi, contractAddress);
 
-<span class="c1">// Call the getBalance function</span>
-<span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">getBalance</span><span class="p">().</span><span class="nx">call</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">balance</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Balance: </span><span class="si">${</span><span class="nx">balance</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Call the getBalance function
+contract.methods.getBalance().call()
+  .then((balance) =&gt; {
+    console.log(`Balance: ${balance}`);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>This example demonstrates how to set up a Web3.js instance, deploy a smart contract, and call a function on that contract.</p>
 <h2 id="deploying-and-managing-decentralized-apps">Deploying and Managing Decentralized Apps</h2>
 <p>Once you've built your DApp, you'll need to deploy it to a blockchain network. This can be done using a range of tools and services, including:
@@ -212,29 +211,28 @@
 * <strong>Google Cloud Blockchain</strong>: A managed blockchain service provided by Google Cloud.</p>
 <h3 id="example-deploying-a-dapp-to-infura">Example: Deploying a DApp to Infura</h3>
 <p>Here's an example of how to deploy a DApp to Infura:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Infura library</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">infura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;infura&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the Infura library
+const infura = require('infura');
 
-<span class="c1">// Set up the Infura provider</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">infura</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">projectId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_PROJECT_ID&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">projectSecret</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;YOUR_PROJECT_SECRET&#39;</span>
-<span class="p">});</span>
+// Set up the Infura provider
+const provider = infura({
+  projectId: 'YOUR_PROJECT_ID',
+  projectSecret: 'YOUR_PROJECT_SECRET'
+});
 
-<span class="c1">// Deploy the DApp</span>
-<span class="nx">provider</span><span class="p">.</span><span class="nx">deploy</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">contract</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;MyContract&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">bytecode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">abi</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span>
-<span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">deployment</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Deployment ID: </span><span class="si">${</span><span class="nx">deployment</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Deploy the DApp
+provider.deploy({
+  contract: 'MyContract',
+  bytecode: '0x...',
+  abi: '0x...'
+})
+  .then((deployment) =&gt; {
+    console.log(`Deployment ID: ${deployment.id}`);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>This example demonstrates how to set up an Infura provider and deploy a DApp to the Infura network.</p>
 <h2 id="common-problems-and-solutions">Common Problems and Solutions</h2>
 <p>When building and deploying DApps, you may encounter a range of common problems, including:
@@ -247,29 +245,28 @@
 * <strong>Penetration testing</strong>: Penetration testing can help simulate real-world attacks and identify weaknesses in your DApp.</p>
 <h3 id="example-using-layer-2-scaling-solutions">Example: Using Layer 2 Scaling Solutions</h3>
 <p>Here's an example of how to use Optimism to scale a DApp:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Import the Optimism library</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">optimism</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;optimism&#39;</span><span class="p">);</span>
+<pre><code class="language-javascript">// Import the Optimism library
+const optimism = require('optimism');
 
-<span class="c1">// Set up the Optimism provider</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">optimism</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">network</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;mainnet&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">wallet</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span>
-<span class="p">});</span>
+// Set up the Optimism provider
+const provider = optimism({
+  network: 'mainnet',
+  wallet: '0x...'
+});
 
-<span class="c1">// Deploy the DApp to Optimism</span>
-<span class="nx">provider</span><span class="p">.</span><span class="nx">deploy</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">contract</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;MyContract&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">bytecode</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">abi</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;0x...&#39;</span>
-<span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">deployment</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Deployment ID: </span><span class="si">${</span><span class="nx">deployment</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
-<span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-<span class="w">  </span><span class="p">});</span>
-</code></pre></div>
-
+// Deploy the DApp to Optimism
+provider.deploy({
+  contract: 'MyContract',
+  bytecode: '0x...',
+  abi: '0x...'
+})
+  .then((deployment) =&gt; {
+    console.log(`Deployment ID: ${deployment.id}`);
+  })
+  .catch((error) =&gt; {
+    console.error(error);
+  });
+</code></pre>
 <p>This example demonstrates how to set up an Optimism provider and deploy a DApp to the Optimism network.</p>
 <h2 id="real-world-use-cases">Real-World Use Cases</h2>
 <p>DApps have a range of real-world use cases, including:
