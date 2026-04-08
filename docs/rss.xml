@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 17:40:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 17:44:53 +0000</lastBuildDate>
+    <item>
+      <title>Snowflake Simplified</title>
+      <link>https://kubaik.github.io/snowflake-simplified/</link>
+      <description>Discover the power of the Snowflake Cloud Data Platform in our blog post &quot;Snowflake Simplified.&quot; Unlock data insights effortlessly with this comprehensive guide!</description>
+      <pubDate>Wed, 08 Apr 2026 17:44:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/snowflake-simplified/</guid>
+    </item>
     <item>
       <title>Limit the Chaos</title>
       <link>https://kubaik.github.io/limit-the-chaos/</link>
@@ -138,13 +145,6 @@
       <description>Streamline mobile app development with CI/CD automation. Learn how to save time &amp; boost efficiency.</description>
       <pubDate>Wed, 08 Apr 2026 11:42:44 +0000</pubDate>
       <guid>https://kubaik.github.io/automate-mobile/</guid>
-    </item>
-    <item>
-      <title>Mesh Up Data (April 2026)</title>
-      <link>https://kubaik.github.io/mesh-up-data-april-2026/</link>
-      <description>Unlock data&apos;s full potential with Data Mesh Architecture, a decentralized approach to data management.</description>
-      <pubDate>Wed, 08 Apr 2026 11:35:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/mesh-up-data-april-2026/</guid>
     </item>
   </channel>
 </rss>
