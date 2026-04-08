@@ -131,3 +131,16 @@ python delete_similar_posts.py --keep-longest
 
 # Once happy, delete
 python delete_similar_posts.py --delete --threshold 0.80
+
+
+#####################################################################################
+
+# Preview what would be deleted (safe, no changes)
+python deduplicate_posts.py
+
+# Actually delete the older duplicates and rebuild the site
+python deduplicate_posts.py --delete
+
+# Or via blog_system.py shortcut
+python blog_system.py dedup
+

@@ -19,6 +19,72 @@ from hashtag_manager import HashtagManager, add_hashtags_to_post
 
 
 # ─────────────────────────────────────────────────────────────────
+# Duplicate-detection helpers
+# ─────────────────────────────────────────────────────────────────
+
+# Words that carry no topic signal – ignored when comparing titles.
+_STOP_WORDS = {
+    "a", "an", "the", "to", "in", "of", "for", "and", "or", "is",
+    "are", "with", "how", "your", "my", "our", "its", "on", "at",
+    "by", "from", "this", "that", "best", "using", "guide", "complete",
+    "introduction", "overview", "tutorial", "tips", "top", "ways",
+}
+
+# Two posts are "too similar" when their title Jaccard score >= this value.
+DUPLICATE_TITLE_THRESHOLD = 0.5
+
+
+def _tokenise(text: str) -> set:
+    """Lowercase, strip punctuation, remove stop-words."""
+    words = re.sub(r"[^\w\s]", "", text.lower()).split()
+    return {w for w in words if w not in _STOP_WORDS and len(w) > 2}
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _is_duplicate_title(new_title: str, existing_titles: List[str],
+                         threshold: float = DUPLICATE_TITLE_THRESHOLD) -> tuple:
+    """
+    Return (is_duplicate, best_match_title, score).
+    is_duplicate is True when the new title is too close to any existing title.
+    """
+    new_tokens = _tokenise(new_title)
+    best_score = 0.0
+    best_match = ""
+    for title in existing_titles:
+        score = _jaccard(new_tokens, _tokenise(title))
+        if score > best_score:
+            best_score = score
+            best_match = title
+    return best_score >= threshold, best_match, best_score
+
+
+def _load_existing_titles(docs_dir: Path) -> List[str]:
+    """Read every post.json and return a list of existing post titles."""
+    titles = []
+    if not docs_dir.exists():
+        return titles
+    for post_dir in docs_dir.iterdir():
+        if not post_dir.is_dir() or post_dir.name == "static":
+            continue
+        post_json = post_dir / "post.json"
+        if post_json.exists():
+            try:
+                with open(post_json, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                title = data.get("title", "")
+                if title:
+                    titles.append(title)
+            except Exception:
+                pass
+    return titles
+
+
+# ─────────────────────────────────────────────────────────────────
 # BlogSystem
 # ─────────────────────────────────────────────────────────────────
 
@@ -239,7 +305,11 @@ class BlogSystem:
         try:
             print(f"Generating content for: {topic}")
 
-            title            = await self._generate_title(topic, keywords)
+            # ── Duplicate-title guard ──────────────────────────────
+            existing_titles = _load_existing_titles(self.output_dir)
+            title           = await self._generate_unique_title(topic, keywords, existing_titles)
+            # ──────────────────────────────────────────────────────
+
             content          = await self._generate_content(title, topic, keywords)
             meta_description = await self._generate_meta_description(topic, title)
             slug             = self._create_slug(title)
@@ -287,13 +357,58 @@ class BlogSystem:
     # INDIVIDUAL GENERATION STEPS (each goes through fallback chain)
     # ─────────────────────────────────────────────────────────────
 
-    async def _generate_title(self, topic: str, keywords: List[str] = None) -> str:
+    async def _generate_unique_title(self, topic: str, keywords: List[str],
+                                     existing_titles: List[str],
+                                     max_attempts: int = 3) -> str:
+        """
+        Generate a title and keep retrying (up to max_attempts) if the
+        result is too similar to an existing post title.
+        """
+        for attempt in range(1, max_attempts + 1):
+            # Ask the model for a fresh title each attempt.
+            # On retry we tell it explicitly which title to avoid.
+            extra_instruction = ""
+            if attempt > 1:
+                extra_instruction = (
+                    f" IMPORTANT: Do NOT produce a title similar to any of these: "
+                    + ", ".join(f'"{t}"' for t in existing_titles[:10])
+                    + ". Choose a clearly different angle."
+                )
+
+            title = await self._generate_title(topic, keywords,
+                                               extra_instruction=extra_instruction)
+            title = title.strip().strip('"')
+
+            if not existing_titles:
+                # No existing posts — accept immediately.
+                return title
+
+            is_dup, match, score = _is_duplicate_title(title, existing_titles)
+            if not is_dup:
+                print(f"Title accepted (similarity {score:.0%} to nearest existing): {title}")
+                return title
+
+            print(
+                f"Attempt {attempt}: generated title is too similar "
+                f"({score:.0%}) to existing post '{match}'. Retrying…"
+            )
+
+        # If all retries are too similar, append the current month/year to
+        # distinguish the post rather than giving up entirely.
+        print("Warning: could not generate a fully unique title. "
+              "Appending date suffix to differentiate.")
+        suffix = datetime.now().strftime("%B %Y")
+        return f"{title} ({suffix})"
+
+    async def _generate_title(self, topic: str, keywords: List[str] = None,
+                               extra_instruction: str = "") -> str:
         keyword_text = f" Focus on keywords: {', '.join(keywords)}" if keywords else ""
         messages = [
             {"role": "system", "content": "You are a skilled blog title writer. Create engaging, SEO-friendly titles."},
             {"role": "user",   "content": (
                 f"Generate a compelling blog post title about '{topic}'.{keyword_text} "
                 "The title should be catchy, informative, and under 60 characters."
+                f"{extra_instruction}"
             )}
         ]
         title = await self._call_api_with_fallback(messages, max_tokens=100)
@@ -465,7 +580,7 @@ Remember to stay updated with the latest developments in {topic} as the field co
 
 
 # ─────────────────────────────────────────────────────────────────
-# TOPIC PICKER
+# TOPIC PICKER  (with duplicate-topic guard)
 # ─────────────────────────────────────────────────────────────────
 
 def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
@@ -496,6 +611,39 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
         print("All topics used, resetting...")
         available = topics
         used      = []
+
+    # ── Duplicate-topic guard ──────────────────────────────────────
+    # Load existing post titles once and skip any candidate topic
+    # that is already too similar to what has been published.
+    docs_dir        = Path("./docs")
+    existing_titles = _load_existing_titles(docs_dir)
+
+    if existing_titles:
+        safe_available = []
+        skipped        = []
+        for candidate in available:
+            # Treat the raw topic string as a pseudo-title for comparison
+            is_dup, match, score = _is_duplicate_title(
+                candidate, existing_titles, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
+            if is_dup:
+                skipped.append((candidate, match, score))
+            else:
+                safe_available.append(candidate)
+
+        if skipped:
+            print(f"Skipped {len(skipped)} topic(s) already covered:")
+            for topic, match, score in skipped:
+                print(f"  '{topic}' ≈ '{match}' ({score:.0%})")
+
+        if safe_available:
+            available = safe_available
+        else:
+            # All remaining topics have been covered — reset and pick any
+            print("All available topics are already covered. Resetting topic history.")
+            available = topics
+            used      = []
+    # ──────────────────────────────────────────────────────────────
 
     topic = random.choice(available)
     used.append(topic)
@@ -970,8 +1118,15 @@ if __name__ == "__main__":
                 else:
                     print("Test cancelled.")
 
+        elif mode == "dedup":
+            # Convenience: run deduplication directly from blog_system CLI
+            print("Running deduplication...")
+            import subprocess
+            args = ["python", "deduplicate_posts.py", "--delete"] + sys.argv[2:]
+            subprocess.run(args)
+
         else:
-            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter]")
+            print("Usage: python blog_system.py [init|auto|build|cleanup|debug|social|test-twitter|dedup]")
             print("  init         - Initialize blog system with config")
             print("  auto         - Generate new post and rebuild site")
             print("  build        - Rebuild site")
@@ -979,6 +1134,7 @@ if __name__ == "__main__":
             print("  debug        - Debug current state and rebuild")
             print("  social       - Generate social media posts for existing content")
             print("  test-twitter - Test Twitter API connection")
+            print("  dedup        - Remove near-duplicate posts and rebuild site")
 
     else:
         print("AI Blog System with Monetization")
@@ -992,6 +1148,7 @@ if __name__ == "__main__":
         print("  debug        - Analyse current state and rebuild")
         print("  social       - Generate social media posts")
         print("  test-twitter - Test Twitter API connection and posting")
+        print("  dedup        - Remove near-duplicate posts and rebuild site")
         print("\nMonetization features:")
         print("  - Automated affiliate link injection")
         print("  - Google AdSense integration with responsive ads")
