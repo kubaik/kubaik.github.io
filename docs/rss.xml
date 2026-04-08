@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 23:23:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 23:33:56 +0000</lastBuildDate>
+    <item>
+      <title>Mastering Load Balancing: Techniques for Optimal Performance</title>
+      <link>https://kubaik.github.io/mastering-load-balancing-techniques-for-optimal-pe/</link>
+      <description>Improve app performance with expert load balancing techniques.</description>
+      <pubDate>Wed, 08 Apr 2026 23:33:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/mastering-load-balancing-techniques-for-optimal-pe/</guid>
+    </item>
     <item>
       <title>Build Smart...</title>
       <link>https://kubaik.github.io/build-smart/</link>
@@ -138,13 +145,6 @@
       <description>Discover essential tips for mobile app security! Learn how to protect your app from threats and ensure user data safety with our expert guide.</description>
       <pubDate>Wed, 08 Apr 2026 14:09:32 +0000</pubDate>
       <guid>https://kubaik.github.io/secure-your-app/</guid>
-    </item>
-    <item>
-      <title>SvelteJS</title>
-      <link>https://kubaik.github.io/sveltejs/</link>
-      <description>Discover SvelteJS: Build fast, scalable apps with modern JavaScript</description>
-      <pubDate>Wed, 08 Apr 2026 13:26:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/sveltejs/</guid>
     </item>
   </channel>
 </rss>
