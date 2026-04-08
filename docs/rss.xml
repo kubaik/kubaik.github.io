@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 19:50:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 19:56:32 +0000</lastBuildDate>
+    <item>
+      <title>Empower Your Ideas: The Rise of Low-Code/No-Code Platforms</title>
+      <link>https://kubaik.github.io/empower-your-ideas-the-rise-of-low-codeno-code-pla/</link>
+      <description>Unlock your creativity with low-code/no-code platforms! Discover how these tools empower innovation and streamline development for everyone.</description>
+      <pubDate>Wed, 08 Apr 2026 19:56:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/empower-your-ideas-the-rise-of-low-codeno-code-pla/</guid>
+    </item>
     <item>
       <title>Mastering Documentation: Essential Best Practices for Clarity</title>
       <link>https://kubaik.github.io/mastering-documentation-essential-best-practices-f/</link>
@@ -138,13 +145,6 @@
       <description>Unlock future insights with AI-driven time series forecasting. Learn how to predict trends and make data-driven decisions.</description>
       <pubDate>Wed, 08 Apr 2026 12:10:03 +0000</pubDate>
       <guid>https://kubaik.github.io/forecast-future/</guid>
-    </item>
-    <item>
-      <title>Query Smarter</title>
-      <link>https://kubaik.github.io/query-smarter/</link>
-      <description>Optimize database queries for faster performance and improved efficiency. Learn expert tips and tricks.</description>
-      <pubDate>Wed, 08 Apr 2026 11:57:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/query-smarter/</guid>
     </item>
   </channel>
 </rss>
