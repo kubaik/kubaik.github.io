@@ -171,5 +171,6 @@
   "Event-Driven Architecture",
   "Cybersecurity Fundamentals",
   "Android Development with Kotlin",
-  "Caching Strategies (Redis, Memcached)"
+  "Caching Strategies (Redis, Memcached)",
+  "Behavior-Driven Development (BDD)"
 ]
