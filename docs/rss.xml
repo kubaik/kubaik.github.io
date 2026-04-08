@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Apr 2026 09:36:45 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 09:49:36 +0000</lastBuildDate>
+    <item>
+      <title>Scale with TypeScript</title>
+      <link>https://kubaik.github.io/scale-with-typescript/</link>
+      <description>Learn how TypeScript boosts large-scale app development with scalability and maintainability.</description>
+      <pubDate>Wed, 08 Apr 2026 09:49:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/scale-with-typescript/</guid>
+    </item>
     <item>
       <title>LLM Hacks</title>
       <link>https://kubaik.github.io/llm-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Unlock the potential of Event-Driven Architecture with &apos;EDA: Scale Smarter&apos;. Discover strategies to enhance scalability and efficiency in your applications!</description>
       <pubDate>Tue, 07 Apr 2026 23:10:51 +0000</pubDate>
       <guid>https://kubaik.github.io/eda-scale-smarter/</guid>
-    </item>
-    <item>
-      <title>Refactor Now</title>
-      <link>https://kubaik.github.io/refactor-now/</link>
-      <description>Improve code quality &amp; reduce bugs: learn when to refactor legacy code</description>
-      <pubDate>Tue, 07 Apr 2026 22:33:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactor-now/</guid>
     </item>
   </channel>
 </rss>
