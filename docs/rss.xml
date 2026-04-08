@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Apr 2026 23:32:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2026 00:08:00 +0000</lastBuildDate>
+    <item>
+      <title>Kotlin Android Dev</title>
+      <link>https://kubaik.github.io/kotlin-android-dev/</link>
+      <description>Learn Android dev with Kotlin. Discover tutorials, tips, and best practices.</description>
+      <pubDate>Wed, 08 Apr 2026 00:07:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/kotlin-android-dev/</guid>
+    </item>
     <item>
       <title>Lock Down: Cyber Basics</title>
       <link>https://kubaik.github.io/lock-down-cyber-basics/</link>
@@ -138,13 +145,6 @@
       <description>Boost website speed with Static Site Generation (SSG). Learn how to improve performance and user experience.</description>
       <pubDate>Tue, 07 Apr 2026 14:00:05 +0000</pubDate>
       <guid>https://kubaik.github.io/boost-speed-with-ssg/</guid>
-    </item>
-    <item>
-      <title>Process Now</title>
-      <link>https://kubaik.github.io/process-now/</link>
-      <description>Unlock instant insights with real-time data processing. Learn how to Process Now.</description>
-      <pubDate>Tue, 07 Apr 2026 13:25:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/process-now/</guid>
     </item>
   </channel>
 </rss>
