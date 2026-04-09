@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 14:17:41 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 15:10:09 +0000</lastBuildDate>
+    <item>
+      <title>AI Life Hacks</title>
+      <link>https://kubaik.github.io/ai-life-hacks/</link>
+      <description>Streamline your life with AI and Python. Discover automation hacks and boost productivity.</description>
+      <pubDate>Thu, 09 Apr 2026 15:10:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-life-hacks/</guid>
+    </item>
     <item>
       <title>Blockchain: Beyond Hype</title>
       <link>https://kubaik.github.io/blockchain-beyond-hype/</link>
@@ -138,13 +145,6 @@
       <description>Explore the future of software development in &quot;AI vs Devs.&quot; Discover whether AI will replace developers or enhance their roles. Get the honest answer!</description>
       <pubDate>Thu, 09 Apr 2026 04:29:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-vs-devs/</guid>
-    </item>
-    <item>
-      <title>Code Smarter</title>
-      <link>https://kubaik.github.io/code-smarter/</link>
-      <description>Boost dev productivity with a Second Brain. Learn to code smarter, not harder.</description>
-      <pubDate>Thu, 09 Apr 2026 03:38:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-smarter/</guid>
     </item>
   </channel>
 </rss>
