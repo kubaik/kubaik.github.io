@@ -2971,5 +2971,18 @@
       "TechStrategy"
     ],
     "topic": "Why Most Digital Transformations Fail"
+  },
+  "docker_in_production:_what_no_one_tells_you": {
+    "timestamp": "2026-04-09T12:11:33.417492",
+    "hashtags": [
+      "CloudNative",
+      "DevOps",
+      "Containerization",
+      "Docker",
+      "Kubernetes",
+      "Serverless",
+      "MicroservicesArchitecture"
+    ],
+    "topic": "Docker in Production: What No One Tells You"
   }
 }
