@@ -3198,5 +3198,19 @@
       "TechLeadership"
     ],
     "topic": "The Engineering Culture That Built Google"
+  },
+  "how_netflix_handles_200_million_concurrent_streams": {
+    "timestamp": "2026-04-09T21:27:50.116551",
+    "hashtags": [
+      "CloudComputing",
+      "StreamingTech",
+      "ScalableArchitecture",
+      "NetflixEngineering",
+      "DevOps",
+      "RealTimeProcessing",
+      "EdgeComputing",
+      "CloudNativeApps"
+    ],
+    "topic": "How Netflix Handles 200 Million Concurrent Streams"
   }
 }
