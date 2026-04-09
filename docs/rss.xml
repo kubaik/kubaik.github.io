@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 09:28:46 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 10:07:39 +0000</lastBuildDate>
+    <item>
+      <title>Fast TDD</title>
+      <link>https://kubaik.github.io/fast-tdd/</link>
+      <description>Boost dev speed with Fast TDD, efficient testing without the slowdown.</description>
+      <pubDate>Thu, 09 Apr 2026 10:07:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/fast-tdd/</guid>
+    </item>
     <item>
       <title>Load Less...</title>
       <link>https://kubaik.github.io/load-less/</link>
@@ -138,13 +145,6 @@
       <description>Unlock microservices management with Service Mesh Architecture</description>
       <pubDate>Wed, 08 Apr 2026 20:37:46 +0000</pubDate>
       <guid>https://kubaik.github.io/mesh-up/</guid>
-    </item>
-    <item>
-      <title>Empower Your Ideas: The Rise of Low-Code/No-Code Platforms</title>
-      <link>https://kubaik.github.io/empower-your-ideas-the-rise-of-low-codeno-code-pla/</link>
-      <description>Unlock your creativity with low-code/no-code platforms! Discover how these tools empower innovation and streamline development for everyone.</description>
-      <pubDate>Wed, 08 Apr 2026 19:56:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/empower-your-ideas-the-rise-of-low-codeno-code-pla/</guid>
     </item>
   </channel>
 </rss>
