@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 13:05:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 13:07:35 +0000</lastBuildDate>
+    <item>
+      <title>2026 Layoffs: The Truth</title>
+      <link>https://kubaik.github.io/2026-layoffs-the-truth/</link>
+      <description>Uncover the truth behind 2026 tech layoffs: causes, impacts, and what&apos;s next.</description>
+      <pubDate>Thu, 09 Apr 2026 13:07:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-layoffs-the-truth/</guid>
+    </item>
     <item>
       <title>Speed Up</title>
       <link>https://kubaik.github.io/speed-up/</link>
@@ -138,13 +145,6 @@
       <description>Boost app performance with smart monitoring. Learn how to optimize your applications.</description>
       <pubDate>Thu, 09 Apr 2026 01:29:04 +0000</pubDate>
       <guid>https://kubaik.github.io/monitor-smarter/</guid>
-    </item>
-    <item>
-      <title>Firewall Shield</title>
-      <link>https://kubaik.github.io/firewall-shield/</link>
-      <description>Protect your site with a Web Application Firewall (WAF). Learn how Firewall Shield safeguards your online presence.</description>
-      <pubDate>Thu, 09 Apr 2026 00:03:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/firewall-shield/</guid>
     </item>
   </channel>
 </rss>
