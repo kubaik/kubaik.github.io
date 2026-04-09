@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:13:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 17:15:50 +0000</lastBuildDate>
+    <item>
+      <title>Py Auto: Boost Dev Speed</title>
+      <link>https://kubaik.github.io/py-auto-boost-dev-speed/</link>
+      <description>Discover how to boost your development speed with Py Auto! Learn to automate repetitive tasks using Python for a more efficient workflow.</description>
+      <pubDate>Thu, 09 Apr 2026 17:15:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/py-auto-boost-dev-speed/</guid>
+    </item>
     <item>
       <title>Top Free AI APIs</title>
       <link>https://kubaik.github.io/top-free-ai-apis/</link>
@@ -138,13 +145,6 @@
       <description>Identify issues before users do. Learn proactive app monitoring strategies.</description>
       <pubDate>Thu, 09 Apr 2026 08:16:24 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-issues-first/</guid>
-    </item>
-    <item>
-      <title>Refactor Safe</title>
-      <link>https://kubaik.github.io/refactor-safe/</link>
-      <description>Refactor legacy code safely with expert tips and best practices.</description>
-      <pubDate>Thu, 09 Apr 2026 07:52:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/refactor-safe/</guid>
     </item>
   </channel>
 </rss>
