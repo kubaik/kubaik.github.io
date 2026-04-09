@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 20:23:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 17:26:19 +0000</lastBuildDate>
+    <item>
+      <title>Dev Burnout: Causes &amp; Cures</title>
+      <link>https://kubaik.github.io/dev-burnout-causes-cures/</link>
+      <description>Learn causes of dev burnout &amp; discover cures to boost productivity</description>
+      <pubDate>Thu, 09 Apr 2026 17:26:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/dev-burnout-causes-cures/</guid>
+    </item>
     <item>
       <title>Py Auto: Boost Dev Speed</title>
       <link>https://kubaik.github.io/py-auto-boost-dev-speed/</link>
@@ -138,13 +145,6 @@
       <description>Explore the unseen costs of digital nomad life and plan your adventure with accuracy.</description>
       <pubDate>Thu, 09 Apr 2026 08:52:47 +0000</pubDate>
       <guid>https://kubaik.github.io/nomad-costs/</guid>
-    </item>
-    <item>
-      <title>Fix Issues First</title>
-      <link>https://kubaik.github.io/fix-issues-first/</link>
-      <description>Identify issues before users do. Learn proactive app monitoring strategies.</description>
-      <pubDate>Thu, 09 Apr 2026 08:16:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-issues-first/</guid>
     </item>
   </channel>
 </rss>
