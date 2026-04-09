@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2026 22:35:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2026 23:24:36 +0000</lastBuildDate>
+    <item>
+      <title>2026 Tech Salaries</title>
+      <link>https://kubaik.github.io/2026-tech-salaries/</link>
+      <description>Discover 2026 tech salary trends: who earns what and why.</description>
+      <pubDate>Thu, 09 Apr 2026 23:24:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-tech-salaries/</guid>
+    </item>
     <item>
       <title>Auth Revamp</title>
       <link>https://kubaik.github.io/auth-revamp/</link>
@@ -138,13 +145,6 @@
       <description>Discover top free AI APIs for developers, boost innovation without the cost.</description>
       <pubDate>Thu, 09 Apr 2026 17:00:55 +0000</pubDate>
       <guid>https://kubaik.github.io/top-free-ai-apis/</guid>
-    </item>
-    <item>
-      <title>Socket to Me</title>
-      <link>https://kubaik.github.io/socket-to-me/</link>
-      <description>Build real-time apps with WebSockets. Learn how to create interactive experiences with instant updates.</description>
-      <pubDate>Thu, 09 Apr 2026 16:51:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/socket-to-me/</guid>
     </item>
   </channel>
 </rss>
